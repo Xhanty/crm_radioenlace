@@ -1,0 +1,35 @@
+.div-1-tables-header {
+    width: 50%;
+}
+
+.div-2-tables-header {
+    width: 50%;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.d-flex-header-table {
+    display: flex;
+}
+
+.form-control {
+    color: #000 !important;
+}
+
+.form-select {
+    color: #000 !important;
+}
+
+td {
+    white-space: normal !important;
+}
+
+.center-vertical {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.table {
+    width: 100% !important;
+}
