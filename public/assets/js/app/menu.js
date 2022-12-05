@@ -218,9 +218,10 @@ $(function () {
         $("#telefono_edit").val(data.telefono_fijo);
         $("#ciudad_cliente_edit").val(data.ciudad);
         
-        $("#ciudad_cliente_edit").val(data.ciudad);
-        $("#ciudad_cliente_edit").val(data.ciudad);
-        $("#ciudad_cliente_edit").val(data.ciudad);
+        $("#tipo_regimenadd").val(data.tipo_regimen);
+        $("#codigo_sucursaladd").val(data.codigo_sucursal);
+        $("#indicativo_telefonoadd").val(data.indicativo_telefono);
+        $("#extencionadd").val(data.extension);
         console.log(data);
     });
 });
