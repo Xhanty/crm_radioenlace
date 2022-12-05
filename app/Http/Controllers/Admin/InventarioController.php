@@ -6,12 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DataTables;
+use Exception;
 
 class InventarioController extends Controller
 {
     public function index()
     {
-        return view('admin.inventario.inventario');
+        try {
+            $categorias = DB::table('categorias')->get();
+            return view('admin.inventario.inventario', compact('categorias'));
+        } catch (Exception $ex) {
+            return $ex;
+        }
     }
 
     public function productos_list(Request $request)
