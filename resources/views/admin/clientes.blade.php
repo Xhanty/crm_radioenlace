@@ -1,5 +1,9 @@
 @extends('layouts.menu')
 
+@section('css')
+    <link href="{{ asset('assets/css/app/tables_img.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
     <div class="main-container container-fluid">
 
@@ -16,107 +20,6 @@
         </div>
         <!-- /breadcrumb -->
 
-        <style>
-            .cards tbody tr {
-                float: left;
-                width: 19rem;
-                margin: 0.5rem;
-                border: 0.0625rem solid rgba(0, 0, 0, .125);
-                border-radius: .25rem;
-                box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
-            }
-
-            .cards tbody tr td:first-child {
-                display: flex;
-                justify-content: center;
-            }
-
-            .cards td:before {
-                content: attr(data-label);
-                position: relative;
-                float: left;
-                color: #808080;
-                margin-left: 0;
-                margin-right: 0.5rem;
-                text-align: left;
-            }
-
-            .cards tbody {
-                display: flex;
-                flex-wrap: wrap;
-                padding: 0.5rem;
-                justify-content: center;
-            }
-
-            .cards tbody td {
-                display: block;
-                cursor: pointer;
-            }
-
-            .cards thead {
-                display: none;
-            }
-
-            .table .avatar {
-                width: 100px;
-                height: 100px;
-            }
-
-            .cards .avatar {
-                width: 150px;
-                height: 150px;
-                margin: 15px;
-            }
-
-            /* DETAIL CLIENTE */
-            .card-detail {
-                background-color: #ffffff;
-                border: 1px solid rgba(0, 34, 51, 0.1);
-                box-shadow: 2px 4px 10px 0 rgba(0, 34, 51, 0.05), 2px 4px 10px 0 rgba(0, 34, 51, 0.05);
-                border-radius: 0.15rem;
-            }
-
-            /* Tabs Card */
-
-            .tab-card {
-                border: 1px solid #eee;
-            }
-
-            .tab-card-header {
-                background: none;
-            }
-
-            /* Default mode */
-            .tab-card-header>.nav-tabs {
-                border: none;
-                margin: 0px;
-            }
-
-            .tab-card-header>.nav-tabs>li {
-                margin-right: 2px;
-            }
-
-            .tab-card-header>.nav-tabs>li>a {
-                border: 0;
-                border-bottom: 2px solid transparent;
-                margin-right: 0;
-                color: #737373;
-                padding: 2px 15px;
-            }
-
-            .tab-card-header>.nav-tabs>li>a.show {
-                border-bottom: 2px solid #007bff;
-                color: #007bff;
-            }
-
-            .tab-card-header>.nav-tabs>li>a:hover {
-                color: #007bff;
-            }
-
-            .tab-card-header>.tab-content {
-                padding-bottom: 0;
-            }
-        </style>
         <!-- Row -->
         <div class="row row-sm" id="div_list_clientes">
             <div class="col-lg-12">
@@ -239,11 +142,13 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Tipo Régimen</label>
-                                <input class="form-control" id="tipo_regimenadd" placeholder="Tipo Régimen" type="text">
+                                <input class="form-control" id="tipo_regimenadd" placeholder="Tipo Régimen"
+                                    type="text">
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="">Código Sucursal</label>
-                                <input class="form-control" id="codigo_sucursaladd" placeholder="Código Sucursal" type="text">
+                                <input class="form-control" id="codigo_sucursaladd" placeholder="Código Sucursal"
+                                    type="text">
                             </div>
                         </div>
                         <br>
@@ -260,35 +165,170 @@
                         </div>
                         <br>
 
+                        <div class="text-center">
+                            <button class="btn ripple btn-primary" id="btnModificarCliente1" type="button">Modificar
+                                Datos Básicos</button>
+                        </div>
+
+                        <br>
+
                         <div class="">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="card-detail mt-3 tab-card">
-                                        <div class="card-header tab-card-header">
+                                        <div class="card-header tab-card-header" style="border: 1px solid #ccc;">
                                             <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
                                                 <li class="nav-item">
-                                                    <a class="nav-link" id="one-tab" data-toggle="tab" href="#one"
-                                                        role="tab" aria-controls="One" aria-selected="true">Datos Facturación</a>
+                                                    <a class="nav-link nav-link-1 active" href="javascript:void(0)">Datos
+                                                        Facturación</a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link" id="two-tab" data-toggle="tab" href="#two"
-                                                        role="tab" aria-controls="Two" aria-selected="false">Datos Técnicos</a>
+                                                    <a class="nav-link nav-link-2" href="javascript:void(0)">Datos
+                                                        Técnicos</a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link" id="three-tab" data-toggle="tab" href="#three"
-                                                        role="tab" aria-controls="Three"
-                                                        aria-selected="false">Anexos</a>
+                                                    <a class="nav-link nav-link-3" id="three-tab"
+                                                        href="javascript:void(0)">Anexos</a>
                                                 </li>
                                             </ul>
                                         </div>
 
-                                        <div class="tab-content" id="myTabContent">
-                                            <div class="tab-pane fade show active p-3" id="one" role="tabpanel"
-                                                aria-labelledby="one-tab">
-                                                <h5 class="card-title">Tab Card One</h5>
-                                                <p class="card-text">Some quick example text to build on the card title and
-                                                    make up
-                                                    the bulk of the card's content.</p>
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade show p-3 active" id="one_detail">
+                                                <div class="row row-sm">
+                                                    <div class="col-lg">
+                                                        <label for="">Nombre</label>
+                                                        <input class="form-control" id="nombre_fact_edit"
+                                                            placeholder="Nombre" type="text">
+                                                    </div>
+                                                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                                                        <label for="">Teléfono</label>
+                                                        <input class="form-control" id="telefono_fact_edit"
+                                                            placeholder="Teléfono" type="text">
+                                                    </div>
+                                                </div>
+                                                <br>
+
+                                                <div class="row row-sm">
+                                                    <div class="col-lg">
+                                                        <label for="">Apellido</label>
+                                                        <input class="form-control" id="apellido_fact_edit"
+                                                            placeholder="Apellido" type="text">
+                                                    </div>
+                                                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                                                        <label for="">Extensión</label>
+                                                        <input class="form-control" id="extension_fact_edit"
+                                                            placeholder="Extensión" type="text">
+                                                    </div>
+                                                </div>
+                                                <br>
+
+                                                <div class="row row-sm">
+                                                    <div class="col-lg">
+                                                        <label for="">E-Mail</label>
+                                                        <input class="form-control" id="email_fact_edit"
+                                                            placeholder="E-Mail" type="email">
+                                                    </div>
+                                                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                                                        <label for="">Código Postal</label>
+                                                        <input class="form-control" id="codigo_fact_edit"
+                                                            placeholder="Código Postal" type="text">
+                                                    </div>
+                                                </div>
+                                                <br>
+
+                                                <div class="row row-sm">
+                                                    <div class="col-lg">
+                                                        <label for="">Tipo Régimen</label>
+                                                        <input class="form-control" id="regimen_fact_edit"
+                                                            placeholder="Tipo Régimen" type="text">
+                                                    </div>
+                                                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                                                        <label for="">Responsabilidad Fiscal</label>
+                                                        <input class="form-control" id="responsable_fact_edit"
+                                                            placeholder="Responsabilidad Fiscal" type="text">
+                                                    </div>
+                                                </div>
+                                                <br>
+
+                                                <div class="row row-sm">
+                                                    <div class="col-6">
+                                                        <label for="">Indicativo Teléfono</label>
+                                                        <input class="form-control" id="indicativo_fact_edit"
+                                                            placeholder="Indicativo Teléfono" type="text">
+                                                    </div>
+                                                </div>
+                                                <br>
+
+                                                <div class="text-center">
+                                                    <button class="btn ripple btn-primary" id="btnModificarCliente2"
+                                                        type="button">Modificar Datos Facturación</button>
+                                                </div>
+                                            </div>
+
+                                            <div class="tab-pane fade show p-3" id="two_detail">
+                                                <div class="row row-sm">
+                                                    <div class="col-lg">
+                                                        <label for="">Nombre</label>
+                                                        <input class="form-control" id="nombre_tecn_edit"
+                                                            placeholder="Nombre" type="text">
+                                                    </div>
+                                                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                                                        <label for="">Indicativo Teléfono</label>
+                                                        <input class="form-control" id="indicativo_tecn_edit"
+                                                            placeholder="Teléfono" type="text">
+                                                    </div>
+                                                </div>
+                                                <br>
+
+                                                <div class="row row-sm">
+                                                    <div class="col-lg">
+                                                        <label for="">Apellido</label>
+                                                        <input class="form-control" id="apellido_tecn_edit"
+                                                            placeholder="Apellido" type="text">
+                                                    </div>
+                                                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                                                        <label for="">Teléfono</label>
+                                                        <input class="form-control" id="telefono_tecn_edit"
+                                                            placeholder="Teléfono" type="text">
+                                                    </div>
+                                                </div>
+                                                <br>
+
+                                                <div class="row row-sm">
+                                                    <div class="col-lg">
+                                                        <label for="">E-Mail</label>
+                                                        <input class="form-control" id="email_tecn_edit"
+                                                            placeholder="E-Mail" type="email">
+                                                    </div>
+                                                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                                                        <label for="">Extensión</label>
+                                                        <input class="form-control" id="extension_tecn_edit"
+                                                            placeholder="Extensión" type="text">
+                                                    </div>
+                                                </div>
+                                                <br>
+
+                                                <div class="text-center">
+                                                    <button class="btn ripple btn-primary" id="btnModificarCliente3"
+                                                        type="button">Modificar Datos Técnicos</button>
+                                                </div>
+                                            </div>
+
+                                            <div class="tab-pane fade show p-3" id="three_detail">
+                                                <table class="table border-top-0 table-bordered text-nowrap border-bottom" id="table_anexos_edit">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="wd-15p border-bottom-0">Tipo</th>
+                                                            <th class="wd-20p border-bottom-0">Fecha</th>
+                                                            <th class="wd-15p border-bottom-0">Descripción</th>
+                                                            <th class="wd-15p border-bottom-0">Creado Por</th>
+                                                            <th class="wd-10p border-bottom-0">Acciones</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>

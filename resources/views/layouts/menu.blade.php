@@ -31,6 +31,8 @@
 
     <!--- Toastr css --->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+    
+    @yield('css')
 </head>
 
 <body class="main-body app sidebar-mini ltr">

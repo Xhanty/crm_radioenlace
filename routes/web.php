@@ -30,8 +30,11 @@ Route::post('/eliminar_asignacion', [App\Http\Controllers\Admin\AsignacionesCont
 
 Route::get('/clientes', [App\Http\Controllers\Admin\ClientesController::class, 'index'])->name('clientes');
 Route::get('/clientes_list', [App\Http\Controllers\Admin\ClientesController::class, 'clientes_list'])->name('clientes_list');
+Route::post('/clientes_data', [App\Http\Controllers\Admin\ClientesController::class, 'clientes_data'])->name('clientes_data');
 
 Route::get('/empleados', [App\Http\Controllers\Admin\EmpleadosController::class, 'index'])->name('empleados');
+Route::get('/empleados_list', [App\Http\Controllers\Admin\EmpleadosController::class, 'empleados_list'])->name('empleados_list');
+Route::post('/empleados_data', [App\Http\Controllers\Admin\EmpleadosController::class, 'empleados_data'])->name('empleados_data');
 
 Route::get('/proveedores', [App\Http\Controllers\Admin\ProveedoresController::class, 'index'])->name('proveedores');
 
@@ -41,6 +44,7 @@ Route::get('/mis_puntos', [App\Http\Controllers\Admin\PuntosController::class, '
 Route::get('/gestionar_puntos', [App\Http\Controllers\Admin\PuntosController::class, 'gestionar_puntos'])->name('gestionar_puntos');
 
 Route::get('/inventario', [App\Http\Controllers\Admin\InventarioController::class, 'index'])->name('inventario');
+Route::get('/productos_list', [App\Http\Controllers\Admin\InventarioController::class, 'productos_list'])->name('productos_list');
 
 Route::get('/reparaciones', [App\Http\Controllers\Admin\ReparacionesController::class, 'index'])->name('reparaciones');
 
