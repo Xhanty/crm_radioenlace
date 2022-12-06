@@ -58,6 +58,10 @@ $(function () {
         hideMethod: "fadeOut",
     };
 
+    /*$(".form-select").select2({
+        width: "100%",
+    });*/
+
     //______Basic Data Table
     $(".basic-datatable-t").DataTable({
         language: language,

@@ -276,8 +276,8 @@
                                     class="side-menu__icon fe fe-folder"></i><span class="side-menu__label">Documentos</span><i
                                     class="angle fe fe-chevron-down"></i></a>
                             <ul class="slide-menu">
-                                <li><a class="slide-item" href="#">Categorías Archivos</a></li>
-                                <li><a class="slide-item" href="#">Gestionar Archivos</a></li>
+                                <li><a class="slide-item" href="{{ route('categorias_archivos') }}">Categorías Documentos</a></li>
+                                <li><a class="slide-item" href="{{ route('archivos') }}">Gestionar Archivos</a></li>
                                 <li><a class="slide-item" href="#">Clientes</a></li>
                                 <li><a class="slide-item" href="#">Gerencia</a></li>
                                 <li><a class="slide-item" href="#">Subgerencia</a></li>
@@ -451,20 +451,22 @@
     <script src="{{ asset('assets/js/custom.js') }}"></script>
 
     <!-- DATA TABLE JS-->
-    <script src="../assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
-    <script src="../assets/plugins/datatable/js/dataTables.bootstrap5.js"></script>
-    <script src="../assets/plugins/datatable/js/dataTables.buttons.min.js"></script>
-    <script src="../assets/plugins/datatable/js/buttons.bootstrap5.min.js"></script>
-    <script src="../assets/plugins/datatable/js/jszip.min.js"></script>
-    <script src="../assets/plugins/datatable/pdfmake/pdfmake.min.js"></script>
-    <script src="../assets/plugins/datatable/pdfmake/vfs_fonts.js"></script>
-    <script src="../assets/plugins/datatable/js/buttons.html5.min.js"></script>
-    <script src="../assets/plugins/datatable/js/buttons.print.min.js"></script>
-    <script src="../assets/plugins/datatable/js/buttons.colVis.min.js"></script>
-    <script src="../assets/plugins/datatable/dataTables.responsive.min.js"></script>
-    <script src="../assets/plugins/datatable/responsive.bootstrap5.min.js"></script>
+    <script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatable/js/dataTables.bootstrap5.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatable/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatable/js/buttons.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatable/js/jszip.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatable/pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatable/pdfmake/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatable/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatable/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatable/js/buttons.colVis.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatable/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatable/responsive.bootstrap5.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--- Select2 js --->
+	<script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
 
     <!--- Menu js --->
     <script src="{{ asset('assets/js/app/menu.js') }}"></script>

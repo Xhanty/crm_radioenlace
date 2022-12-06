@@ -145,6 +145,11 @@ class VehiculosController extends Controller
 
     public function checklist_email()
     {
-        return view('admin.vehiculos.checklist_email');
+        try {
+            $vehiculos = DB::table("vehiculos")->where('estado', 1)->get();
+            return view('admin.vehiculos.checklist_email', compact('vehiculos'));
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+        }
     }
 }

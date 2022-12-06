@@ -27,8 +27,9 @@
                             <div class="col-lg">
                                 <label for="">Seleccione el vehiculo</label>
                                 <select id="vehiculoadd" class="form-select">
-                                    <option value="">Seleccione un tipo</option>
-                                    <option value="0">Chevrolet</option>
+                                    @foreach ($vehiculos as $vehiculo)
+                                        <option value="{{ $vehiculo->id }}">{{ $vehiculo->marca }} {{ $vehiculo->modelo }} | {{ $vehiculo->placa }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -48,9 +49,14 @@
                         <div class="row row-sm">
                             <label for="">Emails a enviar</label>
                             <div class="col-lg" style="display: flex">
-                                <input class="form-control" id="marcaadd" placeholder="Email" type="email">
-                                <a class="center-vertical mg-s-10" href="#" id="new_row_empleado"><i class="fa fa-plus"></i></a>
+                                <input class="form-control emailadd" placeholder="Email" type="email">
+                                <a class="center-vertical mg-s-10" href="javascript:void(0)" id="new_row_email"><i class="fa fa-plus"></i></a>
                             </div>
+                        </div>
+                        <div id="div_list_email"></div>
+                        <br>
+                        <div class="text-center">
+                            <button class="btn ripple btn-primary" id="btn_save_email" type="button">Enviar Checklist Email</button>
                         </div>
                     </div>
                 </div>
@@ -58,4 +64,8 @@
         </div>
         <!-- row closed -->
     </div>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('assets/js/app/checklist_email.js') }}"></script>
 @endsection
