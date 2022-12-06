@@ -67,6 +67,7 @@ $(function () {
     $("#table_vehiculos_img").DataTable({
         processing: true,
         serverSide: true,
+        order: [],
         ajax: "vehiculos_list",
         columns: [
             {
@@ -110,6 +111,7 @@ $(function () {
     $("#table_productos_img").DataTable({
         processing: true,
         serverSide: true,
+        order: [],
         ajax: "productos_list",
         columns: [
             {
@@ -149,6 +151,43 @@ $(function () {
             },
         ],
         language: language,
+    });
+
+    $("#tbl_actividades_inventario").DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "actividades_inventario_list",
+        columns: [
+            { data: "empleado", name: "empleado" },
+            {
+                data: null,
+                render: function (data) {
+                    var img =
+                        '<div><img src="https://formrad.com/radio_enlace/productos/' +
+                        data.img_producto +
+                        '" loading="lazy" style="width: 120px" /></div>' +
+                        "<div>"+data.producto+"</div>";
+
+                    return img;
+                },
+            },
+            { data: "cantidad", name: "cantidad" },
+            { data: "fecha", name: "fecha" },
+            { 
+                data: null,
+                render: function (data) {
+                    return data.tipo;
+                },
+            },
+            {
+                data: "action",
+                name: "action",
+                orderable: true,
+                searchable: true,
+            },
+        ],
+        language: language,
+        order: [],
     });
 
     var table_clientes = $("#table_clientes_img").DataTable({
@@ -311,8 +350,12 @@ $(function () {
                             "</td><td>" +
                             anexo.creador +
                             "</td><td>" +
-                            '<a target="_BLANK" href="https://formrad.com/radio_enlace/documentos_clientes/' + anexo.documento + '"><i class="fa fa-download"></i>&nbsp;Descargar</a><br>' +
-                            '<a class="btn_delete_archivo" data-id="' + anexo.id + '" href="#"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>' +
+                            '<a target="_BLANK" href="https://formrad.com/radio_enlace/documentos_clientes/' +
+                            anexo.documento +
+                            '"><i class="fa fa-download"></i>&nbsp;Descargar</a><br>' +
+                            '<a class="btn_delete_archivo" data-id="' +
+                            anexo.id +
+                            '" href="#"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>' +
                             "</td></tr>"
                     );
                 });
@@ -575,7 +618,7 @@ $(function () {
                 $("#global-loader").fadeOut("fast");
                 console.log(data);
                 alert("Error al cargar los datos del cliente");
-            }
+            },
         });
 
         $("#div_list_empleados").hide();
@@ -606,7 +649,9 @@ $(function () {
         $("#prestamo_otra_info_edit").val(data.prestamo);
         $("#periodo_dotacion_otra_info_edit").val(data.periodo_dotacion);
         $("#licencia_otra_info_edit").val(data.numero_licencia_conduccion);
-        $("#vencimiento_otra_info_edit").val(data.vencimiento_licencia_conduccion);
+        $("#vencimiento_otra_info_edit").val(
+            data.vencimiento_licencia_conduccion
+        );
         $("#multas_pend_otra_info_edit").val(data.multas_transito_pendiente);
         $("#implementos_otra_info_edit").val(data.implementos_seguridad);
         $("#fecha_culminacion_otra_info_edit").val(data.culminacion_contrato);

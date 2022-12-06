@@ -45,6 +45,21 @@ Route::get('/gestionar_puntos', [App\Http\Controllers\Admin\PuntosController::cl
 
 Route::get('/inventario', [App\Http\Controllers\Admin\InventarioController::class, 'index'])->name('inventario');
 Route::get('/productos_list', [App\Http\Controllers\Admin\InventarioController::class, 'productos_list'])->name('productos_list');
+Route::post('/productos_create', [App\Http\Controllers\Admin\InventarioController::class, 'productos_create'])->name('productos_create');
+Route::post('/data_producto', [App\Http\Controllers\Admin\InventarioController::class, 'data_producto'])->name('data_producto');
+Route::post('/delete_producto', [App\Http\Controllers\Admin\InventarioController::class, 'delete_producto'])->name('delete_producto');
+Route::post('/productos_edit', [App\Http\Controllers\Admin\InventarioController::class, 'productos_edit'])->name('productos_edit');
+
+Route::get('/categoria_productos', [App\Http\Controllers\Admin\CategoriaProductosController::class, 'index'])->name('categoria_productos');
+Route::post('/categorias_create', [App\Http\Controllers\Admin\CategoriaProductosController::class, 'categorias_create'])->name('categorias_create');
+Route::post('/categorias_delete', [App\Http\Controllers\Admin\CategoriaProductosController::class, 'categorias_delete'])->name('categorias_delete');
+
+Route::get('/almacenes', [App\Http\Controllers\Admin\AlmacenesController::class, 'index'])->name('almacenes');
+Route::post('/almacenes_create', [App\Http\Controllers\Admin\AlmacenesController::class, 'almacenes_create'])->name('almacenes_create');
+Route::post('/almacenes_delete', [App\Http\Controllers\Admin\AlmacenesController::class, 'almacenes_delete'])->name('almacenes_delete');
+
+Route::get('/actividades_inventario', [App\Http\Controllers\Admin\InventarioController::class, 'actividades_inventario'])->name('actividades_inventario');
+Route::get('/actividades_inventario_list', [App\Http\Controllers\Admin\InventarioController::class, 'actividades_inventario_list'])->name('actividades_inventario_list');
 
 Route::get('/reparaciones', [App\Http\Controllers\Admin\ReparacionesController::class, 'index'])->name('reparaciones');
 

@@ -87,7 +87,7 @@
                         </div>
                         <div class="col-lg mg-t-10 mg-lg-t-0">
                             <label for="">Marca</label>
-                            <input class="form-control" id="marcadd" placeholder="Año" type="text">
+                            <input class="form-control" id="marcadd" placeholder="Marca" type="text">
                         </div>
                     </div>
                     <br>
@@ -111,6 +111,72 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn ripple btn-primary" id="btnGuardarProducto" type="button">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit -->
+    <div class="modal  fade" id="modalEdit">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content modal-content-demo">
+                <div class="modal-header">
+                    <h6 class="modal-title">Modificar Producto</h6><button aria-label="Close" class="btn-close"
+                        data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-center">
+                        <img id="imagenedit" src="http://127.0.0.1:8000/images/vehiculos/18876865131801587359.png" style="width: 222px" loading="lazy">
+                    </div>
+                    <br>
+                    <div class="row row-sm">
+                        <div class="col-lg">
+                            <label for="">Código Producto</label>
+                            <input type="hidden" id="id_producto" disabled readonly>
+                            <input class="form-control" id="codigoedit" placeholder="Marca" type="text">
+                        </div>
+                        <div class="col-lg mg-t-10 mg-lg-t-0">
+                            <label for="">Nombre</label>
+                            <input class="form-control" id="nombreedit" placeholder="Modelo" type="text">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row row-sm">
+                        <div class="col-lg">
+                            <label for="">Categoría</label>
+                            <select id="categoriaedit" class="form-select">
+                                <option value="">Seleccione una categoría</option>
+                                @foreach ($categorias as $categoria)
+                                    <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-lg mg-t-10 mg-lg-t-0">
+                            <label for="">Marca</label>
+                            <input class="form-control" id="marcaedit" placeholder="Marca" type="text">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row row-sm">
+                        <div class="col-lg">
+                            <label for="">Modelo</label>
+                            <input class="form-control" id="modeloedit" placeholder="Soat" type="text">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row row-sm">
+                        <div class="col-lg">
+                            <label for="">Observaciones</label>
+                            <textarea class="form-control" placeholder="Observaciones" rows="3" id="observacionesedit" style="height: 90px; resize: none"></textarea>
+                        </div>
+                        <div class="col-lg mg-t-10 mg-lg-t-0">
+                            <label for="">Foto</label>
+                            <input class="form-control" id="fotoedit" type="file" accept="image/png, image/jpeg">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn ripple btn-primary" id="btnEditarProducto" type="button">Modificar</button>
                 </div>
             </div>
         </div>

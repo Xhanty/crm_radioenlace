@@ -57,7 +57,13 @@
                                             <td>{{ $value->asignacion }}</td>
                                             <td>{{ date('d-m-Y g:i A', strtotime($value->fecha)) }}</td>
                                             <td>{{ date('d-m-Y g:i A', strtotime($value->fecha_culminacion)) }}</td>
-                                            <td>{{ $value->status }}</td>
+                                            <td>
+                                                @if ($value->status == 1)
+                                                    <span class="badge bg-success side-badge">Completado</span>
+                                                @else
+                                                    <span class="badge bg-warning side-badge">Pendiente</span>
+                                                @endif
+                                            </td>
                                             <td>{{ $value->creador }}</td>
                                             <td>
                                                 <a class="d-flex btn_completar" data-id="{{ $value->id }}" href="#"><i class="fa fa-check"></i>&nbsp;Completar</a>
@@ -114,7 +120,13 @@
                                             <td>{{ $value->asignacion }}</td>
                                             <td>{{ date('d-m-Y g:i A', strtotime($value->fecha)) }}</td>
                                             <td>{{ date('d-m-Y g:i A', strtotime($value->fecha_culminacion)) }}</td>
-                                            <td>{{ $value->status }}</td>
+                                            <td>
+                                                @if ($value->status == 1)
+                                                    <span class="badge bg-success side-badge">Completado</span>
+                                                @else
+                                                    <span class="badge bg-warning side-badge">Pendiente</span>
+                                                @endif
+                                            </td>
                                             <td>{{ $value->creador }}</td>
                                             <td>
                                                 <a class="d-flex btn_avances" data-id="{{ $value->id }}" href="#"><i class="fa fa-file"></i>&nbsp;Ver Avances</a>

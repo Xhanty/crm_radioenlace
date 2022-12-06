@@ -224,10 +224,10 @@
                                     class="side-menu__icon fe fe-package"></i><span class="side-menu__label">Inventario</span><i
                                     class="angle fe fe-chevron-down"></i></a>
                             <ul class="slide-menu">
-                                <li><a class="slide-item" href="#">Categorías</a></li>
-                                <li><a class="slide-item" href="#">Almacenes</a></li>
+                                <li><a class="slide-item" href="{{ route('categoria_productos') }}">Categorías</a></li>
+                                <li><a class="slide-item" href="{{ route('almacenes') }}">Almacenes</a></li>
                                 <li><a class="slide-item" href="{{ route('inventario') }}">Productos / Stock</a></li>
-                                <li><a class="slide-item" href="#">Actividades Inventario</a></li>
+                                <li><a class="slide-item" href="{{ route('actividades_inventario') }}">Actividades Inventario</a></li>
                             </ul>
                         </li>
                         <li class="slide">

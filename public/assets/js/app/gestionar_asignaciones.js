@@ -119,7 +119,7 @@ $(function () {
         });
     });
 
-    $(".btn_rechazar").click(function () {
+    $(document).on("click", ".btn_rechazar", function () {
         let id = $(this).attr("data-id");
         Swal.fire({
             title: "¿Deseas rechazar la asignación?",
@@ -150,7 +150,7 @@ $(function () {
         });
     });
 
-    $(".btn_eliminar").click(function () {
+    $(document).on("click", ".btn_eliminar", function () {
         let id = $(this).attr("data-id");
         Swal.fire({
             title: "¿Deseas eliminar la asignación?",
