@@ -131,17 +131,118 @@ class AsignacionesController extends Controller
             DB::beginTransaction();
             $id = $request->id;
             $status = $request->status;
-            $fecha = "0000-00-00 00:00:00";
 
             if ($status == 1) {
                 $fecha = date("Y-m-d H:i:s");
+
+                DB::table("asignaciones")->where("id", $id)->update([
+                    "status" => $status,
+                    "status" => 1,
+                    "fecha_completada" => $fecha,
+                ]);
+            } else {
+                DB::table("asignaciones")->where("id", $id)->update([
+                    "status" => $status,
+                    "devuelta" => 1,
+                    "status" => 0,
+                    "fecha_completada" => null,
+                ]);
+            }
+            DB::commit();
+
+            return response()->json(['info' => 1, 'success' => 'Asignación modificada correctamente.']);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return $ex;
+            return response()->json(['info' => 0, 'success' => 'Error al modificar la asignación.']);
+        }
+    }
+
+    public function asignaciones_data(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $avances = DB::table("avances_asignaciones")
+                ->where("avances_asignaciones.id_asignacion", $id)
+                ->orderBy("avances_asignaciones.id", "desc")
+                ->get();
+            return response()->json(['info' => 1, 'success' => 'Datos obtenidos correctamente.', 'data' => $avances]);
+        } catch (Exception $ex) {
+            return $ex;
+        }
+    }
+
+    public function asignaciones_avances_delete(Request $request)
+    {
+        try {
+            $id = $request->id;
+            DB::table("avances_asignaciones")->where("id", $id)->delete();
+            return response()->json(['info' => 1, 'success' => 'Avance eliminado correctamente.']);
+        } catch (Exception $ex) {
+            return $ex;
+        }
+    }
+
+    public function asignaciones_avances_add(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $id = $request->asignacion_id;
+            $descripcion = $request->descripcion;
+            $status = $request->status;
+
+            if ($anexo = $request->file('archivo')) {
+                $new_name = rand() . rand() . '.' . $anexo->getClientOriginalExtension();
+                $anexo->move(public_path('images/anexos_asignaciones'), $new_name);
+
+                DB::table("avances_asignaciones")->insert([
+                    "id_asignacion" => $id,
+                    "archivo" => $new_name,
+                    "fecha" => date("Y-m-d H:i:s"),
+                    "descripcion" => $descripcion,
+                    "id_status" => $status,
+                ]);
+            } else {
+                DB::table("avances_asignaciones")->insert([
+                    "id_asignacion" => $id,
+                    "archivo" => "",
+                    "fecha" => date("Y-m-d H:i:s"),
+                    "descripcion" => $descripcion,
+                    "id_status" => $status,
+                ]);
             }
 
+            DB::commit();
+            return response()->json(['info' => 1, 'success' => 'Avance creado correctamente.']);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return $ex;
+            return response()->json(['info' => 0, 'success' => 'Error al crear el avance.']);
+        }
+    }
+
+    public function eliminar_asignacion(Request $request)
+    {
+        try {
+            $id = $request->id;
+            DB::table("asignaciones")->where("id", $id)->delete();
+            return response()->json(['info' => 1, 'success' => 'Asignación eliminada correctamente.']);
+        } catch (Exception $ex) {
+            return $ex;
+        }
+    }
+
+    public function change_visto_bueno(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $id = $request->id;
+            $visto_bueno = $request->visto_bueno;
+
             DB::table("asignaciones")->where("id", $id)->update([
-                "status" => $status,
-                "devuelta" => 1,
-                "fecha_completada" => $fecha,
+                "visto_bueno" => $visto_bueno
             ]);
+
             DB::commit();
 
             return response()->json(['info' => 1, 'success' => 'Asignación modificada correctamente.']);

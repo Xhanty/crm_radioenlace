@@ -5,6 +5,11 @@ $(function () {
         },
     });
 
+    let data_user = JSON.parse(localStorage.getItem("user"));
+
+    $(".name_user_val").text(data_user.nombre);
+    $(".cargo_user_val").text(data_user.cargo);
+
     let url = window.location.href;
     $("a[href='" + url + "']").addClass("active");
     $("a[href='" + url + "']")
@@ -16,6 +21,24 @@ $(function () {
         .parent("ul")
         .parent("li")
         .addClass("is-expanded");
+
+    $(document).on("click", ".btn_logout_sesion", function () {
+        $.ajax({
+            url: "logout_user",
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
+                toastr.success("Hasta pronto!");
+                localStorage.removeItem("user");
+                setTimeout(function () {
+                    window.location.href = "/";
+                }, 1000);
+            },
+            error: function (data) {
+                toastr.error("Error al cerrar la sesión, recarga la página");
+            },
+        });
+    });
 
     var language = {
         searchPlaceholder: "Buscar...",
@@ -170,14 +193,16 @@ $(function () {
                         '<div><img src="https://formrad.com/radio_enlace/productos/' +
                         data.img_producto +
                         '" loading="lazy" style="width: 120px" /></div>' +
-                        "<div>"+data.producto+"</div>";
+                        "<div>" +
+                        data.producto +
+                        "</div>";
 
                     return img;
                 },
             },
             { data: "cantidad", name: "cantidad" },
             { data: "fecha", name: "fecha" },
-            { 
+            {
                 data: null,
                 render: function (data) {
                     return data.tipo;

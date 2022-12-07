@@ -56,9 +56,9 @@
                                 data-eva="close-outline"></i></a>
                     </div>
                     <div class="responsive-logo">
-                        <a href="#" class="header-logo"><img src="{{ asset('assets/img/brand/logo.png') }}"
+                        <a href="javascript:void(0)" class="header-logo"><img src="{{ asset('assets/img/brand/logo.png') }}"
                                 class="logo-11"></a>
-                        <a href="#" class="header-logo"><img src="{{ asset('assets/img/brand/logo-white.png') }}"
+                        <a href="javascript:void(0)" class="header-logo"><img src="{{ asset('assets/img/brand/logo-white.png') }}"
                                 class="logo-1"></a>
                     </div>
                 </div>
@@ -91,14 +91,10 @@
                                         <div class="main-header-profile header-img">
                                             <div class="main-img-user"><img alt=""
                                                     src="{{ asset('assets/img/faces/6.jpg') }}"></div>
-                                            <h6>Petey Cruiser</h6><span>Premium Member</span>
+                                            <h6 class="name_user_val">Petey Cruiser</h6><span class="cargo_user_val">Premium Member</span>
                                         </div>
-                                        <a class="dropdown-item" href="#"><i class="far fa-user"></i> My
-                                            Profile</a>
-                                        <a class="dropdown-item" href="#"><i class="far fa-clock"></i>
-                                            Activity Logs</a>
-                                        <a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Sign
-                                            Out</a>
+                                        <a class="dropdown-item" href="javascript:void(0)"><i class="far fa-user"></i> Mi Perfil</a>
+                                        <a class="dropdown-item btn_logout_sesion" href="javascript:void(0)"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
                                     </div>
                                 </div>
                                 <div class="dropdown main-header-message right-toggle">
@@ -120,14 +116,14 @@
         <div class="sticky">
             <aside class="app-sidebar sidebar-scroll">
                 <div class="main-sidebar-header active">
-                    <a class="desktop-logo logo-light active" href="#"><img
+                    <a class="desktop-logo logo-light active" href="javascript:void(0)"><img
                             src="{{ asset('assets/img/brand/logo.png') }}" class="main-logo" alt="logo"></a>
-                    <a class="desktop-logo logo-dark active" href="#"><img
+                    <a class="desktop-logo logo-dark active" href="javascript:void(0)"><img
                             src="{{ asset('assets/img/brand/logo-white.png') }}" class="main-logo"
                             alt="logo"></a>
-                    <a class="logo-icon mobile-logo icon-light active" href="#"><img
+                    <a class="logo-icon mobile-logo icon-light active" href="javascript:void(0)"><img
                             src="{{ asset('assets/img/brand/favicon.png') }}" alt="logo"></a>
-                    <a class="logo-icon mobile-logo icon-dark active" href="#"><img
+                    <a class="logo-icon mobile-logo icon-dark active" href="javascript:void(0)"><img
                             src="{{ asset('assets/img/brand/favicon-white.png') }}" alt="logo"></a>
                 </div>
                 <div class="main-sidemenu">
@@ -139,7 +135,7 @@
                                         class="rounded-circle mCS_img_loaded">
                                 </div>
                                 <div class="user-info">
-                                    <h6 class=" mb-0 text-dark">Petey Cruiser</h6>
+                                    <h6 class=" mb-0 text-dark name_user_val">Petey Cruiser</h6>
                                 </div>
                             </div>
                         </div>
@@ -148,19 +144,19 @@
                         <ul class="nav  nav-pills-circle" style="justify-content: center">
                             <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="top" title=""
                                 data-bs-original-title="Settings" aria-describedby="tooltip365540">
-                                <a class="nav-link text-center m-2">
+                                <a class="nav-link text-center m-2" href="javascript:void(0)">
                                     <i class="fe fe-settings"></i>
                                 </a>
                             </li>
                             <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="top" title=""
                                 data-bs-original-title="Followers">
-                                <a class="nav-link text-center m-2">
+                                <a class="nav-link text-center m-2" href="javascript:void(0)">
                                     <i class="fe fe-user"></i>
                                 </a>
                             </li>
                             <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="top" title=""
                                 data-bs-original-title="Logout">
-                                <a class="nav-link text-center m-2">
+                                <a class="nav-link text-center m-2 btn_logout_sesion" href="javascript:void(0)">
                                     <i class="fe fe-power"></i>
                                 </a>
                             </li>
@@ -235,18 +231,18 @@
                                     class="side-menu__icon fe fe-shopping-cart"></i><span class="side-menu__label">Movimiento Inv.</span><i
                                     class="angle fe fe-chevron-down"></i></a>
                             <ul class="slide-menu">
-                                <li><a class="slide-item" href="#">Productos Baja</a></li>
-                                <li><a class="slide-item" href="#">Repuestos Reparación</a></li>
-                                <li><a class="slide-item" href="#">Productos Instalados</a></li>
-                                <li><a class="slide-item" href="#">Ventas</a></li>
-                                <li><a class="slide-item" href="#">Prestamos</a></li>
-                                <li><a class="slide-item" href="#">Alquileres</a></li>
-                                <li><a class="slide-item" href="#">Productos Asignados</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Productos Baja</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Repuestos Reparación</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Productos Instalados</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Ventas</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Prestamos</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Alquileres</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Productos Asignados</a></li>
                             </ul>
                         </li>
 
                         <li class="slide">
-                            <a class="side-menu__item" href="#"><i
+                            <a class="side-menu__item" href="javascript:void(0)"><i
                                     class="side-menu__icon fe fe-sliders"></i><span
                                     class="side-menu__label">Solicitudes Inventario</span></a>
                         </li>
@@ -260,9 +256,9 @@
                                     class="side-menu__icon fe fe-bar-chart"></i><span class="side-menu__label">Seguimiento Clientes</span><i
                                     class="angle fe fe-chevron-down"></i></a>
                             <ul class="slide-menu">
-                                <li><a class="slide-item" href="#">Categorías</a></li>
-                                <li><a class="slide-item" href="#">Seguimientos</a></li>
-                                <li><a class="slide-item" href="#">Mis Tarjetas</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Categorías</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Seguimientos</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Mis Tarjetas</a></li>
                             </ul>
                         </li>
                         <li class="slide">
@@ -278,17 +274,17 @@
                             <ul class="slide-menu">
                                 <li><a class="slide-item" href="{{ route('categorias_archivos') }}">Categorías Documentos</a></li>
                                 <li><a class="slide-item" href="{{ route('archivos') }}">Gestionar Archivos</a></li>
-                                <li><a class="slide-item" href="#">Clientes</a></li>
-                                <li><a class="slide-item" href="#">Gerencia</a></li>
-                                <li><a class="slide-item" href="#">Subgerencia</a></li>
-                                <li><a class="slide-item" href="#">Contabilidad</a></li>
-                                <li><a class="slide-item" href="#">Cartera</a></li>
-                                <li><a class="slide-item" href="#">Tesorería</a></li>
-                                <li><a class="slide-item" href="#">RH</a></li>
-                                <li><a class="slide-item" href="#">Coordinador Comercial</a></li>
-                                <li><a class="slide-item" href="#">Gerente Comercial</a></li>
-                                <li><a class="slide-item" href="#">Laboratorio</a></li>
-                                <li><a class="slide-item" href="#">SST</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Clientes</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Gerencia</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Subgerencia</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Contabilidad</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Cartera</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Tesorería</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">RH</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Coordinador Comercial</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Gerente Comercial</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Laboratorio</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">SST</a></li>
                             </ul>
                         </li>
 
@@ -297,9 +293,9 @@
                                     class="side-menu__icon fe fe-file-text"></i><span class="side-menu__label">Comercial</span><i
                                     class="angle fe fe-chevron-down"></i></a>
                             <ul class="slide-menu">
-                                <li><a class="slide-item" href="#">Ordenes Compra</a></li>
-                                <li><a class="slide-item" href="#">Cotizaciones</a></li>
-                                <li><a class="slide-item" href="#">Remisiones</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Ordenes Compra</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Cotizaciones</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Remisiones</a></li>
                             </ul>
                         </li>
 
@@ -308,13 +304,13 @@
                                     class="side-menu__icon fe fe-dollar-sign"></i><span class="side-menu__label">Contabilidad</span><i
                                     class="angle fe fe-chevron-down"></i></a>
                             <ul class="slide-menu">
-                                <li><a class="slide-item" href="#">Facturación</a></li>
-                                <li><a class="slide-item" href="#">Estadísticas</a></li>
-                                <li><a class="slide-item" href="#">Gestionar Viáticos</a></li>
-                                <li><a class="slide-item" href="#">Gestionar Causaciones</a></li>
-                                <li><a class="slide-item" href="#">Informes Contables</a></li>
-                                <li><a class="slide-item" href="#">Nómina</a></li>
-                                <li><a class="slide-item" href="#">Configuración Nómina</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Facturación</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Estadísticas</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Gestionar Viáticos</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Gestionar Causaciones</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Informes Contables</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Nómina</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Configuración Nómina</a></li>
                             </ul>
                         </li>
 
@@ -323,10 +319,10 @@
                                     class="side-menu__icon fe fe-globe"></i><span class="side-menu__label">Gastos</span><i
                                     class="angle fe fe-chevron-down"></i></a>
                             <ul class="slide-menu">
-                                <li><a class="slide-item" href="#">Arrendamientos</a></li>
-                                <li><a class="slide-item" href="#">Gastos Varios</a></li>
-                                <li><a class="slide-item" href="#">Gastos Fijos</a></li>
-                                <li><a class="slide-item" href="#">Gastos Equivalentes</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Arrendamientos</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Gastos Varios</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Gastos Fijos</a></li>
+                                <li><a class="slide-item" href="javascript:void(0)">Gastos Equivalentes</a></li>
                             </ul>
                         </li>
                     </ul>

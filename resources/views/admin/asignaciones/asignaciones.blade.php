@@ -34,8 +34,10 @@
                                                 <a class="p-2 text-muted" data-bs-toggle="dropdown" aria-expanded="false"><i
                                                         class="fas fa-ellipsis-v" style="color: #fff"></i></a>
                                                 <div class="dropdown-menu tx-13 dropleft">
-                                                    <a class="dropdown-item" data-id="{{ $value->id }}"
-                                                        href="javascript:void(0);">Agregar Avance</a>
+                                                    <a class="dropdown-item btn_openAvances"
+                                                        data-asignacion="{{ $value->asignacion }}"
+                                                        data-idshow="{{ $value->id }}" href="javascript:void(0);">Agregar
+                                                        Avance</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -81,7 +83,15 @@
                                     <div class="todo-widget-header d-flex pb-2 pd-20 bg-success"
                                         style="border-radius: 4px;">
                                         <div class="ms-auto">
-                                            <div class="" style="cursor: pointer; height: 20px"></div>
+                                            <div class="" style="cursor: pointer;">
+                                                <a class="p-2 text-muted" data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                        class="fas fa-ellipsis-v" style="color: #fff"></i></a>
+                                                <div class="dropdown-menu tx-13 dropleft">
+                                                    <a class="dropdown-item btn_viewAvances"
+                                                        data-id="{{ $value->id }}" href="javascript:void(0);">Ver
+                                                        Avances</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="p-3">
@@ -140,6 +150,92 @@
             </div>
         </div>
         <!-- row closed -->
+
+        <!-- Modal Add -->
+        <div class="modal  fade" id="modalAdd">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Registro de Avances</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="asignacion_id_add" disabled readonly>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Descripción</label>
+                                <textarea id="descripcion_add" class="form-control" rows="2"></textarea>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Estatus</label>
+                                <select id="status_add" class="form-select">
+                                    <option value="1">En Progreso</option>
+                                    <option value="0">Asignado</option>
+                                    <option value="2">Completado</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Anexo del avance (Opcional)</label>
+                                <input type="file" id="archivo_add" class="form-control">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="text-center">
+                            <button class="btn ripple btn-primary" id="btnGuardarAvance" type="button">Agregar
+                                Avance</button>
+                        </div>
+                        <br>
+                        <div class="table-responsive">
+                            <table class="table border-top-0 table-bordered text-nowrap border-bottom" id="tbl_avances">
+                                <thead>
+                                    <tr>
+                                        <th class="wd-10p border-bottom-0">Fecha</th>
+                                        <th class="wd-15p border-bottom-0">Archivo</th>
+                                        <th class="wd-40p border-bottom-0">Descripción</th>
+                                        <th class="wd-10p border-bottom-0">Status</th>
+                                        <th class="wd-10p border-bottom-0">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal View -->
+        <div class="modal  fade" id="modalView">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Listado de Avances</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table border-top-0 table-bordered text-nowrap border-bottom" id="tbl_view_avances">
+                                <thead>
+                                    <tr>
+                                        <th class="wd-10p border-bottom-0">Fecha</th>
+                                        <th class="wd-15p border-bottom-0">Archivo</th>
+                                        <th class="wd-40p border-bottom-0">Descripción</th>
+                                        <th class="wd-10p border-bottom-0">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -157,5 +253,5 @@
             });
         });
     </script>
-
+    <script src="{{ asset('assets/js/app/asignaciones/mis_asignaciones.js') }}"></script>
 @endsection

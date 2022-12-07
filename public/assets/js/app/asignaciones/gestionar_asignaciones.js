@@ -5,6 +5,8 @@ $(function () {
         },
     });
 
+    $(".open-toggle").trigger("click");
+
     let opciones = "";
 
     $(".empleadoadd option").each(function () {
@@ -88,7 +90,7 @@ $(function () {
         });
     });
 
-    $(".btn_completar").click(function () {
+    $(document).on("click", ".btn_completar", function () {
         let id = $(this).attr("data-id");
         Swal.fire({
             title: "¿Deseas completar la asignación?",
@@ -180,4 +182,67 @@ $(function () {
             }
         });
     });
-});
+
+    $(document).on("click", ".btn_avances", function () {
+        $("#global-loader").show();
+        let id = $(this).data("id");
+        $("#tbl_view_avances tbody").empty();
+        $.ajax({
+            url: "asignaciones_data",
+            type: "POST",
+            data: { id: id },
+            success: function (data) {
+                let avances = data.data;
+                //console.log(avances);
+
+                avances.forEach((avance) => {
+                    let file_archivo = "Sin Archivo Adjunto";
+                    let status = "";
+                    if (avance.archivo != null && avance.archivo != "") {
+                        file_archivo = `<a href="images/anexos_asignaciones/${avance.archivo}" target="_blank">Ver Archivo</a>`;
+                    }
+
+                    if (avance.id_status == 1) {
+                        status = `<span class="badge bg-warning">En Progreso</span>`;
+                    } else if (avance.id_status == 2) {
+                        status = `<span class="badge bg-success">Completado</span>`;
+                    } else if (avance.id_status == 0) {
+                        status = `<span class="badge bg-danger">Asignado</span>`;
+                    }
+
+                    $("#tbl_view_avances tbody").append(`
+                        <tr>
+                            <td>${avance.fecha}</td>
+                            <td>${file_archivo}</td>
+                            <td>${avance.descripcion}</td>
+                            <td>${status}</td>
+                        </tr>
+                    `);
+                });
+
+                $("#modalView").modal("show");
+                $("#global-loader").hide();
+            },
+            error: function (data) {
+                $("#global-loader").hide();
+                console.log(data);
+            },
+        });
+    });
+
+    $(document).on("change", ".visto_bueno_check", function () {
+        let id = $(this).data("id");
+        let visto_bueno = $(this).is(":checked") ? 1 : 0;
+        $.ajax({
+            url: "change_visto_bueno",
+            type: "POST",
+            data: { id: id, visto_bueno: visto_bueno },
+            success: function (data) {
+                toastr.success("Visto bueno actualizado");
+            },
+            error: function (data) {
+                toastr.error("Error al actualizar visto bueno");
+            },
+        });
+    });
+});    

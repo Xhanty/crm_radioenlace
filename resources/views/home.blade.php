@@ -7,43 +7,12 @@
         <!-- breadcrumb -->
         <div class="breadcrumb-header justify-content-between">
             <div>
-                <h4 class="content-title mb-2">Hi, welcome back!</h4>
+                <h4 class="content-title mb-2">CRM | Radio Enlace</h4>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">Dashboard</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Project</li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Inicio</a></li>
                     </ol>
                 </nav>
-            </div>
-            <div class="d-flex my-auto">
-                <div class=" d-flex right-page">
-                    <div class="d-flex justify-content-center me-5">
-                        <div class="">
-                            <span class="d-block">
-                                <span class="label ">EXPENSES</span>
-                            </span>
-                            <span class="value">
-                                $53,000
-                            </span>
-                        </div>
-                        <div class="ms-3 mt-2">
-                            <span class="sparkline_bar"></span>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <div class="">
-                            <span class="d-block">
-                                <span class="label">PROFIT</span>
-                            </span>
-                            <span class="value">
-                                $34,000
-                            </span>
-                        </div>
-                        <div class="ms-3 mt-2">
-                            <span class="sparkline_bar31"></span>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         <!-- /breadcrumb -->
@@ -72,15 +41,15 @@
                                     </svg>
                                 </div>
                                 <div class="project-content">
-                                    <h6>Invoices</h6>
+                                    <h6>Asignaciones</h6>
                                     <ul>
                                         <li>
-                                            <strong>Processing</strong>
+                                            <strong>Pendientes</strong>
                                             <span>5</span>
                                         </li>
 
                                         <li>
-                                            <strong>Paid</strong>
+                                            <strong>Completadas</strong>
                                             <span>56</span>
                                         </li>
                                     </ul>
@@ -114,15 +83,15 @@
                                     </svg>
                                 </div>
                                 <div class="project-content">
-                                    <h6>Tasks</h6>
+                                    <h6>Puntos</h6>
                                     <ul>
                                         <li>
-                                            <strong>Processing</strong>
+                                            <strong>Pendientes</strong>
                                             <span>42</span>
                                         </li>
 
                                         <li>
-                                            <strong>Completed</strong>
+                                            <strong>Cobrados</strong>
                                             <span>23</span>
                                         </li>
                                     </ul>
@@ -150,15 +119,15 @@
                                     </svg>
                                 </div>
                                 <div class="project-content">
-                                    <h6>Estimates</h6>
+                                    <h6>Reparaciones</h6>
                                     <ul>
                                         <li>
-                                            <strong>Processing</strong>
+                                            <strong>Pendientes</strong>
                                             <span>2</span>
                                         </li>
 
                                         <li>
-                                            <strong>Accepted</strong>
+                                            <strong>Completadas</strong>
                                             <span>16</span>
                                         </li>
                                     </ul>
@@ -182,15 +151,15 @@
                                     </svg>
                                 </div>
                                 <div class="project-content">
-                                    <h6>Revenue</h6>
+                                    <h6>Productos</h6>
                                     <ul>
                                         <li>
-                                            <strong>Earnings</strong>
-                                            <span>$15,425</span>
+                                            <strong>Asignados</strong>
+                                            <span>15</span>
                                         </li>
                                         <li>
-                                            <strong>Expensive</strong>
-                                            <span>$8,147</span>
+                                            <strong>Devueltos</strong>
+                                            <span>8</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -229,19 +198,17 @@
                     <div class="card overflow-hidden">
                         <div class="card-body pb-3">
                             <div class="d-flex justify-content-between">
-                                <h4 class="card-title mg-b-10">project &amp; task</h4>
+                                <h4 class="card-title mg-b-10">Últimas Asignaciones</h4>
                                 <i class="mdi mdi-dots-horizontal text-gray"></i>
                             </div>
-                            <p class="tx-12 text-muted mb-3">In project, a task is an activity that needs to be
-                                accomplished within a defined period of time or by a deadline. <a href="">Learn
-                                    more</a></p>
+                            <p class="tx-12 text-muted mb-3">Aquí aparecerán las últimas 5 asignaciones. <a href="{{ route('asignaciones') }}">Ver todas</a></p>
                             <div class="table-responsive mb-0 projects-stat tx-14">
                                 <table
                                     class="table table-hover table-bordered mb-0 text-md-nowrap text-lg-nowrap text-xl-nowrap  ">
                                     <thead>
                                         <tr>
-                                            <th>Project &amp; Task</th>
-                                            <th>Status</th>
+                                            <th>Asignaciones</th>
+                                            <th>Estado</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -314,535 +281,6 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /row -->
-
-            <!-- row -->
-            <div class="row row-sm">
-                <div class="col-lg-6 col-xl-4 col-md-12 col-sm-12">
-                    <div class="card overflow-hidden latest-tasks">
-                        <div class="">
-                            <div class="d-flex justify-content-between ps-4 pt-4 pe-4">
-                                <h4 class="card-title mg-b-10">Latest Task</h4>
-                                <i class="mdi mdi-dots-horizontal text-gray"></i>
-                            </div>
-                            <div class="">
-                                <ul class="nav nav-tabs nav-tabs-line nav-tabs-line-brand nav-tabs-bold" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active show" data-bs-toggle="tab" href="#tasktab-1"
-                                            role="tab" aria-selected="false">
-                                            Today
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-bs-toggle="tab" href="#tasktab-2" role="tab"
-                                            aria-selected="false">
-                                            Week
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-bs-toggle="tab" href="#tasktab-3" role="tab"
-                                            aria-selected="true">
-                                            Month
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body pt-3">
-                            <div class="tab-content">
-                                <div class="tab-pane fade active show" id="tasktab-1" role="tabpanel">
-                                    <div class="">
-                                        <div class="tasks">
-                                            <div class=" task-line primary active">
-                                                <a href="javascript:void(0);" class="label">
-                                                    XML Import & Export
-                                                </a>
-                                                <div class="time">
-                                                    12:00 PM
-                                                </div>
-                                            </div>
-                                            <span class="add-delete-task ">
-                                                <a href="javascript:void(0);" class="btn btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="" class="btn btn-link"><i class="fa fa-trash"></i></a>
-                                            </span>
-                                            <div class="checkbox">
-                                                <label class="check-box">
-                                                    <label class="ckbox"><input checked
-                                                            type="checkbox"><span></span></label>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="tasks">
-                                            <div class="task-line pink">
-                                                <a href="javascript:void(0);" class="label">
-                                                    Database Optimization
-                                                </a>
-                                                <div class="time">
-                                                    02:13 PM
-                                                </div>
-                                            </div>
-                                            <span class="add-delete-task ">
-                                                <a href="javascript:void(0);" class="btn btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="" class="btn btn-link"><i class="fa fa-trash"></i></a>
-                                            </span>
-                                            <div class="checkbox">
-                                                <label class="check-box">
-                                                    <label class="ckbox"><input type="checkbox"><span></span></label>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="tasks">
-                                            <div class="task-line success">
-                                                <a href="javascript:void(0);" class="label">
-                                                    Create Wireframes
-                                                </a>
-                                                <div class="time">
-                                                    06:20 PM
-                                                </div>
-                                            </div>
-                                            <span class="add-delete-task ">
-                                                <a href="javascript:void(0);" class="btn btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="" class="btn btn-link"><i class="fa fa-trash"></i></a>
-                                            </span>
-                                            <div class="checkbox">
-                                                <label class="check-box">
-                                                    <label class="ckbox"><input type="checkbox"><span></span></label>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="tasks">
-                                            <div class="task-line warning">
-                                                <a href="javascript:void(0);" class="label">
-                                                    Develop MVP
-                                                </a>
-                                                <div class="time">
-                                                    10: 00 PM
-                                                </div>
-                                            </div>
-                                            <span class="add-delete-task ">
-                                                <a href="javascript:void(0);" class="btn btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="" class="btn btn-link"><i class="fa fa-trash"></i></a>
-                                            </span>
-                                            <div class="checkbox">
-                                                <label class="check-box">
-                                                    <label class="ckbox"><input type="checkbox"><span></span></label>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="tasks">
-                                            <div class="task-line teal">
-                                                <a href="javascript:void(0);" class="label">
-                                                    Design Ecommerce
-                                                </a>
-                                                <div class="time">
-                                                    10: 00 PM
-                                                </div>
-                                            </div>
-                                            <span class="add-delete-task ">
-                                                <a href="javascript:void(0);" class="btn btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="" class="btn btn-link"><i class="fa fa-trash"></i></a>
-                                            </span>
-                                            <div class="checkbox">
-                                                <label class="check-box">
-                                                    <label class="ckbox"><input type="checkbox"><span></span></label>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="tasks mb-0">
-                                            <div class="task-line purple">
-                                                <a href="javascript:void(0);" class="label">
-                                                    Fix Validation Issues
-                                                </a>
-                                                <div class="time">
-                                                    12: 00 AM
-                                                </div>
-                                            </div>
-                                            <span class="add-delete-task ">
-                                                <a href="javascript:void(0);" class="btn btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="" class="btn btn-link"><i class="fa fa-trash"></i></a>
-                                            </span>
-                                            <div class="checkbox">
-                                                <label class="check-box">
-                                                    <label class="ckbox"><input type="checkbox"><span></span></label>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="tasktab-2" role="tabpanel">
-                                    <div class="">
-                                        <div class="tasks">
-                                            <div class=" task-line teal">
-                                                <a href="javascript:void(0);" class="label">
-                                                    Management meeting
-                                                </a>
-                                                <div class="time">
-                                                    06:30 AM
-                                                </div>
-                                            </div>
-                                            <span class="add-delete-task ">
-                                                <a href="javascript:void(0);" class="btn btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="" class="btn btn-link"><i class="fa fa-trash"></i></a>
-                                            </span>
-                                            <div class="checkbox">
-                                                <label class="check-box">
-                                                    <label class="ckbox"><input type="checkbox"><span></span></label>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="tasks">
-                                            <div class="task-line danger">
-                                                <a href="javascript:void(0);" class="label">
-                                                    Connect API to pages
-                                                </a>
-                                                <div class="time">
-                                                    08:00 AM
-                                                </div>
-                                            </div>
-                                            <span class="add-delete-task ">
-                                                <a href="javascript:void(0);" class="btn btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="" class="btn btn-link"><i class="fa fa-trash"></i></a>
-                                            </span>
-                                            <div class="checkbox">
-                                                <label class="check-box">
-                                                    <label class="ckbox"><input type="checkbox"><span></span></label>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="tasks">
-                                            <div class="task-line purple">
-                                                <a href="javascript:void(0);" class="label">
-                                                    Icon change in Redesign App
-                                                </a>
-                                                <div class="time">
-                                                    11:20 AM
-                                                </div>
-                                            </div>
-                                            <span class="add-delete-task ">
-                                                <a href="javascript:void(0);" class="btn btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="" class="btn btn-link"><i class="fa fa-trash"></i></a>
-                                            </span>
-                                            <div class="checkbox">
-                                                <label class="check-box">
-                                                    <label class="ckbox"><input type="checkbox"><span></span></label>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="tasks">
-                                            <div class="task-line warning">
-                                                <a href="javascript:void(0);" class="label">
-                                                    Test new features in tablets
-                                                </a>
-                                                <div class="time">
-                                                    02: 00 PM
-                                                </div>
-                                            </div>
-                                            <span class="add-delete-task ">
-                                                <a href="javascript:void(0);" class="btn btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="" class="btn btn-link"><i class="fa fa-trash"></i></a>
-                                            </span>
-                                            <div class="checkbox">
-                                                <label class="check-box">
-                                                    <label class="ckbox"><input type="checkbox"><span></span></label>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="tasks">
-                                            <div class="task-line success">
-                                                <a href="javascript:void(0);" class="label">
-                                                    Design Logo
-                                                </a>
-                                                <div class="time">
-                                                    04: 00 PM
-                                                </div>
-                                            </div>
-                                            <span class="add-delete-task ">
-                                                <a href="javascript:void(0);" class="btn btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="" class="btn btn-link"><i class="fa fa-trash"></i></a>
-                                            </span>
-                                            <div class="checkbox">
-                                                <label class="check-box">
-                                                    <label class="ckbox"><input type="checkbox"><span></span></label>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="tasks mb-0">
-                                            <div class="task-line primary">
-                                                <a href="javascript:void(0);" class="label">
-                                                    Project Launch
-                                                </a>
-                                                <div class="time">
-                                                    06: 00 PM
-                                                </div>
-                                            </div>
-                                            <span class="add-delete-task ">
-                                                <a href="javascript:void(0);" class="btn btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="" class="btn btn-link"><i class="fa fa-trash"></i></a>
-                                            </span>
-                                            <div class="checkbox">
-                                                <label class="check-box">
-                                                    <label class="ckbox"><input type="checkbox"><span></span></label>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="tasktab-3" role="tabpanel">
-                                    <div class="">
-                                        <div class="tasks">
-                                            <div class=" task-line info">
-                                                <a href="javascript:void(0);" class="label">
-                                                    Design a Landing Page
-                                                </a>
-                                                <div class="time">
-                                                    06:12 AM
-                                                </div>
-                                            </div>
-                                            <span class="add-delete-task ">
-                                                <a href="javascript:void(0);" class="btn btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="" class="btn btn-link"><i class="fa fa-trash"></i></a>
-                                            </span>
-                                            <div class="checkbox">
-                                                <label class="check-box">
-                                                    <label class="ckbox"><input type="checkbox"><span></span></label>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="tasks">
-                                            <div class="task-line danger">
-                                                <a href="javascript:void(0);" class="label">
-                                                    Food Delivery Mobile Application
-                                                </a>
-                                                <div class="time">
-                                                    3:00 PM
-                                                </div>
-                                            </div>
-                                            <span class="add-delete-task ">
-                                                <a href="javascript:void(0);" class="btn btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="" class="btn btn-link"><i class="fa fa-trash"></i></a>
-                                            </span>
-                                            <div class="checkbox">
-                                                <label class="check-box">
-                                                    <label class="ckbox"><input type="checkbox"><span></span></label>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="tasks">
-                                            <div class="task-line warning">
-                                                <a href="javascript:void(0);" class="label">
-                                                    Export Database values
-                                                </a>
-                                                <div class="time">
-                                                    03:20 PM
-                                                </div>
-                                            </div>
-                                            <span class="add-delete-task ">
-                                                <a href="javascript:void(0);" class="btn btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="" class="btn btn-link"><i class="fa fa-trash"></i></a>
-                                            </span>
-                                            <div class="checkbox">
-                                                <label class="check-box">
-                                                    <label class="ckbox"><input type="checkbox"><span></span></label>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="tasks">
-                                            <div class="task-line pink">
-                                                <a href="javascript:void(0);" class="label">
-                                                    Write Simple Python Script
-                                                </a>
-                                                <div class="time">
-                                                    04: 00 PM
-                                                </div>
-                                            </div>
-                                            <span class="add-delete-task ">
-                                                <a href="javascript:void(0);" class="btn btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="" class="btn btn-link"><i class="fa fa-trash"></i></a>
-                                            </span>
-                                            <div class="checkbox">
-                                                <label class="check-box">
-                                                    <label class="ckbox"><input type="checkbox"><span></span></label>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="tasks">
-                                            <div class="task-line success">
-                                                <a href="javascript:void(0);" class="label">
-                                                    Write Simple Anugalr Program
-                                                </a>
-                                                <div class="time">
-                                                    05: 00 PM
-                                                </div>
-                                            </div>
-                                            <span class="add-delete-task ">
-                                                <a href="javascript:void(0);" class="btn btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="" class="btn btn-link"><i class="fa fa-trash"></i></a>
-                                            </span>
-                                            <div class="checkbox">
-                                                <label class="check-box">
-                                                    <label class="ckbox"><input type="checkbox"><span></span></label>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="tasks mb-0">
-                                            <div class="task-line primary">
-                                                <a href="javascript:void(0);" class="label">
-                                                    Design PSD files
-                                                </a>
-                                                <div class="time">
-                                                    06: 00 PM
-                                                </div>
-                                            </div>
-                                            <span class="add-delete-task ">
-                                                <a href="javascript:void(0);" class="btn btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="" class="btn btn-link"><i class="fa fa-trash"></i></a>
-                                            </span>
-                                            <div class="checkbox">
-                                                <label class="check-box">
-                                                    <label class="ckbox"><input type="checkbox"><span></span></label>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
-                    <div class="card overflow-hidden">
-                        <div class="card-header pb-0">
-                            <div class="d-flex justify-content-between">
-                                <h4 class="card-title mg-b-10 mt-2">Projects Workload</h4>
-                                <i class="mdi mdi-dots-horizontal text-gray"></i>
-                            </div>
-                            <p class="tx-12 text-muted mb-0"> In the Project Workload report, their remaining assignments,
-                                completion dates, whether their work is at-risk. <a href="">Learn more</a></p>
-                        </div>
-                        <div class="card-body">
-                            <div class="">
-                                <div class="row justify-content-md-center">
-                                    <div class="col-sm-12">
-                                        <div class="">
-                                            <canvas id="chartDonut" class="ht-175 drop-shadow"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pt-3">
-                                <div class="row ">
-                                    <div class="col-sm-8 ">
-                                        <h5 class="mb-0 tx-15 d-flex"><span
-                                                class="legend bg-primary-gradient brround"></span>40.32%</h6>
-                                            <p class="text-muted  tx-13 mb-0">External</p>
-                                    </div>
-                                    <div class="col-sm-4 ">
-                                        <span id="sparkel1">1,3,7,8,4,5,4,8,6</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="pt-3">
-                                <div class="row ">
-                                    <div class="col-sm-8 ">
-                                        <h6 class="mb-0 tx-15 d-flex"><span
-                                                class="legend bg-danger-gradient brround"></span>40.73%</h6>
-                                        <p class="text-muted tx-13 mb-0 ">Internal</p>
-                                    </div>
-                                    <div class="col-sm-4 ">
-                                        <span id="sparkel2">2,5,6,4,8,6,5,9,6</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pt-3">
-                                <div class="row ">
-                                    <div class="col-sm-8 ">
-                                        <h6 class="mb-0 tx-15 d-flex"><span
-                                                class="legend bg-success-gradient brround"></span>50.12%</h6>
-                                        <p class="text-muted tx-13 mb-0">Other</p>
-                                    </div>
-                                    <div class="col-sm-4 ">
-                                        <span id="sparkel3">2,5,6,4,8,6,5,9,6</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-12 col-xl-4 col-md-12 col-sm-12">
-                    <div class="card card-dashboard-events">
-                        <div class="card-header pb-0">
-                            <div class="d-flex justify-content-between">
-                                <h4 class="card-title mg-b-10">Upcoming Events</h4>
-                                <i class="mdi mdi-dots-horizontal text-gray"></i>
-                            </div>
-                            <p class="tx-12 text-muted mb-0">It had the latest news and notes from the championship, while
-                                previewing the upcoming event.. <a href="">Learn more</a></p>
-                        </div>
-                        <div class="card-body">
-                            <div class="list-group ">
-                                <div class="list-group-item border-top-0">
-                                    <div class="event-indicator bg-primary-gradient"></div><label>Nov 20
-                                        <span>Tuesday</span></label>
-                                    <h6>PH World Mall Lantern Festival</h6>
-                                    <p><strong>8AM - 4PM</strong> Bay Area, San Francisco</p><small><span
-                                            class="tx-danger">Sold Out</span> (3000 tickets sold)</small>
-                                </div>
-                                <div class="list-group-item">
-                                    <div class="event-indicator bg-danger-gradient"></div><label>Nov 23
-                                        <span>Friday</span></label>
-                                    <h6>Asia Pacific Generation Workshop</h6>
-                                    <p><strong>8AM - 5PM</strong> Singapore</p><small><span class="tx-warning">Sold Out
-                                            Soon</span> (12 tickets left)</small>
-                                </div>
-                                <div class="list-group-item border-bottom-0">
-                                    <div class="event-indicator bg-info-gradient"></div><label>Nov 23
-                                        <span>Friday</span></label>
-                                    <h6>Korea Smart Device Trade Show</h6>
-                                    <p><strong>8AM - 5PM</strong> Singapore</p><small><span class="tx-success">Free
-                                            Registration</span> (Limited seats only)</small>
-                                </div>
                             </div>
                         </div>
                     </div>

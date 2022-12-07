@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+    @if(session('user'))
+        <script>
+            window.location = "{{ route('home') }}";
+        </script>
+    @endif
     <div class="main-signin-wrapper">
         <div class="main-card-signin d-md-flex">
             <div class="wd-md-50p login d-none d-md-block page-signin-style p-5 text-white">

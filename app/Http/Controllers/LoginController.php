@@ -31,4 +31,10 @@ class LoginController extends Controller
             return $ex;
         }
     }
+
+    public function logout()
+    {
+        session()->forget('user');
+        return true;
+    }
 }
