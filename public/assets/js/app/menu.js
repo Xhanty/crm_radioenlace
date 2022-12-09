@@ -81,9 +81,10 @@ $(function () {
         hideMethod: "fadeOut",
     };
 
-    /*$(".form-select").select2({
-        width: "100%",
-    });*/
+    $(".form-select").select2({
+        placeholder: "Seleccione una opción",
+        searchInputPlaceholder: "Buscar",
+    });
 
     //______Basic Data Table
     $(".basic-datatable-t").DataTable({

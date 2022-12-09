@@ -80,7 +80,7 @@ class AsignacionesController extends Controller
                 foreach ($files as $file) {
                     if (is_file($file)) {
                         $name = time() . $file->getClientOriginalName();
-                        $file->move(public_path('images/anexos_asignaciones'), $name);
+                        $file->move(public_path('images/asignaciones'), $name);
                         $names_anexos[] = $name;
                     }
                 }
@@ -89,13 +89,13 @@ class AsignacionesController extends Controller
             foreach ($empleados as $key => $empleado) {
                 $asignacion = DB::table("asignaciones")->insertGetId([
                     "id_empleado" => $empleado,
-                    "asignacion" => $observaciones[$key],
-                    "descripcion" => $observacion_general,
+                    "asignacion" => $observaciones[$key] ? $observaciones[$key] : "",
+                    "descripcion" => $observacion_general ? $observacion_general : "",
                     "fecha" => $fecha_inicio,
                     "fecha_culminacion" => $fecha_fin,
                     "created_by" => session("user"),
                     "status" => 0,
-                    "fecha_completada" => date("Y-m-d H:i:s", "0000-00-00 00:00:00"),
+                    "fecha_completada" => null,
                     "visto_bueno" => 0,
                     "devuelta" => 0,
                     "codigo" => $this->generar_codigo(),
@@ -166,7 +166,15 @@ class AsignacionesController extends Controller
                 ->where("avances_asignaciones.id_asignacion", $id)
                 ->orderBy("avances_asignaciones.id", "desc")
                 ->get();
-            return response()->json(['info' => 1, 'success' => 'Datos obtenidos correctamente.', 'data' => $avances]);
+
+            $asignacion = DB::table("asignaciones")
+                ->where("asignaciones.id", $id)
+                ->first();
+
+            $archivos = DB::table("anexos_asignaciones")
+                ->where("anexos_asignaciones.id_asignacion", $id)
+                ->get();
+            return response()->json(['info' => 1, 'success' => 'Datos obtenidos correctamente.', 'data' => $avances, 'asignacion' => $asignacion, 'archivos' => $archivos]);
         } catch (Exception $ex) {
             return $ex;
         }
@@ -176,7 +184,16 @@ class AsignacionesController extends Controller
     {
         try {
             $id = $request->id;
+            $file = DB::table("avances_asignaciones")->where("id", $id)->first();
+            if ($file->archivo) {
+                $path = public_path('images/anexos_asignaciones/' . $file->archivo);
+                if (file_exists($path)) {
+                    unlink($path);
+                }
+            }
+
             DB::table("avances_asignaciones")->where("id", $id)->delete();
+
             return response()->json(['info' => 1, 'success' => 'Avance eliminado correctamente.']);
         } catch (Exception $ex) {
             return $ex;
@@ -225,6 +242,14 @@ class AsignacionesController extends Controller
     {
         try {
             $id = $request->id;
+            $files = DB::table("anexos_asignaciones")->where("id_asignacion", $id)->get();
+            foreach ($files as $file) {
+                $path = public_path('images/asignaciones/' . $file->archivo);
+                if (file_exists($path)) {
+                    unlink($path);
+                }
+            }
+            DB::table("anexos_asignaciones")->where("id_asignacion", $id)->delete();
             DB::table("asignaciones")->where("id", $id)->delete();
             return response()->json(['info' => 1, 'success' => 'Asignación eliminada correctamente.']);
         } catch (Exception $ex) {
@@ -250,6 +275,74 @@ class AsignacionesController extends Controller
             DB::rollBack();
             return $ex;
             return response()->json(['info' => 0, 'success' => 'Error al modificar la asignación.']);
+        }
+    }
+
+    public function eliminar_archivo_asignacion(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $files = DB::table("anexos_asignaciones")->where("id", $id)->get();
+            foreach ($files as $file) {
+                $path = public_path('images/asignaciones/' . $file->archivo);
+                if (file_exists($path)) {
+                    unlink($path);
+                }
+            }
+
+            DB::table("anexos_asignaciones")->where("id", $id)->delete();
+
+            return response()->json(['info' => 1, 'success' => 'Archivo eliminado correctamente.']);
+        } catch (Exception $ex) {
+            return $ex;
+        }
+    }
+
+    public function asignacion_edit(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $id = $request->id;
+            $empleado = $request->empleado;
+            $observacion = $request->observacion;
+            $observacion_general = $request->observacion_general;
+            $fecha_inicio = $request->fecha_inicio;
+            $fecha_fin = $request->fecha_fin;
+            $names_anexos = [];
+
+            foreach ($request->only('anexos') as $files) {
+                foreach ($files as $file) {
+                    if (is_file($file)) {
+                        $name = time() . $file->getClientOriginalName();
+                        $file->move(public_path('images/asignaciones'), $name);
+                        $names_anexos[] = $name;
+                    }
+                }
+            }
+
+            DB::table("asignaciones")->where("id", $id)->update([
+                "id_empleado" => $empleado,
+                "asignacion" => $observacion ? $observacion : "",
+                "descripcion" => $observacion_general ? $observacion_general : "",
+                "fecha" => $fecha_inicio,
+                "fecha_culminacion" => $fecha_fin,
+            ]);
+
+            if ($names_anexos) {
+                foreach ($names_anexos as $name_anexo) {
+                    DB::table("anexos_asignaciones")->insert([
+                        "id_asignacion" => $id,
+                        "archivo" => $name_anexo,
+                    ]);
+                }
+            }
+
+            DB::commit();
+            return response()->json(['info' => 1, 'success' => 'Asignación modificada correctamente.']);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return $ex;
+            return response()->json(['info' => 0, 'success' => 'Error al crear la asignación.']);
         }
     }
 }

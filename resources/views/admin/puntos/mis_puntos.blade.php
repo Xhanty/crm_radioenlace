@@ -21,7 +21,7 @@
         <div class="row row-sm">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header bg-warning" style="border-radius: 4px">
                         <h3 class="card-title">Mis Puntos Pendientes</h3>
                     </div>
                     <div class="card-body">
@@ -39,18 +39,24 @@
                                 <tbody>
                                     @foreach ($puntos_pendientes as $value)
                                         <tr>
-                                            <td>{{ date('d-m-Y', strtotime($value->fecha)) }}</td>
+                                            <td>{{ date('d-m-Y H:i A', strtotime($value->fecha)) }}</td>
                                             <td>{{ $value->descripcion }}</td>
                                             <td>
                                                 @if ($value->tipo == 0)
-                                                    Fijos
+                                                    <span class="badge bg-success">Fijos</span>
                                                 @elseif($value->tipo == 1)
-                                                    Ocasionales
+                                                    <span class="badge bg-warning">Ocasionales</span>
                                                 @else
-                                                    Negativos
+                                                    <span class="badge bg-danger">Negativos</span>
                                                 @endif
                                             </td>
-                                            <td>{{ $value->cantidad }}</td>
+                                            <td>
+                                                @if ($value->tipo == 0 || $value->tipo == 1)
+                                                    <span class="text-success">{{ $value->cantidad }}</span>
+                                                @else
+                                                    <span class="text-danger">{{ $value->cantidad }}</span>
+                                                @endif
+                                            </td>
                                             <td>{{ $value->nombre }}</td>
                                         </tr>
                                     @endforeach
@@ -67,7 +73,7 @@
         <div class="row row-sm">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header bg-success" style="border-radius: 4px">
                         <h3 class="card-title">Mis Puntos Cobrados</h3>
                     </div>
                     <div class="card-body">
@@ -85,18 +91,24 @@
                                 <tbody>
                                     @foreach ($puntos_cobrados as $value)
                                         <tr>
-                                            <td>{{ date('d-m-Y', strtotime($value->fecha)) }}</td>
+                                            <td>{{ date('d-m-Y H:i A', strtotime($value->fecha)) }}</td>
                                             <td>{{ $value->descripcion }}</td>
                                             <td>
                                                 @if ($value->tipo == 0)
-                                                    Fijos
+                                                    <span class="badge bg-success">Fijos</span>
                                                 @elseif($value->tipo == 1)
-                                                    Ocasionales
+                                                    <span class="badge bg-warning">Ocasionales</span>
                                                 @else
-                                                    Negativos
+                                                    <span class="badge bg-danger">Negativos</span>
                                                 @endif
                                             </td>
-                                            <td>{{ $value->cantidad }}</td>
+                                            <td>
+                                                @if ($value->tipo == 0 || $value->tipo == 1)
+                                                    <span class="text-success">{{ $value->cantidad }}</span>
+                                                @else
+                                                    <span class="text-danger">{{ $value->cantidad }}</span>
+                                                @endif
+                                            </td>
                                             <td>{{ $value->nombre }}</td>
                                         </tr>
                                     @endforeach

@@ -31,6 +31,9 @@
 
     <!--- Toastr css --->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+
+    <!--- Date Range --->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     
     @yield('css')
 </head>
@@ -463,6 +466,8 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!--- Select2 js --->
 	<script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
+    <!--- Date Range --->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
     <!--- Menu js --->
     <script src="{{ asset('assets/js/app/menu.js') }}"></script>

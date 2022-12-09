@@ -44,7 +44,7 @@
                                         <th class="wd-10p border-bottom-0">Estado</th>
                                         <th class="wd-15p border-bottom-0">Creada por</th>
                                         <th class="wd-15p border-bottom-0">Acciones</th>
-                                        <th class="wd-15p border-bottom-0">Visto<br>Bueno</th>
+                                        <th class="wd-10p border-bottom-0">Visto<br>Bueno</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -66,13 +66,21 @@
                                             </td>
                                             <td>{{ $value->creador }}</td>
                                             <td>
-                                                <a class="d-flex btn_completar" data-id="{{ $value->id }}" href="javascript:void(0);"><i class="fa fa-check"></i>&nbsp;Completar</a>
-                                                <a class="d-flex btn_editar_pend" data-id="{{ $value->id }}" href="javascript:void(0);"><i class="fa fa-pencil-alt"></i>&nbsp;Editar</a>
-                                                <a class="d-flex btn_avances" data-id="{{ $value->id }}" href="javascript:void(0);"><i class="fa fa-file"></i>&nbsp;Ver Avances</a>
-                                                <a class="d-flex btn_eliminar" data-id="{{ $value->id }}" href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>
+                                                <a class="d-flex btn_completar" data-id="{{ $value->id }}"
+                                                    href="javascript:void(0);"><i
+                                                        class="fa fa-check"></i>&nbsp;Completar</a>
+                                                <a class="d-flex btn_editar" data-id="{{ $value->id }}"
+                                                    href="javascript:void(0);"><i
+                                                        class="fa fa-pencil-alt"></i>&nbsp;Editar</a>
+                                                <a class="d-flex btn_avances" data-id="{{ $value->id }}"
+                                                    href="javascript:void(0);"><i class="fa fa-file"></i>&nbsp;Ver
+                                                    Avances</a>
+                                                <a class="d-flex btn_eliminar" data-id="{{ $value->id }}"
+                                                    href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>
                                             </td>
                                             <td class="text-center">
-                                                <input data-id="{{ $value->id }}" class="visto_bueno_check" @if($value->visto_bueno == 1) { checked } @endif type="checkbox">
+                                                <input data-id="{{ $value->id }}" class="visto_bueno_check"
+                                                    @if ($value->visto_bueno == 1) { checked } @endif type="checkbox">
                                             </td>
                                         </tr>
                                     @endforeach
@@ -128,12 +136,18 @@
                                             </td>
                                             <td>{{ $value->creador }}</td>
                                             <td>
-                                                <a class="d-flex btn_avances" data-id="{{ $value->id }}" href="javascript:void(0);"><i class="fa fa-file"></i>&nbsp;Ver Avances</a>
-                                                <a class="d-flex btn_rechazar" data-id="{{ $value->id }}" href="javascript:void(0);"><i class="fa fa-times"></i>&nbsp;Rechazar</a>
-                                                <a class="d-flex btn_eliminar" data-id="{{ $value->id }}" href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>
+                                                <a class="d-flex btn_avances" data-id="{{ $value->id }}"
+                                                    href="javascript:void(0);"><i class="fa fa-file"></i>&nbsp;Ver
+                                                    Avances</a>
+                                                <a class="d-flex btn_rechazar" data-id="{{ $value->id }}"
+                                                    href="javascript:void(0);"><i class="fa fa-times"></i>&nbsp;Rechazar</a>
+                                                <a class="d-flex btn_eliminar" data-id="{{ $value->id }}"
+                                                    href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>
                                             </td>
                                             <td class="text-center">
-                                                <input data-id="{{ $value->id }}" class="visto_bueno_check" @if($value->visto_bueno == 1) { @checked(true) } @endif type="checkbox">
+                                                <input data-id="{{ $value->id }}" class="visto_bueno_check"
+                                                    @if ($value->visto_bueno == 1) { @checked(true) } @endif
+                                                    type="checkbox">
                                             </td>
                                         </tr>
                                     @endforeach
@@ -159,7 +173,6 @@
                     <div class="row row-sm">
                         <div class="col-lg center-vertical">
                             <select class="form-select empleadoadd">
-                                <option value="">Seleccione un empleado</option>
                                 @foreach ($empleados as $value)
                                     <option value="{{ $value->id }}">{{ $value->nombre }}</option>
                                 @endforeach
@@ -168,7 +181,8 @@
                         <div class="col-lg mg-t-10 mg-lg-t-0" style="display: flex">
                             <textarea class="form-control observacionesadd" placeholder="Asignación individual de este empleado" rows="2"
                                 style="height: 50px; resize: none"></textarea>
-                            <a class="center-vertical mg-s-10" href="javascript:void(0);" id="new_row_empleado"><i class="fa fa-plus"></i></a>
+                            <a class="center-vertical mg-s-10" href="javascript:void(0);" id="new_row_empleado"><i
+                                    class="fa fa-plus"></i></a>
                         </div>
                     </div>
                     <div id="div_new_empleados"></div>
@@ -207,32 +221,102 @@
         </div>
     </div>
 
-    <!-- Modal View Avances -->
-        <div class="modal  fade" id="modalView">
-            <div class="modal-dialog modal-xl" role="document">
-                <div class="modal-content modal-content-demo">
-                    <div class="modal-header">
-                        <h6 class="modal-title">Listado de Avances</h6><button aria-label="Close" class="btn-close"
-                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+    <!-- Modal Edit -->
+    <div class="modal  fade" id="modalEdit">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content modal-content-demo">
+                <div class="modal-header">
+                    <h6 class="modal-title">Modificar la asignación</h6><button aria-label="Close" class="btn-close"
+                        data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="idasignacionedit" disabled readonly>
+                    <div class="row row-sm">
+                        <div class="col-4 center-vertical">
+                            <select class="form-select" id="empleadoedit">
+                                @foreach ($empleados as $value)
+                                    <option value="{{ $value->id }}">{{ $value->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-8 mg-t-10 mg-lg-t-0" style="display: flex">
+                            <textarea class="form-control" placeholder="Asignación individual de este empleado" rows="3"
+                                style="height: 90px; resize: none" id="observacionesedit"></textarea>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <div class="table-responsive">
-                            <table class="table border-top-0 table-bordered text-nowrap border-bottom" id="tbl_view_avances">
+                    <br>
+                    <div class="row row-sm">
+                        <div class="col-lg">
+                            <label for="">Descripción de la asignación</label>
+                            <textarea class="form-control" placeholder="Descripción de la asignación" rows="3" id="observacion_generaledit"
+                                style="height: 90px; resize: none"></textarea>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row row-sm">
+                        <div class="col-lg mg-t-10 mg-lg-t-0">
+                            <label for="">Anexos de la asignación (Opcional)</label>
+                            <input class="form-control" id="anexosedit" multiple type="file"
+                                accept="image/png, image/jpeg">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row row-sm">
+                        <div class="col-lg">
+                            <label for="">Fecha y Hora de inicio</label>
+                            <input class="form-control" id="fecha_inicioedit" type="datetime-local">
+                        </div>
+                        <div class="col-lg mg-t-10 mg-lg-t-0">
+                            <label for="">Fecha y Hora de tentativa de culminación</label>
+                            <input class="form-control" id="fecha_finedit" type="datetime-local">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="table-responsive">
+                            <table class="table border-top-0 table-bordered text-nowrap border-bottom" id="tbl_anexos_asignacion">
                                 <thead>
                                     <tr>
-                                        <th class="wd-10p border-bottom-0">Fecha</th>
-                                        <th class="wd-15p border-bottom-0">Archivo</th>
-                                        <th class="wd-40p border-bottom-0">Descripción</th>
-                                        <th class="wd-10p border-bottom-0">Status</th>
+                                        <th class="wd-40p border-bottom-0">Anexo</th>
+                                        <th class="wd-20p border-bottom-0">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
                             </table>
                         </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn ripple btn-primary" id="btnEditarAsignacion" type="button">Modificar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal View Avances -->
+    <div class="modal  fade" id="modalView">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content modal-content-demo">
+                <div class="modal-header">
+                    <h6 class="modal-title">Listado de Avances</h6><button aria-label="Close" class="btn-close"
+                        data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table border-top-0 table-bordered text-nowrap border-bottom" id="tbl_view_avances">
+                            <thead>
+                                <tr>
+                                    <th class="wd-10p border-bottom-0">Fecha</th>
+                                    <th class="wd-15p border-bottom-0">Archivo</th>
+                                    <th class="wd-40p border-bottom-0">Descripción</th>
+                                    <th class="wd-10p border-bottom-0">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 @endsection
 
 @section('scripts')

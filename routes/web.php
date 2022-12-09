@@ -31,9 +31,11 @@ Route::middleware(['auth_user'])->group(function () {
     Route::get('/gestionar_asignaciones', [App\Http\Controllers\Admin\AsignacionesController::class, 'gestionar_asignaciones'])->name('gestionar_asignaciones');
     Route::get('/actividades_diarias', [App\Http\Controllers\Admin\AsignacionesController::class, 'actividades_diarias'])->name('actividades_diarias');
     Route::post('/asignacion_add', [App\Http\Controllers\Admin\AsignacionesController::class, 'asignacion_add'])->name('asignacion_add');
+    Route::post('/asignacion_edit', [App\Http\Controllers\Admin\AsignacionesController::class, 'asignacion_edit'])->name('asignacion_edit');
     Route::post('/change_asignacion', [App\Http\Controllers\Admin\AsignacionesController::class, 'change_asignacion'])->name('change_asignacion');
     Route::post('/eliminar_asignacion', [App\Http\Controllers\Admin\AsignacionesController::class, 'eliminar_asignacion'])->name('eliminar_asignacion');
     Route::post('/change_visto_bueno', [App\Http\Controllers\Admin\AsignacionesController::class, 'change_visto_bueno'])->name('change_visto_bueno');
+    Route::post('/eliminar_archivo_asignacion', [App\Http\Controllers\Admin\AsignacionesController::class, 'eliminar_archivo_asignacion'])->name('eliminar_archivo_asignacion');
 
     Route::get('/clientes', [App\Http\Controllers\Admin\ClientesController::class, 'index'])->name('clientes');
     Route::get('/clientes_list', [App\Http\Controllers\Admin\ClientesController::class, 'clientes_list'])->name('clientes_list');
@@ -46,9 +48,14 @@ Route::middleware(['auth_user'])->group(function () {
     Route::get('/proveedores', [App\Http\Controllers\Admin\ProveedoresController::class, 'index'])->name('proveedores');
 
     Route::get('/proyectos', [App\Http\Controllers\Admin\ProyectosController::class, 'index'])->name('proyectos');
-
+    
     Route::get('/mis_puntos', [App\Http\Controllers\Admin\PuntosController::class, 'index'])->name('mis_puntos');
     Route::get('/gestionar_puntos', [App\Http\Controllers\Admin\PuntosController::class, 'gestionar_puntos'])->name('gestionar_puntos');
+    Route::post('/puntos_add', [App\Http\Controllers\Admin\PuntosController::class, 'puntos_add'])->name('puntos_add');
+    Route::post('/puntos_delete', [App\Http\Controllers\Admin\PuntosController::class, 'puntos_delete'])->name('puntos_delete');
+    Route::post('/puntos_data', [App\Http\Controllers\Admin\PuntosController::class, 'puntos_data'])->name('puntos_data');
+    Route::post('/puntos_edit', [App\Http\Controllers\Admin\PuntosController::class, 'puntos_edit'])->name('puntos_edit');
+    Route::post('/corte_puntos', [App\Http\Controllers\Admin\PuntosController::class, 'corte_puntos'])->name('corte_puntos');
 
     Route::get('/inventario', [App\Http\Controllers\Admin\InventarioController::class, 'index'])->name('inventario');
     Route::get('/productos_list', [App\Http\Controllers\Admin\InventarioController::class, 'productos_list'])->name('productos_list');

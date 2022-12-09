@@ -65,6 +65,17 @@ $(function () {
             formData.append("anexos[]", anexos[i]);
         }
 
+        if (observacion_general == "") {
+            toastr.warning("Debe agregar una observación general");
+            return false;
+        } else if (fecha_inicio == "") {
+            toastr.warning("Debe agregar una fecha de inicio");
+            return false;
+        } else if (fecha_fin == "") {
+            toastr.warning("Debe agregar una fecha de fin");
+            return false;
+        }
+
         $("#btnGuardarAsignacion").attr("disabled", true);
         $.ajax({
             url: "asignacion_add",
@@ -245,4 +256,133 @@ $(function () {
             },
         });
     });
-});    
+
+    $(document).on("click", ".btn_editar", function () {
+        $("#global-loader").show();
+        let id = $(this).data("id");
+        $("#tbl_anexos_asignacion tbody").empty();
+        $.ajax({
+            url: "asignaciones_data",
+            type: "POST",
+            data: { id: id },
+            success: function (data) {
+                let asignacion = data.asignacion;
+                let archivos = data.archivos;
+                $("#idasignacionedit").val(asignacion.id);
+                $("#empleadoedit").val(asignacion.id_empleado);
+                $("#observacionesedit").val(asignacion.asignacion);
+                $("#observacion_generaledit").val(asignacion.descripcion);
+                $("#fecha_inicioedit").val(asignacion.fecha);
+                $("#fecha_finedit").val(asignacion.fecha_culminacion);
+                archivos.forEach((archivo) => {
+                    $("#tbl_anexos_asignacion tbody").append(`
+                        <tr>
+                            <td><a href="images/asignaciones/${archivo.archivo}" target="_blank">Ver Archivo</a></td>
+                            <td><button class="btn btn-danger btn-sm btn_eliminar_archivo" data-padre="${id}" data-id="${archivo.id}"><i class="fa fa-trash"></i></button></td>
+                        </tr>
+                    `);
+                });
+                $("#global-loader").hide();
+                $("#modalEdit").modal("show");
+            },
+            error: function (data) {
+                toastr.error("Error al obtener datos de la asignación");
+                $("#global-loader").hide();
+            },
+        });
+    });
+
+    $(document).on("click", ".btn_eliminar_archivo", function () {
+        let id = $(this).data("id");
+        let id_asignacion = $(this).data("padre");
+        $("#modalEdit").modal("hide");
+        Swal.fire({
+            title: "¿Deseas eliminar el archivo?",
+            showDenyButton: false,
+            showCancelButton: true,
+            confirmButtonText: "Aceptar",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "eliminar_archivo_asignacion",
+                    type: "POST",
+                    data: { id: id },
+                    success: function (data) {
+                        if(data.info == 1) {
+                            toastr.success("Archivo eliminado");
+                            $(".btn_editar[data-id='" + id_asignacion + "']").click();
+                            $("#modalEdit").modal("show");
+                        } else {
+                            toastr.error("Error al eliminar el archivo");
+                        }
+                    },
+                    error: function (data) {
+                        toastr.error("Error al eliminar el archivo");
+                        $("#modalEdit").modal("show");
+                    },
+                });
+            } else {
+                $("#modalEdit").modal("show");
+            }
+        });
+    });
+
+    $("#btnEditarAsignacion").click(function (e) {
+        e.preventDefault();
+        let id = $("#idasignacionedit").val();
+        let empleado = $("#empleadoedit").val();
+        let observacion = $("#observacionesedit").val();
+        let observacion_general = $("#observacion_generaledit").val();
+        let fecha_inicio = $("#fecha_inicioedit").val();
+        let fecha_fin = $("#fecha_finedit").val();
+        let anexos = $("#anexosedit").get(0).files;
+
+        let formData = new FormData();
+        formData.append("id", id);
+        formData.append("empleado", empleado);
+        formData.append("observacion", observacion);
+        formData.append("observacion_general", observacion_general);
+        formData.append("fecha_inicio", fecha_inicio);
+        formData.append("fecha_fin", fecha_fin);
+
+        for (var i = anexos.length - 1; i >= 0; i--) {
+            formData.append("anexos[]", anexos[i]);
+        }
+
+        if (observacion_general == "") {
+            toastr.warning("Debe agregar una observación general");
+            return false;
+        } else if (fecha_inicio == "") {
+            toastr.warning("Debe agregar una fecha de inicio");
+            return false;
+        } else if (fecha_fin == "") {
+            toastr.warning("Debe agregar una fecha de fin");
+            return false;
+        }
+
+        $("#btnEditarAsignacion").attr("disabled", true);
+        $.ajax({
+            url: "asignacion_edit",
+            data: formData,
+            type: "POST",
+            dataType: "JSON",
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (response) {
+                if (response.info == 1) {
+                    toastr.success(response.success);
+                    window.location.href = "gestionar_asignaciones";
+                } else {
+                    toastr.error("Error al modificar la asignación");
+                    $("#btnEditarAsignacion").attr("disabled", false);
+                }
+            },
+            error: function (error) {
+                toastr.error("Error al modificar la asignación");
+                $("#btnEditarAsignacion").attr("disabled", false);
+            },
+        });
+    });
+});
