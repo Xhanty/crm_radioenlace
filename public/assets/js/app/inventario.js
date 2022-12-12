@@ -35,7 +35,9 @@ $(function () {
             success: function (response) {
                 if (response.info == 1) {
                     toastr.success(response.success);
-                    window.location.href = "inventario";
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1000);
                 } else {
                     toastr.error("Error al guardar el producto");
                     $("#btnGuardarProducto").attr("disabled", false);
@@ -80,7 +82,9 @@ $(function () {
             success: function (response) {
                 if (response.info == 1) {
                     toastr.success(response.success);
-                    window.location.href = "inventario";
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1000);
                 } else {
                     toastr.error("Error al modificar el producto");
                     $("#btnEditarProducto").attr("disabled", false);
@@ -143,7 +147,9 @@ $(function () {
                     success: function (response) {
                         if (response.info == 1) {
                             toastr.success(response.success);
-                            window.location.href = "inventario";
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1000);
                         } else {
                             toastr.error("Error al dar de baja el producto");
                         }
@@ -176,7 +182,9 @@ $(function () {
                     success: function (response) {
                         if (response.info == 1) {
                             toastr.success(response.success);
-                            window.location.href = "inventario";
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1000);
                         } else {
                             toastr.error("Error al eliminar el producto");
                         }

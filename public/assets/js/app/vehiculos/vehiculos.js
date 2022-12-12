@@ -44,9 +44,11 @@ $(function () {
             cache: false,
             processData: false,
             success: function (response) {
-                if(response.info == 1) {
+                if (response.info == 1) {
                     toastr.success(response.success);
-                    window.location.href = "vehiculos";
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1000);
                 } else {
                     toastr.error("Error al guardar el vehiculo");
                     $("#btnGuardarVehiculo").attr("disabled", false);
@@ -75,7 +77,10 @@ $(function () {
                 $("#modalEdit textarea").attr("disabled", "disabled");
                 $("#modalEdit .modal-footer").addClass("d-none");
 
-                $("#imagenedit").attr("src", "http://127.0.0.1:8000/images/vehiculos/" + data.foto);
+                $("#imagenedit").attr(
+                    "src",
+                    "http://127.0.0.1:8000/images/vehiculos/" + data.foto
+                );
                 $("#marcaedit").val(data.marca);
                 $("#modeloedit").val(data.modelo);
                 $("#tipo_combustibleedit").val(data.tipo_combustible);
@@ -112,7 +117,10 @@ $(function () {
                 $("#modalEdit textarea").removeAttr("disabled");
                 $("#modalEdit .modal-footer").removeClass("d-none");
 
-                $("#imagenedit").attr("src", "http://127.0.0.1:8000/images/vehiculos/" + data.foto);
+                $("#imagenedit").attr(
+                    "src",
+                    "http://127.0.0.1:8000/images/vehiculos/" + data.foto
+                );
                 $("#idedit").val(data.id);
                 $("#marcaedit").val(data.marca);
                 $("#modeloedit").val(data.modelo);
@@ -177,7 +185,9 @@ $(function () {
             success: function (response) {
                 if (response.info == 1) {
                     toastr.success(response.success);
-                    window.location.href = "vehiculos";
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1000);
                 } else {
                     toastr.error("Error al modificar el vehiculo");
                     $("#btnEditarVehiculo").attr("disabled", false);
@@ -210,7 +220,9 @@ $(function () {
                     success: function (response) {
                         if (response.info == 1) {
                             toastr.success(response.success);
-                            window.location.href = "vehiculos";
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1000);
                         } else {
                             toastr.error("Error al eliminar el vehiculo");
                         }
@@ -221,6 +233,52 @@ $(function () {
                 });
             }
         });
-        
+    });
+
+    $(document).on("click", ".btn_Encuesta", function () {
+        $("#global-loader").fadeIn("fast");
+
+        if ($.fn.DataTable.isDataTable("#table_salud_vehiculos")) {
+            $("#table_salud_vehiculos").DataTable().destroy();
+        }
+
+        $("#table_salud_vehiculos tbody").empty();
+
+        $.ajax({
+            url: "data_salud_vehiculos",
+            type: "POST",
+            dataType: "JSON",
+            success: function (response) {
+                let data = response.success;
+
+                data.forEach((element) => {
+                    $("#table_salud_vehiculos tbody").append(`
+                        <tr>
+                            <td>${element.creador}</td>
+                            <td>${element.fecha}</td>
+                            <td class="d-flex">
+                                <a class="d-flex btn_eliminar_salud" data-id="{{ $value->id }}"
+                                    href="javascript:void(0);">
+                                    <i class="fa fa-trash"></i></a>&nbsp;
+                                <a class="d-flex btn_view_salud" data-id="{{ $value->id }}"
+                                    href="javascript:void(0);">
+                                    <i class="fa fa-eye"></i></a>
+                            </td>
+                        </tr>
+                    `);
+                });
+
+                $("#table_salud_vehiculos").DataTable({
+                    order: [],
+                });
+                //console.log(data);
+                $("#modalSalud").modal("show");
+                $("#global-loader").fadeOut("fast");
+            },
+            error: function (error) {
+                $("#global-loader").fadeOut("fast");
+                toastr.error("Error al cargar los datos");
+            },
+        });
     });
 });

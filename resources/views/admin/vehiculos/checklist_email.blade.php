@@ -67,5 +67,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('assets/js/app/checklist_email.js') }}"></script>
+    <script src="{{ asset('assets/js/app/vehiculos/checklist_email.js') }}"></script>
 @endsection

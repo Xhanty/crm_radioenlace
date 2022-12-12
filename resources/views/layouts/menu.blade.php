@@ -76,7 +76,7 @@
                         <div class="main-header-right">
                             <li class="dropdown nav-item main-layout">
                                 <a class="new theme-layout nav-link-bg layout-setting">
-                                    <span class="dark-layout"><i class="fe fe-moon"></i></span>
+                                    <!--<span class="dark-layout"><i class="fe fe-moon"></i></span>-->
                                     <span class="light-layout"><i class="fe fe-sun"></i></span>
                                 </a>
                             </li>

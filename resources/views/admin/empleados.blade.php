@@ -77,7 +77,8 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Código Empleado</label>
-                                <input class="form-control" id="codigo_empleado_edit" placeholder="Código Empleado" type="text">
+                                <input class="form-control" id="codigo_empleado_edit" placeholder="Código Empleado"
+                                    type="text">
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="">Nombre</label>
@@ -88,8 +89,7 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Cargo</label>
-                                <input class="form-control" id="cargo_empleado_edit" placeholder="Cargo"
-                                    type="text">
+                                <input class="form-control" id="cargo_empleado_edit" placeholder="Cargo" type="text">
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="">Rol</label>
@@ -112,19 +112,20 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">E-Mail</label>
-                                <input class="form-control" id="email_edit" placeholder="E-Mail"
-                                    type="email">
+                                <input class="form-control" id="email_edit" placeholder="E-Mail" type="email">
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="">Teléfono Fijo</label>
-                                <input class="form-control" id="telefono_fij_edit" placeholder="Teléfono Fijo" type="text">
+                                <input class="form-control" id="telefono_fij_edit" placeholder="Teléfono Fijo"
+                                    type="text">
                             </div>
                         </div>
                         <br>
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Teléfono Celular</label>
-                                <input class="form-control" id="telefono_cel_edit" placeholder="Teléfono Celular" type="text">
+                                <input class="form-control" id="telefono_cel_edit" placeholder="Teléfono Celular"
+                                    type="text">
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="">Dirección</label>
@@ -137,11 +138,13 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Fecha Ingreso</label>
-                                <input class="form-control" id="fecha_ingreso_edit" placeholder="Fecha Ingreso" type="date">
+                                <input class="form-control" id="fecha_ingreso_edit" placeholder="Fecha Ingreso"
+                                    type="date">
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="">Fecha Retiro</label>
-                                <input class="form-control" id="fecha_retiro_edit" placeholder="Fecha Retiro" type="date">
+                                <input class="form-control" id="fecha_retiro_edit" placeholder="Fecha Retiro"
+                                    type="date">
                             </div>
                         </div>
                         <br>
@@ -153,8 +156,7 @@
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="">EPS</label>
-                                <input class="form-control" id="eps_edit" placeholder="EPS"
-                                    type="text">
+                                <input class="form-control" id="eps_edit" placeholder="EPS" type="text">
                             </div>
                         </div>
                         <br>
@@ -190,6 +192,14 @@
                         </div>
                         <br>
 
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Avatar / Foto</label>
+                                <input class="form-control" id="avataredit" type="file">
+                            </div>
+                        </div>
+                        <br>
+
                         <div class="text-center">
                             <button class="btn ripple btn-primary" id="btnModificarEmpleado1" type="button">Modificar
                                 Datos Básicos</button>
@@ -204,16 +214,20 @@
                                         <div class="card-header tab-card-header" style="border: 1px solid #ccc;">
                                             <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
                                                 <li class="nav-item">
-                                                    <a class="nav-link nav-link-1 active" href="javascript:void(0)">Otra Información</a>
+                                                    <a class="nav-link nav-link-1 active" href="javascript:void(0)">Otra
+                                                        Información</a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link nav-link-2" href="javascript:void(0)">Configurar Nomina</a>
+                                                    <a class="nav-link nav-link-2" href="javascript:void(0)">Configurar
+                                                        Nomina</a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link nav-link-3" href="javascript:void(0)">Reportar Novedad</a>
+                                                    <a class="nav-link nav-link-3" href="javascript:void(0)">Reportar
+                                                        Novedad</a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link nav-link-4" href="javascript:void(0)">Reportar Horas Trabajadas</a>
+                                                    <a class="nav-link nav-link-4" href="javascript:void(0)">Reportar
+                                                        Horas Trabajadas</a>
                                                 </li>
                                                 <li class="nav-item">
                                                     <a class="nav-link nav-link-5" id="three-tab"
@@ -396,7 +410,15 @@
                                             </div>
 
                                             <div class="tab-pane fade show p-3" id="three_detail">
-                                                <table class="table border-top-0 table-bordered text-nowrap border-bottom" id="table_novedades_edit">
+                                                <div class="d-flex justify-content-end">
+                                                    <button class="btn ripple btn-primary"
+                                                        data-bs-target="#modalAddNovedad" data-bs-toggle="modal"
+                                                        data-bs-effect="effect-scale" type="button">Reportar
+                                                        Novedad</button>
+                                                </div>
+                                                <br>
+                                                <table class="table border-top-0 table-bordered text-nowrap border-bottom"
+                                                    id="table_novedades_edit">
                                                     <thead>
                                                         <tr>
                                                             <th class="wd-15p border-bottom-0">Motivo</th>
@@ -412,7 +434,14 @@
                                             </div>
 
                                             <div class="tab-pane fade show p-3" id="four_detail">
-                                                <table class="table border-top-0 table-bordered text-nowrap border-bottom" id="table_horas_trabajadas_edit">
+                                                <div class="d-flex justify-content-end">
+                                                    <button class="btn ripple btn-primary" data-bs-target="#modalAddHoras"
+                                                        data-bs-toggle="modal" data-bs-effect="effect-scale"
+                                                        type="button">Reportar Horas Trabajadas</button>
+                                                </div>
+                                                <br>
+                                                <table class="table border-top-0 table-bordered text-nowrap border-bottom"
+                                                    id="table_horas_trabajadas_edit">
                                                     <thead>
                                                         <tr>
                                                             <th class="wd-15p border-bottom-0">Motivo</th>
@@ -428,7 +457,14 @@
                                             </div>
 
                                             <div class="tab-pane fade show p-3" id="five_detail">
-                                                <table class="table border-top-0 table-bordered text-nowrap border-bottom" id="table_anexos_edit">
+                                                <div class="d-flex justify-content-end">
+                                                    <button class="btn ripple btn-primary" data-bs-target="#modalAddAnexo"
+                                                        data-bs-toggle="modal" data-bs-effect="effect-scale"
+                                                        type="button">Agregar Anexo</button>
+                                                </div>
+                                                <br>
+                                                <table class="table border-top-0 table-bordered text-nowrap border-bottom"
+                                                    id="table_anexos_edit">
                                                     <thead>
                                                         <tr>
                                                             <th class="wd-15p border-bottom-0">Tipo</th>
@@ -452,6 +488,149 @@
             </div>
         </div>
         <!-- row closed -->
+
+        <!-- Modal Add Novedad -->
+        <div class="modal  fade" id="modalAddNovedad">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Agregar Novedad</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Motivo</label>
+                                <textarea class="form-control" placeholder="Motivo" rows="3" id="motivoadd"
+                                    style="height: 90px; resize: none"></textarea>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="">Días a descontar</label>
+                                <input class="form-control" id="dias_descontar_add" placeholder="Días a descontar"
+                                    type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" id="btnAgregarNovedad" type="button">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Add Horas -->
+        <div class="modal  fade" id="modalAddHoras">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Reportar Horas Trabajadas</h6><button aria-label="Close"
+                            class="btn-close" data-bs-dismiss="modal" type="button"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Festivo</label>
+                                <select class="form-control" id="festivo_add">
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Desde</label>
+                                <input class="form-control" id="desde_horas_add" type="date">
+                            </div>
+                            <div class="col-lg">
+                                <label for="">Hasta</label>
+                                <input class="form-control" id="hasta_horas_add" type="date">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Motivo</label>
+                                <textarea class="form-control" placeholder="Motivo" rows="3" id="motivoadd"
+                                    style="height: 90px; resize: none"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" id="btnAgregarHoras" type="button">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Add Anexo -->
+        <div class="modal  fade" id="modalAddAnexo">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Agregar Anexo</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Tipo Documento</label>
+                                <select class="form-control" required name="tipo_document_anexo_add">
+                                    <option value="">Seleccione un tipo de documento</option>
+                                    <option value="0">Hoja de vida</option>
+                                    <option value="1">Afiliaciones</option>
+                                    <option value="2">Contrato</option>
+                                    <option value="3">Examenes Ocupacionales</option>
+                                    <option value="4">Curso de altura</option>
+                                    <option value="5">Capacitaciones</option>
+                                    <option value="6">Procesos disciplinarios</option>
+                                    <option value="7">Vacaciones</option>
+                                    <option value="8">Carnet de vacunación</option>
+                                    <option value="9">Primas</option>
+                                    <option value="10">Código de ética y buen gobierno</option>
+                                    <option value="11">Autorización tratamiento de datos personales</option>
+                                    <option value="12">Hoja de vida empresarial</option>
+                                    <option value="13">Control de selección</option>
+                                    <option value="14">Entrega de carnet</option>
+                                    <option value="15">Requisitos laborales</option>
+                                    <option value="16">Entrenamiento y preparación incorporación</option>
+                                    <option value="17">Registro de inducción</option>
+                                    <option value="18">Plan formación inducción</option>
+                                    <option value="19">Evidencia Fotográfoca de las capacitaciones</option>
+                                    <option value="21">Formatos varios (word excel pdf)</option>
+                                    <option value="22">Implementos de seguridad</option>
+                                    <option value="23">Incapacidades</option>
+                                    <option value="24">Datos Personales</option>
+                                    <option value="25">Dotación</option>
+                                    <option value="26">Seguridad Social</option>
+                                    <option value="27">Prestamo a Empleados</option>
+                                    <option value="28">Otros</option>
+                                </select>
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="">Documento</label>
+                                <input class="form-control" id="archivoadd" type="file">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Descripción</label>
+                                <textarea class="form-control" placeholder="Descripción" rows="3" id="descripcion_anexo_add"
+                                    style="height: 90px; resize: none"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" id="btnAgregarAnexo" type="button">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 

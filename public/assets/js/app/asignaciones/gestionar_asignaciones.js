@@ -88,7 +88,9 @@ $(function () {
             success: function (response) {
                 if (response.info == 1) {
                     toastr.success(response.success);
-                    window.location.href = "gestionar_asignaciones";
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1000);
                 } else {
                     toastr.error("Error al crear la asignación");
                     $("#btnGuardarAsignacion").attr("disabled", false);
@@ -119,7 +121,9 @@ $(function () {
                     success: function (response) {
                         if (response.info == 1) {
                             toastr.success(response.success);
-                            window.location.href = "gestionar_asignaciones";
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1000);
                         } else {
                             toastr.error("Error al completar la asignación");
                         }
@@ -150,7 +154,9 @@ $(function () {
                     success: function (response) {
                         if (response.info == 1) {
                             toastr.success(response.success);
-                            window.location.href = "gestionar_asignaciones";
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1000);
                         } else {
                             toastr.error("Error al rechazar la asignación");
                         }
@@ -181,7 +187,9 @@ $(function () {
                     success: function (response) {
                         if (response.info == 1) {
                             toastr.success(response.success);
-                            window.location.href = "gestionar_asignaciones";
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1000);
                         } else {
                             toastr.error("Error al eliminar la asignación");
                         }
@@ -373,7 +381,9 @@ $(function () {
             success: function (response) {
                 if (response.info == 1) {
                     toastr.success(response.success);
-                    window.location.href = "gestionar_asignaciones";
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1000);
                 } else {
                     toastr.error("Error al modificar la asignación");
                     $("#btnEditarAsignacion").attr("disabled", false);

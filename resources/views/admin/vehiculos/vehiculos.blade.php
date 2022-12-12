@@ -138,7 +138,8 @@
                     <div class="row row-sm">
                         <div class="col-lg">
                             <label for="">Observaciones</label>
-                            <textarea class="form-control" placeholder="Observaciones" rows="3" id="observacionesadd" style="height: 90px; resize: none"></textarea>
+                            <textarea class="form-control" placeholder="Observaciones" rows="3" id="observacionesadd"
+                                style="height: 90px; resize: none"></textarea>
                         </div>
                         <div class="col-lg mg-t-10 mg-lg-t-0">
                             <label for="">Foto</label>
@@ -164,7 +165,8 @@
                 <div class="modal-body">
                     <input type="hidden" id="idedit" readonly disabled>
                     <div class="d-flex justify-content-center">
-                        <img id="imagenedit" src="http://127.0.0.1:8000/images/vehiculos/18876865131801587359.png" style="width: 222px" loading="lazy">
+                        <img id="imagenedit" src="http://127.0.0.1:8000/images/vehiculos/18876865131801587359.png"
+                            style="width: 222px" loading="lazy">
                     </div>
                     <br>
                     <div class="row row-sm">
@@ -207,7 +209,8 @@
                     <div class="row row-sm">
                         <div class="col-lg">
                             <label for="">Tecnomecánica</label>
-                            <input class="form-control" id="tecnomecanicaedit" placeholder="Tecnomecánica" type="text">
+                            <input class="form-control" id="tecnomecanicaedit" placeholder="Tecnomecánica"
+                                type="text">
                         </div>
                         <div class="col-lg mg-t-10 mg-lg-t-0">
                             <label for="">Color</label>
@@ -239,7 +242,8 @@
                     <div class="row row-sm">
                         <div class="col-lg">
                             <label for="">Observaciones</label>
-                            <textarea class="form-control" placeholder="Observaciones" rows="3" id="observacionesedit" style="height: 90px; resize: none"></textarea>
+                            <textarea class="form-control" placeholder="Observaciones" rows="3" id="observacionesedit"
+                                style="height: 90px; resize: none"></textarea>
                         </div>
                         <div class="col-lg mg-t-10 mg-lg-t-0">
                             <label for="">Foto</label>
@@ -253,8 +257,168 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Salud -->
+    <div class="modal  fade" id="modalSalud">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content modal-content-demo">
+                <div class="modal-header">
+                    <h6 class="modal-title">Encuesta de Salud</h6><button aria-label="Close" class="btn-close"
+                        data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row row-sm">
+                        <div class="col-lg">
+                            <label for="">¿Dolor de garganta? *</label>
+                            <select id="dolor_garganta" class="form-select">
+                                <option value="">Seleccione una opción</option>
+                                <option value="No">No</option>
+                                <option value="Si">Si</option>
+                            </select>
+                        </div>
+                        <div class="col-lg mg-t-10 mg-lg-t-0">
+                            <label for="">¿Malestar general que te limite de las actividades de la vida diaria?
+                                *</label>
+                            <select id="" class="form-select">
+                                <option value="">Seleccione una opción</option>
+                                <option value="No">No</option>
+                                <option value="Si">Si</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row row-sm">
+                        <div class="col-lg">
+                            <label for="">¿Fiebre igual o mayor a 38 grados, medida con termómetro? *</label>
+                            <select id="" class="form-select">
+                                <option value="">Seleccione una opción</option>
+                                <option value="No">No</option>
+                                <option value="Si">Si</option>
+                            </select>
+                        </div>
+                        <div class="col-lg mg-t-10 mg-lg-t-0">
+                            <label for="">¿Tos seca y persistente de inicio reciente? *</label>
+                            <select id="" class="form-select">
+                                <option value="">Seleccione una opción</option>
+                                <option value="No">No</option>
+                                <option value="Si">Si</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row row-sm">
+                        <div class="col-lg">
+                            <label for="">¿Pérdida del olfato y/o el gusto? *</label>
+                            <select id="" class="form-select">
+                                <option value="">Seleccione una opción</option>
+                                <option value="No">No</option>
+                                <option value="Si">Si</option>
+                            </select>
+                        </div>
+                        <div class="col-lg mg-t-10 mg-lg-t-0">
+                            <label for="">¿Resides con alguien en proceso de diagnóstico de ser positivo para
+                                COVID-19? *</label>
+                            <select id="" class="form-select">
+                                <option value="">Seleccione una opción</option>
+                                <option value="No">No</option>
+                                <option value="Si">Si</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row row-sm">
+                        <div class="col-lg">
+                            <label for="">¿En lo últimos 14 días has tenido contacto con alguien diagnosticado de
+                                COVID-19? *</label>
+                            <select id="" class="form-select">
+                                <option value="">Seleccione una opción</option>
+                                <option value="No">No</option>
+                                <option value="Si">Si</option>
+                            </select>
+                        </div>
+                        <div class="col-lg mg-t-10 mg-lg-t-0">
+                            <label for="">¿Reside con personas que prestan servicio al sector salud? *</label>
+                            <select id="" class="form-select">
+                                <option value="">Seleccione una opción</option>
+                                <option value="No">No</option>
+                                <option value="Si">Si</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row row-sm">
+                        <div class="col-lg">
+                            <label for="">¿Reside con personas mayores de 65 años? *</label>
+                            <select id="" class="form-select">
+                                <option value="">Seleccione una opción</option>
+                                <option value="No">No</option>
+                                <option value="Si">Si</option>
+                            </select>
+                        </div>
+                        <div class="col-lg mg-t-10 mg-lg-t-0">
+                            <label for="">¿Alguien de su grupo familiar posee enfermedades o patologías crónicas?
+                                *</label>
+                            <select id="" class="form-select">
+                                <option value="">Seleccione una opción</option>
+                                <option value="No">No</option>
+                                <option value="Si">Si</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row row-sm">
+                        <div class="col-lg">
+                            <label for="">¿Botas de seguridad? *</label>
+                            <select id="" class="form-select">
+                                <option value="">Seleccione una opción</option>
+                                <option value="Si">Si</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="col-lg mg-t-10 mg-lg-t-0">
+                            <label for="">¿Uniforme? *</label>
+                            <select id="" class="form-select">
+                                <option value="">Seleccione una opción</option>
+                                <option value="Si">Si</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row row-sm">
+                        <div class="col-lg">
+                            <label for="">Declaro que la información suministrada es verídica y me encuentro en
+                                optimas condiciones de Salud para realizar mis funciones dentro de la empresa RADIO ENLACE
+                                SAS. *</label>
+                            <select id="" class="form-select">
+                                <option value="">Seleccione una opción</option>
+                                <option value="Si">Si</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <table class="table border-top-0 table-bordered text-nowrap border-bottom" id="table_salud_vehiculos">
+                        <thead>
+                            <tr>
+                                <th class="wd-15p border-bottom-0">Creado Por</th>
+                                <th class="wd-20p border-bottom-0">Fecha Creación</th>
+                                <th class="wd-10p border-bottom-0">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn ripple btn-primary" id="btnEditarVehiculo" type="button">Modificar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('assets/js/app/vehiculos.js') }}"></script>
+    <script src="{{ asset('assets/js/app/vehiculos/vehiculos.js') }}"></script>
 @endsection

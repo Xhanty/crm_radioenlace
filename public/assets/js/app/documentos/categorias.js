@@ -19,7 +19,9 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response.info == 1) {
                         toastr.success(response.success);
-                        window.location.href = "categorias_archivos";
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 1000);
                     } else {
                         toastr.error("Error al guardar la categoría");
                     }
@@ -52,7 +54,9 @@ $(document).ready(function () {
                     success: function (response) {
                         if (response.info == 1) {
                             toastr.success(response.success);
-                            window.location.href = "categorias_archivos";
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1000);
                         } else {
                             toastr.error("Error al eliminar la categoría");
                         }

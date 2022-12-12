@@ -152,4 +152,19 @@ class VehiculosController extends Controller
             return $ex->getMessage();
         }
     }
+
+    public function data_salud_vehiculos(Request $request)
+    {
+        try {
+            $data = DB::table("salud")
+            ->select('salud.*', 'empleados.nombre as creador')
+            ->join('empleados', 'salud.id_empleado', '=', 'empleados.id')
+            ->orderBy('salud.id', 'desc')
+            ->get();
+            return response()->json(['success' => $data]);
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+            return response()->json(['error' => 'Error al obtener los datos del vehiculo.']);
+        }
+    }
 }

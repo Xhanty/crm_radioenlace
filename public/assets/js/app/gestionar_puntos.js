@@ -98,7 +98,9 @@ $(function () {
                 success: function (data) {
                     if (data.info == 1) {
                         toastr.success("Puntos asignados correctamente");
-                        window.location.reload();
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 1000);
                     } else {
                         $("#btnGuardarPuntos").attr("disabled", false);
                         toastr.error("Error al asignar los puntos");
@@ -132,7 +134,9 @@ $(function () {
                     success: function (response) {
                         if (response.info == 1) {
                             toastr.success(response.success);
-                            window.location.reload();
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1000);
                         } else {
                             toastr.error("Error al eliminar los puntos");
                         }
@@ -192,7 +196,9 @@ $(function () {
                 success: function (data) {
                     if (data.info == 1) {
                         toastr.success("Puntos modificados correctamente");
-                        window.location.reload();
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 1000);
                     } else {
                         $("#btnModificarPuntos").attr("disabled", false);
                         toastr.error("Error al modificar los puntos");
@@ -223,7 +229,9 @@ $(function () {
                     success: function (response) {
                         if (response.info == 1) {
                             toastr.success(response.success);
-                            window.location.reload();
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1000);
                         } else {
                             toastr.error("Error al realizar el corte de los puntos");
                         }

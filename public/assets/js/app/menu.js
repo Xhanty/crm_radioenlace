@@ -81,10 +81,10 @@ $(function () {
         hideMethod: "fadeOut",
     };
 
-    $(".form-select").select2({
+    /*$(".form-select").select2({
         placeholder: "Seleccione una opción",
         searchInputPlaceholder: "Buscar",
-    });
+    });*/
 
     //______Basic Data Table
     $(".basic-datatable-t").DataTable({
@@ -251,12 +251,12 @@ $(function () {
                 className: "text-center",
                 render: function (data, type, full, meta) {
                     if (type === "display") {
-                        var token = (Math.random() * 3 * 1e38).toString(16);
-                        data = '<i class="fa fa-user fa-fw"></i>';
-                        data =
-                            '<img src="https://www.gravatar.com/avatar/' +
-                            token +
-                            '.png?d=robohash" class="avatar border rounded-circle">';
+                        if(data.avatar == null || data.avatar == '') {
+                            return '<img src="assets/img/sin_imagen.jpg" class="avatar border rounded-circle">';
+                        }
+                        return '<img src="http://127.0.0.1:8000/images/clientes/' +
+                            data.avatar +
+                            '" class="avatar border rounded-circle">';
                     }
 
                     return data;
@@ -342,6 +342,7 @@ $(function () {
             },
             dataType: "json",
             success: function (data) {
+                let cliente = data.cliente;
                 let facturacion = data.facturacion;
                 let tecnicos = data.tecnicos;
                 let anexos = data.anexos;
@@ -370,9 +371,37 @@ $(function () {
                 //Anexos
                 anexos.forEach((anexo) => {
                     var date = new Date(anexo.fecha);
+                    var tipo_badge = "";
+                    if (anexo.tipo == 0) {
+                        tipo_badge = "Camara de comercio";
+                    } else if (anexo.tipo == 1) {
+                        tipo_badge = "RUT";
+                    } else if (anexo.tipo == 2) {
+                        tipo_badge = "Cedula del representante Legal";
+                    } else if (anexo.tipo == 3) {
+                        tipo_badge = "Remisiones";
+                    } else if (anexo.tipo == 4) {
+                        tipo_badge = "Cotizaciones";
+                    } else if (anexo.tipo == 5) {
+                        tipo_badge = "Informacion Tecnica";
+                    } else if (anexo.tipo == 6) {
+                        tipo_badge = "Frecuencias";
+                    } else if (anexo.tipo == 7) {
+                        tipo_badge = "Equipos Utilizados";
+                    } else if (anexo.tipo == 8) {
+                        tipo_badge = "Ubicación de Equipos e Inventario";
+                    } else if (anexo.tipo == 9) {
+                        tipo_badge = "Programaciones";
+                    } else if (anexo.tipo == 10) {
+                        tipo_badge = "Otros";
+                    } else if (anexo.tipo == 11) {
+                        tipo_badge = "Formulario ANE";
+                    } else if (anexo.tipo == 12) {
+                        tipo_badge = "Informes Tecnicos";
+                    }
                     $("#table_anexos_edit").append(
                         "<tr><td>" +
-                            anexo.tipo +
+                            tipo_badge +
                             "</td><td>" +
                             date.toLocaleString() +
                             "</td><td>" +
@@ -385,7 +414,7 @@ $(function () {
                             '"><i class="fa fa-download"></i>&nbsp;Descargar</a><br>' +
                             '<a class="btn_delete_archivo" data-id="' +
                             anexo.id +
-                            '" href="#"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>' +
+                            '" href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>' +
                             "</td></tr>"
                     );
                 });
@@ -394,6 +423,36 @@ $(function () {
                     language: language,
                     order: [],
                 });
+
+                //Datos del cliente
+                $("#div_list_clientes").hide();
+                $("#div_content_cliente_edit").show();
+
+                if(cliente.avatar != null && cliente.avatar != ''){
+                    $("#img_cliente_edit").attr("src", "http://127.0.0.1:8000/images/clientes/" + cliente.avatar);
+                } else {
+                    $("#img_cliente_edit").attr("src", "https://formrad.com/radio_enlace/avatares_clientes/noavatar.png");
+                }
+
+                $("#title_cliente_edit").empty();
+                $("#title_cliente_edit").append(cliente.razon_social);
+                $("#id_cliente_edit").val(cliente.id);
+
+                $("#razon_social_edit").val(cliente.razon_social);
+                $("#contacto_edit").val(cliente.contacto);
+                $("#celular_edit").val(cliente.celular);
+                $("#email_edit").val(cliente.email);
+                $("#direccion_edit").val(cliente.direccion);
+                $("#tipo_cliente_edit").val(cliente.tipo);
+                $("#tipo_doc_cliente_edit").val(cliente.tipo_identificacion);
+                $("#documento_cliente_edit").val(cliente.nit);
+                $("#telefono_edit").val(cliente.telefono_fijo);
+                $("#ciudad_cliente_edit").val(cliente.ciudad);
+
+                $("#tipo_regimenadd").val(cliente.tipo_regimen);
+                $("#codigo_sucursaladd").val(cliente.codigo_sucursal);
+                $("#indicativo_telefonoadd").val(cliente.indicativo_telefono);
+                $("#extencionadd").val(cliente.extencion);
 
                 //console.log(data);
                 $("#global-loader").fadeOut("fast");
@@ -404,29 +463,6 @@ $(function () {
                 alert("Error al cargar los datos del cliente");
             },
         });
-
-        $("#div_list_clientes").hide();
-        $("#div_content_cliente_edit").show();
-
-        $("#title_cliente_edit").empty();
-        $("#title_cliente_edit").append(data.razon_social);
-        $("#id_cliente_edit").val(data.id);
-
-        $("#razon_social_edit").val(data.razon_social);
-        $("#contacto_edit").val(data.contacto);
-        $("#celular_edit").val(data.celular);
-        $("#email_edit").val(data.email);
-        $("#direccion_edit").val(data.direccion);
-        $("#tipo_cliente_edit").val(data.tipo);
-        $("#tipo_doc_cliente_edit").val(data.tipo_identificacion);
-        $("#documento_cliente_edit").val(data.nit);
-        $("#telefono_edit").val(data.telefono_fijo);
-        $("#ciudad_cliente_edit").val(data.ciudad);
-
-        $("#tipo_regimenadd").val(data.tipo_regimen);
-        $("#codigo_sucursaladd").val(data.codigo_sucursal);
-        $("#indicativo_telefonoadd").val(data.indicativo_telefono);
-        $("#extencionadd").val(data.extension);
         //console.log(data);
     });
 
@@ -598,7 +634,7 @@ $(function () {
                             "</td><td>" +
                             '<a class="btn_delete_novedad" data-id="' +
                             novedad.id +
-                            '" href="#"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>' +
+                            '" href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>' +
                             "</td></tr>"
                     );
                 });
@@ -621,7 +657,7 @@ $(function () {
                             '"><i class="fa fa-download"></i>&nbsp;Descargar</a><br>' +
                             '<a class="btn_delete_archivo" data-id="' +
                             anexo.id +
-                            '" href="#"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>' +
+                            '" href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>' +
                             "</td></tr>"
                     );
                 });
