@@ -1,3 +1,18 @@
+.dt-buttons.btn-group {
+    position: relative;
+    left: 0;
+    margin-left: 12px;
+}
+
+.dt-buttons.btn-group button:first-child {
+    display: none;
+}
+
+.dt-buttons.btn-group button {
+    height: 33.53px;
+    border-radius: 4px !important;
+}
+
 .cards tbody tr {
     float: left;
     width: 19rem;

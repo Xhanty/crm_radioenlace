@@ -367,10 +367,6 @@
                         </div>
                     </div>
                     <div class="card-body" style="margin-top: -18px;">
-                        <div class="d-flex justify-content-center">
-                            <img src="https://formrad.com/radio_enlace/avatares_clientes/noavatar.png">
-                        </div>
-                        <br>
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Tipo Cliente</label>
