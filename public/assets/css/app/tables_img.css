@@ -30,11 +30,13 @@
 #table_clientes_img tbody tr td:first-child {
     display: flex;
     justify-content: center;
+    cursor: pointer;
 }
 
 #table_empleados_img tbody tr td:first-child {
     display: flex;
     justify-content: center;
+    cursor: pointer;
 }
 
 .cards td:before {

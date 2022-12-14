@@ -131,7 +131,7 @@ $(function () {
         let id = $(this).data("id");
 
         Swal.fire({
-            title: "¿Deseas dar de baja este producto?",
+            title: "¿Deseas cambiar el estado este producto?",
             showDenyButton: true,
             showCancelButton: false,
             confirmButtonText: "Cancelar",
@@ -151,11 +151,11 @@ $(function () {
                                 window.location.reload();
                             }, 1000);
                         } else {
-                            toastr.error("Error al dar de baja el producto");
+                            toastr.error("Error al actualizar el producto");
                         }
                     },
                     error: function (error) {
-                        toastr.error("Error al dar de baja el producto");
+                        toastr.error("Error al actualizar el producto");
                     },
                 });
             }

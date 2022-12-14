@@ -28,14 +28,13 @@
                             <h3 class="card-title mt-2">Lista de Empleados</h3>
                         </div>
                         <div class="div-2-tables-header">
-                            <button class="btn btn-primary" data-bs-target="#modalAdd" data-bs-toggle="modal"
-                                data-bs-effect="effect-scale">Registrar Empleado</button>
+                            <button class="btn btn-primary" id="addNewEmpleado">Registrar Empleado</button>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table border-top-0 table-bordered text-nowrap border-bottom"
-                                id="table_empleados_img" style="cursor: pointer">
+                                id="table_empleados_img">
                                 <thead>
                                     <tr>
                                         <th></th>
@@ -45,6 +44,7 @@
                                         <th>Teléfono</th>
                                         <th>Rol</th>
                                         <th>Estatus</th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -55,7 +55,7 @@
         </div>
         <!-- End Row -->
 
-        <!-- row -->
+        <!-- row Edit -->
         <div class="row row-sm" id="div_content_empleado_edit">
             <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
                 <!--div-->
@@ -489,6 +489,154 @@
         </div>
         <!-- row closed -->
 
+        <!-- row Add -->
+        <div class="row row-sm" id="div_content_empleado_add">
+            <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
+                <!--div-->
+                <div class="card">
+                    <div class="card-header d-flex-header-table">
+                        <div class="div-1-tables-header">
+                            <h3 class="card-title mt-2">Agregar Empleado</h3>
+                        </div>
+                        <div class="div-2-tables-header">
+                            <button class="btn btn-primary" id="back_table_empleado_add">&times;</button>
+                        </div>
+                    </div>
+                    <div class="card-body" style="margin-top: -18px;">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Código Empleado</label>
+                                <input class="form-control" id="codigo_empleado_add" placeholder="Código Empleado"
+                                    type="text">
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="">Nombre</label>
+                                <input class="form-control" id="nombre_empleado_add" placeholder="Nombre" type="text">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Cargo</label>
+                                <input class="form-control" id="cargo_empleado_add" placeholder="Cargo" type="text">
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="">Rol</label>
+                                <select id="rol_empleado_add" class="form-select">
+                                    <option value="0">A0</option>
+                                    <option value="1">A1</option>
+                                    <option value="2">A2</option>
+                                    <option value="3">A3</option>
+                                    <option value="4">A4</option>
+                                    <option value="5">A5</option>
+                                    <option value="6">A6</option>
+                                    <option value="7">A7</option>
+                                    <option value="8">A8</option>
+                                    <option value="9">A9</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">E-Mail</label>
+                                <input class="form-control" id="email_add" placeholder="E-Mail" type="email">
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="">Teléfono Fijo</label>
+                                <input class="form-control" id="telefono_fij_add" placeholder="Teléfono Fijo"
+                                    type="text">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Teléfono Celular</label>
+                                <input class="form-control" id="telefono_cel_add" placeholder="Teléfono Celular"
+                                    type="text">
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="">Dirección</label>
+                                <input class="form-control" id="direccion_add" placeholder="Dirección" type="text">
+                            </div>
+                        </div>
+                        <br>
+
+                        <!-- ACÁ PARA ABAJO -->
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Fecha Ingreso</label>
+                                <input class="form-control" id="fecha_ingreso_add" placeholder="Fecha Ingreso"
+                                    type="date">
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="">Fecha Retiro</label>
+                                <input class="form-control" id="fecha_retiro_add" placeholder="Fecha Retiro"
+                                    type="date">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Fecha Nacimiento</label>
+                                <input class="form-control" id="fecha_nacimiento_add" placeholder="Fecha Nacimiento"
+                                    type="date">
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="">EPS</label>
+                                <input class="form-control" id="eps_add" placeholder="EPS" type="text">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Caja Compensación</label>
+                                <input class="form-control" id="caja_compensacion_add" placeholder="Caja Compensación"
+                                    type="text">
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="">ARL</label>
+                                <input class="form-control" id="arl_add" placeholder="ARL" type="text">
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Fondo Pensión</label>
+                                <input class="form-control" id="fondo_pension_add" placeholder="Fondo Pensión"
+                                    type="text">
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="">Riesgos Profesionales</label>
+                                <select class="form-select" id="riesgos_prof_add">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Avatar / Foto</label>
+                                <input class="form-control" id="avataradd" type="file">
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="text-center">
+                            <button class="btn ripple btn-primary" id="btnAgregarEmpleado" type="button">Agregar Empleado</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- row closed -->
+
         <!-- Modal Add Novedad -->
         <div class="modal  fade" id="modalAddNovedad">
             <div class="modal-dialog modal-lg" role="document">
@@ -579,8 +727,7 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Tipo Documento</label>
-                                <select class="form-control" required name="tipo_document_anexo_add">
-                                    <option value="">Seleccione un tipo de documento</option>
+                                <select class="form-control" required id="tipo_document_anexo_add">
                                     <option value="0">Hoja de vida</option>
                                     <option value="1">Afiliaciones</option>
                                     <option value="2">Contrato</option>

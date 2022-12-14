@@ -259,7 +259,7 @@ $(document).ready(function () {
     $(document).on("click", ".btn_delete_archivo", function () {
         let id = $("#id_cliente_edit").val();
         let id_anexo = $(this).data("id");
-        
+
         Swal.fire({
             title: "¿Estás seguro?",
             text: "¡No podrás revertir esto!",
@@ -356,11 +356,94 @@ $(document).ready(function () {
         });
     });
 
+    $(document).on("click", ".btnEliminar", function () {
+        let id = $(this).data("id");
+
+        Swal.fire({
+            title: "¿Estás seguro?",
+            text: "¡No podrás revertir esto!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "¡Sí, bórralo!",
+            cancelButtonText: "¡No, cancelar!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "clientes_delete",
+                    type: "POST",
+                    data: {
+                        id: id,
+                    },
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.info == 1) {
+                            toastr.success("Cliente eliminado correctamente");
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1000);
+                        } else {
+                            toastr.error("Error al eliminar el cliente");
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        toastr.error("Error al eliminar el cliente");
+                    },
+                });
+            }
+        });
+    });
+
+    $(document).on("click", ".btnInactivar", function () {
+        let id = $(this).data("id");
+        let estado = $(this).data("estado");
+
+        if (estado == 1) {
+            estado = 0;
+        } else {
+            estado = 1;
+        }
+
+        Swal.fire({
+            title: "¿Estás seguro de cambiar el estado del cliente?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "¡Sí, cambiar!",
+            cancelButtonText: "¡No, cancelar!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "clientes_inactivar",
+                    type: "POST",
+                    data: {
+                        id: id,
+                        estado: estado,
+                    },
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.info == 1) {
+                            toastr.success("Cliente actualizado correctamente");
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1000);
+                        } else {
+                            toastr.error("Error al actualizar el cliente");
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        toastr.error("Error al actualizar el cliente");
+                    },
+                });
+            }
+        });
+    });
+
     $("#btnModificarCliente4").click(function () {
         let id = $("#id_cliente_edit").val();
         let tipo_documento = $("#tipodocumentoadd").val();
         let descripcion = $("#descripcionadd").val();
-        
+
         let formData = new FormData();
         formData.append("update_tipo", 5);
         formData.append("id", id);

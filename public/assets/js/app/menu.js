@@ -284,6 +284,17 @@ $(function () {
                     }
                 },
             },
+            {
+                data: null,
+                render: function (data) {
+                    return (
+                        '<button data-estado="'+data.estado+'" data-id="'+data.id+'" class="btn btn-primary btn-sm btnInactivar" title="Inactivar">' +
+                        '<i class="fas fa-times"></i></button>&nbsp;' +
+                        '<button data-id="'+data.id+'" class="btn btn-danger btn-sm btnEliminar" title="Eliminar">' +
+                        '<i class="fa fa-trash"></i></button>'
+                    );
+                },
+            },
         ],
         drawCallback: function (settings) {
             var api = this.api();
@@ -324,7 +335,7 @@ $(function () {
         },
     });
 
-    $("#table_clientes_img tbody").on("click", "tr", function () {
+    $("#table_clientes_img tbody").on("click", "tr td:first-child", function () {
         $("#global-loader").fadeIn("fast");
         var data = table_clientes.row(this).data();
 
@@ -428,10 +439,17 @@ $(function () {
                 $("#div_list_clientes").hide();
                 $("#div_content_cliente_edit").show();
 
-                if(cliente.avatar != null && cliente.avatar != ''){
-                    $("#img_cliente_edit").attr("src", "http://127.0.0.1:8000/images/clientes/" + cliente.avatar);
+                if (cliente.avatar != null && cliente.avatar != "") {
+                    $("#img_cliente_edit").attr(
+                        "src",
+                        "http://127.0.0.1:8000/images/clientes/" +
+                            cliente.avatar
+                    );
                 } else {
-                    $("#img_cliente_edit").attr("src", "https://formrad.com/radio_enlace/avatares_clientes/noavatar.png");
+                    $("#img_cliente_edit").attr(
+                        "src",
+                        "https://formrad.com/radio_enlace/avatares_clientes/noavatar.png"
+                    );
                 }
 
                 $("#title_cliente_edit").empty();
@@ -536,6 +554,17 @@ $(function () {
                     }
                 },
             },
+            {
+                data: null,
+                render: function (data) {
+                    return (
+                        '<button data-estado="'+data.status+'" data-id="'+data.id+'" class="btn btn-primary btn-sm btnInactivar" title="Inactivar">' +
+                        '<i class="fas fa-times"></i></button>&nbsp;' +
+                        '<button data-id="'+data.id+'" class="btn btn-danger btn-sm btnEliminar" title="Eliminar">' +
+                        '<i class="fa fa-trash"></i></button>'
+                    );
+                },
+            },
         ],
         drawCallback: function (settings) {
             var api = this.api();
@@ -576,7 +605,7 @@ $(function () {
         },
     });
 
-    $("#table_empleados_img tbody").on("click", "tr", function () {
+    $("#table_empleados_img tbody").on("click", "tr td:first-child", function () {
         $("#global-loader").fadeIn("fast");
         var data = table_empleados.row(this).data();
 
@@ -642,9 +671,67 @@ $(function () {
                 //Anexos
                 anexos.forEach((anexo) => {
                     var date = new Date(anexo.fecha);
+                    var tipo_badge = "";
+                    if(anexo.tipo == 0){
+                        tipo_badge = "Hoja de vida";
+                    } else if (anexo.tipo == 1) {
+                        tipo_badge = "Afiliaciones";
+                    } else if (anexo.tipo == 2) {
+                        tipo_badge = "Contrato";
+                    } else if (anexo.tipo == 3) {
+                        tipo_badge = "Examenes Ocupacionales";
+                    } else if (anexo.tipo == 4) {
+                        tipo_badge = "Curso de altura";
+                    } else if (anexo.tipo == 5) {
+                        tipo_badge = "Capacitaciones";
+                    } else if (anexo.tipo == 6) {
+                        tipo_badge = "Procesos disciplinarios";
+                    } else if (anexo.tipo == 7) {
+                        tipo_badge = "Vacaciones";
+                    } else if (anexo.tipo == 8) {
+                        tipo_badge = "Carnet de vacunación";
+                    } else if (anexo.tipo == 9) {
+                        tipo_badge = "Primas";
+                    } else if (anexo.tipo == 10) {
+                        tipo_badge = "Código de ética y buen gobierno";
+                    } else if (anexo.tipo == 11) {
+                        tipo_badge = "Autorización tratamiento de datos personales";
+                    } else if (anexo.tipo == 12) {
+                        tipo_badge = "Hoja de vida empresarial";
+                    } else if (anexo.tipo == 13) {
+                        tipo_badge = "Control de selección";
+                    } else if (anexo.tipo == 14) {
+                        tipo_badge = "Entrega de carnet";
+                    } else if (anexo.tipo == 15) {
+                        tipo_badge = "Requisitos laborales";
+                    } else if (anexo.tipo == 16) {
+                        tipo_badge = "Entrenamiento y preparación incorporación";
+                    } else if (anexo.tipo == 17) {
+                        tipo_badge = "Registro de inducción";
+                    } else if (anexo.tipo == 18) {
+                        tipo_badge = "Plan formación inducción";
+                    } else if (anexo.tipo == 19) {
+                        tipo_badge = "Evidencia Fotográfoca de las capacitaciones";
+                    } else if (anexo.tipo == 21) {
+                        tipo_badge = "Formatos varios (word excel pdf)";
+                    } else if (anexo.tipo == 22) {
+                        tipo_badge = "Implementos de seguridad";
+                    } else if (anexo.tipo == 23) {
+                        tipo_badge = "Incapacidades";
+                    } else if (anexo.tipo == 24) {
+                        tipo_badge = "Datos Personales";
+                    } else if (anexo.tipo == 25) {
+                        tipo_badge = "Dotación";
+                    } else if (anexo.tipo == 26) {
+                        tipo_badge = "Seguridad Social";
+                    } else if (anexo.tipo == 27) {
+                        tipo_badge = "Prestamo a Empleados";
+                    } else if (anexo.tipo == 28) {
+                        tipo_badge = "Otros";
+                    }
                     $("#table_anexos_edit").append(
                         "<tr><td>" +
-                            anexo.tipo +
+                            tipo_badge +
                             "</td><td>" +
                             date.toLocaleString() +
                             "</td><td>" +

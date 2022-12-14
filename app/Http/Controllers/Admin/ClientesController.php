@@ -202,4 +202,50 @@ class ClientesController extends Controller
             return $ex;
         }
     }
+
+    public function clientes_delete(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $cliente = $request->id;
+
+            $anexos = DB::table('anexos_clientes')->where("id_cliente", $cliente)->get();
+
+            foreach ($anexos as $anexo) {
+                $path = public_path('images/clientes/' . $anexo->documento);
+                if (file_exists($path)) {
+                    unlink($path);
+                }
+            }
+
+            DB::table('anexos_clientes')->where("id_cliente", $cliente)->delete();
+            DB::table('datos_facturacion')->where("id_cliente", $cliente)->delete();
+            DB::table('datos_tecnico')->where("id_cliente", $cliente)->delete();
+            DB::table('cliente')->where("id", $cliente)->delete();
+
+            DB::commit();
+            return response()->json(["info" => 1]);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return $ex;
+        }
+    }
+
+    public function clientes_inactivar(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $cliente = $request->id;
+
+            DB::table('cliente')->where("id", $cliente)->update([
+                "estado" => $request->estado
+            ]);
+
+            DB::commit();
+            return response()->json(["info" => 1]);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return $ex;
+        }
+    }
 }

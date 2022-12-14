@@ -93,6 +93,11 @@ class InventarioController extends Controller
     {
         try {
             DB::beginTransaction();
+            $imagen = DB::table("productos")->where('id', $request->id)->first();
+            $image_path = public_path('images/productos/' . $imagen->imagen);
+            if (file_exists($image_path)) {
+                unlink($image_path);
+            }
             DB::table("productos")->where('id', $request->id)->delete();
             DB::commit();
             return response()->json(['info' => 1, 'success' => 'Producto eliminado correctamente.']);
@@ -114,7 +119,7 @@ class InventarioController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $actionBtn = '<a data-id="' . $row->id . '" title="Editar" class="edit btn btn-primary btn-sm btn_Edit"><i class="fa fa-pencil-alt"></i></a>
-                    <a data-id="' . $row->id . '" title="Dar de Baja" class="edit btn btn-primary btn-sm btn_Baja"><i class="fas fa-times"></i></a>
+                    <a data-id="' . $row->id . '" title="Cambiar Estatus" class="edit btn btn-primary btn-sm btn_Baja"><i class="fas fa-times"></i></a>
                     <a data-id="' . $row->id . '" title="Eliminar" class="delete btn btn-danger btn-sm btn_Delete"><i class="fa fa-trash"></i></a>';
                     return $actionBtn;
                 })
@@ -160,6 +165,28 @@ class InventarioController extends Controller
                 })
                 ->rawColumns(['action'])
                 ->make(true);
+        }
+    }
+
+    public function baja_producto(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $producto = DB::table("productos")->where('id', $request->id)->first();
+            if ($producto->status == 1) {
+                DB::table("productos")->where('id', $request->id)->update([
+                    'status' => 0
+                ]);
+            } else {
+                DB::table("productos")->where('id', $request->id)->update([
+                    'status' => 1
+                ]);
+            }
+            DB::commit();
+            return response()->json(['info' => 1, 'success' => 'Producto actualizado correctamente.']);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return response()->json(['info' => 0, 'error' => 'Error al actualizar el producto.']);
         }
     }
 }

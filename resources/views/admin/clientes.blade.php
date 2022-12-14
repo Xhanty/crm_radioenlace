@@ -35,7 +35,7 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table border-top-0 table-bordered text-nowrap border-bottom"
-                                id="table_clientes_img" style="cursor: pointer">
+                                id="table_clientes_img">
                                 <thead>
                                     <tr>
                                         <th></th>
@@ -44,6 +44,7 @@
                                         <th>Celular</th>
                                         <th>E-Mail</th>
                                         <th>Estado</th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                             </table>
