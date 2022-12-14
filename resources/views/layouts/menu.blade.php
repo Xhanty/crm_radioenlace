@@ -234,13 +234,13 @@
                                     class="side-menu__icon fe fe-shopping-cart"></i><span class="side-menu__label">Movimiento Inv.</span><i
                                     class="angle fe fe-chevron-down"></i></a>
                             <ul class="slide-menu">
-                                <li><a class="slide-item" href="javascript:void(0)">Productos Baja</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Repuestos Reparación</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Productos Instalados</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Ventas</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Prestamos</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Alquileres</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Productos Asignados</a></li>
+                                <li><a class="slide-item" href="{{ route('productos_baja') }}">Productos Baja</a></li>
+                                <li><a class="slide-item" href="{{ route('repuestos_reparacion') }}">Repuestos Reparación</a></li>
+                                <li><a class="slide-item" href="{{ route('productos_instalados') }}">Productos Instalados</a></li>
+                                <li><a class="slide-item" href="{{ route('ventas') }}">Ventas</a></li>
+                                <li><a class="slide-item" href="{{ route('prestamos') }}">Prestamos</a></li>
+                                <li><a class="slide-item" href="{{ route('alquileres') }}">Alquileres</a></li>
+                                <li><a class="slide-item" href="{{ route('productos_asignados') }}">Productos Asignados</a></li>
                             </ul>
                         </li>
 

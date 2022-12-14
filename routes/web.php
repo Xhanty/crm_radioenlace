@@ -106,10 +106,17 @@ Route::middleware(['auth_user'])->group(function () {
 
     Route::get('/checklist_email', [App\Http\Controllers\Admin\VehiculosController::class, 'checklist_email'])->name('checklist_email');
 
-
     Route::get('/categorias_archivos', [App\Http\Controllers\Admin\Documentos\CategoriasController::class, 'index'])->name('categorias_archivos');
     Route::post('/categorias_archivos_create', [App\Http\Controllers\Admin\Documentos\CategoriasController::class, 'add'])->name('categorias_archivos_create');
     Route::post('/categorias_archivos_delete', [App\Http\Controllers\Admin\Documentos\CategoriasController::class, 'delete'])->name('categorias_archivos_delete');
 
     Route::get('/archivos', [App\Http\Controllers\Admin\Documentos\ArchivosController::class, 'index'])->name('archivos');
+
+    Route::get('/productos_baja', [App\Http\Controllers\Admin\MovimientoInv\RepuestosController::class, 'productos_baja'])->name('productos_baja');
+    Route::get('/repuestos_reparacion', [App\Http\Controllers\Admin\MovimientoInv\RepuestosController::class, 'repuestos_reparacion'])->name('repuestos_reparacion');
+    Route::get('/productos_instalados', [App\Http\Controllers\Admin\MovimientoInv\RepuestosController::class, 'productos_instalados'])->name('productos_instalados');
+    Route::get('/ventas', [App\Http\Controllers\Admin\MovimientoInv\RepuestosController::class, 'ventas'])->name('ventas');
+    Route::get('/prestamos', [App\Http\Controllers\Admin\MovimientoInv\RepuestosController::class, 'prestamos'])->name('prestamos');
+    Route::get('/alquileres', [App\Http\Controllers\Admin\MovimientoInv\RepuestosController::class, 'alquileres'])->name('alquileres');
+    Route::get('/productos_asignados', [App\Http\Controllers\Admin\MovimientoInv\RepuestosController::class, 'productos_asignados'])->name('productos_asignados');
 });
