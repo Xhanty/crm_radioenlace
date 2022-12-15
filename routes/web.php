@@ -112,11 +112,13 @@ Route::middleware(['auth_user'])->group(function () {
 
     Route::get('/archivos', [App\Http\Controllers\Admin\Documentos\ArchivosController::class, 'index'])->name('archivos');
 
-    Route::get('/productos_baja', [App\Http\Controllers\Admin\MovimientoInv\RepuestosController::class, 'productos_baja'])->name('productos_baja');
-    Route::get('/repuestos_reparacion', [App\Http\Controllers\Admin\MovimientoInv\RepuestosController::class, 'repuestos_reparacion'])->name('repuestos_reparacion');
-    Route::get('/productos_instalados', [App\Http\Controllers\Admin\MovimientoInv\RepuestosController::class, 'productos_instalados'])->name('productos_instalados');
-    Route::get('/ventas', [App\Http\Controllers\Admin\MovimientoInv\RepuestosController::class, 'ventas'])->name('ventas');
+    Route::get('/productos_baja', [App\Http\Controllers\Admin\MovimientoInv\ProductosController::class, 'productos_baja'])->name('productos_baja');
+    Route::get('/repuestos_reparacion', [App\Http\Controllers\Admin\MovimientoInv\RepuestosController::class, 'index'])->name('repuestos_reparacion');
+    Route::get('/productos_instalados', [App\Http\Controllers\Admin\MovimientoInv\ProductosController::class, 'productos_instalados'])->name('productos_instalados');
+    Route::get('/ventas', [App\Http\Controllers\Admin\MovimientoInv\VentasController::class, 'index'])->name('ventas');
     Route::get('/prestamos', [App\Http\Controllers\Admin\MovimientoInv\RepuestosController::class, 'prestamos'])->name('prestamos');
-    Route::get('/alquileres', [App\Http\Controllers\Admin\MovimientoInv\RepuestosController::class, 'alquileres'])->name('alquileres');
-    Route::get('/productos_asignados', [App\Http\Controllers\Admin\MovimientoInv\RepuestosController::class, 'productos_asignados'])->name('productos_asignados');
+    Route::get('/alquileres', [App\Http\Controllers\Admin\MovimientoInv\AlquileresController::class, 'index'])->name('alquileres');
+    Route::get('/productos_asignados', [App\Http\Controllers\Admin\MovimientoInv\ProductosController::class, 'productos_asignados'])->name('productos_asignados');
+
+    Route::get('/documentos', [App\Http\Controllers\Admin\Documentos\DocumentosController::class, 'index'])->name('documentos');
 });

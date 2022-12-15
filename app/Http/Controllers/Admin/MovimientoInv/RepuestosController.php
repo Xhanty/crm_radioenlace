@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class RepuestosController extends Controller
 {
-    public function repuestos_reparacion()
+    public function index()
     {
         $repuestos = DB::table('repuestos_reparacion')
         ->select('repuestos_reparacion.*', 'productos.nombre', 'productos.cod_interno', 'productos.serial')
@@ -18,33 +18,8 @@ class RepuestosController extends Controller
         return view('admin.movimientoInv.repuestos', compact('repuestos'));
     }
 
-    public function productos_baja()
-    {
-        return view('admin.movimientoInv.productos_baja');
-    }
-
-    public function productos_instalados()
-    {
-        return view('admin.movimientoInv.productos_instalados');
-    }
-
-    public function ventas()
-    {
-        return view('admin.movimientoInv.ventas');
-    }
-
     public function prestamos()
     {
         return view('admin.movimientoInv.prestamos');
-    }
-
-    public function alquileres()
-    {
-        return view('admin.movimientoInv.alquileres');
-    }
-
-    public function productos_asignados()
-    {
-        return view('admin.movimientoInv.productos_asignados');
     }
 }

@@ -277,17 +277,7 @@
                             <ul class="slide-menu">
                                 <li><a class="slide-item" href="{{ route('categorias_archivos') }}">Categorías Documentos</a></li>
                                 <li><a class="slide-item" href="{{ route('archivos') }}">Gestionar Archivos</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Clientes</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Gerencia</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Subgerencia</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Contabilidad</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Cartera</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Tesorería</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">RH</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Coordinador Comercial</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Gerente Comercial</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Laboratorio</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">SST</a></li>
+                                <li><a class="slide-item" href="{{ route('documentos') }}">Documentos</a></li>
                             </ul>
                         </li>
 
