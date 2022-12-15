@@ -18,7 +18,7 @@ class CategoriasController extends Controller
             ->get();
             return view('admin.documentos.categorias', compact('categorias'));
         } catch (Exception $ex) {
-            return $ex;
+            return view('errors.500');
         }
     }
 

@@ -28,7 +28,7 @@ class PuntosController extends Controller
 
             return view('admin.puntos.mis_puntos', compact('puntos_pendientes', 'puntos_cobrados'));
         } catch (Exception $ex) {
-            return $ex;
+            return view('errors.500');
         }
     }
 
@@ -56,7 +56,7 @@ class PuntosController extends Controller
 
             return view('admin.puntos.gestionar_puntos', compact('puntos_pendientes', 'puntos_cobrados', 'empleados'));
         } catch (Exception $ex) {
-            return $ex;
+            return view('errors.500');
         }
     }
 

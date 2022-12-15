@@ -29,13 +29,17 @@ class AsignacionesController extends Controller
                 ->get();
             return view('admin.asignaciones.asignaciones', compact('asignaciones_pendientes', 'asignaciones_completadas'));
         } catch (Exception $ex) {
-            return $ex;
+            return view('errors.500');
         }
     }
 
     public function actividades_diarias()
     {
-        return view('admin.asignaciones.actividades_diarias');
+        try {
+            return view('admin.asignaciones.actividades_diarias');
+        } catch (Exception $ex) {
+            return view('errors.500');
+        }
     }
 
     public function gestionar_asignaciones()
@@ -61,7 +65,7 @@ class AsignacionesController extends Controller
 
             return view('admin.asignaciones.gestionar_asignaciones', compact('asignaciones_pendientes', 'asignaciones_completadas', 'empleados'));
         } catch (Exception $ex) {
-            return $ex;
+            return view('errors.500');
         }
     }
 

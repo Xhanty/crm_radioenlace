@@ -18,7 +18,7 @@ class AlmacenesController extends Controller
             ->get();
             return view('admin.inventario.almacenes', compact('almacenes'));
         } catch (Exception $ex) {
-            return $ex;
+            return view('errors.500');
         }
     }
 

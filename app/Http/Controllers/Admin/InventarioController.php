@@ -16,7 +16,7 @@ class InventarioController extends Controller
             $categorias = DB::table('categorias')->get();
             return view('admin.inventario.inventario', compact('categorias'));
         } catch (Exception $ex) {
-            return $ex;
+            return view('errors.500');
         }
     }
 
@@ -143,7 +143,7 @@ class InventarioController extends Controller
         try {
             return view('admin.inventario.actividades');
         } catch (Exception $ex) {
-            return $ex;
+            return view('errors.500');
         }
     }
 

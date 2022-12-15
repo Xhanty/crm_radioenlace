@@ -20,7 +20,7 @@ class CategoriaProductosController extends Controller
             ->get();
             return view('admin.inventario.categorias', compact('categorias'));
         } catch (Exception $ex) {
-            return $ex;
+            return view('errors.500');
         }
     }
 

@@ -45,12 +45,12 @@
                                     <ul>
                                         <li>
                                             <strong>Pendientes</strong>
-                                            <span>5</span>
+                                            <span>{{ $asignaciones_pendientes }}</span>
                                         </li>
 
                                         <li>
                                             <strong>Completadas</strong>
-                                            <span>56</span>
+                                            <span>{{ $asignaciones_completadas }}</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -87,12 +87,12 @@
                                     <ul>
                                         <li>
                                             <strong>Pendientes</strong>
-                                            <span>42</span>
+                                            <span>{{ $puntos_pendientes }}</span>
                                         </li>
 
                                         <li>
                                             <strong>Cobrados</strong>
-                                            <span>23</span>
+                                            <span>{{ $puntos_cobrados }}</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -123,12 +123,12 @@
                                     <ul>
                                         <li>
                                             <strong>Pendientes</strong>
-                                            <span>2</span>
+                                            <span>{{ $reparaciones_pendientes }}</span>
                                         </li>
 
                                         <li>
                                             <strong>Completadas</strong>
-                                            <span>16</span>
+                                            <span>{{ $reparaciones_completadas }}</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -155,11 +155,11 @@
                                     <ul>
                                         <li>
                                             <strong>Asignados</strong>
-                                            <span>15</span>
+                                            <span>{{ $productos_asignados }}</span>
                                         </li>
                                         <li>
                                             <strong>Devueltos</strong>
-                                            <span>8</span>
+                                            <span>{{ $productos_devueltos }}</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -201,7 +201,8 @@
                                 <h4 class="card-title mg-b-10">Últimas Asignaciones</h4>
                                 <i class="mdi mdi-dots-horizontal text-gray"></i>
                             </div>
-                            <p class="tx-12 text-muted mb-3">Aquí aparecerán las últimas 5 asignaciones. <a href="{{ route('asignaciones') }}">Ver todas</a></p>
+                            <p class="tx-12 text-muted mb-3">Aquí aparecerán las últimas 5 asignaciones. <a
+                                    href="{{ route('asignaciones') }}">Ver todas</a></p>
                             <div class="table-responsive mb-0 projects-stat tx-14">
                                 <table
                                     class="table table-hover table-bordered mb-0 text-md-nowrap text-lg-nowrap text-xl-nowrap  ">
@@ -212,73 +213,22 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="project-names">
-                                                    <h6
-                                                        class="bg-primary-transparent text-primary d-inline-block me-2 text-center">
-                                                        U</h6>
-                                                    <p class="d-inline-block font-weight-semibold mb-0">UI Design</p>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="badge bg-success">Completed</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="project-names">
-                                                    <h6
-                                                        class="bg-pink-transparent text-pink d-inline-block text-center me-2">
-                                                        R</h6>
-                                                    <p class="d-inline-block font-weight-semibold mb-0">Landing Page</p>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="badge bg-warning">Pending</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="project-names">
-                                                    <h6
-                                                        class="bg-success-transparent text-success d-inline-block me-2 text-center">
-                                                        W</h6>
-                                                    <p class="d-inline-block font-weight-semibold mb-0">Website &amp; Blog
-                                                    </p>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="badge bg-danger">Canceled</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="project-names">
-                                                    <h6
-                                                        class="bg-purple-transparent text-purple d-inline-block me-2 text-center">
-                                                        P</h6>
-                                                    <p class="d-inline-block font-weight-semibold mb-0">Product Development
-                                                    </p>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="badge bg-teal">on-going</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="project-names">
-                                                    <h6
-                                                        class="bg-danger-transparent text-danger d-inline-block me-2 text-center">
-                                                        L</h6>
-                                                    <p class="d-inline-block font-weight-semibold mb-0">Logo Design</p>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="badge bg-success">Completed</div>
-                                            </td>
-                                        </tr>
+                                        @foreach ($asignaciones as $item)
+                                            <tr>
+                                                <td>
+                                                    <div class="project-names">
+                                                        <p class="d-inline-block font-weight-semibold mb-0">{{ $item->asignacion }}</p>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    @if($item->status == 1)
+                                                        <div class="badge bg-warning">Pendiente</div>
+                                                    @else
+                                                        <div class="badge bg-success">Completado</div>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

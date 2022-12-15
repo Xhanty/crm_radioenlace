@@ -11,7 +11,11 @@ class EmpleadosController extends Controller
 {
     public function index()
     {
-        return view('admin.empleados');
+        try {
+            return view('admin.empleados');
+        } catch (Exception $ex) {
+            return view('errors.500');
+        }
     }
 
     public function empleados_list()

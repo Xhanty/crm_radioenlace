@@ -15,7 +15,7 @@ class ProveedoresController extends Controller
             $proveedores = DB::table('proveedores')->get();
             return view('admin.proveedores', compact('proveedores'));
         } catch (Exception $ex) {
-            return $ex;
+            return view('errors.500');
         }
     }
 

@@ -3,12 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
 
 class ReparacionesController extends Controller
 {
     public function index()
     {
-        return view('admin.reparaciones');
+        try {
+            return view('admin.reparaciones');
+        } catch (Exception $ex) {
+            return view('errors.500');
+        }
     }
 }

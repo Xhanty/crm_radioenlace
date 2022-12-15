@@ -14,7 +14,7 @@ class ClientesController extends Controller
         try {
             return view('admin.clientes');
         } catch (Exception $ex) {
-            return $ex;
+            return view('errors.500');
         }
     }
 

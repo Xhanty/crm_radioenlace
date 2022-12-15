@@ -15,7 +15,7 @@ class VehiculosController extends Controller
         try {
             return view('admin.vehiculos.vehiculos');
         } catch (Exception $ex) {
-            return $ex->getMessage();
+            return view('errors.500');
         }
     }
 
@@ -149,7 +149,7 @@ class VehiculosController extends Controller
             $vehiculos = DB::table("vehiculos")->where('estado', 1)->get();
             return view('admin.vehiculos.checklist_email', compact('vehiculos'));
         } catch (Exception $ex) {
-            return $ex->getMessage();
+            return view('errors.500');
         }
     }
 

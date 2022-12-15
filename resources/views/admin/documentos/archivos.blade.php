@@ -102,7 +102,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn ripple btn-primary" id="btnGuardarCategoria" type="button">Guardar</button>
+                        <button class="btn ripple btn-primary" id="btnGuardarArchivo" type="button">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -111,5 +111,5 @@
 @endsection
 
 @section('scripts')
-    <!--<script src="{{ asset('assets/js/app/documentos/archivos.js') }}"></script>-->
+    <script src="{{ asset('assets/js/app/documentos/archivos.js') }}"></script>
 @endsection
