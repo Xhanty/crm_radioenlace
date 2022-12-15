@@ -5,6 +5,15 @@ $(function () {
         },
     });
 
+    $("#div_content_salud").hide();
+    $("#div_list_vehiculos").show();
+
+    $("#back_table_salud").click(function (e) {
+        e.preventDefault();
+        $("#div_content_salud").hide();
+        $("#div_list_vehiculos").show();
+    });
+
     $("#btnGuardarVehiculo").click(function (e) {
         e.preventDefault();
         let marca = $("#marcaadd").val();
@@ -257,12 +266,8 @@ $(function () {
                             <td>${element.creador}</td>
                             <td>${element.fecha}</td>
                             <td class="d-flex">
-                                <a class="d-flex btn_eliminar_salud" data-id="{{ $value->id }}"
-                                    href="javascript:void(0);">
-                                    <i class="fa fa-trash"></i></a>&nbsp;
-                                <a class="d-flex btn_view_salud" data-id="{{ $value->id }}"
-                                    href="javascript:void(0);">
-                                    <i class="fa fa-eye"></i></a>
+                                <a data-id="${element.id}" title="Editar" class="edit btn btn-primary btn-sm btn_ShowEncuesta"><i class="fa fa-eye"></i></a>&nbsp;
+                                <a data-id="${element.id}" title="Eliminar" class="delete btn btn-danger btn-sm btn_DeleteEncuesta"><i class="fa fa-trash"></i></a>
                             </td>
                         </tr>
                     `);
@@ -272,7 +277,8 @@ $(function () {
                     order: [],
                 });
                 //console.log(data);
-                $("#modalSalud").modal("show");
+                $("#div_content_salud").show();
+                $("#div_list_vehiculos").hide();
                 $("#global-loader").fadeOut("fast");
             },
             error: function (error) {
@@ -280,5 +286,9 @@ $(function () {
                 toastr.error("Error al cargar los datos");
             },
         });
+    });
+
+    $(document).on("click", ".btn_Gestionar", function () {
+        
     });
 });

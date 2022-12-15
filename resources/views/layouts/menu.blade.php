@@ -34,9 +34,6 @@
 
     <!--- Date Range --->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    
-    <!--- File Manager --->
-    <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
 
     @yield('css')
 </head>
@@ -464,9 +461,6 @@
 
     <!--- Menu js --->
     <script src="{{ asset('assets/js/app/menu.js') }}"></script>
-
-    <!--- File Manager --->
-    <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
 
     <!--- Custom js --->
     @yield('scripts')
