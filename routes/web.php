@@ -95,7 +95,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::get('/actividades_inventario_list', [App\Http\Controllers\Admin\InventarioController::class, 'actividades_inventario_list'])->name('actividades_inventario_list');
 
     Route::get('/reparaciones', [App\Http\Controllers\Admin\ReparacionesController::class, 'index'])->name('reparaciones');
-
+    
     Route::get('/vehiculos', [App\Http\Controllers\Admin\VehiculosController::class, 'index'])->name('vehiculos');
     Route::get('/vehiculos_list', [App\Http\Controllers\Admin\VehiculosController::class, 'vehiculos_list'])->name('vehiculos_list');
     Route::post('/vehiculos_create', [App\Http\Controllers\Admin\VehiculosController::class, 'vehiculos_create'])->name('vehiculos_create');
@@ -103,6 +103,15 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/data_vehiculo', [App\Http\Controllers\Admin\VehiculosController::class, 'data_vehiculo'])->name('data_vehiculo');
     Route::post('/data_salud_vehiculos', [App\Http\Controllers\Admin\VehiculosController::class, 'data_salud_vehiculos'])->name('data_salud_vehiculos');
     Route::post('/delete_vehiculo', [App\Http\Controllers\Admin\VehiculosController::class, 'vehiculos_delete'])->name('delete_vehiculo');
+    Route::post('/show_encuesta_salud', [App\Http\Controllers\Admin\VehiculosController::class, 'show_encuesta_salud'])->name('show_encuesta_salud');
+    Route::post('/delete_encuesta_salud', [App\Http\Controllers\Admin\VehiculosController::class, 'delete_encuesta_salud'])->name('delete_encuesta_salud');
+    Route::post('/add_encuesta_salud', [App\Http\Controllers\Admin\VehiculosController::class, 'add_encuesta_salud'])->name('add_encuesta_salud');
+    Route::post('/get_tecnicos_vehiculos', [App\Http\Controllers\Admin\VehiculosController::class, 'get_tecnicos_vehiculos'])->name('get_tecnicos_vehiculos');
+    Route::post('/get_inspecciones_vehiculos', [App\Http\Controllers\Admin\VehiculosController::class, 'get_inspecciones_vehiculos'])->name('get_inspecciones_vehiculos');
+    Route::post('/get_gruas', [App\Http\Controllers\Admin\VehiculosController::class, 'get_gruas'])->name('get_gruas');
+    Route::post('/delete_encuesta_grua', [App\Http\Controllers\Admin\VehiculosController::class, 'delete_encuesta_grua'])->name('delete_encuesta_grua');
+    Route::post('/delete_encuesta_tecnico', [App\Http\Controllers\Admin\VehiculosController::class, 'delete_encuesta_tecnico'])->name('delete_encuesta_tecnico');
+    Route::post('/delete_encuesta_inspeccion', [App\Http\Controllers\Admin\VehiculosController::class, 'delete_encuesta_inspeccion'])->name('delete_encuesta_inspeccion');
 
     Route::get('/checklist_email', [App\Http\Controllers\Admin\VehiculosController::class, 'checklist_email'])->name('checklist_email');
 

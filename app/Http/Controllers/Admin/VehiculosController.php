@@ -157,14 +157,178 @@ class VehiculosController extends Controller
     {
         try {
             $data = DB::table("salud")
-            ->select('salud.*', 'empleados.nombre as creador')
-            ->join('empleados', 'salud.id_empleado', '=', 'empleados.id')
-            ->orderBy('salud.id', 'desc')
-            ->get();
+                ->select('salud.*', 'empleados.nombre as creador')
+                ->join('empleados', 'salud.id_empleado', '=', 'empleados.id')
+                ->orderBy('salud.id', 'desc')
+                ->get();
             return response()->json(['success' => $data]);
         } catch (Exception $ex) {
             return $ex->getMessage();
             return response()->json(['error' => 'Error al obtener los datos del vehiculo.']);
+        }
+    }
+
+    public function show_encuesta_salud(Request $request)
+    {
+        try {
+            $data = DB::table("salud")->where('id', $request->id)->first();
+            return response()->json(['info' => 1, 'data' => $data]);
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+            return response()->json(['error' => 'Error al obtener los datos del vehiculo.']);
+        }
+    }
+
+    public function add_encuesta_salud(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            DB::table("salud")->insert([
+                'id_empleado' => session('user'),
+                'fecha' => date('Y-m-d'),
+                'sede' => $request->sede,
+                'dolor_garganta' => $request->uno,
+                'malestar_general' => $request->dos,
+                'fiebre' => $request->tres,
+                'tos_seca' => $request->cuatro,
+                'perdida_olfato' => $request->cinco,
+                'contacto_covid19' => $request->seis,
+                'res_diagnostico_covid19' => $request->siete,
+                'res_servicio_salud' => $request->ocho,
+                'res_65years' => $request->nueve,
+                'res_enfermedades_cronicas' => $request->diez,
+                'botas' => $request->once,
+                'uniforme' => $request->doce,
+                'declaracion' => $request->trece
+            ]);
+            DB::commit();
+
+            $encuestas = DB::table("salud")
+                ->select('salud.*', 'empleados.nombre as creador')
+                ->join('empleados', 'salud.id_empleado', '=', 'empleados.id')
+                ->orderBy('salud.id', 'desc')
+                ->get();
+            return response()->json(['info' => 1, 'encuestas' => $encuestas, 'success' => 'Encuesta de salud agregada correctamente.']);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return response()->json(['info' => 0, 'error' => 'Error al agregar la encuesta de salud.']);
+            return $ex->getMessage();
+        }
+    }
+
+    public function delete_encuesta_salud(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            DB::table("salud")->where('id', $request->id)->delete();
+            DB::commit();
+
+            $encuestas = DB::table("salud")
+                ->select('salud.*', 'empleados.nombre as creador')
+                ->join('empleados', 'salud.id_empleado', '=', 'empleados.id')
+                ->orderBy('salud.id', 'desc')
+                ->get();
+            return response()->json(['info' => 1, 'encuestas' => $encuestas, 'success' => 'Encuesta de salud eliminada correctamente.']);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return response()->json(['info' => 0, 'error' => 'Error al eliminar la encuesta de salud.']);
+            return $ex->getMessage();
+        }
+    }
+    
+    public function get_gruas(Request $request)
+    {
+        try {
+            $vehiculo = $request->id;
+
+            $data = DB::table("checklist")->where('id_vehiculo', $vehiculo)
+                ->select('checklist.*', 'empleados.nombre as creador')
+                ->join('empleados', 'checklist.id_usuario', '=', 'empleados.id')
+                ->get();
+            return response()->json(['gruas' => $data]);
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+            return response()->json(['error' => 'Error al obtener los datos del vehiculo.']);
+        }
+    }
+
+    public function get_tecnicos_vehiculos(Request $request)
+    {
+        try {
+            $vehiculo = $request->id;
+
+            $data = DB::table("checklist2")->where('id_vehiculo', $vehiculo)
+                ->select('checklist2.*', 'empleados.nombre as creador')
+                ->join('empleados', 'checklist2.id_usuario', '=', 'empleados.id')
+                ->get();
+            return response()->json(['gruas' => $data]);
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+            return response()->json(['error' => 'Error al obtener los datos del vehiculo.']);
+        }
+    }
+
+    public function get_inspecciones_vehiculos(Request $request)
+    {
+        try {
+            $vehiculo = $request->id;
+
+            $data = DB::table("inspeccion")->where('id_vehiculo', $vehiculo)
+                ->select('inspeccion.*', 'empleados.nombre as creador')
+                ->join('empleados', 'inspeccion.id_usuario', '=', 'empleados.id')
+                ->get();
+            return response()->json(['gruas' => $data]);
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+            return response()->json(['error' => 'Error al obtener los datos del vehiculo.']);
+        }
+    }
+
+    public function delete_encuesta_grua(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            DB::table("checklist")->where('id', $request->id)->delete();
+            DB::commit();
+
+            $data = DB::table("checklist")->where('id_vehiculo', $request->id_vehiculo)
+                ->select('checklist.*', 'empleados.nombre as creador')
+                ->join('empleados', 'checklist.id_usuario', '=', 'empleados.id')
+                ->get();
+            return response()->json(['info' => 1, 'gruas' => $data, 'success' => 'Checklist eliminado correctamente.']);
+        } catch (Exception $ex) {
+        }
+    }
+
+    public function delete_encuesta_tecnico(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            DB::table("checklist2")->where('id', $request->id)->delete();
+            DB::commit();
+
+            $data = DB::table("checklist2")->where('id_vehiculo', $request->id_vehiculo)
+                ->select('checklist2.*', 'empleados.nombre as creador')
+                ->join('empleados', 'checklist2.id_usuario', '=', 'empleados.id')
+                ->get();
+            return response()->json(['info' => 1, 'gruas' => $data, 'success' => 'Checklist eliminado correctamente.']);
+        } catch (Exception $ex) {
+        }
+    }
+
+    public function delete_encuesta_inspeccion(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            DB::table("inspeccion")->where('id', $request->id)->delete();
+            DB::commit();
+
+            $data = DB::table("inspeccion")->where('id_vehiculo', $request->id_vehiculo)
+                ->select('inspeccion.*', 'empleados.nombre as creador')
+                ->join('empleados', 'inspeccion.id_usuario', '=', 'empleados.id')
+                ->get();
+            return response()->json(['info' => 1, 'gruas' => $data, 'success' => 'Inspeccion eliminada correctamente.']);
+        } catch (Exception $ex) {
         }
     }
 }
