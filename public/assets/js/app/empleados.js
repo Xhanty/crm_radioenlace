@@ -92,6 +92,8 @@ $(document).ready(function () {
         $("#three_detail").removeClass("active");
         $("#four_detail").removeClass("active");
         $("#five_detail").addClass("active");
+
+        window.open("http://127.0.0.1:8000/documentos/?leftDisk=public&leftPath=Empleados/Santiago%20Smith%20Delgado%20Henao", "_blank");
     });
 
     $(document).on("click", ".btnEliminar", function () {
