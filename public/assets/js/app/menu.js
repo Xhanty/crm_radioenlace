@@ -266,7 +266,6 @@ $(function () {
             { data: "categoria", name: "categoria" },
             { data: "almacen", name: "almacen" },
             { data: "ubicacion_ref", name: "ubicacion_ref" },
-            { data: "fecha_actualizacion", name: "fecha_actualizacion" },
             { data: "creador", name: "creador" },
             {
                 data: "status",

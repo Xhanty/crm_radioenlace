@@ -218,8 +218,9 @@ class InventarioController extends Controller
     public function gestion_inventario()
     {
         try {
-            $categorias = DB::table('categorias')->get();
-            return view('admin.inventario.gestion_inventario', compact('categorias'));
+            $empleados = DB::table('empleados')->where("status", 1)->get();
+            $almacenes = DB::table('almacenes')->get();
+            return view('admin.inventario.gestion_inventario', compact('empleados', 'almacenes'));
         } catch (Exception $ex) {
             return view('errors.500');
         }
@@ -228,10 +229,19 @@ class InventarioController extends Controller
     public function gestion_existencias_list()
     {
         $data = DB::table("inventario")
-            ->select('inventario.*', 'productos.nombre as producto', 'productos.imagen',
-            'productos.cod_producto', 'productos.nombre', 'productos.marca',
-            'productos.modelo', 'productos.id_categoria', 'almacenes.nombre as almacen',
-            'empleados.nombre as creador', 'categorias.nombre as categoria')
+            ->select(
+                'inventario.*',
+                'productos.nombre as producto',
+                'productos.imagen',
+                'productos.cod_producto',
+                'productos.nombre',
+                'productos.marca',
+                'productos.modelo',
+                'productos.id_categoria',
+                'almacenes.nombre as almacen',
+                'empleados.nombre as creador',
+                'categorias.nombre as categoria'
+            )
             ->leftJoin('productos', 'inventario.id_producto', '=', 'productos.id')
             ->leftJoin('empleados', 'inventario.created_by', '=', 'empleados.id')
             ->leftJoin('almacenes', 'inventario.ubicacion', '=', 'almacenes.id')
@@ -241,8 +251,11 @@ class InventarioController extends Controller
         return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                $actionBtn = '<a data-id="' . $row->id . '" title="Editar" class="edit btn btn-primary btn-sm btn_Edit"><i class="fa fa-pencil-alt"></i></a>
-                <a data-id="' . $row->id . '" title="Eliminar" class="delete btn btn-danger btn-sm btn_Delete"><i class="fa fa-trash"></i></a>';
+                $actionBtn =
+                    '<a data-id="' . $row->id . '" title="Ver" class="btn btn-primary btn-sm btn_Show"><i class="fa fa-eye"></i></a>' .
+                    '<a data-id="' . $row->id . '" title="Editar" class="btn btn-primary btn-sm btn_Edit"><i class="fa fa-pencil-alt"></i></a>' .
+                    '<a data-id="' . $row->id . '" data-status="' . $row->status . '" title="Dar De Baja" class="btn btn-primary btn-sm btn_Baja"><i class="fas fa-times"></i></a>' .
+                    '<a data-id="' . $row->id . '" data-asignado="' . $row->cantidad_asignada . '" title="Eliminar" class="btn btn-danger btn-sm btn_Delete"><i class="fa fa-trash"></i></a>';
                 return $actionBtn;
             })
             ->rawColumns(['action'])
@@ -252,9 +265,17 @@ class InventarioController extends Controller
     public function gestion_inventario_list()
     {
         $data = DB::table("inventario")
-            ->select('inventario.*', 'productos.nombre as producto', 'productos.imagen',
-            'productos.cod_producto', 'productos.nombre', 'productos.marca',
-            'productos.modelo', 'productos.id_categoria', 'categorias.nombre as categoria')
+            ->select(
+                'inventario.*',
+                'productos.nombre as producto',
+                'productos.imagen',
+                'productos.cod_producto',
+                'productos.nombre',
+                'productos.marca',
+                'productos.modelo',
+                'productos.id_categoria',
+                'categorias.nombre as categoria'
+            )
             ->leftJoin('productos', 'inventario.id_producto', '=', 'productos.id')
             ->leftJoin('categorias', 'productos.id_categoria', '=', 'categorias.id')
             ->where('inventario.cantidad', '>', 0)
@@ -263,11 +284,136 @@ class InventarioController extends Controller
         return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                $actionBtn = '<a data-id="' . $row->id . '" title="Editar" class="edit btn btn-primary btn-sm btn_Edit"><i class="fa fa-pencil-alt"></i></a>
-                <a data-id="' . $row->id . '" title="Eliminar" class="delete btn btn-danger btn-sm btn_Delete"><i class="fa fa-trash"></i></a>';
+                $actionBtn =
+                    '<a data-id="' . $row->id . '" title="Seleccionar" class="btn btn-primary btn-sm btn_Seleccionar"><i class="fa fa-check"></i></a>';
                 return $actionBtn;
             })
             ->rawColumns(['action'])
             ->make(true);
+    }
+
+    public function inventario_change_status(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $id = $request->id;
+            $status = $request->status;
+            if ($status == 1) {
+                DB::table("inventario")->where('id', $id)->update([
+                    'status' => 0
+                ]);
+            } else {
+                DB::table("inventario")->where('id', $id)->update([
+                    'status' => 1
+                ]);
+            }
+            DB::commit();
+            return response()->json(['info' => 1, 'success' => 'Inventario actualizado correctamente.']);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return response()->json(['info' => 0, 'error' => 'Error al actualizar el inventario.']);
+        }
+    }
+
+    public function inventario_delete(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $id = $request->id;
+            DB::table("inventario")->where('id', $id)->delete();
+            DB::commit();
+            return response()->json(['info' => 1, 'success' => 'Inventario eliminado correctamente.']);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return response()->json(['info' => 0, 'error' => 'Error al eliminar el inventario.']);
+        }
+    }
+
+    public function inventario_data(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $data = DB::table("inventario")->where('id', $id)->first();
+            return response()->json(['info' => 1, 'data' => $data]);
+        } catch (Exception $ex) {
+            return response()->json(['info' => 0, 'error' => 'Error al obtener los datos del inventario.']);
+        }
+    }
+
+    public function inventario_detail(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $data = DB::table("inventario")->where('id', $id)->first();
+
+            $productos_instalados = DB::table("repuestos_reparacion")->where('id_inventario', $id)->get();
+
+            $productos_vendidos = DB::table("productos_factura")
+                ->select('productos_factura.*', 'clientes.nombre as cliente')
+                ->join("facturas", "productos_factura.id_factura", "=", "facturas.id")
+                ->join("clientes", "facturas.id_cliente", "=", "clientes.id")
+                ->where('id_inventario', $id)
+                ->get();
+
+            $productos_prestados = DB::table("prestamo")
+                ->select('prestamo.*', 'clientes.nombre as cliente', 'empleados.nombre as empleado')
+                ->leftJoin("clientes", "prestamo.id_cliente", "=", "clientes.id")
+                ->leftJoin("empleados", "prestamo.id_empleado", "=", "empleados.id")
+                ->where('id_inventario', $id)->where("status", 0)
+                ->get();
+
+            $productos_alquilados = DB::table("productos_remision")->where('id_inventario', $id)->get();
+
+            $productos_devueltos = DB::table("prestamo")
+                ->select('prestamo.*', 'clientes.nombre as cliente', 'empleados.nombre as empleado')
+                ->leftJoin("clientes", "prestamo.id_cliente", "=", "clientes.id")
+                ->leftJoin("empleados", "prestamo.id_empleado", "=", "empleados.id")
+                ->where('id_inventario', $id)->where("status", 1)
+                ->get();
+
+            $productos_asignados = DB::table("productos_asignados")
+                ->select('productos_asignados.*', 'empleados.nombre as empleado')
+                ->join("empleados", "productos_asignados.id_empleado", "=", "empleados.id")
+                ->where('id_inventario', $id)
+                ->get();
+
+            return response()->json(['info' => 1, 'data' => $data, 'productos_instalados' => $productos_instalados, 'productos_vendidos' => $productos_vendidos, 'productos_prestados' => $productos_prestados, 'productos_alquilados' => $productos_alquilados, 'productos_devueltos' => $productos_devueltos, 'productos_asignados' => $productos_asignados]);
+        } catch (Exception $ex) {
+            return response()->json(['info' => 0, 'error' => 'Error al obtener los datos del inventario.']);
+        }
+    }
+
+    public function inventario_update(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $id = $request->id;
+            $serial = $request->serial;
+            $codigo = $request->codigo;
+            $cantidad = $request->cantidad;
+            $cantidad_asig = $request->cantidad_asig;
+            $ubicacion = $request->ubicacion;
+            $ubicacion_ref = $request->ubicacion_ref;
+            $asignado = $request->asignado;
+            $descripcion = $request->descripcion;
+
+            DB::table("inventario")->where("id", $id)->update([
+                'serial' => $serial ? $serial : "",
+                'codigo_interno' => $codigo ? $codigo : 0,
+                'cantidad' => $cantidad ? $cantidad : 0,
+                'cantidad_asignada' => $cantidad_asig ? $cantidad_asig : 0,
+                'ubicacion' => $ubicacion ? $ubicacion : 0,
+                'ubicacion_ref' => $ubicacion_ref ? $ubicacion_ref : "",
+                'empleado_asignado' => $asignado ? $asignado : 0,
+                'descripcion' => $descripcion ? $descripcion : "",
+                'fecha_actualizacion' => date("Y-m-d H:i:s")
+            ]);
+
+            DB::commit();
+            return response()->json(['info' => 1, 'success' => 'Inventario actualizado correctamente.']);
+        } catch (Exception $ex) {
+            return response()->json(['info' => 0, 'error' => 'Error al actualizar el inventario.']);
+            return $ex->getMessage();
+        }
     }
 }

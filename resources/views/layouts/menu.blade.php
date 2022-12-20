@@ -409,7 +409,7 @@
 
     <!--- Perfect-scrollbar js --->
     <script src="{{ asset('assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/perfect-scrollbar/p-scroll.js') }}"></script>
+    <!--<script src="{{ asset('assets/plugins/perfect-scrollbar/p-scroll.js') }}"></script>-->
 
     <!--- Sidebar js --->
     <script src="{{ asset('assets/plugins/side-menu/sidemenu.js') }}"></script>
@@ -426,10 +426,10 @@
     <script src="{{ asset('assets/plugins/morris.js/morris.min.js') }}"></script>
 
     <!--- Scripts js --->
-    <script src="{{ asset('assets/js/script.js') }}"></script>
+    <!--<script src="{{ asset('assets/js/script.js') }}"></script>-->
 
     <!--- Index js --->
-    <script src="{{ asset('assets/js/index.js') }}"></script>
+    <!--<script src="{{ asset('assets/js/index.js') }}"></script>-->
 
     <!--themecolor js-->
     <script src="{{ asset('assets/js/themecolor.js') }}"></script>

@@ -86,6 +86,11 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/delete_producto', [App\Http\Controllers\Admin\InventarioController::class, 'delete_producto'])->name('delete_producto');
     Route::post('/productos_edit', [App\Http\Controllers\Admin\InventarioController::class, 'productos_edit'])->name('productos_edit');
     Route::post('/productos_reingreso', [App\Http\Controllers\Admin\InventarioController::class, 'productos_reingreso'])->name('productos_reingreso');
+    Route::post('/inventario_change_status', [App\Http\Controllers\Admin\InventarioController::class, 'inventario_change_status'])->name('inventario_change_status');
+    Route::post('/inventario_delete', [App\Http\Controllers\Admin\InventarioController::class, 'inventario_delete'])->name('inventario_delete');
+    Route::post('/inventario_update', [App\Http\Controllers\Admin\InventarioController::class, 'inventario_update'])->name('inventario_update');
+    Route::post('/inventario_data', [App\Http\Controllers\Admin\InventarioController::class, 'inventario_data'])->name('inventario_data');
+    Route::post('/inventario_detail', [App\Http\Controllers\Admin\InventarioController::class, 'inventario_detail'])->name('inventario_detail');
 
     Route::get('/categoria_productos', [App\Http\Controllers\Admin\CategoriaProductosController::class, 'index'])->name('categoria_productos');
     Route::post('/categorias_create', [App\Http\Controllers\Admin\CategoriaProductosController::class, 'categorias_create'])->name('categorias_create');
