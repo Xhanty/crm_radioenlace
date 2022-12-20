@@ -226,6 +226,7 @@
                                 <li><a class="slide-item" href="{{ route('categoria_productos') }}">Categorías</a></li>
                                 <li><a class="slide-item" href="{{ route('almacenes') }}">Almacenes</a></li>
                                 <li><a class="slide-item" href="{{ route('inventario') }}">Productos / Stock</a></li>
+                                <li><a class="slide-item" href="{{ route('gestion_inventario') }}">Inventario</a></li>
                                 <li><a class="slide-item" href="{{ route('actividades_inventario') }}">Actividades Inventario</a></li>
                             </ul>
                         </li>

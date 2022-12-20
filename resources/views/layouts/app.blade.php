@@ -25,6 +25,9 @@
 
     <!--- Animations css --->
     <link href="{{ asset('assets/css/animate.css') }}" rel="stylesheet">
+
+    <!--- Toastr css --->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
 </head>
 
 <body class="main-body bg-light  login-img">
@@ -64,6 +67,28 @@
 
     <!--- Custom js --->
     <script src="{{ asset('assets/js/custom.js') }}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script>
+        toastr.options = {
+            closeButton: true,
+            debug: false,
+            newestOnTop: false,
+            progressBar: true,
+            positionClass: "toast-bottom-right",
+            preventDuplicates: false,
+            onclick: null,
+            showDuration: "300",
+            hideDuration: "1000",
+            timeOut: "5000",
+            extendedTimeOut: "1000",
+            showEasing: "swing",
+            hideEasing: "linear",
+            showMethod: "fadeIn",
+            hideMethod: "fadeOut",
+        };
+    </script>
 
     <!--- Login js --->
     <script src="{{ asset('assets/js/login.js') }}"></script>

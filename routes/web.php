@@ -75,13 +75,17 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/puntos_edit', [App\Http\Controllers\Admin\PuntosController::class, 'puntos_edit'])->name('puntos_edit');
     Route::post('/corte_puntos', [App\Http\Controllers\Admin\PuntosController::class, 'corte_puntos'])->name('corte_puntos');
     
+    Route::get('/gestion_inventario', [App\Http\Controllers\Admin\InventarioController::class, 'gestion_inventario'])->name('gestion_inventario');
     Route::get('/inventario', [App\Http\Controllers\Admin\InventarioController::class, 'index'])->name('inventario');
     Route::get('/productos_list', [App\Http\Controllers\Admin\InventarioController::class, 'productos_list'])->name('productos_list');
+    Route::get('/gestion_existencias_list', [App\Http\Controllers\Admin\InventarioController::class, 'gestion_existencias_list'])->name('gestion_existencias_list');
+    Route::get('/gestion_inventario_list', [App\Http\Controllers\Admin\InventarioController::class, 'gestion_inventario_list'])->name('gestion_inventario_list');
     Route::post('/productos_create', [App\Http\Controllers\Admin\InventarioController::class, 'productos_create'])->name('productos_create');
     Route::post('/data_producto', [App\Http\Controllers\Admin\InventarioController::class, 'data_producto'])->name('data_producto');
     Route::post('/baja_producto', [App\Http\Controllers\Admin\InventarioController::class, 'baja_producto'])->name('baja_producto');
     Route::post('/delete_producto', [App\Http\Controllers\Admin\InventarioController::class, 'delete_producto'])->name('delete_producto');
     Route::post('/productos_edit', [App\Http\Controllers\Admin\InventarioController::class, 'productos_edit'])->name('productos_edit');
+    Route::post('/productos_reingreso', [App\Http\Controllers\Admin\InventarioController::class, 'productos_reingreso'])->name('productos_reingreso');
 
     Route::get('/categoria_productos', [App\Http\Controllers\Admin\CategoriaProductosController::class, 'index'])->name('categoria_productos');
     Route::post('/categorias_create', [App\Http\Controllers\Admin\CategoriaProductosController::class, 'categorias_create'])->name('categorias_create');
@@ -122,7 +126,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::get('/archivos', [App\Http\Controllers\Admin\Documentos\ArchivosController::class, 'index'])->name('archivos');
     Route::post('/archivos_delete', [App\Http\Controllers\Admin\Documentos\ArchivosController::class, 'archivos_delete'])->name('archivos_delete');
     Route::post('/archivos_add', [App\Http\Controllers\Admin\Documentos\ArchivosController::class, 'archivos_add'])->name('archivos_add');
-
+    
     Route::get('/productos_baja', [App\Http\Controllers\Admin\MovimientoInv\ProductosController::class, 'productos_baja'])->name('productos_baja');
     Route::get('/repuestos_reparacion', [App\Http\Controllers\Admin\MovimientoInv\RepuestosController::class, 'index'])->name('repuestos_reparacion');
     Route::get('/productos_instalados', [App\Http\Controllers\Admin\MovimientoInv\ProductosController::class, 'productos_instalados'])->name('productos_instalados');

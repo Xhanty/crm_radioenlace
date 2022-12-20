@@ -236,19 +236,708 @@
                         </div>
                     </div>
                     <div class="card-body" style="margin-top: -18px;">
-                        <div class="row row-sm">
-                            <div class="col-lg">
-                                <label for="">¿Dolor de garganta? *</label>
-                                <select id="uno_add" class="form-select">
-
-                                    <option value="No">No</option>
-                                    <option value="Si">Si</option>
-                                </select>
+                        <div class="card-body">
+                            <div class="main-content-label">
+                                <label class="ckbox"><input type="checkbox"><span style="font-weight: 700">KIT DE
+                                        CARRETERA</span></label>
+                            </div>
+                            <div class="row" style="margin-bottom: 12px">
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox"
+                                            class="kitcheck"><span>Gato</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitcheck"><span>Palanca
+                                            Gato</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox"
+                                            class="kitcheck"><span>Cruceta</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox"
+                                            class="kitcheck"><span>Extintor</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitcheck"><span>Triangulo
+                                            Reflectivo</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitcheck"><span>Dos
+                                            Tacos</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitcheck"><span>Chaleco
+                                            Reflectivo</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitcheck"><span>Calcomania
+                                            Logo</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitcheck"><span>Carta
+                                            Viaje</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitcheck"><span>Kit de primeros
+                                            auxilios</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="main-content-label">
+                                <label class="ckbox"><input type="checkbox"><span style="font-weight: 700">CAJA DE
+                                        HERRAMIENTA BASICA</span></label>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox"
+                                            class="kitcajaherra"><span>Alicate</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox"
+                                            class="kitcajaherra"><span>Destornillador</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitcajaherra"><span>Llave de
+                                            Expansion</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitcajaherra"><span>Llaves
+                                            Fijas</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox"
+                                            class="kitcajaherra"><span>Linterna</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitcajaherra"><span>Palanca
+                                            Malacate</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="main-content-label">
+                                <label class="ckbox"><input type="checkbox"><span
+                                        style="font-weight: 700">ELECTRICIDAD</span></label>
+                            </div>
+                            <div class="row" style="margin-bottom: 12px">
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitelectricidad"><span>Luces
+                                            Altas</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitelectricidad"><span>Luces
+                                            Medias</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitelectricidad"><span>Luces
+                                            Bajas</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitelectricidad"><span>Luces
+                                            Direccionales</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitelectricidad"><span>Luces
+                                            Internas</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitelectricidad"><span>Luces
+                                            Exploradoras</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox"
+                                            class="kitelectricidad"><span>Pito</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitelectricidad"><span>Revision
+                                            indicadores de tablero</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitelectricidad"><span>Radio de
+                                            comunicacion</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox"
+                                            class="kitelectricidad"><span>Antena</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox"
+                                            class="kitelectricidad"><span>Microfono</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="main-content-label">
+                                <label class="ckbox"><input type="checkbox"><span style="font-weight: 700">ESTADO
+                                        GENERAL CABINA</span></label>
+                            </div>
+                            <div class="row" style="margin-bottom: 12px">
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox"
+                                            class="kitcabina"><span>Golpes</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox"
+                                            class="kitcabina"><span>Estribos</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox"
+                                            class="kitcabina"><span>Cojineria</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox"
+                                            class="kitcabina"><span>Cinturones</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox"
+                                            class="kitcabina"><span>Carteras</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox"
+                                            class="kitcabina"><span>Seguros</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox"
+                                            class="kitcabina"><span>Manijas</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="main-content-label">
+                                <label class="ckbox"><input type="checkbox"><span
+                                        style="font-weight: 700">MOTOR</span></label>
+                            </div>
+                            <div class="row" style="margin-bottom: 12px">
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitmotor"><span>Humedad
+                                            Motor</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitmotor"><span>Humedad
+                                            Caja</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitmotor"><span>Humedad
+                                            Diferencial</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitmotor"><span>Humedad
+                                            Hidraulico</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitmotor"><span>Nivel de aceite
+                                            de motor</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitmotor"><span>Nivel de agua de
+                                            lavaparabrisas</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitmotor"><span>Nivel de aceite
+                                            hidraulica</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitmotor"><span>Nivel de
+                                            refrigerante</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitmotor"><span>Drenar
+                                            sedimentador de agua</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitmotor"><span>Estado de
+                                            tensión de correas</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitmotor"><span>Estado general
+                                            de la bateria</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitmotor"><span>Estado general
+                                            de la carroceria</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitmotor"><span>Avisos
+                                            carroceria cabina</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="main-content-label">
+                                <label class="ckbox"><input type="checkbox"><span style="font-weight: 700">ESTADO
+                                        GENERAL</span></label>
+                            </div>
+                            <div class="row" style="margin-bottom: 12px">
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitestadogeneral"><span>Espejos
+                                            retrovisores</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitestadogeneral"><span>Espejo
+                                            retrovisor interno</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitestadogeneral"><span>Camara
+                                            frontal</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitestadogeneral"><span>Camara
+                                            trasera</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitestadogeneral"><span>Sensor de
+                                            parqueo</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitestadogeneral"><span>Estado de
+                                            las sillas</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitestadogeneral"><span>Estado de
+                                            los tapices</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitestadogeneral"><span>Cinturon
+                                            de seguridad</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitestadogeneral"><span>Estado de
+                                            llantas</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitestadogeneral"><span>Estado
+                                            llanta de repuesto</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox"
+                                            class="kitestadogeneral"><span>Calibracion de llantas</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox"
+                                            class="kitestadogeneral"><span>Kilometraje</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitestadogeneral"><span>Nivel
+                                            de liquido de frenos</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitestadogeneral"><span>Nivel
+                                            de liquido refrigerante</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kitestadogeneral"><span>Llave
+                                            de repuesto</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="main-content-label">
+                                <label class="ckbox"><input type="checkbox"><span
+                                        style="font-weight: 700">HIDRÁULICOS</span></label>
+                            </div>
+                            <div class="row" style="margin-bottom: 12px">
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox"
+                                            class="kithidraulicos"><span>Winche</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kithidraulicos"><span>Cable de
+                                            winche</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox"
+                                            class="kithidraulicos"><span>Hidráulico del planchon</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kithidraulicos"><span>Control
+                                            de mandos</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox"
+                                            class="kithidraulicos"><span>Mangueras</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kithidraulicos"><span>Gatos de
+                                            apoyo trasero</span></label>
+                                    <div class="mt-1 d-none">
+                                        <input type="radio" name="cabina_golpes_desc" value="Bueno"> Bueno
+                                        <input type="radio" name="cabina_golpes_desc" value="Regular"> Regular
+                                        <input type="radio" name="cabina_golpes_desc" value="Malo"> Malo
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="main-content-label">
+                                <label class="ckbox"><input type="checkbox"><span
+                                        style="font-weight: 700">DOCUMENTOS</span></label>
+                            </div>
+                            <div class="row" style="margin-bottom: 12px">
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox"
+                                            class="kithdocumentos"><span>Soat</span></label>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox"
+                                            class="kithdocumentos"><span>Matricula</span></label>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox"
+                                            class="kithdocumentos"><span>Tecnomecanica</span></label>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kithdocumentos"><span>Seguro
+                                            de Riesgo</span></label>
+                                </div>
+                                <div class="col-lg-3 col-md-2 mt-2">
+                                    <label class="ckbox"><input type="checkbox" class="kithdocumentos"><span>Permiso
+                                            de Movilidad</span></label>
+                                </div>
                             </div>
                         </div>
+
                         <br>
                         <div class="text-center">
-                            <button class="btn ripple btn-primary" id="btnAgregarGruas" type="button">Agregar CheckList Gruas</button>
+                            <button class="btn ripple btn-primary" id="btnAgregarGruas" type="button">Agregar
+                                CheckList
+                                Gruas</button>
                         </div>
 
                         <br>
@@ -287,12 +976,14 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">¿Dolor de garganta? *</label>
-                                <input type="text" class="form-control" id="sede_add" placeholder="Ingrese la sede">
+                                <input type="text" class="form-control" id="sede_add"
+                                    placeholder="Ingrese la sede">
                             </div>
                         </div>
                         <br>
                         <div class="text-center">
-                            <button class="btn ripple btn-primary" id="btnAgregarTecnico" type="button">Agregar CheckList Técnico</button>
+                            <button class="btn ripple btn-primary" id="btnAgregarTecnico" type="button">Agregar
+                                CheckList Técnico</button>
                         </div>
 
                         <br>
@@ -331,12 +1022,14 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">¿Dolor de garganta? *</label>
-                                <input type="text" class="form-control" id="sede_add" placeholder="Ingrese la sede">
+                                <input type="text" class="form-control" id="sede_add"
+                                    placeholder="Ingrese la sede">
                             </div>
                         </div>
                         <br>
                         <div class="text-center">
-                            <button class="btn ripple btn-primary" id="btnAgregarInspeccion" type="button">Agregar Inspección</button>
+                            <button class="btn ripple btn-primary" id="btnAgregarInspeccion" type="button">Agregar
+                                Inspección</button>
                         </div>
 
                         <br>
@@ -420,7 +1113,8 @@
                     <div class="row row-sm">
                         <div class="col-lg">
                             <label for="">Seguro de riesgos</label>
-                            <input class="form-control" id="seguroadd" placeholder="Seguro de riesgos" type="text">
+                            <input class="form-control" id="seguroadd" placeholder="Seguro de riesgos"
+                                type="text">
                         </div>
                         <div class="col-lg mg-t-10 mg-lg-t-0">
                             <label for="">Tipo</label>
@@ -446,7 +1140,8 @@
                         </div>
                         <div class="col-lg mg-t-10 mg-lg-t-0">
                             <label for="">Foto</label>
-                            <input class="form-control" id="fotoadd" type="file" accept="image/png, image/jpeg">
+                            <input class="form-control" id="fotoadd" type="file"
+                                accept="image/png, image/jpeg">
                         </div>
                     </div>
                 </div>
@@ -692,7 +1387,8 @@
                     <div class="row row-sm">
                         <div class="col-lg">
                             <label for="">Seguro de riesgos</label>
-                            <input class="form-control" id="seguroedit" placeholder="Seguro de riesgos" type="text">
+                            <input class="form-control" id="seguroedit" placeholder="Seguro de riesgos"
+                                type="text">
                         </div>
                         <div class="col-lg mg-t-10 mg-lg-t-0">
                             <label for="">Tipo</label>
@@ -718,7 +1414,8 @@
                         </div>
                         <div class="col-lg mg-t-10 mg-lg-t-0">
                             <label for="">Foto</label>
-                            <input class="form-control" id="fotoedit" type="file" accept="image/png, image/jpeg">
+                            <input class="form-control" id="fotoedit" type="file"
+                                accept="image/png, image/jpeg">
                         </div>
                     </div>
                 </div>

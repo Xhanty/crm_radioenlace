@@ -160,7 +160,11 @@ class InventarioController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<a data-id="' . $row->id . '" title="Eliminar" class="delete btn btn-danger btn-sm btn_Delete"><i class="fa fa-trash"></i></a>';
+                    $actionBtn = '';
+                    if ($row->tipo == 3 || $row->tipo == 5 || $row->tipo == 4) {
+                        $actionBtn = '<a data-id="' . $row->id . '" title="Reingresar Producto" class="delete btn btn-primary btn-sm btn_Reingreso"><i class="fas fa-exchange-alt"></i></a>';
+                    }
+
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -188,5 +192,82 @@ class InventarioController extends Controller
             DB::rollBack();
             return response()->json(['info' => 0, 'error' => 'Error al actualizar el producto.']);
         }
+    }
+
+    public function productos_reingreso(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $actividad = DB::table("actividad_productos")->where('id', $request->id)->first();
+            $inventario = DB::table("inventario")->where('id', $actividad->id_inventario)->first();
+
+            DB::table("inventario")->where('id', $inventario->id)->update([
+                'cantidad' => $inventario->cantidad + $actividad->cantidad
+            ]);
+
+            DB::table("actividad_productos")->where('id', $request->id)->delete();
+
+            DB::commit();
+            return response()->json(['info' => 1, 'success' => 'Producto reingresado correctamente.']);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return response()->json(['info' => 0, 'error' => 'Error al actualizar el producto.']);
+        }
+    }
+
+    public function gestion_inventario()
+    {
+        try {
+            $categorias = DB::table('categorias')->get();
+            return view('admin.inventario.gestion_inventario', compact('categorias'));
+        } catch (Exception $ex) {
+            return view('errors.500');
+        }
+    }
+
+    public function gestion_existencias_list()
+    {
+        $data = DB::table("inventario")
+            ->select('inventario.*', 'productos.nombre as producto', 'productos.imagen',
+            'productos.cod_producto', 'productos.nombre', 'productos.marca',
+            'productos.modelo', 'productos.id_categoria', 'almacenes.nombre as almacen',
+            'empleados.nombre as creador', 'categorias.nombre as categoria')
+            ->leftJoin('productos', 'inventario.id_producto', '=', 'productos.id')
+            ->leftJoin('empleados', 'inventario.created_by', '=', 'empleados.id')
+            ->leftJoin('almacenes', 'inventario.ubicacion', '=', 'almacenes.id')
+            ->leftJoin('categorias', 'productos.id_categoria', '=', 'categorias.id')
+            ->orderBy('inventario.id', 'desc')
+            ->get();
+        return Datatables::of($data)
+            ->addIndexColumn()
+            ->addColumn('action', function ($row) {
+                $actionBtn = '<a data-id="' . $row->id . '" title="Editar" class="edit btn btn-primary btn-sm btn_Edit"><i class="fa fa-pencil-alt"></i></a>
+                <a data-id="' . $row->id . '" title="Eliminar" class="delete btn btn-danger btn-sm btn_Delete"><i class="fa fa-trash"></i></a>';
+                return $actionBtn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
+    public function gestion_inventario_list()
+    {
+        $data = DB::table("inventario")
+            ->select('inventario.*', 'productos.nombre as producto', 'productos.imagen',
+            'productos.cod_producto', 'productos.nombre', 'productos.marca',
+            'productos.modelo', 'productos.id_categoria', 'categorias.nombre as categoria')
+            ->leftJoin('productos', 'inventario.id_producto', '=', 'productos.id')
+            ->leftJoin('categorias', 'productos.id_categoria', '=', 'categorias.id')
+            ->where('inventario.cantidad', '>', 0)
+            ->orderBy('inventario.id', 'desc')
+            ->get();
+        return Datatables::of($data)
+            ->addIndexColumn()
+            ->addColumn('action', function ($row) {
+                $actionBtn = '<a data-id="' . $row->id . '" title="Editar" class="edit btn btn-primary btn-sm btn_Edit"><i class="fa fa-pencil-alt"></i></a>
+                <a data-id="' . $row->id . '" title="Eliminar" class="delete btn btn-danger btn-sm btn_Delete"><i class="fa fa-trash"></i></a>';
+                return $actionBtn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 }

@@ -89,5 +89,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('assets/js/app/categorias.js') }}"></script>
+    <script src="{{ asset('assets/js/app/inventario/categorias.js') }}"></script>
 @endsection

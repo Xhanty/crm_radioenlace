@@ -37,12 +37,12 @@
                             <table class="table border-top-0 table-bordered text-nowrap border-bottom" id="tbl_actividades_inventario">
                                 <thead>
                                     <tr>
-                                        <th class="wd-15p border-bottom-0">Usuario a cargo</th>
+                                        <th class="wd-20p border-bottom-0">Usuario a cargo</th>
                                         <th class="wd-20p border-bottom-0">Producto</th>
-                                        <th class="wd-15p border-bottom-0">Cantidad</th>
-                                        <th class="wd-15p border-bottom-0">Fecha</th>
-                                        <th class="wd-15p border-bottom-0">Tipo</th>
-                                        <th class="wd-15p border-bottom-0">Acciones</th>
+                                        <th class="wd-10p border-bottom-0">Cantidad</th>
+                                        <th class="wd-10p border-bottom-0">Fecha</th>
+                                        <th class="wd-10p border-bottom-0">Tipo</th>
+                                        <th class="wd-10p border-bottom-0">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -80,5 +80,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('assets/js/app/actividades_inventario.js') }}"></script>
+    <script src="{{ asset('assets/js/app/inventario/actividades.js') }}"></script>
 @endsection

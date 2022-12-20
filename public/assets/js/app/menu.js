@@ -206,7 +206,23 @@ $(function () {
             {
                 data: null,
                 render: function (data) {
-                    return data.tipo;
+                    if (data.tipo == 0) {
+                        return 'Existente';
+                    } else if (data.tipo == 1) {
+                        return 'Compra';
+                    } else if (data.tipo == 2) {
+                        return 'Venta';
+                    } else if (data.tipo == 3) {
+                        return 'Alquiler';
+                    } else if (data.tipo == 4) {
+                        return 'Prestamo';
+                    } else if (data.tipo == 5) {
+                        return 'Asignado a Empleado';
+                    } else if (data.tipo == 6) {
+                        return 'Instalación';
+                    } else {
+                        return 'Otro';
+                    }
                 },
             },
             {
@@ -218,6 +234,106 @@ $(function () {
         ],
         language: language,
         order: [],
+    });
+
+    $("#tbl_inventario_existencias_img").DataTable({
+        processing: true,
+        serverSide: true,
+        order: [],
+        ajax: "gestion_existencias_list",
+        columns: [
+            {
+                data: "imagen",
+                render: function (data) {
+                    if (data == null || data == "") {
+                        return '<img src="assets/img/sin_imagen.jpg" loading="lazy" style="width: 120px" />';
+                    } else {
+                        return (
+                            '<img src="https://formrad.com/radio_enlace/productos/' +
+                            data +
+                            '" loading="lazy" style="width: 120px">'
+                        );
+                    }
+                },
+            },
+            { data: "nombre", name: "producto" },
+            { data: "marca", name: "marca" },
+            { data: "modelo", name: "modelo" },
+            { data: "serial", name: "serial" },
+            { data: "codigo_interno", name: "codigo_interno" },
+            { data: "cantidad", name: "cantidad" },
+            { data: "cantidad_asignada", name: "cantidad_asignada" },
+            { data: "categoria", name: "categoria" },
+            { data: "almacen", name: "almacen" },
+            { data: "ubicacion_ref", name: "ubicacion_ref" },
+            { data: "fecha_actualizacion", name: "fecha_actualizacion" },
+            { data: "creador", name: "creador" },
+            {
+                data: "status",
+                render: function (data) {
+                    if (data == 1) {
+                        return '<span class="badge bg-success side-badge">Disponible</span>';
+                    } else {
+                        return '<span class="badge bg-danger side-badge">Deshabilitado</span>';
+                    }
+                },
+            },
+            {
+                data: "action",
+                name: "action",
+                orderable: true,
+                searchable: true,
+            },
+        ],
+        language: language,
+    });
+    
+    $("#table_inventario_gestion_img").DataTable({
+        processing: true,
+        serverSide: true,
+        order: [],
+        ajax: "gestion_inventario_list",
+        columns: [
+            {
+                data: "imagen",
+                render: function (data) {
+                    if (data == null || data == "") {
+                        return '<img src="assets/img/sin_imagen.jpg" loading="lazy" style="width: 120px" />';
+                    } else {
+                        return (
+                            '<img src="https://formrad.com/radio_enlace/productos/' +
+                            data +
+                            '" loading="lazy" style="width: 120px">'
+                        );
+                    }
+                },
+            },
+            { data: "nombre", name: "producto" },
+            { data: "categoria", name: "categoria" },
+            { data: "cantidad_asignada", name: "cantidad_asignada" },
+            { data: "cod_producto", name: "cod_producto" },
+            { data: "codigo_interno", name: "codigo_interno" },
+            { data: "marca", name: "marca" },
+            { data: "modelo", name: "modelo" },
+            { data: "serial", name: "serial" },
+            {
+                data: "status",
+                render: function (data) {
+                    if (data == 1) {
+                        return '<span class="badge bg-success side-badge">Disponible</span>';
+                    } else {
+                        return '<span class="badge bg-danger side-badge">Deshabilitado</span>';
+                    }
+                },
+            },
+            {
+                data: "action",
+                name: "action",
+                orderable: true,
+                searchable: true,
+            },
+        ],
+        language: language,
     });
 
     var table_clientes = $("#table_clientes_img").DataTable({

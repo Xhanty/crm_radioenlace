@@ -87,5 +87,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('assets/js/app/almacenes.js') }}"></script>
+    <script src="{{ asset('assets/js/app/inventario/almacenes.js') }}"></script>
 @endsection

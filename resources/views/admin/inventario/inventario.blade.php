@@ -184,5 +184,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('assets/js/app/inventario.js') }}"></script>
+    <script src="{{ asset('assets/js/app/inventario/inventario.js') }}"></script>
 @endsection
