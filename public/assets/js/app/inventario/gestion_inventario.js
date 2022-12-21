@@ -95,6 +95,43 @@ $(document).ready(function () {
         });
     });
 
+    $(document).on("click", ".btn_Seleccionar", function () {
+        let id = $(this).data("id");
+        let img = $(this).data("img");
+        let nombre = $(this).data("nombre");
+
+        $("#id_select").val(id);
+        $("#imagen_select").attr("src", "https://formrad.com/radio_enlace/productos/" + img);
+        $("#name_prod_select").text(nombre);
+
+        $("#modal_seleccionar").modal("show");
+    });
+
+    $("#tipo_select").change(function () {
+        let tipo = $(this).val();
+
+        if (tipo == "") {
+            console.log("vacio");
+        } else if (tipo == 0) {
+            console.log(0);
+        } else if (tipo == 1) {
+            console.log(1);
+        } else if (tipo == 2) {
+            console.log(2);
+        } else if (tipo == 3) {
+            console.log(3);
+        } else if (tipo == 4) {
+            console.log(4);
+        } else if (tipo == 5) {
+            console.log(5);
+        } else if (tipo == 6) {
+            console.log(6);
+        }
+
+
+        console.log(tipo);
+    });
+
     $(document).on("click", ".btn_Show", function () {
         let id = $(this).data("id");
 
@@ -110,8 +147,20 @@ $(document).ready(function () {
 
                 if (response.info == 1) {
                     let data = response.data;
+                    let productos_instalados = response.productos_instalados;
+                    let productos_vendidos = response.productos_vendidos;
+                    let productos_prestados = response.productos_prestados;
+                    let productos_alquilados = response.productos_alquilados;
+                    let productos_devueltos = response.productos_devueltos;
+                    let productos_asignados = response.productos_asignados;
 
                     console.log(data);
+                    console.log(productos_instalados);
+                    console.log(productos_vendidos);
+                    console.log(productos_prestados);
+                    console.log(productos_alquilados);
+                    console.log(productos_devueltos);
+                    console.log(productos_asignados);
 
                     //$("#modal_edit").modal("show");
                 } else {

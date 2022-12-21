@@ -285,7 +285,7 @@ class InventarioController extends Controller
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
                 $actionBtn =
-                    '<a data-id="' . $row->id . '" title="Seleccionar" class="btn btn-primary btn-sm btn_Seleccionar"><i class="fa fa-check"></i></a>';
+                    '<a data-id="' . $row->id . '" data-nombre="' . $row->producto . '" data-img="' . $row->imagen . '" title="Seleccionar" class="btn btn-primary btn-sm btn_Seleccionar"><i class="fa fa-check"></i></a>';
                 return $actionBtn;
             })
             ->rawColumns(['action'])
@@ -349,26 +349,26 @@ class InventarioController extends Controller
             $productos_instalados = DB::table("repuestos_reparacion")->where('id_inventario', $id)->get();
 
             $productos_vendidos = DB::table("productos_factura")
-                ->select('productos_factura.*', 'clientes.nombre as cliente')
+                ->select('productos_factura.*', 'cliente.razon_social as cliente')
                 ->join("facturas", "productos_factura.id_factura", "=", "facturas.id")
-                ->join("clientes", "facturas.id_cliente", "=", "clientes.id")
+                ->join("cliente", "facturas.id_cliente", "=", "cliente.id")
                 ->where('id_inventario', $id)
                 ->get();
 
             $productos_prestados = DB::table("prestamo")
-                ->select('prestamo.*', 'clientes.nombre as cliente', 'empleados.nombre as empleado')
-                ->leftJoin("clientes", "prestamo.id_cliente", "=", "clientes.id")
+                ->select('prestamo.*', 'cliente.razon_social as cliente', 'empleados.nombre as empleado')
+                ->leftJoin("cliente", "prestamo.id_cliente", "=", "cliente.id")
                 ->leftJoin("empleados", "prestamo.id_empleado", "=", "empleados.id")
-                ->where('id_inventario', $id)->where("status", 0)
+                ->where('id_inventario', $id)->where("prestamo.status", 0)
                 ->get();
 
-            $productos_alquilados = DB::table("productos_remision")->where('id_inventario', $id)->get();
+            $productos_alquilados = []; //DB::table("productos_remision")->where('id_inventario', $id)->get();
 
             $productos_devueltos = DB::table("prestamo")
-                ->select('prestamo.*', 'clientes.nombre as cliente', 'empleados.nombre as empleado')
-                ->leftJoin("clientes", "prestamo.id_cliente", "=", "clientes.id")
+                ->select('prestamo.*', 'cliente.razon_social as cliente', 'empleados.nombre as empleado')
+                ->leftJoin("cliente", "prestamo.id_cliente", "=", "cliente.id")
                 ->leftJoin("empleados", "prestamo.id_empleado", "=", "empleados.id")
-                ->where('id_inventario', $id)->where("status", 1)
+                ->where('id_inventario', $id)->where("prestamo.status", 1)
                 ->get();
 
             $productos_asignados = DB::table("productos_asignados")
@@ -379,6 +379,7 @@ class InventarioController extends Controller
 
             return response()->json(['info' => 1, 'data' => $data, 'productos_instalados' => $productos_instalados, 'productos_vendidos' => $productos_vendidos, 'productos_prestados' => $productos_prestados, 'productos_alquilados' => $productos_alquilados, 'productos_devueltos' => $productos_devueltos, 'productos_asignados' => $productos_asignados]);
         } catch (Exception $ex) {
+            return $ex->getMessage();
             return response()->json(['info' => 0, 'error' => 'Error al obtener los datos del inventario.']);
         }
     }

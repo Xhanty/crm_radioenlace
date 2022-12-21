@@ -429,7 +429,7 @@
     <!--<script src="{{ asset('assets/js/script.js') }}"></script>-->
 
     <!--- Index js --->
-    <!--<script src="{{ asset('assets/js/index.js') }}"></script>-->
+    <script src="{{ asset('assets/js/index.js') }}"></script>
 
     <!--themecolor js-->
     <script src="{{ asset('assets/js/themecolor.js') }}"></script>

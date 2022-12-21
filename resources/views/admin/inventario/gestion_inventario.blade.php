@@ -100,8 +100,9 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
-                        <h6 class="modal-title">Modificar Existencia de Inventario</h6><button aria-label="Close" class="btn-close"
-                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                        <h6 class="modal-title">Modificar Existencia de Inventario</h6><button aria-label="Close"
+                            class="btn-close" data-bs-dismiss="modal" type="button"><span
+                                aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
                         <input class="form-control" id="id_edit" type="hidden" disabled readonly>
@@ -123,7 +124,8 @@
                             </div>
                             <div class="col-lg">
                                 <label for="">Cantidad Asignada</label>
-                                <input class="form-control" id="cantidad_asig_edit" placeholder="Cantidad Asignada" type="number">
+                                <input class="form-control" id="cantidad_asig_edit" placeholder="Cantidad Asignada"
+                                    type="number">
                             </div>
                         </div>
                         <br>
@@ -138,7 +140,8 @@
                             </div>
                             <div class="col-lg">
                                 <label for="">Ubicación Referencial</label>
-                                <input class="form-control" id="ubicacion_ref_edit" placeholder="Ubicación Referencial" type="text">
+                                <input class="form-control" id="ubicacion_ref_edit" placeholder="Ubicación Referencial"
+                                    type="text">
                             </div>
                         </div>
                         <br>
@@ -162,7 +165,65 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn ripple btn-primary" id="btnModificarInventario" type="button">Modificar</button>
+                        <button class="btn ripple btn-primary" id="btnModificarInventario"
+                            type="button">Modificar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Seleccionar -->
+        <div class="modal  fade" id="modal_seleccionar">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Gestionar Inventario</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex justify-content-center">
+                            <img id="imagen_select" src="{{ asset('assets/img/sin_imagen.jpg') }}"
+                                style="width: 222px" loading="lazy">
+                        </div>
+                        <div class="text-center">
+                            <h2 id="name_prod_select"></h2>
+                        </div>
+                        <br>
+                        <input class="form-control" id="id_select" type="hidden" disabled readonly>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Seleccione tipo de transacción</label>
+                                <select class="form-select" id="tipo_select">
+                                    <option value="">Seleccione tipo de transacción</option>
+                                    <option value="0">Existente</option>
+                                    <option value="1">Compra</option>
+                                    <option value="2">Venta</option>
+                                    <option value="3">Alquiler</option>
+                                    <option value="4">Prestamo</option>
+                                    <option value="5">Asignado a Empleado</option>
+                                    <option value="6">Instalación</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Cantidad</label>
+                                <input class="form-control" id="cantidad_select" placeholder="Cantidad" type="number">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Descripción</label>
+                                <textarea class="form-control" placeholder="Descripción" rows="3" id="descripcion_select"
+                                    style="height: 90px; resize: none"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" id="btnAddSeleccionar" type="button">Registrar
+                            Actividad</button>
                     </div>
                 </div>
             </div>
