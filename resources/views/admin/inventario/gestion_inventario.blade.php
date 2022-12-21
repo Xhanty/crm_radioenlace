@@ -182,17 +182,18 @@
                     </div>
                     <div class="modal-body">
                         <div class="d-flex justify-content-center">
-                            <img id="imagen_select" src="{{ asset('assets/img/sin_imagen.jpg') }}"
-                                style="width: 222px" loading="lazy">
+                            <img id="imagen_select" src="{{ asset('assets/img/sin_imagen.jpg') }}" style="width: 222px"
+                                loading="lazy">
                         </div>
                         <div class="text-center">
                             <h2 id="name_prod_select"></h2>
                         </div>
                         <br>
                         <input class="form-control" id="id_select" type="hidden" disabled readonly>
+                        <input class="form-control" id="id_producto_select" type="hidden" disabled readonly>
+                        <input class="form-control" id="cantidad_old_select" type="hidden" disabled readonly>
                         <div class="row row-sm">
                             <div class="col-lg">
-                                <label for="">Seleccione tipo de transacción</label>
                                 <select class="form-select" id="tipo_select">
                                     <option value="">Seleccione tipo de transacción</option>
                                     <option value="0">Existente</option>
@@ -205,17 +206,96 @@
                                 </select>
                             </div>
                         </div>
-                        <br>
-                        <div class="row row-sm">
+                        <div class="row row-sm mt-3 mb-3">
                             <div class="col-lg">
-                                <label for="">Cantidad</label>
                                 <input class="form-control" id="cantidad_select" placeholder="Cantidad" type="number">
                             </div>
                         </div>
-                        <br>
-                        <div class="row row-sm">
+                        <!-- Proveedor -->
+                        <div class="row row-sm mt-3 mb-3 form-change d-none">
                             <div class="col-lg">
-                                <label for="">Descripción</label>
+                                <select class="form-select" id="proveedor_select">
+                                    <option value="">Seleccione un proveedor si es necesario</option>
+                                    @foreach ($proveedores as $proveedor)
+                                        <option value="{{ $proveedor->id }}">{{ $proveedor->razon_social }}</option>
+                                    @endforeach
+                                </select>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Ubicación -->
+                        <div class="row row-sm mt-3 mb-3 form-change d-none">
+                            <div class="col-lg">
+                                <select class="form-select" id="ubicacion_select">
+                                    <option value="">Seleccione una ubicación</option>
+                                    @foreach ($almacenes as $almacen)
+                                        <option value="{{ $almacen->id }}">{{ $almacen->nombre }}</option>
+                                    @endforeach
+                                </select>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Ubicación Referencial -->
+                        <div class="row row-sm mt-3 mb-3 form-change d-none">
+                            <div class="col-lg">
+                                <input class="form-control" id="ubicacion_ref_select" placeholder="Ubicación Referencial" type="text">
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Precio de Compra -->
+                        <div class="row row-sm mt-3 mb-3 form-change d-none">
+                            <div class="col-lg">
+                                <input class="form-control" id="precio_compra_select" placeholder="Precio de Compra" type="text">
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Precio de Venta -->
+                        <div class="row row-sm mt-3 mb-3 form-change d-none">
+                            <div class="col-lg">
+                                <input class="form-control" id="precio_venta_select" placeholder="Precio de Venta" type="text">
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Serial -->
+                        <div class="row row-sm mt-3 mb-3 form-change d-none">
+                            <div class="col-lg">
+                                <input class="form-control" id="serial_select" placeholder="Serial" type="text">
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Código Interno -->
+                        <div class="row row-sm mt-3 mb-3 form-change d-none">
+                            <div class="col-lg">
+                                <input class="form-control" id="codigo_interno_select" placeholder="Código Interno" type="text">
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Empleado -->
+                        <div class="row row-sm mt-3 mb-3 form-change d-none">
+                            <div class="col-lg">
+                                <select class="form-select" id="empleado_select">
+                                    <option value="">Seleccione un empleado</option>
+                                    @foreach ($empleados as $empleado)
+                                        <option value="{{ $empleado->id }}">{{ $empleado->nombre }}</option>
+                                    @endforeach
+                                </select>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Cliente -->
+                        <div class="row row-sm mt-3 mb-3 form-change d-none">
+                            <div class="col-lg">
+                                <select class="form-select" id="cliente_select">
+                                    <option value="">Seleccione un cliente</option>
+                                    @foreach ($clientes as $cliente)
+                                        <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
+                                    @endforeach
+                                </select>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row row-sm mt-3">
+                            <div class="col-lg">
                                 <textarea class="form-control" placeholder="Descripción" rows="3" id="descripcion_select"
                                     style="height: 90px; resize: none"></textarea>
                             </div>

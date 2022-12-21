@@ -91,6 +91,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/inventario_update', [App\Http\Controllers\Admin\InventarioController::class, 'inventario_update'])->name('inventario_update');
     Route::post('/inventario_data', [App\Http\Controllers\Admin\InventarioController::class, 'inventario_data'])->name('inventario_data');
     Route::post('/inventario_detail', [App\Http\Controllers\Admin\InventarioController::class, 'inventario_detail'])->name('inventario_detail');
+    Route::post('/inventario_update_select', [App\Http\Controllers\Admin\InventarioController::class, 'inventario_update_select'])->name('inventario_update_select');
 
     Route::get('/categoria_productos', [App\Http\Controllers\Admin\CategoriaProductosController::class, 'index'])->name('categoria_productos');
     Route::post('/categorias_create', [App\Http\Controllers\Admin\CategoriaProductosController::class, 'categorias_create'])->name('categorias_create');

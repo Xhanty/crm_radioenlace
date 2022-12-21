@@ -99,35 +99,120 @@ $(document).ready(function () {
         let id = $(this).data("id");
         let img = $(this).data("img");
         let nombre = $(this).data("nombre");
+        let producto = $(this).data("producto");
+        let cantidad = $(this).data("cantidad");
 
         $("#id_select").val(id);
-        $("#imagen_select").attr("src", "https://formrad.com/radio_enlace/productos/" + img);
+        $("#id_producto_select").val(producto);
+        $("#cantidad_old_select").val(cantidad);
+        $("#imagen_select").attr(
+            "src",
+            "https://formrad.com/radio_enlace/productos/" + img
+        );
         $("#name_prod_select").text(nombre);
 
         $("#modal_seleccionar").modal("show");
     });
 
+    $("#btnAddSeleccionar").click(function () {
+        let id = $("#id_select").val();
+        let producto = $("#id_producto_select").val();
+        let cantidad_old = $("#cantidad_old_select").val();
+        let tipo = $("#tipo_select").val();
+        let cantidad = $("#cantidad_select").val();
+        let proveedor = $("#proveedor_select").val();
+        let ubicacion = $("#ubicacion_select").val();
+        let ubicacion_ref = $("#ubicacion_ref_select").val();
+        let precio_compra = $("#precio_compra_select").val();
+        let precio_venta = $("#precio_venta_select").val();
+        let serial = $("#serial_select").val();
+        let codigo_interno = $("#codigo_interno_select").val();
+        let empleado = $("#empleado_select").val();
+        let cliente = $("#cliente_select").val();
+        let descripcion = $("#descripcion_select").val();
+
+        if (tipo == "" || tipo == null) {
+            toastr.error("Debe seleccionar un tipo de transacción");
+        } else if (cantidad < 1) {
+            toastr.error("La cantidad debe ser mayor a 0");
+        } else {
+            $("#btnAddSeleccionar").attr("disabled", true);
+
+            $.ajax({
+                url: "inventario_update_select",
+                type: "POST",
+                data: {
+                    id: id,
+                    producto: producto,
+                    tipo: tipo,
+                    cantidad: cantidad,
+                    cantidad_old: cantidad_old,
+                    proveedor: proveedor,
+                    ubicacion: ubicacion,
+                    ubicacion_ref: ubicacion_ref,
+                    precio_compra: precio_compra,
+                    precio_venta: precio_venta,
+                    serial: serial,
+                    codigo_interno: codigo_interno,
+                    empleado: empleado,
+                    cliente: cliente,
+                    descripcion: descripcion,
+                },
+                dataType: "json",
+                success: function (response) {
+                    if (response.info == 1) {
+                        toastr.success("Inventario actualizado correctamente");
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 1000);
+                    } else {
+                        $("#btnAddSeleccionar").attr("disabled", false);
+                        toastr.error("Error al actualizar el inventario");
+                    }
+                },
+                error: function (error) {
+                    $("#btnAddSeleccionar").attr("disabled", false);
+                    toastr.error("Error al actualizar el inventario");
+                    console.log(error);
+                },
+            });
+        }
+    });
+
     $("#tipo_select").change(function () {
         let tipo = $(this).val();
+        $(".form-change").addClass("d-none");
 
-        if (tipo == "") {
-            console.log("vacio");
+        if (tipo == "" || tipo == null) {
+            toastr.error("Debe seleccionar un tipo de transacción");
         } else if (tipo == 0) {
-            console.log(0);
+            $("#proveedor_select").parent().parent().removeClass("d-none");
+            $("#ubicacion_select").parent().parent().removeClass("d-none");
+            $("#ubicacion_ref_select").parent().parent().removeClass("d-none");
+            $("#precio_compra_select").parent().parent().removeClass("d-none");
+            $("#precio_venta_select").parent().parent().removeClass("d-none");
+            $("#serial_select").parent().parent().removeClass("d-none");
+            $("#codigo_interno_select").parent().parent().removeClass("d-none");
         } else if (tipo == 1) {
-            console.log(1);
+            $("#proveedor_select").parent().parent().removeClass("d-none");
+            $("#ubicacion_select").parent().parent().removeClass("d-none");
+            $("#ubicacion_ref_select").parent().parent().removeClass("d-none");
+            $("#precio_compra_select").parent().parent().removeClass("d-none");
+            $("#precio_venta_select").parent().parent().removeClass("d-none");
+            $("#serial_select").parent().parent().removeClass("d-none");
+            $("#codigo_interno_select").parent().parent().removeClass("d-none");
         } else if (tipo == 2) {
-            console.log(2);
+            $("#cliente_select").parent().parent().removeClass("d-none");
         } else if (tipo == 3) {
-            console.log(3);
+            $("#cliente_select").parent().parent().removeClass("d-none");
         } else if (tipo == 4) {
-            console.log(4);
+            $("#empleado_select").parent().parent().removeClass("d-none");
+            $("#cliente_select").parent().parent().removeClass("d-none");
         } else if (tipo == 5) {
-            console.log(5);
+            $("#empleado_select").parent().parent().removeClass("d-none");
         } else if (tipo == 6) {
-            console.log(6);
+            $("#cliente_select").parent().parent().removeClass("d-none");
         }
-
 
         console.log(tipo);
     });

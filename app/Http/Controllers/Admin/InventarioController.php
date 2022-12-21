@@ -220,7 +220,9 @@ class InventarioController extends Controller
         try {
             $empleados = DB::table('empleados')->where("status", 1)->get();
             $almacenes = DB::table('almacenes')->get();
-            return view('admin.inventario.gestion_inventario', compact('empleados', 'almacenes'));
+            $proveedores = DB::table('proveedores')->where("estado", 1)->get();
+            $clientes = DB::table('cliente')->where("estado", 1)->get();
+            return view('admin.inventario.gestion_inventario', compact('empleados', 'almacenes', 'proveedores', 'clientes'));
         } catch (Exception $ex) {
             return view('errors.500');
         }
@@ -285,7 +287,7 @@ class InventarioController extends Controller
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
                 $actionBtn =
-                    '<a data-id="' . $row->id . '" data-nombre="' . $row->producto . '" data-img="' . $row->imagen . '" title="Seleccionar" class="btn btn-primary btn-sm btn_Seleccionar"><i class="fa fa-check"></i></a>';
+                    '<a data-id="' . $row->id . '" data-nombre="' . $row->producto . '" data-img="' . $row->imagen . '" data-producto="' . $row->id_producto . '" data-cantidad="' . $row->cantidad . '" title="Seleccionar" class="btn btn-primary btn-sm btn_Seleccionar"><i class="fa fa-check"></i></a>';
                 return $actionBtn;
             })
             ->rawColumns(['action'])
@@ -413,6 +415,81 @@ class InventarioController extends Controller
             DB::commit();
             return response()->json(['info' => 1, 'success' => 'Inventario actualizado correctamente.']);
         } catch (Exception $ex) {
+            return response()->json(['info' => 0, 'error' => 'Error al actualizar el inventario.']);
+            return $ex->getMessage();
+        }
+    }
+
+    public function inventario_update_select(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $id = $request->id;
+            $cantidad_old = $request->cantidad_old;
+            $producto = $request->producto;
+            $tipo = $request->tipo;
+
+            if ($tipo == 0) {
+            } else if ($tipo == 1) {
+                DB::table("inventario")->where("id", $id)->update([
+                    'id_proveedor' => $request->proveedor ? $request->proveedor : 0,
+                    'ubicacion' => $request->ubicacion ? $request->ubicacion : 0,
+                    'ubicacion_ref' => $request->ubicacion_ref ? $request->ubicacion_ref : "",
+                    'precio_compra' => $request->precio_compra ? $request->precio_compra : 0,
+                    'precio_venta' => $request->precio_venta ? $request->precio_venta : 0,
+                    'serial' => $request->serial,
+                    'cod_interno' => $request->codigo_interno,
+                    'cantidad' => $request->cantidad + $cantidad_old,
+                    'descripcion' => $request->descripcion ? $request->descripcion : "",
+                ]);
+            } else if ($tipo == 2) {
+                DB::table('ventas')->insert([
+                    'id_cliente' => $request->cliente,
+                    'id_producto' => $producto,
+                    'anexo' => "",
+                    'fecha' => date("Y-m-d"),
+                    'created_by' => session('user'),
+                    'cantidad' => $request->cantidad,
+                    'precio_compra' => $request->precio_compra,
+                    'precio_venta' => $request->precio_venta,
+                ]);
+            } else if ($tipo == 3) {
+            } else if ($tipo == 4) {
+                DB::table("prestamo")->insert([
+                    'id_inventario' => $id,
+                    'cantidad' => $request->cantidad,
+                    'id_cliente' => $request->cliente,
+                    'id_empleado' => $request->empleado,
+                    'tipo' => 4,
+                    'created_by' => session('user'),
+                    'status' => 0,
+                    'fecha' => date("Y-m-d"),
+                ]);
+            } else if ($tipo == 5) {
+                DB::table("productos_asignados")->insert([
+                    'cantidad' => $request->cantidad,
+                    'id_empleado' => $request->empleado,
+                    'id_inventario' => $id,
+                    'descripcion' => session('user'),
+                    'fecha' => date("Y-m-d H:i:s"),
+                    'created_by' => session('user'),
+                    'status' => 0,
+                ]);
+            } else if ($tipo == 6) {
+                DB::table("instalaciones")->insert([
+                    'id_inventario' => $id,
+                    'id_cliente' => $request->cliente,
+                    'cantidad' => $request->cantidad,
+                    'tipo' => 6,
+                    'created_by' => session('user'),
+                    'status' => 1,
+                    'fecha' => date("Y-m-d"),
+                ]);
+            }
+
+            DB::commit();
+        } catch (Exception $ex) {
+            DB::rollBack();
             return response()->json(['info' => 0, 'error' => 'Error al actualizar el inventario.']);
             return $ex->getMessage();
         }
