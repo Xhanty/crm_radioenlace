@@ -126,7 +126,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="d-flex justify-content-center">
-                        <img id="imagenedit" src="http://127.0.0.1:8000/images/vehiculos/18876865131801587359.png" style="width: 222px" loading="lazy">
+                        <img id="imagenedit" src="{{ asset('images/vehiculos/18876865131801587359.png') }}" style="width: 222px" loading="lazy">
                     </div>
                     <br>
                     <div class="row row-sm">

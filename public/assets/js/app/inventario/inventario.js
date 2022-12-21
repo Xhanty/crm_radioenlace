@@ -5,6 +5,10 @@ $(function () {
         },
     });
 
+    var protocol = window.location.protocol;
+    var host = window.location.host;
+    var url_general = protocol + "//" + host + "/";
+
     $("#btnGuardarProducto").on("click", function () {
         var codigo = $("#codigoadd").val();
         var nombre = $("#nombreadd").val();
@@ -108,7 +112,7 @@ $(function () {
             success: function (data) {
                 let producto = data.producto;
 
-                $("#imagenedit").attr("src", "http://127.0.0.1:8000/images/productos/" + producto.imagen);
+                $("#imagenedit").attr("src", url_general + "images/productos/" + producto.imagen);
                 $("#id_producto").val(producto.id);
                 $("#codigoedit").val(producto.cod_producto);
                 $("#nombreedit").val(producto.nombre);

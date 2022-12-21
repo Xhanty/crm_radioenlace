@@ -1331,7 +1331,7 @@
                 <div class="modal-body">
                     <input type="hidden" id="idedit" readonly disabled>
                     <div class="d-flex justify-content-center">
-                        <img id="imagenedit" src="http://127.0.0.1:8000/images/vehiculos/18876865131801587359.png"
+                        <img id="imagenedit" src="{{ asset('images/vehiculos/18876865131801587359.png') }}"
                             style="width: 222px" loading="lazy">
                     </div>
                     <br>

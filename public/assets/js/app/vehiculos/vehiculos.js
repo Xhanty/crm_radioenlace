@@ -112,7 +112,7 @@ $(function () {
 
                 $("#imagenedit").attr(
                     "src",
-                    "http://127.0.0.1:8000/images/vehiculos/" + data.foto
+                    url_general + "images/vehiculos/" + data.foto
                 );
                 $("#marcaedit").val(data.marca);
                 $("#modeloedit").val(data.modelo);
@@ -152,7 +152,7 @@ $(function () {
 
                 $("#imagenedit").attr(
                     "src",
-                    "http://127.0.0.1:8000/images/vehiculos/" + data.foto
+                    url_general +"images/vehiculos/" + data.foto
                 );
                 $("#idedit").val(data.id);
                 $("#marcaedit").val(data.marca);

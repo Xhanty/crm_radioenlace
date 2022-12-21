@@ -5,6 +5,10 @@ $(function () {
         },
     });
 
+    var protocol = window.location.protocol;
+    var host = window.location.host;
+    var url_general = protocol + "//" + host + "/";
+
     let data_user = JSON.parse(localStorage.getItem("user"));
 
     $(".name_user_val").text(data_user.nombre);
@@ -105,7 +109,7 @@ $(function () {
                         return '<img src="assets/img/sin_imagen.jpg" loading="lazy" style="width: 120px" />';
                     } else {
                         return (
-                            '<img src="http://127.0.0.1:8000/images/vehiculos/' +
+                            '<img src="' + url_general + 'images/vehiculos/' +
                             data +
                             '" loading="lazy" style="width: 120px">'
                         );
@@ -369,7 +373,7 @@ $(function () {
                         if(data.avatar == null || data.avatar == '') {
                             return '<img src="assets/img/sin_imagen.jpg" class="avatar border rounded-circle">';
                         }
-                        return '<img src="http://127.0.0.1:8000/images/clientes/' +
+                        return '<img src="'+url_general+'images/clientes/' +
                             data.avatar +
                             '" class="avatar border rounded-circle">';
                     }
@@ -557,7 +561,7 @@ $(function () {
                 if (cliente.avatar != null && cliente.avatar != "") {
                     $("#img_cliente_edit").attr(
                         "src",
-                        "http://127.0.0.1:8000/images/clientes/" +
+                        url_general + "images/clientes/" +
                             cliente.avatar
                     );
                 } else {
