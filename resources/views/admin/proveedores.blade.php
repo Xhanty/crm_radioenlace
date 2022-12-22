@@ -44,7 +44,7 @@
                                 <tbody>
                                     @foreach ($proveedores as $item)
                                         <tr>
-                                            <td><img src="https://formrad.com/radio_enlace/avatares_proveedores/{{ $item->avatar }}"
+                                            <td><img src="{{ asset('images/proveedores/' . $item->avatar) }}"
                                                     alt="img" class="avatar avatar-md brround"></td>
                                             <td>{{ $item->razon_social }}</td>
                                             <td>{{ $item->contacto }}</td>
@@ -195,7 +195,7 @@
                         <div class="d-flex justify-content-center">
                             <img id="img_proveedor_edit" class="avatar border rounded-circle"
                                 style="width: 14pc; height: 14pc;"
-                                src="https://formrad.com/radio_enlace/avatares_clientes/noavatar.png">
+                                src="{{ asset('images/clientes/noavatar.png') }}">
                         </div>
                         <br>
                         <input type="hidden" readonly disabled id="id_proveedor_edit">

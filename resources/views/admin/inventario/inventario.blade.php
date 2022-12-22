@@ -40,7 +40,7 @@
                                         <th class="wd-10p border-bottom-0">Cod Producto</th>
                                         <th class="wd-10p border-bottom-0">Marca</th>
                                         <th class="wd-10p border-bottom-0">Modelo</th>
-                                        <th class="wd-15p border-bottom-0">Estatus</th>
+                                        <th class="wd-10p border-bottom-0">Estatus</th>
                                         <th class="wd-15p border-bottom-0">Acciones</th>
                                     </tr>
                                 </thead>

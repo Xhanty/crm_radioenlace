@@ -5,6 +5,10 @@ $(document).ready(function () {
         },
     });
 
+    var protocol = window.location.protocol;
+    var host = window.location.host;
+    var url_general = protocol + "//" + host + "/";
+
     $(".open-toggle").trigger("click");
 
     $("#btnModificarInventario").click(function () {
@@ -105,10 +109,7 @@ $(document).ready(function () {
         $("#id_select").val(id);
         $("#id_producto_select").val(producto);
         $("#cantidad_old_select").val(cantidad);
-        $("#imagen_select").attr(
-            "src",
-            "https://formrad.com/radio_enlace/productos/" + img
-        );
+        $("#imagen_select").attr("src", url_general + "images/productos/" + img);
         $("#name_prod_select").text(nombre);
 
         $("#modal_seleccionar").modal("show");

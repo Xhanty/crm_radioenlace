@@ -5,6 +5,10 @@ $(function () {
         },
     });
 
+    var protocol = window.location.protocol;
+    var host = window.location.host;
+    var url_general = protocol + "//" + host + "/";
+
     $("#div_content_prov_edit").hide();
     $("#div_content_prov_add").hide();
     $(".open-toggle").trigger("click");
@@ -282,13 +286,12 @@ $(function () {
                     if (data.avatar != null && data.avatar != "") {
                         $("#img_proveedor_edit").attr(
                             "src",
-                            "https://formrad.com/radio_enlace/avatares_proveedores/" +
-                                data.avatar
+                            url_general + "images/proveedores/" + data.avatar
                         );
                     } else {
                         $("#img_proveedor_edit").attr(
                             "src",
-                            "https://formrad.com/radio_enlace/avatares_clientes/noavatar.png"
+                            url_general + "images/clientes/noavatar.png"
                         );
                     }
 

@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Comercial;
 
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ReparacionesController extends Controller
+class CotizacionController extends Controller
 {
     public function index()
     {
         try {
-            return view('admin.reparaciones');
+            return view('admin.comercial.cotizaciones');
         } catch (Exception $ex) {
             return view('errors.500');
         }

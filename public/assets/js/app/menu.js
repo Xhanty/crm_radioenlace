@@ -153,7 +153,7 @@ $(function () {
                         return '<img src="assets/img/sin_imagen.jpg" loading="lazy" style="width: 120px" />';
                     } else {
                         return (
-                            '<img src="https://formrad.com/radio_enlace/productos/' +
+                            '<img src="' + url_general + 'images/productos/' +
                             data +
                             '" loading="lazy" style="width: 120px">'
                         );
@@ -195,8 +195,8 @@ $(function () {
                 data: null,
                 render: function (data) {
                     var img =
-                        '<div><img src="https://formrad.com/radio_enlace/productos/' +
-                        data.img_producto +
+                        '<div><img src="' +
+                        data.img_producto  + url_general + "images/productos/" +
                         '" loading="lazy" style="width: 120px" /></div>' +
                         "<div>" +
                         data.producto +
@@ -253,7 +253,7 @@ $(function () {
                         return '<img src="assets/img/sin_imagen.jpg" loading="lazy" style="width: 120px" />';
                     } else {
                         return (
-                            '<img src="https://formrad.com/radio_enlace/productos/' +
+                            '<img src="' + url_general + "images/productos/" +
                             data +
                             '" loading="lazy" style="width: 120px">'
                         );
@@ -304,7 +304,7 @@ $(function () {
                         return '<img src="assets/img/sin_imagen.jpg" loading="lazy" style="width: 120px" />';
                     } else {
                         return (
-                            '<img src="https://formrad.com/radio_enlace/productos/' +
+                            '<img src="' + "images/productos/" +
                             data +
                             '" loading="lazy" style="width: 120px">'
                         );
@@ -567,7 +567,7 @@ $(function () {
                 } else {
                     $("#img_cliente_edit").attr(
                         "src",
-                        "https://formrad.com/radio_enlace/avatares_clientes/noavatar.png"
+                        url_general + "images/clientes/noavatar.png"
                     );
                 }
 

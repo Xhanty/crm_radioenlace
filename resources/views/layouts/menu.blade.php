@@ -246,7 +246,7 @@
                         </li>
 
                         <li class="slide">
-                            <a class="side-menu__item" href="javascript:void(0)"><i
+                            <a class="side-menu__item" href="{{ route('solicitud_inventario') }}"><i
                                     class="side-menu__icon fe fe-sliders"></i><span
                                     class="side-menu__label">Solicitudes Inventario</span></a>
                         </li>
@@ -260,9 +260,9 @@
                                     class="side-menu__icon fe fe-bar-chart"></i><span class="side-menu__label">Seguimiento Clientes</span><i
                                     class="angle fe fe-chevron-down"></i></a>
                             <ul class="slide-menu">
-                                <li><a class="slide-item" href="javascript:void(0)">Categorías</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Seguimientos</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Mis Tarjetas</a></li>
+                                <li><a class="slide-item" href="{{ route('categorias_seguimientos') }}">Categorías</a></li>
+                                <li><a class="slide-item" href="{{ route('seguimientos_clientes') }}">Seguimientos</a></li>
+                                <li><a class="slide-item" href="{{ route('tarjetas_seguimientos') }}">Mis Tarjetas</a></li>
                             </ul>
                         </li>
                         <li class="slide">
@@ -287,9 +287,9 @@
                                     class="side-menu__icon fe fe-file-text"></i><span class="side-menu__label">Comercial</span><i
                                     class="angle fe fe-chevron-down"></i></a>
                             <ul class="slide-menu">
-                                <li><a class="slide-item" href="javascript:void(0)">Ordenes Compra</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Cotizaciones</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Remisiones</a></li>
+                                <li><a class="slide-item" href="{{ route('ordenes_compra') }}">Ordenes Compra</a></li>
+                                <li><a class="slide-item" href="{{ route('cotizaciones') }}">Cotizaciones</a></li>
+                                <li><a class="slide-item" href="{{ route('remisiones') }}">Remisiones</a></li>
                             </ul>
                         </li>
 
@@ -298,13 +298,15 @@
                                     class="side-menu__icon fe fe-dollar-sign"></i><span class="side-menu__label">Contabilidad</span><i
                                     class="angle fe fe-chevron-down"></i></a>
                             <ul class="slide-menu">
-                                <li><a class="slide-item" href="javascript:void(0)">Facturación</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Estadísticas</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Gestionar Viáticos</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Gestionar Causaciones</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Informes Contables</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Nómina</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Configuración Nómina</a></li>
+                                <li><a class="slide-item" href="{{ route('facturacion') }}">Facturación</a></li>
+                                <li><a class="slide-item" href="{{ route('estadistica_proveedores') }}">Estadística Proveedores</a></li>
+                                <li><a class="slide-item" href="{{ route('estadistica_compra') }}">Estadística Compra</a></li>
+                                <li><a class="slide-item" href="{{ route('estadistica_ventas') }}">Estadística Ventas</a></li>
+                                <li><a class="slide-item" href="{{ route('viaticos') }}">Gestionar Viáticos</a></li>
+                                <li><a class="slide-item" href="{{ route('causaciones') }}">Gestionar Causaciones</a></li>
+                                <li><a class="slide-item" href="{{ route('informe_contable') }}">Informes Contables</a></li>
+                                <li><a class="slide-item" href="{{ route('nomina') }}">Nómina</a></li>
+                                <li><a class="slide-item" href="{{ route('config_nomina') }}">Configuración Nómina</a></li>
                             </ul>
                         </li>
 
@@ -313,10 +315,10 @@
                                     class="side-menu__icon fe fe-globe"></i><span class="side-menu__label">Gastos</span><i
                                     class="angle fe fe-chevron-down"></i></a>
                             <ul class="slide-menu">
-                                <li><a class="slide-item" href="javascript:void(0)">Arrendamientos</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Gastos Varios</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Gastos Fijos</a></li>
-                                <li><a class="slide-item" href="javascript:void(0)">Gastos Equivalentes</a></li>
+                                <li><a class="slide-item" href="{{ route('arrendamientos') }}">Arrendamientos</a></li>
+                                <li><a class="slide-item" href="{{ route('gastos_varios') }}">Gastos Varios</a></li>
+                                <li><a class="slide-item" href="{{ route('gastos_fijos') }}">Gastos Fijos</a></li>
+                                <li><a class="slide-item" href="{{ route('gastos_equivalentes') }}">Gastos Equivalentes</a></li>
                             </ul>
                         </li>
                     </ul>

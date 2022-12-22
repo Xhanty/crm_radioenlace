@@ -70,7 +70,7 @@
                     </div>
                     <div class="card-body" style="margin-top: -18px;">
                         <div class="d-flex justify-content-center">
-                            <img id="img_cliente_edit" class="avatar border rounded-circle" style="width: 14pc; height: 14pc;" src="https://formrad.com/radio_enlace/avatares_clientes/noavatar.png">
+                            <img id="img_cliente_edit" class="avatar border rounded-circle" style="width: 14pc; height: 14pc;" src="{{ asset('images/clientes/noavatar.png') }}">
                         </div>
                         <br>
                         <input type="hidden" readonly disabled id="id_cliente_edit">

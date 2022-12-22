@@ -70,7 +70,7 @@
                     </div>
                     <div class="card-body" style="margin-top: -18px;">
                         <div class="d-flex justify-content-center">
-                            <img src="https://formrad.com/radio_enlace/avatares_clientes/noavatar.png">
+                            <img src="{{ asset('images/clientes/noavatar.png') }}">
                         </div>
                         <br>
                         <input type="hidden" readonly disabled id="id_empleado_edit">
