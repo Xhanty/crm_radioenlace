@@ -9,6 +9,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0);">Proyectos</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"> Proyectos</li>
                     </ol>
                 </nav>
             </div>
@@ -18,5 +19,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('assets/js/app/proyectos.js') }}"></script>
+    <script src="{{ asset('assets/js/app/proyectos/proyectos.js') }}"></script>
 @endsection

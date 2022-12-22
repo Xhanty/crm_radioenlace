@@ -251,9 +251,14 @@
                                     class="side-menu__label">Solicitudes Inventario</span></a>
                         </li>
                         <li class="slide">
-                            <a class="side-menu__item" href="{{ route('proyectos') }}"><i
-                                    class="side-menu__icon fe fe-shield"></i><span
-                                    class="side-menu__label">Proyectos</span></a>
+                            <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
+                                    class="side-menu__icon fe fe-shield"></i><span class="side-menu__label">Proyectos</span><i
+                                    class="angle fe fe-chevron-down"></i></a>
+                            <ul class="slide-menu">
+                                <li><a class="slide-item" href="{{ route('categorias_proyectos') }}">Categorías</a></li>
+                                <li><a class="slide-item" href="{{ route('proyectos') }}">Proyectos</a></li>
+                                <li><a class="slide-item" href="{{ route('mis_tarjetas') }}">Mis Tarjetas</a></li>
+                            </ul>
                         </li>
                         <li class="slide">
                             <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
@@ -265,10 +270,15 @@
                                 <li><a class="slide-item" href="{{ route('tarjetas_seguimientos') }}">Mis Tarjetas</a></li>
                             </ul>
                         </li>
+
                         <li class="slide">
-                            <a class="side-menu__item" href="{{ route('reparaciones') }}"><i
-                                    class="side-menu__icon fe fe-layers"></i><span
-                                    class="side-menu__label">Reparaciones</span></a>
+                            <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
+                                    class="side-menu__icon fe fe-layers"></i><span class="side-menu__label">Reparaciones</span><i
+                                    class="angle fe fe-chevron-down"></i></a>
+                            <ul class="slide-menu">
+                                <li><a class="slide-item" href="{{ route('reparaciones') }}">Reparaciones</a></li>
+                                <li><a class="slide-item" href="{{ route('mis_reparaciones') }}">Reparaciones Asignadas</a></li>
+                            </ul>
                         </li>
 
                         <li class="slide">

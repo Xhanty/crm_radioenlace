@@ -139,7 +139,9 @@ Route::middleware(['auth_user'])->group(function () {
     Route::get('/solicitud_inventario', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'index'])->name('solicitud_inventario');
 
     // PROYECTOS
-    Route::get('/proyectos', [App\Http\Controllers\Admin\ProyectosController::class, 'index'])->name('proyectos');
+    Route::get('/categorias_proyectos', [App\Http\Controllers\Admin\Proyectos\CategoriasController::class, 'index'])->name('categorias_proyectos');
+    Route::get('/proyectos', [App\Http\Controllers\Admin\Proyectos\ProyectosController::class, 'index'])->name('proyectos');
+    Route::get('/mis_tarjetas', [App\Http\Controllers\Admin\Proyectos\TarjetasController::class, 'index'])->name('mis_tarjetas');
 
     // SEGUIMIENTO DE CLIENTES
     Route::get('/seguimientos_clientes', [App\Http\Controllers\Admin\SeguimientoCliente\SeguimientoController::class, 'index'])->name('seguimientos_clientes');
@@ -147,7 +149,8 @@ Route::middleware(['auth_user'])->group(function () {
     Route::get('/tarjetas_seguimientos', [App\Http\Controllers\Admin\SeguimientoCliente\TarjetasController::class, 'index'])->name('tarjetas_seguimientos');
 
     // REPARACIONES
-    Route::get('/reparaciones', [App\Http\Controllers\Admin\ReparacionesController::class, 'index'])->name('reparaciones');
+    Route::get('/reparaciones', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'index'])->name('reparaciones');
+    Route::get('/mis_reparaciones', [App\Http\Controllers\Admin\Reparaciones\MisReparacionesController::class, 'index'])->name('mis_reparaciones');
 
     // DOCUMENTOS
     Route::get('/categorias_archivos', [App\Http\Controllers\Admin\Documentos\CategoriasController::class, 'index'])->name('categorias_archivos');
