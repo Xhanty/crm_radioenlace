@@ -632,14 +632,12 @@ $(function () {
                 orderable: false,
                 data: null,
                 className: "text-center",
-                render: function (data, type, full, meta) {
+                render: function (dataa, type, full, meta) {
                     if (type === "display") {
-                        var token = (Math.random() * 3 * 1e38).toString(16);
                         data = '<i class="fa fa-user fa-fw"></i>';
                         data =
-                            '<img src="https://www.gravatar.com/avatar/' +
-                            token +
-                            '.png?d=robohash" class="avatar border rounded-circle">';
+                            '<img src="' + url_general + "images/empleados/" +
+                            dataa.avatar + '" class="avatar border rounded-circle">';
                     }
 
                     return data;
@@ -883,7 +881,7 @@ $(function () {
                     order: [],
                 });
 
-                console.log(data);
+                //console.log(data);
                 $("#global-loader").fadeOut("fast");
             },
             error: function (data) {
@@ -892,6 +890,18 @@ $(function () {
                 alert("Error al cargar los datos del cliente");
             },
         });
+
+        if (data.avatar != null && data.avatar != "") {
+            $("#img_empleado_edit").attr(
+                "src",
+                url_general + "images/empleados/" + data.avatar
+            );
+        } else {
+            $("#img_empleado_edit").attr(
+                "src",
+                url_general + "images/empleados/noavatar.png"
+            );
+        }
 
         $("#div_list_empleados").hide();
         $("#div_content_empleado_edit").show();

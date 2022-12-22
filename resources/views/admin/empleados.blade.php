@@ -70,7 +70,7 @@
                     </div>
                     <div class="card-body" style="margin-top: -18px;">
                         <div class="d-flex justify-content-center">
-                            <img src="{{ asset('images/clientes/noavatar.png') }}">
+                            <img id="img_empleado_edit" class="avatar border rounded-circle" style="width: 14pc; height: 14pc;" src="{{ asset('images/clientes/noavatar.png') }}">
                         </div>
                         <br>
                         <input type="hidden" readonly disabled id="id_empleado_edit">
