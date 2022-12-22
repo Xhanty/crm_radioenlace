@@ -196,7 +196,7 @@ $(function () {
                 render: function (data) {
                     var img =
                         '<div><img src="' +
-                        data.img_producto  + url_general + "images/productos/" +
+                        url_general + "images/productos/" + data.img_producto +
                         '" loading="lazy" style="width: 120px" /></div>' +
                         "<div>" +
                         data.producto +
