@@ -23,6 +23,7 @@ class LoginController extends Controller
 
             if($user && $user->id) {
                 session(['user' => $user->id]);
+                session(['user_img' => $user->avatar]);
                 return response()->json(['data' => 'success', 'user' => $user]);
             } else {
                 return response()->json(['data' => 'incorrect']);

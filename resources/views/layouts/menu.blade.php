@@ -87,13 +87,13 @@
                                 </div>
                                 <div class="dropdown main-profile-menu nav nav-item nav-link">
                                     <a class="profile-user d-flex" href=""><img
-                                            src="{{ asset('assets/img/faces/6.jpg') }}" alt="user-img"
+                                            src="{{ asset('images/empleados/' . session('user_img')) }}" alt="user-img"
                                             class="rounded-circle mCS_img_loaded"><span></span></a>
 
                                     <div class="dropdown-menu">
                                         <div class="main-header-profile header-img">
                                             <div class="main-img-user"><img alt=""
-                                                    src="{{ asset('assets/img/faces/6.jpg') }}"></div>
+                                                    src="{{ asset('images/empleados/' . session('user_img')) }}"></div>
                                             <h6 class="name_user_val">Petey Cruiser</h6><span class="cargo_user_val">Premium Member</span>
                                         </div>
                                         <a class="dropdown-item" href="javascript:void(0)"><i class="far fa-user"></i> Mi Perfil</a>
@@ -134,7 +134,7 @@
                         <div class="app-sidebar__user">
                             <div class="dropdown user-pro-body text-center">
                                 <div class="user-pic">
-                                    <img src="{{ asset('assets/img/faces/6.jpg') }}" alt="user-img"
+                                    <img src="{{ asset('images/empleados/' . session('user_img')) }}" alt="user-img"
                                         class="rounded-circle mCS_img_loaded">
                                 </div>
                                 <div class="user-info">
