@@ -9,6 +9,8 @@ $(function () {
     var host = window.location.host;
     var url_general = protocol + "//" + host + "/";
 
+    $(".open-toggle").trigger("click");
+
     $("#btnGuardarProducto").on("click", function () {
         var codigo = $("#codigoadd").val();
         var nombre = $("#nombreadd").val();
