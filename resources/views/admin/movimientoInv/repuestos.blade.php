@@ -64,3 +64,7 @@
         <!-- End Row -->
     </div>
 @endsection
+
+@section('scripts')
+    <script src="{{ asset('assets/js/app/movimiento_inv/repuestos.js') }}"></script>
+@endsection
