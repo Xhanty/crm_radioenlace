@@ -21,9 +21,31 @@ class NominaController extends Controller
     public function config_nomina()
     {
         try {
-            return view('admin.contabilidad.config_nomina');
+            $data = DB::table('configuracion_nomina')->first();
+            return view('admin.contabilidad.config_nomina', compact('data'));
         } catch (Exception $ex) {
             return view('errors.500');
+        }
+    }
+
+    public function update_config_nomina(Request $request)
+    {
+        try {
+            DB::table("configuracion_nomina")->where("id", $request->id)->update([
+                'porcentaje_salud' => $request->salud,
+                'porcentaje_pension' => $request->pension,
+                'monto_base_fte' => $request->monto,
+            ]);
+
+            return response()->json([
+                'info' => 1,
+                'message' => 'Configuración actualizada correctamente',
+            ], 200);
+        } catch (Exception $ex) {
+            return response()->json([
+                'info' => 0,
+                'message' => 'Error al actualizar la configuración',
+            ], 200);
         }
     }
 }

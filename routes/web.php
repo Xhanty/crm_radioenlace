@@ -140,12 +140,16 @@ Route::middleware(['auth_user'])->group(function () {
 
     // PROYECTOS
     Route::get('/categorias_proyectos', [App\Http\Controllers\Admin\Proyectos\CategoriasController::class, 'index'])->name('categorias_proyectos');
+    Route::post('/categorias_proyectos_add', [App\Http\Controllers\Admin\Proyectos\CategoriasController::class, 'add'])->name('categorias_proyectos_add');
+    Route::post('/categorias_proyectos_delete', [App\Http\Controllers\Admin\Proyectos\CategoriasController::class, 'delete'])->name('categorias_proyectos_delete');
     Route::get('/proyectos', [App\Http\Controllers\Admin\Proyectos\ProyectosController::class, 'index'])->name('proyectos');
     Route::get('/mis_tarjetas', [App\Http\Controllers\Admin\Proyectos\TarjetasController::class, 'index'])->name('mis_tarjetas');
 
     // SEGUIMIENTO DE CLIENTES
-    Route::get('/seguimientos_clientes', [App\Http\Controllers\Admin\SeguimientoCliente\SeguimientoController::class, 'index'])->name('seguimientos_clientes');
     Route::get('/categorias_seguimientos', [App\Http\Controllers\Admin\SeguimientoCliente\CategoriasController::class, 'index'])->name('categorias_seguimientos');
+    Route::post('/categorias_seguimientos_add', [App\Http\Controllers\Admin\SeguimientoCliente\CategoriasController::class, 'add'])->name('categorias_seguimientos_add');
+    Route::post('/categorias_seguimientos_delete', [App\Http\Controllers\Admin\SeguimientoCliente\CategoriasController::class, 'delete'])->name('categorias_seguimientos_delete');
+    Route::get('/seguimientos_clientes', [App\Http\Controllers\Admin\SeguimientoCliente\SeguimientoController::class, 'index'])->name('seguimientos_clientes');
     Route::get('/tarjetas_seguimientos', [App\Http\Controllers\Admin\SeguimientoCliente\TarjetasController::class, 'index'])->name('tarjetas_seguimientos');
 
     // REPARACIONES
@@ -176,6 +180,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::get('/informe_contable', [App\Http\Controllers\Admin\Contabilidad\InformeContableController::class, 'index'])->name('informe_contable');
     Route::get('/nomina', [App\Http\Controllers\Admin\Contabilidad\NominaController::class, 'nomina'])->name('nomina');
     Route::get('/config_nomina', [App\Http\Controllers\Admin\Contabilidad\NominaController::class, 'config_nomina'])->name('config_nomina');
+    Route::post('/update_config_nomina', [App\Http\Controllers\Admin\Contabilidad\NominaController::class, 'update_config_nomina'])->name('update_config_nomina');
 
     // GASTOS
     Route::get('/arrendamientos', [App\Http\Controllers\Admin\Gastos\ArrendamientosController::class, 'index'])->name('arrendamientos');
