@@ -43,6 +43,7 @@ $(function () {
             datefilter1[0] = start.format("YYYY-MM-DD");
             datefilter1[1] = end.format("YYYY-MM-DD");
             let empleado = $("#empleadofilter1").val();
+            $("#rangofilter1").val(datefilter1[0] + " - " + datefilter1[1]);
             traerPuntos(datefilter1, 0, empleado);
         }
     );
@@ -56,6 +57,7 @@ $(function () {
             datefilter2[0] = start.format("YYYY-MM-DD");
             datefilter2[1] = end.format("YYYY-MM-DD");
             let empleado = $("#empleadofilter2").val();
+            $("#rangofilter2").val(datefilter2[0] + " - " + datefilter2[1]);
             traerPuntos(datefilter2, 1, empleado);
         }
     );
