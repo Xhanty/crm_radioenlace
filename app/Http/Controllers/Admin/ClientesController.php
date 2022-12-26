@@ -54,7 +54,7 @@ class ClientesController extends Controller
 
             if ($anexo = $request->file('archivo')) {
                 $archivo = rand() . rand() . '.' . $anexo->getClientOriginalExtension();
-                $anexo->move(public_path('images/clientes'), $archivo);
+                $anexo->move('images/clientes', $archivo);
             }
 
             $cliente = DB::table("cliente")->insertGetId([
@@ -122,7 +122,7 @@ class ClientesController extends Controller
 
                 if ($anexo = $request->file('archivo')) {
                     $archivo = rand() . rand() . '.' . $anexo->getClientOriginalExtension();
-                    $anexo->move(public_path('images/clientes'), $archivo);
+                    $anexo->move('images/clientes', $archivo);
                 }
 
                 DB::table("cliente")->where("id", $cliente)->update([
@@ -166,7 +166,7 @@ class ClientesController extends Controller
             } else if ($tipo == 4) {
                 $anexo = DB::table('anexos_clientes')->where("id", $request->id_anexo)->first();
 
-                $path = public_path('images/clientes/' . $anexo->documento);
+                $path = 'images/clientes/' . $anexo->documento;
                 if (file_exists($path)) {
                     unlink($path);
                 }
@@ -175,7 +175,7 @@ class ClientesController extends Controller
             } else if ($tipo == 5) {
                 if ($anexo = $request->file('archivo')) {
                     $new_name = rand() . rand() . '.' . $anexo->getClientOriginalExtension();
-                    $anexo->move(public_path('images/clientes'), $new_name);
+                    $anexo->move('images/clientes', $new_name);
 
                     DB::table("anexos_clientes")->insert([
                         "id_cliente" => $cliente,
@@ -212,7 +212,7 @@ class ClientesController extends Controller
             $anexos = DB::table('anexos_clientes')->where("id_cliente", $cliente)->get();
 
             foreach ($anexos as $anexo) {
-                $path = public_path('images/clientes/' . $anexo->documento);
+                $path = 'images/clientes/' . $anexo->documento;
                 if (file_exists($path)) {
                     unlink($path);
                 }

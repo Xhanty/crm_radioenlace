@@ -26,7 +26,7 @@ class ProveedoresController extends Controller
             $archivo = "";
             if ($anexo = $request->file('archivo')) {
                 $archivo = rand() . rand() . '.' . $anexo->getClientOriginalExtension();
-                $anexo->move(public_path('images/proveedores'), $archivo);
+                $anexo->move('images/proveedores', $archivo);
             }
 
             DB::table("proveedores")->insert([
@@ -60,8 +60,8 @@ class ProveedoresController extends Controller
         try {
             DB::beginTransaction();
             $archivo = DB::table("proveedores")->where("id", $request->id)->first();
-            if ($archivo->avatar != "" && file_exists(public_path('images/proveedores/' . $archivo->avatar))) {
-                unlink(public_path('images/proveedores/' . $archivo->avatar));
+            if ($archivo->avatar != "" && file_exists('images/proveedores/' . $archivo->avatar)) {
+                unlink('images/proveedores/' . $archivo->avatar);
             }
             DB::table("proveedores")->where("id", $request->id)->delete();
             DB::commit();
@@ -99,7 +99,7 @@ class ProveedoresController extends Controller
             $archivo = "";
             if ($anexo = $request->file('archivo')) {
                 $archivo = rand() . rand() . '.' . $anexo->getClientOriginalExtension();
-                $anexo->move(public_path('images/proveedores'), $archivo);
+                $anexo->move('images/proveedores', $archivo);
             }
 
             DB::table("proveedores")->where("id", $request->id)->update([
@@ -135,7 +135,7 @@ class ProveedoresController extends Controller
             $archivo = "";
             if ($anexo = $request->file('archivo')) {
                 $archivo = rand() . rand() . '.' . $anexo->getClientOriginalExtension();
-                $anexo->move(public_path('images/proveedores/anexos'), $archivo);
+                $anexo->move('images/proveedores/anexos', $archivo);
             }
 
             DB::table("anexos_proveedores")->insert([
@@ -168,8 +168,8 @@ class ProveedoresController extends Controller
         try {
             DB::beginTransaction();
             $archivo = DB::table("anexos_proveedores")->where("id", $request->id)->first();
-            if ($archivo->documento != "" && file_exists(public_path('images/proveedores/anexos/' . $archivo->documento))) {
-                unlink(public_path('images/proveedores/anexos/' . $archivo->documento));
+            if ($archivo->documento != "" && file_exists('images/proveedores/anexos/' . $archivo->documento)) {
+                unlink('images/proveedores/anexos/' . $archivo->documento);
             }
             DB::table("anexos_proveedores")->where("id", $request->id)->delete();
             DB::commit();

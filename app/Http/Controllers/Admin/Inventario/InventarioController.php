@@ -26,7 +26,7 @@ class InventarioController extends Controller
             DB::beginTransaction();
             $image = $request->file('foto');
             $new_name = rand() . rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/productos'), $new_name);
+            $image->move('images/productos', $new_name);
 
             DB::table("productos")->insert([
                 'id_categoria' => $request->categoria ? $request->categoria : 1,
@@ -59,7 +59,7 @@ class InventarioController extends Controller
             if ($request->hasFile('foto')) {
                 $image = $request->file('foto');
                 $new_name = rand() . rand() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('images/productos'), $new_name);
+                $image->move('images/productos', $new_name);
 
                 DB::table("productos")->where('id', $request->id)->update([
                     'id_categoria' => $request->categoria ? $request->categoria : 1,
@@ -94,7 +94,7 @@ class InventarioController extends Controller
         try {
             DB::beginTransaction();
             $imagen = DB::table("productos")->where('id', $request->id)->first();
-            $image_path = public_path('images/productos/' . $imagen->imagen);
+            $image_path = 'images/productos/' . $imagen->imagen;
             if (file_exists($image_path)) {
                 unlink($image_path);
             }

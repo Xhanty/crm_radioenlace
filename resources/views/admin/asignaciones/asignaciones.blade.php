@@ -29,6 +29,7 @@
                                 <div class="card-body p-0">
                                     <div class="todo-widget-header d-flex pb-2 pd-20 bg-warning"
                                         style="border-radius: 4px;">
+                                        <strong>{{ $value->codigo }}</strong>
                                         <div class="ms-auto">
                                             <div class="" style="cursor: pointer;">
                                                 <a class="p-2 text-muted" data-bs-toggle="dropdown" aria-expanded="false"><i
@@ -82,6 +83,7 @@
                                 <div class="card-body p-0">
                                     <div class="todo-widget-header d-flex pb-2 pd-20 bg-success"
                                         style="border-radius: 4px;">
+                                        <strong>{{ $value->codigo }}</strong>
                                         <div class="ms-auto">
                                             <div class="" style="cursor: pointer;">
                                                 <a class="p-2 text-muted" data-bs-toggle="dropdown" aria-expanded="false"><i

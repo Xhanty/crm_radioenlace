@@ -84,7 +84,7 @@ class AsignacionesController extends Controller
                 foreach ($files as $file) {
                     if (is_file($file)) {
                         $name = time() . $file->getClientOriginalName();
-                        $file->move(public_path('images/asignaciones'), $name);
+                        $file->move('images/asignaciones', $name);
                         $names_anexos[] = $name;
                     }
                 }
@@ -190,7 +190,7 @@ class AsignacionesController extends Controller
             $id = $request->id;
             $file = DB::table("avances_asignaciones")->where("id", $id)->first();
             if ($file->archivo) {
-                $path = public_path('images/anexos_asignaciones/' . $file->archivo);
+                $path = 'images/anexos_asignaciones/' . $file->archivo;
                 if (file_exists($path)) {
                     unlink($path);
                 }
@@ -214,7 +214,7 @@ class AsignacionesController extends Controller
 
             if ($anexo = $request->file('archivo')) {
                 $new_name = rand() . rand() . '.' . $anexo->getClientOriginalExtension();
-                $anexo->move(public_path('images/anexos_asignaciones'), $new_name);
+                $anexo->move('images/anexos_asignaciones', $new_name);
 
                 DB::table("avances_asignaciones")->insert([
                     "id_asignacion" => $id,
@@ -248,7 +248,7 @@ class AsignacionesController extends Controller
             $id = $request->id;
             $files = DB::table("anexos_asignaciones")->where("id_asignacion", $id)->get();
             foreach ($files as $file) {
-                $path = public_path('images/asignaciones/' . $file->archivo);
+                $path = 'images/asignaciones/' . $file->archivo;
                 if (file_exists($path)) {
                     unlink($path);
                 }
@@ -288,7 +288,7 @@ class AsignacionesController extends Controller
             $id = $request->id;
             $files = DB::table("anexos_asignaciones")->where("id", $id)->get();
             foreach ($files as $file) {
-                $path = public_path('images/asignaciones/' . $file->archivo);
+                $path = 'images/asignaciones/' . $file->archivo;
                 if (file_exists($path)) {
                     unlink($path);
                 }
@@ -318,7 +318,7 @@ class AsignacionesController extends Controller
                 foreach ($files as $file) {
                     if (is_file($file)) {
                         $name = time() . $file->getClientOriginalName();
-                        $file->move(public_path('images/asignaciones'), $name);
+                        $file->move('images/asignaciones', $name);
                         $names_anexos[] = $name;
                     }
                 }

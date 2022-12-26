@@ -80,6 +80,7 @@ Route::middleware(['auth_user'])->group(function () {
     // EMPLEADOS
     Route::get('/empleados', [App\Http\Controllers\Admin\EmpleadosController::class, 'index'])->name('empleados');
     Route::get('/empleados_list', [App\Http\Controllers\Admin\EmpleadosController::class, 'empleados_list'])->name('empleados_list');
+    Route::get('/empleados_actives', [App\Http\Controllers\Admin\EmpleadosController::class, 'empleados_actives'])->name('empleados_actives');
     Route::post('/empleados_data', [App\Http\Controllers\Admin\EmpleadosController::class, 'empleados_data'])->name('empleados_data');
     Route::post('/empleados_add', [App\Http\Controllers\Admin\EmpleadosController::class, 'empleados_add'])->name('empleados_add');
     Route::post('/empleados_update', [App\Http\Controllers\Admin\EmpleadosController::class, 'empleados_update'])->name('empleados_update');
@@ -187,4 +188,16 @@ Route::middleware(['auth_user'])->group(function () {
     Route::get('/gastos_varios', [App\Http\Controllers\Admin\Gastos\GastosController::class, 'gastos_varios'])->name('gastos_varios');
     Route::get('/gastos_fijos', [App\Http\Controllers\Admin\Gastos\GastosController::class, 'gastos_fijos'])->name('gastos_fijos');
     Route::get('/gastos_equivalentes', [App\Http\Controllers\Admin\Gastos\GastosController::class, 'gastos_equivalentes'])->name('gastos_equivalentes');
+});
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('tasks',  [App\Http\Controllers\TaskProjectController::class, 'index'])->name('tasks.index');
+    Route::post('tasks', [App\Http\Controllers\TaskProjectController::class, 'store'])->name('tasks.store');
+    Route::put('tasks/sync', [App\Http\Controllers\TaskProjectController::class, 'sync'])->name('tasks.sync');
+    Route::put('tasks/{task}', [App\Http\Controllers\TaskProjectController::class, 'update'])->name('tasks.update');
+});
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::post('statuses', [App\Http\Controllers\StatusController::class, 'store'])->name('statuses.store');
+    Route::put('statuses', [App\Http\Controllers\StatusController::class, 'update'])->name('statuses.update');
 });

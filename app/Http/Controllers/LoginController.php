@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -16,15 +18,17 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         try {
-            $email = $request->email;
-            $password = $request->password;
+            $credentials = $request->only('email', 'password');
 
-            $user = User::where('email', $email)->where('clave', sha1($password))->first();
-
-            if($user && $user->id) {
-                session(['user' => $user->id]);
-                session(['user_img' => $user->avatar]);
-                return response()->json(['data' => 'success', 'user' => $user]);
+            if (Auth::attempt($credentials)) {
+                $user = User::where('id', auth()->user()->id)->first();
+                if ($user && $user->id) {
+                    session(['user' => $user->id]);
+                    session(['user_img' => $user->avatar]);
+                    return response()->json(['data' => 'success', 'user' => $user]);
+                } else {
+                    return response()->json(['data' => 'incorrect']);
+                }
             } else {
                 return response()->json(['data' => 'incorrect']);
             }

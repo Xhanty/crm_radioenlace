@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class EmpleadosController extends Controller
 {
@@ -22,6 +23,16 @@ class EmpleadosController extends Controller
     {
         try {
             $empleados = DB::table('empleados')->get();
+            return response()->json(["data" => $empleados]);
+        } catch (Exception $ex) {
+            return $ex;
+        }
+    }
+
+    public function empleados_actives()
+    {
+        try {
+            $empleados = DB::table('empleados')->where("status", 1)->get();
             return response()->json(["data" => $empleados]);
         } catch (Exception $ex) {
             return $ex;
@@ -54,7 +65,7 @@ class EmpleadosController extends Controller
             if ($request->hasFile('archivo')) {
                 $file = $request->file('archivo');
                 $archivo = 'avatar_' . time() . "." . $file->getClientOriginalExtension();
-                $path = public_path('images/empleados/' . $archivo);
+                $path = 'images/empleados/' . $archivo;
                 file_put_contents($path, file_get_contents($file));
             }
 
@@ -88,7 +99,7 @@ class EmpleadosController extends Controller
                 "licencia_conduccion_moto" => "",
                 "vencimiento_licencia_moto" => date("Y-m-d", strtotime(date("Y-m-d") . "+ 5 year")),
                 "puntos" => 0,
-                "clave" => sha1($request->codigo),
+                "clave" => Hash::make($request->codigo),
                 "periodo_vacaciones" => "",
             ]);
 
@@ -110,7 +121,7 @@ class EmpleadosController extends Controller
                 if ($request->hasFile('archivo')) {
                     $file = $request->file('archivo');
                     $archivo = 'avatar_' . time() . "." . $file->getClientOriginalExtension();
-                    $path = public_path('images/empleados/' . $archivo);
+                    $path = 'images/empleados/' . $archivo;
                     file_put_contents($path, file_get_contents($file));
                 }
 
@@ -172,7 +183,7 @@ class EmpleadosController extends Controller
             $anexos = DB::table('anexos')->where("id_usuario", $empleado)->get();
 
             foreach ($anexos as $anexo) {
-                $path = public_path('images/empleados/' . $anexo->documento);
+                $path = 'images/empleados/' . $anexo->documento;
                 if (file_exists($path)) {
                     unlink($path);
                 }
@@ -223,7 +234,7 @@ class EmpleadosController extends Controller
         try {
             $anexo = DB::table('anexos')->where("id", $request->id)->first();
 
-            $path = public_path('images/empleados/' . $anexo->documento);
+            $path = 'images/empleados/' . $anexo->documento;
             if (file_exists($path)) {
                 unlink($path);
             }

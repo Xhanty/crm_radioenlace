@@ -44,7 +44,7 @@ class VehiculosController extends Controller
             DB::beginTransaction();
             $image = $request->file('foto');
             $new_name = rand() . rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/vehiculos'), $new_name);
+            $image->move('images/vehiculos', $new_name);
 
             DB::table("vehiculos")->insert([
                 'marca' => $request->marca,
@@ -89,7 +89,7 @@ class VehiculosController extends Controller
             if ($request->hasFile('foto')) {
                 $image = $request->file('foto');
                 $new_name = rand() . rand() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('images/vehiculos'), $new_name);
+                $image->move('images/vehiculos', $new_name);
 
                 DB::table("vehiculos")->where('id', $request->id)->update([
                     'marca' => $request->marca,
