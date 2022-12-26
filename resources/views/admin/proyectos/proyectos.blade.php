@@ -42,9 +42,48 @@
                                         <th>Fecha Culminación</th>
                                         <th>¿Trjs. Culm.?</th>
                                         <th>Acciones</th>
+                                        <th>Visto<br>Bueno</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($proyectos_pendientes as $proyecto)
+                                        <tr>
+                                            <td>{{ $proyecto->empleado }}</td>
+                                            <td>{{ $proyecto->categoria }}</td>
+                                            <td>{{ $proyecto->nombre }}</td>
+                                            <td>{{ $proyecto->cliente }}</td>
+                                            <td>{{ $proyecto->puntos }}</td>
+                                            <td>{{ $proyecto->fecha_inicio }}</td>
+                                            <td>{{ $proyecto->fecha_culminacion }}</td>
+                                            <td>{{ $proyecto->fecha_culminacion }}</td>
+                                            <td>
+                                                <a class="d-flex btn_completar" data-id="{{ $proyecto->id }}"
+                                                    href="javascript:void(0);"><i class="fa fa-list"></i>&nbsp;Gestionar
+                                                    Estatus</a>
+                                                <a class="d-flex btn_editar" data-id="{{ $proyecto->id }}"
+                                                    href="javascript:void(0);"><i class="fa fa-check"></i>&nbsp;Asignar
+                                                    Tarjeta</a>
+                                                <a class="d-flex btn_avances" data-id="{{ $proyecto->id }}"
+                                                    href="javascript:void(0);"><i class="fa fa-eye"></i>&nbsp;Ver
+                                                    Tarjetas</a>
+                                                <a class="d-flex btn_avances" data-id="{{ $proyecto->id }}"
+                                                    href="javascript:void(0);"><i
+                                                        class="fa fa-pencil-alt"></i>&nbsp;Editar</a>
+                                                <a class="d-flex btn_avances" data-id="{{ $proyecto->id }}"
+                                                    href="javascript:void(0);"><i class="fa fa-file"></i>&nbsp;Gestionar
+                                                    Acta</a>
+                                                <a class="d-flex btn_eliminar" data-id="{{ $proyecto->id }}"
+                                                    href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>
+                                                <a class="d-flex btn_avances" data-id="{{ $proyecto->id }}"
+                                                    href="javascript:void(0);"><i class="fa fa-user"></i>&nbsp;Firma
+                                                    Cliente</a>
+                                            </td>
+                                            <td class="text-center">
+                                                <input data-id="{{ $proyecto->id }}" class="visto_bueno_check"
+                                                    @if ($proyecto->visto_bueno == 1) { checked } @endif type="checkbox">
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -77,9 +116,45 @@
                                         <th>Fecha Culminación</th>
                                         <th>¿Trjs. Culm.?</th>
                                         <th>Acciones</th>
+                                        <th>Visto<br>Bueno</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($proyectos_aprobados as $proyecto)
+                                        <tr>
+                                            <td>{{ $proyecto->empleado }}</td>
+                                            <td>{{ $proyecto->categoria }}</td>
+                                            <td>{{ $proyecto->nombre }}</td>
+                                            <td>{{ $proyecto->cliente }}</td>
+                                            <td>{{ $proyecto->puntos }}</td>
+                                            <td>{{ $proyecto->fecha_inicio }}</td>
+                                            <td>{{ $proyecto->fecha_culminacion }}</td>
+                                            <td>{{ $proyecto->fecha_culminacion }}</td>
+                                            <td>
+                                                <a class="d-flex btn_completar" data-id="{{ $proyecto->id }}"
+                                                    href="javascript:void(0);"><i class="fa fa-list"></i>&nbsp;Gestionar
+                                                    Estatus</a>
+                                                <a class="d-flex btn_editar" data-id="{{ $proyecto->id }}"
+                                                    href="javascript:void(0);"><i class="fa fa-check"></i>&nbsp;Asignar
+                                                    Tarjeta</a>
+                                                <a class="d-flex btn_avances" data-id="{{ $proyecto->id }}"
+                                                    href="javascript:void(0);"><i class="fa fa-eye"></i>&nbsp;Ver
+                                                    Tarjetas</a>
+                                                <a class="d-flex btn_avances" data-id="{{ $proyecto->id }}"
+                                                    href="javascript:void(0);"><i
+                                                        class="fa fa-pencil-alt"></i>&nbsp;Editar</a>
+                                                <a class="d-flex btn_avances" data-id="{{ $proyecto->id }}"
+                                                    href="javascript:void(0);"><i class="fa fa-file"></i>&nbsp;Gestionar
+                                                    Acta</a>
+                                                <a class="d-flex btn_eliminar" data-id="{{ $proyecto->id }}"
+                                                    href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>
+                                            </td>
+                                            <td class="text-center">
+                                                <input data-id="{{ $proyecto->id }}" class="visto_bueno_check"
+                                                    @if ($proyecto->visto_bueno == 1) { checked } @endif type="checkbox">
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

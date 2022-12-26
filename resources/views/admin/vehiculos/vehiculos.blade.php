@@ -1293,7 +1293,7 @@
         </div>
     </div>
 
-    <!-- Modal View Encuesta Salud -->
+    <!-- Modal Gestionar Salud -->
     <div class="modal  fade" id="modalViewGestionar">
         <div class="modal-dialog" role="document">
             <div class="modal-content modal-content-demo">
