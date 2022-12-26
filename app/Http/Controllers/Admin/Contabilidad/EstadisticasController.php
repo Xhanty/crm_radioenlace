@@ -12,7 +12,8 @@ class EstadisticasController extends Controller
     public function estadistica_proveedores()
     {
         try {
-            return view('admin.contabilidad.estadistica_proveedores');
+            $proveedores = DB::table("proveedores")->where("estado", 1)->get();
+            return view('admin.contabilidad.estadistica_proveedores', compact('proveedores'));
         } catch (Exception $ex) {
             return view('errors.500');
         }
@@ -21,7 +22,9 @@ class EstadisticasController extends Controller
     public function estadistica_compra()
     {
         try {
-            return view('admin.contabilidad.estadistica_compra');
+            $proveedores = DB::table("proveedores")->where("estado", 1)->get();
+            $productos = DB::table("productos")->where("status", 1)->get();
+            return view('admin.contabilidad.estadistica_compra', compact('proveedores', 'productos'));
         } catch (Exception $ex) {
             return view('errors.500');
         }
@@ -30,7 +33,9 @@ class EstadisticasController extends Controller
     public function estadistica_ventas()
     {
         try {
-            return view('admin.contabilidad.estadistica_ventas');
+            $proveedores = DB::table("proveedores")->where("estado", 1)->get();
+            $productos = DB::table("productos")->where("status", 1)->get();
+            return view('admin.contabilidad.estadistica_ventas', compact('proveedores', 'productos'));
         } catch (Exception $ex) {
             return view('errors.500');
         }

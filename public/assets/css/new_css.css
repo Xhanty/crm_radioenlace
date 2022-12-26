@@ -33,3 +33,20 @@ td {
 .table {
     width: 100% !important;
 }
+
+@media (max-width: 991px) {
+    .div-1-tables-header {
+        width: 100% !important;
+    }
+
+    .div-2-tables-header {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .d-flex-header-table {
+        display: flex;
+        flex-direction: column;
+    }
+}
