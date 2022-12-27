@@ -60,12 +60,8 @@
                                                 <a class="d-flex btn_completar" data-id="{{ $proyecto->id }}"
                                                     href="javascript:void(0);"><i class="fa fa-list"></i>&nbsp;Gestionar
                                                     Estatus</a>
-                                                <a class="d-flex btn_editar" data-id="{{ $proyecto->id }}"
-                                                    href="javascript:void(0);"><i class="fa fa-check"></i>&nbsp;Asignar
-                                                    Tarjeta</a>
-                                                <a class="d-flex btn_avances" data-id="{{ $proyecto->id }}"
-                                                    href="javascript:void(0);"><i class="fa fa-eye"></i>&nbsp;Ver
-                                                    Tarjetas</a>
+                                                <a class="d-flex btn_board" data-id="{{ $proyecto->id }}"
+                                                    href="javascript:void(0);"><i class="fa fa-check"></i>&nbsp;Asignaciones</a>
                                                 <a class="d-flex btn_avances" data-id="{{ $proyecto->id }}"
                                                     href="javascript:void(0);"><i
                                                         class="fa fa-pencil-alt"></i>&nbsp;Editar</a>
@@ -134,12 +130,8 @@
                                                 <a class="d-flex btn_completar" data-id="{{ $proyecto->id }}"
                                                     href="javascript:void(0);"><i class="fa fa-list"></i>&nbsp;Gestionar
                                                     Estatus</a>
-                                                <a class="d-flex btn_editar" data-id="{{ $proyecto->id }}"
-                                                    href="javascript:void(0);"><i class="fa fa-check"></i>&nbsp;Asignar
-                                                    Tarjeta</a>
-                                                <a class="d-flex btn_avances" data-id="{{ $proyecto->id }}"
-                                                    href="javascript:void(0);"><i class="fa fa-eye"></i>&nbsp;Ver
-                                                    Tarjetas</a>
+                                                <a class="d-flex btn_board" data-id="{{ $proyecto->id }}"
+                                                    href="javascript:void(0);"><i class="fa fa-check"></i>&nbsp;Asignaciones</a>
                                                 <a class="d-flex btn_avances" data-id="{{ $proyecto->id }}"
                                                     href="javascript:void(0);"><i
                                                         class="fa fa-pencil-alt"></i>&nbsp;Editar</a>
@@ -168,4 +160,13 @@
 
 @section('scripts')
     <script src="{{ asset('assets/js/app/proyectos/proyectos.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '.btn_board', function() {
+                let id = $(this).data('id');
+
+                window.open("{{route('tasks.index').'/?project='}}" + id, '_blank');
+            });
+        });
+    </script>
 @endsection

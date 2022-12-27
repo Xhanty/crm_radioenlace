@@ -1,4 +1,4 @@
-@extends('layouts.pp')
+@extends('layouts.board')
 
 @section('content')
 <div class="md:mx-4 relative overflow-hidden">

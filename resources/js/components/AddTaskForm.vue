@@ -8,8 +8,8 @@
                 placeholder="Añade una descripción (opcional)" v-model.trim="newTask.description"></textarea>
             <select class="mt-3 p-2 block w-full p-1 border text-sm rounded" v-model="newTask.user_id">
                 <option value="" disabled>Selecciona un empleado</option>
-                <option v-for="empleado in initialEmpleados" :value="empleado.id">
-                    {{ empleado.name }}
+                <option v-for="empleado in empleados_data" :value="empleado.id">
+                    {{ empleado.nombre }}
                 </option>
             </select>
             <div v-show="errorMessage">
@@ -44,10 +44,13 @@ export default {
                 user_id: null
             },
             errorMessage: "",
+            empleados_data: [],
         };
     },
     mounted() {
         this.newTask.status_id = this.statusId;
+        this.get_empleados();
+        this.my_data();
     },
     methods: {
         handleAddNewTask() {
@@ -85,6 +88,15 @@ export default {
                 console.log(err.response);
             }
         },
+        get_empleados() {
+            axios.get("/empleados_actives").then(response => {
+                this.empleados_data = response.data.data;
+            });
+        },
+        my_data() {
+            let user = JSON.parse(localStorage.getItem("user"));
+            this.newTask.user_id = user.id;
+        }
     }
 };
 </script>

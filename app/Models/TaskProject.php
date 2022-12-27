@@ -10,9 +10,11 @@ class TaskProject extends Model
     use HasFactory;
 
     protected $fillable = [
+        'code',
         'title',
         'description',
         'order',
+        'project_id',
         'user_id',
         'status_id',
     ];

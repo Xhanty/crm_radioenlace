@@ -2199,11 +2199,14 @@ __webpack_require__.r(__webpack_exports__);
         status_id: null,
         user_id: null
       },
-      errorMessage: ""
+      errorMessage: "",
+      empleados_data: []
     };
   },
   mounted: function mounted() {
     this.newTask.status_id = this.statusId;
+    this.get_empleados();
+    this.my_data();
   },
   methods: {
     handleAddNewTask: function handleAddNewTask() {
@@ -2238,6 +2241,16 @@ __webpack_require__.r(__webpack_exports__);
         // We have bigger problems
         console.log(err.response);
       }
+    },
+    get_empleados: function get_empleados() {
+      var _this2 = this;
+      axios.get("/empleados_actives").then(function (response) {
+        _this2.empleados_data = response.data.data;
+      });
+    },
+    my_data: function my_data() {
+      var user = JSON.parse(localStorage.getItem("user"));
+      this.newTask.user_id = user.id;
     }
   }
 });
@@ -2264,14 +2277,14 @@ __webpack_require__.r(__webpack_exports__);
     AddTaskForm: _AddTaskForm__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   props: {
-    initialData: Array,
-    initialEmpleados: Array
+    initialData: Array
   },
   data: function data() {
     return {
       statuses: [],
-      empleados_data: [],
-      newTaskForStatus: 0
+      newTaskForStatus: 0,
+      taskSelected: [],
+      modal: null
     };
   },
   computed: {
@@ -2286,7 +2299,6 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     // 'clone' the statuses so we don't alter the prop when making changes
     this.statuses = JSON.parse(JSON.stringify(this.initialData));
-    this.empleados();
   },
   methods: {
     openAddTaskForm: function openAddTaskForm(statusId) {
@@ -2314,12 +2326,32 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err.response);
       });
     },
-    empleados: function empleados() {
-      var _this = this;
-      axios.get("/empleados_actives").then(function (response) {
-        _this.empleados_data = response.data;
-        console.log(_this.empleados_data);
-      });
+    expandDetails: function expandDetails(task) {
+      this.taskSelected = task;
+      // set the modal menu element
+      var targetEl = document.getElementById('taskDetails');
+      // set the modal menu to visible
+      // options with default values
+      var options = {
+        placement: 'top-center',
+        backdrop: 'dynamic',
+        backdropClasses: 'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40',
+        onHide: function onHide() {
+          //console.log('modal is hidden');
+        },
+        onShow: function onShow() {
+          //console.log('modal is shown');
+        },
+        onToggle: function onToggle() {
+          //console.log('modal has been toggled');
+        }
+      };
+      this.modal = new Modal(targetEl, options);
+      console.log(task);
+      this.modal.show();
+    },
+    closeDetails: function closeDetails() {
+      this.modal.hide();
     }
   }
 });
@@ -2428,12 +2460,12 @@ var render = function render() {
       value: "",
       disabled: ""
     }
-  }, [_vm._v("Selecciona un empleado")]), _vm._v(" "), _vm._l(_vm.initialEmpleados, function (empleado) {
+  }, [_vm._v("Selecciona un empleado")]), _vm._v(" "), _vm._l(_vm.empleados_data, function (empleado) {
     return _c("option", {
       domProps: {
         value: empleado.id
       }
-    }, [_vm._v("\n                " + _vm._s(empleado.name) + "\n            ")]);
+    }, [_vm._v("\n                " + _vm._s(empleado.nombre) + "\n            ")]);
   })], 2), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
@@ -2483,25 +2515,26 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "relative p-2 flex overflow-x-auto h-full"
-  }, _vm._l(_vm.statuses, function (status) {
+    staticClass: "relative p-2 flex overflow-x-auto h-full justify-center"
+  }, [_vm._l(_vm.statuses, function (status) {
     return _c("div", {
       key: status.slug,
       staticClass: "mr-6 w-4/5 max-w-xs flex-shrink-0"
     }, [_c("div", {
       staticClass: "rounded-md shadow-md overflow-hidden"
     }, [_c("div", {
-      staticClass: "p-3 flex justify-between items-baseline bg-blue-800"
+      staticClass: "p-3 flex justify-between items-baseline bg-gray-700"
     }, [_c("h4", {
-      staticClass: "font-medium text-white"
+      staticClass: "font-medium",
+      "class": status.color
     }, [_vm._v("\n                    " + _vm._s(status.title) + "\n                ")]), _vm._v(" "), _c("button", {
-      staticClass: "py-1 px-2 text-sm text-orange-500 hover:underline",
+      staticClass: "py-1 px-2 text-sm text-orange-500 hover:no-underline",
       on: {
         click: function click($event) {
           return _vm.openAddTaskForm(status.id);
         }
       }
-    }, [_vm._v("\n                    Agregar Tarea\n                ")])]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                    Agregar Asignación\n                ")])]), _vm._v(" "), _c("div", {
       staticClass: "p-2 bg-blue-100"
     }, [_vm.newTaskForStatus === status.id ? _c("AddTaskForm", {
       attrs: {
@@ -2531,12 +2564,26 @@ var render = function render() {
     }, _vm._l(status.tasks, function (task) {
       return _c("div", {
         key: task.id,
-        staticClass: "mb-3 p-4 flex flex-col bg-white rounded-md shadow transform hover:shadow-md cursor-pointer"
+        staticClass: "mb-3 p-4 flex flex-col bg-white rounded-md shadow transform hover:shadow-md cursor-pointer",
+        on: {
+          click: function click($event) {
+            return _vm.expandDetails(task);
+          }
+        }
       }, [_c("span", {
-        staticClass: "block mb-2 text-xl text-gray-900"
-      }, [_vm._v("\n                                " + _vm._s(task.title) + "\n                            ")]), _vm._v(" "), _c("p", {
-        staticClass: "text-gray-700"
-      }, [_vm._v("\n                                " + _vm._s(task.description) + "\n                            ")])]);
+        staticClass: "block mb-2 text-lg text-gray-700"
+      }, [_vm._v("\n                                " + _vm._s(task.title) + "\n                            ")]), _vm._v(" "), _c("div", {
+        staticClass: "mt-2 flex justify-between items-center"
+      }, [_c("span", {
+        staticClass: "text-sm text-gray-600"
+      }, [_vm._v("\n                                    " + _vm._s(task.code) + "\n                                ")]), _vm._v(" "), _c("img", {
+        staticClass: "w-8 h-8 rounded-full",
+        attrs: {
+          title: task.user.nombre,
+          src: "http://127.0.0.1:8000/images/empleados/" + task.user.avatar,
+          alt: ""
+        }
+      })])]);
     }), 0)], 1), _vm._v(" "), _c("div", {
       directives: [{
         name: "show",
@@ -2547,17 +2594,183 @@ var render = function render() {
       staticClass: "flex-1 p-4 flex flex-col items-center justify-center"
     }, [_c("span", {
       staticClass: "text-gray-600"
-    }, [_vm._v("Aún no hay tareas")]), _vm._v(" "), _c("button", {
-      staticClass: "mt-1 text-sm text-orange-600 hover:underline",
+    }, [_vm._v("Aún no hay asignaciones")]), _vm._v(" "), _c("button", {
+      staticClass: "mt-1 text-sm text-orange-600 hover:no-underline",
       on: {
         click: function click($event) {
           return _vm.openAddTaskForm(status.id);
         }
       }
     }, [_vm._v("\n                        Agregar\n                    ")])])], 1)])]);
-  }), 0);
+  }), _vm._v(" "), _c("div", {
+    staticClass: "fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full",
+    attrs: {
+      id: "taskDetails",
+      tabindex: "-1",
+      "aria-hidden": "true"
+    }
+  }, [_c("div", {
+    staticClass: "relative w-full h-full max-w-7xl md:h-auto"
+  }, [_c("div", {
+    staticClass: "relative bg-white rounded-lg shadow dark:bg-gray-700"
+  }, [_c("div", {
+    staticClass: "flex items-start justify-between p-5 border-b rounded-t dark:border-gray-600"
+  }, [_c("h3", {
+    staticClass: "text-xl font-semibold text-gray-900 lg:text-2xl dark:text-white"
+  }, [_vm._v("\n                        " + _vm._s(_vm.taskSelected.code) + "\n                    ")]), _vm._v(" "), _c("button", {
+    staticClass: "text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.closeDetails
+    }
+  }, [_c("svg", {
+    staticClass: "w-5 h-5",
+    attrs: {
+      fill: "currentColor",
+      viewBox: "0 0 20 20",
+      xmlns: "http://www.w3.org/2000/svg"
+    }
+  }, [_c("path", {
+    attrs: {
+      "fill-rule": "evenodd",
+      d: "M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z",
+      "clip-rule": "evenodd"
+    }
+  })])])]), _vm._v(" "), _c("div", {
+    staticClass: "p-6 space-y-6"
+  }, [_c("div", {
+    staticClass: "flex"
+  }, [_c("div", {
+    staticClass: "w-4/6"
+  }, [_c("label", {
+    staticClass: "block mb-2 text-sm font-medium text-gray-900 dark:text-white",
+    attrs: {
+      "for": "message"
+    }
+  }, [_vm._v("Descripción")]), _vm._v(" "), _c("textarea", {
+    staticClass: "block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500",
+    attrs: {
+      rows: "5",
+      placeholder: "Write your thoughts here..."
+    }
+  }, [_vm._v(_vm._s(_vm.taskSelected.description))])]), _vm._v(" "), _c("div", {
+    staticClass: "px-6 py-6 w-2/6"
+  }, [_c("h3", {
+    staticClass: "text-md py-4 px-6 font-medium border-2 rounded border-gray-200 text-gray-700 dark:text-white"
+  }, [_vm._v("\n                                Detalles")]), _vm._v(" "), _c("form", {
+    staticClass: "space-y-6 py-3 px-6 rounded border-gray-200 border-2 border-t-0",
+    attrs: {
+      action: "#"
+    }
+  }, [_vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _c("div", {
+    staticClass: "flex justify-between"
+  }, [_vm._m(3), _vm._v(" "), _c("div", {
+    staticClass: "w-4/6"
+  }, [_c("input", {
+    staticClass: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5",
+    attrs: {
+      type: "text",
+      disabled: ""
+    },
+    domProps: {
+      value: _vm.taskSelected.code
+    }
+  })])])])])])])])])])], 2);
 };
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "flex justify-between"
+  }, [_c("div", {
+    staticClass: "justify-center self-center"
+  }, [_c("p", {
+    staticClass: "text-sm text-black-800",
+    attrs: {
+      href: "#"
+    }
+  }, [_vm._v("Responsable")])]), _vm._v(" "), _c("div", {
+    staticClass: "w-4/6"
+  }, [_c("select", {
+    staticClass: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+    attrs: {
+      id: "countries"
+    }
+  }, [_c("option", {
+    attrs: {
+      selected: ""
+    }
+  }, [_vm._v("Choose a country")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "US"
+    }
+  }, [_vm._v("United States")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "CA"
+    }
+  }, [_vm._v("Canada")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "FR"
+    }
+  }, [_vm._v("France")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "DE"
+    }
+  }, [_vm._v("Germany")])])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "flex justify-between"
+  }, [_c("div", {
+    staticClass: "justify-center self-center"
+  }, [_c("p", {
+    staticClass: "text-sm text-black-800",
+    attrs: {
+      href: "#"
+    }
+  }, [_vm._v("Fecha Inicio")])]), _vm._v(" "), _c("div", {
+    staticClass: "w-4/6"
+  }, [_c("input", {
+    staticClass: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5",
+    attrs: {
+      type: "date"
+    }
+  })])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "flex justify-between"
+  }, [_c("div", {
+    staticClass: "justify-center self-center"
+  }, [_c("p", {
+    staticClass: "text-sm text-black-800",
+    attrs: {
+      href: "#"
+    }
+  }, [_vm._v("Fecha Fin")])]), _vm._v(" "), _c("div", {
+    staticClass: "w-4/6"
+  }, [_c("input", {
+    staticClass: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5",
+    attrs: {
+      type: "date"
+    }
+  })])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "justify-center self-center"
+  }, [_c("p", {
+    staticClass: "text-sm text-black-800",
+    attrs: {
+      href: "#"
+    }
+  }, [_vm._v("Informador")])]);
+}];
 render._withStripped = true;
 
 

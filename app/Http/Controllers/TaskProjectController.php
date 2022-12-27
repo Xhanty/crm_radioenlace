@@ -3,15 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\TaskProject;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class TaskProjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = auth()->user()->statuses()->with('tasks')->get();
+        try {
+            $project = $request->get('project');
 
-        return view('tasks.index', compact('tasks'));
+            $valid_project = DB::table('proyecto')
+                ->where('id', $project)
+                ->first();
+
+            if (!$project || !$valid_project) {
+                return view("errors.404");
+            }
+
+            $tasks = auth()->user()->statuses()->with('tasks.user')->with('tasks', function ($query) use ($project) {
+                $query->where('project_id', $project);
+            })->get();
+
+            session(['project_tasks' => $project]);
+            session(['name_project' => $valid_project->nombre]);
+
+            return view('tasks.index', compact('tasks'));
+        } catch (Exception $ex) {
+            return view("errors.500");
+            return $ex->getMessage();
+        }
     }
 
     public function create()
@@ -24,12 +47,20 @@ class TaskProjectController extends Controller
         $this->validate($request, [
             'title' => ['required', 'string', 'max:56'],
             'description' => ['nullable', 'string'],
-            'status_id' => ['required', 'exists:statuses,id']
+            'status_id' => ['required', 'exists:statuses,id'],
         ]);
+        $request['code'] = 'CRM-' . strtoupper(Str::random(6));
+        $request['project_id'] = session('project_tasks');
 
-        return $request->user()
-            ->tasks()
-            ->create($request->only('title', 'description', 'status_id'));
+        $new = TaskProject::create($request->all());
+
+        $find_user = DB::table('empleados')
+            ->where('id', $new->user_id)
+            ->first();
+
+        $new['user'] = $find_user;
+
+        return $new;
     }
 
     public function sync(Request $request)
@@ -42,14 +73,19 @@ class TaskProjectController extends Controller
             foreach ($status['tasks'] as $i => $task) {
                 $order = $i + 1;
                 if ($task['status_id'] !== $status['id'] || $task['order'] !== $order) {
-                    request()->user()->tasks()
-                        ->find($task['id'])
+                    TaskProject::where('id', $task['id'])
                         ->update(['status_id' => $status['id'], 'order' => $order]);
                 }
             }
         }
 
-        return $request->user()->statuses()->with('tasks')->get();
+        $project = session('project_tasks');
+
+        $tasks = auth()->user()->statuses()->with('tasks.user')->with('tasks', function ($query) use ($project) {
+            $query->where('project_id', $project);
+        })->get();
+
+        return $tasks;
     }
 
     public function show(TaskProject $task)
