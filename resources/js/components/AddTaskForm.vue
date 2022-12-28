@@ -23,7 +23,7 @@
                 class="py-1 leading-5 text-gray-600 hover:text-gray-700">
                 Cancelar
             </button>
-            <button type="submit" class="px-3 py-1 leading-5 text-white bg-orange-600 hover:bg-orange-500 rounded">
+            <button type="submit" class="px-3 py-1 leading-5 text-white bg-blue-700 hover:bg-blue-800 rounded">
                 Agregar
             </button>
         </div>

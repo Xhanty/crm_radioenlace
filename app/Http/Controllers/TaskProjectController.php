@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Status;
 use App\Models\TaskProject;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -50,6 +52,8 @@ class TaskProjectController extends Controller
             'status_id' => ['required', 'exists:statuses,id'],
         ]);
         $request['code'] = 'CRM-' . strtoupper(Str::random(6));
+        $request['init_date'] = date('Y-m-d');
+        $request['created_by'] = auth()->user()->id;
         $request['project_id'] = session('project_tasks');
 
         $new = TaskProject::create($request->all());
@@ -100,11 +104,62 @@ class TaskProjectController extends Controller
 
     public function update(Request $request, TaskProject $task)
     {
-        //
     }
 
     public function destroy(TaskProject $task)
     {
         //
+    }
+
+    public function tasks_edit(Request $request)
+    {
+        TaskProject::where('id', $request->id)->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'user_id' => $request->user_id,
+            'init_date' => $request->init_date,
+            'end_date' => $request->end_date,
+        ]);
+
+        $project = session('project_tasks');
+
+        $tasks = auth()->user()->statuses()->with('tasks.user')->with('tasks', function ($query) use ($project) {
+            $query->where('project_id', $project);
+        })->get();
+
+        return $tasks;
+    }
+
+    public function tasks_delete(Request $request)
+    {
+        TaskProject::where('id', $request->id)->delete();
+
+        $project = session('project_tasks');
+
+        $tasks = auth()->user()->statuses()->with('tasks.user')->with('tasks', function ($query) use ($project) {
+            $query->where('project_id', $project);
+        })->get();
+
+        return $tasks;
+    }
+
+    public function task_add_file(Request $request)
+    {
+        $file = $request->file('file');
+        $name = time() . $file->getClientOriginalName();
+        $file->move(public_path() . '/files/', $name);
+
+        $task = TaskProject::where('id', $request->id)->first();
+
+        $task->files = $task->files . ',' . $name;
+        $task->save();
+
+        $project = session('project_tasks');
+
+        $tasks = auth()->user()->statuses()->with('tasks.user')->with('tasks', function ($query) use ($project) {
+            $query->where('project_id', $project);
+        })->get();
+
+        return $tasks;
     }
 }

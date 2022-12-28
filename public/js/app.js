@@ -2284,7 +2284,14 @@ __webpack_require__.r(__webpack_exports__);
       statuses: [],
       newTaskForStatus: 0,
       taskSelected: [],
-      modal: null
+      userSelected: [],
+      userCreator: [],
+      modal: null,
+      empleados_data: [],
+      permisoActividad: false,
+      permisoCreador: false,
+      disabledCreador: true,
+      fileGeneral: null
     };
   },
   computed: {
@@ -2299,6 +2306,8 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     // 'clone' the statuses so we don't alter the prop when making changes
     this.statuses = JSON.parse(JSON.stringify(this.initialData));
+    this.get_empleados();
+    this.my_data();
   },
   methods: {
     openAddTaskForm: function openAddTaskForm(statusId) {
@@ -2327,7 +2336,9 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     expandDetails: function expandDetails(task) {
+      var _this = this;
       this.taskSelected = task;
+      this.userSelected = task.user;
       // set the modal menu element
       var targetEl = document.getElementById('taskDetails');
       // set the modal menu to visible
@@ -2340,18 +2351,57 @@ __webpack_require__.r(__webpack_exports__);
           //console.log('modal is hidden');
         },
         onShow: function onShow() {
-          //console.log('modal is shown');
+          //console.log(this.userCreator);
+          //console.log(this.taskSelected);
+          if (_this.userCreator.id == _this.taskSelected.created_by) {
+            _this.permisoCreador = true;
+            _this.permisoActividad = true;
+            _this.disabledCreador = false;
+          } else if (_this.userCreator.id == _this.userSelected.id) {
+            _this.permisoActividad = true;
+            _this.permisoCreador = false;
+            _this.disabledCreador = true;
+          } else {
+            _this.permisoActividad = false;
+            _this.permisoCreador = false;
+            _this.disabledCreador = true;
+          }
         },
         onToggle: function onToggle() {
           //console.log('modal has been toggled');
         }
       };
       this.modal = new Modal(targetEl, options);
-      console.log(task);
+      //console.log(task);
       this.modal.show();
     },
     closeDetails: function closeDetails() {
       this.modal.hide();
+    },
+    get_empleados: function get_empleados() {
+      var _this2 = this;
+      axios.get("/empleados_actives").then(function (response) {
+        _this2.empleados_data = response.data.data;
+      });
+    },
+    my_data: function my_data() {
+      var user = JSON.parse(localStorage.getItem("user"));
+      this.userCreator = user;
+    },
+    changeTask: function changeTask() {
+      var _this3 = this;
+      var data = this.taskSelected;
+      axios.post("/tasks_edit", data).then(function (response) {
+        _this3.statuses = response.data;
+      });
+    },
+    deleteTask: function deleteTask() {
+      var _this4 = this;
+      var data = this.taskSelected;
+      axios.post("/tasks_delete", data).then(function (response) {
+        _this4.statuses = response.data;
+        _this4.closeDetails();
+      });
     }
   }
 });
@@ -2488,7 +2538,7 @@ var render = function render() {
       }
     }
   }, [_vm._v("\n            Cancelar\n        ")]), _vm._v(" "), _c("button", {
-    staticClass: "px-3 py-1 leading-5 text-white bg-orange-600 hover:bg-orange-500 rounded",
+    staticClass: "px-3 py-1 leading-5 text-white bg-blue-700 hover:bg-blue-800 rounded",
     attrs: {
       type: "submit"
     }
@@ -2528,7 +2578,7 @@ var render = function render() {
       staticClass: "font-medium",
       "class": status.color
     }, [_vm._v("\n                    " + _vm._s(status.title) + "\n                ")]), _vm._v(" "), _c("button", {
-      staticClass: "py-1 px-2 text-sm text-orange-500 hover:no-underline",
+      staticClass: "py-1 px-2 text-sm text-white hover:no-underline",
       on: {
         click: function click($event) {
           return _vm.openAddTaskForm(status.id);
@@ -2580,7 +2630,7 @@ var render = function render() {
         staticClass: "w-8 h-8 rounded-full",
         attrs: {
           title: task.user.nombre,
-          src: "http://127.0.0.1:8000/images/empleados/" + task.user.avatar,
+          src: "/images/empleados/" + task.user.avatar,
           alt: ""
         }
       })])]);
@@ -2595,7 +2645,7 @@ var render = function render() {
     }, [_c("span", {
       staticClass: "text-gray-600"
     }, [_vm._v("Aún no hay asignaciones")]), _vm._v(" "), _c("button", {
-      staticClass: "mt-1 text-sm text-orange-600 hover:no-underline",
+      staticClass: "mt-1 text-sm text-blue-700 hover:no-underline",
       on: {
         click: function click($event) {
           return _vm.openAddTaskForm(status.id);
@@ -2643,122 +2693,570 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "flex"
   }, [_c("div", {
-    staticClass: "w-4/6"
-  }, [_c("label", {
+    staticClass: "w-5/6 overflow-auto h-128"
+  }, [_c("div", [_c("label", {
     staticClass: "block mb-2 text-sm font-medium text-gray-900 dark:text-white",
     attrs: {
       "for": "message"
     }
-  }, [_vm._v("Descripción")]), _vm._v(" "), _c("textarea", {
-    staticClass: "block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500",
+  }, [_vm._v("Asignación")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.taskSelected.title,
+      expression: "taskSelected.title"
+    }],
+    staticClass: "block p-2.5 rounded border border-gray-300 w-full text-md font-normal text-gray-900 bg-gray-50 focus:ring-blue-500 focus:border-blue-500",
     attrs: {
-      rows: "5",
-      placeholder: "Write your thoughts here..."
+      type: "text",
+      disabled: _vm.disabledCreador
+    },
+    domProps: {
+      value: _vm.taskSelected.title
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.taskSelected, "title", $event.target.value);
+      }
+    }
+  })]), _vm._v(" "), _c("br"), _vm._v(" "), _c("div", {}, [_c("form", [_c("input", {
+    ref: "filegeneral",
+    staticClass: "hidden",
+    attrs: {
+      type: "file"
+    },
+    on: {
+      "v-model": _vm.fileGeneral
+    }
+  }), _vm._v(" "), _c("label", {
+    staticClass: "block mb-2 text-sm font-medium text-gray-900 dark:text-white",
+    attrs: {
+      "for": "message"
+    }
+  }, [_vm._v("Descripción")]), _vm._v(" "), _c("div", {
+    staticClass: "w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
+  }, [_c("div", {
+    staticClass: "px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800"
+  }, [_c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.taskSelected.description,
+      expression: "taskSelected.description"
+    }],
+    staticClass: "resize-none w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400",
+    attrs: {
+      id: "comment",
+      rows: "4",
+      disabled: _vm.disabledCreador,
+      placeholder: "Ingrese la descripción aquí"
+    },
+    domProps: {
+      value: _vm.taskSelected.description
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.taskSelected, "description", $event.target.value);
+      }
     }
   }, [_vm._v(_vm._s(_vm.taskSelected.description))])]), _vm._v(" "), _c("div", {
-    staticClass: "px-6 py-6 w-2/6"
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.permisoCreador,
+      expression: "permisoCreador"
+    }],
+    staticClass: "flex items-center justify-end px-3 py-2 border-t dark:border-gray-600"
+  }, [_c("div", {
+    staticClass: "flex pl-0 space-x-1 sm:pl-2"
+  }, [_c("button", {
+    staticClass: "inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.$refs.filegeneral.click();
+      }
+    }
+  }, [_c("svg", {
+    staticClass: "w-5 h-5",
+    attrs: {
+      "aria-hidden": "true",
+      fill: "currentColor",
+      viewBox: "0 0 20 20",
+      xmlns: "http://www.w3.org/2000/svg"
+    }
+  }, [_c("path", {
+    attrs: {
+      "fill-rule": "evenodd",
+      d: "M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z",
+      "clip-rule": "evenodd"
+    }
+  })])]), _vm._v(" "), _c("button", {
+    staticClass: "inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.changeTask
+    }
+  }, [_c("svg", {
+    staticClass: "w-6 h-6 rotate-90",
+    attrs: {
+      "aria-hidden": "true",
+      fill: "currentColor",
+      viewBox: "0 0 20 20",
+      xmlns: "http://www.w3.org/2000/svg"
+    }
+  }, [_c("path", {
+    attrs: {
+      d: "M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"
+    }
+  })])])])])])])]), _vm._v(" "), _c("div", {}, [_c("label", {
+    staticClass: "block mb-2 text-sm font-medium text-gray-900 dark:text-white",
+    attrs: {
+      "for": "message"
+    }
+  }, [_vm._v("Archivos\n                                    Adjuntos")]), _vm._v(" "), _c("div", {
+    staticClass: "grid gap-4 grid-cols-4"
+  }, [_c("div", {
+    staticClass: "w-48 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700"
+  }, [_c("div", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.permisoCreador,
+      expression: "permisoCreador"
+    }],
+    staticClass: "flex justify-end px-4"
+  }, [_c("button", {
+    staticClass: "inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm",
+    attrs: {
+      id: "dropdownButton",
+      "data-dropdown-toggle": "dropdown",
+      type: "button"
+    }
+  }, [_c("svg", {
+    staticClass: "w-6 h-6",
+    attrs: {
+      "aria-hidden": "true",
+      fill: "currentColor",
+      viewBox: "0 0 20 20",
+      xmlns: "http://www.w3.org/2000/svg"
+    }
+  }, [_c("path", {
+    attrs: {
+      d: "M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
+    }
+  })])]), _vm._v(" "), _vm._m(0)]), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _c("div", {
+    staticClass: "w-48 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700"
+  }, [_c("div", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.permisoCreador,
+      expression: "permisoCreador"
+    }],
+    staticClass: "flex justify-end px-4"
+  }, [_c("button", {
+    staticClass: "inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm",
+    attrs: {
+      id: "dropdownButton",
+      "data-dropdown-toggle": "dropdown",
+      type: "button"
+    }
+  }, [_c("svg", {
+    staticClass: "w-6 h-6",
+    attrs: {
+      "aria-hidden": "true",
+      fill: "currentColor",
+      viewBox: "0 0 20 20",
+      xmlns: "http://www.w3.org/2000/svg"
+    }
+  }, [_c("path", {
+    attrs: {
+      d: "M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
+    }
+  })])]), _vm._v(" "), _vm._m(2)]), _vm._v(" "), _vm._m(3)])])]), _vm._v(" "), _c("br"), _vm._v(" "), _c("div", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.permisoActividad,
+      expression: "permisoActividad"
+    }]
+  }, [_c("form", [_c("label", {
+    staticClass: "block mb-2 text-sm font-medium text-gray-900 dark:text-white",
+    attrs: {
+      "for": "message"
+    }
+  }, [_vm._v("Actividad")]), _vm._v(" "), _c("div", {
+    staticClass: "flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700"
+  }, [_c("img", {
+    staticClass: "w-10 h-10 rounded-full object-cover",
+    attrs: {
+      src: "/images/empleados/" + _vm.userCreator.avatar,
+      alt: "avatar"
+    }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "flex items-center w-full"
+  }, [_c("textarea", {
+    staticClass: "resize-none block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+    attrs: {
+      rows: "1",
+      placeholder: "Ingrese su observación aquí"
+    }
+  }), _vm._v(" "), _c("button", {
+    staticClass: "inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600",
+    attrs: {
+      type: "button"
+    }
+  }, [_c("svg", {
+    staticClass: "w-5 h-5",
+    attrs: {
+      "aria-hidden": "true",
+      fill: "currentColor",
+      viewBox: "0 0 20 20",
+      xmlns: "http://www.w3.org/2000/svg"
+    }
+  }, [_c("path", {
+    attrs: {
+      "fill-rule": "evenodd",
+      d: "M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z",
+      "clip-rule": "evenodd"
+    }
+  })])]), _vm._v(" "), _c("button", {
+    staticClass: "inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600",
+    attrs: {
+      type: "button"
+    }
+  }, [_c("svg", {
+    staticClass: "w-6 h-6 rotate-90",
+    attrs: {
+      "aria-hidden": "true",
+      fill: "currentColor",
+      viewBox: "0 0 20 20",
+      xmlns: "http://www.w3.org/2000/svg"
+    }
+  }, [_c("path", {
+    attrs: {
+      d: "M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"
+    }
+  })])])])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "py-6 pl-6 w-2/6 pr-0"
   }, [_c("h3", {
     staticClass: "text-md py-4 px-6 font-medium border-2 rounded border-gray-200 text-gray-700 dark:text-white"
   }, [_vm._v("\n                                Detalles")]), _vm._v(" "), _c("form", {
-    staticClass: "space-y-6 py-3 px-6 rounded border-gray-200 border-2 border-t-0",
+    staticClass: "space-y-6 py-6 px-4 rounded border-gray-200 border-2 border-t-0",
     attrs: {
       action: "#"
     }
-  }, [_vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _c("div", {
+  }, [_c("div", {
     staticClass: "flex justify-between"
-  }, [_vm._m(3), _vm._v(" "), _c("div", {
+  }, [_vm._m(4), _vm._v(" "), _c("div", {
+    staticClass: "w-4/6"
+  }, [_c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.taskSelected.user_id,
+      expression: "taskSelected.user_id"
+    }],
+    staticClass: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+    attrs: {
+      id: "countries",
+      disabled: _vm.disabledCreador
+    },
+    on: {
+      change: [function ($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_vm.taskSelected, "user_id", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }, _vm.changeTask]
+    }
+  }, [_c("option", {
+    attrs: {
+      value: "",
+      disabled: ""
+    }
+  }, [_vm._v("Selecciona un empleado")]), _vm._v(" "), _vm._l(_vm.empleados_data, function (empleado) {
+    return _c("option", {
+      domProps: {
+        value: empleado.id
+      }
+    }, [_vm._v("\n                                                " + _vm._s(empleado.nombre) + "\n                                            ")]);
+  })], 2)])]), _vm._v(" "), _c("div", {
+    staticClass: "flex justify-between"
+  }, [_vm._m(5), _vm._v(" "), _c("div", {
     staticClass: "w-4/6"
   }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.taskSelected.init_date,
+      expression: "taskSelected.init_date"
+    }],
     staticClass: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5",
     attrs: {
-      type: "text",
-      disabled: ""
+      type: "date",
+      disabled: _vm.disabledCreador
     },
     domProps: {
-      value: _vm.taskSelected.code
+      value: _vm.taskSelected.init_date
+    },
+    on: {
+      change: _vm.changeTask,
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.taskSelected, "init_date", $event.target.value);
+      }
     }
-  })])])])])])])])])])], 2);
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "flex justify-between"
+  }, [_vm._m(6), _vm._v(" "), _c("div", {
+    staticClass: "w-4/6"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.taskSelected.end_date,
+      expression: "taskSelected.end_date"
+    }],
+    staticClass: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5",
+    attrs: {
+      type: "date",
+      disabled: _vm.disabledCreador
+    },
+    domProps: {
+      value: _vm.taskSelected.end_date
+    },
+    on: {
+      change: _vm.changeTask,
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.taskSelected, "end_date", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "flex justify-between"
+  }, [_vm._m(7), _vm._v(" "), _c("div", {
+    staticClass: "w-4/6"
+  }, [_c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.taskSelected.created_by,
+      expression: "taskSelected.created_by"
+    }],
+    staticClass: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+    attrs: {
+      id: "countries",
+      disabled: ""
+    },
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_vm.taskSelected, "created_by", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      value: "",
+      disabled: ""
+    }
+  }, [_vm._v("Selecciona un empleado")]), _vm._v(" "), _vm._l(_vm.empleados_data, function (empleado) {
+    return _c("option", {
+      domProps: {
+        value: empleado.id
+      }
+    }, [_vm._v("\n                                                " + _vm._s(empleado.nombre) + "\n                                            ")]);
+  })], 2)])]), _vm._v(" "), _c("div", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.permisoCreador,
+      expression: "permisoCreador"
+    }],
+    staticClass: "flex justify-center"
+  }, [_vm._m(8)])])])])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full",
+    attrs: {
+      id: "popup-modal",
+      tabindex: "-1"
+    }
+  }, [_c("div", {
+    staticClass: "relative w-full h-full max-w-md md:h-auto"
+  }, [_c("div", {
+    staticClass: "relative bg-white rounded-lg shadow dark:bg-gray-700"
+  }, [_c("button", {
+    staticClass: "absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white",
+    attrs: {
+      type: "button",
+      "data-modal-toggle": "popup-modal"
+    }
+  }, [_c("svg", {
+    staticClass: "w-5 h-5",
+    attrs: {
+      "aria-hidden": "true",
+      fill: "currentColor",
+      viewBox: "0 0 20 20",
+      xmlns: "http://www.w3.org/2000/svg"
+    }
+  }, [_c("path", {
+    attrs: {
+      "fill-rule": "evenodd",
+      d: "M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z",
+      "clip-rule": "evenodd"
+    }
+  })]), _vm._v(" "), _c("span", {
+    staticClass: "sr-only"
+  }, [_vm._v("Close modal")])]), _vm._v(" "), _c("div", {
+    staticClass: "p-6 text-center"
+  }, [_c("svg", {
+    staticClass: "mx-auto mb-4 text-gray-400 w-14 h-14 dark:text-gray-200",
+    attrs: {
+      "aria-hidden": "true",
+      fill: "none",
+      stroke: "currentColor",
+      viewBox: "0 0 24 24",
+      xmlns: "http://www.w3.org/2000/svg"
+    }
+  }, [_c("path", {
+    attrs: {
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      "stroke-width": "2",
+      d: "M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+    }
+  })]), _vm._v(" "), _c("h3", {
+    staticClass: "mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"
+  }, [_vm._v("¿Desea eliminar la\n                        asignación?")]), _vm._v(" "), _c("button", {
+    staticClass: "text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2",
+    attrs: {
+      "data-modal-toggle": "popup-modal",
+      type: "button"
+    },
+    on: {
+      click: _vm.deleteTask
+    }
+  }, [_vm._v("\n                        Sí, Eliminar\n                    ")]), _vm._v(" "), _c("button", {
+    staticClass: "text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600",
+    attrs: {
+      "data-modal-toggle": "popup-modal",
+      type: "button"
+    }
+  }, [_vm._v("No,\n                        Cancelar")])])])])])], 2);
 };
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "flex justify-between"
-  }, [_c("div", {
-    staticClass: "justify-center self-center"
-  }, [_c("p", {
-    staticClass: "text-sm text-black-800",
+    staticClass: "z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700",
+    attrs: {
+      id: "dropdown"
+    }
+  }, [_c("ul", {
+    staticClass: "py-1",
+    attrs: {
+      "aria-labelledby": "dropdownButton"
+    }
+  }, [_c("li", [_c("a", {
+    staticClass: "block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white",
     attrs: {
       href: "#"
     }
-  }, [_vm._v("Responsable")])]), _vm._v(" "), _c("div", {
-    staticClass: "w-4/6"
-  }, [_c("select", {
-    staticClass: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
-    attrs: {
-      id: "countries"
-    }
-  }, [_c("option", {
-    attrs: {
-      selected: ""
-    }
-  }, [_vm._v("Choose a country")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "US"
-    }
-  }, [_vm._v("United States")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "CA"
-    }
-  }, [_vm._v("Canada")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "FR"
-    }
-  }, [_vm._v("France")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "DE"
-    }
-  }, [_vm._v("Germany")])])])]);
+  }, [_vm._v("Eliminar")])])])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "flex justify-between"
-  }, [_c("div", {
-    staticClass: "justify-center self-center"
-  }, [_c("p", {
-    staticClass: "text-sm text-black-800",
+    staticClass: "flex flex-col items-center pb-2 py-1"
+  }, [_c("img", {
+    staticClass: "w-20 h-20",
     attrs: {
-      href: "#"
+      src: "/assets/img/icon-file.png",
+      alt: "Documento"
     }
-  }, [_vm._v("Fecha Inicio")])]), _vm._v(" "), _c("div", {
-    staticClass: "w-4/6"
-  }, [_c("input", {
-    staticClass: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5",
-    attrs: {
-      type: "date"
-    }
-  })])]);
+  }), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 text-sm font-medium text-gray-600 dark:text-white"
+  }, [_vm._v("Cedula.png")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "flex justify-between"
-  }, [_c("div", {
+    staticClass: "z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700",
+    attrs: {
+      id: "dropdown"
+    }
+  }, [_c("ul", {
+    staticClass: "py-1",
+    attrs: {
+      "aria-labelledby": "dropdownButton"
+    }
+  }, [_c("li", [_c("a", {
+    staticClass: "block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white",
+    attrs: {
+      href: "#"
+    }
+  }, [_vm._v("Eliminar")])])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "flex flex-col items-center pb-2 py-1"
+  }, [_c("img", {
+    staticClass: "w-20 h-20",
+    attrs: {
+      src: "/assets/img/icon-file.png",
+      alt: "Documento"
+    }
+  }), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 text-sm font-medium text-gray-600 dark:text-white"
+  }, [_vm._v("Cedula.png")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
     staticClass: "justify-center self-center"
   }, [_c("p", {
     staticClass: "text-sm text-black-800",
     attrs: {
       href: "#"
     }
-  }, [_vm._v("Fecha Fin")])]), _vm._v(" "), _c("div", {
-    staticClass: "w-4/6"
-  }, [_c("input", {
-    staticClass: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5",
+  }, [_vm._v("Responsable")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "justify-center self-center"
+  }, [_c("p", {
+    staticClass: "text-sm text-black-800",
     attrs: {
-      type: "date"
+      href: "#"
     }
-  })])]);
+  }, [_vm._v("Fecha Inicio")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "justify-center self-center"
+  }, [_c("p", {
+    staticClass: "text-sm text-black-800",
+    attrs: {
+      href: "#"
+    }
+  }, [_vm._v("Fecha Fin")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
@@ -2770,6 +3268,18 @@ var staticRenderFns = [function () {
       href: "#"
     }
   }, [_vm._v("Informador")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "justify-center self-center"
+  }, [_c("a", {
+    staticClass: "text-sm text-red-600",
+    attrs: {
+      href: "#",
+      "data-modal-toggle": "popup-modal"
+    }
+  }, [_vm._v("Eliminar Asignación")])]);
 }];
 render._withStripped = true;
 

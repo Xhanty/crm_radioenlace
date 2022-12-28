@@ -17,6 +17,9 @@ class TaskProject extends Model
         'project_id',
         'user_id',
         'status_id',
+        'init_date',
+        'end_date',
+        'created_by',
     ];
 
     public function user()
