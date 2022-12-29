@@ -13,7 +13,6 @@ class Status extends Model
         'title',
         'slug',
         'order',
-        'user_id',
     ];
 
     public $timestamps = false;
@@ -21,10 +20,5 @@ class Status extends Model
     public function tasks()
     {
         return $this->hasMany(TaskProject::class)->orderBy('order');
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
     }
 }

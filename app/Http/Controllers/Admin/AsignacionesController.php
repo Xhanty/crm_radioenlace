@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\TaskProject;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +15,8 @@ class AsignacionesController extends Controller
         try {
             $asignaciones_pendientes = DB::table("asignaciones")
                 ->join("empleados", "empleados.id", "=", "asignaciones.created_by")
-                ->select("asignaciones.*", "empleados.nombre")
+                ->join("task_projects", "task_projects.code", "=", "asignaciones.codigo")
+                ->select("asignaciones.*","empleados.nombre", "task_projects.id AS task_id", "task_projects.project_id")
                 ->where("asignaciones.status", 0)
                 ->where("asignaciones.id_empleado", session("user"))
                 ->orderBy("asignaciones.id", "desc")
@@ -22,7 +24,8 @@ class AsignacionesController extends Controller
 
             $asignaciones_completadas = DB::table("asignaciones")
                 ->join("empleados", "empleados.id", "=", "asignaciones.created_by")
-                ->select("asignaciones.*", "empleados.nombre")
+                ->join("task_projects", "task_projects.code", "=", "asignaciones.codigo")
+                ->select("asignaciones.*", "empleados.nombre", "task_projects.id AS task_id", "task_projects.project_id")
                 ->where("asignaciones.status", 1)
                 ->where("asignaciones.id_empleado", session("user"))
                 ->orderBy("asignaciones.id", "desc")
@@ -246,14 +249,30 @@ class AsignacionesController extends Controller
     {
         try {
             $id = $request->id;
-            $files = DB::table("anexos_asignaciones")->where("id_asignacion", $id)->get();
+            $code = DB::table("asignaciones")->where("id", $id)->first()->codigo;
+            $task = TaskProject::where('code', $code)->first();
+
+            $files = DB::table("anexos_tasks_projects")->where('task', $task->id)->get();
+
+            foreach ($files as $file) {
+                unlink('images/anexos_tasks_projects/' . $file->file);
+            }
+
+            DB::table("anexos_tasks_projects")->where('task', $task->id)->delete();
+            DB::table("avances_tasks_projects")->where('task', $task->id)->delete();
+            TaskProject::where('id', $task->id)->delete();
+
+
+            //$task = Task
+            /*$files = DB::table("anexos_asignaciones")->where("id_asignacion", $id)->get();
             foreach ($files as $file) {
                 $path = 'images/asignaciones/' . $file->archivo;
                 if (file_exists($path)) {
                     unlink($path);
                 }
             }
-            DB::table("anexos_asignaciones")->where("id_asignacion", $id)->delete();
+            DB::table("anexos_asignaciones")->where("id_asignacion", $id)->delete();*/
+            
             DB::table("asignaciones")->where("id", $id)->delete();
             return response()->json(['info' => 1, 'success' => 'Asignación eliminada correctamente.']);
         } catch (Exception $ex) {

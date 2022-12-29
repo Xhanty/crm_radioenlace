@@ -32,14 +32,17 @@
                                         <strong>{{ $value->codigo }}</strong>
                                         <div class="ms-auto">
                                             <div class="" style="cursor: pointer;">
-                                                <a class="p-2 text-muted" data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                <a href="{{ route('tasks.index') . '/?project=' . $value->project_id . '&task=' . $value->task_id  }}" target="_BLANK" class="p-2 text-muted">
+                                                    <i class="fas fa-eye" style="color: #000"></i>
+                                                </a>
+                                                <!--<a class="p-2 text-muted" data-bs-toggle="dropdown" aria-expanded="false"><i
                                                         class="fas fa-ellipsis-v" style="color: #fff"></i></a>
                                                 <div class="dropdown-menu tx-13 dropleft">
                                                     <a class="dropdown-item btn_openAvances"
                                                         data-asignacion="{{ $value->asignacion }}"
                                                         data-idshow="{{ $value->id }}" href="javascript:void(0);">Agregar
                                                         Avance</a>
-                                                </div>
+                                                </div>-->
                                             </div>
                                         </div>
                                     </div>
@@ -58,10 +61,6 @@
                                     <div class="p-3 border-top">
                                         <span class="tx-12 text-muted">Fecha Inicio</span>
                                         <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ $value->fecha }}</h5>
-                                    </div>
-                                    <div class="p-3 border-top">
-                                        <span class="tx-12 text-muted">Fecha Culminación Tentativa</span>
-                                        <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ $value->fecha_culminacion }}</h5>
                                     </div>
                                     <div class="p-3 border-top">
                                         <span class="tx-12 text-muted">Fecha Culminación</span>
@@ -111,10 +110,6 @@
                                     <div class="p-3 border-top">
                                         <span class="tx-12 text-muted">Fecha Inicio</span>
                                         <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ $value->fecha }}</h5>
-                                    </div>
-                                    <div class="p-3 border-top">
-                                        <span class="tx-12 text-muted">Fecha Culminación Tentativa</span>
-                                        <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ $value->fecha_culminacion }}</h5>
                                     </div>
                                     <div class="p-3 border-top">
                                         <span class="tx-12 text-muted">Fecha Culminación</span>

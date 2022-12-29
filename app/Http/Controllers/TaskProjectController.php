@@ -25,17 +25,46 @@ class TaskProjectController extends Controller
                 return view("errors.404");
             }
 
-            $tasks = auth()->user()->statuses()->with('tasks.user')->with('tasks', function ($query) use ($project) {
-                $query->where('project_id', $project);
-            })->get();
+            $id = auth()->user()->id;
+
+            $valid_creator = TaskProject::where('created_by', $id)->where('project_id', $project)->count();
+
+            $tasks = Status::get();
+
+            if($valid_creator > 0) {
+                foreach ($tasks as $task) {
+                    $task['tasks'] = TaskProject::where('status_id', $task->id)
+                    ->where('project_id', $project)
+                    ->orderBy('order')->get();
+                    foreach ($task['tasks'] as $t) {
+                        $find_user = DB::table('empleados')
+                            ->where('id', $t->user_id)
+                            ->first();
+                        $t['user'] = $find_user;
+                    }
+                }
+            } else {
+                foreach ($tasks as $task) {
+                    $task['tasks'] = TaskProject::where('status_id', $task->id)
+                    ->where('project_id', $project)
+                    ->where('user_id', $id)
+                    ->orderBy('order')->get();
+                    foreach ($task['tasks'] as $t) {
+                        $find_user = DB::table('empleados')
+                            ->where('id', $t->user_id)
+                            ->first();
+                        $t['user'] = $find_user;
+                    }
+                }
+            }
 
             session(['project_tasks' => $project]);
             session(['name_project' => $valid_project->nombre]);
 
             return view('tasks.index', compact('tasks'));
         } catch (Exception $ex) {
-            return view("errors.500");
             return $ex->getMessage();
+            return view("errors.500");
         }
     }
 
@@ -58,6 +87,29 @@ class TaskProjectController extends Controller
 
         $new = TaskProject::create($request->all());
 
+        $status = Status::find($request->status_id);
+        $estado_asignacion = 0;
+        $fecha_fin = null;
+
+        if($status->slug == 'completed') {
+            $estado_asignacion = 1;
+            $fecha_fin = date('Y-m-d H:i:s');
+        }
+
+        DB::table("asignaciones")->insert([
+            'id_empleado' => $request->user_id,
+            'descripcion' => $request->description,
+            'asignacion' => $request->title,
+            'fecha' => date('Y-m-d H:i:s'),
+            'fecha_culminacion' => $fecha_fin,
+            'status' => $estado_asignacion,
+            'created_by' => auth()->user()->id,
+            'fecha_completada' => $fecha_fin,
+            'visto_bueno' => 0,
+            'devuelta' => 0,
+            'codigo' => $request['code'],
+        ]);
+
         $find_user = DB::table('empleados')
             ->where('id', $new->user_id)
             ->first();
@@ -79,15 +131,58 @@ class TaskProjectController extends Controller
                 if ($task['status_id'] !== $status['id'] || $task['order'] !== $order) {
                     TaskProject::where('id', $task['id'])
                         ->update(['status_id' => $status['id'], 'order' => $order]);
+                    
+                    $status = Status::find($status['id']);
+                    $estado_asignacion = 0;
+                    $fecha_fin = null;
+
+                    if($status->slug == 'completed') {
+                        $estado_asignacion = 1;
+                        $fecha_fin = date('Y-m-d H:i:s');
+                    }
+
+                    DB::table("asignaciones")->where('codigo', $task['code'])->update([
+                        'status' => $estado_asignacion,
+                        'fecha_completada' => $fecha_fin,
+                    ]);
                 }
             }
         }
 
         $project = session('project_tasks');
 
-        $tasks = auth()->user()->statuses()->with('tasks.user')->with('tasks', function ($query) use ($project) {
-            $query->where('project_id', $project);
-        })->get();
+        $id = auth()->user()->id;
+
+        $valid_creator = TaskProject::where('created_by', $id)->where('project_id', $project)->count();
+
+        $tasks = Status::get();
+
+        if ($valid_creator > 0) {
+            foreach ($tasks as $task) {
+                $task['tasks'] = TaskProject::where('status_id', $task->id)
+                    ->where('project_id', $project)
+                    ->orderBy('order')->get();
+                foreach ($task['tasks'] as $t) {
+                    $find_user = DB::table('empleados')
+                    ->where('id', $t->user_id)
+                        ->first();
+                    $t['user'] = $find_user;
+                }
+            }
+        } else {
+            foreach ($tasks as $task) {
+                $task['tasks'] = TaskProject::where('status_id', $task->id)
+                    ->where('project_id', $project)
+                    ->where('user_id', $id)
+                    ->orderBy('order')->get();
+                foreach ($task['tasks'] as $t) {
+                    $find_user = DB::table('empleados')
+                    ->where('id', $t->user_id)
+                        ->first();
+                    $t['user'] = $find_user;
+                }
+            }
+        }
 
         return $tasks;
     }
@@ -113,6 +208,8 @@ class TaskProjectController extends Controller
 
     public function tasks_edit(Request $request)
     {
+        $code = TaskProject::where('id', $request->id)->first();
+
         TaskProject::where('id', $request->id)->update([
             'title' => $request->title,
             'description' => $request->description,
@@ -121,45 +218,216 @@ class TaskProjectController extends Controller
             'end_date' => $request->end_date,
         ]);
 
+        DB::table("asignaciones")->where('codigo', $code->code)->update([
+            'id_empleado' => $request->user_id,
+            'descripcion' => $request->description,
+            'asignacion' => $request->title,
+            'fecha' => $request->init_date,
+            'fecha_culminacion' => $request->end_date,
+            'fecha_completada' => $request->end_date,
+        ]);
+
         $project = session('project_tasks');
 
-        $tasks = auth()->user()->statuses()->with('tasks.user')->with('tasks', function ($query) use ($project) {
-            $query->where('project_id', $project);
-        })->get();
+        $id = auth()->user()->id;
+
+        $valid_creator = TaskProject::where('created_by', $id)->where('project_id', $project)->count();
+
+        $tasks = Status::get();
+
+        if ($valid_creator > 0) {
+            foreach ($tasks as $task) {
+                $task['tasks'] = TaskProject::where('status_id', $task->id)
+                    ->where('project_id', $project)
+                    ->orderBy('order')->get();
+                foreach ($task['tasks'] as $t) {
+                    $find_user = DB::table('empleados')
+                    ->where('id', $t->user_id)
+                        ->first();
+                    $t['user'] = $find_user;
+                }
+            }
+        } else {
+            foreach ($tasks as $task) {
+                $task['tasks'] = TaskProject::where('status_id', $task->id)
+                    ->where('project_id', $project)
+                    ->where('user_id', $id)
+                    ->orderBy('order')->get();
+                foreach ($task['tasks'] as $t) {
+                    $find_user = DB::table('empleados')
+                    ->where('id', $t->user_id)
+                        ->first();
+                    $t['user'] = $find_user;
+                }
+            }
+        }
 
         return $tasks;
     }
 
     public function tasks_delete(Request $request)
     {
+        $code = TaskProject::where('id', $request->id)->first();
+        $files = DB::table("anexos_tasks_projects")->where('task', $request->id)->get();
+
+        foreach ($files as $file) {
+            unlink('images/anexos_tasks_projects/' . $file->file);
+        }
+
+        DB::table("anexos_tasks_projects")->where('task', $request->id)->delete();
+        DB::table("avances_tasks_projects")->where('task', $request->id)->delete();
         TaskProject::where('id', $request->id)->delete();
+        DB::table("asignaciones")->where('codigo', $code->code)->delete();
 
         $project = session('project_tasks');
 
-        $tasks = auth()->user()->statuses()->with('tasks.user')->with('tasks', function ($query) use ($project) {
-            $query->where('project_id', $project);
-        })->get();
+        $id = auth()->user()->id;
+
+        $valid_creator = TaskProject::where('created_by', $id)->where('project_id', $project)->count();
+
+        $tasks = Status::get();
+
+        if ($valid_creator > 0) {
+            foreach ($tasks as $task) {
+                $task['tasks'] = TaskProject::where('status_id', $task->id)
+                    ->where('project_id', $project)
+                    ->orderBy('order')->get();
+                foreach ($task['tasks'] as $t) {
+                    $find_user = DB::table('empleados')
+                    ->where('id', $t->user_id)
+                        ->first();
+                    $t['user'] = $find_user;
+                }
+            }
+        } else {
+            foreach ($tasks as $task) {
+                $task['tasks'] = TaskProject::where('status_id', $task->id)
+                    ->where('project_id', $project)
+                    ->where('user_id', $id)
+                    ->orderBy('order')->get();
+                foreach ($task['tasks'] as $t) {
+                    $find_user = DB::table('empleados')
+                    ->where('id', $t->user_id)
+                        ->first();
+                    $t['user'] = $find_user;
+                }
+            }
+        }
 
         return $tasks;
     }
 
+    public function anexos(Request $request)
+    {
+        $files = DB::table("anexos_tasks_projects")
+            ->where('task', $request->id)
+            ->get();
+
+        return $files;
+    }
+
     public function task_add_file(Request $request)
     {
+        $files = $request->file('file');
+
+        foreach ($files as $file) {
+            $name = $file->getClientOriginalName();
+            $name_dos = time() . $file->getClientOriginalName();
+            $file->move('images/anexos_tasks_projects/', $name_dos);
+
+            DB::table('anexos_tasks_projects')->insert([
+                'task' => $request->task_id,
+                'file' => $name_dos,
+                'name_file' => $name,
+                'created_at' => date('Y-m-d'),
+            ]);
+        }
+
+        $files = DB::table("anexos_tasks_projects")
+            ->where('task', $request->task_id)
+            ->get();
+
+        return $files;
+    }
+
+    public function task_delete_file(Request $request)
+    {
+        $file = $request->file;
+
+        if (file_exists('images/anexos_tasks_projects/' . $file)) {
+            unlink('images/anexos_tasks_projects/' . $file);
+        }
+
+        DB::table('anexos_tasks_projects')
+            ->where('id', $request->id)
+            ->delete();
+
+        $files = DB::table("anexos_tasks_projects")
+            ->where('task', $request->task_id)
+            ->get();
+
+        return $files;
+    }
+
+    public function avances(Request $request)
+    {
+        $avances = DB::table("avances_tasks_projects")
+            ->select('avances_tasks_projects.*','empleados.nombre as empleado', 'empleados.avatar')
+            ->join('empleados', 'empleados.id', '=', 'avances_tasks_projects.user_id')
+            ->where('task', $request->id)
+            ->get();
+
+        return $avances;
+    }
+
+    public function task_add_avance(Request $request)
+    {
         $file = $request->file('file');
-        $name = time() . $file->getClientOriginalName();
-        $file->move(public_path() . '/files/', $name);
 
-        $task = TaskProject::where('id', $request->id)->first();
+        if($file) {
+            $name = $file->getClientOriginalName();
+            $name_dos = time() . $file->getClientOriginalName();
+            $file->move('images/avances_tasks_projects/', $name_dos);
+        }
 
-        $task->files = $task->files . ',' . $name;
-        $task->save();
+        DB::table('avances_tasks_projects')->insert([
+            'user_id' => auth()->user()->id,
+            'task' => $request->task_id,
+            'avance' => $request->actividad,
+            'file' => $name_dos ?? null,
+            'name_file' => $name ?? null,
+            'fecha' => date('Y-m-d'),
+        ]);
 
-        $project = session('project_tasks');
+        $avances = DB::table("avances_tasks_projects")
+            ->select('avances_tasks_projects.*','empleados.nombre as empleado', 'empleados.avatar')
+            ->join('empleados', 'empleados.id', '=', 'avances_tasks_projects.user_id')
+            ->where('task', $request->task_id)
+            ->get();
 
-        $tasks = auth()->user()->statuses()->with('tasks.user')->with('tasks', function ($query) use ($project) {
-            $query->where('project_id', $project);
-        })->get();
+        return $avances;
+    }
 
-        return $tasks;
+    public function task_delete_avance(Request $request)
+    {
+        $file = $request->file;
+
+        if($file) {
+            if (file_exists('images/avances_tasks_projects/' . $file)) {
+                unlink('images/avances_tasks_projects/' . $file);
+            }
+        }
+
+        DB::table('avances_tasks_projects')
+            ->where('id', $request->id)
+            ->delete();
+
+        $avances = DB::table("avances_tasks_projects")
+            ->select('avances_tasks_projects.*', 'empleados.nombre as empleado', 'empleados.avatar')
+            ->join('empleados', 'empleados.id', '=', 'avances_tasks_projects.user_id')
+            ->where('task', $request->task_id)
+            ->get();
+
+        return $avances;
     }
 }

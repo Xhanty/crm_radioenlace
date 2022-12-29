@@ -193,9 +193,14 @@ Route::middleware(['auth_user'])->group(function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::get('tasks',  [App\Http\Controllers\TaskProjectController::class, 'index'])->name('tasks.index');
     Route::post('tasks', [App\Http\Controllers\TaskProjectController::class, 'store'])->name('tasks.store');
+    Route::post('tasks_anexos', [App\Http\Controllers\TaskProjectController::class, 'anexos'])->name('tasks_anexos');
+    Route::post('task_add_file', [App\Http\Controllers\TaskProjectController::class, 'task_add_file'])->name('task_add_file');
+    Route::post('task_delete_file', [App\Http\Controllers\TaskProjectController::class, 'task_delete_file'])->name('task_delete_file');
+    Route::post('tasks_avances', [App\Http\Controllers\TaskProjectController::class, 'avances'])->name('tasks_avances');
+    Route::post('task_add_avance', [App\Http\Controllers\TaskProjectController::class, 'task_add_avance'])->name('task_add_avance');
+    Route::post('task_delete_avance', [App\Http\Controllers\TaskProjectController::class, 'task_delete_avance'])->name('task_delete_avance');
     Route::post('tasks_edit', [App\Http\Controllers\TaskProjectController::class, 'tasks_edit'])->name('tasks_edit');
     Route::post('tasks_delete', [App\Http\Controllers\TaskProjectController::class, 'tasks_delete'])->name('tasks_delete');
-    Route::post('task_add_file', [App\Http\Controllers\TaskProjectController::class, 'task_add_file'])->name('task_add_file');
     Route::put('tasks/sync', [App\Http\Controllers\TaskProjectController::class, 'sync'])->name('tasks.sync');
     Route::put('tasks/{task}', [App\Http\Controllers\TaskProjectController::class, 'update'])->name('tasks.update');
 });

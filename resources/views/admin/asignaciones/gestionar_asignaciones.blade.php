@@ -25,10 +25,10 @@
                         <div class="div-1-tables-header">
                             <h3 class="card-title mt-2">Lista de Asignaciones Pendientes</h3>
                         </div>
-                        <div class="div-2-tables-header">
+                        <!--<div class="div-2-tables-header">
                             <button class="btn btn-primary" data-bs-target="#modalAdd" data-bs-toggle="modal"
                                 data-bs-effect="effect-scale">Crear Asignación</button>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -40,8 +40,7 @@
                                         <th class="wd-20p border-bottom-0">Descripción</th>
                                         <th class="wd-20p border-bottom-0">Asignación</th>
                                         <th class="wd-10p border-bottom-0">Fecha Inicio</th>
-                                        <th class="wd-10p border-bottom-0">Fecha<br>Culminación<br>Tentativa</th>
-                                        <th class="wd-10p border-bottom-0">Estado</th>
+                                        <th class="wd-10p border-bottom-0">Fecha Fin</th>
                                         <th class="wd-15p border-bottom-0">Creada por</th>
                                         <th class="wd-15p border-bottom-0">Acciones</th>
                                         <th class="wd-10p border-bottom-0">Visto<br>Bueno</th>
@@ -56,17 +55,10 @@
                                             <td>{{ $value->descripcion }}</td>
                                             <td>{{ $value->asignacion }}</td>
                                             <td>{{ date('d-m-Y g:i A', strtotime($value->fecha)) }}</td>
-                                            <td>{{ date('d-m-Y g:i A', strtotime($value->fecha_culminacion)) }}</td>
-                                            <td>
-                                                @if ($value->status == 1)
-                                                    <span class="badge bg-success side-badge">Completado</span>
-                                                @else
-                                                    <span class="badge bg-warning side-badge">Pendiente</span>
-                                                @endif
-                                            </td>
+                                            <td>{{ date('d-m-Y g:i A', strtotime($value->fecha_completada)) }}</td>
                                             <td>{{ $value->creador }}</td>
                                             <td>
-                                                <a class="d-flex btn_completar" data-id="{{ $value->id }}"
+                                                <!--<a class="d-flex btn_completar" data-id="{{ $value->id }}"
                                                     href="javascript:void(0);"><i
                                                         class="fa fa-check"></i>&nbsp;Completar</a>
                                                 <a class="d-flex btn_editar" data-id="{{ $value->id }}"
@@ -74,7 +66,7 @@
                                                         class="fa fa-pencil-alt"></i>&nbsp;Editar</a>
                                                 <a class="d-flex btn_avances" data-id="{{ $value->id }}"
                                                     href="javascript:void(0);"><i class="fa fa-file"></i>&nbsp;Ver
-                                                    Avances</a>
+                                                    Avances</a>-->
                                                 <a class="d-flex btn_eliminar" data-id="{{ $value->id }}"
                                                     href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>
                                             </td>
@@ -110,8 +102,7 @@
                                         <th class="wd-20p border-bottom-0">Descripción</th>
                                         <th class="wd-20p border-bottom-0">Asignación</th>
                                         <th class="wd-10p border-bottom-0">Fecha Inicio</th>
-                                        <th class="wd-10p border-bottom-0">Fecha<br>Culminación<br>Tentativa</th>
-                                        <th class="wd-10p border-bottom-0">Estado</th>
+                                        <th class="wd-10p border-bottom-0">Fecha Fin</th>
                                         <th class="wd-15p border-bottom-0">Creada por</th>
                                         <th class="wd-15p border-bottom-0">Acciones</th>
                                         <th class="wd-15p border-bottom-0">Visto<br>Bueno</th>
@@ -126,21 +117,14 @@
                                             <td>{{ $value->descripcion }}</td>
                                             <td>{{ $value->asignacion }}</td>
                                             <td>{{ date('d-m-Y g:i A', strtotime($value->fecha)) }}</td>
-                                            <td>{{ date('d-m-Y g:i A', strtotime($value->fecha_culminacion)) }}</td>
-                                            <td>
-                                                @if ($value->status == 1)
-                                                    <span class="badge bg-success side-badge">Completado</span>
-                                                @else
-                                                    <span class="badge bg-warning side-badge">Pendiente</span>
-                                                @endif
-                                            </td>
+                                            <td>{{ date('d-m-Y g:i A', strtotime($value->fecha_completada)) }}</td>
                                             <td>{{ $value->creador }}</td>
                                             <td>
-                                                <a class="d-flex btn_avances" data-id="{{ $value->id }}"
+                                                <!--<a class="d-flex btn_avances" data-id="{{ $value->id }}"
                                                     href="javascript:void(0);"><i class="fa fa-file"></i>&nbsp;Ver
                                                     Avances</a>
                                                 <a class="d-flex btn_rechazar" data-id="{{ $value->id }}"
-                                                    href="javascript:void(0);"><i class="fa fa-times"></i>&nbsp;Rechazar</a>
+                                                    href="javascript:void(0);"><i class="fa fa-times"></i>&nbsp;Rechazar</a>-->
                                                 <a class="d-flex btn_eliminar" data-id="{{ $value->id }}"
                                                     href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>
                                             </td>

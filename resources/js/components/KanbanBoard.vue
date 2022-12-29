@@ -23,8 +23,9 @@
                         <transition-group
                             class="flex-1 flex flex-col h-full overflow-x-hidden overflow-y-auto rounded shadow-xs"
                             tag="div">
-                            <div v-for="task in status.tasks" :key="task.id" @click="expandDetails(task)"
-                                class="mb-3 p-4 flex flex-col bg-white rounded-md shadow transform hover:shadow-md cursor-pointer">
+                            <div v-for="task in status.tasks" :ref="'md' + task.id" :key="task.id" @click="expandDetails(task)"
+                                class="mb-3 p-4 flex flex-col bg-white rounded-md shadow transform hover:shadow-md"
+                                style="cursor: grab;">
                                 <span class="block mb-2 text-lg text-gray-700">
                                     {{ task.title }}
                                 </span>
@@ -81,7 +82,7 @@
                     <!-- Modal body -->
                     <div class="p-6 space-y-6">
                         <div class="flex">
-                            <div class="w-5/6 overflow-auto h-128">
+                            <div class="w-5/6 overflow-auto h-128 px-1.5">
                                 <div>
                                     <label for="message"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Asignación</label>
@@ -91,7 +92,8 @@
                                 <br>
                                 <div class="">
                                     <form>
-                                        <input type="file" ref="filegeneral" @v-model="fileGeneral" class="hidden"/>
+                                        <input type="file" ref="filegeneral" class="hidden" @change="uploadFiles"
+                                            multiple />
                                         <label for="message"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripción</label>
                                         <div
@@ -133,78 +135,98 @@
                                     <label for="message"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Archivos
                                         Adjuntos</label>
-                                    
+
                                     <div class="grid gap-4 grid-cols-4">
-                                        <div class="w-48 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+                                        <div v-for="file in anexosTask" :key="file.id"
+                                            class="w-48 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
                                             <div class="flex justify-end px-4" v-show="permisoCreador">
-                                                <button id="dropdownButton" data-dropdown-toggle="dropdown"
+                                                <button @click="deleteFile(file)"
                                                     class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm"
                                                     type="button">
-                                                    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                                         xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z">
-                                                        </path>
+                                                        <path fill-rule="evenodd"
+                                                            d="M3 5a1 1 0 011-1h12a1 1 0 011 1v1H3V5zm12 2v9a2 2 0 01-2 2H7a2 2 0 01-2-2V7h10zm-5 2a1 1 0 00-1 1v4a1 1 0 002 0V9a1 1 0 00-1-1zm4 0a1 1 0 00-1 1v4a1 1 0 002 0V9a1 1 0 00-1-1z"
+                                                            clip-rule="evenodd"></path>
                                                     </svg>
                                                 </button>
-                                                <!-- Dropdown menu -->
-                                                <div id="dropdown"
-                                                    class="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700">
-                                                    <ul class="py-1" aria-labelledby="dropdownButton">
-                                                        <li>
-                                                            <a href="#"
-                                                                class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Eliminar</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
                                             </div>
-                                            <div class="flex flex-col items-center pb-2 py-1">
-                                                <img class="w-20 h-20" src="/assets/img/icon-file.png" alt="Documento" />
-                                                <p class="mb-1 text-sm font-medium text-gray-600 dark:text-white">Cedula.png</p>
-                                            </div>
-                                        </div>
-                                        <div class="w-48 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-                                            <div class="flex justify-end px-4" v-show="permisoCreador">
-                                                <button id="dropdownButton" data-dropdown-toggle="dropdown"
-                                                    class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm"
-                                                    type="button">
-                                                    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z">
-                                                        </path>
-                                                    </svg>
-                                                </button>
-                                                <!-- Dropdown menu -->
-                                                <div id="dropdown"
-                                                    class="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700">
-                                                    <ul class="py-1" aria-labelledby="dropdownButton">
-                                                        <li>
-                                                            <a href="#"
-                                                                class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Eliminar</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="flex flex-col items-center pb-2 py-1">
-                                                <img class="w-20 h-20" src="/assets/img/icon-file.png" alt="Documento" />
-                                                <p class="mb-1 text-sm font-medium text-gray-600 dark:text-white">Cedula.png</p>
+                                            <div @click="openFile(file)"
+                                                class="flex flex-col items-center pb-2 py-1 cursor-pointer">
+                                                <img class="w-20 h-20" src="/assets/img/icon-file.png"
+                                                    :alt="file.name_file" />
+                                                <p
+                                                    class="mb-1 text-sm font-medium text-gray-600 dark:text-white text-center px-1.5">
+                                                    {{ file.name_file }}
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
 
                                 </div>
                                 <br>
-                                <div v-show="permisoActividad">
+                                <div>
                                     <form>
+                                        <div
+                                            class="w-full p-4 bg-white border rounded-lg shadow-md sm:p-4 dark:bg-gray-800 dark:border-gray-700">
+                                            <div class="flex items-center justify-between mb-4">
+                                                <h5
+                                                    class="text-md font-bold leading-none text-gray-900 dark:text-white">
+                                                    Observaciones</h5>
+                                            </div>
+                                            <div class="flow-root">
+                                                <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                                                    <li class="py-2 sm:py-2" v-for="avance of avancesTask"
+                                                        :key="avance.id">
+                                                        <div class="flex items-center space-x-4">
+                                                            <div class="flex-shrink-0">
+                                                                <img class="w-8 h-8 rounded-full"
+                                                                    :title="avance.empleado"
+                                                                    :src="'/images/empleados/' + avance.avatar"
+                                                                    alt="Neil image">
+                                                            </div>
+                                                            <div class="flex-1 min-w-0">
+                                                                <p
+                                                                    class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                                                    {{ avance.empleado }}
+                                                                </p>
+                                                                <p
+                                                                    class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                                    {{ avance.avance }}
+                                                                </p>
+                                                                <p
+                                                                    class="text-sm font-medium text-gray-500 truncate dark:text-gray-400">
+                                                                    {{ avance.fecha }}
+                                                                </p>
+                                                            </div>
+                                                            <div
+                                                                class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                                                <button @click="deleteAvance(avance)" title="Eliminar"
+                                                                    class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm"
+                                                                    type="button">
+                                                                    <svg class="w-5 h-5" fill="currentColor"
+                                                                        viewBox="0 0 20 20"
+                                                                        xmlns="http://www.w3.org/2000/svg">
+                                                                        <path fill-rule="evenodd"
+                                                                            d="M3 5a1 1 0 011-1h12a1 1 0 011 1v1H3V5zm12 2v9a2 2 0 01-2 2H7a2 2 0 01-2-2V7h10zm-5 2a1 1 0 00-1 1v4a1 1 0 002 0V9a1 1 0 00-1-1zm4 0a1 1 0 00-1 1v4a1 1 0 002 0V9a1 1 0 00-1-1z"
+                                                                            clip-rule="evenodd"></path>
+                                                                    </svg>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <br>
                                         <label for="message"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Actividad</label>
-                                        <div class="flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700">
+                                        <div class="flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700"
+                                            v-show="permisoActividad">
                                             <img class="w-10 h-10 rounded-full object-cover"
-                                                :src="'/images/empleados/' + userCreator.avatar"
-                                                alt="avatar">
+                                                :src="'/images/empleados/' + userCreator.avatar" alt="avatar">
                                             <div class="flex items-center w-full">
-                                                <textarea rows="1"
+                                                <textarea rows="1" v-model="actividad"
                                                     class="resize-none block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                     placeholder="Ingrese su observación aquí"></textarea>
                                                 <button type="button"
@@ -216,7 +238,7 @@
                                                             clip-rule="evenodd"></path>
                                                     </svg>
                                                 </button>
-                                                <button type="button"
+                                                <button type="button" @click="addActividad"
                                                     class="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600">
                                                     <svg aria-hidden="true" class="w-6 h-6 rotate-90"
                                                         fill="currentColor" viewBox="0 0 20 20"
@@ -369,6 +391,9 @@ export default {
             permisoCreador: false,
             disabledCreador: true,
             fileGeneral: null,
+            anexosTask: [],
+            avancesTask: [],
+            actividad: "",
         };
     },
     computed: {
@@ -385,6 +410,7 @@ export default {
         this.statuses = JSON.parse(JSON.stringify(this.initialData));
         this.get_empleados();
         this.my_data();
+        this.verifyModal();
     },
     methods: {
         openAddTaskForm(statusId) {
@@ -440,6 +466,11 @@ export default {
                         this.permisoCreador = false;
                         this.disabledCreador = true;
                     }
+                    this.anexosTask = [];
+                    this.avancesTask = [];
+                    this.actividad = "";
+                    this.anexos();
+                    this.avances();
                 },
                 onToggle: () => {
                     //console.log('modal has been toggled');
@@ -473,6 +504,81 @@ export default {
                 this.statuses = response.data;
                 this.closeDetails();
             });
+        },
+        anexos() {
+            let data = this.taskSelected;
+            axios.post("/tasks_anexos", data).then(response => {
+                //this.fileGeneral = response.data;
+                this.anexosTask = response.data;
+                //console.log(response.data);
+            });
+        },
+        deleteFile(file) {
+            let data = {
+                id: file.id,
+                file: file.file,
+                task_id: this.taskSelected.id
+            };
+            axios.post("/task_delete_file", data).then(response => {
+                this.anexosTask = response.data;
+            });
+        },
+        openFile(file) {
+            window.open("/images/anexos_tasks_projects/" + file.file, '_blank');
+        },
+        uploadFiles(event) {
+            let files = event.target.files;
+            let data = new FormData();
+            data.append("task_id", this.taskSelected.id);
+            for (let i = 0; i < files.length; i++) {
+                data.append("file[]", files[i]);
+            }
+            axios.post("/task_add_file", data).then(response => {
+                this.anexosTask = response.data;
+            });
+        },
+        avances() {
+            let data = this.taskSelected;
+            axios.post("/tasks_avances", data).then(response => {
+                this.avancesTask = response.data;
+                console.log(response.data);
+            });
+        },
+        addActividad() {
+            if (this.actividad.trim().length < 1) {
+                alert("Debe ingresar una observación");
+                return;
+            }
+
+            let data = {
+                task_id: this.taskSelected.id,
+                actividad: this.actividad
+            };
+
+            axios.post("/task_add_avance", data).then(response => {
+                this.actividad = "";
+                this.avancesTask = response.data;
+            });
+        },
+        deleteAvance(avance) {
+            let data = {
+                id: avance.id,
+                task_id: this.taskSelected.id
+            };
+            axios.post("/task_delete_avance", data).then(response => {
+                this.avancesTask = response.data;
+            });
+        },
+        verifyModal() {
+            const valores = window.location.search;
+            const urlParams = new URLSearchParams(valores);
+            var task = urlParams.get('task');
+
+            if (task != null && task > 0) {
+                console.log(task);
+                var modal = "md" + task;
+                this.$refs.modal.click()
+            }
         }
     }
 };

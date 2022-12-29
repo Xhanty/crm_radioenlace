@@ -2291,7 +2291,10 @@ __webpack_require__.r(__webpack_exports__);
       permisoActividad: false,
       permisoCreador: false,
       disabledCreador: true,
-      fileGeneral: null
+      fileGeneral: null,
+      anexosTask: [],
+      avancesTask: [],
+      actividad: ""
     };
   },
   computed: {
@@ -2308,6 +2311,7 @@ __webpack_require__.r(__webpack_exports__);
     this.statuses = JSON.parse(JSON.stringify(this.initialData));
     this.get_empleados();
     this.my_data();
+    this.verifyModal();
   },
   methods: {
     openAddTaskForm: function openAddTaskForm(statusId) {
@@ -2366,6 +2370,11 @@ __webpack_require__.r(__webpack_exports__);
             _this.permisoCreador = false;
             _this.disabledCreador = true;
           }
+          _this.anexosTask = [];
+          _this.avancesTask = [];
+          _this.actividad = "";
+          _this.anexos();
+          _this.avances();
         },
         onToggle: function onToggle() {
           //console.log('modal has been toggled');
@@ -2402,6 +2411,84 @@ __webpack_require__.r(__webpack_exports__);
         _this4.statuses = response.data;
         _this4.closeDetails();
       });
+    },
+    anexos: function anexos() {
+      var _this5 = this;
+      var data = this.taskSelected;
+      axios.post("/tasks_anexos", data).then(function (response) {
+        //this.fileGeneral = response.data;
+        _this5.anexosTask = response.data;
+        //console.log(response.data);
+      });
+    },
+    deleteFile: function deleteFile(file) {
+      var _this6 = this;
+      var data = {
+        id: file.id,
+        file: file.file,
+        task_id: this.taskSelected.id
+      };
+      axios.post("/task_delete_file", data).then(function (response) {
+        _this6.anexosTask = response.data;
+      });
+    },
+    openFile: function openFile(file) {
+      window.open("/images/anexos_tasks_projects/" + file.file, '_blank');
+    },
+    uploadFiles: function uploadFiles(event) {
+      var _this7 = this;
+      var files = event.target.files;
+      var data = new FormData();
+      data.append("task_id", this.taskSelected.id);
+      for (var i = 0; i < files.length; i++) {
+        data.append("file[]", files[i]);
+      }
+      axios.post("/task_add_file", data).then(function (response) {
+        _this7.anexosTask = response.data;
+      });
+    },
+    avances: function avances() {
+      var _this8 = this;
+      var data = this.taskSelected;
+      axios.post("/tasks_avances", data).then(function (response) {
+        _this8.avancesTask = response.data;
+        console.log(response.data);
+      });
+    },
+    addActividad: function addActividad() {
+      var _this9 = this;
+      if (this.actividad.trim().length < 1) {
+        alert("Debe ingresar una observación");
+        return;
+      }
+      var data = {
+        task_id: this.taskSelected.id,
+        actividad: this.actividad
+      };
+      axios.post("/task_add_avance", data).then(function (response) {
+        _this9.actividad = "";
+        _this9.avancesTask = response.data;
+      });
+    },
+    deleteAvance: function deleteAvance(avance) {
+      var _this10 = this;
+      var data = {
+        id: avance.id,
+        task_id: this.taskSelected.id
+      };
+      axios.post("/task_delete_avance", data).then(function (response) {
+        _this10.avancesTask = response.data;
+      });
+    },
+    verifyModal: function verifyModal() {
+      var valores = window.location.search;
+      var urlParams = new URLSearchParams(valores);
+      var task = urlParams.get('task');
+      if (task != null && task > 0) {
+        console.log(task);
+        var modal = "md" + task;
+        this.$refs.modal.click();
+      }
     }
   }
 });
@@ -2614,7 +2701,12 @@ var render = function render() {
     }, _vm._l(status.tasks, function (task) {
       return _c("div", {
         key: task.id,
-        staticClass: "mb-3 p-4 flex flex-col bg-white rounded-md shadow transform hover:shadow-md cursor-pointer",
+        ref: "md" + task.id,
+        refInFor: true,
+        staticClass: "mb-3 p-4 flex flex-col bg-white rounded-md shadow transform hover:shadow-md",
+        staticStyle: {
+          cursor: "grab"
+        },
         on: {
           click: function click($event) {
             return _vm.expandDetails(task);
@@ -2693,7 +2785,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "flex"
   }, [_c("div", {
-    staticClass: "w-5/6 overflow-auto h-128"
+    staticClass: "w-5/6 overflow-auto h-128 px-1.5"
   }, [_c("div", [_c("label", {
     staticClass: "block mb-2 text-sm font-medium text-gray-900 dark:text-white",
     attrs: {
@@ -2724,10 +2816,11 @@ var render = function render() {
     ref: "filegeneral",
     staticClass: "hidden",
     attrs: {
-      type: "file"
+      type: "file",
+      multiple: ""
     },
     on: {
-      "v-model": _vm.fileGeneral
+      change: _vm.uploadFiles
     }
   }), _vm._v(" "), _c("label", {
     staticClass: "block mb-2 text-sm font-medium text-gray-900 dark:text-white",
@@ -2822,77 +2915,128 @@ var render = function render() {
     }
   }, [_vm._v("Archivos\n                                    Adjuntos")]), _vm._v(" "), _c("div", {
     staticClass: "grid gap-4 grid-cols-4"
-  }, [_c("div", {
-    staticClass: "w-48 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700"
-  }, [_c("div", {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: _vm.permisoCreador,
-      expression: "permisoCreador"
-    }],
-    staticClass: "flex justify-end px-4"
-  }, [_c("button", {
-    staticClass: "inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm",
+  }, _vm._l(_vm.anexosTask, function (file) {
+    return _c("div", {
+      key: file.id,
+      staticClass: "w-48 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700"
+    }, [_c("div", {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: _vm.permisoCreador,
+        expression: "permisoCreador"
+      }],
+      staticClass: "flex justify-end px-4"
+    }, [_c("button", {
+      staticClass: "inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm",
+      attrs: {
+        type: "button"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.deleteFile(file);
+        }
+      }
+    }, [_c("svg", {
+      staticClass: "w-5 h-5",
+      attrs: {
+        fill: "currentColor",
+        viewBox: "0 0 20 20",
+        xmlns: "http://www.w3.org/2000/svg"
+      }
+    }, [_c("path", {
+      attrs: {
+        "fill-rule": "evenodd",
+        d: "M3 5a1 1 0 011-1h12a1 1 0 011 1v1H3V5zm12 2v9a2 2 0 01-2 2H7a2 2 0 01-2-2V7h10zm-5 2a1 1 0 00-1 1v4a1 1 0 002 0V9a1 1 0 00-1-1zm4 0a1 1 0 00-1 1v4a1 1 0 002 0V9a1 1 0 00-1-1z",
+        "clip-rule": "evenodd"
+      }
+    })])])]), _vm._v(" "), _c("div", {
+      staticClass: "flex flex-col items-center pb-2 py-1 cursor-pointer",
+      on: {
+        click: function click($event) {
+          return _vm.openFile(file);
+        }
+      }
+    }, [_c("img", {
+      staticClass: "w-20 h-20",
+      attrs: {
+        src: "/assets/img/icon-file.png",
+        alt: file.name_file
+      }
+    }), _vm._v(" "), _c("p", {
+      staticClass: "mb-1 text-sm font-medium text-gray-600 dark:text-white text-center px-1.5"
+    }, [_vm._v("\n                                                " + _vm._s(file.name_file) + "\n                                            ")])])]);
+  }), 0)]), _vm._v(" "), _c("br"), _vm._v(" "), _c("div", [_c("form", [_c("div", {
+    staticClass: "w-full p-4 bg-white border rounded-lg shadow-md sm:p-4 dark:bg-gray-800 dark:border-gray-700"
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "flow-root"
+  }, [_c("ul", {
+    staticClass: "divide-y divide-gray-200 dark:divide-gray-700",
     attrs: {
-      id: "dropdownButton",
-      "data-dropdown-toggle": "dropdown",
-      type: "button"
+      role: "list"
     }
-  }, [_c("svg", {
-    staticClass: "w-6 h-6",
-    attrs: {
-      "aria-hidden": "true",
-      fill: "currentColor",
-      viewBox: "0 0 20 20",
-      xmlns: "http://www.w3.org/2000/svg"
-    }
-  }, [_c("path", {
-    attrs: {
-      d: "M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
-    }
-  })])]), _vm._v(" "), _vm._m(0)]), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _c("div", {
-    staticClass: "w-48 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700"
-  }, [_c("div", {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: _vm.permisoCreador,
-      expression: "permisoCreador"
-    }],
-    staticClass: "flex justify-end px-4"
-  }, [_c("button", {
-    staticClass: "inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm",
-    attrs: {
-      id: "dropdownButton",
-      "data-dropdown-toggle": "dropdown",
-      type: "button"
-    }
-  }, [_c("svg", {
-    staticClass: "w-6 h-6",
-    attrs: {
-      "aria-hidden": "true",
-      fill: "currentColor",
-      viewBox: "0 0 20 20",
-      xmlns: "http://www.w3.org/2000/svg"
-    }
-  }, [_c("path", {
-    attrs: {
-      d: "M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
-    }
-  })])]), _vm._v(" "), _vm._m(2)]), _vm._v(" "), _vm._m(3)])])]), _vm._v(" "), _c("br"), _vm._v(" "), _c("div", {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: _vm.permisoActividad,
-      expression: "permisoActividad"
-    }]
-  }, [_c("form", [_c("label", {
+  }, _vm._l(_vm.avancesTask, function (avance) {
+    return _c("li", {
+      key: avance.id,
+      staticClass: "py-2 sm:py-2"
+    }, [_c("div", {
+      staticClass: "flex items-center space-x-4"
+    }, [_c("div", {
+      staticClass: "flex-shrink-0"
+    }, [_c("img", {
+      staticClass: "w-8 h-8 rounded-full",
+      attrs: {
+        title: avance.empleado,
+        src: "/images/empleados/" + avance.avatar,
+        alt: "Neil image"
+      }
+    })]), _vm._v(" "), _c("div", {
+      staticClass: "flex-1 min-w-0"
+    }, [_c("p", {
+      staticClass: "text-sm font-medium text-gray-900 truncate dark:text-white"
+    }, [_vm._v("\n                                                                " + _vm._s(avance.empleado) + "\n                                                            ")]), _vm._v(" "), _c("p", {
+      staticClass: "text-sm text-gray-500 truncate dark:text-gray-400"
+    }, [_vm._v("\n                                                                " + _vm._s(avance.avance) + "\n                                                            ")]), _vm._v(" "), _c("p", {
+      staticClass: "text-sm font-medium text-gray-500 truncate dark:text-gray-400"
+    }, [_vm._v("\n                                                                " + _vm._s(avance.fecha) + "\n                                                            ")])]), _vm._v(" "), _c("div", {
+      staticClass: "inline-flex items-center text-base font-semibold text-gray-900 dark:text-white"
+    }, [_c("button", {
+      staticClass: "inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm",
+      attrs: {
+        title: "Eliminar",
+        type: "button"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.deleteAvance(avance);
+        }
+      }
+    }, [_c("svg", {
+      staticClass: "w-5 h-5",
+      attrs: {
+        fill: "currentColor",
+        viewBox: "0 0 20 20",
+        xmlns: "http://www.w3.org/2000/svg"
+      }
+    }, [_c("path", {
+      attrs: {
+        "fill-rule": "evenodd",
+        d: "M3 5a1 1 0 011-1h12a1 1 0 011 1v1H3V5zm12 2v9a2 2 0 01-2 2H7a2 2 0 01-2-2V7h10zm-5 2a1 1 0 00-1 1v4a1 1 0 002 0V9a1 1 0 00-1-1zm4 0a1 1 0 00-1 1v4a1 1 0 002 0V9a1 1 0 00-1-1z",
+        "clip-rule": "evenodd"
+      }
+    })])])])])]);
+  }), 0)])]), _vm._v(" "), _c("br"), _vm._v(" "), _c("label", {
     staticClass: "block mb-2 text-sm font-medium text-gray-900 dark:text-white",
     attrs: {
       "for": "message"
     }
   }, [_vm._v("Actividad")]), _vm._v(" "), _c("div", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.permisoActividad,
+      expression: "permisoActividad"
+    }],
     staticClass: "flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700"
   }, [_c("img", {
     staticClass: "w-10 h-10 rounded-full object-cover",
@@ -2903,10 +3047,25 @@ var render = function render() {
   }), _vm._v(" "), _c("div", {
     staticClass: "flex items-center w-full"
   }, [_c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.actividad,
+      expression: "actividad"
+    }],
     staticClass: "resize-none block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
     attrs: {
       rows: "1",
       placeholder: "Ingrese su observación aquí"
+    },
+    domProps: {
+      value: _vm.actividad
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.actividad = $event.target.value;
+      }
     }
   }), _vm._v(" "), _c("button", {
     staticClass: "inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600",
@@ -2931,6 +3090,9 @@ var render = function render() {
     staticClass: "inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600",
     attrs: {
       type: "button"
+    },
+    on: {
+      click: _vm.addActividad
     }
   }, [_c("svg", {
     staticClass: "w-6 h-6 rotate-90",
@@ -2955,7 +3117,7 @@ var render = function render() {
     }
   }, [_c("div", {
     staticClass: "flex justify-between"
-  }, [_vm._m(4), _vm._v(" "), _c("div", {
+  }, [_vm._m(1), _vm._v(" "), _c("div", {
     staticClass: "w-4/6"
   }, [_c("select", {
     directives: [{
@@ -2993,7 +3155,7 @@ var render = function render() {
     }, [_vm._v("\n                                                " + _vm._s(empleado.nombre) + "\n                                            ")]);
   })], 2)])]), _vm._v(" "), _c("div", {
     staticClass: "flex justify-between"
-  }, [_vm._m(5), _vm._v(" "), _c("div", {
+  }, [_vm._m(2), _vm._v(" "), _c("div", {
     staticClass: "w-4/6"
   }, [_c("input", {
     directives: [{
@@ -3019,7 +3181,7 @@ var render = function render() {
     }
   })])]), _vm._v(" "), _c("div", {
     staticClass: "flex justify-between"
-  }, [_vm._m(6), _vm._v(" "), _c("div", {
+  }, [_vm._m(3), _vm._v(" "), _c("div", {
     staticClass: "w-4/6"
   }, [_c("input", {
     directives: [{
@@ -3045,7 +3207,7 @@ var render = function render() {
     }
   })])]), _vm._v(" "), _c("div", {
     staticClass: "flex justify-between"
-  }, [_vm._m(7), _vm._v(" "), _c("div", {
+  }, [_vm._m(4), _vm._v(" "), _c("div", {
     staticClass: "w-4/6"
   }, [_c("select", {
     directives: [{
@@ -3089,7 +3251,7 @@ var render = function render() {
       expression: "permisoCreador"
     }],
     staticClass: "flex justify-center"
-  }, [_vm._m(8)])])])])])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._m(5)])])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full",
     attrs: {
       id: "popup-modal",
@@ -3162,68 +3324,10 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700",
-    attrs: {
-      id: "dropdown"
-    }
-  }, [_c("ul", {
-    staticClass: "py-1",
-    attrs: {
-      "aria-labelledby": "dropdownButton"
-    }
-  }, [_c("li", [_c("a", {
-    staticClass: "block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white",
-    attrs: {
-      href: "#"
-    }
-  }, [_vm._v("Eliminar")])])])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "flex flex-col items-center pb-2 py-1"
-  }, [_c("img", {
-    staticClass: "w-20 h-20",
-    attrs: {
-      src: "/assets/img/icon-file.png",
-      alt: "Documento"
-    }
-  }), _vm._v(" "), _c("p", {
-    staticClass: "mb-1 text-sm font-medium text-gray-600 dark:text-white"
-  }, [_vm._v("Cedula.png")])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700",
-    attrs: {
-      id: "dropdown"
-    }
-  }, [_c("ul", {
-    staticClass: "py-1",
-    attrs: {
-      "aria-labelledby": "dropdownButton"
-    }
-  }, [_c("li", [_c("a", {
-    staticClass: "block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white",
-    attrs: {
-      href: "#"
-    }
-  }, [_vm._v("Eliminar")])])])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "flex flex-col items-center pb-2 py-1"
-  }, [_c("img", {
-    staticClass: "w-20 h-20",
-    attrs: {
-      src: "/assets/img/icon-file.png",
-      alt: "Documento"
-    }
-  }), _vm._v(" "), _c("p", {
-    staticClass: "mb-1 text-sm font-medium text-gray-600 dark:text-white"
-  }, [_vm._v("Cedula.png")])]);
+    staticClass: "flex items-center justify-between mb-4"
+  }, [_c("h5", {
+    staticClass: "text-md font-bold leading-none text-gray-900 dark:text-white"
+  }, [_vm._v("\n                                                Observaciones")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
