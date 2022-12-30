@@ -144,6 +144,9 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/categorias_proyectos_add', [App\Http\Controllers\Admin\Proyectos\CategoriasController::class, 'add'])->name('categorias_proyectos_add');
     Route::post('/categorias_proyectos_delete', [App\Http\Controllers\Admin\Proyectos\CategoriasController::class, 'delete'])->name('categorias_proyectos_delete');
     Route::get('/proyectos', [App\Http\Controllers\Admin\Proyectos\ProyectosController::class, 'index'])->name('proyectos');
+    Route::post('/proyectos_data', [App\Http\Controllers\Admin\Proyectos\ProyectosController::class, 'proyectos_data'])->name('proyectos_data');
+    Route::post('/proyectos_add', [App\Http\Controllers\Admin\Proyectos\ProyectosController::class, 'proyectos_add'])->name('proyectos_add');
+    Route::post('/proyectos_edit', [App\Http\Controllers\Admin\Proyectos\ProyectosController::class, 'proyectos_edit'])->name('proyectos_edit');
     Route::get('/mis_tarjetas', [App\Http\Controllers\Admin\Proyectos\TarjetasController::class, 'index'])->name('mis_tarjetas');
 
     // SEGUIMIENTO DE CLIENTES
