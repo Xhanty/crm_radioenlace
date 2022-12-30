@@ -85,13 +85,17 @@
                                         <strong>{{ $value->codigo }}</strong>
                                         <div class="ms-auto">
                                             <div class="" style="cursor: pointer;">
-                                                <a class="p-2 text-muted" data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                <a href="{{ route('tasks.index') . '/?project=' . $value->project_id . '&task=' . $value->task_id  }}" target="_BLANK" class="p-2 text-muted">
+                                                    <i class="fas fa-eye" style="color: #000"></i>
+                                                </a>
+                                                <!--<a class="p-2 text-muted" data-bs-toggle="dropdown" aria-expanded="false"><i
                                                         class="fas fa-ellipsis-v" style="color: #fff"></i></a>
                                                 <div class="dropdown-menu tx-13 dropleft">
-                                                    <a class="dropdown-item btn_viewAvances"
-                                                        data-id="{{ $value->id }}" href="javascript:void(0);">Ver
-                                                        Avances</a>
-                                                </div>
+                                                    <a class="dropdown-item btn_openAvances"
+                                                        data-asignacion="{{ $value->asignacion }}"
+                                                        data-idshow="{{ $value->id }}" href="javascript:void(0);">Agregar
+                                                        Avance</a>
+                                                </div>-->
                                             </div>
                                         </div>
                                     </div>

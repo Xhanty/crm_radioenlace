@@ -2483,11 +2483,17 @@ __webpack_require__.r(__webpack_exports__);
     verifyModal: function verifyModal() {
       var valores = window.location.search;
       var urlParams = new URLSearchParams(valores);
-      var task = urlParams.get('task');
-      if (task != null && task > 0) {
-        console.log(task);
-        var modal = "md" + task;
-        this.$refs.modal.click();
+      var taskUrl = urlParams.get('task');
+      if (taskUrl != null && taskUrl > 0) {
+        var taskSelected = [];
+        this.statuses.forEach(function (status) {
+          status.tasks.forEach(function (task) {
+            if (task.id == taskUrl) {
+              taskSelected = task;
+            }
+          });
+        });
+        this.expandDetails(taskSelected);
       }
     }
   }
@@ -2701,11 +2707,12 @@ var render = function render() {
     }, _vm._l(status.tasks, function (task) {
       return _c("div", {
         key: task.id,
-        ref: "md" + task.id,
-        refInFor: true,
         staticClass: "mb-3 p-4 flex flex-col bg-white rounded-md shadow transform hover:shadow-md",
         staticStyle: {
           cursor: "grab"
+        },
+        attrs: {
+          id: task.id
         },
         on: {
           click: function click($event) {

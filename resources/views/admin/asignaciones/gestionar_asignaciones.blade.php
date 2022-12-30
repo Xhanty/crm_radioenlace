@@ -67,6 +67,8 @@
                                                 <a class="d-flex btn_avances" data-id="{{ $value->id }}"
                                                     href="javascript:void(0);"><i class="fa fa-file"></i>&nbsp;Ver
                                                     Avances</a>-->
+                                                <a href="{{ route('tasks.index') . '/?project=' . $value->project_id . '&task=' . $value->task_id  }}" target="_BLANK" class="d-flex" data-id="{{ $value->id }}"
+                                                    href="javascript:void(0);"><i class="fa fa-eye"></i>&nbsp;Ver</a>
                                                 <a class="d-flex btn_eliminar" data-id="{{ $value->id }}"
                                                     href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>
                                             </td>
@@ -125,6 +127,8 @@
                                                     Avances</a>
                                                 <a class="d-flex btn_rechazar" data-id="{{ $value->id }}"
                                                     href="javascript:void(0);"><i class="fa fa-times"></i>&nbsp;Rechazar</a>-->
+                                                <a href="{{ route('tasks.index') . '/?project=' . $value->project_id . '&task=' . $value->task_id  }}" target="_BLANK" class="d-flex" data-id="{{ $value->id }}"
+                                                    href="javascript:void(0);"><i class="fa fa-eye"></i>&nbsp;Ver</a>
                                                 <a class="d-flex btn_eliminar" data-id="{{ $value->id }}"
                                                     href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>
                                             </td>

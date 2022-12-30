@@ -23,7 +23,7 @@
                         <transition-group
                             class="flex-1 flex flex-col h-full overflow-x-hidden overflow-y-auto rounded shadow-xs"
                             tag="div">
-                            <div v-for="task in status.tasks" :ref="'md' + task.id" :key="task.id" @click="expandDetails(task)"
+                            <div v-for="task in status.tasks" :id="task.id" :key="task.id" @click="expandDetails(task)"
                                 class="mb-3 p-4 flex flex-col bg-white rounded-md shadow transform hover:shadow-md"
                                 style="cursor: grab;">
                                 <span class="block mb-2 text-lg text-gray-700">
@@ -572,12 +572,18 @@ export default {
         verifyModal() {
             const valores = window.location.search;
             const urlParams = new URLSearchParams(valores);
-            var task = urlParams.get('task');
+            var taskUrl = urlParams.get('task');
 
-            if (task != null && task > 0) {
-                console.log(task);
-                var modal = "md" + task;
-                this.$refs.modal.click()
+            if (taskUrl != null && taskUrl > 0) {
+                var taskSelected = [];
+                this.statuses.forEach(status => {
+                    status.tasks.forEach(task => {
+                        if (task.id == taskUrl) {
+                            taskSelected = task;
+                        }
+                    });
+                });
+                this.expandDetails(taskSelected);
             }
         }
     }

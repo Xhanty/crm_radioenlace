@@ -51,7 +51,8 @@ class AsignacionesController extends Controller
             $asignaciones_pendientes = DB::table("asignaciones")
                 ->join("empleados", "empleados.id", "=", "asignaciones.id_empleado")
                 ->join("empleados AS creador", "creador.id", "=", "asignaciones.created_by")
-                ->select("asignaciones.*", "empleados.nombre", "creador.nombre AS creador")
+                ->join("task_projects", "task_projects.code", "=", "asignaciones.codigo")
+                ->select("asignaciones.*", "empleados.nombre", "creador.nombre AS creador", "task_projects.id AS task_id", "task_projects.project_id")
                 ->where("asignaciones.status", 0)
                 ->orderBy("asignaciones.id", "desc")
                 ->get();
@@ -59,7 +60,8 @@ class AsignacionesController extends Controller
             $asignaciones_completadas = DB::table("asignaciones")
                 ->join("empleados", "empleados.id", "=", "asignaciones.id_empleado")
                 ->join("empleados AS creador", "creador.id", "=", "asignaciones.created_by")
-                ->select("asignaciones.*", "empleados.nombre", "creador.nombre AS creador")
+                ->join("task_projects", "task_projects.code", "=", "asignaciones.codigo")
+                ->select("asignaciones.*", "empleados.nombre", "creador.nombre AS creador", "task_projects.id AS task_id", "task_projects.project_id")
                 ->where("asignaciones.status", 1)
                 ->orderBy("asignaciones.id", "desc")
                 ->get();
