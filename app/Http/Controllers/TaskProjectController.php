@@ -31,11 +31,11 @@ class TaskProjectController extends Controller
 
             $tasks = Status::get();
 
-            if($valid_creator > 0) {
+            if ($valid_creator > 0) {
                 foreach ($tasks as $task) {
                     $task['tasks'] = TaskProject::where('status_id', $task->id)
-                    ->where('project_id', $project)
-                    ->orderBy('order')->get();
+                        ->where('project_id', $project)
+                        ->orderBy('order')->get();
                     foreach ($task['tasks'] as $t) {
                         $find_user = DB::table('empleados')
                             ->where('id', $t->user_id)
@@ -46,9 +46,9 @@ class TaskProjectController extends Controller
             } else {
                 foreach ($tasks as $task) {
                     $task['tasks'] = TaskProject::where('status_id', $task->id)
-                    ->where('project_id', $project)
-                    ->where('user_id', $id)
-                    ->orderBy('order')->get();
+                        ->where('project_id', $project)
+                        ->where('user_id', $id)
+                        ->orderBy('order')->get();
                     foreach ($task['tasks'] as $t) {
                         $find_user = DB::table('empleados')
                             ->where('id', $t->user_id)
@@ -91,7 +91,7 @@ class TaskProjectController extends Controller
         $estado_asignacion = 0;
         $fecha_fin = null;
 
-        if($status->slug == 'completed') {
+        if ($status->slug == 'completed') {
             $estado_asignacion = 1;
             $fecha_fin = date('Y-m-d H:i:s');
         }
@@ -131,12 +131,12 @@ class TaskProjectController extends Controller
                 if ($task['status_id'] !== $status['id'] || $task['order'] !== $order) {
                     TaskProject::where('id', $task['id'])
                         ->update(['status_id' => $status['id'], 'order' => $order]);
-                    
+
                     $status = Status::find($status['id']);
                     $estado_asignacion = 0;
                     $fecha_fin = null;
 
-                    if($status->slug == 'completed') {
+                    if ($status->slug == 'completed') {
                         $estado_asignacion = 1;
                         $fecha_fin = date('Y-m-d H:i:s');
                     }
@@ -164,7 +164,7 @@ class TaskProjectController extends Controller
                     ->orderBy('order')->get();
                 foreach ($task['tasks'] as $t) {
                     $find_user = DB::table('empleados')
-                    ->where('id', $t->user_id)
+                        ->where('id', $t->user_id)
                         ->first();
                     $t['user'] = $find_user;
                 }
@@ -177,7 +177,7 @@ class TaskProjectController extends Controller
                     ->orderBy('order')->get();
                 foreach ($task['tasks'] as $t) {
                     $find_user = DB::table('empleados')
-                    ->where('id', $t->user_id)
+                        ->where('id', $t->user_id)
                         ->first();
                     $t['user'] = $find_user;
                 }
@@ -243,7 +243,7 @@ class TaskProjectController extends Controller
                     ->orderBy('order')->get();
                 foreach ($task['tasks'] as $t) {
                     $find_user = DB::table('empleados')
-                    ->where('id', $t->user_id)
+                        ->where('id', $t->user_id)
                         ->first();
                     $t['user'] = $find_user;
                 }
@@ -256,7 +256,7 @@ class TaskProjectController extends Controller
                     ->orderBy('order')->get();
                 foreach ($task['tasks'] as $t) {
                     $find_user = DB::table('empleados')
-                    ->where('id', $t->user_id)
+                        ->where('id', $t->user_id)
                         ->first();
                     $t['user'] = $find_user;
                 }
@@ -295,7 +295,7 @@ class TaskProjectController extends Controller
                     ->orderBy('order')->get();
                 foreach ($task['tasks'] as $t) {
                     $find_user = DB::table('empleados')
-                    ->where('id', $t->user_id)
+                        ->where('id', $t->user_id)
                         ->first();
                     $t['user'] = $find_user;
                 }
@@ -308,7 +308,7 @@ class TaskProjectController extends Controller
                     ->orderBy('order')->get();
                 foreach ($task['tasks'] as $t) {
                     $find_user = DB::table('empleados')
-                    ->where('id', $t->user_id)
+                        ->where('id', $t->user_id)
                         ->first();
                     $t['user'] = $find_user;
                 }
@@ -373,7 +373,7 @@ class TaskProjectController extends Controller
     public function avances(Request $request)
     {
         $avances = DB::table("avances_tasks_projects")
-            ->select('avances_tasks_projects.*','empleados.nombre as empleado', 'empleados.avatar')
+            ->select('avances_tasks_projects.*', 'empleados.nombre as empleado', 'empleados.avatar')
             ->join('empleados', 'empleados.id', '=', 'avances_tasks_projects.user_id')
             ->where('task', $request->id)
             ->get();
@@ -385,7 +385,7 @@ class TaskProjectController extends Controller
     {
         $file = $request->file('file');
 
-        if($file) {
+        if ($file) {
             $name = $file->getClientOriginalName();
             $name_dos = time() . $file->getClientOriginalName();
             $file->move('images/avances_tasks_projects/', $name_dos);
@@ -401,7 +401,7 @@ class TaskProjectController extends Controller
         ]);
 
         $avances = DB::table("avances_tasks_projects")
-            ->select('avances_tasks_projects.*','empleados.nombre as empleado', 'empleados.avatar')
+            ->select('avances_tasks_projects.*', 'empleados.nombre as empleado', 'empleados.avatar')
             ->join('empleados', 'empleados.id', '=', 'avances_tasks_projects.user_id')
             ->where('task', $request->task_id)
             ->get();
@@ -411,17 +411,45 @@ class TaskProjectController extends Controller
 
     public function task_delete_avance(Request $request)
     {
-        $file = $request->file;
+        $file = DB::table('avances_tasks_projects')
+            ->where('id', $request->id)
+            ->first();
 
-        if($file) {
-            if (file_exists('images/avances_tasks_projects/' . $file)) {
-                unlink('images/avances_tasks_projects/' . $file);
+        if ($file) {
+            if (file_exists('images/anexos_tasks_projects/' . $file->file)) {
+                unlink('images/anexos_tasks_projects/' . $file->file);
             }
         }
 
         DB::table('avances_tasks_projects')
             ->where('id', $request->id)
             ->delete();
+
+        $avances = DB::table("avances_tasks_projects")
+            ->select('avances_tasks_projects.*', 'empleados.nombre as empleado', 'empleados.avatar')
+            ->join('empleados', 'empleados.id', '=', 'avances_tasks_projects.user_id')
+            ->where('task', $request->task_id)
+            ->get();
+
+        return $avances;
+    }
+
+    public function task_add_file_observacion(Request $request)
+    {
+        $file = $request->file('file');
+
+        $name = $file->getClientOriginalName();
+        $name_dos = time() . $file->getClientOriginalName();
+        $file->move('images/anexos_tasks_projects/', $name_dos);
+
+        DB::table('avances_tasks_projects')->insert([
+            'user_id' => auth()->user()->id,
+            'task' => $request->task_id,
+            'avance' => null,
+            'file' => $name_dos,
+            'name_file' => $name,
+            'fecha' => date('Y-m-d'),
+        ]);
 
         $avances = DB::table("avances_tasks_projects")
             ->select('avances_tasks_projects.*', 'empleados.nombre as empleado', 'empleados.avatar')

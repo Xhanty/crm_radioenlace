@@ -207,6 +207,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('task_delete_file', [App\Http\Controllers\TaskProjectController::class, 'task_delete_file'])->name('task_delete_file');
     Route::post('tasks_avances', [App\Http\Controllers\TaskProjectController::class, 'avances'])->name('tasks_avances');
     Route::post('task_add_avance', [App\Http\Controllers\TaskProjectController::class, 'task_add_avance'])->name('task_add_avance');
+    Route::post('task_add_file_observacion', [App\Http\Controllers\TaskProjectController::class, 'task_add_file_observacion'])->name('task_add_file_observacion');
     Route::post('task_delete_avance', [App\Http\Controllers\TaskProjectController::class, 'task_delete_avance'])->name('task_delete_avance');
     Route::post('tasks_edit', [App\Http\Controllers\TaskProjectController::class, 'tasks_edit'])->name('tasks_edit');
     Route::post('tasks_delete', [App\Http\Controllers\TaskProjectController::class, 'tasks_delete'])->name('tasks_delete');

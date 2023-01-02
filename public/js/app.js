@@ -2495,6 +2495,16 @@ __webpack_require__.r(__webpack_exports__);
         });
         this.expandDetails(taskSelected);
       }
+    },
+    uploadFilesObservacion: function uploadFilesObservacion() {
+      var _this11 = this;
+      var file = event.target.files;
+      var data = new FormData();
+      data.append("task_id", this.taskSelected.id);
+      data.append("file", file[0]);
+      axios.post("/task_add_file_observacion", data).then(function (response) {
+        _this11.avancesTask = response.data;
+      });
     }
   }
 });
@@ -3001,9 +3011,17 @@ var render = function render() {
       staticClass: "flex-1 min-w-0"
     }, [_c("p", {
       staticClass: "text-sm font-medium text-gray-900 truncate dark:text-white"
-    }, [_vm._v("\n                                                                " + _vm._s(avance.empleado) + "\n                                                            ")]), _vm._v(" "), _c("p", {
+    }, [_vm._v("\n                                                                " + _vm._s(avance.empleado) + "\n                                                            ")]), _vm._v(" "), avance.avance ? _c("p", {
       staticClass: "text-sm text-gray-500 truncate dark:text-gray-400"
-    }, [_vm._v("\n                                                                " + _vm._s(avance.avance) + "\n                                                            ")]), _vm._v(" "), _c("p", {
+    }, [_vm._v("\n                                                                " + _vm._s(avance.avance) + "\n                                                            ")]) : _vm._e(), _vm._v(" "), avance.file ? _c("p", {
+      staticClass: "text-sm text-gray-500 truncate dark:text-gray-400"
+    }, [_c("a", {
+      staticClass: "text-blue-700",
+      attrs: {
+        href: "/images/anexos_tasks_projects/" + avance.file,
+        target: "_blank"
+      }
+    }, [_vm._v(_vm._s(avance.name_file))])]) : _vm._e(), _vm._v(" "), _c("p", {
       staticClass: "text-sm font-medium text-gray-500 truncate dark:text-gray-400"
     }, [_vm._v("\n                                                                " + _vm._s(avance.fecha) + "\n                                                            ")])]), _vm._v(" "), _c("div", {
       staticClass: "inline-flex items-center text-base font-semibold text-gray-900 dark:text-white"
@@ -3032,7 +3050,16 @@ var render = function render() {
         "clip-rule": "evenodd"
       }
     })])])])])]);
-  }), 0)])]), _vm._v(" "), _c("br"), _vm._v(" "), _c("label", {
+  }), 0)])]), _vm._v(" "), _c("br"), _vm._v(" "), _c("input", {
+    ref: "fileobservacion",
+    staticClass: "hidden",
+    attrs: {
+      type: "file"
+    },
+    on: {
+      change: _vm.uploadFilesObservacion
+    }
+  }), _vm._v(" "), _c("label", {
     staticClass: "block mb-2 text-sm font-medium text-gray-900 dark:text-white",
     attrs: {
       "for": "message"
@@ -3078,6 +3105,11 @@ var render = function render() {
     staticClass: "inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600",
     attrs: {
       type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.$refs.fileobservacion.click();
+      }
     }
   }, [_c("svg", {
     staticClass: "w-5 h-5",

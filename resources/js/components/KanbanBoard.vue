@@ -186,16 +186,17 @@
                                                                     alt="Neil image">
                                                             </div>
                                                             <div class="flex-1 min-w-0">
-                                                                <p
-                                                                    class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                                                <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
                                                                     {{ avance.empleado }}
                                                                 </p>
-                                                                <p
-                                                                    class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                                <p v-if="avance.avance" class="text-sm text-gray-500 truncate dark:text-gray-400">
                                                                     {{ avance.avance }}
                                                                 </p>
-                                                                <p
-                                                                    class="text-sm font-medium text-gray-500 truncate dark:text-gray-400">
+                                                                <p v-if="avance.file" class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                                    <a :href="'/images/anexos_tasks_projects/' + avance.file"
+                                                                        target="_blank" class="text-blue-700">{{ avance.name_file }}</a>
+                                                                </p>
+                                                                <p class="text-sm font-medium text-gray-500 truncate dark:text-gray-400">
                                                                     {{ avance.fecha }}
                                                                 </p>
                                                             </div>
@@ -219,6 +220,7 @@
                                             </div>
                                         </div>
                                         <br>
+                                        <input type="file" ref="fileobservacion" class="hidden" @change="uploadFilesObservacion" />
                                         <label for="message"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Actividad</label>
                                         <div class="flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700"
@@ -229,7 +231,7 @@
                                                 <textarea rows="1" v-model="actividad"
                                                     class="resize-none block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                     placeholder="Ingrese su observación aquí"></textarea>
-                                                <button type="button"
+                                                <button type="button" @click="$refs.fileobservacion.click()"
                                                     class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
                                                     <svg aria-hidden="true" class="w-5 h-5" fill="currentColor"
                                                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -595,7 +597,16 @@ export default {
                 });
                 this.expandDetails(taskSelected);
             }
-        }
+        },
+        uploadFilesObservacion(){
+            let file = event.target.files;
+            let data = new FormData();
+            data.append("task_id", this.taskSelected.id);
+            data.append("file", file[0]);
+            axios.post("/task_add_file_observacion", data).then(response => {
+                this.avancesTask = response.data;
+            });
+        },
     }
 };
 </script>
