@@ -58,7 +58,8 @@ class HomeController extends Controller
             $asignaciones = DB::table("asignaciones")
                 ->where("asignaciones.id_empleado", session("user"))
                 ->orderBy("asignaciones.id", "desc")
-                ->where('asignaciones.status', 1)
+                ->where('asignaciones.status', 0)
+                ->whereNull('asignaciones.id_cliente')
                 ->limit(5)
                 ->get();
                 

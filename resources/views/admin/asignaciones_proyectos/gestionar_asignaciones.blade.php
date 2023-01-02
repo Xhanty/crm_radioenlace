@@ -10,7 +10,8 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0);">Asignaciones</a></li>
-                        <li class="breadcrumb-item active" aria-current="page"> Gestionar Asignaciones</li>
+                        <li class="breadcrumb-item active" aria-current="page">Proyectos</li>
+                        <li class="breadcrumb-item active" aria-current="page">Gestionar Asignaciones</li>
                     </ol>
                 </nav>
             </div>

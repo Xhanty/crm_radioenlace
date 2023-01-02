@@ -3216,6 +3216,33 @@ var render = function render() {
     staticClass: "flex justify-between"
   }, [_vm._m(4), _vm._v(" "), _c("div", {
     staticClass: "w-4/6"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.taskSelected.puntos,
+      expression: "taskSelected.puntos"
+    }],
+    staticClass: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5",
+    attrs: {
+      type: "number",
+      min: "0",
+      disabled: _vm.disabledCreador
+    },
+    domProps: {
+      value: _vm.taskSelected.puntos
+    },
+    on: {
+      change: _vm.changeTask,
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.taskSelected, "puntos", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "flex justify-between"
+  }, [_vm._m(5), _vm._v(" "), _c("div", {
+    staticClass: "w-4/6"
   }, [_c("select", {
     directives: [{
       name: "model",
@@ -3258,7 +3285,7 @@ var render = function render() {
       expression: "permisoCreador"
     }],
     staticClass: "flex justify-center"
-  }, [_vm._m(5)])])])])])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._m(6)])])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full",
     attrs: {
       id: "popup-modal",
@@ -3368,6 +3395,17 @@ var staticRenderFns = [function () {
       href: "#"
     }
   }, [_vm._v("Fecha Fin")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "justify-center self-center"
+  }, [_c("p", {
+    staticClass: "text-sm text-black-800",
+    attrs: {
+      href: "#"
+    }
+  }, [_vm._v("Puntos")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;

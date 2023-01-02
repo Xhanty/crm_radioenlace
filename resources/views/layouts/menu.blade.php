@@ -175,15 +175,30 @@
                                     class="side-menu__icon fe fe-airplay"></i><span
                                     class="side-menu__label">Inicio</span></a>
                         </li>
+                        <li class="slide" id="menu_otro_asignaciones">
+							<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i class="side-menu__icon fe fe-check"></i><span class="side-menu__label">Asignaciones</span><i class="angle fe fe-chevron-down"></i></a>
+                            <ul class="slide-menu" style="display: none;" id="1_otro_asignaciones">
+								<li class="side-menu__label1"><a href="javascript:void(0);">Asignaciones</a></li>
+								<li class="sub-slide">
+									<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Proyectos</span><i class="sub-angle fe fe-chevron-down"></i></a>
+									<ul class="sub-slide-menu" style="display: none;" id="1_1_otro_asignaciones">
+										<li><a class="sub-side-menu__item" href="{{ route('asignaciones') }}">Asignaciones</a></li>
+                                        <li><a class="sub-side-menu__item" href="{{ route('gestionar_asignaciones') }}">Gestionar Asignaciones</a></li>
+									</ul>
+								</li>
+                                <li class="sub-slide">
+									<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Clientes</span><i class="sub-angle fe fe-chevron-down"></i></a>
+									<ul class="sub-slide-menu" style="display: none;" id="2_1_otro_asignaciones">
+										<li><a class="sub-side-menu__item" href="{{ route('asignaciones_clientes') }}">Asignaciones</a></li>
+                                        <li><a class="sub-side-menu__item" href="{{ route('gestionar_asignaciones_clientes') }}">Gestionar Asignaciones</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
                         <li class="slide">
-                            <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
-                                    class="side-menu__icon fe fe-check"></i><span class="side-menu__label">Asignaciones</span><i
-                                    class="angle fe fe-chevron-down"></i></a>
-                            <ul class="slide-menu">
-                                <li><a class="slide-item" href="{{ route('asignaciones') }}">Mis Asignaciones</a></li>
-                                <li><a class="slide-item" href="{{ route('gestionar_asignaciones') }}">Gestionar Asignaciones</a></li>
-                                <li><a class="slide-item" href="{{ route('actividades_diarias') }}">Actividades Diarias</a></li>
-                            </ul>
+                            <a class="side-menu__item" href="{{ route('actividades_diarias') }}"><i
+                                    class="side-menu__icon fe fe-user"></i><span
+                                    class="side-menu__label">Actividades Diarias</span></a>
                         </li>
                         <li class="slide">
                             <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i

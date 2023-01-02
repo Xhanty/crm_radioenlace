@@ -16,7 +16,8 @@ class AsignacionesController extends Controller
             $asignaciones_pendientes = DB::table("asignaciones")
                 ->join("empleados", "empleados.id", "=", "asignaciones.created_by")
                 ->join("task_projects", "task_projects.code", "=", "asignaciones.codigo")
-                ->select("asignaciones.*","empleados.nombre", "task_projects.id AS task_id", "task_projects.project_id")
+                ->join("proyecto", "task_projects.project_id", "=", "proyecto.id")
+                ->select("asignaciones.*", "empleados.nombre", "task_projects.id AS task_id", "task_projects.project_id", "proyecto.nombre AS proyecto")
                 ->where("asignaciones.status", 0)
                 ->where("asignaciones.id_empleado", session("user"))
                 ->orderBy("asignaciones.id", "desc")
@@ -25,12 +26,39 @@ class AsignacionesController extends Controller
             $asignaciones_completadas = DB::table("asignaciones")
                 ->join("empleados", "empleados.id", "=", "asignaciones.created_by")
                 ->join("task_projects", "task_projects.code", "=", "asignaciones.codigo")
-                ->select("asignaciones.*", "empleados.nombre", "task_projects.id AS task_id", "task_projects.project_id")
+                ->join("proyecto", "task_projects.project_id", "=", "proyecto.id")
+                ->select("asignaciones.*", "empleados.nombre", "task_projects.id AS task_id", "task_projects.project_id", "proyecto.nombre AS proyecto")
                 ->where("asignaciones.status", 1)
                 ->where("asignaciones.id_empleado", session("user"))
                 ->orderBy("asignaciones.id", "desc")
                 ->get();
-            return view('admin.asignaciones.asignaciones', compact('asignaciones_pendientes', 'asignaciones_completadas'));
+            return view('admin.asignaciones_proyectos.asignaciones', compact('asignaciones_pendientes', 'asignaciones_completadas'));
+        } catch (Exception $ex) {
+            return view('errors.500');
+        }
+    }
+
+    public function asignaciones_clientes()
+    {
+        try {
+            $asignaciones_pendientes = DB::table("asignaciones")
+                ->join("empleados", "empleados.id", "=", "asignaciones.created_by")
+                ->join("cliente", "cliente.id", "=", "asignaciones.id_cliente")
+                ->select("asignaciones.*", "empleados.nombre", "cliente.razon_social AS cliente")
+                ->where("asignaciones.status", 0)
+                ->where("asignaciones.id_empleado", session("user"))
+                ->orderBy("asignaciones.id", "desc")
+                ->get();
+
+            $asignaciones_completadas = DB::table("asignaciones")
+                ->join("empleados", "empleados.id", "=", "asignaciones.created_by")
+                ->join("cliente", "cliente.id", "=", "asignaciones.id_cliente")
+                ->select("asignaciones.*", "empleados.nombre", "cliente.razon_social AS cliente")
+                ->where("asignaciones.status", 1)
+                ->where("asignaciones.id_empleado", session("user"))
+                ->orderBy("asignaciones.id", "desc")
+                ->get();
+            return view('admin.asignaciones_clientes.asignaciones', compact('asignaciones_pendientes', 'asignaciones_completadas'));
         } catch (Exception $ex) {
             return view('errors.500');
         }
@@ -39,7 +67,7 @@ class AsignacionesController extends Controller
     public function actividades_diarias()
     {
         try {
-            return view('admin.asignaciones.actividades_diarias');
+            return view('admin.actividades_diarias');
         } catch (Exception $ex) {
             return view('errors.500');
         }
@@ -68,7 +96,37 @@ class AsignacionesController extends Controller
 
             $empleados = DB::table("empleados")->where("status", 1)->get();
 
-            return view('admin.asignaciones.gestionar_asignaciones', compact('asignaciones_pendientes', 'asignaciones_completadas', 'empleados'));
+            return view('admin.asignaciones_proyectos.gestionar_asignaciones', compact('asignaciones_pendientes', 'asignaciones_completadas', 'empleados'));
+        } catch (Exception $ex) {
+            return view('errors.500');
+        }
+    }
+
+    public function gestionar_asignaciones_clientes()
+    {
+        try {
+            $asignaciones_pendientes = DB::table("asignaciones")
+                ->join("empleados", "empleados.id", "=", "asignaciones.id_empleado")
+                ->join("empleados AS creador", "creador.id", "=", "asignaciones.created_by")
+                ->join("cliente", "cliente.id", "=", "asignaciones.id_cliente")
+                ->select("asignaciones.*", "empleados.nombre", "creador.nombre AS creador", "cliente.razon_social AS cliente")
+                ->where("asignaciones.status", 0)
+                ->orderBy("asignaciones.id", "desc")
+                ->get();
+
+            $asignaciones_completadas = DB::table("asignaciones")
+                ->join("empleados", "empleados.id", "=", "asignaciones.id_empleado")
+                ->join("empleados AS creador", "creador.id", "=", "asignaciones.created_by")
+                ->join("cliente", "cliente.id", "=", "asignaciones.id_cliente")
+                ->select("asignaciones.*", "empleados.nombre", "creador.nombre AS creador", "cliente.razon_social AS cliente")
+                ->where("asignaciones.status", 1)
+                ->orderBy("asignaciones.id", "desc")
+                ->get();
+
+            $empleados = DB::table("empleados")->where("status", 1)->get();
+            $clientes = DB::table("cliente")->where("estado", 1)->get();
+
+            return view('admin.asignaciones_clientes.gestionar_asignaciones', compact('asignaciones_pendientes', 'asignaciones_completadas', 'empleados', 'clientes'));
         } catch (Exception $ex) {
             return view('errors.500');
         }
@@ -83,7 +141,9 @@ class AsignacionesController extends Controller
             $observacion_general = $request->observacion_general;
             $fecha_inicio = $request->fecha_inicio;
             $fecha_fin = $request->fecha_fin;
+            $cliente = $request->cliente;
             $names_anexos = [];
+            $codigo = $this->generar_codigo();
 
             foreach ($request->only('anexos') as $files) {
                 foreach ($files as $file) {
@@ -98,6 +158,7 @@ class AsignacionesController extends Controller
             foreach ($empleados as $key => $empleado) {
                 $asignacion = DB::table("asignaciones")->insertGetId([
                     "id_empleado" => $empleado,
+                    "id_cliente" => $cliente,
                     "asignacion" => $observaciones[$key] ? $observaciones[$key] : "",
                     "descripcion" => $observacion_general ? $observacion_general : "",
                     "fecha" => $fecha_inicio,
@@ -107,7 +168,7 @@ class AsignacionesController extends Controller
                     "fecha_completada" => null,
                     "visto_bueno" => 0,
                     "devuelta" => 0,
-                    "codigo" => $this->generar_codigo(),
+                    "codigo" => $codigo,
                 ]);
 
                 if ($names_anexos) {
@@ -254,28 +315,28 @@ class AsignacionesController extends Controller
             $code = DB::table("asignaciones")->where("id", $id)->first()->codigo;
             $task = TaskProject::where('code', $code)->first();
 
-            $files = DB::table("anexos_tasks_projects")->where('task', $task->id)->get();
+            if ($task) {
+                $files = DB::table("anexos_tasks_projects")->where('task', $task->id)->get();
 
-            foreach ($files as $file) {
-                unlink('images/anexos_tasks_projects/' . $file->file);
-            }
-
-            DB::table("anexos_tasks_projects")->where('task', $task->id)->delete();
-            DB::table("avances_tasks_projects")->where('task', $task->id)->delete();
-            TaskProject::where('id', $task->id)->delete();
-
-
-            //$task = Task
-            /*$files = DB::table("anexos_asignaciones")->where("id_asignacion", $id)->get();
-            foreach ($files as $file) {
-                $path = 'images/asignaciones/' . $file->archivo;
-                if (file_exists($path)) {
-                    unlink($path);
+                foreach ($files as $file) {
+                    unlink('images/anexos_tasks_projects/' . $file->file);
                 }
+
+                DB::table("anexos_tasks_projects")->where('task', $task->id)->delete();
+                DB::table("avances_tasks_projects")->where('task', $task->id)->delete();
+                TaskProject::where('id', $task->id)->delete();
+            } else {
+                $files = DB::table("anexos_asignaciones")->where("id_asignacion", $id)->get();
+                foreach ($files as $file) {
+                    $path = 'images/asignaciones/' . $file->archivo;
+                    if (file_exists($path)) {
+                        unlink($path);
+                    }
+                }
+                
+                DB::table("anexos_asignaciones")->where("id_asignacion", $id)->delete();
+                DB::table("asignaciones")->where("id", $id)->delete();
             }
-            DB::table("anexos_asignaciones")->where("id_asignacion", $id)->delete();*/
-            
-            DB::table("asignaciones")->where("id", $id)->delete();
             return response()->json(['info' => 1, 'success' => 'Asignación eliminada correctamente.']);
         } catch (Exception $ex) {
             return $ex;
@@ -333,6 +394,7 @@ class AsignacionesController extends Controller
             $observacion_general = $request->observacion_general;
             $fecha_inicio = $request->fecha_inicio;
             $fecha_fin = $request->fecha_fin;
+            $cliente = $request->cliente;
             $names_anexos = [];
 
             foreach ($request->only('anexos') as $files) {
@@ -347,6 +409,7 @@ class AsignacionesController extends Controller
 
             DB::table("asignaciones")->where("id", $id)->update([
                 "id_empleado" => $empleado,
+                "id_cliente" => $cliente,
                 "asignacion" => $observacion ? $observacion : "",
                 "descripcion" => $observacion_general ? $observacion_general : "",
                 "fecha" => $fecha_inicio,

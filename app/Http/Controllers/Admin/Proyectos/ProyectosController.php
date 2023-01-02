@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Proyectos;
 
 use App\Http\Controllers\Controller;
+use App\Models\TaskProject;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -30,8 +31,8 @@ class ProyectosController extends Controller
                 ->orderBy('proyecto.id', 'desc')
                 ->get();
 
-                $categorias = DB::table('categorias_proyectos')->get();
-                $clientes = DB::table('cliente')->where("estado", 1)->get();
+            $categorias = DB::table('categorias_proyectos')->get();
+            $clientes = DB::table('cliente')->where("estado", 1)->get();
             return view('admin.proyectos.proyectos', compact('proyectos_pendientes', 'proyectos_aprobados', 'categorias', 'clientes'));
         } catch (Exception $ex) {
             return view('errors.500');
@@ -91,10 +92,55 @@ class ProyectosController extends Controller
     {
         try {
             $proyecto = DB::table('proyecto')->where('id', $request->id)->first();
-            
+
             return response()->json(['info' => 1, 'data' => $proyecto]);
         } catch (Exception $ex) {
             return response()->json(['info' => 0, 'error' => 'Error al obtener los datos del proyecto']);
+        }
+    }
+
+    public function proyectos_delete(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $tasks = TaskProject::where('project_id', $id)->get();
+
+            foreach ($tasks as $task) {
+                $files = DB::table("anexos_tasks_projects")->where('task', $task->id)->get();
+                foreach ($files as $file) {
+                    unlink('images/anexos_tasks_projects/' . $file->file);
+                }
+                DB::table("anexos_tasks_projects")->where('task', $task->id)->delete();
+                DB::table("avances_tasks_projects")->where('task', $task->id)->delete();
+                DB::table("asignaciones")->where("codigo", $task->code)->delete();
+                TaskProject::where('id', $task->id)->delete();
+            }
+
+            DB::table('proyecto')->where('id', $request->id)->delete();
+            return response()->json(['info' => 1, 'success' => 'Proyecto eliminado correctamente']);
+        } catch (Exception $ex) {
+            return response()->json(['info' => 0, 'error' => 'Error al eliminar el proyecto']);
+        }
+    }
+
+    public function visto_bueno(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $id = $request->id;
+            $visto_bueno = $request->visto_bueno;
+
+            DB::table("proyecto")->where("id", $id)->update([
+                "visto_bueno" => $visto_bueno
+            ]);
+
+            DB::commit();
+
+            return response()->json(['info' => 1, 'success' => 'Proyecto modificado correctamente.']);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return $ex;
+            return response()->json(['info' => 0, 'success' => 'Error al modificar el proyecto.']);
         }
     }
 }

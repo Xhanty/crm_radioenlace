@@ -198,7 +198,7 @@
                     <div class="card overflow-hidden">
                         <div class="card-body pb-3">
                             <div class="d-flex justify-content-between">
-                                <h4 class="card-title mg-b-10">Últimas Asignaciones</h4>
+                                <h4 class="card-title mg-b-10">Últimas Asignaciones (Proyectos)</h4>
                                 <i class="mdi mdi-dots-horizontal text-gray"></i>
                             </div>
                             <p class="tx-12 text-muted mb-3">Aquí aparecerán las últimas 5 asignaciones. <a
@@ -221,7 +221,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    @if($item->status == 1)
+                                                    @if($item->status == 0)
                                                         <div class="badge bg-warning">Pendiente</div>
                                                     @else
                                                         <div class="badge bg-success">Completado</div>

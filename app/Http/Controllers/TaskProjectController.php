@@ -98,7 +98,7 @@ class TaskProjectController extends Controller
 
         DB::table("asignaciones")->insert([
             'id_empleado' => $request->user_id,
-            'descripcion' => $request->description,
+            'descripcion' => $request->description ? $request->description : '',
             'asignacion' => $request->title,
             'fecha' => date('Y-m-d H:i:s'),
             'fecha_culminacion' => $fecha_fin,
@@ -211,6 +211,7 @@ class TaskProjectController extends Controller
         $code = TaskProject::where('id', $request->id)->first();
 
         TaskProject::where('id', $request->id)->update([
+            'puntos' => $request->puntos ? $request->puntos : 0,
             'title' => $request->title,
             'description' => $request->description,
             'user_id' => $request->user_id,

@@ -8,7 +8,7 @@ $(function () {
     //$(".open-toggle").trigger("click");
     $("#menu_otro_asignaciones").addClass("is-expanded");
     $("#1_otro_asignaciones").show();
-    $("#1_1_otro_asignaciones").show();
+    $("#2_1_otro_asignaciones").show();
 
     let opciones = "";
 
@@ -48,6 +48,7 @@ $(function () {
         let fecha_inicio = $("#fecha_inicioadd").val();
         let fecha_fin = $("#fecha_finadd").val();
         let anexos = $("#anexosadd").get(0).files;
+        let cliente = $("#cliente_add").val();
 
         $(".empleadoadd").each(function () {
             empleados.push($(this).val());
@@ -63,6 +64,7 @@ $(function () {
         formData.append("observacion_general", observacion_general);
         formData.append("fecha_inicio", fecha_inicio);
         formData.append("fecha_fin", fecha_fin);
+        formData.append("cliente", cliente);
 
         for (var i = anexos.length - 1; i >= 0; i--) {
             formData.append("anexos[]", anexos[i]);
@@ -285,6 +287,7 @@ $(function () {
                 $("#observacion_generaledit").val(asignacion.descripcion);
                 $("#fecha_inicioedit").val(asignacion.fecha);
                 $("#fecha_finedit").val(asignacion.fecha_culminacion);
+                $("#cliente_edit").val(asignacion.id_cliente);
                 archivos.forEach((archivo) => {
                     $("#tbl_anexos_asignacion tbody").append(`
                         <tr>
@@ -348,6 +351,7 @@ $(function () {
         let fecha_inicio = $("#fecha_inicioedit").val();
         let fecha_fin = $("#fecha_finedit").val();
         let anexos = $("#anexosedit").get(0).files;
+        let cliente = $("#cliente_edit").val();
 
         let formData = new FormData();
         formData.append("id", id);
@@ -356,6 +360,7 @@ $(function () {
         formData.append("observacion_general", observacion_general);
         formData.append("fecha_inicio", fecha_inicio);
         formData.append("fecha_fin", fecha_fin);
+        formData.append("cliente", cliente);
 
         for (var i = anexos.length - 1; i >= 0; i--) {
             formData.append("anexos[]", anexos[i]);

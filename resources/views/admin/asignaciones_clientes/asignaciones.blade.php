@@ -10,7 +10,8 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0);">Asignaciones</a></li>
-                        <li class="breadcrumb-item active" aria-current="page"> Mis Asignaciones</li>
+                        <li class="breadcrumb-item active" aria-current="page">Clientes</li>
+                        <li class="breadcrumb-item active" aria-current="page">Asignaciones</li>
                     </ol>
                 </nav>
             </div>
@@ -29,42 +30,35 @@
                                 <div class="card-body p-0">
                                     <div class="todo-widget-header d-flex pb-2 pd-20 bg-warning"
                                         style="border-radius: 4px;">
-                                        <strong>{{ $value->codigo }}</strong>
+                                        <strong>{{ $value->codigo }} ({{ $value->cliente }})</strong>
                                         <div class="ms-auto">
                                             <div class="" style="cursor: pointer;">
-                                                <a href="{{ route('tasks.index') . '/?project=' . $value->project_id . '&task=' . $value->task_id  }}" target="_BLANK" class="p-2 text-muted">
-                                                    <i class="fas fa-eye" style="color: #000"></i>
-                                                </a>
-                                                <!--<a class="p-2 text-muted" data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                <a class="p-2 text-muted" data-bs-toggle="dropdown" aria-expanded="false"><i
                                                         class="fas fa-ellipsis-v" style="color: #fff"></i></a>
                                                 <div class="dropdown-menu tx-13 dropleft">
                                                     <a class="dropdown-item btn_openAvances"
                                                         data-asignacion="{{ $value->asignacion }}"
                                                         data-idshow="{{ $value->id }}" href="javascript:void(0);">Agregar
                                                         Avance</a>
-                                                </div>-->
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="p-3">
-                                        <span class="tx-12 text-muted">Descripción</span>
-                                        <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ $value->descripcion }}</h5>
+                                    <div class="p-3 border-top">
+                                        <span class="tx-12 text-muted">Asignación</span>
+                                        <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ $value->asignacion }}</h5>
                                     </div>
                                     <div class="p-3 border-top">
                                         <span class="tx-12 text-muted">Asignada por</span>
                                         <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ $value->nombre }}</h5>
                                     </div>
                                     <div class="p-3 border-top">
-                                        <span class="tx-12 text-muted">Mi Asignación</span>
-                                        <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ $value->asignacion }}</h5>
-                                    </div>
-                                    <div class="p-3 border-top">
-                                        <span class="tx-12 text-muted">Fecha Inicio</span>
-                                        <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ $value->fecha }}</h5>
-                                    </div>
-                                    <div class="p-3 border-top">
-                                        <span class="tx-12 text-muted">Fecha Culminación</span>
-                                        <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ $value->fecha_completada }}</h5>
+                                        <span class="tx-12 text-muted">Fecha Inicio - Fecha Fin</span>
+                                        @php
+                                            $fecha = date_create($value->fecha);
+                                        @endphp
+                                        <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ date_format($fecha, 'd-m-Y') }} -
+                                            {{ $value->fecha_completada }}</h5>
                                     </div>
                                 </div>
                             </div>
@@ -82,42 +76,36 @@
                                 <div class="card-body p-0">
                                     <div class="todo-widget-header d-flex pb-2 pd-20 bg-success"
                                         style="border-radius: 4px;">
-                                        <strong>{{ $value->codigo }}</strong>
+                                        <strong>{{ $value->codigo }} ({{ $value->cliente }})</strong>
                                         <div class="ms-auto">
                                             <div class="" style="cursor: pointer;">
-                                                <a href="{{ route('tasks.index') . '/?project=' . $value->project_id . '&task=' . $value->task_id  }}" target="_BLANK" class="p-2 text-muted">
-                                                    <i class="fas fa-eye" style="color: #000"></i>
-                                                </a>
-                                                <!--<a class="p-2 text-muted" data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                <a class="p-2 text-muted" data-bs-toggle="dropdown" aria-expanded="false"><i
                                                         class="fas fa-ellipsis-v" style="color: #fff"></i></a>
                                                 <div class="dropdown-menu tx-13 dropleft">
                                                     <a class="dropdown-item btn_openAvances"
                                                         data-asignacion="{{ $value->asignacion }}"
                                                         data-idshow="{{ $value->id }}" href="javascript:void(0);">Agregar
                                                         Avance</a>
-                                                </div>-->
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="p-3">
-                                        <span class="tx-12 text-muted">Descripción</span>
-                                        <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ $value->descripcion }}</h5>
+                                    <div class="p-3 border-top">
+                                        <span class="tx-12 text-muted">Asignación</span>
+                                        <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ $value->asignacion }}</h5>
                                     </div>
                                     <div class="p-3 border-top">
                                         <span class="tx-12 text-muted">Asignada por</span>
                                         <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ $value->nombre }}</h5>
                                     </div>
                                     <div class="p-3 border-top">
-                                        <span class="tx-12 text-muted">Mi Asignación</span>
-                                        <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ $value->asignacion }}</h5>
-                                    </div>
-                                    <div class="p-3 border-top">
-                                        <span class="tx-12 text-muted">Fecha Inicio</span>
-                                        <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ $value->fecha }}</h5>
-                                    </div>
-                                    <div class="p-3 border-top">
-                                        <span class="tx-12 text-muted">Fecha Culminación</span>
-                                        <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ $value->fecha_completada }}</h5>
+                                        <span class="tx-12 text-muted">Fecha Inicio - Fecha Fin</span>
+                                        @php
+                                            $fecha = date_create($value->fecha);
+                                            $fecha2 = date_create($value->fecha_completada);
+                                        @endphp
+                                        <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ date_format($fecha, 'd-m-Y') }} -
+                                            {{ date_format($fecha2, 'd-m-Y') }}</h5>
                                     </div>
                                 </div>
                             </div>
@@ -221,7 +209,8 @@
                     </div>
                     <div class="modal-body">
                         <div class="table-responsive">
-                            <table class="table border-top-0 table-bordered text-nowrap border-bottom" id="tbl_view_avances">
+                            <table class="table border-top-0 table-bordered text-nowrap border-bottom"
+                                id="tbl_view_avances">
                                 <thead>
                                     <tr>
                                         <th class="wd-10p border-bottom-0">Fecha</th>
@@ -254,5 +243,5 @@
             });
         });
     </script>
-    <script src="{{ asset('assets/js/app/asignaciones/mis_asignaciones.js') }}"></script>
+    <script src="{{ asset('assets/js/app/asignaciones_clientes/mis_asignaciones.js') }}"></script>
 @endsection

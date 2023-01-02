@@ -26,7 +26,7 @@ Route::middleware(['auth_user'])->group(function () {
     // INICIO
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-    // ASIGNACIONES
+    // ASIGNACIONES PROYECTOS
     Route::get('/asignaciones', [App\Http\Controllers\Admin\AsignacionesController::class, 'index'])->name('asignaciones');
     Route::post('/asignaciones_data', [App\Http\Controllers\Admin\AsignacionesController::class, 'asignaciones_data'])->name('asignaciones_data');
     Route::post('/asignaciones_avances_delete', [App\Http\Controllers\Admin\AsignacionesController::class, 'asignaciones_avances_delete'])->name('asignaciones_avances_delete');
@@ -39,6 +39,10 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/eliminar_asignacion', [App\Http\Controllers\Admin\AsignacionesController::class, 'eliminar_asignacion'])->name('eliminar_asignacion');
     Route::post('/change_visto_bueno', [App\Http\Controllers\Admin\AsignacionesController::class, 'change_visto_bueno'])->name('change_visto_bueno');
     Route::post('/eliminar_archivo_asignacion', [App\Http\Controllers\Admin\AsignacionesController::class, 'eliminar_archivo_asignacion'])->name('eliminar_archivo_asignacion');
+
+    // PROYECTOS
+    Route::get('/asignaciones_clientes', [App\Http\Controllers\Admin\AsignacionesController::class, 'asignaciones_clientes'])->name('asignaciones_clientes');
+    Route::get('/gestionar_asignaciones_clientes', [App\Http\Controllers\Admin\AsignacionesController::class, 'gestionar_asignaciones_clientes'])->name('gestionar_asignaciones_clientes');
 
     // PUNTOS
     Route::get('/mis_puntos', [App\Http\Controllers\Admin\PuntosController::class, 'index'])->name('mis_puntos');
@@ -139,14 +143,16 @@ Route::middleware(['auth_user'])->group(function () {
     // SOLICITUDES DE INVENTARIO
     Route::get('/solicitud_inventario', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'index'])->name('solicitud_inventario');
 
-    // PROYECTOS
+    // PROYECTOS 
     Route::get('/categorias_proyectos', [App\Http\Controllers\Admin\Proyectos\CategoriasController::class, 'index'])->name('categorias_proyectos');
     Route::post('/categorias_proyectos_add', [App\Http\Controllers\Admin\Proyectos\CategoriasController::class, 'add'])->name('categorias_proyectos_add');
     Route::post('/categorias_proyectos_delete', [App\Http\Controllers\Admin\Proyectos\CategoriasController::class, 'delete'])->name('categorias_proyectos_delete');
     Route::get('/proyectos', [App\Http\Controllers\Admin\Proyectos\ProyectosController::class, 'index'])->name('proyectos');
     Route::post('/proyectos_data', [App\Http\Controllers\Admin\Proyectos\ProyectosController::class, 'proyectos_data'])->name('proyectos_data');
+    Route::post('/proyectos_delete', [App\Http\Controllers\Admin\Proyectos\ProyectosController::class, 'proyectos_delete'])->name('proyectos_delete');
     Route::post('/proyectos_add', [App\Http\Controllers\Admin\Proyectos\ProyectosController::class, 'proyectos_add'])->name('proyectos_add');
     Route::post('/proyectos_edit', [App\Http\Controllers\Admin\Proyectos\ProyectosController::class, 'proyectos_edit'])->name('proyectos_edit');
+    Route::post('/change_visto_bueno_proyecto', [App\Http\Controllers\Admin\Proyectos\ProyectosController::class, 'visto_bueno'])->name('change_visto_bueno_proyecto');
     Route::get('/mis_tarjetas', [App\Http\Controllers\Admin\Proyectos\TarjetasController::class, 'index'])->name('mis_tarjetas');
 
     // SEGUIMIENTO DE CLIENTES

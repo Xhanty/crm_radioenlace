@@ -301,6 +301,16 @@
 
                                     <div class="flex justify-between">
                                         <div class="justify-center self-center">
+                                            <p href="#" class="text-sm text-black-800">Puntos</p>
+                                        </div>
+                                        <div class="w-4/6">
+                                            <input type="number" min="0" v-model="taskSelected.puntos" :disabled="disabledCreador" @change="changeTask"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                        </div>
+                                    </div>
+
+                                    <div class="flex justify-between">
+                                        <div class="justify-center self-center">
                                             <p href="#" class="text-sm text-black-800">Informador</p>
                                         </div>
                                         <div class="w-4/6">

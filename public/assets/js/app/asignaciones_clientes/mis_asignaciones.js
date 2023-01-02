@@ -7,7 +7,7 @@ $(function () {
 
     $("#menu_otro_asignaciones").addClass("is-expanded");
     $("#1_otro_asignaciones").show();
-    $("#1_1_otro_asignaciones").show();
+    $("#2_1_otro_asignaciones").show();
 
     $(document).on("click", ".btn_openAvances", function () {
         $("#global-loader").show();

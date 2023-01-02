@@ -145,16 +145,12 @@ $(document).ready(function () {
                     $("#facturacion_edit").val(data.facturacion);
                     $("#puntos_edit").val(data.puntos);
                     $("#puntos_mensuales_edit").val(data.puntos_mensuales);
-                    $("#porcentaje_tecnico_edit").val(
-                        data.porcentaje_tecnico
-                    );
+                    $("#porcentaje_tecnico_edit").val(data.porcentaje_tecnico);
                     $("#porcentaje_participante_edit").val(
                         data.porcentaje_participante
                     );
                     $("#fecha_inicio_edit").val(data.fecha_inicio);
-                    $("#fecha_culminacion_edit").val(
-                        data.fecha_culminacion
-                    );
+                    $("#fecha_culminacion_edit").val(data.fecha_culminacion);
                     $("#descripcion_edit").val(data.descripcion);
 
                     $("#global-loader").fadeOut("fast");
@@ -169,6 +165,66 @@ $(document).ready(function () {
                 $("#global-loader").fadeOut("fast");
                 toastr.error("Error al obtener los datos del proyecto");
                 console.log(response);
+            },
+        });
+    });
+
+    $(document).on("click", ".btn_eliminar", function (e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+
+        Swal.fire({
+            title: "¿Estás seguro?",
+            text: "Esta acción no se puede deshacer",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, eliminar",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "proyectos_delete",
+                    type: "POST",
+                    data: {
+                        id: id,
+                    },
+                    success: function (response) {
+                        if (response.info == 1) {
+                            toastr.success("Proyecto eliminado correctamente");
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000);
+                        } else {
+                            toastr.error(
+                                "Ha ocurrido un error al eliminar el proyecto"
+                            );
+                        }
+                    },
+                    error: function (error) {
+                        toastr.error(
+                            "Ha ocurrido un error al eliminar el proyecto"
+                        );
+                        console.log(error);
+                    },
+                });
+            }
+        });
+    });
+
+    $(document).on("change", ".visto_bueno_check", function () {
+        let id = $(this).data("id");
+        let visto_bueno = $(this).is(":checked") ? 1 : 0;
+        $.ajax({
+            url: "change_visto_bueno_proyecto",
+            type: "POST",
+            data: { id: id, visto_bueno: visto_bueno },
+            success: function (data) {
+                toastr.success("Visto bueno actualizado");
+            },
+            error: function (data) {
+                toastr.error("Error al actualizar visto bueno");
             },
         });
     });
