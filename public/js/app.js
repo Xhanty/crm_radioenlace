@@ -2188,6 +2188,9 @@ module.exports = JSON.parse("{\"name\":\"axios\",\"version\":\"0.21.4\",\"descri
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    Multiselect: window.VueMultiselect["default"]
+  },
   props: {
     statusId: Number
   },
@@ -2197,7 +2200,8 @@ __webpack_require__.r(__webpack_exports__);
         title: "",
         description: "",
         status_id: null,
-        user_id: null
+        user_id: null,
+        value_empleados: []
       },
       errorMessage: "",
       empleados_data: []
@@ -2214,6 +2218,10 @@ __webpack_require__.r(__webpack_exports__);
       // Basic validation so we don't send an empty task to the server
       if (!this.newTask.title) {
         this.errorMessage = "El campo del título es obligatorio";
+        return;
+      }
+      if (this.newTask.value_empleados.length == 0) {
+        this.errorMessage = "Debes seleccionar al menos un empleado";
         return;
       }
 
@@ -2589,37 +2597,25 @@ var render = function render() {
         return _vm.$forceUpdate();
       }
     }
-  }), _vm._v(" "), _c("select", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.newTask.user_id,
-      expression: "newTask.user_id"
-    }],
-    staticClass: "mt-3 p-2 block w-full p-1 border text-sm rounded",
-    on: {
-      change: function change($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-          return o.selected;
-        }).map(function (o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val;
-        });
-        _vm.$set(_vm.newTask, "user_id", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-      }
-    }
-  }, [_c("option", {
+  }), _vm._v(" "), _c("br"), _vm._v(" "), _c("multiselect", {
     attrs: {
-      value: "",
-      disabled: ""
+      options: _vm.empleados_data,
+      multiple: true,
+      "close-on-select": false,
+      "clear-on-select": false,
+      "preserve-search": true,
+      placeholder: "Empleados",
+      label: "nombre",
+      "track-by": "id"
+    },
+    model: {
+      value: _vm.newTask.value_empleados,
+      callback: function callback($$v) {
+        _vm.$set(_vm.newTask, "value_empleados", $$v);
+      },
+      expression: "newTask.value_empleados"
     }
-  }, [_vm._v("Selecciona un empleado")]), _vm._v(" "), _vm._l(_vm.empleados_data, function (empleado) {
-    return _c("option", {
-      domProps: {
-        value: empleado.id
-      }
-    }, [_vm._v("\n                " + _vm._s(empleado.nombre) + "\n            ")]);
-  })], 2), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -2628,7 +2624,7 @@ var render = function render() {
     }]
   }, [_c("span", {
     staticClass: "text-xs text-red-500"
-  }, [_vm._v("\n                " + _vm._s(_vm.errorMessage) + "\n            ")])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                " + _vm._s(_vm.errorMessage) + "\n            ")])])], 1), _vm._v(" "), _c("div", {
     staticClass: "p-3 flex justify-between items-end text-sm bg-gray-100"
   }, [_c("button", {
     staticClass: "py-1 leading-5 text-gray-600 hover:text-gray-700",
@@ -2735,14 +2731,20 @@ var render = function render() {
         staticClass: "mt-2 flex justify-between items-center"
       }, [_c("span", {
         staticClass: "text-sm text-gray-600"
-      }, [_vm._v("\n                                    " + _vm._s(task.code) + "\n                                ")]), _vm._v(" "), _c("img", {
-        staticClass: "w-8 h-8 rounded-full",
-        attrs: {
-          title: task.user.nombre,
-          src: "/images/empleados/" + task.user.avatar,
-          alt: ""
-        }
-      })])]);
+      }, [_vm._v("\n                                    " + _vm._s(task.code) + "\n                                ")]), _vm._v(" "), _c("div", {
+        staticClass: "flex justify-end items-center"
+      }, _vm._l(task.user, function (user) {
+        return _c("div", {
+          key: user.id
+        }, [_c("img", {
+          staticClass: "w-8 h-8 rounded-full mr-1",
+          attrs: {
+            title: user.nombre,
+            src: "/images/empleados/" + user.avatar,
+            alt: ""
+          }
+        })]);
+      }), 0)])]);
     }), 0)], 1), _vm._v(" "), _c("div", {
       directives: [{
         name: "show",

@@ -37,8 +37,8 @@
                                 <thead>
                                     <tr>
                                         <th class="wd-10p border-bottom-0">Código</th>
-                                        <th class="wd-15p border-bottom-0">Cliente</th>
                                         <th class="wd-15p border-bottom-0">Empleado</th>
+                                        <th class="wd-15p border-bottom-0">Cliente</th>
                                         <th class="wd-20p border-bottom-0">Asignación</th>
                                         <th class="wd-10p border-bottom-0">Fecha Inicio</th>
                                         <th class="wd-10p border-bottom-0">Fecha Fin</th>

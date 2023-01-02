@@ -15,7 +15,12 @@
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.5/dist/flowbite.min.css" />
-
+    <link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
+    <style>
+        .multiselect__content-wrapper {
+            position: relative !important;
+        }
+    </style>
 </head>
 <body class="bg-gray-100 h-screen antialiased leading-none">
     <div id="app">
@@ -38,6 +43,6 @@
         @yield('content')
     </div>
     <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
-
+    <script src="https://unpkg.com/vue-multiselect@2.1.0"></script>
 </body>
 </html>

@@ -36,8 +36,12 @@
                                     <span class="text-sm text-gray-600">
                                         {{ task.code }}
                                     </span>
-                                    <img class="w-8 h-8 rounded-full" :title="task.user.nombre"
-                                        :src="'/images/empleados/' + task.user.avatar" alt="">
+                                    <div class="flex justify-end items-center">
+                                        <div v-for="user in task.user" :key="user.id">
+                                            <img class="w-8 h-8 rounded-full mr-1" :title="user.nombre" :src="'/images/empleados/' + user.avatar" alt="">
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                             </div>
                             <!-- ./Tasks -->

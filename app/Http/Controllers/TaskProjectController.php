@@ -37,23 +37,39 @@ class TaskProjectController extends Controller
                         ->where('project_id', $project)
                         ->orderBy('order')->get();
                     foreach ($task['tasks'] as $t) {
-                        $find_user = DB::table('empleados')
-                            ->where('id', $t->user_id)
-                            ->first();
-                        $t['user'] = $find_user;
+                        $users_id = json_decode($t->user_id);
+
+                        $users = [];
+
+                        foreach ($users_id as $key => $value) {
+                            $find_user = DB::table('empleados')
+                                ->where('id', $value)
+                                ->first();
+                            $users[] = $find_user;
+                        }
+
+                        $t['user'] = $users;
                     }
                 }
             } else {
                 foreach ($tasks as $task) {
                     $task['tasks'] = TaskProject::where('status_id', $task->id)
                         ->where('project_id', $project)
-                        ->where('user_id', $id)
+                        ->where('user_id', 'like', '%' . $id . '%')
                         ->orderBy('order')->get();
                     foreach ($task['tasks'] as $t) {
-                        $find_user = DB::table('empleados')
-                            ->where('id', $t->user_id)
-                            ->first();
-                        $t['user'] = $find_user;
+                        $users_id = json_decode($t->user_id);
+
+                        $users = [];
+
+                        foreach ($users_id as $key => $value) {
+                            $find_user = DB::table('empleados')
+                                ->where('id', $value)
+                                ->first();
+                            $users[] = $find_user;
+                        }
+
+                        $t['user'] = $users;
                     }
                 }
             }
@@ -85,7 +101,12 @@ class TaskProjectController extends Controller
         $request['created_by'] = auth()->user()->id;
         $request['project_id'] = session('project_tasks');
 
-        $new = TaskProject::create($request->all());
+        $empleados = $request->value_empleados;
+        $ids_empleados = [];
+
+        foreach ($empleados as $key => $value) {
+            $ids_empleados[] = $value['id'];
+        }
 
         $status = Status::find($request->status_id);
         $estado_asignacion = 0;
@@ -96,19 +117,26 @@ class TaskProjectController extends Controller
             $fecha_fin = date('Y-m-d H:i:s');
         }
 
-        DB::table("asignaciones")->insert([
-            'id_empleado' => $request->user_id,
-            'descripcion' => $request->description ? $request->description : '',
-            'asignacion' => $request->title,
-            'fecha' => date('Y-m-d H:i:s'),
-            'fecha_culminacion' => $fecha_fin,
-            'status' => $estado_asignacion,
-            'created_by' => auth()->user()->id,
-            'fecha_completada' => $fecha_fin,
-            'visto_bueno' => 0,
-            'devuelta' => 0,
-            'codigo' => $request['code'],
-        ]);
+        for ($i = 0; $i < count($ids_empleados); $i++) {
+            $request['user_id'] = $ids_empleados[$i];
+
+            DB::table("asignaciones")->insert([
+                'id_empleado' => $request->user_id,
+                'descripcion' => $request->description ? $request->description : '',
+                'asignacion' => $request->title,
+                'fecha' => date('Y-m-d H:i:s'),
+                'fecha_culminacion' => $fecha_fin,
+                'status' => $estado_asignacion,
+                'created_by' => auth()->user()->id,
+                'fecha_completada' => $fecha_fin,
+                'visto_bueno' => 0,
+                'devuelta' => 0,
+                'codigo' => $request['code'],
+            ]);
+        }
+
+        $request['user_id'] = json_encode($ids_empleados);
+        $new = TaskProject::create($request->all());
 
         $find_user = DB::table('empleados')
             ->where('id', $new->user_id)
@@ -163,23 +191,39 @@ class TaskProjectController extends Controller
                     ->where('project_id', $project)
                     ->orderBy('order')->get();
                 foreach ($task['tasks'] as $t) {
-                    $find_user = DB::table('empleados')
-                        ->where('id', $t->user_id)
+                    $users_id = json_decode($t->user_id);
+
+                    $users = [];
+
+                    foreach ($users_id as $key => $value) {
+                        $find_user = DB::table('empleados')
+                        ->where('id', $value)
                         ->first();
-                    $t['user'] = $find_user;
+                        $users[] = $find_user;
+                    }
+
+                    $t['user'] = $users;
                 }
             }
         } else {
             foreach ($tasks as $task) {
                 $task['tasks'] = TaskProject::where('status_id', $task->id)
                     ->where('project_id', $project)
-                    ->where('user_id', $id)
+                    ->where('user_id', 'like', '%' . $id . '%')
                     ->orderBy('order')->get();
                 foreach ($task['tasks'] as $t) {
-                    $find_user = DB::table('empleados')
-                        ->where('id', $t->user_id)
+                    $users_id = json_decode($t->user_id);
+
+                    $users = [];
+
+                    foreach ($users_id as $key => $value) {
+                        $find_user = DB::table('empleados')
+                        ->where('id', $value)
                         ->first();
-                    $t['user'] = $find_user;
+                        $users[] = $find_user;
+                    }
+
+                    $t['user'] = $users;
                 }
             }
         }
@@ -242,23 +286,39 @@ class TaskProjectController extends Controller
                     ->where('project_id', $project)
                     ->orderBy('order')->get();
                 foreach ($task['tasks'] as $t) {
-                    $find_user = DB::table('empleados')
-                        ->where('id', $t->user_id)
+                    $users_id = json_decode($t->user_id);
+
+                    $users = [];
+
+                    foreach ($users_id as $key => $value) {
+                        $find_user = DB::table('empleados')
+                        ->where('id', $value)
                         ->first();
-                    $t['user'] = $find_user;
+                        $users[] = $find_user;
+                    }
+
+                    $t['user'] = $users;
                 }
             }
         } else {
             foreach ($tasks as $task) {
                 $task['tasks'] = TaskProject::where('status_id', $task->id)
                     ->where('project_id', $project)
-                    ->where('user_id', $id)
+                    ->where('user_id', 'like', '%' . $id . '%')
                     ->orderBy('order')->get();
                 foreach ($task['tasks'] as $t) {
-                    $find_user = DB::table('empleados')
-                        ->where('id', $t->user_id)
+                    $users_id = json_decode($t->user_id);
+
+                    $users = [];
+
+                    foreach ($users_id as $key => $value) {
+                        $find_user = DB::table('empleados')
+                        ->where('id', $value)
                         ->first();
-                    $t['user'] = $find_user;
+                        $users[] = $find_user;
+                    }
+
+                    $t['user'] = $users;
                 }
             }
         }
@@ -294,23 +354,39 @@ class TaskProjectController extends Controller
                     ->where('project_id', $project)
                     ->orderBy('order')->get();
                 foreach ($task['tasks'] as $t) {
-                    $find_user = DB::table('empleados')
-                        ->where('id', $t->user_id)
+                    $users_id = json_decode($t->user_id);
+
+                    $users = [];
+
+                    foreach ($users_id as $key => $value) {
+                        $find_user = DB::table('empleados')
+                        ->where('id', $value)
                         ->first();
-                    $t['user'] = $find_user;
+                        $users[] = $find_user;
+                    }
+
+                    $t['user'] = $users;
                 }
             }
         } else {
             foreach ($tasks as $task) {
                 $task['tasks'] = TaskProject::where('status_id', $task->id)
                     ->where('project_id', $project)
-                    ->where('user_id', $id)
+                    ->where('user_id', 'like', '%' . $id . '%')
                     ->orderBy('order')->get();
                 foreach ($task['tasks'] as $t) {
-                    $find_user = DB::table('empleados')
-                        ->where('id', $t->user_id)
+                    $users_id = json_decode($t->user_id);
+
+                    $users = [];
+
+                    foreach ($users_id as $key => $value) {
+                        $find_user = DB::table('empleados')
+                        ->where('id', $value)
                         ->first();
-                    $t['user'] = $find_user;
+                        $users[] = $find_user;
+                    }
+
+                    $t['user'] = $users;
                 }
             }
         }

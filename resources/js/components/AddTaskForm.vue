@@ -6,12 +6,17 @@
                 placeholder="Introduce un título" v-model.trim="newTask.title" />
             <textarea class="mt-3 p-2 block w-full p-1 border text-sm rounded" rows="4"
                 placeholder="Añade una descripción (opcional)" v-model.trim="newTask.description"></textarea>
-            <select class="mt-3 p-2 block w-full p-1 border text-sm rounded" v-model="newTask.user_id">
+            <!--<select class="mt-3 p-2 block w-full p-1 border text-sm rounded" v-model="newTask.user_id">
                 <option value="" disabled>Selecciona un empleado</option>
                 <option v-for="empleado in empleados_data" :value="empleado.id">
                     {{ empleado.nombre }}
                 </option>
-            </select>
+            </select>-->
+            <br>
+            <multiselect v-model="newTask.value_empleados" :options="empleados_data" :multiple="true" :close-on-select="false" :clear-on-select="false"
+                :preserve-search="true" placeholder="Empleados" label="nombre" track-by="id">
+            </multiselect>
+
             <div v-show="errorMessage">
                 <span class="text-xs text-red-500">
                     {{ errorMessage }}
@@ -32,6 +37,9 @@
 
 <script>
 export default {
+    components: {
+        Multiselect: window.VueMultiselect.default
+    },
     props: {
         statusId: Number
     },
@@ -41,7 +49,8 @@ export default {
                 title: "",
                 description: "",
                 status_id: null,
-                user_id: null
+                user_id: null,
+                value_empleados: []
             },
             errorMessage: "",
             empleados_data: [],
@@ -57,6 +66,11 @@ export default {
             // Basic validation so we don't send an empty task to the server
             if (!this.newTask.title) {
                 this.errorMessage = "El campo del título es obligatorio";
+                return;
+            }
+
+            if (this.newTask.value_empleados.length == 0){
+                this.errorMessage = "Debes seleccionar al menos un empleado";
                 return;
             }
 
