@@ -196,6 +196,9 @@ Route::middleware(['auth_user'])->group(function () {
     Route::get('/gastos_varios', [App\Http\Controllers\Admin\Gastos\GastosController::class, 'gastos_varios'])->name('gastos_varios');
     Route::get('/gastos_fijos', [App\Http\Controllers\Admin\Gastos\GastosController::class, 'gastos_fijos'])->name('gastos_fijos');
     Route::get('/gastos_equivalentes', [App\Http\Controllers\Admin\Gastos\GastosController::class, 'gastos_equivalentes'])->name('gastos_equivalentes');
+
+    // CALENDARIO
+    Route::get('/calendario', [App\Http\Controllers\CalendarController::class, 'index'])->name('calendario');
 });
 
 Route::group(['middleware' => 'auth'], function () {
