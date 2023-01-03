@@ -270,7 +270,6 @@
                             <ul class="slide-menu">
                                 <li><a class="slide-item" href="{{ route('categorias_proyectos') }}">Categorías</a></li>
                                 <li><a class="slide-item" href="{{ route('proyectos') }}">Proyectos</a></li>
-                                <!--<li><a class="slide-item" href="{{ route('mis_tarjetas') }}">Mis Tarjetas</a></li>-->
                             </ul>
                         </li>
                         <li class="slide">

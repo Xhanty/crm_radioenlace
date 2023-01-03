@@ -153,7 +153,6 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/proyectos_add', [App\Http\Controllers\Admin\Proyectos\ProyectosController::class, 'proyectos_add'])->name('proyectos_add');
     Route::post('/proyectos_edit', [App\Http\Controllers\Admin\Proyectos\ProyectosController::class, 'proyectos_edit'])->name('proyectos_edit');
     Route::post('/change_visto_bueno_proyecto', [App\Http\Controllers\Admin\Proyectos\ProyectosController::class, 'visto_bueno'])->name('change_visto_bueno_proyecto');
-    Route::get('/mis_tarjetas', [App\Http\Controllers\Admin\Proyectos\TarjetasController::class, 'index'])->name('mis_tarjetas');
 
     // SEGUIMIENTO DE CLIENTES
     Route::get('/categorias_seguimientos', [App\Http\Controllers\Admin\SeguimientoCliente\CategoriasController::class, 'index'])->name('categorias_seguimientos');
