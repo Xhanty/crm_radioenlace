@@ -2321,7 +2321,6 @@ __webpack_require__.r(__webpack_exports__);
     this.statuses = JSON.parse(JSON.stringify(this.initialData));
     this.get_empleados();
     this.my_data();
-    this.verifyModal();
   },
   methods: {
     openAddTaskForm: function openAddTaskForm(statusId) {
@@ -2362,7 +2361,6 @@ __webpack_require__.r(__webpack_exports__);
           _this.responsables_id.push(element);
         }
       });
-
       // set the modal menu element
       var targetEl = document.getElementById('taskDetails');
       // set the modal menu to visible
@@ -2413,6 +2411,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
       axios.get("/empleados_actives").then(function (response) {
         _this2.empleados_data = response.data.data;
+        _this2.verifyModal();
       });
     },
     my_data: function my_data() {

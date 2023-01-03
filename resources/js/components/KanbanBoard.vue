@@ -445,7 +445,6 @@ export default {
         this.statuses = JSON.parse(JSON.stringify(this.initialData));
         this.get_empleados();
         this.my_data();
-        this.verifyModal();
     },
     methods: {
         openAddTaskForm(statusId) {
@@ -485,7 +484,6 @@ export default {
                     this.responsables_id.push(element);
                 }
             });
-
             // set the modal menu element
             const targetEl = document.getElementById('taskDetails');
             // set the modal menu to visible
@@ -533,6 +531,7 @@ export default {
         get_empleados() {
             axios.get("/empleados_actives").then(response => {
                 this.empleados_data = response.data.data;
+                this.verifyModal();
             });
         },
         my_data() {
