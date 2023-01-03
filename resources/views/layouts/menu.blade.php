@@ -100,11 +100,9 @@
                                         <a class="dropdown-item btn_logout_sesion" href="javascript:void(0)"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
                                     </div>
                                 </div>
-                                <div class="dropdown main-header-message right-toggle">
-                                    <a class="nav-link pe-0" data-bs-toggle="sidebar-right"
-                                        data-bs-target=".sidebar-right">
-                                        <i class="ion ion-md-menu tx-20 bg-transparent"></i>
-                                    </a>
+                                <div class="nav-item full-screen" style="margin: auto 0;">
+                                    <a class="new nav-link full-screen-link" href="javascript:void(0);"><i
+                                            class="fe fe-calendar"></i></span></a>
                                 </div>
                             </div>
                         </div>
@@ -179,18 +177,18 @@
 							<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i class="side-menu__icon fe fe-check"></i><span class="side-menu__label">Asignaciones</span><i class="angle fe fe-chevron-down"></i></a>
                             <ul class="slide-menu" style="display: none;" id="1_otro_asignaciones">
 								<li class="side-menu__label1"><a href="javascript:void(0);">Asignaciones</a></li>
-								<li class="sub-slide">
-									<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Proyectos</span><i class="sub-angle fe fe-chevron-down"></i></a>
-									<ul class="sub-slide-menu" style="display: none;" id="1_1_otro_asignaciones">
-										<li><a class="sub-side-menu__item" href="{{ route('asignaciones') }}">Asignaciones</a></li>
-                                        <li><a class="sub-side-menu__item" href="{{ route('gestionar_asignaciones') }}">Gestionar Asignaciones</a></li>
-									</ul>
-								</li>
                                 <li class="sub-slide">
 									<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Generales</span><i class="sub-angle fe fe-chevron-down"></i></a>
 									<ul class="sub-slide-menu" style="display: none;" id="2_1_otro_asignaciones">
 										<li><a class="sub-side-menu__item" href="{{ route('asignaciones_clientes') }}">Asignaciones</a></li>
                                         <li><a class="sub-side-menu__item" href="{{ route('gestionar_asignaciones_clientes') }}">Gestionar Asignaciones</a></li>
+									</ul>
+								</li>
+								<li class="sub-slide">
+									<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Proyectos</span><i class="sub-angle fe fe-chevron-down"></i></a>
+									<ul class="sub-slide-menu" style="display: none;" id="1_1_otro_asignaciones">
+										<li><a class="sub-side-menu__item" href="{{ route('asignaciones') }}">Asignaciones</a></li>
+                                        <li><a class="sub-side-menu__item" href="{{ route('gestionar_asignaciones') }}">Gestionar Asignaciones</a></li>
 									</ul>
 								</li>
 							</ul>

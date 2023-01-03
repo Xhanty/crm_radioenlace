@@ -16,12 +16,25 @@ class HomeController extends Controller
     public function index()
     {
         try {
-            $asignaciones_pendientes = DB::table('asignaciones')
+            $asignaciones_g_pendientes = DB::table('asignaciones')
                 ->where('status', 0)
+                ->where('id_cliente', '!=', null)
                 ->where('id_empleado', session('user'))
                 ->count();
-            $asignaciones_completadas = DB::table('asignaciones')
+            $asignaciones_g_completadas = DB::table('asignaciones')
                 ->where('status', 1)
+                ->where('id_cliente', '!=', null)
+                ->where('id_empleado', session('user'))
+                ->count();
+
+            $asignaciones_p_pendientes = DB::table('asignaciones')
+                ->where('status', 0)
+                ->whereNull('id_cliente')
+                ->where('id_empleado', session('user'))
+                ->count();
+            $asignaciones_p_completadas = DB::table('asignaciones')
+                ->where('status', 1)
+                ->whereNull('id_cliente')
                 ->where('id_empleado', session('user'))
                 ->count();
 
@@ -45,25 +58,23 @@ class HomeController extends Controller
                 ->where('id_empleado_repara', session('user'))
                 ->count();
 
-
-            $productos_asignados = DB::table('productos_asignados')
-                ->where('status', 0)
-                ->where('id_empleado', session('user'))
-                ->count();
-            $productos_devueltos = DB::table('productos_asignados')
-                ->where('status', 1)
-                ->where('id_empleado', session('user'))
-                ->count();
-
-            $asignaciones = DB::table("asignaciones")
+            $asignaciones_proyectos = DB::table("asignaciones")
                 ->where("asignaciones.id_empleado", session("user"))
                 ->orderBy("asignaciones.id", "desc")
                 ->where('asignaciones.status', 0)
                 ->whereNull('asignaciones.id_cliente')
                 ->limit(5)
                 ->get();
-                
-            return view('home', compact('asignaciones_pendientes', 'asignaciones_completadas', 'puntos_pendientes', 'puntos_cobrados', 'reparaciones_pendientes', 'reparaciones_completadas', 'productos_asignados', 'productos_devueltos', 'asignaciones'));
+
+            $asignaciones_generales = DB::table("asignaciones")
+                ->where("asignaciones.id_empleado", session("user"))
+                ->orderBy("asignaciones.id", "desc")
+                ->where('asignaciones.status', 0)
+                ->where('asignaciones.id_cliente', '!=', null)
+                ->limit(5)
+                ->get();
+
+            return view('home', compact('puntos_pendientes', 'puntos_cobrados', 'reparaciones_pendientes', 'reparaciones_completadas', 'asignaciones_proyectos', 'asignaciones_generales', 'asignaciones_g_pendientes', 'asignaciones_g_completadas', 'asignaciones_p_pendientes', 'asignaciones_p_completadas'));
         } catch (Exception $ex) {
             return view('errors.500');
         }
