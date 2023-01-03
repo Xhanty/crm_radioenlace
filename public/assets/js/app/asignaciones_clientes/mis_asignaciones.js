@@ -8,6 +8,7 @@ $(function () {
     $("#menu_otro_asignaciones").addClass("is-expanded");
     $("#1_otro_asignaciones").show();
     $("#2_1_otro_asignaciones").show();
+    $(".open-toggle").trigger("click");
 
     $(document).on("click", ".btn_openAvances", function () {
         $("#global-loader").show();
@@ -81,7 +82,7 @@ $(function () {
                     type: "POST",
                     data: { id: id },
                     success: function (data) {
-                        if(data.info == 1) {
+                        if (data.info == 1) {
                             $('*[data-idshow="' + idpadre + '"]').click();
                             $("#global-loader").hide();
                             toastr.success("Se eliminó correctamente");
@@ -126,7 +127,7 @@ $(function () {
                 processData: false,
                 contentType: false,
                 success: function (data) {
-                    if(data.info == 1) {
+                    if (data.info == 1) {
                         $("#descripcion_add").val("");
                         $("#archivo_add").val("");
                         $('*[data-idshow="' + id + '"]').click();
@@ -190,6 +191,39 @@ $(function () {
             error: function (data) {
                 $("#global-loader").hide();
                 console.log(data);
+            },
+        });
+    });
+
+    $(document).on("click", ".btn_openDetalles", function () {
+        $("#global-loader").show();
+        let id = $(this).data("id");
+        $("#tbl_anexos_asignacion tbody").empty();
+        $.ajax({
+            url: "asignaciones_data",
+            type: "POST",
+            data: { id: id },
+            success: function (data) {
+                let asignacion = data.asignacion;
+                let archivos = data.archivos;
+                $("#asignacion_show").val(asignacion.asignacion);
+                $("#cliente_show").val(asignacion.id_cliente);
+                $("#observacion_show").val(asignacion.descripcion);
+                $("#fecha_inicio_show").val(asignacion.fecha);
+                $("#fecha_fin_show").val(asignacion.fecha_culminacion);
+                archivos.forEach((archivo) => {
+                    $("#tbl_anexos_asignacion tbody").append(`
+                        <tr>
+                            <td><a href="images/asignaciones/${archivo.archivo}" target="_blank">Ver Archivo</a></td>
+                        </tr>
+                    `);
+                });
+                $("#global-loader").hide();
+                $("#modalDetalles").modal("show");
+            },
+            error: function (data) {
+                toastr.error("Error al obtener datos de la asignación");
+                $("#global-loader").hide();
             },
         });
     });

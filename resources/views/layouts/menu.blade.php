@@ -187,7 +187,7 @@
 									</ul>
 								</li>
                                 <li class="sub-slide">
-									<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Clientes</span><i class="sub-angle fe fe-chevron-down"></i></a>
+									<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Generales</span><i class="sub-angle fe fe-chevron-down"></i></a>
 									<ul class="sub-slide-menu" style="display: none;" id="2_1_otro_asignaciones">
 										<li><a class="sub-side-menu__item" href="{{ route('asignaciones_clientes') }}">Asignaciones</a></li>
                                         <li><a class="sub-side-menu__item" href="{{ route('gestionar_asignaciones_clientes') }}">Gestionar Asignaciones</a></li>
@@ -272,7 +272,7 @@
                             <ul class="slide-menu">
                                 <li><a class="slide-item" href="{{ route('categorias_proyectos') }}">Categorías</a></li>
                                 <li><a class="slide-item" href="{{ route('proyectos') }}">Proyectos</a></li>
-                                <li><a class="slide-item" href="{{ route('mis_tarjetas') }}">Mis Tarjetas</a></li>
+                                <!--<li><a class="slide-item" href="{{ route('mis_tarjetas') }}">Mis Tarjetas</a></li>-->
                             </ul>
                         </li>
                         <li class="slide">

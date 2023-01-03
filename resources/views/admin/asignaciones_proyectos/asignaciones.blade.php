@@ -25,7 +25,7 @@
 
                     @foreach ($asignaciones_pendientes as $value)
                         <!-- col -->
-                        <div class="col-xl-4 col-md-6">
+                        <div class="col-xl-3 col-md-6">
                             <div class="card mg-b-20">
                                 <div class="card-body p-0">
                                     <div class="todo-widget-header d-flex pb-2 pd-20 bg-warning"
@@ -73,7 +73,7 @@
 
                     @foreach ($asignaciones_completadas as $value)
                         <!-- col -->
-                        <div class="col-xl-4 col-md-6">
+                        <div class="col-xl-3 col-md-6">
                             <div class="card mg-b-20">
                                 <div class="card-body p-0">
                                     <div class="todo-widget-header d-flex pb-2 pd-20 bg-success"

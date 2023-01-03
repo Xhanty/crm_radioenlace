@@ -58,7 +58,9 @@ class AsignacionesController extends Controller
                 ->where("asignaciones.id_empleado", session("user"))
                 ->orderBy("asignaciones.id", "desc")
                 ->get();
-            return view('admin.asignaciones_clientes.asignaciones', compact('asignaciones_pendientes', 'asignaciones_completadas'));
+
+            $clientes = DB::table("cliente")->where("estado", 1)->get();
+            return view('admin.asignaciones_clientes.asignaciones', compact('asignaciones_pendientes', 'asignaciones_completadas', 'clientes'));
         } catch (Exception $ex) {
             return view('errors.500');
         }
@@ -333,7 +335,7 @@ class AsignacionesController extends Controller
                         unlink($path);
                     }
                 }
-                
+
                 DB::table("anexos_asignaciones")->where("id_asignacion", $id)->delete();
                 DB::table("asignaciones")->where("id", $id)->delete();
             }

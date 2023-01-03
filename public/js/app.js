@@ -2282,7 +2282,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     draggable: vuedraggable__WEBPACK_IMPORTED_MODULE_0___default.a,
-    AddTaskForm: _AddTaskForm__WEBPACK_IMPORTED_MODULE_1__["default"]
+    AddTaskForm: _AddTaskForm__WEBPACK_IMPORTED_MODULE_1__["default"],
+    Multiselect: window.VueMultiselect["default"]
   },
   props: {
     initialData: Array
@@ -2302,7 +2303,8 @@ __webpack_require__.r(__webpack_exports__);
       fileGeneral: null,
       anexosTask: [],
       avancesTask: [],
-      actividad: ""
+      actividad: "",
+      responsables_id: []
     };
   },
   computed: {
@@ -2330,12 +2332,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     handleTaskAdded: function handleTaskAdded(newTask) {
       // Find the index of the status where we should add the task
-      var statusIndex = this.statuses.findIndex(function (status) {
-        return status.id === newTask.status_id;
-      });
+      /*const statusIndex = this.statuses.findIndex(
+          status => status.id === newTask.status_id
+      );
+        // Add newly created task to our column
+      this.statuses[statusIndex].tasks.push(newTask);*/
 
-      // Add newly created task to our column
-      this.statuses[statusIndex].tasks.push(newTask);
+      this.statuses = newTask;
 
       // Reset and close the AddTaskForm
       this.closeAddTaskForm();
@@ -2349,8 +2352,17 @@ __webpack_require__.r(__webpack_exports__);
     },
     expandDetails: function expandDetails(task) {
       var _this = this;
+      this.responsables_id = [];
+      var users_id = JSON.parse(task.user_id);
       this.taskSelected = task;
+      this.taskSelected.users_id = [];
       this.userSelected = task.user;
+      this.empleados_data.forEach(function (element) {
+        if (users_id.includes(element.id)) {
+          _this.responsables_id.push(element);
+        }
+      });
+
       // set the modal menu element
       var targetEl = document.getElementById('taskDetails');
       // set the modal menu to visible
@@ -2369,7 +2381,9 @@ __webpack_require__.r(__webpack_exports__);
             _this.permisoCreador = true;
             _this.permisoActividad = true;
             _this.disabledCreador = false;
-          } else if (_this.userCreator.id == _this.userSelected.id) {
+          } else if (_this.userSelected.find(function (user) {
+            return user.id == _this.userCreator.id;
+          })) {
             _this.permisoActividad = true;
             _this.permisoCreador = false;
             _this.disabledCreador = true;
@@ -2512,6 +2526,17 @@ __webpack_require__.r(__webpack_exports__);
       data.append("file", file[0]);
       axios.post("/task_add_file_observacion", data).then(function (response) {
         _this11.avancesTask = response.data;
+      });
+    },
+    changeTaskResponsable: function changeTaskResponsable() {
+      var _this12 = this;
+      console.log(this.responsables_id);
+      var data = {
+        id: this.taskSelected.id,
+        responsables_id: this.responsables_id
+      };
+      axios.post("/task_change_responsable", data).then(function (response) {
+        _this12.statuses = response.data;
       });
     }
   }
@@ -3023,7 +3048,7 @@ var render = function render() {
         href: "/images/anexos_tasks_projects/" + avance.file,
         target: "_blank"
       }
-    }, [_vm._v(_vm._s(avance.name_file))])]) : _vm._e(), _vm._v(" "), _c("p", {
+    }, [_vm._v("\n                                                                    " + _vm._s(avance.name_file) + "\n                                                                ")])]) : _vm._e(), _vm._v(" "), _c("p", {
       staticClass: "text-sm font-medium text-gray-500 truncate dark:text-gray-400"
     }, [_vm._v("\n                                                                " + _vm._s(avance.fecha) + "\n                                                            ")])]), _vm._v(" "), _c("div", {
       staticClass: "inline-flex items-center text-base font-semibold text-gray-900 dark:text-white"
@@ -3160,41 +3185,28 @@ var render = function render() {
     staticClass: "flex justify-between"
   }, [_vm._m(1), _vm._v(" "), _c("div", {
     staticClass: "w-4/6"
-  }, [_c("select", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.taskSelected.user_id,
-      expression: "taskSelected.user_id"
-    }],
-    staticClass: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+  }, [_c("multiselect", {
     attrs: {
-      id: "countries",
-      disabled: _vm.disabledCreador
+      options: _vm.empleados_data,
+      multiple: true,
+      "close-on-select": false,
+      "clear-on-select": false,
+      "preserve-search": true,
+      placeholder: "Empleados",
+      label: "nombre",
+      "track-by": "id"
     },
     on: {
-      change: [function ($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-          return o.selected;
-        }).map(function (o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val;
-        });
-        _vm.$set(_vm.taskSelected, "user_id", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-      }, _vm.changeTask]
+      input: _vm.changeTaskResponsable
+    },
+    model: {
+      value: _vm.responsables_id,
+      callback: function callback($$v) {
+        _vm.responsables_id = $$v;
+      },
+      expression: "responsables_id"
     }
-  }, [_c("option", {
-    attrs: {
-      value: "",
-      disabled: ""
-    }
-  }, [_vm._v("Selecciona un empleado")]), _vm._v(" "), _vm._l(_vm.empleados_data, function (empleado) {
-    return _c("option", {
-      domProps: {
-        value: empleado.id
-      }
-    }, [_vm._v("\n                                                " + _vm._s(empleado.nombre) + "\n                                            ")]);
-  })], 2)])]), _vm._v(" "), _c("div", {
+  })], 1)]), _vm._v(" "), _c("div", {
     staticClass: "flex justify-between"
   }, [_vm._m(2), _vm._v(" "), _c("div", {
     staticClass: "w-4/6"
@@ -3406,7 +3418,7 @@ var staticRenderFns = [function () {
     attrs: {
       href: "#"
     }
-  }, [_vm._v("Responsable")])]);
+  }, [_vm._v("Responsables")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;

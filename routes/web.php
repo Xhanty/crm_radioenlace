@@ -210,6 +210,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('task_add_file_observacion', [App\Http\Controllers\TaskProjectController::class, 'task_add_file_observacion'])->name('task_add_file_observacion');
     Route::post('task_delete_avance', [App\Http\Controllers\TaskProjectController::class, 'task_delete_avance'])->name('task_delete_avance');
     Route::post('tasks_edit', [App\Http\Controllers\TaskProjectController::class, 'tasks_edit'])->name('tasks_edit');
+    Route::post('task_change_responsable', [App\Http\Controllers\TaskProjectController::class, 'task_change_responsable'])->name('task_change_responsable');
     Route::post('tasks_delete', [App\Http\Controllers\TaskProjectController::class, 'tasks_delete'])->name('tasks_delete');
     Route::put('tasks/sync', [App\Http\Controllers\TaskProjectController::class, 'sync'])->name('tasks.sync');
     Route::put('tasks/{task}', [App\Http\Controllers\TaskProjectController::class, 'update'])->name('tasks.update');

@@ -38,10 +38,11 @@
                                     </span>
                                     <div class="flex justify-end items-center">
                                         <div v-for="user in task.user" :key="user.id">
-                                            <img class="w-8 h-8 rounded-full mr-1" :title="user.nombre" :src="'/images/empleados/' + user.avatar" alt="">
+                                            <img class="w-8 h-8 rounded-full mr-1" :title="user.nombre"
+                                                :src="'/images/empleados/' + user.avatar" alt="">
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <!-- ./Tasks -->
@@ -190,17 +191,23 @@
                                                                     alt="Neil image">
                                                             </div>
                                                             <div class="flex-1 min-w-0">
-                                                                <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                                                <p
+                                                                    class="text-sm font-medium text-gray-900 truncate dark:text-white">
                                                                     {{ avance.empleado }}
                                                                 </p>
-                                                                <p v-if="avance.avance" class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                                <p v-if="avance.avance"
+                                                                    class="text-sm text-gray-500 truncate dark:text-gray-400">
                                                                     {{ avance.avance }}
                                                                 </p>
-                                                                <p v-if="avance.file" class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                                <p v-if="avance.file"
+                                                                    class="text-sm text-gray-500 truncate dark:text-gray-400">
                                                                     <a :href="'/images/anexos_tasks_projects/' + avance.file"
-                                                                        target="_blank" class="text-blue-700">{{ avance.name_file }}</a>
+                                                                        target="_blank" class="text-blue-700">
+                                                                        {{ avance.name_file }}
+                                                                    </a>
                                                                 </p>
-                                                                <p class="text-sm font-medium text-gray-500 truncate dark:text-gray-400">
+                                                                <p
+                                                                    class="text-sm font-medium text-gray-500 truncate dark:text-gray-400">
                                                                     {{ avance.fecha }}
                                                                 </p>
                                                             </div>
@@ -224,7 +231,8 @@
                                             </div>
                                         </div>
                                         <br>
-                                        <input type="file" ref="fileobservacion" class="hidden" @change="uploadFilesObservacion" />
+                                        <input type="file" ref="fileobservacion" class="hidden"
+                                            @change="uploadFilesObservacion" />
                                         <label for="message"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Actividad</label>
                                         <div class="flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700"
@@ -267,17 +275,22 @@
                                     action="#">
                                     <div class="flex justify-between">
                                         <div class="justify-center self-center">
-                                            <p href="#" class="text-sm text-black-800">Responsable</p>
+                                            <p href="#" class="text-sm text-black-800">Responsables</p>
                                         </div>
                                         <div class="w-4/6">
-                                            <select id="countries" v-model="taskSelected.user_id"
+                                            <!--<select id="countries" v-model="taskSelected.user_id"
                                                 :disabled="disabledCreador" @change="changeTask"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 <option value="" disabled>Selecciona un empleado</option>
                                                 <option v-for="empleado in empleados_data" :value="empleado.id">
                                                     {{ empleado.nombre }}
                                                 </option>
-                                            </select>
+                                            </select>-->
+                                            <multiselect @input="changeTaskResponsable" v-model="responsables_id" :options="empleados_data"
+                                                :multiple="true" :close-on-select="false" :clear-on-select="false"
+                                                :preserve-search="true" placeholder="Empleados" label="nombre"
+                                                track-by="id">
+                                            </multiselect>
                                         </div>
                                     </div>
 
@@ -310,7 +323,8 @@
                                             <p href="#" class="text-sm text-black-800">Puntos</p>
                                         </div>
                                         <div class="w-4/6">
-                                            <input type="number" min="0" v-model="taskSelected.puntos" :disabled="disabledCreador" @change="changeTask"
+                                            <input type="number" min="0" v-model="taskSelected.puntos"
+                                                :disabled="disabledCreador" @change="changeTask"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                         </div>
                                     </div>
@@ -390,7 +404,11 @@ import draggable from "vuedraggable";
 import AddTaskForm from "./AddTaskForm";
 
 export default {
-    components: { draggable, AddTaskForm },
+    components: {
+        draggable,
+        AddTaskForm,
+        Multiselect: window.VueMultiselect.default,
+    },
     props: {
         initialData: Array,
     },
@@ -410,6 +428,7 @@ export default {
             anexosTask: [],
             avancesTask: [],
             actividad: "",
+            responsables_id: [],
         };
     },
     computed: {
@@ -437,12 +456,14 @@ export default {
         },
         handleTaskAdded(newTask) {
             // Find the index of the status where we should add the task
-            const statusIndex = this.statuses.findIndex(
+            /*const statusIndex = this.statuses.findIndex(
                 status => status.id === newTask.status_id
             );
 
             // Add newly created task to our column
-            this.statuses[statusIndex].tasks.push(newTask);
+            this.statuses[statusIndex].tasks.push(newTask);*/
+
+            this.statuses = newTask;
 
             // Reset and close the AddTaskForm
             this.closeAddTaskForm();
@@ -453,8 +474,18 @@ export default {
             });
         },
         expandDetails(task) {
+            this.responsables_id = [];
+            var users_id = JSON.parse(task.user_id);
             this.taskSelected = task;
+            this.taskSelected.users_id = [];
             this.userSelected = task.user;
+
+            this.empleados_data.forEach(element => {
+                if (users_id.includes(element.id)) {
+                    this.responsables_id.push(element);
+                }
+            });
+
             // set the modal menu element
             const targetEl = document.getElementById('taskDetails');
             // set the modal menu to visible
@@ -473,7 +504,7 @@ export default {
                         this.permisoCreador = true;
                         this.permisoActividad = true;
                         this.disabledCreador = false;
-                    } else if (this.userCreator.id == this.userSelected.id) {
+                    } else if (this.userSelected.find(user => user.id == this.userCreator.id)) {
                         this.permisoActividad = true;
                         this.permisoCreador = false;
                         this.disabledCreador = true;
@@ -602,13 +633,24 @@ export default {
                 this.expandDetails(taskSelected);
             }
         },
-        uploadFilesObservacion(){
+        uploadFilesObservacion() {
             let file = event.target.files;
             let data = new FormData();
             data.append("task_id", this.taskSelected.id);
             data.append("file", file[0]);
             axios.post("/task_add_file_observacion", data).then(response => {
                 this.avancesTask = response.data;
+            });
+        },
+        changeTaskResponsable() {
+            console.log(this.responsables_id);
+            let data = {
+                id: this.taskSelected.id,
+                responsables_id: this.responsables_id
+            };
+
+            axios.post("/task_change_responsable", data).then(response => {
+                this.statuses = response.data;
             });
         },
     }
