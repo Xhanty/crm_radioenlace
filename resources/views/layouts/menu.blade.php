@@ -101,7 +101,7 @@
                                     </div>
                                 </div>
                                 <div class="nav-item full-screen" style="margin: auto 0;">
-                                    <a class="new nav-link full-screen-link" href="javascript:void(0);"><i
+                                    <a class="new nav-link full-screen-link" target="_BLANK" href="{{ route('calendario') }}"><i
                                             class="fe fe-calendar"></i></span></a>
                                 </div>
                             </div>

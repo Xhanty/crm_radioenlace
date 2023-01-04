@@ -60,7 +60,7 @@ class HomeController extends Controller
 
             $asignaciones_proyectos = DB::table("asignaciones")
                 ->where("asignaciones.id_empleado", session("user"))
-                ->orderBy("asignaciones.id", "desc")
+                ->orderBy("asignaciones.id", "ASC")
                 ->where('asignaciones.status', 0)
                 ->whereNull('asignaciones.id_cliente')
                 ->limit(5)
@@ -68,7 +68,7 @@ class HomeController extends Controller
 
             $asignaciones_generales = DB::table("asignaciones")
                 ->where("asignaciones.id_empleado", session("user"))
-                ->orderBy("asignaciones.id", "desc")
+                ->orderBy("asignaciones.id", "ASC")
                 ->where('asignaciones.status', 0)
                 ->where('asignaciones.id_cliente', '!=', null)
                 ->limit(5)

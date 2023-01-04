@@ -20,7 +20,7 @@ class AsignacionesController extends Controller
                 ->select("asignaciones.*", "empleados.nombre", "task_projects.id AS task_id", "task_projects.project_id", "proyecto.nombre AS proyecto")
                 ->where("asignaciones.status", 0)
                 ->where("asignaciones.id_empleado", session("user"))
-                ->orderBy("asignaciones.id", "desc")
+                ->orderBy("asignaciones.id", "ASC")
                 ->get();
 
             $asignaciones_completadas = DB::table("asignaciones")
@@ -30,7 +30,7 @@ class AsignacionesController extends Controller
                 ->select("asignaciones.*", "empleados.nombre", "task_projects.id AS task_id", "task_projects.project_id", "proyecto.nombre AS proyecto")
                 ->where("asignaciones.status", 1)
                 ->where("asignaciones.id_empleado", session("user"))
-                ->orderBy("asignaciones.id", "desc")
+                ->orderBy("asignaciones.id", "ASC")
                 ->get();
             return view('admin.asignaciones_proyectos.asignaciones', compact('asignaciones_pendientes', 'asignaciones_completadas'));
         } catch (Exception $ex) {
@@ -47,7 +47,7 @@ class AsignacionesController extends Controller
                 ->select("asignaciones.*", "empleados.nombre", "cliente.razon_social AS cliente")
                 ->where("asignaciones.status", 0)
                 ->where("asignaciones.id_empleado", session("user"))
-                ->orderBy("asignaciones.id", "desc")
+                ->orderBy("asignaciones.id", "ASC")
                 ->get();
 
             $asignaciones_completadas = DB::table("asignaciones")
@@ -56,7 +56,7 @@ class AsignacionesController extends Controller
                 ->select("asignaciones.*", "empleados.nombre", "cliente.razon_social AS cliente")
                 ->where("asignaciones.status", 1)
                 ->where("asignaciones.id_empleado", session("user"))
-                ->orderBy("asignaciones.id", "desc")
+                ->orderBy("asignaciones.id", "ASC")
                 ->get();
 
             $clientes = DB::table("cliente")->where("estado", 1)->get();

@@ -90,8 +90,8 @@ function hexToRGBA(hex) {
     calendar.id = String(id);
     calendar.name = "Otros";
     calendar.color = "#ffffff";
-    calendar.bgColor = "#9d9d9d";
-    calendar.dragBgColor = "#9d9d9d";
-    calendar.borderColor = "#9d9d9d";
+    calendar.bgColor = "#e0e04a";
+    calendar.dragBgColor = "#e0e04a";
+    calendar.borderColor = "#e0e04a";
     addCalendar(calendar);
 })();

@@ -2,8 +2,12 @@
 <html lang="es">
 
 <head>
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>TOAST UI Calendar App DEMO</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
+    <!--- Favicon --->
+    <link rel="icon" href="{{ asset('assets/img/brand/favicon.png') }}" type="image/x-icon" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css">
     <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css">
@@ -46,23 +50,23 @@
                 <button id="dropdownMenu-calendarType" class="btn btn-default btn-sm dropdown-toggle" type="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     <i id="calendarTypeIcon" class="calendar-icon ic_view_month" style="margin-right: 4px;"></i>
-                    <span id="calendarTypeName">Dropdown</span>&nbsp;
+                    <span id="calendarTypeName">Opciones</span>&nbsp;
                     <i class="calendar-icon tui-full-calendar-dropdown-arrow"></i>
                 </button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu-calendarType">
                     <li role="presentation">
                         <a class="dropdown-menu-title" role="menuitem" data-action="toggle-daily">
-                            <i class="calendar-icon ic_view_day"></i>Diariamente
+                            <i class="calendar-icon ic_view_day"></i>Día
                         </a>
                     </li>
                     <li role="presentation">
                         <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weekly">
-                            <i class="calendar-icon ic_view_week"></i>Semanalmente
+                            <i class="calendar-icon ic_view_week"></i>Semana
                         </a>
                     </li>
                     <li role="presentation">
                         <a class="dropdown-menu-title" role="menuitem" data-action="toggle-monthly">
-                            <i class="calendar-icon ic_view_month"></i>Mensualmente
+                            <i class="calendar-icon ic_view_month"></i>Mes
                         </a>
                     </li>
                     <!--<li role="presentation">
