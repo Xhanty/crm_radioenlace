@@ -145,7 +145,7 @@
                         <ul class="nav  nav-pills-circle" style="justify-content: center">
                             <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="top" title=""
                                 data-bs-original-title="Settings" aria-describedby="tooltip365540">
-                                <a class="nav-link text-center m-2" href="javascript:void(0)">
+                                <a class="nav-link text-center m-2" href="{{ route('permisos') }}">
                                     <i class="fe fe-settings"></i>
                                 </a>
                             </li>

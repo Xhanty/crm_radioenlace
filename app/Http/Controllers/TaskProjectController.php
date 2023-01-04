@@ -164,7 +164,7 @@ class TaskProjectController extends Controller
 
                     foreach ($users_id as $key => $value) {
                         $find_user = DB::table('empleados')
-                        ->where('id', $value)
+                            ->where('id', $value)
                             ->first();
                         $users[] = $find_user;
                     }
@@ -185,7 +185,7 @@ class TaskProjectController extends Controller
 
                     foreach ($users_id as $key => $value) {
                         $find_user = DB::table('empleados')
-                        ->where('id', $value)
+                            ->where('id', $value)
                             ->first();
                         $users[] = $find_user;
                     }
@@ -485,7 +485,10 @@ class TaskProjectController extends Controller
         DB::table("anexos_tasks_projects")->where('task', $request->id)->delete();
         DB::table("avances_tasks_projects")->where('task', $request->id)->delete();
         TaskProject::where('id', $request->id)->delete();
-        DB::table("asignaciones")->where('codigo', $code->code)->delete();
+        $asignaciones = DB::table("asignaciones")->where("codigo", $code->code)->get();
+        foreach ($asignaciones as $key => $value) {
+            DB::table("asignaciones")->where("id", $value->id)->delete();
+        }
 
         $project = session('project_tasks');
 

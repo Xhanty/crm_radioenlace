@@ -19,11 +19,13 @@ class HomeController extends Controller
             $asignaciones_g_pendientes = DB::table('asignaciones')
                 ->where('status', 0)
                 ->where('id_cliente', '!=', null)
+                ->where('revision', 0)
                 ->where('id_empleado', session('user'))
                 ->count();
             $asignaciones_g_completadas = DB::table('asignaciones')
                 ->where('status', 1)
                 ->where('id_cliente', '!=', null)
+                ->where('revision', 2)
                 ->where('id_empleado', session('user'))
                 ->count();
 
@@ -70,6 +72,7 @@ class HomeController extends Controller
                 ->where("asignaciones.id_empleado", session("user"))
                 ->orderBy("asignaciones.id", "ASC")
                 ->where('asignaciones.status', 0)
+                ->where('revision', 0)
                 ->where('asignaciones.id_cliente', '!=', null)
                 ->limit(5)
                 ->get();

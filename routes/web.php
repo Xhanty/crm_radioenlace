@@ -199,6 +199,10 @@ Route::middleware(['auth_user'])->group(function () {
 
     // CALENDARIO
     Route::get('/calendario', [App\Http\Controllers\CalendarController::class, 'index'])->name('calendario');
+
+    // PERMISOS
+    Route::get('/permisos', [App\Http\Controllers\Admin\PermisosController::class, 'index'])->name('permisos');
+    Route::post('/permisos_empleado', [App\Http\Controllers\Admin\PermisosController::class, 'data'])->name('permisos_empleado');
 });
 
 Route::group(['middleware' => 'auth'], function () {

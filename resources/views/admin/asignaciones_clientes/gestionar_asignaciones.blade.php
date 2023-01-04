@@ -59,9 +59,14 @@
                                             <td>{{ date('d-m-Y g:i A', strtotime($value->fecha_completada)) }}</td>
                                             <td>{{ $value->creador }}</td>
                                             <td>
-                                                <a class="d-flex btn_completar" data-id="{{ $value->id }}"
-                                                    href="javascript:void(0);"><i
-                                                        class="fa fa-check"></i>&nbsp;Completar</a>
+                                                @if ($value->revision == 1)
+                                                    <a class="d-flex btn_completar" data-id="{{ $value->id }}"
+                                                        href="javascript:void(0);"><i
+                                                            class="fa fa-check"></i>&nbsp;Completar</a>
+                                                    <a class="d-flex btn_rechazar" data-id="{{ $value->id }}"
+                                                        href="javascript:void(0);"><i
+                                                            class="fa fa-times"></i>&nbsp;Rechazar</a>
+                                                @endif
                                                 <a class="d-flex btn_editar" data-id="{{ $value->id }}"
                                                     href="javascript:void(0);"><i
                                                         class="fa fa-pencil-alt"></i>&nbsp;Editar</a>
@@ -124,8 +129,11 @@
                                                 <a class="d-flex btn_avances" data-id="{{ $value->id }}"
                                                     href="javascript:void(0);"><i class="fa fa-file"></i>&nbsp;Ver
                                                     Avances</a>
-                                                <a class="d-flex btn_rechazar" data-id="{{ $value->id }}"
-                                                    href="javascript:void(0);"><i class="fa fa-times"></i>&nbsp;Rechazar</a>
+                                                @if ($value->revision == 2)
+                                                    <a class="d-flex btn_rechazar" data-id="{{ $value->id }}"
+                                                        href="javascript:void(0);"><i
+                                                            class="fa fa-times"></i>&nbsp;Rechazar</a>
+                                                @endif
                                                 <a class="d-flex btn_eliminar" data-id="{{ $value->id }}"
                                                     href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>
                                             </td>
@@ -257,8 +265,8 @@
                     <div class="row row-sm">
                         <div class="col-lg">
                             <label for="">Descripción de la asignación</label>
-                            <textarea class="form-control" placeholder="Descripción de la asignación" rows="3" id="observacion_generaledit"
-                                style="height: 90px; resize: none"></textarea>
+                            <textarea class="form-control" placeholder="Descripción de la asignación" rows="3"
+                                id="observacion_generaledit" style="height: 90px; resize: none"></textarea>
                         </div>
                     </div>
                     <br>
@@ -282,16 +290,17 @@
                     </div>
                     <br>
                     <div class="table-responsive">
-                            <table class="table border-top-0 table-bordered text-nowrap border-bottom" id="tbl_anexos_asignacion">
-                                <thead>
-                                    <tr>
-                                        <th class="wd-40p border-bottom-0">Anexo</th>
-                                        <th class="wd-20p border-bottom-0">Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
-                        </div>
+                        <table class="table border-top-0 table-bordered text-nowrap border-bottom"
+                            id="tbl_anexos_asignacion">
+                            <thead>
+                                <tr>
+                                    <th class="wd-40p border-bottom-0">Anexo</th>
+                                    <th class="wd-20p border-bottom-0">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button class="btn ripple btn-primary" id="btnEditarAsignacion" type="button">Modificar</button>

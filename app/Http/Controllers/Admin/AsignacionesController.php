@@ -32,6 +32,7 @@ class AsignacionesController extends Controller
                 ->where("asignaciones.id_empleado", session("user"))
                 ->orderBy("asignaciones.id", "ASC")
                 ->get();
+
             return view('admin.asignaciones_proyectos.asignaciones', compact('asignaciones_pendientes', 'asignaciones_completadas'));
         } catch (Exception $ex) {
             return view('errors.500');
@@ -46,6 +47,7 @@ class AsignacionesController extends Controller
                 ->join("cliente", "cliente.id", "=", "asignaciones.id_cliente")
                 ->select("asignaciones.*", "empleados.nombre", "cliente.razon_social AS cliente")
                 ->where("asignaciones.status", 0)
+                ->where("asignaciones.revision", 0)
                 ->where("asignaciones.id_empleado", session("user"))
                 ->orderBy("asignaciones.id", "ASC")
                 ->get();
@@ -55,12 +57,23 @@ class AsignacionesController extends Controller
                 ->join("cliente", "cliente.id", "=", "asignaciones.id_cliente")
                 ->select("asignaciones.*", "empleados.nombre", "cliente.razon_social AS cliente")
                 ->where("asignaciones.status", 1)
+                ->where("asignaciones.revision", 2)
                 ->where("asignaciones.id_empleado", session("user"))
                 ->orderBy("asignaciones.id", "ASC")
                 ->get();
 
             $clientes = DB::table("cliente")->where("estado", 1)->get();
-            return view('admin.asignaciones_clientes.asignaciones', compact('asignaciones_pendientes', 'asignaciones_completadas', 'clientes'));
+
+            $asignaciones_revision = DB::table("asignaciones")
+                ->join("empleados", "empleados.id", "=", "asignaciones.created_by")
+                ->join("cliente", "cliente.id", "=", "asignaciones.id_cliente")
+                ->select("asignaciones.*", "empleados.nombre", "cliente.razon_social AS cliente")
+                ->where("asignaciones.status", 0)
+                ->where("asignaciones.revision", 1)
+                ->where("asignaciones.id_empleado", session("user"))
+                ->orderBy("asignaciones.id", "ASC")
+                ->get();
+            return view('admin.asignaciones_clientes.asignaciones', compact('asignaciones_pendientes', 'asignaciones_completadas', 'clientes', 'asignaciones_revision'));
         } catch (Exception $ex) {
             return view('errors.500');
         }
@@ -113,7 +126,7 @@ class AsignacionesController extends Controller
                 ->join("cliente", "cliente.id", "=", "asignaciones.id_cliente")
                 ->select("asignaciones.*", "empleados.nombre", "creador.nombre AS creador", "cliente.razon_social AS cliente")
                 ->where("asignaciones.status", 0)
-                ->orderBy("asignaciones.id", "desc")
+                ->orderBy("asignaciones.revision", "desc")
                 ->get();
 
             $asignaciones_completadas = DB::table("asignaciones")
@@ -122,6 +135,7 @@ class AsignacionesController extends Controller
                 ->join("cliente", "cliente.id", "=", "asignaciones.id_cliente")
                 ->select("asignaciones.*", "empleados.nombre", "creador.nombre AS creador", "cliente.razon_social AS cliente")
                 ->where("asignaciones.status", 1)
+                ->where("asignaciones.revision", 2)
                 ->orderBy("asignaciones.id", "desc")
                 ->get();
 
@@ -210,12 +224,14 @@ class AsignacionesController extends Controller
                 DB::table("asignaciones")->where("id", $id)->update([
                     "status" => $status,
                     "status" => 1,
+                    "revision" => 2,
                     "fecha_completada" => $fecha,
                 ]);
             } else {
                 DB::table("asignaciones")->where("id", $id)->update([
                     "status" => $status,
                     "devuelta" => 1,
+                    "revision" => 0,
                     "status" => 0,
                     "fecha_completada" => null,
                 ]);
@@ -279,6 +295,7 @@ class AsignacionesController extends Controller
             $id = $request->asignacion_id;
             $descripcion = $request->descripcion;
             $status = $request->status;
+            $recargar = 0;
 
             if ($anexo = $request->file('archivo')) {
                 $new_name = rand() . rand() . '.' . $anexo->getClientOriginalExtension();
@@ -301,12 +318,20 @@ class AsignacionesController extends Controller
                 ]);
             }
 
+            if($status == 2) {
+                DB::table("asignaciones")->where("id", $id)->update([
+                    "revision" => 1,
+                ]);
+
+                $recargar = 1;
+            }
+
             DB::commit();
-            return response()->json(['info' => 1, 'success' => 'Avance creado correctamente.']);
+            return response()->json(['info' => 1, 'success' => 'Avance creado correctamente.', 'recargar' => $recargar]);
         } catch (Exception $ex) {
             DB::rollBack();
             return $ex;
-            return response()->json(['info' => 0, 'success' => 'Error al crear el avance.']);
+            return response()->json(['info' => 0, 'success' => 'Error al crear el avance.', 'recargar' => $recargar]);
         }
     }
 

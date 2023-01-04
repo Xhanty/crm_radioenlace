@@ -87,11 +87,62 @@
                                                 <div class="dropdown-menu tx-13 dropleft">
                                                     <a class="dropdown-item btn_openDetalles" data-id="{{ $value->id }}"
                                                         href="javascript:void(0);">Ver Detalles</a>
-                                                    <a class="dropdown-item btn_openAvances"
+                                                    <a class="dropdown-item btn_viewAvances"
                                                         data-asignacion="{{ $value->asignacion }}"
+                                                        data-id="{{ $value->id }}"
                                                         data-idshow="{{ $value->id }}"
-                                                        href="javascript:void(0);">Agregar
-                                                        Avance</a>
+                                                        href="javascript:void(0);">Ver
+                                                        Avances</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-3 border-top">
+                                        <span class="tx-12 text-muted">Asignación</span>
+                                        <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ $value->asignacion }}</h5>
+                                    </div>
+                                    <div class="p-3 border-top">
+                                        <span class="tx-12 text-muted">Asignada por</span>
+                                        <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ $value->nombre }}</h5>
+                                    </div>
+                                    <div class="p-3 border-top">
+                                        <span class="tx-12 text-muted">Fecha Inicio - Fecha Fin</span>
+                                        @php
+                                            $fecha = date_create($value->fecha);
+                                            $fecha2 = date_create($value->fecha_culminacion);
+                                        @endphp
+                                        <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ date_format($fecha, 'd-m-Y') }} /
+                                            {{ date_format($fecha2, 'd-m-Y') }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /col -->
+                    @endforeach
+                </div>
+
+                <div class="row row-sm d-none" id="div_asignaciones_revision">
+
+                    @foreach ($asignaciones_revision as $value)
+                        <!-- col -->
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card mg-b-20">
+                                <div class="card-body p-0">
+                                    <div class="todo-widget-header d-flex pb-2 pd-20 bg-primary"
+                                        style="border-radius: 4px;">
+                                        <strong>{{ $value->codigo }} ({{ $value->cliente }})</strong>
+                                        <div class="ms-auto">
+                                            <div class="" style="cursor: pointer;">
+                                                <a class="p-2 text-muted" data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                        class="fas fa-ellipsis-v" style="color: #fff"></i></a>
+                                                <div class="dropdown-menu tx-13 dropleft">
+                                                    <a class="dropdown-item btn_openDetalles" data-id="{{ $value->id }}"
+                                                        href="javascript:void(0);">Ver Detalles</a>
+                                                    <a class="dropdown-item btn_viewAvances"
+                                                        data-asignacion="{{ $value->asignacion }}"
+                                                        data-id="{{ $value->id }}"
+                                                        data-idshow="{{ $value->id }}"
+                                                        href="javascript:void(0);">Ver Avances</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -134,6 +185,10 @@
                             <a class="list-group-item" id="show_pendientes" href="javascript:void(0);">
                                 <div class="event-indicator bg-warning"></div>
                                 <h6 class="mg-t-5">Pendientes</h6>
+                            </a>
+                            <a class="list-group-item" id="show_revision" href="javascript:void(0);">
+                                <div class="event-indicator bg-primary"></div>
+                                <h6 class="mg-t-5">En revisión</h6>
                             </a>
                             <a class="list-group-item" id="show_completadas" href="javascript:void(0);">
                                 <div class="event-indicator bg-success"></div>
@@ -302,11 +357,19 @@
             $('#show_pendientes').click(function() {
                 $('#div_asignaciones_pendientes').removeClass('d-none');
                 $('#div_asignaciones_completadas').addClass('d-none');
+                $('#div_asignaciones_revision').addClass('d-none');
+            });
+
+            $('#show_revision').click(function() {
+                $('#div_asignaciones_pendientes').addClass('d-none');
+                $('#div_asignaciones_completadas').addClass('d-none');
+                $('#div_asignaciones_revision').removeClass('d-none');
             });
 
             $('#show_completadas').click(function() {
                 $('#div_asignaciones_pendientes').addClass('d-none');
                 $('#div_asignaciones_completadas').removeClass('d-none');
+                $('#div_asignaciones_revision').addClass('d-none');
             });
         });
     </script>

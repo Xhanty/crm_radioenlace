@@ -128,11 +128,18 @@ $(function () {
                 contentType: false,
                 success: function (data) {
                     if (data.info == 1) {
+                        $("#global-loader").hide();
+                        $("#modalAdd").modal("hide");
                         $("#descripcion_add").val("");
                         $("#archivo_add").val("");
                         $('*[data-idshow="' + id + '"]').click();
-                        $("#global-loader").hide();
                         toastr.success("Se guardó correctamente");
+
+                        if (data.recargar == 1) {
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000);
+                        }
                     } else {
                         $("#global-loader").hide();
                         $("#modalAdd").modal("show");
