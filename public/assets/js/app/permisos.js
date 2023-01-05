@@ -5,6 +5,8 @@ $(function () {
         },
     });
 
+    let permisosCheck = [];
+
     $("#modalSelect").modal({
         backdrop: "static",
         keyboard: false,
@@ -50,4 +52,22 @@ $(function () {
             });
         }
     });
+
+    $("input[type=checkbox]").on("change", function () {
+        setTimeout(() => {
+            checksPermisos();
+        }, 1);
+    });
+
+    function checksPermisos() {
+        permisosCheck = [];
+
+        $("input[type=checkbox]:checked").each(function () {
+            if(this.value != "on" && this.value != "off" && this.value != "undefined" && this.value != "null" && this.value != ""){
+                permisosCheck.push(this.value);
+            }
+        });
+        
+        console.log(permisosCheck);
+    }
 });
