@@ -6,6 +6,10 @@
 
 @section('content')
     <div class="main-container container-fluid">
+        <!-- Input Edit Admin -->
+        <input type="hidden" disabled readonly id="edit_empleados_admin"
+            value="{{ auth()->user()->hasPermissionTo('edit_empleados') }}">
+
         <!-- breadcrumb -->
         <div class="breadcrumb-header justify-content-between">
             <div>
@@ -27,9 +31,11 @@
                         <div class="div-1-tables-header">
                             <h3 class="card-title mt-2">Lista de Empleados</h3>
                         </div>
-                        <div class="div-2-tables-header">
-                            <button class="btn btn-primary" id="addNewEmpleado">Registrar Empleado</button>
-                        </div>
+                        @if (auth()->user()->hasPermissionTo('add_empleados'))
+                            <div class="div-2-tables-header">
+                                <button class="btn btn-primary" id="addNewEmpleado">Registrar Empleado</button>
+                            </div>
+                        @endif
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -70,7 +76,8 @@
                     </div>
                     <div class="card-body" style="margin-top: -18px;">
                         <div class="d-flex justify-content-center">
-                            <img id="img_empleado_edit" class="avatar border rounded-circle" style="width: 14pc; height: 14pc;" src="{{ asset('images/clientes/noavatar.png') }}">
+                            <img id="img_empleado_edit" class="avatar border rounded-circle"
+                                style="width: 14pc; height: 14pc;" src="{{ asset('images/clientes/noavatar.png') }}">
                         </div>
                         <br>
                         <input type="hidden" readonly disabled id="id_empleado_edit">
@@ -199,13 +206,15 @@
                             </div>
                         </div>
                         <br>
+                        @if (auth()->user()->hasPermissionTo('edit_empleados'))
+                            <div class="text-center">
+                                <button class="btn ripple btn-primary" id="btnModificarEmpleado1"
+                                    type="button">Modificar
+                                    Datos Básicos</button>
+                            </div>
 
-                        <div class="text-center">
-                            <button class="btn ripple btn-primary" id="btnModificarEmpleado1" type="button">Modificar
-                                Datos Básicos</button>
-                        </div>
-
-                        <br>
+                            <br>
+                        @endif
 
                         <div class="">
                             <div class="row">
@@ -217,22 +226,29 @@
                                                     <a class="nav-link nav-link-1 active" href="javascript:void(0)">Otra
                                                         Información</a>
                                                 </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link nav-link-2" href="javascript:void(0)">Configurar
-                                                        Nomina</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link nav-link-3" href="javascript:void(0)">Reportar
-                                                        Novedad</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link nav-link-4" href="javascript:void(0)">Reportar
-                                                        Horas Trabajadas</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link nav-link-5" id="three-tab"
-                                                        href="javascript:void(0)">Anexos</a>
-                                                </li>
+                                                @if (auth()->user()->hasPermissionTo('nomina_empleados'))
+                                                    <li class="nav-item">
+                                                        <a class="nav-link nav-link-2"
+                                                            href="javascript:void(0)">Configurar
+                                                            Nomina</a>
+                                                    </li>
+                                                @endif
+                                                @if (auth()->user()->hasPermissionTo('novedades_empleados'))
+                                                    <li class="nav-item">
+                                                        <a class="nav-link nav-link-3" href="javascript:void(0)">Reportar
+                                                            Novedad</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link nav-link-4" href="javascript:void(0)">Reportar
+                                                            Horas Trabajadas</a>
+                                                    </li>
+                                                @endif
+                                                @if (auth()->user()->hasPermissionTo('anexos_empleados'))
+                                                    <li class="nav-item">
+                                                        <a class="nav-link nav-link-5" id="three-tab"
+                                                            href="javascript:void(0)">Anexos</a>
+                                                    </li>
+                                                @endif
                                             </ul>
                                         </div>
 
@@ -297,11 +313,12 @@
                                                     </div>
                                                 </div>
                                                 <br>
-
-                                                <div class="text-center">
-                                                    <button class="btn ripple btn-primary" id="btnModificarEmpleado2"
-                                                        type="button">Modificar Otra Información</button>
-                                                </div>
+                                                @if (auth()->user()->hasPermissionTo('edit_empleados'))
+                                                    <div class="text-center">
+                                                        <button class="btn ripple btn-primary" id="btnModificarEmpleado2"
+                                                            type="button">Modificar Otra Información</button>
+                                                    </div>
+                                                @endif
                                             </div>
 
                                             <div class="tab-pane fade show p-3" id="two_detail">
@@ -457,12 +474,15 @@
                                             </div>
 
                                             <div class="tab-pane fade show p-3" id="five_detail">
-                                                <div class="d-flex justify-content-end">
-                                                    <button class="btn ripple btn-primary" data-bs-target="#modalAddAnexo"
-                                                        data-bs-toggle="modal" data-bs-effect="effect-scale"
-                                                        type="button">Agregar Anexo</button>
-                                                </div>
-                                                <br>
+                                                @if (auth()->user()->hasPermissionTo('anexos_empleados'))
+                                                    <div class="d-flex justify-content-end">
+                                                        <button class="btn ripple btn-primary"
+                                                            data-bs-target="#modalAddAnexo" data-bs-toggle="modal"
+                                                            data-bs-effect="effect-scale" type="button">Agregar
+                                                            Anexo</button>
+                                                    </div>
+                                                    <br>
+                                                @endif
                                                 <table class="table border-top-0 table-bordered text-nowrap border-bottom"
                                                     id="table_anexos_edit">
                                                     <thead>
@@ -511,7 +531,8 @@
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="">Nombre</label>
-                                <input class="form-control" id="nombre_empleado_add" placeholder="Nombre" type="text">
+                                <input class="form-control" id="nombre_empleado_add" placeholder="Nombre"
+                                    type="text">
                             </div>
                         </div>
                         <br>
@@ -629,7 +650,8 @@
                         <br>
 
                         <div class="text-center">
-                            <button class="btn ripple btn-primary" id="btnAgregarEmpleado" type="button">Agregar Empleado</button>
+                            <button class="btn ripple btn-primary" id="btnAgregarEmpleado" type="button">Agregar
+                                Empleado</button>
                         </div>
                     </div>
                 </div>

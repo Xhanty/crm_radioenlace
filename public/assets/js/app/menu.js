@@ -629,7 +629,7 @@ $(function () {
                         cliente.indicativo_telefono
                     );
                     $("#extencionadd").val(cliente.extencion);
-                    
+
                     //console.log(data);
                     $("#global-loader").fadeOut("fast");
                 },
@@ -717,18 +717,21 @@ $(function () {
             {
                 data: null,
                 render: function (data) {
-                    return (
-                        '<button data-estado="' +
-                        data.status +
-                        '" data-id="' +
-                        data.id +
-                        '" class="btn btn-primary btn-sm btnInactivar" title="Inactivar">' +
-                        '<i class="fas fa-times"></i></button>&nbsp;' +
-                        '<button data-id="' +
-                        data.id +
-                        '" class="btn btn-danger btn-sm btnEliminar" title="Eliminar">' +
-                        '<i class="fa fa-trash"></i></button>'
-                    );
+                    let data_return = "";
+                    if ($("#edit_empleados_admin").val() == 1) {
+                        data_return =
+                            '<button data-estado="' +
+                            data.status +
+                            '" data-id="' +
+                            data.id +
+                            '" class="btn btn-primary btn-sm btnInactivar" title="Inactivar">' +
+                            '<i class="fas fa-times"></i></button>&nbsp;' +
+                            '<button data-id="' +
+                            data.id +
+                            '" class="btn btn-danger btn-sm btnEliminar" title="Eliminar">' +
+                            '<i class="fa fa-trash"></i></button>';
+                    }
+                    return data_return;
                 },
             },
         ],
