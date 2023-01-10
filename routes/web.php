@@ -94,6 +94,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/empleados_novedad_delete', [App\Http\Controllers\Admin\EmpleadosController::class, 'empleados_novedad_delete'])->name('empleados_novedad_delete');
     Route::post('/empleados_anexo_delete', [App\Http\Controllers\Admin\EmpleadosController::class, 'empleados_anexo_delete'])->name('empleados_anexo_delete');
     Route::post('/empleados_anexo_add', [App\Http\Controllers\Admin\EmpleadosController::class, 'empleados_anexo_add'])->name('empleados_anexo_add');
+    Route::post('/empleados_change_clave', [App\Http\Controllers\Admin\EmpleadosController::class, 'empleados_change_clave'])->name('empleados_change_clave');
 
     // PROVEEDORES
     Route::get('/proveedores', [App\Http\Controllers\Admin\ProveedoresController::class, 'index'])->name('proveedores');

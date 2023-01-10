@@ -370,6 +370,47 @@ $(document).ready(function () {
         });
     });
 
+    $(document).on("click", ".btnChangeClave", function () {
+        let id = $(this).data("id");
+        $("#id_empleado_clave").val(id);
+
+        $("#modalChangeClave").modal("show");
+    });
+
+    $("#btnChangeClave").click(function () {
+        let id = $("#id_empleado_clave").val();
+        let clave = $("#new_clave_empleado").val();
+
+        $("#btnChangeClave").attr("disabled", true);
+        $.ajax({
+            url: "empleados_change_clave",
+            type: "POST",
+            data: {
+                empleado: id,
+                clave: clave,
+            },
+            dataType: "json",
+            success: function (response) {
+                if (response.info == 1) {
+                    $("#new_clave_empleado").val("");
+                    $("#id_empleado_clave").val("");
+                    $("#modalChangeClave").modal("hide");
+
+                    toastr.success("Clave actualizada correctamente");
+                    $("#btnChangeClave").attr("disabled", false);
+                } else {
+                    toastr.error("Error al actualizar la clave");
+                    $("#btnChangeClave").attr("disabled", false);
+                }
+            },
+            error: function (error) {
+                toastr.error("Error al actualizar la clave");
+                $("#btnChangeClave").attr("disabled", false);
+                console.log(error);
+            },
+        });
+    });
+
     $("#btnAgregarNovedad").click(function () {
         let id = $("#id_empleado_edit").val();
         let motivo = $("#motivoadd").val();

@@ -10,6 +10,10 @@
         <input type="hidden" disabled readonly id="edit_empleados_admin"
             value="{{ auth()->user()->hasPermissionTo('edit_empleados') }}">
 
+        <!-- Input Clave Admin -->
+        <input type="hidden" disabled readonly id="clave_empleados_admin"
+            value="{{ auth()->user()->hasPermissionTo('clave_empleados') }}">
+
         <!-- breadcrumb -->
         <div class="breadcrumb-header justify-content-between">
             <div>
@@ -796,6 +800,30 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn ripple btn-primary" id="btnAgregarAnexo" type="button">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Change Clave -->
+        <div class="modal  fade" id="modalChangeClave">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Cambiar Clave</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" disabled readonly id="id_empleado_clave">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="new_clave_empleado">Clave</label>
+                                <input class="form-control" id="new_clave_empleado" type="password">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" id="btnChangeClave" type="button">Modificar</button>
                     </div>
                 </div>
             </div>

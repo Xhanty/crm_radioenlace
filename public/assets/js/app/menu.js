@@ -729,8 +729,16 @@ $(function () {
                             '<button data-id="' +
                             data.id +
                             '" class="btn btn-danger btn-sm btnEliminar" title="Eliminar">' +
-                            '<i class="fa fa-trash"></i></button>';
+                            '<i class="fa fa-trash"></i></button>&nbsp;';
                     }
+
+                    if ($("#clave_empleados_admin").val() == 1) {
+                        data_return +=
+                            '<button data-id="' +
+                            data.id +
+                            '" class="btn btn-primary btn-sm btnChangeClave" title="Cambiar Clave"><i class="fa fa-unlock-alt"></i></button>';
+                    }
+
                     return data_return;
                 },
             },

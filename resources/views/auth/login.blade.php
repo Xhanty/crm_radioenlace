@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @if(session('user'))
+    @if (session('user'))
         <script>
             window.location = "{{ route('home') }}";
         </script>
@@ -41,4 +41,14 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).keyup(function(event) {
+            if (event.which === 13) {
+                $("#btn_login").click();
+            }
+        });
+    </script>
 @endsection

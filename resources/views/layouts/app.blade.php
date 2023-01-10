@@ -92,6 +92,7 @@
 
     <!--- Login js --->
     <script src="{{ asset('assets/js/login.js') }}"></script>
+    @yield('scripts')
 </body>
 
 </html>

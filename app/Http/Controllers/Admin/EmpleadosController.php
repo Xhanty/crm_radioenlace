@@ -287,4 +287,16 @@ class EmpleadosController extends Controller
             return $ex;
         }
     }
+
+    public function empleados_change_clave(Request $request)
+    {
+        try {
+            $empleado = $request->empleado;
+            $clave = $request->clave;
+            DB::table('empleados')->where('id', $empleado)->update(['password' => Hash::make($clave)]);
+            return response()->json(["info" => 1]);
+        } catch (Exception $ex) {
+            return $ex;
+        }
+    }
 }
