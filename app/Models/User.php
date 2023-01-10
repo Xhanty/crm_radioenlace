@@ -100,4 +100,25 @@ class User extends Authenticatable
             ]);
         });
     }
+
+    public function permisos()
+    {
+        return Permiso::select("modulo")->where('empleado', $this->id)->pluck('modulo')->toArray();
+    }
+
+    public function hasPermissionTo($permission)
+    {
+        return in_array($permission, $this->permisos());
+    }
+
+    public function hasPermissionToMultiple($permissions_string)
+    {
+        $permissions = explode('|', $permissions_string);
+        foreach ($permissions as $permission) {
+            if ($this->hasPermissionTo($permission)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

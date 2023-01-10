@@ -13,6 +13,10 @@ class ProyectosController extends Controller
     public function index()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('gestion_proyectos')) {
+                return redirect()->route('home');
+            }
+
             $proyectos_pendientes = DB::table('proyecto')
                 ->select("proyecto.*", "categorias_proyectos.nombre as categoria", "empleados.nombre as empleado", "cliente.razon_social as cliente")
                 ->leftJoin("categorias_proyectos", "proyecto.id_categoria", "=", "categorias_proyectos.id")

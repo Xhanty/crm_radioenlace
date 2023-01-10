@@ -59,10 +59,10 @@
                                 data-eva="close-outline"></i></a>
                     </div>
                     <div class="responsive-logo">
-                        <a href="javascript:void(0)" class="header-logo"><img src="{{ asset('assets/img/brand/logo.png') }}"
-                                class="logo-11"></a>
-                        <a href="javascript:void(0)" class="header-logo"><img src="{{ asset('assets/img/brand/logo-white.png') }}"
-                                class="logo-1"></a>
+                        <a href="javascript:void(0)" class="header-logo"><img
+                                src="{{ asset('assets/img/brand/logo.png') }}" class="logo-11"></a>
+                        <a href="javascript:void(0)" class="header-logo"><img
+                                src="{{ asset('assets/img/brand/logo-white.png') }}" class="logo-1"></a>
                     </div>
                 </div>
                 <button class="navbar-toggler nav-link icon navresponsive-toggler vertical-icon ms-auto" type="button"
@@ -94,15 +94,18 @@
                                         <div class="main-header-profile header-img">
                                             <div class="main-img-user"><img alt=""
                                                     src="{{ asset('images/empleados/' . session('user_img')) }}"></div>
-                                            <h6 class="name_user_val">Petey Cruiser</h6><span class="cargo_user_val">Premium Member</span>
+                                            <h6 class="name_user_val">Petey Cruiser</h6><span
+                                                class="cargo_user_val">Premium Member</span>
                                         </div>
-                                        <a class="dropdown-item" href="javascript:void(0)"><i class="far fa-user"></i> Mi Perfil</a>
-                                        <a class="dropdown-item btn_logout_sesion" href="javascript:void(0)"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+                                        <a class="dropdown-item" href="javascript:void(0)"><i class="far fa-user"></i>
+                                            Mi Perfil</a>
+                                        <a class="dropdown-item btn_logout_sesion" href="javascript:void(0)"><i
+                                                class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
                                     </div>
                                 </div>
                                 <div class="nav-item full-screen" style="margin: auto 0;">
-                                    <a class="new nav-link full-screen-link" target="_BLANK" href="{{ route('calendario') }}"><i
-                                            class="fe fe-calendar"></i></span></a>
+                                    <a class="new nav-link full-screen-link" target="_BLANK"
+                                        href="{{ route('calendario') }}"><i class="fe fe-calendar"></i></span></a>
                                 </div>
                             </div>
                         </div>
@@ -143,12 +146,14 @@
                     </div>
                     <div class="sidebar-navs">
                         <ul class="nav  nav-pills-circle" style="justify-content: center">
-                            <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="top" title=""
-                                data-bs-original-title="Settings" aria-describedby="tooltip365540">
-                                <a class="nav-link text-center m-2" href="{{ route('permisos') }}">
-                                    <i class="fe fe-settings"></i>
-                                </a>
-                            </li>
+                            @if (auth()->user()->hasPermissionTo('permisos_usuarios'))
+                                <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                                    data-bs-original-title="Settings" aria-describedby="tooltip365540">
+                                    <a class="nav-link text-center m-2" href="{{ route('permisos') }}">
+                                        <i class="fe fe-settings"></i>
+                                    </a>
+                                </li>
+                            @endif
                             <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="top" title=""
                                 data-bs-original-title="Followers">
                                 <a class="nav-link text-center m-2" href="javascript:void(0)">
@@ -173,176 +178,393 @@
                                     class="side-menu__icon fe fe-airplay"></i><span
                                     class="side-menu__label">Inicio</span></a>
                         </li>
+
                         <li class="slide" id="menu_otro_asignaciones">
-							<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i class="side-menu__icon fe fe-check"></i><span class="side-menu__label">Asignaciones</span><i class="angle fe fe-chevron-down"></i></a>
+                            <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
+                                    class="side-menu__icon fe fe-check"></i><span
+                                    class="side-menu__label">Asignaciones</span><i
+                                    class="angle fe fe-chevron-down"></i></a>
                             <ul class="slide-menu" style="display: none;" id="1_otro_asignaciones">
-								<li class="side-menu__label1"><a href="javascript:void(0);">Asignaciones</a></li>
+                                <li class="side-menu__label1"><a href="javascript:void(0);">Asignaciones</a></li>
                                 <li class="sub-slide">
-									<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Generales</span><i class="sub-angle fe fe-chevron-down"></i></a>
-									<ul class="sub-slide-menu" style="display: none;" id="2_1_otro_asignaciones">
-										<li><a class="sub-side-menu__item" href="{{ route('asignaciones_clientes') }}">Asignaciones</a></li>
-                                        <li><a class="sub-side-menu__item" href="{{ route('gestionar_asignaciones_clientes') }}">Gestionar Asignaciones</a></li>
-									</ul>
-								</li>
-								<li class="sub-slide">
-									<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Proyectos</span><i class="sub-angle fe fe-chevron-down"></i></a>
-									<ul class="sub-slide-menu" style="display: none;" id="1_1_otro_asignaciones">
-										<li><a class="sub-side-menu__item" href="{{ route('asignaciones') }}">Asignaciones</a></li>
-                                        <li><a class="sub-side-menu__item" href="{{ route('gestionar_asignaciones') }}">Gestionar Asignaciones</a></li>
-									</ul>
-								</li>
-							</ul>
-						</li>
+                                    <a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span
+                                            class="sub-side-menu__label">Generales</span><i
+                                            class="sub-angle fe fe-chevron-down"></i></a>
+                                    <ul class="sub-slide-menu" style="display: none;" id="2_1_otro_asignaciones">
+                                        <li><a class="sub-side-menu__item"
+                                                href="{{ route('asignaciones_clientes') }}">Asignaciones</a></li>
+                                        @if (auth()->user()->hasPermissionTo('gestion_asignacion'))
+                                            <li><a class="sub-side-menu__item"
+                                                    href="{{ route('gestionar_asignaciones_clientes') }}">Gestionar
+                                                    Asignaciones</a></li>
+                                        @endif
+                                    </ul>
+                                </li>
+                                <li class="sub-slide">
+                                    <a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span
+                                            class="sub-side-menu__label">Proyectos</span><i
+                                            class="sub-angle fe fe-chevron-down"></i></a>
+                                    <ul class="sub-slide-menu" style="display: none;" id="1_1_otro_asignaciones">
+                                        <li><a class="sub-side-menu__item"
+                                                href="{{ route('asignaciones') }}">Asignaciones</a></li>
+                                        @if (auth()->user()->hasPermissionTo('gestion_asignaciones_proyectos'))
+                                            <li><a class="sub-side-menu__item"
+                                                    href="{{ route('gestionar_asignaciones') }}">Gestionar
+                                                    Asignaciones</a></li>
+                                        @endif
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
                         <li class="slide">
                             <a class="side-menu__item" href="{{ route('actividades_diarias') }}"><i
-                                    class="side-menu__icon fe fe-user"></i><span
-                                    class="side-menu__label">Actividades Diarias</span></a>
+                                    class="side-menu__icon fe fe-user"></i><span class="side-menu__label">Actividades
+                                    Diarias</span></a>
                         </li>
+
                         <li class="slide">
                             <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
-                                    class="side-menu__icon fe fe-credit-card"></i><span class="side-menu__label">Puntos</span><i
-                                    class="angle fe fe-chevron-down"></i></a>
+                                    class="side-menu__icon fe fe-credit-card"></i><span
+                                    class="side-menu__label">Puntos</span><i class="angle fe fe-chevron-down"></i></a>
                             <ul class="slide-menu">
                                 <li><a class="slide-item" href="{{ route('mis_puntos') }}">Mis Puntos</a></li>
-                                <li><a class="slide-item" href="{{ route('gestionar_puntos') }}">Gestionar Puntos</a></li>
-                            </ul>
-                        </li>
-                        <li class="slide">
-                            <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
-                                    class="side-menu__icon fe fe-truck"></i><span class="side-menu__label">Vehículos</span><i
-                                    class="angle fe fe-chevron-down"></i></a>
-                            <ul class="slide-menu">
-                                <li><a class="slide-item" href="{{ route('vehiculos') }}">Vehículos</a></li>
-                                <li><a class="slide-item" href="{{ route('checklist_email') }}">Enviar Checklist Email</a></li>
-                            </ul>
-                        </li>
-                        <li class="slide">
-                            <a class="side-menu__item" href="{{ route('clientes') }}"><i
-                                    class="side-menu__icon fe fe-user"></i><span
-                                    class="side-menu__label">Clientes</span></a>
-                        </li>
-                        <li class="slide">
-                            <a class="side-menu__item" href="{{ route('empleados') }}"><i
-                                    class="side-menu__icon fe fe-users"></i><span
-                                    class="side-menu__label">Empleados</span></a>
-                        </li>
-                        <li class="slide">
-                            <a class="side-menu__item" href="{{ route('proveedores') }}"><i
-                                    class="side-menu__icon fe fe-briefcase"></i><span
-                                    class="side-menu__label">Proveedores</span></a>
-                        </li>
-                        <li class="slide">
-                            <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
-                                    class="side-menu__icon fe fe-package"></i><span class="side-menu__label">Inventario</span><i
-                                    class="angle fe fe-chevron-down"></i></a>
-                            <ul class="slide-menu">
-                                <li><a class="slide-item" href="{{ route('categoria_productos') }}">Categorías</a></li>
-                                <li><a class="slide-item" href="{{ route('almacenes') }}">Almacenes</a></li>
-                                <li><a class="slide-item" href="{{ route('inventario') }}">Productos / Stock</a></li>
-                                <li><a class="slide-item" href="{{ route('gestion_inventario') }}">Inventario</a></li>
-                                <li><a class="slide-item" href="{{ route('actividades_inventario') }}">Actividades Inventario</a></li>
-                            </ul>
-                        </li>
-                        <li class="slide">
-                            <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
-                                    class="side-menu__icon fe fe-shopping-cart"></i><span class="side-menu__label">Movimiento Inv.</span><i
-                                    class="angle fe fe-chevron-down"></i></a>
-                            <ul class="slide-menu">
-                                <li><a class="slide-item" href="{{ route('productos_baja') }}">Productos Baja</a></li>
-                                <li><a class="slide-item" href="{{ route('repuestos_reparacion') }}">Repuestos Reparación</a></li>
-                                <li><a class="slide-item" href="{{ route('productos_instalados') }}">Productos Instalados</a></li>
-                                <li><a class="slide-item" href="{{ route('ventas') }}">Ventas</a></li>
-                                <li><a class="slide-item" href="{{ route('prestamos') }}">Prestamos</a></li>
-                                <li><a class="slide-item" href="{{ route('alquileres') }}">Alquileres</a></li>
-                                <li><a class="slide-item" href="{{ route('productos_asignados') }}">Productos Asignados</a></li>
+                                @if (auth()->user()->hasPermissionTo('gestionar_puntos'))
+                                    <li><a class="slide-item" href="{{ route('gestionar_puntos') }}">Gestionar
+                                            Puntos</a>
+                                    </li>
+                                @endif
                             </ul>
                         </li>
 
-                        <li class="slide">
-                            <a class="side-menu__item" href="{{ route('solicitud_inventario') }}"><i
-                                    class="side-menu__icon fe fe-sliders"></i><span
-                                    class="side-menu__label">Solicitudes Inventario</span></a>
-                        </li>
-                        <li class="slide">
-                            <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
-                                    class="side-menu__icon fe fe-shield"></i><span class="side-menu__label">Proyectos</span><i
-                                    class="angle fe fe-chevron-down"></i></a>
-                            <ul class="slide-menu">
-                                <li><a class="slide-item" href="{{ route('categorias_proyectos') }}">Categorías</a></li>
-                                <li><a class="slide-item" href="{{ route('proyectos') }}">Proyectos</a></li>
-                            </ul>
-                        </li>
-                        <li class="slide">
-                            <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
-                                    class="side-menu__icon fe fe-bar-chart"></i><span class="side-menu__label">Seguimiento Clientes</span><i
-                                    class="angle fe fe-chevron-down"></i></a>
-                            <ul class="slide-menu">
-                                <li><a class="slide-item" href="{{ route('categorias_seguimientos') }}">Categorías</a></li>
-                                <li><a class="slide-item" href="{{ route('seguimientos_clientes') }}">Seguimientos</a></li>
-                                <li><a class="slide-item" href="{{ route('tarjetas_seguimientos') }}">Mis Tarjetas</a></li>
-                            </ul>
-                        </li>
+                        @if (auth()->user()->hasPermissionTo('ver_vehiculos'))
+                            <li class="slide">
+                                <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
+                                        class="side-menu__icon fe fe-truck"></i><span
+                                        class="side-menu__label">Vehículos</span><i
+                                        class="angle fe fe-chevron-down"></i></a>
+                                <ul class="slide-menu">
+                                    <li><a class="slide-item" href="{{ route('vehiculos') }}">Vehículos</a></li>
+                                    @if (auth()->user()->hasPermissionTo('gestion_checklist_vehiculos'))
+                                        <li><a class="slide-item" href="{{ route('checklist_email') }}">Enviar
+                                                Checklist
+                                                Email</a></li>
+                                    @endif
+                                </ul>
+                            </li>
+                        @endif
+
+                        @if (auth()->user()->hasPermissionTo('ver_clientes'))
+                            <li class="slide">
+                                <a class="side-menu__item" href="{{ route('clientes') }}"><i
+                                        class="side-menu__icon fe fe-user"></i><span
+                                        class="side-menu__label">Clientes</span></a>
+                            </li>
+                        @endif
+
+                        @if (auth()->user()->hasPermissionTo('ver_empleados'))
+                            <li class="slide">
+                                <a class="side-menu__item" href="{{ route('empleados') }}"><i
+                                        class="side-menu__icon fe fe-users"></i><span
+                                        class="side-menu__label">Empleados</span></a>
+                            </li>
+                        @endif
+
+                        @if (auth()->user()->hasPermissionTo('ver_proveedores'))
+                            <li class="slide">
+                                <a class="side-menu__item" href="{{ route('proveedores') }}"><i
+                                        class="side-menu__icon fe fe-briefcase"></i><span
+                                        class="side-menu__label">Proveedores</span></a>
+                            </li>
+                        @endif
+
+                        @if (auth()->user()->hasPermissionToMultiple(
+                                'gestion_categorias_inventario|' .
+                                    'gestion_almacenes_inventario|' .
+                                    'gestion_productos_inventario|' .
+                                    'gestion_inventario|' .
+                                    'gestion_actividades_inventario'))
+                            <li class="slide">
+                                <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
+                                        class="side-menu__icon fe fe-package"></i><span
+                                        class="side-menu__label">Inventario</span><i
+                                        class="angle fe fe-chevron-down"></i></a>
+                                <ul class="slide-menu">
+                                    @if (auth()->user()->hasPermissionTo('gestion_categorias_inventario'))
+                                        <li><a class="slide-item"
+                                                href="{{ route('categoria_productos') }}">Categorías</a>
+                                        </li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_almacenes_inventario'))
+                                        <li><a class="slide-item" href="{{ route('almacenes') }}">Almacenes</a></li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_productos_inventario'))
+                                        <li><a class="slide-item" href="{{ route('inventario') }}">Productos /
+                                                Stock</a>
+                                        </li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_inventario'))
+                                        <li><a class="slide-item"
+                                                href="{{ route('gestion_inventario') }}">Inventario</a>
+                                        </li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_actividades_inventario'))
+                                        <li><a class="slide-item"
+                                                href="{{ route('actividades_inventario') }}">Actividades
+                                                Inventario</a></li>
+                                    @endif
+                                </ul>
+                            </li>
+                        @endif
+
+                        @if (auth()->user()->hasPermissionToMultiple(
+                                'gestion_productos_baja|' .
+                                    'gestion_repuestos_reparacion|' .
+                                    'gestion_ventas|' .
+                                    'gestion_prestamos|' .
+                                    'gestion_alquileres|' .
+                                    'gestion_productos_asignados|' .
+                                    'gestion_productos_instalados'))
+                            <li class="slide">
+                                <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
+                                        class="side-menu__icon fe fe-shopping-cart"></i><span
+                                        class="side-menu__label">Movimiento Inv.</span><i
+                                        class="angle fe fe-chevron-down"></i></a>
+                                <ul class="slide-menu">
+                                    @if (auth()->user()->hasPermissionTo('gestion_productos_baja'))
+                                        <li><a class="slide-item" href="{{ route('productos_baja') }}">Productos
+                                                Baja</a>
+                                        </li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_repuestos_reparacion'))
+                                        <li><a class="slide-item"
+                                                href="{{ route('repuestos_reparacion') }}">Repuestos
+                                                Reparación</a></li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_productos_instalados'))
+                                        <li><a class="slide-item"
+                                                href="{{ route('productos_instalados') }}">Productos
+                                                Instalados</a></li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_ventas'))
+                                        <li><a class="slide-item" href="{{ route('ventas') }}">Ventas</a></li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_prestamos'))
+                                        <li><a class="slide-item" href="{{ route('prestamos') }}">Prestamos</a></li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_alquileres'))
+                                        <li><a class="slide-item" href="{{ route('alquileres') }}">Alquileres</a>
+                                        </li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_productos_asignados'))
+                                        <li><a class="slide-item" href="{{ route('productos_asignados') }}">Productos
+                                                Asignados</a></li>
+                                    @endif
+                                </ul>
+                            </li>
+                        @endif
+
+                        @if (auth()->user()->hasPermissionTo('gestion_solicitudes'))
+                            <li class="slide">
+                                <a class="side-menu__item" href="{{ route('solicitud_inventario') }}"><i
+                                        class="side-menu__icon fe fe-sliders"></i><span
+                                        class="side-menu__label">Solicitudes Inventario</span></a>
+                            </li>
+                        @endif
+
+                        @if (auth()->user()->hasPermissionToMultiple('gesion_categorias_proyectos|' . 'gestion_proyectos'))
+                            <li class="slide">
+                                <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
+                                        class="side-menu__icon fe fe-shield"></i><span
+                                        class="side-menu__label">Proyectos</span><i
+                                        class="angle fe fe-chevron-down"></i></a>
+                                <ul class="slide-menu">
+                                    @if (auth()->user()->hasPermissionTo('gesion_categorias_proyectos'))
+                                        <li><a class="slide-item"
+                                                href="{{ route('categorias_proyectos') }}">Categorías</a>
+                                        </li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_proyectos'))
+                                        <li><a class="slide-item" href="{{ route('proyectos') }}">Proyectos</a></li>
+                                    @endif
+                                </ul>
+                            </li>
+                        @endif
+
+                        @if (auth()->user()->hasPermissionToMultiple('gestion_categorias_seguimientos|' . 'gestion_seguimientos'))
+                            <li class="slide">
+                                <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
+                                        class="side-menu__icon fe fe-bar-chart"></i><span
+                                        class="side-menu__label">Seguimiento Clientes</span><i
+                                        class="angle fe fe-chevron-down"></i></a>
+                                <ul class="slide-menu">
+                                    @if (auth()->user()->hasPermissionTo('gestion_categorias_seguimientos'))
+                                        <li><a class="slide-item"
+                                                href="{{ route('categorias_seguimientos') }}">Categorías</a></li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_seguimientos'))
+                                        <li><a class="slide-item"
+                                                href="{{ route('seguimientos_clientes') }}">Seguimientos</a></li>
+                                    @endif
+                                    <!--<li><a class="slide-item" href="{{ route('tarjetas_seguimientos') }}">Mis
+                                        Tarjetas</a></li>-->
+                                </ul>
+                            </li>
+                        @endif
 
                         <li class="slide">
                             <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
-                                    class="side-menu__icon fe fe-layers"></i><span class="side-menu__label">Reparaciones</span><i
+                                    class="side-menu__icon fe fe-layers"></i><span
+                                    class="side-menu__label">Reparaciones</span><i
                                     class="angle fe fe-chevron-down"></i></a>
                             <ul class="slide-menu">
-                                <li><a class="slide-item" href="{{ route('reparaciones') }}">Reparaciones</a></li>
-                                <li><a class="slide-item" href="{{ route('mis_reparaciones') }}">Reparaciones Asignadas</a></li>
+                                @if (auth()->user()->hasPermissionTo('gestion_reparaciones'))
+                                    <li><a class="slide-item" href="{{ route('reparaciones') }}">Reparaciones</a>
+                                    </li>
+                                @endif
+                                <li><a class="slide-item" href="{{ route('mis_reparaciones') }}">Reparaciones
+                                        Asignadas</a></li>
                             </ul>
                         </li>
 
-                        <li class="slide">
-                            <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
-                                    class="side-menu__icon fe fe-folder"></i><span class="side-menu__label">Documentos</span><i
-                                    class="angle fe fe-chevron-down"></i></a>
-                            <ul class="slide-menu">
-                                <li><a class="slide-item" href="{{ route('categorias_archivos') }}">Categorías Documentos</a></li>
-                                <li><a class="slide-item" href="{{ route('archivos') }}">Gestionar Archivos</a></li>
-                                <li><a class="slide-item" href="{{ route('documentos') }}">Documentos</a></li>
-                            </ul>
-                        </li>
+                        @if (auth()->user()->hasPermissionToMultiple('gestion_categorias_documentos|' . 'gestion_archivos|' . 'gestion_documentos'))
+                            <li class="slide">
+                                <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
+                                        class="side-menu__icon fe fe-folder"></i><span
+                                        class="side-menu__label">Documentos</span><i
+                                        class="angle fe fe-chevron-down"></i></a>
+                                <ul class="slide-menu">
+                                    @if (auth()->user()->hasPermissionTo('gestion_categorias_documentos'))
+                                        <li><a class="slide-item"
+                                                href="{{ route('categorias_archivos') }}">Categorías
+                                                Documentos</a></li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_archivos'))
+                                        <li><a class="slide-item" href="{{ route('archivos') }}">Gestionar
+                                                Archivos</a>
+                                        </li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_documentos'))
+                                        <li><a class="slide-item" href="{{ route('documentos') }}">Documentos</a>
+                                        </li>
+                                    @endif
+                                </ul>
+                            </li>
+                        @endif
 
-                        <li class="slide">
-                            <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
-                                    class="side-menu__icon fe fe-file-text"></i><span class="side-menu__label">Comercial</span><i
-                                    class="angle fe fe-chevron-down"></i></a>
-                            <ul class="slide-menu">
-                                <li><a class="slide-item" href="{{ route('ordenes_compra') }}">Ordenes Compra</a></li>
-                                <li><a class="slide-item" href="{{ route('cotizaciones') }}">Cotizaciones</a></li>
-                                <li><a class="slide-item" href="{{ route('remisiones') }}">Remisiones</a></li>
-                            </ul>
-                        </li>
+                        @if (auth()->user()->hasPermissionToMultiple('gestion_orden_compra|' . 'gestionar_cotizaciones|' . 'gestionar_remisiones'))
+                            <li class="slide">
+                                <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
+                                        class="side-menu__icon fe fe-file-text"></i><span
+                                        class="side-menu__label">Comercial</span><i
+                                        class="angle fe fe-chevron-down"></i></a>
+                                <ul class="slide-menu">
+                                    @if (auth()->user()->hasPermissionTo('gestion_orden_compra'))
+                                        <li><a class="slide-item" href="{{ route('ordenes_compra') }}">Ordenes
+                                                Compra</a>
+                                        </li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestionar_cotizaciones'))
+                                        <li><a class="slide-item" href="{{ route('cotizaciones') }}">Cotizaciones</a>
+                                        </li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestionar_remisiones'))
+                                        <li><a class="slide-item" href="{{ route('remisiones') }}">Remisiones</a>
+                                        </li>
+                                    @endif
+                                </ul>
+                            </li>
+                        @endif
 
-                        <li class="slide">
-                            <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
-                                    class="side-menu__icon fe fe-dollar-sign"></i><span class="side-menu__label">Contabilidad</span><i
-                                    class="angle fe fe-chevron-down"></i></a>
-                            <ul class="slide-menu">
-                                <li><a class="slide-item" href="{{ route('facturacion') }}">Facturación</a></li>
-                                <li><a class="slide-item" href="{{ route('estadistica_proveedores') }}">Estadística Proveedores</a></li>
-                                <li><a class="slide-item" href="{{ route('estadistica_compra') }}">Estadística Compra</a></li>
-                                <li><a class="slide-item" href="{{ route('estadistica_ventas') }}">Estadística Ventas</a></li>
-                                <li><a class="slide-item" href="{{ route('viaticos') }}">Gestionar Viáticos</a></li>
-                                <li><a class="slide-item" href="{{ route('causaciones') }}">Gestionar Causaciones</a></li>
-                                <li><a class="slide-item" href="{{ route('informe_contable') }}">Informes Contables</a></li>
-                                <li><a class="slide-item" href="{{ route('nomina') }}">Nómina</a></li>
-                                <li><a class="slide-item" href="{{ route('config_nomina') }}">Configuración Nómina</a></li>
-                            </ul>
-                        </li>
+                        @if (auth()->user()->hasPermissionToMultiple(
+                                'gestion_facturacion|' .
+                                    'gestion_causaciones|' .
+                                    'estadistica_proveedores|' .
+                                    'estadisticas_ventas|' .
+                                    'estadisticas_orden_compra|' .
+                                    'informes_contables|' .
+                                    'gestion_viaticos|' .
+                                    'gestion_nomina_general|' .
+                                    'gestion_config_nomina_general'))
+                            <li class="slide">
+                                <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
+                                        class="side-menu__icon fe fe-dollar-sign"></i><span
+                                        class="side-menu__label">Contabilidad</span><i
+                                        class="angle fe fe-chevron-down"></i></a>
+                                <ul class="slide-menu">
+                                    @if (auth()->user()->hasPermissionTo('gestion_facturacion'))
+                                        <li><a class="slide-item" href="{{ route('facturacion') }}">Facturación</a>
+                                        </li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('estadistica_proveedores'))
+                                        <li><a class="slide-item"
+                                                href="{{ route('estadistica_proveedores') }}">Estadística
+                                                Proveedores</a></li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('estadisticas_orden_compra'))
+                                        <li><a class="slide-item"
+                                                href="{{ route('estadistica_compra') }}">Estadística
+                                                Compra</a></li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('estadisticas_ventas'))
+                                        <li><a class="slide-item"
+                                                href="{{ route('estadistica_ventas') }}">Estadística
+                                                Ventas</a></li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_viaticos'))
+                                        <li><a class="slide-item" href="{{ route('viaticos') }}">Gestionar
+                                                Viáticos</a>
+                                        </li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_causaciones'))
+                                        <li><a class="slide-item" href="{{ route('causaciones') }}">Gestionar
+                                                Causaciones</a>
+                                        </li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('informes_contables'))
+                                        <li><a class="slide-item" href="{{ route('informe_contable') }}">Informes
+                                                Contables</a></li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_nomina_general'))
+                                        <li><a class="slide-item" href="{{ route('nomina') }}">Nómina</a></li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_config_nomina_general'))
+                                        <li><a class="slide-item" href="{{ route('config_nomina') }}">Configuración
+                                                Nómina</a></li>
+                                    @endif
+                                </ul>
+                            </li>
+                        @endif
 
-                        <li class="slide">
-                            <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
-                                    class="side-menu__icon fe fe-globe"></i><span class="side-menu__label">Gastos</span><i
-                                    class="angle fe fe-chevron-down"></i></a>
-                            <ul class="slide-menu">
-                                <li><a class="slide-item" href="{{ route('arrendamientos') }}">Arrendamientos</a></li>
-                                <li><a class="slide-item" href="{{ route('gastos_varios') }}">Gastos Varios</a></li>
-                                <li><a class="slide-item" href="{{ route('gastos_fijos') }}">Gastos Fijos</a></li>
-                                <li><a class="slide-item" href="{{ route('gastos_equivalentes') }}">Gastos Equivalentes</a></li>
-                            </ul>
-                        </li>
+                        @if (auth()->user()->hasPermissionToMultiple(
+                                'gestion_arrendamientos|' . 'gestion_gastos_varios|' . 'gestion_gastos_fijos|' . 'gestion_gastos_equivalentes'))
+                            <li class="slide">
+                                <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
+                                        class="side-menu__icon fe fe-globe"></i><span
+                                        class="side-menu__label">Gastos</span><i
+                                        class="angle fe fe-chevron-down"></i></a>
+                                <ul class="slide-menu">
+                                    @if (auth()->user()->hasPermissionTo('gestion_arrendamientos'))
+                                        <li><a class="slide-item"
+                                                href="{{ route('arrendamientos') }}">Arrendamientos</a>
+                                        </li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_gastos_varios'))
+                                        <li><a class="slide-item" href="{{ route('gastos_varios') }}">Gastos
+                                                Varios</a>
+                                        </li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_gastos_fijos'))
+                                        <li><a class="slide-item" href="{{ route('gastos_fijos') }}">Gastos Fijos</a>
+                                        </li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_gastos_equivalentes'))
+                                        <li><a class="slide-item" href="{{ route('gastos_equivalentes') }}">Gastos
+                                                Equivalentes</a></li>
+                                    @endif
+                                </ul>
+                            </li>
+                        @endif
                     </ul>
 
                     <div class="slide-right" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191"
@@ -357,37 +579,6 @@
         <div class="main-content app-content">
             @yield('content')
         </div>
-
-        <!--Sidebar-right-->
-        <div class="sidebar sidebar-right sidebar-animate">
-            <div class="panel panel-primary card mb-0">
-                <div class="panel-body tabs-menu-body p-0 border-0">
-                    <ul class="Date-time">
-                        <li class="time">
-                            <h1 class="animated ">21:00</h1>
-                            <p class="animated ">Sat,October 1st 2029</p>
-                        </li>
-                    </ul>
-                    <div class="card-body latest-tasks">
-                        <h3 class="events-title"><span>Eventos </span></h3>
-                        <div class="event">
-                            <div class="Day">Wednessday 22 Jan</div>
-                            <div class="tasks">
-                                <div class=" task-line primary">
-                                    <a href="javascript:void(0);" class="label">
-                                        XML Import &amp; Export
-                                    </a>
-                                    <div class="time">
-                                        12:00 PM
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--/Sidebar-right-->
 
         <!-- Footer opened -->
         <div class="main-footer ht-45">
@@ -442,8 +633,8 @@
     <script src="{{ asset('assets/js/sticky.js') }}"></script>
 
     <!-- right-sidebar js -->
-    <script src="{{ asset('assets/plugins/sidebar/sidebar.js') }}"></script>
-    <script src="{{ asset('assets/plugins/sidebar/sidebar-custom.js') }}"></script>
+    <!--<script src="{{ asset('assets/plugins/sidebar/sidebar.js') }}"></script>
+    <script src="{{ asset('assets/plugins/sidebar/sidebar-custom.js') }}"></script>-->
 
     <!-- Morris js -->
     <script src="{{ asset('assets/plugins/raphael/raphael.min.js') }}"></script>
@@ -480,7 +671,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!--- Select2 js --->
-	<script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
     <!--- Date Range --->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 

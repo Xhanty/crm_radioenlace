@@ -12,6 +12,10 @@ class ArchivosController extends Controller
     public function index()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('gestion_archivos')) {
+                return redirect()->route('home');
+            }
+
             $anexos = DB::table('anexos_clientes')
                 ->select("anexos_clientes.*", "cliente.razon_social as cliente", "empleados.nombre as creador")
                 ->join("cliente", "anexos_clientes.id_cliente", "=", "cliente.id")

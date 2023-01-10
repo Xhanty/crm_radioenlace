@@ -31,7 +31,7 @@
                         </div>
                         <div class="card-footer p-3">
                             <label class="form-switch float-end mb-0">
-                                <input type="checkbox" class="form-switch-input check-con-1">
+                                <input type="checkbox" value="gestion_facturacion" class="form-switch-input check-con-1">
                                 <span class="form-switch-indicator custom-radius"></span>
                             </label>
                         </div>
@@ -55,7 +55,7 @@
                         </div>
                         <div class="card-footer p-3">
                             <label class="form-switch float-end mb-0">
-                                <input type="checkbox" class="form-switch-input check-con-2">
+                                <input type="checkbox" value="completar_facturas" class="form-switch-input check-con-2">
                                 <span class="form-switch-indicator custom-radius"></span>
                             </label>
                         </div>
@@ -79,7 +79,7 @@
                         </div>
                         <div class="card-footer p-3">
                             <label class="form-switch float-end mb-0">
-                                <input type="checkbox" class="form-switch-input check-con-3">
+                                <input type="checkbox" value="re_abrir_facturas" class="form-switch-input check-con-3">
                                 <span class="form-switch-indicator custom-radius"></span>
                             </label>
                         </div>
@@ -103,7 +103,7 @@
                         </div>
                         <div class="card-footer p-3">
                             <label class="form-switch float-end mb-0">
-                                <input type="checkbox" class="form-switch-input check-con-4">
+                                <input type="checkbox" value="anular_facturas" class="form-switch-input check-con-4">
                                 <span class="form-switch-indicator custom-radius"></span>
                             </label>
                         </div>
@@ -128,7 +128,7 @@
                         </div>
                         <div class="card-footer p-3">
                             <label class="form-switch float-end mb-0">
-                                <input type="checkbox" class="form-switch-input check-con-5">
+                                <input type="checkbox" value="gestion_causaciones" class="form-switch-input check-con-5">
                                 <span class="form-switch-indicator custom-radius"></span>
                             </label>
                         </div>
@@ -152,7 +152,7 @@
                         </div>
                         <div class="card-footer p-3">
                             <label class="form-switch float-end mb-0">
-                                <input type="checkbox" class="form-switch-input check-con-6">
+                                <input type="checkbox" value="enviar_facturas" class="form-switch-input check-con-6">
                                 <span class="form-switch-indicator custom-radius"></span>
                             </label>
                         </div>
@@ -176,7 +176,7 @@
                         </div>
                         <div class="card-footer p-3">
                             <label class="form-switch float-end mb-0">
-                                <input type="checkbox" class="form-switch-input check-con-7">
+                                <input type="checkbox" value="detalles_facturas" class="form-switch-input check-con-7">
                                 <span class="form-switch-indicator custom-radius"></span>
                             </label>
                         </div>
@@ -200,7 +200,7 @@
                         </div>
                         <div class="card-footer p-3">
                             <label class="form-switch float-end mb-0">
-                                <input type="checkbox" class="form-switch-input check-con-8">
+                                <input type="checkbox" value="eliminar_facturas" class="form-switch-input check-con-8">
                                 <span class="form-switch-indicator custom-radius"></span>
                             </label>
                         </div>
@@ -225,7 +225,7 @@
                         </div>
                         <div class="card-footer p-3">
                             <label class="form-switch float-end mb-0">
-                                <input type="checkbox" class="form-switch-input check-con-9">
+                                <input type="checkbox" value="estadistica_proveedores" class="form-switch-input check-con-9">
                                 <span class="form-switch-indicator custom-radius"></span>
                             </label>
                         </div>
@@ -249,7 +249,7 @@
                         </div>
                         <div class="card-footer p-3">
                             <label class="form-switch float-end mb-0">
-                                <input type="checkbox" class="form-switch-input check-con-10">
+                                <input type="checkbox" value="estadisticas_ventas" class="form-switch-input check-con-10">
                                 <span class="form-switch-indicator custom-radius"></span>
                             </label>
                         </div>
@@ -273,7 +273,7 @@
                         </div>
                         <div class="card-footer p-3">
                             <label class="form-switch float-end mb-0">
-                                <input type="checkbox" class="form-switch-input check-con-11">
+                                <input type="checkbox" value="estadisticas_orden_compra" class="form-switch-input check-con-11">
                                 <span class="form-switch-indicator custom-radius"></span>
                             </label>
                         </div>
@@ -297,7 +297,7 @@
                         </div>
                         <div class="card-footer p-3">
                             <label class="form-switch float-end mb-0">
-                                <input type="checkbox" class="form-switch-input check-con-12">
+                                <input type="checkbox" value="informes_contables" class="form-switch-input check-con-12">
                                 <span class="form-switch-indicator custom-radius"></span>
                             </label>
                         </div>
@@ -322,7 +322,7 @@
                         </div>
                         <div class="card-footer p-3">
                             <label class="form-switch float-end mb-0">
-                                <input type="checkbox" class="form-switch-input check-con-13">
+                                <input type="checkbox" value="gestion_viaticos" class="form-switch-input check-con-13">
                                 <span class="form-switch-indicator custom-radius"></span>
                             </label>
                         </div>
@@ -346,7 +346,7 @@
                         </div>
                         <div class="card-footer p-3">
                             <label class="form-switch float-end mb-0">
-                                <input type="checkbox" class="form-switch-input check-con-14">
+                                <input type="checkbox" value="gestion_nomina_general" class="form-switch-input check-con-14">
                                 <span class="form-switch-indicator custom-radius"></span>
                             </label>
                         </div>
@@ -370,7 +370,7 @@
                         </div>
                         <div class="card-footer p-3">
                             <label class="form-switch float-end mb-0">
-                                <input type="checkbox" class="form-switch-input check-con-15">
+                                <input type="checkbox" value="gestion_config_nomina_general" class="form-switch-input check-con-15">
                                 <span class="form-switch-indicator custom-radius"></span>
                             </label>
                         </div>

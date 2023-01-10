@@ -109,7 +109,9 @@ $(function () {
                         return '<img src="assets/img/sin_imagen.jpg" loading="lazy" style="width: 120px" />';
                     } else {
                         return (
-                            '<img src="' + url_general + 'images/vehiculos/' +
+                            '<img src="' +
+                            url_general +
+                            "images/vehiculos/" +
                             data +
                             '" loading="lazy" style="width: 120px">'
                         );
@@ -153,7 +155,9 @@ $(function () {
                         return '<img src="assets/img/sin_imagen.jpg" loading="lazy" style="width: 120px" />';
                     } else {
                         return (
-                            '<img src="' + url_general + 'images/productos/' +
+                            '<img src="' +
+                            url_general +
+                            "images/productos/" +
                             data +
                             '" loading="lazy" style="width: 120px">'
                         );
@@ -196,7 +200,9 @@ $(function () {
                 render: function (data) {
                     var img =
                         '<div><img src="' +
-                        url_general + "images/productos/" + data.img_producto +
+                        url_general +
+                        "images/productos/" +
+                        data.img_producto +
                         '" loading="lazy" style="width: 120px" /></div>' +
                         "<div>" +
                         data.producto +
@@ -211,21 +217,21 @@ $(function () {
                 data: null,
                 render: function (data) {
                     if (data.tipo == 0) {
-                        return 'Existente';
+                        return "Existente";
                     } else if (data.tipo == 1) {
-                        return 'Compra';
+                        return "Compra";
                     } else if (data.tipo == 2) {
-                        return 'Venta';
+                        return "Venta";
                     } else if (data.tipo == 3) {
-                        return 'Alquiler';
+                        return "Alquiler";
                     } else if (data.tipo == 4) {
-                        return 'Prestamo';
+                        return "Prestamo";
                     } else if (data.tipo == 5) {
-                        return 'Asignado a Empleado';
+                        return "Asignado a Empleado";
                     } else if (data.tipo == 6) {
-                        return 'Instalación';
+                        return "Instalación";
                     } else {
-                        return 'Otro';
+                        return "Otro";
                     }
                 },
             },
@@ -253,7 +259,9 @@ $(function () {
                         return '<img src="assets/img/sin_imagen.jpg" loading="lazy" style="width: 120px" />';
                     } else {
                         return (
-                            '<img src="' + url_general + "images/productos/" +
+                            '<img src="' +
+                            url_general +
+                            "images/productos/" +
                             data +
                             '" loading="lazy" style="width: 120px">'
                         );
@@ -290,7 +298,7 @@ $(function () {
         ],
         language: language,
     });
-    
+
     $("#table_inventario_gestion_img").DataTable({
         processing: true,
         serverSide: true,
@@ -304,7 +312,8 @@ $(function () {
                         return '<img src="assets/img/sin_imagen.jpg" loading="lazy" style="width: 120px" />';
                     } else {
                         return (
-                            '<img src="' + "images/productos/" +
+                            '<img src="' +
+                            "images/productos/" +
                             data +
                             '" loading="lazy" style="width: 120px">'
                         );
@@ -370,12 +379,16 @@ $(function () {
                 className: "text-center",
                 render: function (data, type, full, meta) {
                     if (type === "display") {
-                        if(data.avatar == null || data.avatar == '') {
+                        if (data.avatar == null || data.avatar == "") {
                             return '<img src="assets/img/sin_imagen.jpg" class="avatar border rounded-circle">';
                         }
-                        return '<img src="'+url_general+'images/clientes/' +
+                        return (
+                            '<img src="' +
+                            url_general +
+                            "images/clientes/" +
                             data.avatar +
-                            '" class="avatar border rounded-circle">';
+                            '" class="avatar border rounded-circle">'
+                        );
                     }
 
                     return data;
@@ -406,12 +419,23 @@ $(function () {
             {
                 data: null,
                 render: function (data) {
-                    return (
-                        '<button data-estado="'+data.estado+'" data-id="'+data.id+'" class="btn btn-primary btn-sm btnInactivar" title="Inactivar">' +
-                        '<i class="fas fa-times"></i></button>&nbsp;' +
-                        '<button data-id="'+data.id+'" class="btn btn-danger btn-sm btnEliminar" title="Eliminar">' +
-                        '<i class="fa fa-trash"></i></button>'
-                    );
+                    let data_return = "";
+
+                    if ($("#delete_cliente_admin").val() == 1) {
+                        data_return +=
+                            '<button data-estado="' +
+                            data.estado +
+                            '" data-id="' +
+                            data.id +
+                            '" class="btn btn-primary btn-sm btnInactivar" title="Inactivar">' +
+                            '<i class="fas fa-times"></i></button>&nbsp;' +
+                            '<button data-id="' +
+                            data.id +
+                            '" class="btn btn-danger btn-sm btnEliminar" title="Eliminar">' +
+                            '<i class="fa fa-trash"></i></button>';
+                    }
+
+                    return data_return;
                 },
             },
         ],
@@ -454,154 +478,170 @@ $(function () {
         },
     });
 
-    $("#table_clientes_img tbody").on("click", "tr td:first-child", function () {
-        $("#global-loader").fadeIn("fast");
-        var data = table_clientes.row(this).data();
+    $("#table_clientes_img tbody").on(
+        "click",
+        "tr td:first-child",
+        function () {
+            $("#global-loader").fadeIn("fast");
+            var data = table_clientes.row(this).data();
 
-        if ($.fn.DataTable.isDataTable("#table_anexos_edit")) {
-            $("#table_anexos_edit").DataTable().destroy();
-        }
+            if ($.fn.DataTable.isDataTable("#table_anexos_edit")) {
+                $("#table_anexos_edit").DataTable().destroy();
+            }
 
-        $("#table_anexos_edit tbody").empty();
+            $("#table_anexos_edit tbody").empty();
 
-        $.ajax({
-            url: "clientes_data",
-            type: "POST",
-            data: {
-                cliente: data.id,
-            },
-            dataType: "json",
-            success: function (data) {
-                let cliente = data.cliente;
-                let facturacion = data.facturacion;
-                let tecnicos = data.tecnicos;
-                let anexos = data.anexos;
+            $.ajax({
+                url: "clientes_data",
+                type: "POST",
+                data: {
+                    cliente: data.id,
+                },
+                dataType: "json",
+                success: function (data) {
+                    let cliente = data.cliente;
+                    let facturacion = data.facturacion;
+                    let tecnicos = data.tecnicos;
+                    let anexos = data.anexos;
 
-                //Facturación
-                $("#nombre_fact_edit").val(facturacion.nombre);
-                $("#telefono_fact_edit").val(facturacion.telefono);
-                $("#apellido_fact_edit").val(facturacion.apellido);
-                $("#extension_fact_edit").val(facturacion.extension);
-                $("#email_fact_edit").val(facturacion.email);
-                $("#codigo_fact_edit").val(facturacion.codigo_postal);
-                $("#regimen_fact_edit").val(facturacion.tipo_regimen);
-                $("#responsable_fact_edit").val(
-                    facturacion.responsabilidad_fiscal
-                );
-                $("#indicativo_fact_edit").val(facturacion.indicativo_telefono);
+                    //Facturación
+                    $("#nombre_fact_edit").val(facturacion.nombre);
+                    $("#telefono_fact_edit").val(facturacion.telefono);
+                    $("#apellido_fact_edit").val(facturacion.apellido);
+                    $("#extension_fact_edit").val(facturacion.extension);
+                    $("#email_fact_edit").val(facturacion.email);
+                    $("#codigo_fact_edit").val(facturacion.codigo_postal);
+                    $("#regimen_fact_edit").val(facturacion.tipo_regimen);
+                    $("#responsable_fact_edit").val(
+                        facturacion.responsabilidad_fiscal
+                    );
+                    $("#indicativo_fact_edit").val(
+                        facturacion.indicativo_telefono
+                    );
 
-                //Técnicos
-                $("#nombre_tecn_edit").val(tecnicos.nombre);
-                $("#indicativo_tecn_edit").val(tecnicos.indicativo_telefono);
-                $("#apellido_tecn_edit").val(tecnicos.apellido);
-                $("#telefono_tecn_edit").val(tecnicos.telefono);
-                $("#email_tecn_edit").val(tecnicos.email);
-                $("#extension_tecn_edit").val(tecnicos.extension);
+                    //Técnicos
+                    $("#nombre_tecn_edit").val(tecnicos.nombre);
+                    $("#indicativo_tecn_edit").val(
+                        tecnicos.indicativo_telefono
+                    );
+                    $("#apellido_tecn_edit").val(tecnicos.apellido);
+                    $("#telefono_tecn_edit").val(tecnicos.telefono);
+                    $("#email_tecn_edit").val(tecnicos.email);
+                    $("#extension_tecn_edit").val(tecnicos.extension);
 
-                //Anexos
-                anexos.forEach((anexo) => {
-                    var date = new Date(anexo.fecha);
-                    var tipo_badge = "";
-                    if (anexo.tipo == 0) {
-                        tipo_badge = "Camara de comercio";
-                    } else if (anexo.tipo == 1) {
-                        tipo_badge = "RUT";
-                    } else if (anexo.tipo == 2) {
-                        tipo_badge = "Cedula del representante Legal";
-                    } else if (anexo.tipo == 3) {
-                        tipo_badge = "Remisiones";
-                    } else if (anexo.tipo == 4) {
-                        tipo_badge = "Cotizaciones";
-                    } else if (anexo.tipo == 5) {
-                        tipo_badge = "Informacion Tecnica";
-                    } else if (anexo.tipo == 6) {
-                        tipo_badge = "Frecuencias";
-                    } else if (anexo.tipo == 7) {
-                        tipo_badge = "Equipos Utilizados";
-                    } else if (anexo.tipo == 8) {
-                        tipo_badge = "Ubicación de Equipos e Inventario";
-                    } else if (anexo.tipo == 9) {
-                        tipo_badge = "Programaciones";
-                    } else if (anexo.tipo == 10) {
-                        tipo_badge = "Otros";
-                    } else if (anexo.tipo == 11) {
-                        tipo_badge = "Formulario ANE";
-                    } else if (anexo.tipo == 12) {
-                        tipo_badge = "Informes Tecnicos";
+                    //Anexos
+                    anexos.forEach((anexo) => {
+                        var date = new Date(anexo.fecha);
+                        var tipo_badge = "";
+                        if (anexo.tipo == 0) {
+                            tipo_badge = "Camara de comercio";
+                        } else if (anexo.tipo == 1) {
+                            tipo_badge = "RUT";
+                        } else if (anexo.tipo == 2) {
+                            tipo_badge = "Cedula del representante Legal";
+                        } else if (anexo.tipo == 3) {
+                            tipo_badge = "Remisiones";
+                        } else if (anexo.tipo == 4) {
+                            tipo_badge = "Cotizaciones";
+                        } else if (anexo.tipo == 5) {
+                            tipo_badge = "Informacion Tecnica";
+                        } else if (anexo.tipo == 6) {
+                            tipo_badge = "Frecuencias";
+                        } else if (anexo.tipo == 7) {
+                            tipo_badge = "Equipos Utilizados";
+                        } else if (anexo.tipo == 8) {
+                            tipo_badge = "Ubicación de Equipos e Inventario";
+                        } else if (anexo.tipo == 9) {
+                            tipo_badge = "Programaciones";
+                        } else if (anexo.tipo == 10) {
+                            tipo_badge = "Otros";
+                        } else if (anexo.tipo == 11) {
+                            tipo_badge = "Formulario ANE";
+                        } else if (anexo.tipo == 12) {
+                            tipo_badge = "Informes Tecnicos";
+                        }
+                        var data_delete = "";
+                        if ($("#anexos_cliente_admin").val() == 1) {
+                            data_delete =
+                                '<br><a class="btn_delete_archivo" data-id="' +
+                                anexo.id +
+                                '" href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>';
+                        }
+                        $("#table_anexos_edit").append(
+                            "<tr><td>" +
+                                tipo_badge +
+                                "</td><td>" +
+                                date.toLocaleString() +
+                                "</td><td>" +
+                                anexo.descripcion +
+                                "</td><td>" +
+                                anexo.creador +
+                                "</td><td>" +
+                                '<a target="_BLANK" href="https://formrad.com/radio_enlace/documentos_clientes/' +
+                                anexo.documento +
+                                '"><i class="fa fa-download"></i>&nbsp;Descargar</a>' +
+                                data_delete +
+                                "</td></tr>"
+                        );
+                    });
+
+                    $("#table_anexos_edit").DataTable({
+                        language: language,
+                        order: [],
+                    });
+
+                    //Datos del cliente
+                    $("#div_list_clientes").hide();
+                    $("#div_content_cliente_edit").show();
+
+                    if (cliente.avatar != null && cliente.avatar != "") {
+                        $("#img_cliente_edit").attr(
+                            "src",
+                            url_general + "images/clientes/" + cliente.avatar
+                        );
+                    } else {
+                        $("#img_cliente_edit").attr(
+                            "src",
+                            url_general + "images/clientes/noavatar.png"
+                        );
                     }
-                    $("#table_anexos_edit").append(
-                        "<tr><td>" +
-                            tipo_badge +
-                            "</td><td>" +
-                            date.toLocaleString() +
-                            "</td><td>" +
-                            anexo.descripcion +
-                            "</td><td>" +
-                            anexo.creador +
-                            "</td><td>" +
-                            '<a target="_BLANK" href="https://formrad.com/radio_enlace/documentos_clientes/' +
-                            anexo.documento +
-                            '"><i class="fa fa-download"></i>&nbsp;Descargar</a><br>' +
-                            '<a class="btn_delete_archivo" data-id="' +
-                            anexo.id +
-                            '" href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>' +
-                            "</td></tr>"
+
+                    $("#title_cliente_edit").empty();
+                    $("#title_cliente_edit").append(cliente.razon_social);
+                    $("#id_cliente_edit").val(cliente.id);
+
+                    $("#razon_social_edit").val(cliente.razon_social);
+                    $("#contacto_edit").val(cliente.contacto);
+                    $("#celular_edit").val(cliente.celular);
+                    $("#email_edit").val(cliente.email);
+                    $("#direccion_edit").val(cliente.direccion);
+                    $("#tipo_cliente_edit").val(cliente.tipo);
+                    $("#tipo_doc_cliente_edit").val(
+                        cliente.tipo_identificacion
                     );
-                });
+                    $("#documento_cliente_edit").val(cliente.nit);
+                    $("#telefono_edit").val(cliente.telefono_fijo);
+                    $("#ciudad_cliente_edit").val(cliente.ciudad);
 
-                $("#table_anexos_edit").DataTable({
-                    language: language,
-                    order: [],
-                });
-
-                //Datos del cliente
-                $("#div_list_clientes").hide();
-                $("#div_content_cliente_edit").show();
-
-                if (cliente.avatar != null && cliente.avatar != "") {
-                    $("#img_cliente_edit").attr(
-                        "src",
-                        url_general + "images/clientes/" +
-                            cliente.avatar
+                    $("#tipo_regimenadd").val(cliente.tipo_regimen);
+                    $("#codigo_sucursaladd").val(cliente.codigo_sucursal);
+                    $("#indicativo_telefonoadd").val(
+                        cliente.indicativo_telefono
                     );
-                } else {
-                    $("#img_cliente_edit").attr(
-                        "src",
-                        url_general + "images/clientes/noavatar.png"
-                    );
-                }
-
-                $("#title_cliente_edit").empty();
-                $("#title_cliente_edit").append(cliente.razon_social);
-                $("#id_cliente_edit").val(cliente.id);
-
-                $("#razon_social_edit").val(cliente.razon_social);
-                $("#contacto_edit").val(cliente.contacto);
-                $("#celular_edit").val(cliente.celular);
-                $("#email_edit").val(cliente.email);
-                $("#direccion_edit").val(cliente.direccion);
-                $("#tipo_cliente_edit").val(cliente.tipo);
-                $("#tipo_doc_cliente_edit").val(cliente.tipo_identificacion);
-                $("#documento_cliente_edit").val(cliente.nit);
-                $("#telefono_edit").val(cliente.telefono_fijo);
-                $("#ciudad_cliente_edit").val(cliente.ciudad);
-
-                $("#tipo_regimenadd").val(cliente.tipo_regimen);
-                $("#codigo_sucursaladd").val(cliente.codigo_sucursal);
-                $("#indicativo_telefonoadd").val(cliente.indicativo_telefono);
-                $("#extencionadd").val(cliente.extencion);
-
-                //console.log(data);
-                $("#global-loader").fadeOut("fast");
-            },
-            error: function (data) {
-                $("#global-loader").fadeOut("fast");
-                //console.log(data);
-                alert("Error al cargar los datos del cliente");
-            },
-        });
-        //console.log(data);
-    });
+                    $("#extencionadd").val(cliente.extencion);
+                    
+                    //console.log(data);
+                    $("#global-loader").fadeOut("fast");
+                },
+                error: function (data) {
+                    $("#global-loader").fadeOut("fast");
+                    //console.log(data);
+                    alert("Error al cargar los datos del cliente");
+                },
+            });
+            //console.log(data);
+        }
+    );
 
     var table_empleados = $("#table_empleados_img").DataTable({
         dom:
@@ -636,8 +676,11 @@ $(function () {
                     if (type === "display") {
                         data = '<i class="fa fa-user fa-fw"></i>';
                         data =
-                            '<img src="' + url_general + "images/empleados/" +
-                            dataa.avatar + '" class="avatar border rounded-circle">';
+                            '<img src="' +
+                            url_general +
+                            "images/empleados/" +
+                            dataa.avatar +
+                            '" class="avatar border rounded-circle">';
                     }
 
                     return data;
@@ -675,9 +718,15 @@ $(function () {
                 data: null,
                 render: function (data) {
                     return (
-                        '<button data-estado="'+data.status+'" data-id="'+data.id+'" class="btn btn-primary btn-sm btnInactivar" title="Inactivar">' +
+                        '<button data-estado="' +
+                        data.status +
+                        '" data-id="' +
+                        data.id +
+                        '" class="btn btn-primary btn-sm btnInactivar" title="Inactivar">' +
                         '<i class="fas fa-times"></i></button>&nbsp;' +
-                        '<button data-id="'+data.id+'" class="btn btn-danger btn-sm btnEliminar" title="Eliminar">' +
+                        '<button data-id="' +
+                        data.id +
+                        '" class="btn btn-danger btn-sm btnEliminar" title="Eliminar">' +
                         '<i class="fa fa-trash"></i></button>'
                     );
                 },
@@ -722,43 +771,46 @@ $(function () {
         },
     });
 
-    $("#table_empleados_img tbody").on("click", "tr td:first-child", function () {
-        $("#global-loader").fadeIn("fast");
-        var data = table_empleados.row(this).data();
+    $("#table_empleados_img tbody").on(
+        "click",
+        "tr td:first-child",
+        function () {
+            $("#global-loader").fadeIn("fast");
+            var data = table_empleados.row(this).data();
 
-        if ($.fn.DataTable.isDataTable("#table_novedades_edit")) {
-            $("#table_novedades_edit").DataTable().destroy();
-        }
+            if ($.fn.DataTable.isDataTable("#table_novedades_edit")) {
+                $("#table_novedades_edit").DataTable().destroy();
+            }
 
-        $("#table_novedades_edit tbody").empty();
+            $("#table_novedades_edit tbody").empty();
 
-        if ($.fn.DataTable.isDataTable("#table_horas_trabajadas_edit")) {
-            $("#table_horas_trabajadas_edit").DataTable().destroy();
-        }
+            if ($.fn.DataTable.isDataTable("#table_horas_trabajadas_edit")) {
+                $("#table_horas_trabajadas_edit").DataTable().destroy();
+            }
 
-        $("#table_horas_trabajadas_edit tbody").empty();
+            $("#table_horas_trabajadas_edit tbody").empty();
 
-        if ($.fn.DataTable.isDataTable("#table_anexos_edit")) {
-            $("#table_anexos_edit").DataTable().destroy();
-        }
+            if ($.fn.DataTable.isDataTable("#table_anexos_edit")) {
+                $("#table_anexos_edit").DataTable().destroy();
+            }
 
-        $("#table_anexos_edit tbody").empty();
+            $("#table_anexos_edit tbody").empty();
 
-        $.ajax({
-            url: "empleados_data",
-            type: "POST",
-            data: {
-                empleado: data.id,
-            },
-            dataType: "json",
-            success: function (data) {
-                let nomina = data.nomina;
-                let novedades = data.novedades;
-                let horas = data.horas;
-                let anexos = data.anexos;
+            $.ajax({
+                url: "empleados_data",
+                type: "POST",
+                data: {
+                    empleado: data.id,
+                },
+                dataType: "json",
+                success: function (data) {
+                    let nomina = data.nomina;
+                    let novedades = data.novedades;
+                    let horas = data.horas;
+                    let anexos = data.anexos;
 
-                //Facturación
-                /*$("#nombre_fact_edit").val(facturacion.nombre);
+                    //Facturación
+                    /*$("#nombre_fact_edit").val(facturacion.nombre);
                 $("#telefono_fact_edit").val(facturacion.telefono);
                 $("#apellido_fact_edit").val(facturacion.apellido);
                 $("#extension_fact_edit").val(facturacion.extension);
@@ -766,178 +818,186 @@ $(function () {
                 $("#codigo_fact_edit").val(facturacion.codigo_postal);
                 $("#regimen_fact_edit").val(facturacion.tipo_regimen);*/
 
-                //Novedades
-                novedades.forEach((novedad) => {
-                    $("#table_novedades_edit").append(
-                        "<tr><td>" +
-                            novedad.motivo +
-                            "</td><td>" +
-                            novedad.dias +
-                            "</td><td>" +
-                            novedad.fecha +
-                            "</td><td>" +
-                            novedad.status +
-                            "</td><td>" +
-                            '<a class="btn_delete_novedad" data-id="' +
-                            novedad.id +
-                            '" href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>' +
-                            "</td></tr>"
-                    );
-                });
+                    //Novedades
+                    novedades.forEach((novedad) => {
+                        $("#table_novedades_edit").append(
+                            "<tr><td>" +
+                                novedad.motivo +
+                                "</td><td>" +
+                                novedad.dias +
+                                "</td><td>" +
+                                novedad.fecha +
+                                "</td><td>" +
+                                novedad.status +
+                                "</td><td>" +
+                                '<a class="btn_delete_novedad" data-id="' +
+                                novedad.id +
+                                '" href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>' +
+                                "</td></tr>"
+                        );
+                    });
 
-                //Anexos
-                anexos.forEach((anexo) => {
-                    var date = new Date(anexo.fecha);
-                    var tipo_badge = "";
-                    if(anexo.tipo == 0){
-                        tipo_badge = "Hoja de vida";
-                    } else if (anexo.tipo == 1) {
-                        tipo_badge = "Afiliaciones";
-                    } else if (anexo.tipo == 2) {
-                        tipo_badge = "Contrato";
-                    } else if (anexo.tipo == 3) {
-                        tipo_badge = "Examenes Ocupacionales";
-                    } else if (anexo.tipo == 4) {
-                        tipo_badge = "Curso de altura";
-                    } else if (anexo.tipo == 5) {
-                        tipo_badge = "Capacitaciones";
-                    } else if (anexo.tipo == 6) {
-                        tipo_badge = "Procesos disciplinarios";
-                    } else if (anexo.tipo == 7) {
-                        tipo_badge = "Vacaciones";
-                    } else if (anexo.tipo == 8) {
-                        tipo_badge = "Carnet de vacunación";
-                    } else if (anexo.tipo == 9) {
-                        tipo_badge = "Primas";
-                    } else if (anexo.tipo == 10) {
-                        tipo_badge = "Código de ética y buen gobierno";
-                    } else if (anexo.tipo == 11) {
-                        tipo_badge = "Autorización tratamiento de datos personales";
-                    } else if (anexo.tipo == 12) {
-                        tipo_badge = "Hoja de vida empresarial";
-                    } else if (anexo.tipo == 13) {
-                        tipo_badge = "Control de selección";
-                    } else if (anexo.tipo == 14) {
-                        tipo_badge = "Entrega de carnet";
-                    } else if (anexo.tipo == 15) {
-                        tipo_badge = "Requisitos laborales";
-                    } else if (anexo.tipo == 16) {
-                        tipo_badge = "Entrenamiento y preparación incorporación";
-                    } else if (anexo.tipo == 17) {
-                        tipo_badge = "Registro de inducción";
-                    } else if (anexo.tipo == 18) {
-                        tipo_badge = "Plan formación inducción";
-                    } else if (anexo.tipo == 19) {
-                        tipo_badge = "Evidencia Fotográfoca de las capacitaciones";
-                    } else if (anexo.tipo == 21) {
-                        tipo_badge = "Formatos varios (word excel pdf)";
-                    } else if (anexo.tipo == 22) {
-                        tipo_badge = "Implementos de seguridad";
-                    } else if (anexo.tipo == 23) {
-                        tipo_badge = "Incapacidades";
-                    } else if (anexo.tipo == 24) {
-                        tipo_badge = "Datos Personales";
-                    } else if (anexo.tipo == 25) {
-                        tipo_badge = "Dotación";
-                    } else if (anexo.tipo == 26) {
-                        tipo_badge = "Seguridad Social";
-                    } else if (anexo.tipo == 27) {
-                        tipo_badge = "Prestamo a Empleados";
-                    } else if (anexo.tipo == 28) {
-                        tipo_badge = "Otros";
-                    }
-                    $("#table_anexos_edit").append(
-                        "<tr><td>" +
-                            tipo_badge +
-                            "</td><td>" +
-                            date.toLocaleString() +
-                            "</td><td>" +
-                            anexo.descripcion +
-                            "</td><td>" +
-                            anexo.creador +
-                            "</td><td>" +
-                            '<a target="_BLANK" href="https://formrad.com/radio_enlace/documentos/' +
-                            anexo.documento +
-                            '"><i class="fa fa-download"></i>&nbsp;Descargar</a><br>' +
-                            '<a class="btn_delete_archivo" data-id="' +
-                            anexo.id +
-                            '" href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>' +
-                            "</td></tr>"
-                    );
-                });
+                    //Anexos
+                    anexos.forEach((anexo) => {
+                        var date = new Date(anexo.fecha);
+                        var tipo_badge = "";
+                        if (anexo.tipo == 0) {
+                            tipo_badge = "Hoja de vida";
+                        } else if (anexo.tipo == 1) {
+                            tipo_badge = "Afiliaciones";
+                        } else if (anexo.tipo == 2) {
+                            tipo_badge = "Contrato";
+                        } else if (anexo.tipo == 3) {
+                            tipo_badge = "Examenes Ocupacionales";
+                        } else if (anexo.tipo == 4) {
+                            tipo_badge = "Curso de altura";
+                        } else if (anexo.tipo == 5) {
+                            tipo_badge = "Capacitaciones";
+                        } else if (anexo.tipo == 6) {
+                            tipo_badge = "Procesos disciplinarios";
+                        } else if (anexo.tipo == 7) {
+                            tipo_badge = "Vacaciones";
+                        } else if (anexo.tipo == 8) {
+                            tipo_badge = "Carnet de vacunación";
+                        } else if (anexo.tipo == 9) {
+                            tipo_badge = "Primas";
+                        } else if (anexo.tipo == 10) {
+                            tipo_badge = "Código de ética y buen gobierno";
+                        } else if (anexo.tipo == 11) {
+                            tipo_badge =
+                                "Autorización tratamiento de datos personales";
+                        } else if (anexo.tipo == 12) {
+                            tipo_badge = "Hoja de vida empresarial";
+                        } else if (anexo.tipo == 13) {
+                            tipo_badge = "Control de selección";
+                        } else if (anexo.tipo == 14) {
+                            tipo_badge = "Entrega de carnet";
+                        } else if (anexo.tipo == 15) {
+                            tipo_badge = "Requisitos laborales";
+                        } else if (anexo.tipo == 16) {
+                            tipo_badge =
+                                "Entrenamiento y preparación incorporación";
+                        } else if (anexo.tipo == 17) {
+                            tipo_badge = "Registro de inducción";
+                        } else if (anexo.tipo == 18) {
+                            tipo_badge = "Plan formación inducción";
+                        } else if (anexo.tipo == 19) {
+                            tipo_badge =
+                                "Evidencia Fotográfoca de las capacitaciones";
+                        } else if (anexo.tipo == 21) {
+                            tipo_badge = "Formatos varios (word excel pdf)";
+                        } else if (anexo.tipo == 22) {
+                            tipo_badge = "Implementos de seguridad";
+                        } else if (anexo.tipo == 23) {
+                            tipo_badge = "Incapacidades";
+                        } else if (anexo.tipo == 24) {
+                            tipo_badge = "Datos Personales";
+                        } else if (anexo.tipo == 25) {
+                            tipo_badge = "Dotación";
+                        } else if (anexo.tipo == 26) {
+                            tipo_badge = "Seguridad Social";
+                        } else if (anexo.tipo == 27) {
+                            tipo_badge = "Prestamo a Empleados";
+                        } else if (anexo.tipo == 28) {
+                            tipo_badge = "Otros";
+                        }
+                        $("#table_anexos_edit").append(
+                            "<tr><td>" +
+                                tipo_badge +
+                                "</td><td>" +
+                                date.toLocaleString() +
+                                "</td><td>" +
+                                anexo.descripcion +
+                                "</td><td>" +
+                                anexo.creador +
+                                "</td><td>" +
+                                '<a target="_BLANK" href="https://formrad.com/radio_enlace/documentos/' +
+                                anexo.documento +
+                                '"><i class="fa fa-download"></i>&nbsp;Descargar</a><br>' +
+                                '<a class="btn_delete_archivo" data-id="' +
+                                anexo.id +
+                                '" href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>' +
+                                "</td></tr>"
+                        );
+                    });
 
-                $("#table_novedades_edit").DataTable({
-                    language: language,
-                    order: [],
-                });
+                    $("#table_novedades_edit").DataTable({
+                        language: language,
+                        order: [],
+                    });
 
-                $("#table_horas_trabajadas_edit").DataTable({
-                    language: language,
-                    order: [],
-                });
+                    $("#table_horas_trabajadas_edit").DataTable({
+                        language: language,
+                        order: [],
+                    });
 
-                $("#table_anexos_edit").DataTable({
-                    language: language,
-                    order: [],
-                });
+                    $("#table_anexos_edit").DataTable({
+                        language: language,
+                        order: [],
+                    });
 
-                //console.log(data);
-                $("#global-loader").fadeOut("fast");
-            },
-            error: function (data) {
-                $("#global-loader").fadeOut("fast");
-                console.log(data);
-                alert("Error al cargar los datos del cliente");
-            },
-        });
+                    //console.log(data);
+                    $("#global-loader").fadeOut("fast");
+                },
+                error: function (data) {
+                    $("#global-loader").fadeOut("fast");
+                    console.log(data);
+                    alert("Error al cargar los datos del cliente");
+                },
+            });
 
-        if (data.avatar != null && data.avatar != "") {
-            $("#img_empleado_edit").attr(
-                "src",
-                url_general + "images/empleados/" + data.avatar
+            if (data.avatar != null && data.avatar != "") {
+                $("#img_empleado_edit").attr(
+                    "src",
+                    url_general + "images/empleados/" + data.avatar
+                );
+            } else {
+                $("#img_empleado_edit").attr(
+                    "src",
+                    url_general + "images/empleados/noavatar.png"
+                );
+            }
+
+            $("#div_list_empleados").hide();
+            $("#div_content_empleado_edit").show();
+
+            $("#title_empleado_edit").empty();
+            $("#title_empleado_edit").append(data.nombre);
+            $("#id_empleado_edit").val(data.id);
+
+            $("#codigo_empleado_edit").val(data.codigo_empleado);
+            $("#nombre_empleado_edit").val(data.nombre);
+            $("#cargo_empleado_edit").val(data.cargo);
+            $("#rol_empleado_edit").val(data.rol);
+            $("#email_edit").val(data.email);
+            $("#telefono_fij_edit").val(data.telefono_fijo);
+            $("#telefono_cel_edit").val(data.telefono_celular);
+            $("#direccion_edit").val(data.direccion);
+            $("#fecha_ingreso_edit").val(data.fecha_ingreso);
+            $("#fecha_retiro_edit").val(data.fecha_retiro);
+            $("#fecha_nacimiento_edit").val(data.fecha_nacimiento);
+            $("#eps_edit").val(data.eps);
+            $("#caja_compensacion_edit").val(data.caja_compensacion);
+            $("#arl_edit").val(data.arl);
+            $("#fondo_pension_edit").val(data.fondo_pension);
+            $("#riesgos_prof_edit").val(data.riesgos_profesionales);
+
+            $("#observaciones_otra_info_edit").val(data.observaciones);
+            $("#prestamo_otra_info_edit").val(data.prestamo);
+            $("#periodo_dotacion_otra_info_edit").val(data.periodo_dotacion);
+            $("#licencia_otra_info_edit").val(data.numero_licencia_conduccion);
+            $("#vencimiento_otra_info_edit").val(
+                data.vencimiento_licencia_conduccion
             );
-        } else {
-            $("#img_empleado_edit").attr(
-                "src",
-                url_general + "images/empleados/noavatar.png"
+            $("#multas_pend_otra_info_edit").val(
+                data.multas_transito_pendiente
             );
+            $("#implementos_otra_info_edit").val(data.implementos_seguridad);
+            $("#fecha_culminacion_otra_info_edit").val(
+                data.culminacion_contrato
+            );
+
+            console.log(data);
         }
-
-        $("#div_list_empleados").hide();
-        $("#div_content_empleado_edit").show();
-
-        $("#title_empleado_edit").empty();
-        $("#title_empleado_edit").append(data.nombre);
-        $("#id_empleado_edit").val(data.id);
-
-        $("#codigo_empleado_edit").val(data.codigo_empleado);
-        $("#nombre_empleado_edit").val(data.nombre);
-        $("#cargo_empleado_edit").val(data.cargo);
-        $("#rol_empleado_edit").val(data.rol);
-        $("#email_edit").val(data.email);
-        $("#telefono_fij_edit").val(data.telefono_fijo);
-        $("#telefono_cel_edit").val(data.telefono_celular);
-        $("#direccion_edit").val(data.direccion);
-        $("#fecha_ingreso_edit").val(data.fecha_ingreso);
-        $("#fecha_retiro_edit").val(data.fecha_retiro);
-        $("#fecha_nacimiento_edit").val(data.fecha_nacimiento);
-        $("#eps_edit").val(data.eps);
-        $("#caja_compensacion_edit").val(data.caja_compensacion);
-        $("#arl_edit").val(data.arl);
-        $("#fondo_pension_edit").val(data.fondo_pension);
-        $("#riesgos_prof_edit").val(data.riesgos_profesionales);
-
-        $("#observaciones_otra_info_edit").val(data.observaciones);
-        $("#prestamo_otra_info_edit").val(data.prestamo);
-        $("#periodo_dotacion_otra_info_edit").val(data.periodo_dotacion);
-        $("#licencia_otra_info_edit").val(data.numero_licencia_conduccion);
-        $("#vencimiento_otra_info_edit").val(
-            data.vencimiento_licencia_conduccion
-        );
-        $("#multas_pend_otra_info_edit").val(data.multas_transito_pendiente);
-        $("#implementos_otra_info_edit").val(data.implementos_seguridad);
-        $("#fecha_culminacion_otra_info_edit").val(data.culminacion_contrato);
-
-        console.log(data);
-    });
+    );
 });

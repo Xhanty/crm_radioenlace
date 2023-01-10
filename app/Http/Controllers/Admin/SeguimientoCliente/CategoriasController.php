@@ -12,6 +12,10 @@ class CategoriasController extends Controller
     public function index()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('gestion_categorias_seguimientos')) {
+                return redirect()->route('home');
+            }
+
             $categorias = DB::table('categorias_seguimiento_clientes')
             ->select('categorias_seguimiento_clientes.*', 'empleados.nombre as nombre_empleado', DB::raw('count(seguimiento_clientes.id) as cantidad_seguimiento_cliente'))
             ->join("empleados", "categorias_seguimiento_clientes.created_by", "=", "empleados.id")

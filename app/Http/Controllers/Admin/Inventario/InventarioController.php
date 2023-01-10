@@ -13,6 +13,10 @@ class InventarioController extends Controller
     public function index()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('gestion_productos_inventario')) {
+                return redirect()->route('home');
+            }
+
             $categorias = DB::table('categorias')->get();
             return view('admin.inventario.inventario', compact('categorias'));
         } catch (Exception $ex) {
@@ -141,6 +145,10 @@ class InventarioController extends Controller
     public function actividades_inventario()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('gestion_actividades_inventario')) {
+                return redirect()->route('home');
+            }
+
             return view('admin.inventario.actividades');
         } catch (Exception $ex) {
             return view('errors.500');
@@ -218,6 +226,10 @@ class InventarioController extends Controller
     public function gestion_inventario()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('gestion_inventario')) {
+                return redirect()->route('home');
+            }
+
             $empleados = DB::table('empleados')->where("status", 1)->get();
             $almacenes = DB::table('almacenes')->get();
             $proveedores = DB::table('proveedores')->where("estado", 1)->get();
@@ -256,8 +268,11 @@ class InventarioController extends Controller
                 $actionBtn =
                     '<a data-id="' . $row->id . '" title="Ver" class="btn btn-primary btn-sm btn_Show"><i class="fa fa-eye"></i></a>' .
                     '<a data-id="' . $row->id . '" title="Editar" class="btn btn-primary btn-sm btn_Edit"><i class="fa fa-pencil-alt"></i></a>' .
-                    '<a data-id="' . $row->id . '" data-status="' . $row->status . '" title="Dar De Baja" class="btn btn-primary btn-sm btn_Baja"><i class="fas fa-times"></i></a>' .
-                    '<a data-id="' . $row->id . '" data-asignado="' . $row->cantidad_asignada . '" title="Eliminar" class="btn btn-danger btn-sm btn_Delete"><i class="fa fa-trash"></i></a>';
+                    '<a data-id="' . $row->id . '" data-status="' . $row->status . '" title="Dar De Baja" class="btn btn-primary btn-sm btn_Baja"><i class="fas fa-times"></i></a>';
+
+                if (auth()->user()->hasPermissionTo('delete_existencias_inventario')) {
+                    $actionBtn .= '<a data-id="' . $row->id . '" data-asignado="' . $row->cantidad_asignada . '" title="Eliminar" class="btn btn-danger btn-sm btn_Delete"><i class="fa fa-trash"></i></a>';
+                }
                 return $actionBtn;
             })
             ->rawColumns(['action'])

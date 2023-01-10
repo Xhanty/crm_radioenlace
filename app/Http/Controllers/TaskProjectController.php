@@ -15,6 +15,12 @@ class TaskProjectController extends Controller
     public function index(Request $request)
     {
         try {
+            $is_admin = 0;
+
+            if(auth()->user()->hasPermissionTo('gestion_asignaciones_proyectos')) {
+                $is_admin = 1;
+            }
+
             $project = $request->get('project');
 
             $valid_project = DB::table('proyecto')
@@ -77,7 +83,7 @@ class TaskProjectController extends Controller
             session(['project_tasks' => $project]);
             session(['name_project' => $valid_project->nombre]);
 
-            return view('tasks.index', compact('tasks'));
+            return view('tasks.index', compact('tasks', 'is_admin'));
         } catch (Exception $ex) {
             return $ex->getMessage();
             return view("errors.500");

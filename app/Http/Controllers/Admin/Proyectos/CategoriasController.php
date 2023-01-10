@@ -12,6 +12,10 @@ class CategoriasController extends Controller
     public function index()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('categorias_proyectos')) {
+                return redirect()->route('home');
+            }
+
             $categorias = DB::table('categorias_proyectos')
                 ->select('categorias_proyectos.*', 'empleados.nombre as nombre_empleado', DB::raw('count(proyecto.id) as cantidad_proyectos'))
                 ->join("empleados", "categorias_proyectos.created_by", "=", "empleados.id")

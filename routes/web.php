@@ -40,7 +40,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/change_visto_bueno', [App\Http\Controllers\Admin\AsignacionesController::class, 'change_visto_bueno'])->name('change_visto_bueno');
     Route::post('/eliminar_archivo_asignacion', [App\Http\Controllers\Admin\AsignacionesController::class, 'eliminar_archivo_asignacion'])->name('eliminar_archivo_asignacion');
 
-    // PROYECTOS
+    // ASIGNACIONES PROYECTOS
     Route::get('/asignaciones_clientes', [App\Http\Controllers\Admin\AsignacionesController::class, 'asignaciones_clientes'])->name('asignaciones_clientes');
     Route::get('/gestionar_asignaciones_clientes', [App\Http\Controllers\Admin\AsignacionesController::class, 'gestionar_asignaciones_clientes'])->name('gestionar_asignaciones_clientes');
 
@@ -203,6 +203,7 @@ Route::middleware(['auth_user'])->group(function () {
     // PERMISOS
     Route::get('/permisos', [App\Http\Controllers\Admin\PermisosController::class, 'index'])->name('permisos');
     Route::post('/permisos_empleado', [App\Http\Controllers\Admin\PermisosController::class, 'data'])->name('permisos_empleado');
+    Route::post('/permisos_user_update', [App\Http\Controllers\Admin\PermisosController::class, 'update'])->name('permisos_user_update');
 });
 
 Route::group(['middleware' => 'auth'], function () {

@@ -7,7 +7,8 @@
                     <h4 class="font-medium" :class="status.color">
                         {{ status.title }}
                     </h4>
-                    <button @click="openAddTaskForm(status.id)" class="py-1 px-2 text-sm text-white hover:no-underline">
+                    <button v-if="is_admin_panel" @click="openAddTaskForm(status.id)"
+                        class="py-1 px-2 text-sm text-white hover:no-underline">
                         Agregar Asignación
                     </button>
                 </div>
@@ -52,7 +53,7 @@
                     <div v-show="!status.tasks.length && newTaskForStatus !== status.id"
                         class="flex-1 p-4 flex flex-col items-center justify-center">
                         <span class="text-gray-600">Aún no hay asignaciones</span>
-                        <button class="mt-1 text-sm text-blue-700 hover:no-underline"
+                        <button v-if="is_admin_panel" class="mt-1 text-sm text-blue-700 hover:no-underline"
                             @click="openAddTaskForm(status.id)">
                             Agregar
                         </button>
@@ -286,10 +287,10 @@
                                                     {{ empleado.nombre }}
                                                 </option>
                                             </select>-->
-                                            <multiselect @input="changeTaskResponsable" v-model="responsables_id" :options="empleados_data"
-                                                :multiple="true" :close-on-select="false" :clear-on-select="false"
-                                                :preserve-search="true" placeholder="Empleados" label="nombre"
-                                                track-by="id">
+                                            <multiselect @input="changeTaskResponsable" v-model="responsables_id"
+                                                :options="empleados_data" :multiple="true" :close-on-select="false"
+                                                :clear-on-select="false" :preserve-search="true" placeholder="Empleados"
+                                                label="nombre" track-by="id">
                                             </multiselect>
                                         </div>
                                     </div>
@@ -411,6 +412,7 @@ export default {
     },
     props: {
         initialData: Array,
+        adminData: 0,
     },
     data() {
         return {
@@ -429,6 +431,7 @@ export default {
             avancesTask: [],
             actividad: "",
             responsables_id: [],
+            is_admin_panel: 0,
         };
     },
     computed: {
@@ -443,6 +446,7 @@ export default {
     mounted() {
         // 'clone' the statuses so we don't alter the prop when making changes
         this.statuses = JSON.parse(JSON.stringify(this.initialData));
+        this.is_admin_panel = this.adminData;
         this.get_empleados();
         this.my_data();
     },

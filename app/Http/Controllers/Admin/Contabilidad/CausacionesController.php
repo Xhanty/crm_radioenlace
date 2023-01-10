@@ -12,6 +12,10 @@ class CausacionesController extends Controller
     public function index()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('gestion_causaciones')) {
+                return redirect()->route('home');
+            }
+
             return view('admin.contabilidad.causaciones');
         } catch (Exception $ex) {
             return view('errors.500');

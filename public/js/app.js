@@ -2286,7 +2286,8 @@ __webpack_require__.r(__webpack_exports__);
     Multiselect: window.VueMultiselect["default"]
   },
   props: {
-    initialData: Array
+    initialData: Array,
+    adminData: 0
   },
   data: function data() {
     return {
@@ -2304,7 +2305,8 @@ __webpack_require__.r(__webpack_exports__);
       anexosTask: [],
       avancesTask: [],
       actividad: "",
-      responsables_id: []
+      responsables_id: [],
+      is_admin_panel: 0
     };
   },
   computed: {
@@ -2319,6 +2321,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     // 'clone' the statuses so we don't alter the prop when making changes
     this.statuses = JSON.parse(JSON.stringify(this.initialData));
+    this.is_admin_panel = this.adminData;
     this.get_empleados();
     this.my_data();
   },
@@ -2700,14 +2703,14 @@ var render = function render() {
     }, [_c("h4", {
       staticClass: "font-medium",
       "class": status.color
-    }, [_vm._v("\n                    " + _vm._s(status.title) + "\n                ")]), _vm._v(" "), _c("button", {
+    }, [_vm._v("\n                    " + _vm._s(status.title) + "\n                ")]), _vm._v(" "), _vm.is_admin_panel ? _c("button", {
       staticClass: "py-1 px-2 text-sm text-white hover:no-underline",
       on: {
         click: function click($event) {
           return _vm.openAddTaskForm(status.id);
         }
       }
-    }, [_vm._v("\n                    Agregar Asignación\n                ")])]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                    Agregar Asignación\n                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
       staticClass: "p-2 bg-blue-100"
     }, [_vm.newTaskForStatus === status.id ? _c("AddTaskForm", {
       attrs: {
@@ -2779,14 +2782,14 @@ var render = function render() {
       staticClass: "flex-1 p-4 flex flex-col items-center justify-center"
     }, [_c("span", {
       staticClass: "text-gray-600"
-    }, [_vm._v("Aún no hay asignaciones")]), _vm._v(" "), _c("button", {
+    }, [_vm._v("Aún no hay asignaciones")]), _vm._v(" "), _vm.is_admin_panel ? _c("button", {
       staticClass: "mt-1 text-sm text-blue-700 hover:no-underline",
       on: {
         click: function click($event) {
           return _vm.openAddTaskForm(status.id);
         }
       }
-    }, [_vm._v("\n                        Agregar\n                    ")])])], 1)])]);
+    }, [_vm._v("\n                        Agregar\n                    ")]) : _vm._e()])], 1)])]);
   }), _vm._v(" "), _c("div", {
     staticClass: "fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full",
     attrs: {

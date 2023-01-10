@@ -56,7 +56,7 @@
                                             <td>{{ $value->cliente }}</td>
                                             <td>{{ $value->asignacion }}</td>
                                             <td>{{ date('d-m-Y g:i A', strtotime($value->fecha)) }}</td>
-                                            <td>{{ date('d-m-Y g:i A', strtotime($value->fecha_completada)) }}</td>
+                                            <td>{{ date('d-m-Y g:i A', strtotime($value->fecha_culminacion)) }}</td>
                                             <td>{{ $value->creador }}</td>
                                             <td>
                                                 @if ($value->revision == 1)
@@ -123,7 +123,7 @@
                                             <td>{{ $value->cliente }}</td>
                                             <td>{{ $value->asignacion }}</td>
                                             <td>{{ date('d-m-Y g:i A', strtotime($value->fecha)) }}</td>
-                                            <td>{{ date('d-m-Y g:i A', strtotime($value->fecha_completada)) }}</td>
+                                            <td>{{ date('d-m-Y g:i A', strtotime($value->fecha_culminacion)) }}</td>
                                             <td>{{ $value->creador }}</td>
                                             <td>
                                                 <a class="d-flex btn_avances" data-id="{{ $value->id }}"

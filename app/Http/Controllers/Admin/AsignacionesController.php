@@ -91,6 +91,11 @@ class AsignacionesController extends Controller
     public function gestionar_asignaciones()
     {
         try {
+
+            if (!auth()->user()->hasPermissionTo('gestion_asignaciones_proyectos')) {
+                return redirect()->route('home');
+            }
+
             $asignaciones_pendientes = DB::table("asignaciones")
                 ->join("empleados", "empleados.id", "=", "asignaciones.id_empleado")
                 ->join("empleados AS creador", "creador.id", "=", "asignaciones.created_by")
@@ -120,6 +125,11 @@ class AsignacionesController extends Controller
     public function gestionar_asignaciones_clientes()
     {
         try {
+
+            if (!auth()->user()->hasPermissionTo('gestion_asignacion')) {
+                return redirect()->route('home');
+            }
+
             $asignaciones_pendientes = DB::table("asignaciones")
                 ->join("empleados", "empleados.id", "=", "asignaciones.id_empleado")
                 ->join("empleados AS creador", "creador.id", "=", "asignaciones.created_by")

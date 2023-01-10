@@ -2,6 +2,14 @@
 
 @section('content')
     <div class="main-container container-fluid">
+        <!-- Input Edit Admin -->
+        <input type="hidden" disabled readonly id="edit_proveedor_admin"
+            value="{{ auth()->user()->hasPermissionTo('edit_proveedores') }}">
+
+        <!-- Input Anexos Admin -->
+        <input type="hidden" disabled readonly id="anexos_proveedor_admin"
+            value="{{ auth()->user()->hasPermissionTo('anexos_proveedores') }}">
+
         <!-- breadcrumb -->
         <div class="breadcrumb-header justify-content-between">
             <div>
@@ -23,9 +31,11 @@
                         <div class="div-1-tables-header">
                             <h3 class="card-title mt-2">Lista de Proveedores</h3>
                         </div>
-                        <div class="div-2-tables-header">
-                            <button class="btn btn-primary" id="btnNewProveedor">Registrar Proveedor</button>
-                        </div>
+                        @if (auth()->user()->hasPermissionTo('add_proveedores'))
+                            <div class="div-2-tables-header">
+                                <button class="btn btn-primary" id="btnNewProveedor">Registrar Proveedor</button>
+                            </div>
+                        @endif
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -44,8 +54,8 @@
                                 <tbody>
                                     @foreach ($proveedores as $item)
                                         <tr>
-                                            <td><img src="{{ asset('images/proveedores/' . $item->avatar) }}"
-                                                    alt="img" class="avatar avatar-md brround"></td>
+                                            <td><img src="{{ asset('images/proveedores/' . $item->avatar) }}" alt="img"
+                                                    class="avatar avatar-md brround"></td>
                                             <td>{{ $item->razon_social }}</td>
                                             <td>{{ $item->contacto }}</td>
                                             <td>{{ $item->celular }}</td>
@@ -61,11 +71,13 @@
                                             </td>
                                             <td>
                                                 <button data-id="{{ $item->id }}"
-                                                    class="btn btn-primary btn-sm btnEditar" title="Editar"><i
+                                                    class="btn btn-primary btn-sm btnEditar" title="Ver o Editar"><i
                                                         class="fa fa-pencil-alt"></i></button>
-                                                <button data-id="{{ $item->id }}"
-                                                    class="btn btn-danger btn-sm btnEliminar" title="Eliminar"><i
-                                                        class="fa fa-trash"></i></button>
+                                                @if (auth()->user()->hasPermissionTo('edit_proveedores'))
+                                                    <button data-id="{{ $item->id }}"
+                                                        class="btn btn-danger btn-sm btnEliminar" title="Eliminar"><i
+                                                            class="fa fa-trash"></i></button>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -195,8 +207,7 @@
                     <div class="card-body" style="margin-top: -18px;">
                         <div class="d-flex justify-content-center">
                             <img id="img_proveedor_edit" class="avatar border rounded-circle"
-                                style="width: 14pc; height: 14pc;"
-                                src="{{ asset('images/clientes/noavatar.png') }}">
+                                style="width: 14pc; height: 14pc;" src="{{ asset('images/clientes/noavatar.png') }}">
                         </div>
                         <br>
                         <input type="hidden" readonly disabled id="id_proveedor_edit">
@@ -278,15 +289,21 @@
                                 <input class="form-control" id="avataredit" type="file">
                             </div>
                         </div>
-                        <br>
-                        <div class="text-center">
-                            <button class="btn ripple btn-primary" id="btnEditProveedor" type="button">Modificar Proveedor</button>
-                        </div>
-                        <br>
-                        <div class="d-flex justify-content-end">
-                            <button class="btn ripple btn-primary" data-bs-target="#modalAdd" data-bs-toggle="modal"
-                                data-bs-effect="effect-scale" type="button">Agregar Anexo</button>
-                        </div>
+                        @if (auth()->user()->hasPermissionTo('edit_proveedores'))
+                            <br>
+                            <div class="text-center">
+                                <button class="btn ripple btn-primary" id="btnEditProveedor" type="button">Modificar
+                                    Proveedor</button>
+                            </div>
+                        @endif
+
+                        @if (auth()->user()->hasPermissionTo('anexos_proveedores'))
+                            <br>
+                            <div class="d-flex justify-content-end">
+                                <button class="btn ripple btn-primary" data-bs-target="#modalAdd" data-bs-toggle="modal"
+                                    data-bs-effect="effect-scale" type="button">Agregar Anexo</button>
+                            </div>
+                        @endif
                         <br>
                         <div class="table-responsive">
                             <table class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t"

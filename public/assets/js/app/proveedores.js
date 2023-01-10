@@ -327,6 +327,16 @@ $(function () {
                         } else if (anexo.tipo == 5) {
                             tipo_badge = "Certificación Bancaria";
                         }
+                        var data_delete = "";
+                        if ($("#anexos_proveedor_admin").val() == 1) {
+                            data_delete =
+                                '<br><a class="btn_delete_archivo" data-id="' +
+                                anexo.id +
+                                '" data-id_proveedor="' +
+                                id_proveedor +
+                                '" href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>';
+                        }
+
                         $("#tbl_anexos_proveedores").append(
                             "<tr><td>" +
                                 tipo_badge +
@@ -339,12 +349,7 @@ $(function () {
                                 "</td><td>" +
                                 '<a target="_BLANK" href="https://formrad.com/radio_enlace/documentos_clientes/' +
                                 anexo.documento +
-                                '"><i class="fa fa-download"></i>&nbsp;Descargar</a><br>' +
-                                '<a class="btn_delete_archivo" data-id="' +
-                                anexo.id +
-                                '" data-id_proveedor="' +
-                                id_proveedor +
-                                '" href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>' +
+                                '"><i class="fa fa-download"></i>&nbsp;Descargar</a>' + data_delete +
                                 "</td></tr>"
                         );
                     });

@@ -12,6 +12,10 @@ class ReparacionesController extends Controller
     public function index()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('gestion_reparaciones')) {
+                return redirect()->route('home');
+            }
+
             return view('admin.reparaciones.reparaciones');
         } catch (Exception $ex) {
             return view('errors.500');

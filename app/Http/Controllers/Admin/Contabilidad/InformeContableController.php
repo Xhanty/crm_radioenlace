@@ -12,6 +12,10 @@ class InformeContableController extends Controller
     public function index()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('informes_contables')) {
+                return redirect()->route('home');
+            }
+
             return view('admin.contabilidad.informe_contable');
         } catch (Exception $ex) {
             return view('errors.500');

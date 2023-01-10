@@ -121,7 +121,7 @@ $(function () {
 
     $(".check-mov-0").on("change", function () {
         let check = $(this).prop("checked");
-        let cantidad = 6;
+        let cantidad = 7;
 
         for (let i = 1; i <= cantidad; i++) {
             if (check) {

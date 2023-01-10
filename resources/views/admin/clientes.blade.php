@@ -6,6 +6,17 @@
 
 @section('content')
     <div class="main-container container-fluid">
+        <!-- Input Delete Admin -->
+        <input type="hidden" disabled readonly id="delete_cliente_admin"
+            value="{{ auth()->user()->hasPermissionTo('eliminar_clientes') }}">
+
+        <!-- Input Edit Admin -->
+        <input type="hidden" disabled readonly id="edit_cliente_admin"
+            value="{{ auth()->user()->hasPermissionTo('edit_clientes') }}">
+
+        <!-- Input Anexos Admin -->
+        <input type="hidden" disabled readonly id="anexos_cliente_admin"
+            value="{{ auth()->user()->hasPermissionTo('anexos_clientes') }}">
 
         <!-- breadcrumb -->
         <div class="breadcrumb-header justify-content-between">
@@ -28,9 +39,11 @@
                         <div class="div-1-tables-header">
                             <h3 class="card-title mt-2">Lista de Clientes</h3>
                         </div>
-                        <div class="div-2-tables-header">
-                            <button class="btn btn-primary" id="btnNewCliente">Registrar Cliente</button>
-                        </div>
+                        @if (auth()->user()->hasPermissionTo('add_clientes'))
+                            <div class="div-2-tables-header">
+                                <button class="btn btn-primary" id="btnNewCliente">Registrar Cliente</button>
+                            </div>
+                        @endif
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -70,7 +83,8 @@
                     </div>
                     <div class="card-body" style="margin-top: -18px;">
                         <div class="d-flex justify-content-center">
-                            <img id="img_cliente_edit" class="avatar border rounded-circle" style="width: 14pc; height: 14pc;" src="{{ asset('images/clientes/noavatar.png') }}">
+                            <img id="img_cliente_edit" class="avatar border rounded-circle"
+                                style="width: 14pc; height: 14pc;" src="{{ asset('images/clientes/noavatar.png') }}">
                         </div>
                         <br>
                         <input type="hidden" readonly disabled id="id_cliente_edit">
@@ -170,12 +184,13 @@
                                 <input class="form-control" id="avataredit" type="file">
                             </div>
                         </div>
-                        <br>
-                        <div class="text-center">
-                            <button class="btn ripple btn-primary" id="btnModificarCliente1" type="button">Modificar
-                                Datos Básicos</button>
-                        </div>
-
+                        @if (auth()->user()->hasPermissionTo('edit_clientes'))
+                            <br>
+                            <div class="text-center">
+                                <button class="btn ripple btn-primary" id="btnModificarCliente1" type="button">Modificar
+                                    Datos Básicos</button>
+                            </div>
+                        @endif
                         <br>
 
                         <div class="">
@@ -264,12 +279,14 @@
                                                             placeholder="Indicativo Teléfono" type="text">
                                                     </div>
                                                 </div>
-                                                <br>
+                                                @if (auth()->user()->hasPermissionTo('edit_clientes'))
+                                                    <br>
 
-                                                <div class="text-center">
-                                                    <button class="btn ripple btn-primary" id="btnModificarCliente2"
-                                                        type="button">Modificar Datos Facturación</button>
-                                                </div>
+                                                    <div class="text-center">
+                                                        <button class="btn ripple btn-primary" id="btnModificarCliente2"
+                                                            type="button">Modificar Datos Facturación</button>
+                                                    </div>
+                                                @endif
                                             </div>
 
                                             <div class="tab-pane fade show p-3" id="two_detail">
@@ -313,21 +330,25 @@
                                                             placeholder="Extensión" type="text">
                                                     </div>
                                                 </div>
-                                                <br>
+                                                @if (auth()->user()->hasPermissionTo('edit_clientes'))
+                                                    <br>
 
-                                                <div class="text-center">
-                                                    <button class="btn ripple btn-primary" id="btnModificarCliente3"
-                                                        type="button">Modificar Datos Técnicos</button>
-                                                </div>
+                                                    <div class="text-center">
+                                                        <button class="btn ripple btn-primary" id="btnModificarCliente3"
+                                                            type="button">Modificar Datos Técnicos</button>
+                                                    </div>
+                                                @endif
                                             </div>
 
                                             <div class="tab-pane fade show p-3" id="three_detail">
-                                                <div class="d-flex justify-content-end">
-                                                    <button class="btn ripple btn-primary" data-bs-target="#modalAdd"
-                                                        data-bs-toggle="modal" data-bs-effect="effect-scale"
-                                                        type="button">Agregar Anexo</button>
-                                                </div>
-                                                <br>
+                                                @if (auth()->user()->hasPermissionTo('anexos_clientes'))
+                                                    <div class="d-flex justify-content-end">
+                                                        <button class="btn ripple btn-primary" data-bs-target="#modalAdd"
+                                                            data-bs-toggle="modal" data-bs-effect="effect-scale"
+                                                            type="button">Agregar Anexo</button>
+                                                    </div>
+                                                    <br>
+                                                @endif
                                                 <table class="table border-top-0 table-bordered text-nowrap border-bottom"
                                                     id="table_anexos_edit">
                                                     <thead>
@@ -414,7 +435,8 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Teléfono Fijo</label>
-                                <input class="form-control" id="telefono_add" placeholder="Teléfono Fijo" type="text">
+                                <input class="form-control" id="telefono_add" placeholder="Teléfono Fijo"
+                                    type="text">
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="">Celular</label>
@@ -449,12 +471,13 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Indicativo Teléfono</label>
-                                <input class="form-control" id="indicativo_telefonoadd_new" placeholder="Indicativo Teléfono"
-                                    type="text">
+                                <input class="form-control" id="indicativo_telefonoadd_new"
+                                    placeholder="Indicativo Teléfono" type="text">
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="">Extensión</label>
-                                <input class="form-control" id="extencionadd_new" placeholder="Extensión" type="text">
+                                <input class="form-control" id="extencionadd_new" placeholder="Extensión"
+                                    type="text">
                             </div>
                         </div>
                         <br>
@@ -466,7 +489,8 @@
                         </div>
                         <br>
                         <div class="text-center">
-                            <button class="btn ripple btn-primary" id="btnAddCliente" type="button">Agregar Cliente</button>
+                            <button class="btn ripple btn-primary" id="btnAddCliente" type="button">Agregar
+                                Cliente</button>
                         </div>
                     </div>
                 </div>

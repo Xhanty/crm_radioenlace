@@ -12,6 +12,10 @@ class ArrendamientosController extends Controller
     public function index()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('gestion_arrendamientos')) {
+                return redirect()->route('home');
+            }
+
             return view('admin.gastos.arrendamientos');
         } catch (Exception $ex) {
             return view('errors.500');

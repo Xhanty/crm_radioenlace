@@ -12,6 +12,10 @@ class NominaController extends Controller
     public function nomina()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('gestion_nomina_general')) {
+                return redirect()->route('home');
+            }
+
             return view('admin.contabilidad.nomina');
         } catch (Exception $ex) {
             return view('errors.500');
@@ -21,6 +25,10 @@ class NominaController extends Controller
     public function config_nomina()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('gestion_config_nomina_general')) {
+                return redirect()->route('home');
+            }
+
             $data = DB::table('configuracion_nomina')->first();
             return view('admin.contabilidad.config_nomina', compact('data'));
         } catch (Exception $ex) {

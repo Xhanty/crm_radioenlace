@@ -12,11 +12,16 @@ class PermisosController extends Controller
     public function index()
     {
         try {
+
+            if (!auth()->user()->hasPermissionTo('permisos_usuarios')) {
+                return redirect()->route('home');
+            }
+
             $empleados = DB::table("empleados")->where("status", 1)->get();
             return view('permisos', compact('empleados'));
-        } catch (Exception $e) {
+        } catch (Exception $ex) {
             return view('errors.500');
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -25,15 +30,46 @@ class PermisosController extends Controller
         try {
             $empleado = $request->empleado;
 
-            $permisos = DB::table("permisos")
-                ->where("permisos.id_usuario", $empleado)
+            $permisos = DB::table("permisos_new")
+                ->where("permisos_new.empleado", $empleado)
                 ->get();
             return response()->json([
                 "info" => 1,
                 "data" => $permisos
             ]);
-        } catch (Exception $e) {
-            return $e->getMessage();
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+        }
+    }
+
+    public function update(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $permisos = $request->permisos;
+            $empleado = $request->empleado;
+            $admin = auth()->user()->id;
+
+            DB::table("permisos_new")->where("empleado", $empleado)->delete();
+
+            foreach ($permisos as $permiso) {
+                DB::table("permisos_new")->insert([
+                    "empleado" => $empleado,
+                    "modulo" => $permiso,
+                    "administrador" => $admin,
+                    "fecha" => date("Y-m-d H:i:s")
+                ]);
+            }
+
+            DB::commit();
+
+            return response()->json([
+                "info" => 1,
+                "message" => "Permisos actualizados correctamente"
+            ]);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return $ex->getMessage();
         }
     }
 }

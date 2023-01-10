@@ -12,6 +12,10 @@ class AlquileresController extends Controller
     public function index()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('gestion_alquileres')) {
+                return redirect()->route('home');
+            }
+
             return view('admin.movimientoInv.alquileres');
         } catch (Exception $ex) {
             return view('errors.500');

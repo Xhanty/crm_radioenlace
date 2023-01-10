@@ -12,6 +12,10 @@ class CategoriasController extends Controller
     public function index()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('categorias_archivos')) {
+                return redirect()->route('home');
+            }
+
             $categorias = DB::table('categorias_archivos')
             ->select('categorias_archivos.*', 'empleados.nombre as creador')
             ->join("empleados", "categorias_archivos.created_by", "=", "empleados.id")

@@ -12,6 +12,10 @@ class CategoriaProductosController extends Controller
     public function index()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('gestion_categorias_inventario')) {
+                return redirect()->route('home');
+            }
+
             $categorias = DB::table('categorias')
             ->select("categorias.*", "empleados.nombre as creador", DB::raw("count(productos.id) as total_productos"))
             ->join("empleados", "empleados.id", "=", "categorias.created_by")

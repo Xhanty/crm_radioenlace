@@ -12,6 +12,10 @@ class AlmacenesController extends Controller
     public function index()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('gestion_almacenes_inventario')) {
+                return redirect()->route('home');
+            }
+            
             $almacenes = DB::table('almacenes')
             ->select("almacenes.*", "empleados.nombre as creador")
             ->join("empleados", "empleados.id", "=", "almacenes.created_by")

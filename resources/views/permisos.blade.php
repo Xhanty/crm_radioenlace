@@ -1,5 +1,41 @@
 @extends('layouts.menu')
 
+@section('css')
+    <style>
+        .btn-flotante {
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            border-radius: 5px;
+            letter-spacing: 2px;
+            background-color: #3858F9;
+            padding: 18px 30px;
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            transition: all 300ms ease 0ms;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+            z-index: 99;
+        }
+
+        .btn-flotante:hover {
+            background-color: #3858F9;
+            color: #ffffff;
+            box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3);
+            transform: translateY(-7px);
+        }
+
+        @media only screen and (max-width: 600px) {
+            .btn-flotante {
+                font-size: 14px;
+                padding: 12px 20px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="main-container container-fluid">
 
@@ -117,7 +153,6 @@
             @include('permisos.reparaciones')
             @include('permisos.documentos')
             @include('permisos.comercial')
-            <!-- FALTA CONTABILIDAD -->
             @include('permisos.contabilidad')
             @include('permisos.gastos')
             @include('permisos.configuracion')
@@ -129,6 +164,8 @@
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
                         <h6 class="modal-title">Asignar Permisos</h6>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span
+                                aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
                         <div class="row row-sm">
@@ -147,6 +184,9 @@
                 </div>
             </div>
         </div>
+
+        <a href="javascript:void(0);" class="btn-flotante" data-bs-target="#modalSelect" data-bs-toggle="modal"
+            data-bs-effect="effect-scale">Empleado</a>
     </div>
 @endsection
 

@@ -12,6 +12,10 @@ class ClientesController extends Controller
     public function index()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('ver_clientes')) {
+                return redirect()->route('home');
+            }
+
             return view('admin.clientes');
         } catch (Exception $ex) {
             return view('errors.500');

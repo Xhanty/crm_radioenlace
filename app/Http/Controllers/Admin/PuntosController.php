@@ -35,6 +35,10 @@ class PuntosController extends Controller
     public function gestionar_puntos()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('gestionar_puntos')) {
+                return redirect()->route('home');
+            }
+
             $empleados = DB::table('empleados')
                 ->select('id', 'nombre')
                 ->where('status', 1)

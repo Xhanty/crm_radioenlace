@@ -12,6 +12,10 @@ class OrdenCompraController extends Controller
     public function index()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('gestion_orden_compra')) {
+                return redirect()->route('home');
+            }
+
             $ordenes_pendientes = DB::table("ordenes_compra")
             ->select("ordenes_compra.id", "ordenes_compra.descripcion", "ordenes_compra.fecha", "cliente.razon_social as nombre_cliente", "empleados.nombre as nombre_empleado", DB::raw("SUM(productos_orden_compra.cantidad) as cantidad"))
             ->join("cliente", "ordenes_compra.id_cliente", "=", "cliente.id")

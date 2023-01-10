@@ -13,6 +13,10 @@ class VehiculosController extends Controller
     public function index()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('ver_vehiculos')) {
+                return redirect()->route('home');
+            }
+
             return view('admin.vehiculos.vehiculos');
         } catch (Exception $ex) {
             return view('errors.500');
@@ -28,9 +32,16 @@ class VehiculosController extends Controller
                 ->addColumn('action', function ($row) {
                     $actionBtn = '<a data-id="' . $row->id . '" title="Ver" class="edit btn btn-primary btn-sm btn_Show"><i class="fa fa-eye"></i></a>
                     <a data-id="' . $row->id . '" title="Editar" class="edit btn btn-primary btn-sm btn_Edit"><i class="fa fa-pencil-alt"></i></a>
-                    <a data-id="' . $row->id . '" title="Gestionar" class="edit btn btn-success btn-sm btn_Gestionar"><i class="fa fa-file"></i></a>
-                    <a data-id="' . $row->id . '" title="Encuesta de salud" class="edit btn btn-success btn-sm btn_Encuesta"><i class="fa fa-plus"></i></a>
                     <a data-id="' . $row->id . '" title="Eliminar" class="delete btn btn-danger btn-sm btn_Delete"><i class="fa fa-trash"></i></a>';
+                    
+                    if (auth()->user()->hasPermissionTo('gestion_checklist_vehiculos')) {
+                        $actionBtn .= ' <a data-id="' . $row->id . '" title="Gestionar" class="edit btn btn-success btn-sm btn_Gestionar"><i class="fa fa-file"></i></a>';
+                    }
+
+                    if (auth()->user()->hasPermissionTo('gestion_salud_vehiculos')) {
+                        $actionBtn .= '<a data-id="' . $row->id . '" title="Encuesta de salud" class="edit btn btn-success btn-sm btn_Encuesta"><i class="fa fa-plus"></i></a>';
+                    }
+
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -146,6 +157,10 @@ class VehiculosController extends Controller
     public function checklist_email()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('enviar_checklist_vehiculos')) {
+                return redirect()->route('home');
+            }
+
             $vehiculos = DB::table("vehiculos")->where('estado', 1)->get();
             return view('admin.vehiculos.checklist_email', compact('vehiculos'));
         } catch (Exception $ex) {
@@ -235,7 +250,7 @@ class VehiculosController extends Controller
             return $ex->getMessage();
         }
     }
-    
+
     public function get_gruas(Request $request)
     {
         try {

@@ -12,6 +12,10 @@ class RemisionController extends Controller
     public function index()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('gestionar_remisiones')) {
+                return redirect()->route('home');
+            }
+
             return view('admin.comercial.remisiones');
         } catch (Exception $ex) {
             return view('errors.500');

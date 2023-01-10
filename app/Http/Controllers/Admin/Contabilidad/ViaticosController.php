@@ -12,6 +12,10 @@ class ViaticosController extends Controller
     public function index()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('gestion_viaticos')) {
+                return redirect()->route('home');
+            }
+
             return view('admin.contabilidad.viaticos');
         } catch (Exception $ex) {
             return view('errors.500');

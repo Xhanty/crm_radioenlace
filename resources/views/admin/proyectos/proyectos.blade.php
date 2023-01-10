@@ -42,7 +42,9 @@
                                         <th>Fecha Inicio</th>
                                         <th>Fecha Culminación</th>
                                         <th>Acciones</th>
-                                        <th>Visto<br>Bueno</th>
+                                        @if (auth()->user()->hasPermissionTo('visto_bueno_proyectos'))
+                                            <th>Visto<br>Bueno</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -60,23 +62,31 @@
                                                     href="javascript:void(0);"><i class="fa fa-list"></i>&nbsp;Gestionar
                                                     Estatus</a>
                                                 <a class="d-flex btn_board" data-id="{{ $proyecto->id }}"
-                                                    href="javascript:void(0);"><i class="fa fa-check"></i>&nbsp;Asignaciones</a>
+                                                    href="javascript:void(0);"><i
+                                                        class="fa fa-check"></i>&nbsp;Asignaciones</a>
                                                 <a class="d-flex btn_editar" data-id="{{ $proyecto->id }}"
                                                     href="javascript:void(0);"><i
                                                         class="fa fa-pencil-alt"></i>&nbsp;Editar</a>
-                                                <a class="d-flex btn_avances" data-id="{{ $proyecto->id }}"
-                                                    href="javascript:void(0);"><i class="fa fa-file"></i>&nbsp;Gestionar
-                                                    Acta</a>
+                                                @if (auth()->user()->hasPermissionTo('gestion_actas_proyectos'))
+                                                    <a class="d-flex btn_avances" data-id="{{ $proyecto->id }}"
+                                                        href="javascript:void(0);"><i class="fa fa-file"></i>&nbsp;Gestionar
+                                                        Acta</a>
+                                                @endif
                                                 <a class="d-flex btn_eliminar" data-id="{{ $proyecto->id }}"
                                                     href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>
-                                                <a class="d-flex btn_avances" data-id="{{ $proyecto->id }}"
-                                                    href="javascript:void(0);"><i class="fa fa-user"></i>&nbsp;Firma
-                                                    Cliente</a>
+                                                @if (auth()->user()->hasPermissionTo('firma_cliente_proyectos'))
+                                                    <a class="d-flex btn_avances" data-id="{{ $proyecto->id }}"
+                                                        href="javascript:void(0);"><i class="fa fa-user"></i>&nbsp;Firma
+                                                        Cliente</a>
+                                                @endif
                                             </td>
-                                            <td class="text-center">
-                                                <input data-id="{{ $proyecto->id }}" class="visto_bueno_check"
-                                                    @if ($proyecto->visto_bueno == 1) { checked } @endif type="checkbox">
-                                            </td>
+                                            @if (auth()->user()->hasPermissionTo('visto_bueno_proyectos'))
+                                                <td class="text-center">
+                                                    <input data-id="{{ $proyecto->id }}" class="visto_bueno_check"
+                                                        @if ($proyecto->visto_bueno == 1) { checked } @endif
+                                                        type="checkbox">
+                                                </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -110,7 +120,9 @@
                                         <th>Fecha Inicio</th>
                                         <th>Fecha Culminación</th>
                                         <th>Acciones</th>
-                                        <th>Visto<br>Bueno</th>
+                                        @if (auth()->user()->hasPermissionTo('visto_bueno_proyectos'))
+                                            <th>Visto<br>Bueno</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -128,20 +140,26 @@
                                                     href="javascript:void(0);"><i class="fa fa-list"></i>&nbsp;Gestionar
                                                     Estatus</a>
                                                 <a class="d-flex btn_board" data-id="{{ $proyecto->id }}"
-                                                    href="javascript:void(0);"><i class="fa fa-check"></i>&nbsp;Asignaciones</a>
+                                                    href="javascript:void(0);"><i
+                                                        class="fa fa-check"></i>&nbsp;Asignaciones</a>
                                                 <a class="d-flex btn_editar" data-id="{{ $proyecto->id }}"
                                                     href="javascript:void(0);"><i
                                                         class="fa fa-pencil-alt"></i>&nbsp;Editar</a>
-                                                <a class="d-flex btn_avances" data-id="{{ $proyecto->id }}"
-                                                    href="javascript:void(0);"><i class="fa fa-file"></i>&nbsp;Gestionar
-                                                    Acta</a>
+                                                @if (auth()->user()->hasPermissionTo('gestion_actas_proyectos'))
+                                                    <a class="d-flex btn_avances" data-id="{{ $proyecto->id }}"
+                                                        href="javascript:void(0);"><i class="fa fa-file"></i>&nbsp;Gestionar
+                                                        Acta</a>
+                                                @endif
                                                 <a class="d-flex btn_eliminar" data-id="{{ $proyecto->id }}"
                                                     href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>
                                             </td>
-                                            <td class="text-center">
-                                                <input data-id="{{ $proyecto->id }}" class="visto_bueno_check"
-                                                    @if ($proyecto->visto_bueno == 1) { checked } @endif type="checkbox">
-                                            </td>
+                                            @if (auth()->user()->hasPermissionTo('visto_bueno_proyectos'))
+                                                <td class="text-center">
+                                                    <input data-id="{{ $proyecto->id }}" class="visto_bueno_check"
+                                                        @if ($proyecto->visto_bueno == 1) { checked } @endif
+                                                        type="checkbox">
+                                                </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -184,7 +202,8 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="nombre_add">Nombre del proyecto</label>
-                                <input type="text" id="nombre_add" class="form-control" placeholder="Nombre del proyecto">
+                                <input type="text" id="nombre_add" class="form-control"
+                                    placeholder="Nombre del proyecto">
                             </div>
                             <div class="col-lg">
                                 <label for="facturacion_add">¿Requiere Facturación?</label>
@@ -202,18 +221,21 @@
                             </div>
                             <div class="col-lg">
                                 <label for="puntos_mensuales_add">Puntos Mensuales</label>
-                                <input type="text" id="puntos_mensuales_add" class="form-control" placeholder="Puntos Mensuales">
+                                <input type="text" id="puntos_mensuales_add" class="form-control"
+                                    placeholder="Puntos Mensuales">
                             </div>
                         </div>
                         <br>
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="porcentaje_tecnico_add">Porcentaje Técnico</label>
-                                <input type="text" id="porcentaje_tecnico_add" class="form-control" placeholder="Porcentaje Técnico">
+                                <input type="text" id="porcentaje_tecnico_add" class="form-control"
+                                    placeholder="Porcentaje Técnico">
                             </div>
                             <div class="col-lg">
                                 <label for="porcentaje_participante_add">Porcentaje Participante</label>
-                                <input type="text" id="porcentaje_participante_add" class="form-control" placeholder="Porcentaje Participante">
+                                <input type="text" id="porcentaje_participante_add" class="form-control"
+                                    placeholder="Porcentaje Participante">
                             </div>
                         </div>
                         <br>
@@ -275,7 +297,8 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="nombre_edit">Nombre del proyecto</label>
-                                <input type="text" id="nombre_edit" class="form-control" placeholder="Nombre del proyecto">
+                                <input type="text" id="nombre_edit" class="form-control"
+                                    placeholder="Nombre del proyecto">
                             </div>
                             <div class="col-lg">
                                 <label for="facturacion_edit">¿Requiere Facturación?</label>
@@ -293,18 +316,21 @@
                             </div>
                             <div class="col-lg">
                                 <label for="puntos_mensuales_edit">Puntos Mensuales</label>
-                                <input type="text" id="puntos_mensuales_edit" class="form-control" placeholder="Puntos Mensuales">
+                                <input type="text" id="puntos_mensuales_edit" class="form-control"
+                                    placeholder="Puntos Mensuales">
                             </div>
                         </div>
                         <br>
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="porcentaje_tecnico_edit">Porcentaje Técnico</label>
-                                <input type="text" id="porcentaje_tecnico_edit" class="form-control" placeholder="Porcentaje Técnico">
+                                <input type="text" id="porcentaje_tecnico_edit" class="form-control"
+                                    placeholder="Porcentaje Técnico">
                             </div>
                             <div class="col-lg">
                                 <label for="porcentaje_participante_edit">Porcentaje Participante</label>
-                                <input type="text" id="porcentaje_participante_edit" class="form-control" placeholder="Porcentaje Participante">
+                                <input type="text" id="porcentaje_participante_edit" class="form-control"
+                                    placeholder="Porcentaje Participante">
                             </div>
                         </div>
                         <br>
@@ -328,7 +354,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn ripple btn-primary" id="btnModificarProyecto" type="button">Modificar</button>
+                        <button class="btn ripple btn-primary" id="btnModificarProyecto"
+                            type="button">Modificar</button>
                     </div>
                 </div>
             </div>
@@ -343,7 +370,7 @@
             $(document).on('click', '.btn_board', function() {
                 let id = $(this).data('id');
 
-                window.open("{{route('tasks.index').'/?project='}}" + id, '_blank');
+                window.open("{{ route('tasks.index') . '/?project=' }}" + id, '_blank');
             });
         });
     </script>

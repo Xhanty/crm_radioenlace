@@ -12,6 +12,10 @@ class ProveedoresController extends Controller
     public function index()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('ver_proveedores')) {
+                return redirect()->route('home');
+            }
+
             $proveedores = DB::table('proveedores')->get();
             return view('admin.proveedores', compact('proveedores'));
         } catch (Exception $ex) {
