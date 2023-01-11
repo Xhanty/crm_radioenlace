@@ -106,14 +106,14 @@ $(function () {
                 data: "foto",
                 render: function (data) {
                     if (data == null || data == "") {
-                        return '<img src="assets/img/sin_imagen.jpg" loading="lazy" style="width: 120px" />';
+                        return '<img src="assets/img/sin_imagen.jpg" loading="lazy" style="width: 120px; height: 120px" />';
                     } else {
                         return (
                             '<img src="' +
                             url_general +
                             "images/vehiculos/" +
                             data +
-                            '" loading="lazy" style="width: 120px">'
+                            '" loading="lazy" style="width: 120px; height: 120px">'
                         );
                     }
                 },
@@ -152,14 +152,14 @@ $(function () {
                 data: "imagen",
                 render: function (data) {
                     if (data == null || data == "") {
-                        return '<img src="assets/img/sin_imagen.jpg" loading="lazy" style="width: 120px" />';
+                        return '<img src="assets/img/sin_imagen.jpg" loading="lazy" style="width: 120px; height: 120px" />';
                     } else {
                         return (
                             '<img src="' +
                             url_general +
                             "images/productos/" +
                             data +
-                            '" loading="lazy" style="width: 120px">'
+                            '" loading="lazy" style="width: 120px; height: 120px">'
                         );
                     }
                 },
@@ -203,7 +203,7 @@ $(function () {
                         url_general +
                         "images/productos/" +
                         data.img_producto +
-                        '" loading="lazy" style="width: 120px" /></div>' +
+                        '" loading="lazy" style="width: 120px; height: 120px" /></div>' +
                         "<div>" +
                         data.producto +
                         "</div>";
@@ -256,14 +256,14 @@ $(function () {
                 data: "imagen",
                 render: function (data) {
                     if (data == null || data == "") {
-                        return '<img src="assets/img/sin_imagen.jpg" loading="lazy" style="width: 120px" />';
+                        return '<img src="assets/img/sin_imagen.jpg" loading="lazy" style="width: 120px; height: 120px" />';
                     } else {
                         return (
                             '<img src="' +
                             url_general +
                             "images/productos/" +
                             data +
-                            '" loading="lazy" style="width: 120px">'
+                            '" loading="lazy" style="width: 120px; height: 120px">'
                         );
                     }
                 },
@@ -309,13 +309,13 @@ $(function () {
                 data: "imagen",
                 render: function (data) {
                     if (data == null || data == "") {
-                        return '<img src="assets/img/sin_imagen.jpg" loading="lazy" style="width: 120px" />';
+                        return '<img src="assets/img/sin_imagen.jpg" loading="lazy" style="width: 120px; height: 120px" />';
                     } else {
                         return (
                             '<img src="' +
                             "images/productos/" +
                             data +
-                            '" loading="lazy" style="width: 120px">'
+                            '" loading="lazy" style="width: 120px; height: 120px">'
                         );
                     }
                 },
@@ -504,20 +504,23 @@ $(function () {
                     let tecnicos = data.tecnicos;
                     let anexos = data.anexos;
 
-                    //Facturación
-                    $("#nombre_fact_edit").val(facturacion.nombre);
-                    $("#telefono_fact_edit").val(facturacion.telefono);
-                    $("#apellido_fact_edit").val(facturacion.apellido);
-                    $("#extension_fact_edit").val(facturacion.extension);
-                    $("#email_fact_edit").val(facturacion.email);
-                    $("#codigo_fact_edit").val(facturacion.codigo_postal);
-                    $("#regimen_fact_edit").val(facturacion.tipo_regimen);
-                    $("#responsable_fact_edit").val(
-                        facturacion.responsabilidad_fiscal
-                    );
-                    $("#indicativo_fact_edit").val(
-                        facturacion.indicativo_telefono
-                    );
+                    if (facturacion){
+                        //Facturación
+                        $("#nombre_fact_edit").val(facturacion.nombre);
+                        $("#telefono_fact_edit").val(facturacion.telefono);
+                        $("#apellido_fact_edit").val(facturacion.apellido);
+                        $("#extension_fact_edit").val(facturacion.extension);
+                        $("#email_fact_edit").val(facturacion.email);
+                        $("#codigo_fact_edit").val(facturacion.codigo_postal);
+                        $("#regimen_fact_edit").val(facturacion.tipo_regimen);
+                        $("#responsable_fact_edit").val(
+                            facturacion.responsabilidad_fiscal
+                        );
+                        $("#indicativo_fact_edit").val(
+                            facturacion.indicativo_telefono
+                        );
+                    }
+                        
 
                     //Técnicos
                     $("#nombre_tecn_edit").val(tecnicos.nombre);

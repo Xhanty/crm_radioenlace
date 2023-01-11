@@ -35,7 +35,7 @@ class VehiculosController extends Controller
                     <a data-id="' . $row->id . '" title="Eliminar" class="delete btn btn-danger btn-sm btn_Delete"><i class="fa fa-trash"></i></a>';
                     
                     if (auth()->user()->hasPermissionTo('gestion_checklist_vehiculos')) {
-                        $actionBtn .= ' <a data-id="' . $row->id . '" title="Gestionar" class="edit btn btn-success btn-sm btn_Gestionar"><i class="fa fa-file"></i></a>';
+                        $actionBtn .= ' <a data-id="' . $row->id . '" title="Gestionar" class="edit btn btn-success btn-sm btn_Gestionar"><i class="fa fa-file"></i></a> ';
                     }
 
                     if (auth()->user()->hasPermissionTo('gestion_salud_vehiculos')) {

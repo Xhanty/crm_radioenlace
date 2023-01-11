@@ -6,6 +6,9 @@ $(function () {
     });
 
     var vehiculo_global = 0;
+    var protocol = window.location.protocol;
+    var host = window.location.host;
+    var url_general = protocol + "//" + host + "/";
 
     $("#div_content_salud").hide();
     $("#div_content_gruas").hide();

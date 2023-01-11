@@ -51,14 +51,8 @@ class HomeController extends Controller
                 ->sum("cantidad");
 
 
-            $reparaciones_pendientes = DB::table('reparaciones')
-                ->where('status', 0)
-                ->where('id_empleado_repara', session('user'))
-                ->count();
-            $reparaciones_completadas = DB::table('reparaciones')
-                ->where('status', 1)
-                ->where('id_empleado_repara', session('user'))
-                ->count();
+            $reparaciones_pendientes = 0;
+            $reparaciones_completadas = 0;
 
             $asignaciones_proyectos = DB::table("asignaciones")
                 ->where("asignaciones.id_empleado", session("user"))
@@ -79,6 +73,7 @@ class HomeController extends Controller
 
             return view('home', compact('puntos_pendientes', 'puntos_cobrados', 'reparaciones_pendientes', 'reparaciones_completadas', 'asignaciones_proyectos', 'asignaciones_generales', 'asignaciones_g_pendientes', 'asignaciones_g_completadas', 'asignaciones_p_pendientes', 'asignaciones_p_completadas'));
         } catch (Exception $ex) {
+            return $ex;
             return view('errors.500');
         }
     }

@@ -217,11 +217,11 @@
                             </ul>
                         </li>
 
-                        <li class="slide">
+                        <!--<li class="slide">
                             <a class="side-menu__item" href="{{ route('actividades_diarias') }}"><i
                                     class="side-menu__icon fe fe-user"></i><span class="side-menu__label">Actividades
                                     Diarias</span></a>
-                        </li>
+                        </li>-->
 
                         <li class="slide">
                             <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
