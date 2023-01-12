@@ -147,6 +147,23 @@ class ClientesController extends Controller
                     "avatar" => $archivo,
                 ]);
             } else if ($tipo == 2) {
+                $valid_data = DB::table('datos_facturacion')->where("id_cliente", $cliente)->first();
+
+                if (!$valid_data) {
+                    DB::table('datos_facturacion')->insert([
+                        'nombre' => "",
+                        'telefono' => "",
+                        'apellido' => "",
+                        'extension' => "",
+                        'email' => "",
+                        'codigo_postal' => "",
+                        'tipo_regimen' => "",
+                        'responsabilidad_fiscal' => "",
+                        'indicativo_telefono' => "",
+                        'id_cliente' => $cliente,
+                    ]);
+                }
+
                 DB::table('datos_facturacion')->where("id_cliente", $cliente)->update([
                     'nombre' => $request->nombre ? $request->nombre : "",
                     'telefono' => $request->telefono ? $request->telefono : "",
@@ -159,6 +176,20 @@ class ClientesController extends Controller
                     'indicativo_telefono' => $request->indicativo_telefono ? $request->indicativo_telefono : ""
                 ]);
             } else if ($tipo == 3) {
+                $valid_data = DB::table('datos_tecnico')->where("id_cliente", $cliente)->first();
+
+                if (!$valid_data) {
+                    DB::table('datos_tecnico')->insert([
+                        'nombre' => "",
+                        'indicativo_telefono' => "",
+                        'apellido' => "",
+                        'telefono' => "",
+                        'email' => "",
+                        'extension' => "",
+                        'id_cliente' => $cliente,
+                    ]);
+                }
+
                 DB::table('datos_tecnico')->where("id_cliente", $cliente)->update([
                     'nombre' => $request->nombre ? $request->nombre : "",
                     'indicativo_telefono' => $request->indicativo_telefono ? $request->indicativo_telefono : "",

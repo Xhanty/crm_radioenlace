@@ -53,15 +53,12 @@ $.fn.extend({
 });
 
 //Initialization of treeviews
+$("#tree1").treed({
+    openedClass: "si si-organization",
+    closedClass: "si si-organization",
+});
 
-$('#treeview1').treed();
-
-$('#treeview2').treed();
-
-$('#treeview3').treed();
-
-$('#tree1').treed();
-
-$('#tree2').treed({openedClass:'si si-folder-alt', closedClass:'si si-folder'});
-
-$('#tree3').treed({openedClass:'si si-arrow-right-circle', closedClass:'si si-arrow-down-circle'});
+$("#tree2").treed({
+    openedClass: "si si-folder-alt",
+    closedClass: "si si-folder",
+});

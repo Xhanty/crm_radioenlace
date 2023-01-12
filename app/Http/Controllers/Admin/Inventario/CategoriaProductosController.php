@@ -16,12 +16,13 @@ class CategoriaProductosController extends Controller
                 return redirect()->route('home');
             }
 
-            $categorias = DB::table('categorias')
-            ->select("categorias.*", "empleados.nombre as creador", DB::raw("count(productos.id) as total_productos"))
-            ->join("empleados", "empleados.id", "=", "categorias.created_by")
-            ->leftJoin("productos", "productos.id_categoria", "=", "categorias.id")
-            ->groupBy("categorias.id", "categorias.nombre", "categorias.created_by", "categorias.fecha", "creador")
-            ->get();
+            $categorias = DB::table('categorias_productos')
+                ->select("categorias_productos.*", "empleados.nombre as creador", DB::raw("count(productos.id) as total_productos"), DB::raw("count(subcategorias_productos.id) as total_subs"))
+                ->join("empleados", "empleados.id", "=", "categorias_productos.created_by")
+                ->leftJoin("productos", "productos.categoria", "=", "categorias_productos.id")
+                ->leftJoin("subcategorias_productos", "subcategorias_productos.categoria", "=", "categorias_productos.id")
+                ->groupBy("categorias_productos.id", "categorias_productos.nombre", "categorias_productos.created_by", "categorias_productos.fecha", "creador")
+                ->get();
             return view('admin.inventario.categorias', compact('categorias'));
         } catch (Exception $ex) {
             return view('errors.500');
@@ -32,15 +33,28 @@ class CategoriaProductosController extends Controller
     {
         try {
             $nombre = $request->nombre;
-            $categoria = DB::table('categorias')->insert([
+            $subcategorias = $request->subcategorias;
+            DB::table('categorias_productos')->insert([
                 'nombre' => $nombre,
                 'created_by' => session('user'),
                 'fecha' => date('Y-m-d')
             ]);
+
+            $categoria = DB::table('categorias_productos')->where('nombre', $nombre)->first();
+
+            foreach ($subcategorias as $subcategoria) {
+                DB::table('subcategorias_productos')->insert([
+                    'nombre' => $subcategoria,
+                    'categoria' => $categoria->id,
+                    'created_by' => session('user'),
+                    'fecha' => date('Y-m-d')
+                ]);
+            }
+
             return response()->json(['info' => 1, 'success' => 'Categoría creada correctamente']);
         } catch (Exception $ex) {
-            return response()->json(['info' => 0, 'error' => 'Error al crear la categoría.']);
             return $ex;
+            return response()->json(['info' => 0, 'error' => 'Error al crear la categoría.']);
         }
     }
 
@@ -48,11 +62,51 @@ class CategoriaProductosController extends Controller
     {
         try {
             $id = $request->id;
-            $categoria = DB::table('categorias')->where('id', $id)->delete();
+            $subcategorias = DB::table('subcategorias_productos')->where('categoria', $id)->delete();
+            $categoria = DB::table('categorias_productos')->where('id', $id)->delete();
             return response()->json(['info' => 1, 'success' => 'Categoría eliminada correctamente']);
         } catch (Exception $ex) {
             return response()->json(['info' => 0, 'error' => 'Error al eliminar la categoría.']);
             return $ex;
+        }
+    }
+
+    public function subcategorias_get(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $subcategorias = DB::table('subcategorias_productos')->where('categoria', $id)->get();
+            return response()->json(['info' => 1, 'data' => $subcategorias]);
+        } catch (Exception $ex) {
+            return response()->json(['info' => 0, 'error' => 'Error al obtener las subcategorías.']);
+        }
+    }
+
+    public function categorias_edit(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $nombre = $request->nombre;
+            $subcategorias = $request->subcategorias;
+
+            DB::table('categorias_productos')->where('id', $id)->update([
+                'nombre' => $nombre
+            ]);
+
+            if($subcategorias) {
+                foreach ($subcategorias as $subcategoria) {
+                    DB::table('subcategorias_productos')->insert([
+                        'nombre' => $subcategoria,
+                        'categoria' => $id,
+                        'created_by' => session('user'),
+                        'fecha' => date('Y-m-d')
+                    ]);
+                }
+            }
+
+            return response()->json(['info' => 1, 'success' => 'Categoría editada correctamente']);
+        } catch (Exception $ex) {
+            return response()->json(['info' => 0, 'error' => 'Error al editar la categoría.']);
         }
     }
 }

@@ -105,12 +105,14 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/proveedores_anexos_add', [App\Http\Controllers\Admin\ProveedoresController::class, 'proveedores_anexos_add'])->name('proveedores_anexos_add');
     Route::post('/proveedores_anexos_delete', [App\Http\Controllers\Admin\ProveedoresController::class, 'proveedores_anexos_delete'])->name('proveedores_anexos_delete');
 
-    // INVENTARIO
+    // INVENTARIO subcategorias_get
     Route::get('/almacenes', [App\Http\Controllers\Admin\Inventario\AlmacenesController::class, 'index'])->name('almacenes');
     Route::post('/almacenes_create', [App\Http\Controllers\Admin\Inventario\AlmacenesController::class, 'almacenes_create'])->name('almacenes_create');
     Route::post('/almacenes_delete', [App\Http\Controllers\Admin\Inventario\AlmacenesController::class, 'almacenes_delete'])->name('almacenes_delete');
     Route::get('/categoria_productos', [App\Http\Controllers\Admin\Inventario\CategoriaProductosController::class, 'index'])->name('categoria_productos');
     Route::post('/categorias_create', [App\Http\Controllers\Admin\Inventario\CategoriaProductosController::class, 'categorias_create'])->name('categorias_create');
+    Route::post('/subcategorias_get', [App\Http\Controllers\Admin\Inventario\CategoriaProductosController::class, 'subcategorias_get'])->name('subcategorias_get');
+    Route::post('/categorias_edit', [App\Http\Controllers\Admin\Inventario\CategoriaProductosController::class, 'categorias_edit'])->name('categorias_edit');
     Route::post('/categorias_delete', [App\Http\Controllers\Admin\Inventario\CategoriaProductosController::class, 'categorias_delete'])->name('categorias_delete');
     Route::get('/gestion_inventario', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'gestion_inventario'])->name('gestion_inventario');
     Route::get('/inventario', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'index'])->name('inventario');

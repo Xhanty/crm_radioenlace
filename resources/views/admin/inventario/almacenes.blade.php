@@ -1,5 +1,41 @@
 @extends('layouts.menu')
 
+@section('css')
+    <style>
+        .btn-flotante {
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            border-radius: 5px;
+            letter-spacing: 2px;
+            background-color: #3858F9;
+            padding: 18px 30px;
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            transition: all 300ms ease 0ms;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+            z-index: 99;
+        }
+
+        .btn-flotante:hover {
+            background-color: #3858F9;
+            color: #ffffff;
+            box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3);
+            transform: translateY(-7px);
+        }
+
+        @media only screen and (max-width: 600px) {
+            .btn-flotante {
+                font-size: 14px;
+                padding: 12px 20px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="main-container container-fluid">
 
@@ -17,49 +53,81 @@
         </div>
         <!-- /breadcrumb -->
 
-        <!-- Row -->
-        <div class="row row-sm">
-            <div class="col-lg-12">
+        <div class="row">
+            <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header d-flex-header-table">
-                        <div class="div-1-tables-header">
-                            <h3 class="card-title mt-2">Lista de Almacenes</h3>
-                        </div>
-                        <div class="div-2-tables-header">
-                            <button class="btn btn-primary" data-bs-target="#modalAdd" data-bs-toggle="modal"
-                                data-bs-effect="effect-scale">Registrar Almacén</button>
-                        </div>
-                    </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
-                                <thead>
-                                    <tr>
-                                        <th class="wd-15p border-bottom-0">Nombre</th>
-                                        <th class="wd-20p border-bottom-0">Creada Por</th>
-                                        <th class="wd-15p border-bottom-0">Fecha Creación</th>
-                                        <th class="wd-15p border-bottom-0">Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($almacenes as $value)
-                                        <tr>
-                                            <td>{{ $value->nombre }}</td>
-                                            <td>{{ $value->creador }}</td>
-                                            <td>{{ $value->fecha }}</td>
-                                            <td><a data-id="{{ $value->id }}" title="Eliminar"
-                                                    class="delete btn btn-danger btn-sm btn_Delete"><i
-                                                        class="fa fa-trash"></i></a></td>
-                                        </tr>
+                        <div class="main-content-label mg-b-5">
+                            SEDE PRINCIPAL
+                        </div>
+                        <p class="mg-b-10"></p>
+                        <div class="row">
+                            <!-- col -->
+                            <div class="col-lg-12 mt-4 mt-lg-0">
+                                <ul id="tree1">
+                                    @foreach ($almacenes_sede as $sede)
+                                        <li><a href="javascript:void(0);">{{ $sede->nombre }}</a>
+                                            @foreach ($sede->almacenes as $almacen)
+                                                <ul>
+                                                    <li>{{ $almacen->nombre }}
+                                                        @if (count($almacen->estantes) > 0)
+                                                            <ul>
+                                                                @foreach ($almacen->estantes as $estante)
+                                                                    <li>{{ $estante->nombre }}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        @endif
+                                                    </li>
+                                                </ul>
+                                            @endforeach
+                                        </li>
                                     @endforeach
-                                </tbody>
-                            </table>
+                                </ul>
+                            </div>
+                            <!-- /col -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- End Row -->
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="main-content-label mg-b-5 d-flex">
+                            CLIENTES
+                        </div>
+                        <p class="mg-b-10"></p>
+                        <div class="row">
+                            <!-- col -->
+                            <div class="col-lg-12 mt-4 mt-lg-0">
+                                <ul id="tree2">
+                                    @foreach ($clientes as $cliente)
+                                        <li><a href="javascript:void(0);">{{ $cliente->razon_social }}</a>
+                                            @foreach ($cliente->almacenes as $almacen)
+                                                <ul>
+                                                    <li>{{ $almacen->nombre }}
+                                                        @if (count($almacen->estantes) > 0)
+                                                            <ul>
+                                                                @foreach ($almacen->estantes as $estante)
+                                                                    <li>{{ $estante->nombre }}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        @endif
+                                                    </li>
+                                                </ul>
+                                            @endforeach
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <!-- /col -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Modal Add -->
         <div class="modal  fade" id="modalAdd">
@@ -83,9 +151,13 @@
                 </div>
             </div>
         </div>
+
+        <a href="javascript:void(0);" class="btn-flotante" data-bs-target="#modalAdd" data-bs-toggle="modal"
+            data-bs-effect="effect-scale">Agregar Almacén</a>
     </div>
 @endsection
 
 @section('scripts')
     <script src="{{ asset('assets/js/app/inventario/almacenes.js') }}"></script>
+    <script src="{{ asset('assets/plugins/treeview/treeview.js') }}"></script>
 @endsection
