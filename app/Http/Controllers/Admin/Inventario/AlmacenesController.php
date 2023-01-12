@@ -24,6 +24,12 @@ class AlmacenesController extends Controller
                 ->groupBy("cliente.id", "cliente.razon_social")
                 ->get();
 
+            $clientes_all = DB::table('cliente')
+                ->select("cliente.id", "cliente.razon_social")
+                ->where("estado", 1)
+                ->orderBy("cliente.razon_social")
+                ->get();
+
             foreach ($clientes as $key => $value) {
                 $almacenes = DB::table('almacenes')
                     ->where("almacenes.cliente", $value->id)
@@ -69,7 +75,7 @@ class AlmacenesController extends Controller
                 }
             }
 
-            return view('admin.inventario.almacenes', compact('almacenes_sede', 'clientes'));
+            return view('admin.inventario.almacenes', compact('almacenes_sede', 'clientes', 'clientes_all'));
         } catch (Exception $ex) {
             return $ex;
             return view('errors.500');
@@ -101,6 +107,63 @@ class AlmacenesController extends Controller
             return response()->json(['info' => 1, 'success' => 'Almacén eliminado correctamente']);
         } catch (Exception $ex) {
             return response()->json(['info' => 0, 'error' => 'Error al eliminar el almacén.']);
+            return $ex;
+        }
+    }
+
+    public function almacenes_cliente(Request $request)
+    {
+        try {
+            $nivel = $request->nivel;
+            $cliente = $request->cliente;
+
+
+            $almacenes = DB::table('almacenes')
+                ->where("almacenes.cliente", $cliente)
+                ->orderBy("almacenes.nombre")
+                ->get();
+
+            if ($nivel == 3) {
+                foreach ($almacenes as $key => $value) {
+                    $estantes = DB::table('ubicaciones_almacen')
+                        ->where("ubicaciones_almacen.almacen", $value->id)
+                        ->orderBy("ubicaciones_almacen.nombre")
+                        ->get();
+                    $almacenes[$key]->estantes = $estantes;
+                }
+            }
+
+            return response()->json(['info' => 1, 'data' => $almacenes]);
+        } catch (Exception $ex) {
+            return response()->json(['info' => 0, 'error' => 'Error al cargar los almacenes.']);
+            return $ex;
+        }
+    }
+
+    public function almacenes_sede(Request $request)
+    {
+        try {
+            $nivel = $request->nivel;
+
+            $almacenes = DB::table('almacenes')
+                ->whereNull("almacenes.cliente")
+                ->where("almacen", 1)
+                ->orderBy("almacenes.nombre")
+                ->get();
+
+            if ($nivel == 3) {
+                foreach ($almacenes as $key => $value) {
+                    $estantes = DB::table('ubicaciones_almacen')
+                        ->where("ubicaciones_almacen.almacen", $value->id)
+                        ->orderBy("ubicaciones_almacen.nombre")
+                        ->get();
+                    $almacenes[$key]->estantes = $estantes;
+                }
+            }
+
+            return response()->json(['info' => 1, 'data' => $almacenes]);
+        } catch (Exception $ex) {
+            return response()->json(['info' => 0, 'error' => 'Error al cargar los almacenes.']);
             return $ex;
         }
     }

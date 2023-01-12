@@ -37,6 +37,11 @@
 
     @yield('css')
 </head>
+<style>
+    .slide.is-expanded .sub-side-menu__item:before {
+        content: "\e994";
+    }
+</style>
 
 <body class="main-body app sidebar-mini ltr">
     <!-- Loader -->

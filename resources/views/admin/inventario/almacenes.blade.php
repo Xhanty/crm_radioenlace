@@ -131,13 +131,56 @@
 
         <!-- Modal Add -->
         <div class="modal  fade" id="modalAdd">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
                         <h6 class="modal-title">Registro de Almacén</h6><button aria-label="Close" class="btn-close"
                             data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Ubicación</label>
+                                <select id="general_add" class="form-select">
+                                    <option value="1">Sede Principal</option>
+                                    <option value="2">Cliente</option>
+                                </select>
+                            </div>
+                            <div class="col-lg">
+                                <label for="">Nivel de ingreso</label>
+                                <select id="nivel_ingreso_add" class="form-select">
+                                    <option value="1">Nivel 1</option>
+                                    <option value="2">Nivel 2</option>
+                                    <option value="3">Nivel 3</option>
+                                </select>
+                            </div>
+                            <div class="col-lg d-none">
+                                <label for="">Cliente</label>
+                                <select id="cliente_add" class="form-select">
+                                    @foreach ($clientes_all as $cliente)
+                                        <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row row-sm d-none mt-3">
+                            <div class="col-lg d-none">
+                                <label for="">Seleccione el nivel 1</label>
+                                <select id="nivel_uno_add" class="form-select">
+                                    @foreach ($almacenes_sede as $sede)
+                                        <option value="{{ $sede->id }}">{{ $sede->nombre }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg d-none">
+                                <label for="">Seleccione el nivel 2</label>
+                                <select id="nivel_dos_add" class="form-select">
+                                    <option value="1">Nivel 1</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Nombre de Almacén</label>
