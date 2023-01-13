@@ -304,13 +304,13 @@
                                         </li>
                                     @endif
                                     @if (auth()->user()->hasPermissionTo('gestion_productos_inventario'))
-                                        <li><a class="slide-item" href="{{ route('inventario') }}">Productos /
-                                                Stock</a>
+                                        <li><a class="slide-item" href="{{ route('inventario') }}">Productos</a>
                                         </li>
                                     @endif
                                     @if (auth()->user()->hasPermissionTo('gestion_inventario'))
                                         <li><a class="slide-item"
-                                                href="{{ route('gestion_inventario') }}">Inventario</a>
+                                                href="{{ route('gestion_inventario') }}">Inventario /
+                                                Stock</a>
                                         </li>
                                     @endif
                                     @if (auth()->user()->hasPermissionTo('gestion_actividades_inventario'))
