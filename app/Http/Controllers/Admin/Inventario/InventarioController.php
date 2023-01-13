@@ -144,6 +144,26 @@ class InventarioController extends Controller
         }
     }
 
+    public function productos_gestion_list(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = DB::table("productos")
+                ->select('productos.*', 'categorias_productos.nombre as categoria', 'subcategorias_productos.nombre as subcategoria')
+                ->join('categorias_productos', 'productos.categoria', '=', 'categorias_productos.id')
+                ->join('subcategorias_productos', 'subcategorias_productos.id', '=', 'productos.sub_categoria')
+                ->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '<a data-id="' . $row->id . '" title="Ingreso" class="edit btn btn-success btn-sm btn_Ingreso"><i class="fas fa-cloud-download-alt"></i></a>
+                    <a data-id="' . $row->id . '" title="Salida" class="edit btn btn-warning btn-sm btn_Salida"><i class="fas fa-cloud-upload-alt"></i></a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+
     public function data_producto(Request $request)
     {
         try {
@@ -242,83 +262,10 @@ class InventarioController extends Controller
                 return redirect()->route('home');
             }
 
-            $empleados = DB::table('empleados')->where("status", 1)->get();
-            $almacenes = DB::table('almacenes')->get();
-            $proveedores = DB::table('proveedores')->where("estado", 1)->get();
-            $clientes = DB::table('cliente')->where("estado", 1)->get();
-            return view('admin.inventario.gestion_inventario', compact('empleados', 'almacenes', 'proveedores', 'clientes'));
+            return view('admin.inventario.gestion_inventario');
         } catch (Exception $ex) {
             return view('errors.500');
         }
-    }
-
-    public function gestion_existencias_list()
-    {
-        $data = DB::table("inventario")
-            ->select(
-                'inventario.*',
-                'productos.nombre as producto',
-                'productos.imagen',
-                'productos.cod_producto',
-                'productos.nombre',
-                'productos.marca',
-                'productos.modelo',
-                'productos.id_categoria',
-                'almacenes.nombre as almacen',
-                'empleados.nombre as creador',
-                'categorias.nombre as categoria'
-            )
-            ->leftJoin('productos', 'inventario.id_producto', '=', 'productos.id')
-            ->leftJoin('empleados', 'inventario.created_by', '=', 'empleados.id')
-            ->leftJoin('almacenes', 'inventario.ubicacion', '=', 'almacenes.id')
-            ->leftJoin('categorias', 'productos.id_categoria', '=', 'categorias.id')
-            ->orderBy('inventario.id', 'desc')
-            ->get();
-        return Datatables::of($data)
-            ->addIndexColumn()
-            ->addColumn('action', function ($row) {
-                $actionBtn =
-                    '<a data-id="' . $row->id . '" title="Ver" class="btn btn-primary btn-sm btn_Show"><i class="fa fa-eye"></i></a>' .
-                    '<a data-id="' . $row->id . '" title="Editar" class="btn btn-primary btn-sm btn_Edit"><i class="fa fa-pencil-alt"></i></a>' .
-                    '<a data-id="' . $row->id . '" data-status="' . $row->status . '" title="Dar De Baja" class="btn btn-primary btn-sm btn_Baja"><i class="fas fa-times"></i></a>';
-
-                if (auth()->user()->hasPermissionTo('delete_existencias_inventario')) {
-                    $actionBtn .= '<a data-id="' . $row->id . '" data-asignado="' . $row->cantidad_asignada . '" title="Eliminar" class="btn btn-danger btn-sm btn_Delete"><i class="fa fa-trash"></i></a>';
-                }
-                return $actionBtn;
-            })
-            ->rawColumns(['action'])
-            ->make(true);
-    }
-
-    public function gestion_inventario_list()
-    {
-        $data = DB::table("inventario")
-            ->select(
-                'inventario.*',
-                'productos.nombre as producto',
-                'productos.imagen',
-                'productos.cod_producto',
-                'productos.nombre',
-                'productos.marca',
-                'productos.modelo',
-                'productos.id_categoria',
-                'categorias.nombre as categoria'
-            )
-            ->leftJoin('productos', 'inventario.id_producto', '=', 'productos.id')
-            ->leftJoin('categorias', 'productos.id_categoria', '=', 'categorias.id')
-            ->where('inventario.cantidad', '>', 0)
-            ->orderBy('inventario.id', 'desc')
-            ->get();
-        return Datatables::of($data)
-            ->addIndexColumn()
-            ->addColumn('action', function ($row) {
-                $actionBtn =
-                    '<a data-id="' . $row->id . '" data-nombre="' . $row->producto . '" data-img="' . $row->imagen . '" data-producto="' . $row->id_producto . '" data-cantidad="' . $row->cantidad . '" title="Seleccionar" class="btn btn-primary btn-sm btn_Seleccionar"><i class="fa fa-check"></i></a>';
-                return $actionBtn;
-            })
-            ->rawColumns(['action'])
-            ->make(true);
     }
 
     public function inventario_change_status(Request $request)

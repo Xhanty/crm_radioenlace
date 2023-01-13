@@ -190,6 +190,54 @@ $(function () {
         language: language,
     });
 
+    $("#table_productos_gestion_img").DataTable({
+        processing: true,
+        serverSide: true,
+        order: [],
+        ajax: "productos_gestion_list",
+        columns: [
+            {
+                data: "imagen",
+                render: function (data) {
+                    if (data == null || data == "") {
+                        return '<img src="assets/img/sin_imagen.jpg" loading="lazy" style="width: 120px; height: 120px" />';
+                    } else {
+                        return (
+                            '<img src="' +
+                            url_general +
+                            "images/productos/" +
+                            data +
+                            '" loading="lazy" style="width: 120px; height: 120px">'
+                        );
+                    }
+                },
+            },
+            { data: "cod_producto", name: "cod_producto" },
+            { data: "nombre", name: "nombre" },
+            { data: "categoria", name: "categoria" },
+            { data: "subcategoria", name: "subcategoria" },
+            { data: "marca", name: "marca" },
+            { data: "modelo", name: "modelo" },
+            {
+                data: "status",
+                render: function (data) {
+                    if (data == 1) {
+                        return '<span class="badge bg-success side-badge">Disponible</span>';
+                    } else {
+                        return '<span class="badge bg-danger side-badge">Deshabilitado</span>';
+                    }
+                },
+            },
+            {
+                data: "action",
+                name: "action",
+                orderable: true,
+                searchable: true,
+            },
+        ],
+        language: language,
+    });
+
     $("#tbl_actividades_inventario").DataTable({
         processing: true,
         serverSide: true,
@@ -245,108 +293,6 @@ $(function () {
         ],
         language: language,
         order: [],
-    });
-
-    $("#tbl_inventario_existencias_img").DataTable({
-        processing: true,
-        serverSide: true,
-        order: [],
-        ajax: "gestion_existencias_list",
-        columns: [
-            {
-                data: "imagen",
-                render: function (data) {
-                    if (data == null || data == "") {
-                        return '<img src="assets/img/sin_imagen.jpg" loading="lazy" style="width: 120px; height: 120px" />';
-                    } else {
-                        return (
-                            '<img src="' +
-                            url_general +
-                            "images/productos/" +
-                            data +
-                            '" loading="lazy" style="width: 120px; height: 120px">'
-                        );
-                    }
-                },
-            },
-            { data: "nombre", name: "producto" },
-            { data: "marca", name: "marca" },
-            { data: "modelo", name: "modelo" },
-            { data: "serial", name: "serial" },
-            { data: "codigo_interno", name: "codigo_interno" },
-            { data: "cantidad", name: "cantidad" },
-            { data: "cantidad_asignada", name: "cantidad_asignada" },
-            { data: "categoria", name: "categoria" },
-            { data: "almacen", name: "almacen" },
-            { data: "ubicacion_ref", name: "ubicacion_ref" },
-            { data: "creador", name: "creador" },
-            {
-                data: "status",
-                render: function (data) {
-                    if (data == 1) {
-                        return '<span class="badge bg-success side-badge">Disponible</span>';
-                    } else {
-                        return '<span class="badge bg-danger side-badge">Deshabilitado</span>';
-                    }
-                },
-            },
-            {
-                data: "action",
-                name: "action",
-                orderable: true,
-                searchable: true,
-            },
-        ],
-        language: language,
-    });
-
-    $("#table_inventario_gestion_img").DataTable({
-        processing: true,
-        serverSide: true,
-        order: [],
-        ajax: "gestion_inventario_list",
-        columns: [
-            {
-                data: "imagen",
-                render: function (data) {
-                    if (data == null || data == "") {
-                        return '<img src="assets/img/sin_imagen.jpg" loading="lazy" style="width: 120px; height: 120px" />';
-                    } else {
-                        return (
-                            '<img src="' +
-                            "images/productos/" +
-                            data +
-                            '" loading="lazy" style="width: 120px; height: 120px">'
-                        );
-                    }
-                },
-            },
-            { data: "nombre", name: "producto" },
-            { data: "categoria", name: "categoria" },
-            { data: "cantidad_asignada", name: "cantidad_asignada" },
-            { data: "cod_producto", name: "cod_producto" },
-            { data: "codigo_interno", name: "codigo_interno" },
-            { data: "marca", name: "marca" },
-            { data: "modelo", name: "modelo" },
-            { data: "serial", name: "serial" },
-            {
-                data: "status",
-                render: function (data) {
-                    if (data == 1) {
-                        return '<span class="badge bg-success side-badge">Disponible</span>';
-                    } else {
-                        return '<span class="badge bg-danger side-badge">Deshabilitado</span>';
-                    }
-                },
-            },
-            {
-                data: "action",
-                name: "action",
-                orderable: true,
-                searchable: true,
-            },
-        ],
-        language: language,
     });
 
     var table_clientes = $("#table_clientes_img").DataTable({
@@ -505,7 +451,7 @@ $(function () {
                     let tecnicos = data.tecnicos;
                     let anexos = data.anexos;
 
-                    if (facturacion){
+                    if (facturacion) {
                         //Facturación
                         $("#nombre_fact_edit").val(facturacion.nombre);
                         $("#telefono_fact_edit").val(facturacion.telefono);
@@ -521,7 +467,6 @@ $(function () {
                             facturacion.indicativo_telefono
                         );
                     }
-                        
 
                     //Técnicos
                     $("#nombre_tecn_edit").val(tecnicos.nombre);

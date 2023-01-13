@@ -120,8 +120,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::get('/gestion_inventario', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'gestion_inventario'])->name('gestion_inventario');
     Route::get('/inventario', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'index'])->name('inventario');
     Route::get('/productos_list', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'productos_list'])->name('productos_list');
-    Route::get('/gestion_existencias_list', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'gestion_existencias_list'])->name('gestion_existencias_list');
-    Route::get('/gestion_inventario_list', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'gestion_inventario_list'])->name('gestion_inventario_list');
+    Route::get('/productos_gestion_list', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'productos_gestion_list'])->name('productos_gestion_list');
     Route::post('/productos_create', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'productos_create'])->name('productos_create');
     Route::post('/data_producto', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'data_producto'])->name('data_producto');
     Route::post('/baja_producto', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'baja_producto'])->name('baja_producto');

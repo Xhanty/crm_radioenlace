@@ -12,7 +12,7 @@ class CategoriasController extends Controller
     public function index()
     {
         try {
-            if (!auth()->user()->hasPermissionTo('categorias_proyectos')) {
+            if (!auth()->user()->hasPermissionTo('gesion_categorias_proyectos')) {
                 return redirect()->route('home');
             }
 
