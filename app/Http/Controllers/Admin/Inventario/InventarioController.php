@@ -17,7 +17,7 @@ class InventarioController extends Controller
                 return redirect()->route('home');
             }
 
-            $categorias = DB::table('categorias')->get();
+            $categorias = DB::table('categorias_productos')->get();
             return view('admin.inventario.inventario', compact('categorias'));
         } catch (Exception $ex) {
             return view('errors.500');
@@ -116,8 +116,8 @@ class InventarioController extends Controller
     {
         if ($request->ajax()) {
             $data = DB::table("productos")
-                ->select('productos.*', 'categorias.nombre as categoria')
-                ->join('categorias', 'productos.id_categoria', '=', 'categorias.id')
+                ->select('productos.*', 'categorias_productos.nombre as categoria')
+                ->join('categorias_productos', 'productos.categoria', '=', 'categorias_productos.id')
                 ->get();
             return Datatables::of($data)
                 ->addIndexColumn()
