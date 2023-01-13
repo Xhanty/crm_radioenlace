@@ -63,17 +63,49 @@
                         <p class="mg-b-10"></p>
                         <div class="row">
                             <!-- col -->
-                            <div class="col-lg-12 mt-4 mt-lg-0">
+                            <div class="col-auto mt-4 mt-lg-0">
                                 <ul id="tree1">
                                     @foreach ($almacenes_sede as $sede)
                                         <li><a href="javascript:void(0);">{{ $sede->nombre }}</a>
+                                            &nbsp;
+                                            <a href="javascript:void(0);" class="btn_Edit" data-nombre="{{ $sede->nombre }}"
+                                                data-observaciones="{{ $sede->observaciones }}" data-nivel="1"
+                                                data-id="{{ $sede->id }}" title="Editar"><i
+                                                    class="fa fa-pencil-alt"></i></a>
+                                            <a href="javascript:void(0);" class="btn_Delete" data-cliente="0" data-nivel="1"
+                                                data-id="{{ $sede->id }}" title="Eliminar"><i
+                                                    class="fa fa-trash"></i></a>
                                             @foreach ($sede->almacenes as $almacen)
                                                 <ul>
-                                                    <li>{{ $almacen->nombre }}
+                                                    <li style="cursor: pointer;">
+                                                        {{ $almacen->nombre }}
+                                                        &nbsp;
+                                                        <a href="javascript:void(0);" class="btn_Edit"
+                                                            data-nombre="{{ $almacen->nombre }}" data-nivel="2"
+                                                            data-observaciones="{{ $almacen->observaciones }}"
+                                                            data-id="{{ $almacen->id }}" title="Editar"><i
+                                                                class="fa fa-pencil-alt"></i></a>
+                                                        <a href="javascript:void(0);" class="btn_Delete" data-cliente="0"
+                                                            data-nivel="2" data-id="{{ $almacen->id }}" title="Eliminar"><i
+                                                                class="fa fa-trash"></i></a>
                                                         @if (count($almacen->estantes) > 0)
                                                             <ul>
                                                                 @foreach ($almacen->estantes as $estante)
-                                                                    <li>{{ $estante->nombre }}</li>
+                                                                    <li style="cursor: pointer;" data-bs-placement="right"
+                                                                        data-bs-toggle="tooltip-primary" title=""
+                                                                        data-bs-original-title="{{ $estante->observaciones }}">
+                                                                        {{ $estante->nombre }} &nbsp;
+                                                                        <a href="javascript:void(0);" class="btn_Edit"
+                                                                            data-nombre="{{ $estante->nombre }}"
+                                                                            data-observaciones="{{ $estante->observaciones }}"
+                                                                            data-nivel="3" data-id="{{ $estante->id }}"
+                                                                            title="Editar"><i
+                                                                                class="fa fa-pencil-alt"></i></a>
+                                                                        <a href="javascript:void(0);" class="btn_Delete"
+                                                                            data-cliente="0" data-nivel="3"
+                                                                            data-id="{{ $estante->id }}"
+                                                                            title="Eliminar"><i class="fa fa-trash"></i></a>
+                                                                    </li>
                                                                 @endforeach
                                                             </ul>
                                                         @endif
@@ -101,17 +133,43 @@
                         <p class="mg-b-10"></p>
                         <div class="row">
                             <!-- col -->
-                            <div class="col-lg-12 mt-4 mt-lg-0">
+                            <div class="col-lg-auto mt-4 mt-lg-0">
                                 <ul id="tree2">
                                     @foreach ($clientes as $cliente)
                                         <li><a href="javascript:void(0);">{{ $cliente->razon_social }}</a>
                                             @foreach ($cliente->almacenes as $almacen)
                                                 <ul>
-                                                    <li>{{ $almacen->nombre }}
+                                                    <li style="cursor: pointer;">
+                                                        {{ $almacen->nombre }}
+                                                        &nbsp;
+                                                        <a href="javascript:void(0);" class="btn_Edit_Cliente"
+                                                            data-nombre="{{ $almacen->nombre }}" data-nivel="1"
+                                                            data-observaciones="{{ $almacen->observaciones }}"
+                                                            data-id="{{ $almacen->id }}" title="Editar"><i
+                                                                class="fa fa-pencil-alt"></i></a>
+                                                        <a href="javascript:void(0);" class="btn_Delete" data-nivel="1"
+                                                            data-cliente="1" data-id="{{ $almacen->id }}"
+                                                            title="Eliminar"><i class="fa fa-trash"></i></a></a>
                                                         @if (count($almacen->estantes) > 0)
                                                             <ul>
                                                                 @foreach ($almacen->estantes as $estante)
-                                                                    <li>{{ $estante->nombre }}</li>
+                                                                    <li style="cursor: pointer;" data-bs-placement="right"
+                                                                        data-bs-toggle="tooltip-primary" title=""
+                                                                        data-bs-original-title="{{ $estante->observaciones }}">
+                                                                        {{ $estante->nombre }}
+                                                                        <a href="javascript:void(0);"
+                                                                            class="btn_Edit_Cliente"
+                                                                            data-nombre="{{ $estante->nombre }}"
+                                                                            data-observaciones="{{ $estante->observaciones }}"
+                                                                            data-nivel="2" data-id="{{ $estante->id }}"
+                                                                            title="Editar"><i
+                                                                                class="fa fa-pencil-alt"></i></a>
+                                                                        <a href="javascript:void(0);" class="btn_Delete"
+                                                                            data-nivel="2" data-cliente="1"
+                                                                            data-id="{{ $estante->id }}"
+                                                                            title="Eliminar"><i
+                                                                                class="fa fa-trash"></i></a></a>
+                                                                    </li>
                                                                 @endforeach
                                                             </ul>
                                                         @endif
@@ -184,12 +242,56 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Nombre de Almacén</label>
-                                <input class="form-control" id="almacenadd" placeholder="Nombre de Almacén" type="text">
+                                <input class="form-control" id="almacenadd" placeholder="Nombre de Almacén"
+                                    type="text">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Observaciones (Opcional)</label>
+                                <textarea class="form-control" placeholder="Observaciones" rows="3" id="observacion_add"
+                                    style="height: 90px; resize: none"></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button class="btn ripple btn-primary" id="btnGuardarAlmacen" type="button">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Edit -->
+        <div class="modal  fade" id="modalEdit">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Modificar Almacén</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" disabled readonly id="id_almacen_edit">
+                        <input type="hidden" disabled readonly id="cliente_almacen_edit">
+                        <input type="hidden" disabled readonly id="nivel_almacen_edit">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Nombre de Almacén</label>
+                                <input class="form-control" id="almacenedit" placeholder="Nombre de Almacén"
+                                    type="text">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Observaciones (Opcional)</label>
+                                <textarea class="form-control" placeholder="Observaciones" rows="3" id="observacion_edit"
+                                    style="height: 90px; resize: none"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" id="btnModificarAlmacen" type="button">Modificar</button>
                     </div>
                 </div>
             </div>
@@ -203,4 +305,5 @@
 @section('scripts')
     <script src="{{ asset('assets/js/app/inventario/almacenes.js') }}"></script>
     <script src="{{ asset('assets/plugins/treeview/treeview.js') }}"></script>
+    <script src="{{ asset('assets/js/tooltip.js') }}"></script>
 @endsection

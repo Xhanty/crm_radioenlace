@@ -105,9 +105,10 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/proveedores_anexos_add', [App\Http\Controllers\Admin\ProveedoresController::class, 'proveedores_anexos_add'])->name('proveedores_anexos_add');
     Route::post('/proveedores_anexos_delete', [App\Http\Controllers\Admin\ProveedoresController::class, 'proveedores_anexos_delete'])->name('proveedores_anexos_delete');
 
-    // INVENTARIO 
+    // INVENTARIO
     Route::get('/almacenes', [App\Http\Controllers\Admin\Inventario\AlmacenesController::class, 'index'])->name('almacenes');
     Route::post('/almacenes_create', [App\Http\Controllers\Admin\Inventario\AlmacenesController::class, 'almacenes_create'])->name('almacenes_create');
+    Route::post('/almacenes_update', [App\Http\Controllers\Admin\Inventario\AlmacenesController::class, 'almacenes_update'])->name('almacenes_update');
     Route::post('/almacenes_delete', [App\Http\Controllers\Admin\Inventario\AlmacenesController::class, 'almacenes_delete'])->name('almacenes_delete');
     Route::post('/almacenes_sede', [App\Http\Controllers\Admin\Inventario\AlmacenesController::class, 'almacenes_sede'])->name('almacenes_sede');
     Route::post('/almacenes_cliente', [App\Http\Controllers\Admin\Inventario\AlmacenesController::class, 'almacenes_cliente'])->name('almacenes_cliente');

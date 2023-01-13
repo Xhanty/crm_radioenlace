@@ -49,11 +49,11 @@ class AlmacenesController extends Controller
             }
 
             $almacenes_sede = DB::table('almacenes')
-                ->select("almacenes.id", "almacenes.nombre")
+                ->select("almacenes.id", "almacenes.nombre", "almacenes.observaciones")
                 ->whereNull("almacenes.cliente")
                 ->where("almacen", 1)
                 ->orderBy("almacenes.nombre")
-                ->groupBy("almacenes.id", "almacenes.nombre")
+                ->groupBy("almacenes.id", "almacenes.nombre", "almacenes.observaciones")
                 ->get();
 
             foreach ($almacenes_sede as $key => $value) {
@@ -85,13 +85,66 @@ class AlmacenesController extends Controller
     public function almacenes_create(Request $request)
     {
         try {
+            $ubicacion = $request->ubicacion;
+            $nivel = $request->nivel;
+            $cliente = $request->cliente;
+            $nivel1 = $request->nivel1;
+            $nivel2 = $request->nivel2;
             $nombre = $request->nombre;
-            $categoria = DB::table('almacenes')->insert([
-                'nombre' => $nombre,
-                'created_by' => session('user'),
-                'fecha' => date('Y-m-d'),
-                'status' => 0
-            ]);
+            $observaciones = $request->observacion;
+
+            if ($ubicacion == 1) {
+                $cliente = null;
+                if ($nivel == 1) {
+                    DB::table('almacenes')->insert([
+                        'nombre' => $nombre,
+                        'observaciones' => $observaciones,
+                        'created_by' => session('user'),
+                        'fecha' => date('Y-m-d'),
+                        'status' => 1,
+                        'almacen' => 1
+                    ]);
+                } else if ($nivel == 2) {
+                    DB::table('almacenes')->insert([
+                        'nombre' => $nombre,
+                        'observaciones' => $observaciones,
+                        'created_by' => session('user'),
+                        'fecha' => date('Y-m-d'),
+                        'status' => 1,
+                        'almacen' => 0,
+                        'almacen_id' => $nivel1
+                    ]);
+                } else if ($nivel == 3) {
+                    DB::table('ubicaciones_almacen')->insert([
+                        'almacen' => $nivel2,
+                        'observaciones' => $observaciones,
+                        'nombre' => $nombre,
+                        'created_by' => session('user'),
+                        'fecha' => date('Y-m-d'),
+                    ]);
+                }
+            } else if ($ubicacion == 2) {
+                if ($nivel == 1) {
+                    DB::table('almacenes')->insert([
+                        'cliente' => $cliente,
+                        'nombre' => $nombre,
+                        'observaciones' => $observaciones,
+                        'created_by' => session('user'),
+                        'fecha' => date('Y-m-d'),
+                        'status' => 1,
+                        'almacen' => 0,
+                    ]);
+                } else if ($nivel == 2) {
+                    DB::table('ubicaciones_almacen')->insert([
+                        'almacen' => $nivel1,
+                        'nombre' => $nombre,
+                        'observaciones' => $observaciones,
+                        'created_by' => session('user'),
+                        'fecha' => date('Y-m-d'),
+                    ]);
+                }
+            }
+
             return response()->json(['info' => 1, 'success' => 'Almacén creado correctamente']);
         } catch (Exception $ex) {
             return response()->json(['info' => 0, 'error' => 'Error al crear el almacén.']);
@@ -102,8 +155,70 @@ class AlmacenesController extends Controller
     public function almacenes_delete(Request $request)
     {
         try {
+            $cliente = $request->cliente;
             $id = $request->id;
-            $categoria = DB::table('almacenes')->where('id', $id)->delete();
+            $nivel = $request->nivel;
+
+            $valid_products = DB::table('productos')
+                ->where('almacen', $id)
+                ->orWhere('sub_almacen', $id)
+                ->orWhere('sub_almacen_2', $id)
+                ->count();
+
+            if ($valid_products > 0) {
+                return response()->json(['info' => 0, 'success' => 'No se puede eliminar el almacén, tiene productos asociados.']);
+            }
+
+            if ($cliente == 0) {
+                if ($nivel == 1) {
+                    $almacenes = DB::table('almacenes')
+                        ->where('almacen_id', $id)
+                        ->get();
+
+                    foreach ($almacenes as $key => $value) {
+                        DB::table('ubicaciones_almacen')
+                            ->where('almacen', $value->id)
+                            ->delete();
+                    }
+
+                    DB::table('almacenes')
+                        ->where('almacen_id', $id)
+                        ->delete();
+
+                    DB::table('almacenes')
+                        ->where('id', $id)
+                        ->delete();
+                } else if ($nivel == 2) {
+                    DB::table('ubicaciones_almacen')
+                        ->where('almacen', $id)
+                        ->delete();
+
+                    DB::table('almacenes')
+                        ->where('id', $id)
+                        ->delete();
+                } else if ($nivel == 3) {
+                    DB::table('ubicaciones_almacen')
+                        ->where('id', $id)
+                        ->delete();
+                }
+            } else if ($cliente == 1) {
+                if ($nivel == 1) {
+
+                    DB::table('ubicaciones_almacen')
+                        ->where('almacen', $id)
+                        ->delete();
+
+                    DB::table('almacenes')
+                        ->where('id', $id)
+                        ->delete();
+                } else if ($nivel == 2) {
+                    DB::table('ubicaciones_almacen')
+                        ->where('id', $id)
+                        ->delete();
+                }
+            }
+
+            DB::table('almacenes')->where('id', $id)->delete();
             return response()->json(['info' => 1, 'success' => 'Almacén eliminado correctamente']);
         } catch (Exception $ex) {
             return response()->json(['info' => 0, 'error' => 'Error al eliminar el almacén.']);
@@ -151,11 +266,12 @@ class AlmacenesController extends Controller
                 ->orderBy("almacenes.nombre")
                 ->get();
 
-            if ($nivel == 3) {
+            if ($nivel == 3 && $almacenes) {
                 foreach ($almacenes as $key => $value) {
-                    $estantes = DB::table('ubicaciones_almacen')
-                        ->where("ubicaciones_almacen.almacen", $value->id)
-                        ->orderBy("ubicaciones_almacen.nombre")
+                    $estantes = DB::table('almacenes')
+                        ->whereNull("almacenes.cliente")
+                        ->where("almacen_id", $value->id)
+                        ->orderBy("almacenes.nombre")
                         ->get();
                     $almacenes[$key]->estantes = $estantes;
                 }
@@ -166,5 +282,50 @@ class AlmacenesController extends Controller
             return response()->json(['info' => 0, 'error' => 'Error al cargar los almacenes.']);
             return $ex;
         }
+    }
+
+    public function almacenes_update(Request $request)
+    {
+        $cliente = $request->cliente;
+        $id = $request->id;
+        $nombre = $request->nombre;
+        $nivel = $request->nivel;
+        $observacion = $request->observacion;
+
+        if ($cliente == 0) {
+            if ($nivel == 1 || $nivel == 2) {
+                DB::table('almacenes')
+                    ->where('id', $id)
+                    ->update([
+                        'nombre' => $nombre,
+                        'observaciones' => $observacion ? $observacion : null,
+                    ]);
+            } else if ($nivel == 3) {
+                DB::table('ubicaciones_almacen')
+                    ->where('id', $id)
+                    ->update([
+                        'nombre' => $nombre,
+                        'observaciones' => $observacion ? $observacion : null,
+                    ]);
+            }
+        } else if ($cliente == 1) {
+            if ($nivel == 1) {
+                DB::table('almacenes')
+                    ->where('id', $id)
+                    ->update([
+                        'nombre' => $nombre,
+                        'observaciones' => $observacion ? $observacion : null,
+                    ]);
+            } else if ($nivel == 2) {
+                DB::table('ubicaciones_almacen')
+                    ->where('id', $id)
+                    ->update([
+                        'nombre' => $nombre,
+                        'observaciones' => $observacion ? $observacion : null,
+                    ]);
+            }
+        }
+
+        return response()->json(['info' => 1, 'success' => 'Almacén actualizado correctamente']);
     }
 }

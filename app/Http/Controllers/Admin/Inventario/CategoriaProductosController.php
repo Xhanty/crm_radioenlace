@@ -17,12 +17,18 @@ class CategoriaProductosController extends Controller
             }
 
             $categorias = DB::table('categorias_productos')
-                ->select("categorias_productos.*", "empleados.nombre as creador", DB::raw("count(productos.id) as total_productos"), DB::raw("count(subcategorias_productos.id) as total_subs"))
+                ->select("categorias_productos.*", "empleados.nombre as creador", DB::raw("count(subcategorias_productos.id) as total_subs"))
                 ->join("empleados", "empleados.id", "=", "categorias_productos.created_by")
                 ->leftJoin("productos", "productos.categoria", "=", "categorias_productos.id")
                 ->leftJoin("subcategorias_productos", "subcategorias_productos.categoria", "=", "categorias_productos.id")
                 ->groupBy("categorias_productos.id", "categorias_productos.nombre", "categorias_productos.created_by", "categorias_productos.fecha", "creador")
                 ->get();
+
+            foreach ($categorias as $key => $value) {
+                $total_productos = DB::table('productos')->where('categoria', $value->id)->count();
+                $categorias[$key]->total_productos = $total_productos;
+            }
+
             return view('admin.inventario.categorias', compact('categorias'));
         } catch (Exception $ex) {
             return view('errors.500');
@@ -62,8 +68,8 @@ class CategoriaProductosController extends Controller
     {
         try {
             $id = $request->id;
-            $subcategorias = DB::table('subcategorias_productos')->where('categoria', $id)->delete();
-            $categoria = DB::table('categorias_productos')->where('id', $id)->delete();
+            DB::table('subcategorias_productos')->where('categoria', $id)->delete();
+            DB::table('categorias_productos')->where('id', $id)->delete();
             return response()->json(['info' => 1, 'success' => 'Categoría eliminada correctamente']);
         } catch (Exception $ex) {
             return response()->json(['info' => 0, 'error' => 'Error al eliminar la categoría.']);
@@ -93,7 +99,7 @@ class CategoriaProductosController extends Controller
                 'nombre' => $nombre
             ]);
 
-            if($subcategorias) {
+            if ($subcategorias) {
                 foreach ($subcategorias as $subcategoria) {
                     DB::table('subcategorias_productos')->insert([
                         'nombre' => $subcategoria,
