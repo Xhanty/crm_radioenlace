@@ -25,6 +25,8 @@ $(document).ready(function () {
         } else if (nombre == "") {
             toastr.error("El campo nombre es obligatorio");
         } else {
+
+            $("#btnGuardarAlmacen").attr("disabled", true);
             $.ajax({
                 url: "almacenes_create",
                 type: "POST",
@@ -45,11 +47,13 @@ $(document).ready(function () {
                             window.location.reload();
                         }, 1000);
                     } else {
+                        $("#btnGuardarAlmacen").attr("disabled", false);
                         toastr.error("Error al guardar el almacén");
                     }
                 },
                 error: function (error) {
                     console.log(error);
+                    $("#btnGuardarAlmacen").attr("disabled", false);
                     toastr.error("Error al guardar el almacén");
                 },
             });
@@ -276,6 +280,7 @@ $(document).ready(function () {
         if (nombre == "") {
             toastr.error("El campo nombre es obligatorio");
         } else {
+            $("#btnModificarAlmacen").attr("disabled", true);
             $.ajax({
                 url: "almacenes_update",
                 type: "POST",
@@ -294,11 +299,13 @@ $(document).ready(function () {
                             window.location.reload();
                         }, 1000);
                     } else {
+                        $("#btnModificarAlmacen").attr("disabled", false);
                         toastr.error("Error al modificar el almacén");
                     }
                 },
                 error: function (error) {
                     console.log(error);
+                    $("#btnModificarAlmacen").attr("disabled", false);
                     toastr.error("Error al modificar el almacén");
                 },
             });

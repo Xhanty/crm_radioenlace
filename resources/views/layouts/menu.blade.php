@@ -295,13 +295,13 @@
                                         class="side-menu__label">Inventario</span><i
                                         class="angle fe fe-chevron-down"></i></a>
                                 <ul class="slide-menu">
+                                    @if (auth()->user()->hasPermissionTo('gestion_almacenes_inventario'))
+                                        <li><a class="slide-item" href="{{ route('almacenes') }}">Almacenes</a></li>
+                                    @endif
                                     @if (auth()->user()->hasPermissionTo('gestion_categorias_inventario'))
                                         <li><a class="slide-item"
                                                 href="{{ route('categoria_productos') }}">Categorías</a>
                                         </li>
-                                    @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_almacenes_inventario'))
-                                        <li><a class="slide-item" href="{{ route('almacenes') }}">Almacenes</a></li>
                                     @endif
                                     @if (auth()->user()->hasPermissionTo('gestion_productos_inventario'))
                                         <li><a class="slide-item" href="{{ route('inventario') }}">Productos /
