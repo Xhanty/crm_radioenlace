@@ -31,17 +31,19 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table border-top-0 table-bordered text-nowrap border-bottom" id="table_productos_img">
+                            <table class="table border-top-0 table-bordered text-nowrap border-bottom"
+                                id="table_productos_img">
                                 <thead>
                                     <tr>
-                                        <th class="wd-10p border-bottom-0">Imagen</th>
-                                        <th class="wd-20p border-bottom-0">Nombre</th>
-                                        <th class="wd-20p border-bottom-0">Categoría</th>
-                                        <th class="wd-10p border-bottom-0">Cod Producto</th>
-                                        <th class="wd-10p border-bottom-0">Marca</th>
-                                        <th class="wd-10p border-bottom-0">Modelo</th>
-                                        <th class="wd-10p border-bottom-0">Estatus</th>
-                                        <th class="wd-15p border-bottom-0">Acciones</th>
+                                        <th class="border-bottom-0">Imagen</th>
+                                        <th class="border-bottom-0">Cod Producto</th>
+                                        <th class="border-bottom-0">Nombre</th>
+                                        <th class="border-bottom-0">Categoría</th>
+                                        <th class="border-bottom-0">SubCategoría</th>
+                                        <th class="border-bottom-0">Marca</th>
+                                        <th class="border-bottom-0">Modelo</th>
+                                        <th class="border-bottom-0">Status</th>
+                                        <th class="border-bottom-0">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -67,11 +69,11 @@
                     <div class="row row-sm">
                         <div class="col-lg">
                             <label for="">Código Producto</label>
-                            <input class="form-control" id="codigoadd" placeholder="Marca" type="text">
+                            <input class="form-control" id="codigoadd" disabled placeholder="Código" type="text">
                         </div>
-                        <div class="col-lg mg-t-10 mg-lg-t-0">
-                            <label for="">Nombre</label>
-                            <input class="form-control" id="nombreadd" placeholder="Modelo" type="text">
+                        <div class="col-lg mg-lg-t-0">
+                            <label for="">Marca</label>
+                            <input class="form-control" id="marcadd" placeholder="Marca" type="text">
                         </div>
                     </div>
                     <br>
@@ -81,31 +83,44 @@
                             <select id="categoriaadd" class="form-select">
                                 <option value="">Seleccione una categoría</option>
                                 @foreach ($categorias as $categoria)
-                                    <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
+                                    <option data-options='{{ $categoria->subcategorias }}' value="{{ $categoria->id }}">
+                                        {{ $categoria->nombre }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-lg mg-t-10 mg-lg-t-0">
-                            <label for="">Marca</label>
-                            <input class="form-control" id="marcadd" placeholder="Marca" type="text">
+                        <div class="col-lg">
+                            <label for="">SubCategoría</label>
+                            <select id="subcategoriaadd" class="form-select">
+                                <option value="">Seleccione una subcategoría</option>
+                            </select>
                         </div>
+
                     </div>
                     <br>
                     <div class="row row-sm">
                         <div class="col-lg">
                             <label for="">Modelo</label>
-                            <input class="form-control" id="modeloadd" placeholder="Soat" type="text">
+                            <input class="form-control" id="modeloadd" placeholder="Modelo" type="text">
+                        </div>
+                        <div class="col-lg mg-lg-t-0">
+                            <label for="">Nombre</label>
+                            <input class="form-control" id="nombreadd" placeholder="Nombre" type="text">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row row-sm">
+
+                        <div class="col-lg mg-lg-t-0">
+                            <label for="">Foto</label>
+                            <input class="form-control" id="fotoadd" type="file" accept="image/png, image/jpeg">
                         </div>
                     </div>
                     <br>
                     <div class="row row-sm">
                         <div class="col-lg">
                             <label for="">Observaciones</label>
-                            <textarea class="form-control" placeholder="Observaciones" rows="3" id="observacionesadd" style="height: 90px; resize: none"></textarea>
-                        </div>
-                        <div class="col-lg mg-t-10 mg-lg-t-0">
-                            <label for="">Foto</label>
-                            <input class="form-control" id="fotoadd" type="file" accept="image/png, image/jpeg">
+                            <textarea class="form-control" placeholder="Observaciones" rows="3" id="observacionesadd"
+                                style="height: 90px; resize: none"></textarea>
                         </div>
                     </div>
                 </div>
@@ -126,30 +141,15 @@
                 </div>
                 <div class="modal-body">
                     <div class="d-flex justify-content-center">
-                        <img id="imagenedit" src="{{ asset('images/vehiculos/18876865131801587359.png') }}" style="width: 222px" loading="lazy">
+                        <img id="imagenedit" src="{{ asset('images/vehiculos/18876865131801587359.png') }}"
+                            style="width: 222px" loading="lazy">
                     </div>
                     <br>
                     <div class="row row-sm">
                         <div class="col-lg">
                             <label for="">Código Producto</label>
                             <input type="hidden" id="id_producto" disabled readonly>
-                            <input class="form-control" id="codigoedit" placeholder="Marca" type="text">
-                        </div>
-                        <div class="col-lg mg-t-10 mg-lg-t-0">
-                            <label for="">Nombre</label>
-                            <input class="form-control" id="nombreedit" placeholder="Modelo" type="text">
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row row-sm">
-                        <div class="col-lg">
-                            <label for="">Categoría</label>
-                            <select id="categoriaedit" class="form-select">
-                                <option value="">Seleccione una categoría</option>
-                                @foreach ($categorias as $categoria)
-                                    <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
-                                @endforeach
-                            </select>
+                            <input class="form-control" disabled id="codigoedit" placeholder="Código" type="text">
                         </div>
                         <div class="col-lg mg-t-10 mg-lg-t-0">
                             <label for="">Marca</label>
@@ -159,19 +159,46 @@
                     <br>
                     <div class="row row-sm">
                         <div class="col-lg">
+                            <label for="">Categoría</label>
+                            <select id="categoriaedit" class="form-select">
+                                <option value="">Seleccione una categoría</option>
+                                @foreach ($categorias as $categoria)
+                                    <option data-options="{{ $categoria->subcategorias }}" value="{{ $categoria->id }}">
+                                        {{ $categoria->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-lg">
+                            <label for="">SubCategoría</label>
+                            <select id="subcategoriaedit" class="form-select">
+                                <option value="">Seleccione una subcategoría</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row row-sm">
+                        <div class="col-lg">
                             <label for="">Modelo</label>
-                            <input class="form-control" id="modeloedit" placeholder="Soat" type="text">
+                            <input class="form-control" id="modeloedit" placeholder="Modelo" type="text">
+                        </div>
+                        <div class="col-lg mg-t-10 mg-lg-t-0">
+                            <label for="">Nombre</label>
+                            <input class="form-control" id="nombreedit" placeholder="Nombre" type="text">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row row-sm">
+                        <div class="col-lg mg-t-10 mg-lg-t-0">
+                            <label for="">Foto</label>
+                            <input class="form-control" id="fotoedit" type="file" accept="image/png, image/jpeg">
                         </div>
                     </div>
                     <br>
                     <div class="row row-sm">
                         <div class="col-lg">
                             <label for="">Observaciones</label>
-                            <textarea class="form-control" placeholder="Observaciones" rows="3" id="observacionesedit" style="height: 90px; resize: none"></textarea>
-                        </div>
-                        <div class="col-lg mg-t-10 mg-lg-t-0">
-                            <label for="">Foto</label>
-                            <input class="form-control" id="fotoedit" type="file" accept="image/png, image/jpeg">
+                            <textarea class="form-control" placeholder="Observaciones" rows="3" id="observacionesedit"
+                                style="height: 90px; resize: none"></textarea>
                         </div>
                     </div>
                 </div>

@@ -159,7 +159,7 @@ class AlmacenesController extends Controller
             $id = $request->id;
             $nivel = $request->nivel;
 
-            $valid_products = DB::table('productos')
+            /*$valid_products = DB::table('productos')
                 ->where('almacen', $id)
                 ->orWhere('sub_almacen', $id)
                 ->orWhere('sub_almacen_2', $id)
@@ -167,7 +167,7 @@ class AlmacenesController extends Controller
 
             if ($valid_products > 0) {
                 return response()->json(['info' => 0, 'success' => 'No se puede eliminar el almacén, tiene productos asociados.']);
-            }
+            }*/
 
             if ($cliente == 0) {
                 if ($nivel == 1) {

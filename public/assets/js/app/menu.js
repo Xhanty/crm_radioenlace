@@ -164,9 +164,10 @@ $(function () {
                     }
                 },
             },
+            { data: "cod_producto", name: "cod_producto" },
             { data: "nombre", name: "nombre" },
             { data: "categoria", name: "categoria" },
-            { data: "cod_producto", name: "cod_producto" },
+            { data: "subcategoria", name: "subcategoria" },
             { data: "marca", name: "marca" },
             { data: "modelo", name: "modelo" },
             {

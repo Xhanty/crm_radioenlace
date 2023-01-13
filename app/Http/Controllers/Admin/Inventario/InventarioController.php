@@ -18,6 +18,13 @@ class InventarioController extends Controller
             }
 
             $categorias = DB::table('categorias_productos')->get();
+
+            if ($categorias) {
+                foreach ($categorias as $key => $value) {
+                    $subcategorias = DB::table('subcategorias_productos')->where('categoria', $value->id)->get();
+                    $categorias[$key]->subcategorias = $subcategorias;
+                }
+            }
             return view('admin.inventario.inventario', compact('categorias'));
         } catch (Exception $ex) {
             return view('errors.500');
@@ -28,23 +35,27 @@ class InventarioController extends Controller
     {
         try {
             DB::beginTransaction();
-            $image = $request->file('foto');
-            $new_name = rand() . rand() . '.' . $image->getClientOriginalExtension();
-            $image->move('images/productos', $new_name);
+
+            if ($request->file('foto')) {
+                $image = $request->file('foto');
+                $new_name = rand() . rand() . '.' . $image->getClientOriginalExtension();
+                $image->move('images/productos', $new_name);
+            } else {
+                $new_name = "noimagen.png";
+            }
 
             DB::table("productos")->insert([
-                'id_categoria' => $request->categoria ? $request->categoria : 1,
-                'cod_producto' => $request->codigo ? $request->codigo : "",
-                'cod_interno' => "",
-                'nombre' => $request->nombre ? $request->nombre : "",
-                'marca' => $request->marca ? $request->marca : "",
-                'modelo' => $request->modelo ? $request->modelo : "",
-                'serial' => "",
+                'cod_producto' => $request->codigo,
+                'id_creador' => session('user'),
+                'categoria' => $request->categoria,
+                'sub_categoria' => $request->subcategoria ? $request->subcategoria : null,
+                'marca' => $request->marca ? $request->marca : '',
+                'modelo' => $request->modelo ? $request->modelo : '',
+                'nombre' => $request->nombre,
                 'imagen' => $new_name,
-                'observaciones' => $request->observaciones ? $request->observaciones : "",
-                'fecha_creacion' => date('Y-m-d'),
+                'observaciones' => $request->observaciones ? $request->observaciones : '',
+                'created_at' => date('Y-m-d'),
                 'status' => 1,
-                'created_by' => session('user')
             ]);
 
             DB::commit();
@@ -66,22 +77,22 @@ class InventarioController extends Controller
                 $image->move('images/productos', $new_name);
 
                 DB::table("productos")->where('id', $request->id)->update([
-                    'id_categoria' => $request->categoria ? $request->categoria : 1,
-                    'cod_producto' => $request->codigo ? $request->codigo : "",
-                    'nombre' => $request->nombre ? $request->nombre : "",
-                    'marca' => $request->marca ? $request->marca : "",
-                    'modelo' => $request->modelo ? $request->modelo : "",
+                    'categoria' => $request->categoria,
+                    'sub_categoria' => $request->subcategoria ? $request->subcategoria : null,
+                    'marca' => $request->marca ? $request->marca : '',
+                    'modelo' => $request->modelo ? $request->modelo : '',
+                    'nombre' => $request->nombre,
                     'imagen' => $new_name,
-                    'observaciones' => $request->observaciones ? $request->observaciones : "",
+                    'observaciones' => $request->observaciones ? $request->observaciones : ''
                 ]);
             } else {
                 DB::table("productos")->where('id', $request->id)->update([
-                    'id_categoria' => $request->categoria ? $request->categoria : 1,
-                    'cod_producto' => $request->codigo ? $request->codigo : "",
-                    'nombre' => $request->nombre ? $request->nombre : "",
-                    'marca' => $request->marca ? $request->marca : "",
-                    'modelo' => $request->modelo ? $request->modelo : "",
-                    'observaciones' => $request->observaciones ? $request->observaciones : "",
+                    'categoria' => $request->categoria,
+                    'sub_categoria' => $request->subcategoria ? $request->subcategoria : null,
+                    'marca' => $request->marca ? $request->marca : '',
+                    'modelo' => $request->modelo ? $request->modelo : '',
+                    'nombre' => $request->nombre,
+                    'observaciones' => $request->observaciones ? $request->observaciones : ''
                 ]);
             }
 
@@ -116,8 +127,9 @@ class InventarioController extends Controller
     {
         if ($request->ajax()) {
             $data = DB::table("productos")
-                ->select('productos.*', 'categorias_productos.nombre as categoria')
+                ->select('productos.*', 'categorias_productos.nombre as categoria', 'subcategorias_productos.nombre as subcategoria')
                 ->join('categorias_productos', 'productos.categoria', '=', 'categorias_productos.id')
+                ->join('subcategorias_productos', 'subcategorias_productos.id', '=', 'productos.sub_categoria')
                 ->get();
             return Datatables::of($data)
                 ->addIndexColumn()

@@ -5,6 +5,7 @@ $(function () {
         },
     });
 
+    $("#codigoadd").val("PR-" + makecode(8));
     var protocol = window.location.protocol;
     var host = window.location.host;
     var url_general = protocol + "//" + host + "/";
@@ -13,21 +14,23 @@ $(function () {
 
     $("#btnGuardarProducto").on("click", function () {
         var codigo = $("#codigoadd").val();
-        var nombre = $("#nombreadd").val();
-        var categoria = $("#categoriaadd").val();
         var marca = $("#marcadd").val();
+        var categoria = $("#categoriaadd").val();
+        var subcategoria = $("#subcategoriaadd").val();
         var modelo = $("#modeloadd").val();
-        var observaciones = $("#observacionesadd").val();
+        var nombre = $("#nombreadd").val();
         var foto = $("#fotoadd")[0].files[0];
+        var observaciones = $("#observacionesadd").val();
 
         var formData = new FormData();
         formData.append("codigo", codigo);
-        formData.append("nombre", nombre);
-        formData.append("categoria", categoria);
         formData.append("marca", marca);
+        formData.append("categoria", categoria);
+        formData.append("subcategoria", subcategoria);
         formData.append("modelo", modelo);
-        formData.append("observaciones", observaciones);
+        formData.append("nombre", nombre);
         formData.append("foto", foto);
+        formData.append("observaciones", observaciones);
 
         $("#btnGuardarProducto").attr("disabled", true);
         $.ajax({
@@ -58,23 +61,23 @@ $(function () {
 
     $("#btnEditarProducto").on("click", function () {
         var id = $("#id_producto").val();
-        var codigo = $("#codigoedit").val();
+        var marca = $("#marcaedit").val();
         var nombre = $("#nombreedit").val();
         var categoria = $("#categoriaedit").val();
-        var marca = $("#marcaedit").val();
+        var subcategoria = $("#subcategoriaedit").val();
         var modelo = $("#modeloedit").val();
-        var observaciones = $("#observacionesedit").val();
         var foto = $("#fotoedit")[0].files[0];
+        var observaciones = $("#observacionesedit").val();
 
         var formData = new FormData();
         formData.append("id", id);
-        formData.append("codigo", codigo);
-        formData.append("nombre", nombre);
-        formData.append("categoria", categoria);
         formData.append("marca", marca);
+        formData.append("categoria", categoria);
+        formData.append("subcategoria", subcategoria);
         formData.append("modelo", modelo);
-        formData.append("observaciones", observaciones);
+        formData.append("nombre", nombre);
         formData.append("foto", foto);
+        formData.append("observaciones", observaciones);
 
         $("#btnEditarProducto").attr("disabled", true);
         $.ajax({
@@ -114,11 +117,15 @@ $(function () {
             success: function (data) {
                 let producto = data.producto;
 
-                $("#imagenedit").attr("src", url_general + "images/productos/" + producto.imagen);
+                $("#imagenedit").attr(
+                    "src",
+                    url_general + "images/productos/" + producto.imagen
+                );
                 $("#id_producto").val(producto.id);
                 $("#codigoedit").val(producto.cod_producto);
                 $("#nombreedit").val(producto.nombre);
-                $("#categoriaedit").val(producto.id_categoria);
+                $("#categoriaedit").val(producto.categoria).change();
+                $("#subcategoriaedit").val(producto.sub_categoria);
                 $("#marcaedit").val(producto.marca);
                 $("#modeloedit").val(producto.modelo);
                 $("#observacionesedit").val(producto.observaciones);
@@ -201,5 +208,61 @@ $(function () {
                 });
             }
         });
+    });
+
+    function makecode(length) {
+        var result = "";
+        var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+            result += characters.charAt(
+                Math.floor(Math.random() * charactersLength)
+            );
+        }
+        return result;
+    }
+
+    $("#categoriaadd").change(function () {
+        var subcategorias = $(this).find(":selected").data("options");
+
+        $("#subcategoriaadd").empty();
+
+        if (!subcategorias) {
+            $("#subcategoriaadd").append(
+                $("<option></option>")
+                    .attr("value", "")
+                    .text("Seleccione una subcategoría")
+            );
+        } else {
+            $.each(subcategorias, function (key, value) {
+                $("#subcategoriaadd").append(
+                    $("<option></option>")
+                        .attr("value", value.id)
+                        .text(value.nombre)
+                );
+            });
+        }
+    });
+
+    $("#categoriaedit").change(function () {
+        var subcategorias = $(this).find(":selected").data("options");
+
+        $("#subcategoriaedit").empty();
+
+        if (!subcategorias) {
+            $("#subcategoriaedit").append(
+                $("<option></option>")
+                    .attr("value", "")
+                    .text("Seleccione una subcategoría")
+            );
+        } else {
+            $.each(subcategorias, function (key, value) {
+                $("#subcategoriaedit").append(
+                    $("<option></option>")
+                        .attr("value", value.id)
+                        .text(value.nombre)
+                );
+            });
+        }
     });
 });
