@@ -12,6 +12,8 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
+        'schedule_add',
+        'schedule_update',
+        'schedule_delete',
     ];
 }

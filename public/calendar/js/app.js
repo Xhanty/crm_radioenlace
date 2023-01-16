@@ -12,7 +12,7 @@
     var datePicker, selectedCalendar;
 
     cal = new Calendar('#calendar', {
-        defaultView: 'week',
+        defaultView: 'month',
         useCreationPopup: useCreationPopup,
         useDetailPopup: useDetailPopup,
         calendars: CalendarList,
@@ -41,7 +41,7 @@
             console.log('clickDayname', date);
         },
         'beforeCreateSchedule': function(e) {
-            console.log('beforeCreateSchedule', e);
+            //console.log('beforeCreateSchedule', e);
             saveNewSchedule(e);
         },
         'beforeUpdateSchedule': function(e) {
@@ -55,11 +55,15 @@
             }
 
             cal.updateSchedule(schedule.id, schedule.calendarId, changes);
+
+            saveUpdateSchedule(schedule);
+
             refreshScheduleVisibility();
         },
         'beforeDeleteSchedule': function(e) {
             console.log('beforeDeleteSchedule', e);
             cal.deleteSchedule(e.schedule.id, e.schedule.calendarId);
+            saveDeleteSchedule(e.schedule);
         },
         'afterRenderSchedule': function(e) {
             var schedule = e.schedule;
@@ -263,7 +267,10 @@
             });
         }
     }
+
     function saveNewSchedule(scheduleData) {
+        saveDatabase(scheduleData);
+        console.log(scheduleData);
         var calendar = scheduleData.calendar || findCalendar(scheduleData.calendarId);
         var schedule = {
             id: String(chance.guid()),
@@ -291,6 +298,68 @@
         cal.createSchedules([schedule]);
 
         refreshScheduleVisibility();
+    }
+
+    function saveDatabase(scheduleData) {
+        var formdata = new FormData();
+        formdata.append("calendarId", scheduleData.calendarId);
+        formdata.append("isAllDay", scheduleData.isAllDay);
+        formdata.append("isPrivate", scheduleData.isPrivate);
+        formdata.append("name", scheduleData.title);
+        formdata.append("description", scheduleData.location);
+        formdata.append("state", scheduleData.state);
+        formdata.append("start", scheduleData.start.getFullYear() + "-" + (scheduleData.start.getMonth() + 1) + "-" + scheduleData.start.getDate() + " " + scheduleData.start.getHours() + ":" + scheduleData.start.getMinutes() + ":00");
+        formdata.append("end", scheduleData.end.getFullYear() + "-" + (scheduleData.end.getMonth() + 1) + "-" + scheduleData.end.getDate() + " " + scheduleData.end.getHours() + ":" + scheduleData.end.getMinutes() + ":00");
+        formdata.append("useCreationPopup", scheduleData.useCreationPopup);
+
+        var requestOptions = {
+            method: 'POST',
+            body: formdata
+        };
+
+        fetch("http://127.0.0.1:8000/schedule_add", requestOptions)
+            .then((response) => response.text())
+            .then((result) => document.getElementById("events_user_all").value = result)
+            .catch((error) => console.log("error", error));
+    }
+
+    function saveUpdateSchedule(scheduleData) {
+        var formdata = new FormData();
+        formdata.append("id", scheduleData.id);
+        formdata.append("calendarId", scheduleData.calendarId);
+        formdata.append("isAllDay", scheduleData.isAllDay);
+        formdata.append("isPrivate", scheduleData.isPrivate);
+        formdata.append("name", scheduleData.title);
+        formdata.append("description", scheduleData.location);
+        formdata.append("state", scheduleData.state);
+        formdata.append("start", scheduleData.start.getFullYear() + "-" + (scheduleData.start.getMonth() + 1) + "-" + scheduleData.start.getDate() + " " + scheduleData.start.getHours() + ":" + scheduleData.start.getMinutes() + ":00");
+        formdata.append("end", scheduleData.end.getFullYear() + "-" + (scheduleData.end.getMonth() + 1) + "-" + scheduleData.end.getDate() + " " + scheduleData.end.getHours() + ":" + scheduleData.end.getMinutes() + ":00");
+
+        var requestOptions = {
+            method: 'POST',
+            body: formdata
+        };
+
+        fetch("http://127.0.0.1:8000/schedule_update", requestOptions)
+            .then((response) => response.text())
+            .then((result) => document.getElementById("events_user_all").value = result)
+            .catch((error) => console.log("error", error));
+    }
+
+    function saveDeleteSchedule(schedule) {
+        var formdata = new FormData();
+        formdata.append("id", schedule.id);
+
+        var requestOptions = {
+            method: 'POST',
+            body: formdata
+        };
+
+        fetch("http://127.0.0.1:8000/schedule_delete", requestOptions)
+            .then((response) => response.text())
+            .then((result) => document.getElementById("events_user_all").value = result)
+            .catch((error) => console.log("error", error));
+
     }
 
     function onChangeCalendars(e) {

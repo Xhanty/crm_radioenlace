@@ -204,11 +204,20 @@ Route::middleware(['auth_user'])->group(function () {
 
     // CALENDARIO
     Route::get('/calendario', [App\Http\Controllers\CalendarController::class, 'index'])->name('calendario');
+    Route::post('/schedule_add', [App\Http\Controllers\CalendarController::class, 'add'])->name('schedule_add');
+    Route::post('/schedule_update', [App\Http\Controllers\CalendarController::class, 'update'])->name('schedule_update');
+    Route::post('/schedule_delete', [App\Http\Controllers\CalendarController::class, 'delete'])->name('schedule_delete');
 
     // PERMISOS
     Route::get('/permisos', [App\Http\Controllers\Admin\PermisosController::class, 'index'])->name('permisos');
     Route::post('/permisos_empleado', [App\Http\Controllers\Admin\PermisosController::class, 'data'])->name('permisos_empleado');
     Route::post('/permisos_user_update', [App\Http\Controllers\Admin\PermisosController::class, 'update'])->name('permisos_user_update');
+
+    // PERMISOS
+    Route::get('/categorias_calendario', [App\Http\Controllers\Admin\CategoriasCalendarioController::class, 'index'])->name('categorias_calendario');
+    Route::post('/categorias_calendario_add', [App\Http\Controllers\Admin\CategoriasCalendarioController::class, 'add'])->name('categorias_calendario_add');
+    Route::post('/categorias_calendario_update', [App\Http\Controllers\Admin\CategoriasCalendarioController::class, 'update'])->name('categorias_calendario_update');
+    Route::post('/categorias_calendario_delete', [App\Http\Controllers\Admin\CategoriasCalendarioController::class, 'delete'])->name('categorias_calendario_delete');
 });
 
 Route::group(['middleware' => 'auth'], function () {

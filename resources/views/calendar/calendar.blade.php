@@ -27,6 +27,8 @@
             <button id="btn-new-schedule" type="button" class="btn btn-default btn-block lnb-new-schedule-btn"
                 data-toggle="modal">Crear</button>
         </div>
+        <input type="hidden" disabled readonly id="events_user_all" value="{{ $events }}">
+        <input type="hidden" disabled readonly id="categories_all" value="{{ $categories }}">
         <div id="lnb-calendars" class="lnb-calendars">
             <div>
                 <div class="lnb-calendars-item">
@@ -89,7 +91,8 @@
                     </li>
                     <li role="presentation">
                         <a role="menuitem" data-action="toggle-start-day-1">
-                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-start-day-1">
+                            <input type="checkbox" class="tui-full-calendar-checkbox-square"
+                                value="toggle-start-day-1">
                             <span class="checkbox-title"></span>Semana de inicio el lunes
                         </a>
                     </li>

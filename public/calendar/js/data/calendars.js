@@ -43,55 +43,17 @@ function hexToRGBA(hex) {
 
 (function () {
     var calendar;
-    var id = 0;
+    let categories = document.getElementById("categories_all").value;
+    categories = JSON.parse(categories);
 
-    calendar = new CalendarInfo();
-    id += 1;
-    calendar.id = String(id);
-    calendar.name = "Tareas";
-    calendar.color = "#ffffff";
-    calendar.bgColor = "#ff5583";
-    calendar.dragBgColor = "#ff5583";
-    calendar.borderColor = "#ff5583";
-    addCalendar(calendar);
-
-    calendar = new CalendarInfo();
-    id += 1;
-    calendar.id = String(id);
-    calendar.name = "Eventos";
-    calendar.color = "#ffffff";
-    calendar.bgColor = "#03bd9e";
-    calendar.dragBgColor = "#03bd9e";
-    calendar.borderColor = "#03bd9e";
-    addCalendar(calendar);
-
-    calendar = new CalendarInfo();
-    id += 1;
-    calendar.id = String(id);
-    calendar.name = "Notas";
-    calendar.color = "#ffffff";
-    calendar.bgColor = "#9e5fff";
-    calendar.dragBgColor = "#9e5fff";
-    calendar.borderColor = "#9e5fff";
-    addCalendar(calendar);
-
-    calendar = new CalendarInfo();
-    id += 1;
-    calendar.id = String(id);
-    calendar.name = "Recordatorios";
-    calendar.color = "#ffffff";
-    calendar.bgColor = "#00a9ff";
-    calendar.dragBgColor = "#00a9ff";
-    calendar.borderColor = "#00a9ff";
-    addCalendar(calendar);
-
-    calendar = new CalendarInfo();
-    id += 1;
-    calendar.id = String(id);
-    calendar.name = "Otros";
-    calendar.color = "#ffffff";
-    calendar.bgColor = "#e0e04a";
-    calendar.dragBgColor = "#e0e04a";
-    calendar.borderColor = "#e0e04a";
-    addCalendar(calendar);
+    categories.forEach(function (category) {
+        calendar = new CalendarInfo();
+        calendar.id = String(category.id);
+        calendar.name = category.nombre;
+        calendar.color = "#ffffff";
+        calendar.bgColor = category.bgColor;
+        calendar.dragBgColor = category.dragBgColor;
+        calendar.borderColor = category.borderColor;
+        addCalendar(calendar);
+    });
 })();

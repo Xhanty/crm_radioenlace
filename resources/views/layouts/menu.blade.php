@@ -159,6 +159,13 @@
                                     </a>
                                 </li>
                             @endif
+                            @if (auth()->user()->hasPermissionTo('permisos_usuarios'))
+                                <li class="nav-item" title="Categorias Calendario">
+                                    <a class="nav-link text-center m-2" href="{{ route('categorias_calendario') }}">
+                                        <i class="fe fe-calendar"></i>
+                                    </a>
+                                </li>
+                            @endif
                             <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="top" title=""
                                 data-bs-original-title="Followers">
                                 <a class="nav-link text-center m-2" href="javascript:void(0)">
@@ -284,11 +291,11 @@
                         @endif
 
                         @if (auth()->user()->hasPermissionToMultiple(
-                                'gestion_categorias_inventario|' .
-                                    'gestion_almacenes_inventario|' .
-                                    'gestion_productos_inventario|' .
-                                    'gestion_inventario|' .
-                                    'gestion_actividades_inventario'))
+                                    'gestion_categorias_inventario|' .
+                                        'gestion_almacenes_inventario|' .
+                                        'gestion_productos_inventario|' .
+                                        'gestion_inventario|' .
+                                        'gestion_actividades_inventario'))
                             <li class="slide">
                                 <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
                                         class="side-menu__icon fe fe-package"></i><span
@@ -308,8 +315,8 @@
                                         </li>
                                     @endif
                                     @if (auth()->user()->hasPermissionTo('gestion_inventario'))
-                                        <li><a class="slide-item"
-                                                href="{{ route('gestion_inventario') }}">Inventario /
+                                        <li><a class="slide-item" href="{{ route('gestion_inventario') }}">Inventario
+                                                /
                                                 Stock</a>
                                         </li>
                                     @endif
@@ -323,13 +330,13 @@
                         @endif
 
                         @if (auth()->user()->hasPermissionToMultiple(
-                                'gestion_productos_baja|' .
-                                    'gestion_repuestos_reparacion|' .
-                                    'gestion_ventas|' .
-                                    'gestion_prestamos|' .
-                                    'gestion_alquileres|' .
-                                    'gestion_productos_asignados|' .
-                                    'gestion_productos_instalados'))
+                                    'gestion_productos_baja|' .
+                                        'gestion_repuestos_reparacion|' .
+                                        'gestion_ventas|' .
+                                        'gestion_prestamos|' .
+                                        'gestion_alquileres|' .
+                                        'gestion_productos_asignados|' .
+                                        'gestion_productos_instalados'))
                             <li class="slide">
                                 <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
                                         class="side-menu__icon fe fe-shopping-cart"></i><span
@@ -482,15 +489,15 @@
                         @endif
 
                         @if (auth()->user()->hasPermissionToMultiple(
-                                'gestion_facturacion|' .
-                                    'gestion_causaciones|' .
-                                    'estadistica_proveedores|' .
-                                    'estadisticas_ventas|' .
-                                    'estadisticas_orden_compra|' .
-                                    'informes_contables|' .
-                                    'gestion_viaticos|' .
-                                    'gestion_nomina_general|' .
-                                    'gestion_config_nomina_general'))
+                                    'gestion_facturacion|' .
+                                        'gestion_causaciones|' .
+                                        'estadistica_proveedores|' .
+                                        'estadisticas_ventas|' .
+                                        'estadisticas_orden_compra|' .
+                                        'informes_contables|' .
+                                        'gestion_viaticos|' .
+                                        'gestion_nomina_general|' .
+                                        'gestion_config_nomina_general'))
                             <li class="slide">
                                 <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
                                         class="side-menu__icon fe fe-dollar-sign"></i><span
@@ -542,7 +549,10 @@
                         @endif
 
                         @if (auth()->user()->hasPermissionToMultiple(
-                                'gestion_arrendamientos|' . 'gestion_gastos_varios|' . 'gestion_gastos_fijos|' . 'gestion_gastos_equivalentes'))
+                                    'gestion_arrendamientos|' .
+                                        'gestion_gastos_varios|' .
+                                        'gestion_gastos_fijos|' .
+                                        'gestion_gastos_equivalentes'))
                             <li class="slide">
                                 <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
                                         class="side-menu__icon fe fe-globe"></i><span
