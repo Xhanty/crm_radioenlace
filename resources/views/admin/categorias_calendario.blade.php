@@ -50,9 +50,15 @@
                                             <td><input type="color" style="border: 0" disabled
                                                     value="{{ $value->bgColor }}"></td>
                                             <td>{{ $value->creador }}</td>
-                                            <td><a data-id="{{ $value->id }}" title="Eliminar"
+                                            <td>
+                                                <a data-id="{{ $value->id }}" data-nombre="{{ $value->nombre }}"
+                                                    data-color="{{ $value->color }}" data-fondo="{{ $value->bgColor }}"
+                                                    title="Editar" class="delete btn btn-primary btn-sm btn_Edit"><i
+                                                        class="fa fa-pencil-alt"></i></a>
+                                                <a data-id="{{ $value->id }}" title="Eliminar"
                                                     class="delete btn btn-danger btn-sm btn_Delete"><i
-                                                        class="fa fa-trash"></i></a></td>
+                                                        class="fa fa-trash"></i></a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -101,6 +107,44 @@
             </div>
         </div>
 
+        <!-- Modal Edit -->
+        <div class="modal  fade" id="modalEdit">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Modificar Categoría</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" disabled readonly id="id_edit">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Nombre de Categoría</label>
+                                <input class="form-control" id="categoriaedit" placeholder="Nombre de Categoría"
+                                    type="text">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Color Texto</label>
+                                <input class="form-control" style="border: 0; height: 50px" id="color_text_edit"
+                                    type="color">
+                            </div>
+                            <div class="col-lg">
+                                <label for="">Color Fondo</label>
+                                <input class="form-control" style="border: 0; height: 50px" id="color_fondo_edit"
+                                    type="color">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" id="btnEditarCategoria"
+                            type="button">Modificar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
