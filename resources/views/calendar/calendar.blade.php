@@ -18,7 +18,7 @@
 
 <body>
     <div id="top">
-        <a href="https://github.com/nhn/tui.calendar">
+        <a href="#">
             <img src="{{ asset('calendar/images/img-bi.png') }}">
         </a>
     </div>

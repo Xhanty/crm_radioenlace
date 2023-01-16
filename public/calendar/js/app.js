@@ -11,6 +11,10 @@
     var useDetailPopup = true;
     var datePicker, selectedCalendar;
 
+    var protocol = window.location.protocol;
+    var host = window.location.host;
+    var url_general = protocol + "//" + host + "/";
+
     cal = new Calendar('#calendar', {
         defaultView: 'month',
         useCreationPopup: useCreationPopup,
@@ -317,7 +321,7 @@
             body: formdata
         };
 
-        fetch("http://127.0.0.1:8000/schedule_add", requestOptions)
+        fetch(url_general + "schedule_add", requestOptions)
             .then((response) => response.text())
             .then((result) => document.getElementById("events_user_all").value = result)
             .catch((error) => console.log("error", error));
@@ -340,7 +344,7 @@
             body: formdata
         };
 
-        fetch("http://127.0.0.1:8000/schedule_update", requestOptions)
+        fetch(url_general + "schedule_update", requestOptions)
             .then((response) => response.text())
             .then((result) => document.getElementById("events_user_all").value = result)
             .catch((error) => console.log("error", error));
@@ -355,7 +359,7 @@
             body: formdata
         };
 
-        fetch("http://127.0.0.1:8000/schedule_delete", requestOptions)
+        fetch(url_general + "schedule_delete", requestOptions)
             .then((response) => response.text())
             .then((result) => document.getElementById("events_user_all").value = result)
             .catch((error) => console.log("error", error));
