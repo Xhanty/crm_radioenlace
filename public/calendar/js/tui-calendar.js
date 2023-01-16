@@ -23357,7 +23357,7 @@ var helpers = {
     },
 
     'popupIsAllDay-tmpl': function() {
-        return 'Todo';
+        return 'Falta';
     },
 
     'popupStateFree-tmpl': function() {

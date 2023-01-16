@@ -236,15 +236,15 @@ $(function () {
         }
     });
 
-    $(".check-con-0").on("change", function () {
+    $(".check-conf-0").on("change", function () {
         let check = $(this).prop("checked");
-        let cantidad = 2;
+        let cantidad = 3;
 
         for (let i = 1; i <= cantidad; i++) {
             if (check) {
-                $(".check-con-" + i).prop("checked", true);
+                $(".check-conf-" + i).prop("checked", true);
             } else {
-                $(".check-con-" + i).prop("checked", false);
+                $(".check-conf-" + i).prop("checked", false);
             }
         }
     });

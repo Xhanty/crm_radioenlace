@@ -57,10 +57,20 @@ function printSchedule(printSchedule) {
     schedule.body = "";
     schedule.location = printSchedule.description;
 
+    schedule.color = printSchedule["category"]["color"];
+
+    schedule.bgColor = printSchedule["category"]["bgColor"];
+    schedule.dragBgColor = printSchedule["category"]["dragBgColor"];
+    schedule.borderColor = printSchedule["category"]["borderColor"];
+
     if (printSchedule.isAllDay == 0) {
         schedule.isAllday = false;
     } else {
         schedule.isAllday = true;
+        schedule.color = "#ffffff";
+        schedule.bgColor = "#d61313";
+        schedule.dragBgColor = "#d61313";
+        schedule.borderColor = "#d61313";
     }
 
     schedule.start = moment(printSchedule.start).toDate();
@@ -73,7 +83,6 @@ function printSchedule(printSchedule) {
     }
 
     schedule.isReadOnly = false;
-    
 
     if (printSchedule.isPrivate == 0) {
         schedule.isPrivate = false;
@@ -83,11 +92,6 @@ function printSchedule(printSchedule) {
 
     schedule.state = printSchedule.state;
 
-    schedule.color = printSchedule["category"]["color"];
-    schedule.bgColor = printSchedule["category"]["bgColor"];
-    schedule.dragBgColor = printSchedule["category"]["dragBgColor"];
-    schedule.borderColor = printSchedule["category"]["borderColor"];
-
     ScheduleList.push(schedule);
 }
 
@@ -95,7 +99,7 @@ function generateSchedule(viewName, renderStart, renderEnd) {
     ScheduleList = [];
     var ScheduleList2 = document.getElementById("events_user_all").value;
     ScheduleList2 = JSON.parse(ScheduleList2);
-    
+
     ScheduleList2.forEach((element) => {
         printSchedule(element);
     });

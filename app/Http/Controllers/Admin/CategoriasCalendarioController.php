@@ -12,7 +12,7 @@ class CategoriasCalendarioController extends Controller
     public function index()
     {
         try {
-            if (!auth()->user()->hasPermissionTo('permisos_usuarios')) {
+            if (!auth()->user()->hasPermissionTo('categorias_calendario')) {
                 return redirect()->route('home');
             }
 

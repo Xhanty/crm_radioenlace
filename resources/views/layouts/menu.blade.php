@@ -159,7 +159,7 @@
                                     </a>
                                 </li>
                             @endif
-                            @if (auth()->user()->hasPermissionTo('permisos_usuarios'))
+                            @if (auth()->user()->hasPermissionTo('categorias_calendario'))
                                 <li class="nav-item" title="Categorias Calendario">
                                     <a class="nav-link text-center m-2" href="{{ route('categorias_calendario') }}">
                                         <i class="fe fe-calendar"></i>

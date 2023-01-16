@@ -274,7 +274,6 @@
 
     function saveNewSchedule(scheduleData) {
         saveDatabase(scheduleData);
-        console.log(scheduleData);
         var calendar = scheduleData.calendar || findCalendar(scheduleData.calendarId);
         var schedule = {
             id: String(chance.guid()),
@@ -293,10 +292,17 @@
             state: scheduleData.state
         };
         if (calendar) {
-            schedule.calendarId = calendar.id;
-            schedule.color = calendar.color;
-            schedule.bgColor = calendar.bgColor;
-            schedule.borderColor = calendar.borderColor;
+            if(scheduleData.isAllDay == true) {
+                schedule.calendarId = calendar.id;
+                schedule.color = "#ffffff";
+                schedule.bgColor = "#d61313";
+                schedule.borderColor = "#d61313";
+            } else {
+                schedule.calendarId = calendar.id;
+                schedule.color = calendar.color;
+                schedule.bgColor = calendar.bgColor;
+                schedule.borderColor = calendar.borderColor;
+            }   
         }
 
         cal.createSchedules([schedule]);
