@@ -4,6 +4,10 @@ $(document).ready(function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     });
+
+    var protocol = window.location.protocol;
+    var host = window.location.host;
+    var url_general = protocol + "//" + host + "/";
     let time = 60000;
 
     obtenerDatos();
@@ -25,7 +29,7 @@ $(document).ready(function () {
                             timeout: time,
                             vibrate: [100, 100, 100],
                             onClick: function () {
-                                window.location = "calendario";
+                                window.open(url_general + 'calendario', "_blank");
                                 this.close();
                             },
                         });
