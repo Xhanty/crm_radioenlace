@@ -34,6 +34,7 @@ $(function () {
             success: function (data) {
                 toastr.success("Hasta pronto!");
                 localStorage.removeItem("user");
+                localStorage.removeItem("notification_bienvenida");
                 setTimeout(function () {
                     window.location.href = "/";
                 }, 1000);

@@ -26,6 +26,9 @@ Route::middleware(['auth_user'])->group(function () {
     // INICIO
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+    // NOTIFICACIONES
+    Route::post('/notificaciones_eventos', [App\Http\Controllers\NotificacionesController::class, 'notificaciones_eventos'])->name('notificaciones_eventos');
+
     // ASIGNACIONES PROYECTOS
     Route::get('/asignaciones', [App\Http\Controllers\Admin\AsignacionesController::class, 'index'])->name('asignaciones');
     Route::post('/asignaciones_data', [App\Http\Controllers\Admin\AsignacionesController::class, 'asignaciones_data'])->name('asignaciones_data');
@@ -213,7 +216,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/permisos_empleado', [App\Http\Controllers\Admin\PermisosController::class, 'data'])->name('permisos_empleado');
     Route::post('/permisos_user_update', [App\Http\Controllers\Admin\PermisosController::class, 'update'])->name('permisos_user_update');
 
-    // PERMISOS
+    // CATEGORIAS CALENDARIO
     Route::get('/categorias_calendario', [App\Http\Controllers\Admin\CategoriasCalendarioController::class, 'index'])->name('categorias_calendario');
     Route::post('/categorias_calendario_add', [App\Http\Controllers\Admin\CategoriasCalendarioController::class, 'add'])->name('categorias_calendario_add');
     Route::post('/categorias_calendario_update', [App\Http\Controllers\Admin\CategoriasCalendarioController::class, 'update'])->name('categorias_calendario_update');

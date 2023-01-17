@@ -693,6 +693,31 @@
     <!--- Menu js --->
     <script src="{{ asset('assets/js/app/menu.js') }}"></script>
 
+    <!--- Notificaciones -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/0.0.11/push.min.js"></script>
+    <script>
+        Push.Permission.request();
+
+        var notification_bienvenida = localStorage.getItem('notification_bienvenida');
+
+        if (!notification_bienvenida) {
+            Push.create("CRM", {
+                body: "Bienvenido(a), recuerda revisar las asignaciones",
+                icon: 'https://radioenlacesas.com/wp-content/uploads/2017/08/cropped-logoradioenlace-2.png',
+                timeout: 8000,
+                vibrate: [100, 100, 100],
+                onClick: function () {
+                    window.focus();
+                    this.close();
+                }
+            });
+        }
+
+        localStorage.setItem('notification_bienvenida', 1);
+    </script>
+
+    <script src="{{ asset('assets/js/app/notificaciones/calendario.js') }}"></script>
+
     <!--- Custom js --->
     @yield('scripts')
 </body>
