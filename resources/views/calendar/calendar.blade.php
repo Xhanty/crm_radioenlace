@@ -17,11 +17,6 @@
 </head>
 
 <body>
-    <div id="top">
-        <a href="#">
-            <img src="{{ asset('calendar/images/img-bi.png') }}">
-        </a>
-    </div>
     <div id="lnb">
         <div class="lnb-new-schedule">
             <button id="btn-new-schedule" type="button" class="btn btn-default btn-block lnb-new-schedule-btn"
