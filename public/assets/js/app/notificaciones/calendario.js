@@ -14,7 +14,7 @@ $(document).ready(function () {
 
     function obtenerDatos() {
         $.ajax({
-            url: "notificaciones_eventos",
+            url: "/notificaciones_eventos",
             type: "POST",
             dataType: "json",
             success: function (response) {
