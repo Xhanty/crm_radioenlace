@@ -20,7 +20,7 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.info == 1) {
                     let data = response.data;
-                    console.log(data);
+                    //console.log(data);
                     if (data.length > 0) {
                         var event = data[0];
                         Push.create("CRM Calendario", {
