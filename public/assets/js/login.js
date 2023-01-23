@@ -18,7 +18,7 @@ $(function () {
                     localStorage.setItem("user", JSON.stringify(data.user));
                     window.location.href = "/home";
                 } else {
-                    toastr.error("Email o contraseña incorrectos");
+                    toastr.error("Correo electrónico o contraseña incorrectos");
                 }
             },
             error: function (data) {

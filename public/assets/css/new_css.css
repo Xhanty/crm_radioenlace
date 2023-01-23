@@ -50,3 +50,53 @@ td {
         flex-direction: column;
     }
 }
+
+@media (max-width: 991px) {
+    .responsive-navbar.navbar .navbar-collapse {
+        background: linear-gradient(45deg, rgb(53, 53, 53), #DA251D) !important;
+    }
+}
+
+.main-header {
+    background: linear-gradient(45deg, rgb(53, 53, 53), #DA251D) !important;
+}
+
+.main-content:after {
+    background: linear-gradient(45deg, rgb(53, 53, 53), #DA251D) !important;
+}
+
+.main-header.side-header.fixed-header {
+    background: linear-gradient(45deg, #DA251D, rgb(53, 53, 53)) !important;
+}
+
+.app-sidebar .slide.is-expanded .side-menu__item {
+    background: linear-gradient(45deg, rgb(53, 53, 53), #DA251D) !important;
+}
+
+.side-menu__item.active,
+.side-menu__item:hover,
+.side-menu__item:focus {
+    background: linear-gradient(45deg, rgb(53, 53, 53), #DA251D) !important;
+}
+
+#back-to-top {
+    background: linear-gradient(45deg, rgb(53, 53, 53), #DA251D) !important;
+}
+
+.bg-primary-gradient {
+    background: linear-gradient(45deg, rgb(65, 65, 65), #DA251D) !important;
+}
+
+.btn-outline-secondary:not(:disabled):not(.disabled):active,
+.btn-outline-secondary:not(:disabled):not(.disabled).active {
+    background-color: #3858f9 !important;
+    border-color: #3858f9 !important;
+}
+
+.main-content-body-contacts {
+    display: block !important;
+}
+
+.slide:hover .side-menu__item {
+    background: linear-gradient(45deg, rgb(53, 53, 53), #DA251D) !important;
+}
