@@ -11,91 +11,238 @@ $(document).ready(function () {
 
     $(".open-toggle").trigger("click");
 
-    $("#btnModificarInventario").click(function () {
-        let id = $("#id_edit").val();
-        let serial = $("#serial_edit").val();
-        let codigo = $("#codigo_edit").val();
-        let cantidad = $("#cantidad_edit").val();
-        let cantidad_asig = $("#cantidad_asig_edit").val();
-        let ubicacion = $("#ubicacion_edit").val();
-        let ubicacion_ref = $("#ubicacion_ref_edit").val();
-        let asignado = $("#asignado_edit").val();
-        let descripcion = $("#descripcion_edit").val();
+    $(document).on("click", ".btn_Ingreso", function () {
+        let id = $(this).data("id");
 
-        if (ubicacion == "") {
-            toastr.error("El campo ubicación es obligatorio");
-        } else {
-            $("#btnModificarInventario").attr("disabled", true);
+        $("#producto_id_ingreso").val(id);
+        $("#modalIngreso").modal("show");
+    });
 
+    $(document).on("click", ".btn_Salida", function () {
+        let id = $(this).data("id");
+
+        $("#producto_id_salida").val(id);
+        $("#modalSalida").modal("show");
+    });
+
+    $("#btnIngresoProducto").click(function () {
+        let producto_id = $("#producto_id_ingreso").val();
+        let opcion = $("#tipoingreso_select").val();
+
+        if (opcion == 1) {
+            $("#modalIngreso").modal("hide");
+            $("#global-loader").fadeIn("slow");
+            $("#producto_id_compra").val(producto_id);
             $.ajax({
-                url: "inventario_update",
+                url: "data_detalle_producto",
                 type: "POST",
-                data: {
-                    id: id,
-                    serial: serial,
-                    codigo: codigo,
-                    cantidad: cantidad,
-                    cantidad_asig: cantidad_asig,
-                    ubicacion: ubicacion,
-                    ubicacion_ref: ubicacion_ref,
-                    asignado: asignado,
-                    descripcion: descripcion,
-                },
-                dataType: "json",
+                data: { id: producto_id },
                 success: function (response) {
+                    $("#global-loader").fadeOut("slow");
+                    let data = response.data;
+                    let inventario = data.inventario;
                     if (response.info == 1) {
-                        toastr.success("Inventario actualizado correctamente");
-                        setTimeout(function () {
-                            window.location.reload();
-                        }, 1000);
-                    } else {
-                        $("#btnModificarInventario").attr("disabled", false);
-                        toastr.error("Error al actualizar el inventario");
+                        $("#title_prodc_compra").text(
+                            data.nombre + " " + data.marca + " - " + data.modelo
+                        );
+                        $("#imagen_compra").attr(
+                            "src",
+                            url_general + "images/productos/" + data.imagen
+                        );
+                        $("#serialexistente_compra").empty();
+                        $("#serialexistente_compra").append(
+                            '<option value="0">Ninguno</option>'
+                        );
+                        inventario.forEach((element) => {
+                            $("#serialexistente_compra").append(
+                                "<option value='" +
+                                    element.id +
+                                    "'>" +
+                                    element.serial +
+                                    " (Cantidad: " +
+                                    element.cantidad +
+                                    ")" +
+                                    "</option>"
+                            );
+                        });
+
+                        $("#modalCompra").modal("show");
                     }
                 },
                 error: function (error) {
-                    $("#btnModificarInventario").attr("disabled", false);
-                    toastr.error("Error al actualizar el inventario");
+                    $("#global-loader").fadeOut("slow");
+                    console.log(error);
+                },
+            });
+        } else if (opcion == 2) {
+            $("#modalIngreso").modal("hide");
+            $("#global-loader").fadeIn("slow");
+            $.ajax({
+                url: "data_detalle_producto",
+                type: "POST",
+                data: { id: producto_id },
+                success: function (response) {
+                    $("#global-loader").fadeOut("slow");
+                    let data = response.data;
+                    let inventario = data.inventario;
+                    if (response.info == 1) {
+                        $("#title_prodc_reingreso").text(
+                            data.nombre + " " + data.marca + " - " + data.modelo
+                        );
+                        $("#imagen_reingreso").attr(
+                            "src",
+                            url_general + "images/productos/" + data.imagen
+                        );
+                        $("#producto_reingreso").empty();
+
+                        inventario.forEach((element) => {
+                            let salidas = element.salidas;
+                            salidas.forEach((element2) => {
+                                $("#producto_reingreso").append(
+                                    "<option data-cantidad='" +
+                                        element2.cantidad +
+                                        "' value='" +
+                                        element2.id +
+                                        "'>" +
+                                        element.serial +
+                                        " (Cantidad: " +
+                                        element2.cantidad +
+                                        ") " +
+                                        "</option>"
+                                );
+                            });
+                        });
+                        $("#modalReingreso").modal("show");
+                    }
+                },
+                error: function (error) {
+                    $("#global-loader").fadeOut("slow");
                     console.log(error);
                 },
             });
         }
     });
 
-    $(document).on("click", ".btn_Edit", function () {
-        let id = $(this).data("id");
+    $("#serialexistente_compra").change(function () {
+        let serial = $(this).val();
+        if (serial != 0) {
+            $("#serial_compra").parent().addClass("d-none");
+        } else {
+            $("#serial_compra").parent().removeClass("d-none");
+        }
+    });
 
-        $("#global-loader").fadeIn("fast");
+    $("#btnCompraProducto").click(function () {
+        let producto_id = $("#producto_id_compra").val();
+        let serial = $("#serialexistente_compra").val();
+        let precio_venta = $("#precio_compra").val();
+        let precio_compra = $("#precio_compra").val();
+        let serial_compra = $("#serial_compra").val();
+        let cantidad = $("#cantidad_compra").val();
+        let observaciones = $("#cantidad_compra").val();
 
-        $.ajax({
-            url: "inventario_data",
-            type: "POST",
-            data: { id: id },
-            dataType: "json",
-            success: function (response) {
-                $("#global-loader").fadeOut("fast");
+        if (serial == 0 || serial == null) {
+            if (serial_compra == "") {
+                toastr.error("Debe ingresar el serial del producto");
+                return false;
+            }
+        }
 
-                if (response.info == 1) {
-                    let data = response.data;
-                    $("#id_edit").val(data.id);
-                    $("#serial_edit").val(data.serial);
-                    $("#codigo_edit").val(data.codigo_interno);
-                    $("#cantidad_edit").val(data.cantidad);
-                    $("#cantidad_asig_edit").val(data.cantidad_asignada);
-                    $("#ubicacion_edit").val(data.ubicacion);
-                    $("#ubicacion_ref_edit").val(data.ubicacion_ref);
-                    $("#asignado_edit").val(data.empleado_asignado);
-                    $("#descripcion_edit").val(data.descripcion);
-                    $("#modal_edit").modal("show");
-                } else {
-                    toastr.error("Error al obtener los datos del inventario");
-                }
-            },
-            error: function (error) {
-                toastr.error("Error al obtener los datos del inventario");
-                console.log(error);
-                $("#global-loader").fadeOut("fast");
-            },
-        });
+        if (cantidad == "" || cantidad < 1) {
+            toastr.error("Debe ingresar una cantidad valida");
+            return false;
+        } else {
+            $("#btnCompraProducto").attr("disabled", true);
+            $.ajax({
+                url: "ingreso_inventario",
+                type: "POST",
+                data: {
+                    producto_id: producto_id,
+                    serial: serial,
+                    precio_venta: precio_venta,
+                    precio_compra: precio_compra,
+                    serial_compra: serial_compra,
+                    cantidad: cantidad,
+                    observaciones: observaciones,
+                },
+                success: function (response) {
+                    $("#btnCompraProducto").attr("disabled", false);
+                    if (response.info == 1) {
+                        $("#modalCompra").modal("hide");
+                        $("#modalIngreso").modal("hide");
+                        Swal.fire({
+                            icon: "success",
+                            title: "Ingreso realizado correctamente",
+                            showConfirmButton: false,
+                            timer: 1500,
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        toastr.error("Error al realizar el ingreso");
+                    }
+                },
+                error: function (error) {
+                    toastr.error("Error al realizar el ingreso");
+                    $("#btnCompraProducto").attr("disabled", false);
+                    console.log(error);
+                },
+            });
+        }
+    });
+
+    $("#btnReIngresoProducto").click(function () {
+        let serial = $("#producto_reingreso").val();
+        let cantidad_old = $("#producto_reingreso")
+            .find(":selected")
+            .data("cantidad");
+        let cantidad = $("#cantidad_reingreso").val();
+        let observaciones = $("#observacion_reingreso").val();
+
+        if (serial == 0 || serial == null) {
+            toastr.error("Debe seleccionar un serial existente");
+            return false;
+        } else if (cantidad == "" || cantidad < 1) {
+            toastr.error("Debe ingresar una cantidad valida");
+            return false;
+        } else if (cantidad > cantidad_old) {
+            toastr.error(
+                "La cantidad ingresada no puede ser mayor a la cantidad de salida"
+            );
+            return false;
+        } else {
+            $("#btnReIngresoProducto").attr("disabled", true);
+            $.ajax({
+                url: "reingreso_inventario",
+                type: "POST",
+                data: {
+                    serial: serial,
+                    cantidad: cantidad,
+                    observaciones: observaciones,
+                },
+                success: function (response) {
+                    $("#btnReIngresoProducto").attr("disabled", false);
+                    if (response.info == 1) {
+                        $("#modalIngreso").modal("hide");
+                        $("#modalReingreso").modal("hide");
+                        Swal.fire({
+                            icon: "success",
+                            title: "Reingreso realizado correctamente",
+                            showConfirmButton: false,
+                            timer: 1500,
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        toastr.error("Error al realizar el reingreso");
+                    }
+                },
+                error: function (error) {
+                    toastr.error("Error al realizar el reingreso");
+                    $("#btnReIngresoProducto").attr("disabled", false);
+                    console.log(error);
+                },
+            });
+        }
     });
 });

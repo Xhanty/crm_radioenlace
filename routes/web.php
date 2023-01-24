@@ -129,13 +129,6 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/baja_producto', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'baja_producto'])->name('baja_producto');
     Route::post('/delete_producto', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'delete_producto'])->name('delete_producto');
     Route::post('/productos_edit', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'productos_edit'])->name('productos_edit');
-    Route::post('/productos_reingreso', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'productos_reingreso'])->name('productos_reingreso');
-    Route::post('/inventario_change_status', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'inventario_change_status'])->name('inventario_change_status');
-    Route::post('/inventario_delete', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'inventario_delete'])->name('inventario_delete');
-    Route::post('/inventario_update', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'inventario_update'])->name('inventario_update');
-    Route::post('/inventario_data', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'inventario_data'])->name('inventario_data');
-    Route::post('/inventario_detail', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'inventario_detail'])->name('inventario_detail');
-    Route::post('/inventario_update_select', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'inventario_update_select'])->name('inventario_update_select');
     Route::get('/actividades_inventario', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'actividades_inventario'])->name('actividades_inventario');
     Route::get('/actividades_inventario_list', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'actividades_inventario_list'])->name('actividades_inventario_list');
 
@@ -221,6 +214,11 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/categorias_calendario_add', [App\Http\Controllers\Admin\CategoriasCalendarioController::class, 'add'])->name('categorias_calendario_add');
     Route::post('/categorias_calendario_update', [App\Http\Controllers\Admin\CategoriasCalendarioController::class, 'update'])->name('categorias_calendario_update');
     Route::post('/categorias_calendario_delete', [App\Http\Controllers\Admin\CategoriasCalendarioController::class, 'delete'])->name('categorias_calendario_delete');
+
+    // GESTION INVENTARIO
+    Route::post('/data_detalle_producto', [App\Http\Controllers\Admin\Inventario\GestionController::class, 'data'])->name('data_detalle_producto');
+    Route::post('/ingreso_inventario', [App\Http\Controllers\Admin\Inventario\GestionController::class, 'ingreso_inventario'])->name('ingreso_inventario');
+    Route::post('/reingreso_inventario', [App\Http\Controllers\Admin\Inventario\GestionController::class, 'reingreso_inventario'])->name('reingreso_inventario');
 });
 
 Route::group(['middleware' => 'auth'], function () {

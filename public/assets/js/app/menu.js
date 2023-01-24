@@ -107,14 +107,14 @@ $(function () {
                 data: "foto",
                 render: function (data) {
                     if (data == null || data == "") {
-                        return '<img src="assets/img/sin_imagen.jpg" loading="lazy" style="width: 120px; height: 120px" />';
+                        return '<img src="assets/img/sin_imagen.jpg" loading="lazy" id="img_tbl_resize" />';
                     } else {
                         return (
                             '<img src="' +
                             url_general +
                             "images/vehiculos/" +
                             data +
-                            '" loading="lazy" style="width: 120px; height: 120px">'
+                            '" loading="lazy" id="img_tbl_resize">'
                         );
                     }
                 },
@@ -153,14 +153,14 @@ $(function () {
                 data: "imagen",
                 render: function (data) {
                     if (data == null || data == "") {
-                        return '<img src="assets/img/sin_imagen.jpg" loading="lazy" style="width: 120px; height: 120px" />';
+                        return '<img src="assets/img/sin_imagen.jpg" loading="lazy" id="img_tbl_resize" />';
                     } else {
                         return (
                             '<img src="' +
                             url_general +
                             "images/productos/" +
                             data +
-                            '" loading="lazy" style="width: 120px; height: 120px">'
+                            '" loading="lazy" id="img_tbl_resize">'
                         );
                     }
                 },
@@ -201,14 +201,14 @@ $(function () {
                 data: "imagen",
                 render: function (data) {
                     if (data == null || data == "") {
-                        return '<img src="assets/img/sin_imagen.jpg" loading="lazy" style="width: 120px; height: 120px" />';
+                        return '<img src="assets/img/sin_imagen.jpg" loading="lazy" id="img_tbl_resize" />';
                     } else {
                         return (
                             '<img src="' +
                             url_general +
                             "images/productos/" +
                             data +
-                            '" loading="lazy" style="width: 120px; height: 120px">'
+                            '" loading="lazy" id="img_tbl_resize">'
                         );
                     }
                 },
@@ -219,6 +219,7 @@ $(function () {
             { data: "subcategoria", name: "subcategoria" },
             { data: "marca", name: "marca" },
             { data: "modelo", name: "modelo" },
+            { data: "cantidad", name: "cantidad" },
             {
                 data: "status",
                 render: function (data) {
@@ -253,7 +254,7 @@ $(function () {
                         url_general +
                         "images/productos/" +
                         data.img_producto +
-                        '" loading="lazy" style="width: 120px; height: 120px" /></div>' +
+                        '" loading="lazy" id="img_tbl_resize" /></div>' +
                         "<div>" +
                         data.producto +
                         "</div>";

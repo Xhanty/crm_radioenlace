@@ -152,6 +152,10 @@ class InventarioController extends Controller
                 ->join('categorias_productos', 'productos.categoria', '=', 'categorias_productos.id')
                 ->join('subcategorias_productos', 'subcategorias_productos.id', '=', 'productos.sub_categoria')
                 ->get();
+
+            foreach ($data as $key => $value) {
+                $value->cantidad = DB::table('inventario')->where('producto_id', $value->id)->sum('cantidad');
+            }
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -234,238 +238,71 @@ class InventarioController extends Controller
         }
     }
 
-    public function productos_reingreso(Request $request)
-    {
-        try {
-            DB::beginTransaction();
-            $actividad = DB::table("actividad_productos")->where('id', $request->id)->first();
-            $inventario = DB::table("inventario")->where('id', $actividad->id_inventario)->first();
-
-            DB::table("inventario")->where('id', $inventario->id)->update([
-                'cantidad' => $inventario->cantidad + $actividad->cantidad
-            ]);
-
-            DB::table("actividad_productos")->where('id', $request->id)->delete();
-
-            DB::commit();
-            return response()->json(['info' => 1, 'success' => 'Producto reingresado correctamente.']);
-        } catch (Exception $ex) {
-            DB::rollBack();
-            return response()->json(['info' => 0, 'error' => 'Error al actualizar el producto.']);
-        }
-    }
-
     public function gestion_inventario()
     {
         try {
             if (!auth()->user()->hasPermissionTo('gestion_inventario')) {
                 return redirect()->route('home');
             }
+            $proveedores = DB::table('proveedores')->where('estado', 1)->get();
 
-            return view('admin.inventario.gestion_inventario');
+            $clientes = DB::table('cliente')
+                ->select("cliente.id", "cliente.razon_social")
+                ->join("almacenes", "almacenes.cliente", "=", "cliente.id")
+                ->where("estado", 1)
+                ->orderBy("cliente.razon_social")
+                ->groupBy("cliente.id", "cliente.razon_social")
+                ->get();
+
+            foreach ($clientes as $key => $value) {
+                $almacenes = DB::table('almacenes')
+                    ->where("almacenes.cliente", $value->id)
+                    ->orderBy("almacenes.nombre")
+                    ->get();
+                $clientes[$key]->almacenes = $almacenes;
+            }
+
+            foreach ($clientes as $key => $value) {
+                foreach ($value->almacenes as $key2 => $value2) {
+                    $estantes = DB::table('ubicaciones_almacen')
+                        ->where("ubicaciones_almacen.almacen", $value2->id)
+                        ->orderBy("ubicaciones_almacen.nombre")
+                        ->get();
+                    $clientes[$key]->almacenes[$key2]->estantes = $estantes;
+                }
+            }
+
+            $almacenes_sede = DB::table('almacenes')
+                ->select("almacenes.id", "almacenes.nombre", "almacenes.observaciones")
+                ->whereNull("almacenes.cliente")
+                ->where("almacen", 1)
+                ->orderBy("almacenes.nombre")
+                ->groupBy("almacenes.id", "almacenes.nombre", "almacenes.observaciones")
+                ->get();
+
+            foreach ($almacenes_sede as $key => $value) {
+                $almacenes = DB::table('almacenes')
+                    ->whereNull("almacenes.cliente")
+                    ->where("almacen_id", $value->id)
+                    ->orderBy("almacenes.nombre")
+                    ->get();
+                $almacenes_sede[$key]->almacenes = $almacenes;
+            }
+
+            foreach ($almacenes_sede as $key => $value) {
+                foreach ($value->almacenes as $key2 => $value2) {
+                    $estantes = DB::table('ubicaciones_almacen')
+                        ->where("ubicaciones_almacen.almacen", $value2->id)
+                        ->orderBy("ubicaciones_almacen.nombre")
+                        ->get();
+                    $almacenes_sede[$key]->almacenes[$key2]->estantes = $estantes;
+                }
+            }
+
+
+            return view('admin.inventario.gestion_inventario', compact('proveedores', 'clientes', 'almacenes_sede'));
         } catch (Exception $ex) {
             return view('errors.500');
-        }
-    }
-
-    public function inventario_change_status(Request $request)
-    {
-        try {
-            DB::beginTransaction();
-            $id = $request->id;
-            $status = $request->status;
-            if ($status == 1) {
-                DB::table("inventario")->where('id', $id)->update([
-                    'status' => 0
-                ]);
-            } else {
-                DB::table("inventario")->where('id', $id)->update([
-                    'status' => 1
-                ]);
-            }
-            DB::commit();
-            return response()->json(['info' => 1, 'success' => 'Inventario actualizado correctamente.']);
-        } catch (Exception $ex) {
-            DB::rollBack();
-            return response()->json(['info' => 0, 'error' => 'Error al actualizar el inventario.']);
-        }
-    }
-
-    public function inventario_delete(Request $request)
-    {
-        try {
-            DB::beginTransaction();
-            $id = $request->id;
-            DB::table("inventario")->where('id', $id)->delete();
-            DB::commit();
-            return response()->json(['info' => 1, 'success' => 'Inventario eliminado correctamente.']);
-        } catch (Exception $ex) {
-            DB::rollBack();
-            return response()->json(['info' => 0, 'error' => 'Error al eliminar el inventario.']);
-        }
-    }
-
-    public function inventario_data(Request $request)
-    {
-        try {
-            $id = $request->id;
-            $data = DB::table("inventario")->where('id', $id)->first();
-            return response()->json(['info' => 1, 'data' => $data]);
-        } catch (Exception $ex) {
-            return response()->json(['info' => 0, 'error' => 'Error al obtener los datos del inventario.']);
-        }
-    }
-
-    public function inventario_detail(Request $request)
-    {
-        try {
-            $id = $request->id;
-            $data = DB::table("inventario")->where('id', $id)->first();
-
-            $productos_instalados = DB::table("repuestos_reparacion")->where('id_inventario', $id)->get();
-
-            $productos_vendidos = DB::table("productos_factura")
-                ->select('productos_factura.*', 'cliente.razon_social as cliente')
-                ->join("facturas", "productos_factura.id_factura", "=", "facturas.id")
-                ->join("cliente", "facturas.id_cliente", "=", "cliente.id")
-                ->where('id_inventario', $id)
-                ->get();
-
-            $productos_prestados = DB::table("prestamo")
-                ->select('prestamo.*', 'cliente.razon_social as cliente', 'empleados.nombre as empleado')
-                ->leftJoin("cliente", "prestamo.id_cliente", "=", "cliente.id")
-                ->leftJoin("empleados", "prestamo.id_empleado", "=", "empleados.id")
-                ->where('id_inventario', $id)->where("prestamo.status", 0)
-                ->get();
-
-            $productos_alquilados = []; //DB::table("productos_remision")->where('id_inventario', $id)->get();
-
-            $productos_devueltos = DB::table("prestamo")
-                ->select('prestamo.*', 'cliente.razon_social as cliente', 'empleados.nombre as empleado')
-                ->leftJoin("cliente", "prestamo.id_cliente", "=", "cliente.id")
-                ->leftJoin("empleados", "prestamo.id_empleado", "=", "empleados.id")
-                ->where('id_inventario', $id)->where("prestamo.status", 1)
-                ->get();
-
-            $productos_asignados = DB::table("productos_asignados")
-                ->select('productos_asignados.*', 'empleados.nombre as empleado')
-                ->join("empleados", "productos_asignados.id_empleado", "=", "empleados.id")
-                ->where('id_inventario', $id)
-                ->get();
-
-            return response()->json(['info' => 1, 'data' => $data, 'productos_instalados' => $productos_instalados, 'productos_vendidos' => $productos_vendidos, 'productos_prestados' => $productos_prestados, 'productos_alquilados' => $productos_alquilados, 'productos_devueltos' => $productos_devueltos, 'productos_asignados' => $productos_asignados]);
-        } catch (Exception $ex) {
-            return $ex->getMessage();
-            return response()->json(['info' => 0, 'error' => 'Error al obtener los datos del inventario.']);
-        }
-    }
-
-    public function inventario_update(Request $request)
-    {
-        try {
-            DB::beginTransaction();
-            $id = $request->id;
-            $serial = $request->serial;
-            $codigo = $request->codigo;
-            $cantidad = $request->cantidad;
-            $cantidad_asig = $request->cantidad_asig;
-            $ubicacion = $request->ubicacion;
-            $ubicacion_ref = $request->ubicacion_ref;
-            $asignado = $request->asignado;
-            $descripcion = $request->descripcion;
-
-            DB::table("inventario")->where("id", $id)->update([
-                'serial' => $serial ? $serial : "",
-                'codigo_interno' => $codigo ? $codigo : 0,
-                'cantidad' => $cantidad ? $cantidad : 0,
-                'cantidad_asignada' => $cantidad_asig ? $cantidad_asig : 0,
-                'ubicacion' => $ubicacion ? $ubicacion : 0,
-                'ubicacion_ref' => $ubicacion_ref ? $ubicacion_ref : "",
-                'empleado_asignado' => $asignado ? $asignado : 0,
-                'descripcion' => $descripcion ? $descripcion : "",
-                'fecha_actualizacion' => date("Y-m-d H:i:s")
-            ]);
-
-            DB::commit();
-            return response()->json(['info' => 1, 'success' => 'Inventario actualizado correctamente.']);
-        } catch (Exception $ex) {
-            return response()->json(['info' => 0, 'error' => 'Error al actualizar el inventario.']);
-            return $ex->getMessage();
-        }
-    }
-
-    public function inventario_update_select(Request $request)
-    {
-        try {
-            DB::beginTransaction();
-            $id = $request->id;
-            $cantidad_old = $request->cantidad_old;
-            $producto = $request->producto;
-            $tipo = $request->tipo;
-
-            if ($tipo == 0) {
-            } else if ($tipo == 1) {
-                DB::table("inventario")->where("id", $id)->update([
-                    'id_proveedor' => $request->proveedor ? $request->proveedor : 0,
-                    'ubicacion' => $request->ubicacion ? $request->ubicacion : 0,
-                    'ubicacion_ref' => $request->ubicacion_ref ? $request->ubicacion_ref : "",
-                    'precio_compra' => $request->precio_compra ? $request->precio_compra : 0,
-                    'precio_venta' => $request->precio_venta ? $request->precio_venta : 0,
-                    'serial' => $request->serial,
-                    'cod_interno' => $request->codigo_interno,
-                    'cantidad' => $request->cantidad + $cantidad_old,
-                    'descripcion' => $request->descripcion ? $request->descripcion : "",
-                ]);
-            } else if ($tipo == 2) {
-                DB::table('ventas')->insert([
-                    'id_cliente' => $request->cliente,
-                    'id_producto' => $producto,
-                    'anexo' => "",
-                    'fecha' => date("Y-m-d"),
-                    'created_by' => session('user'),
-                    'cantidad' => $request->cantidad,
-                    'precio_compra' => $request->precio_compra,
-                    'precio_venta' => $request->precio_venta,
-                ]);
-            } else if ($tipo == 3) {
-            } else if ($tipo == 4) {
-                DB::table("prestamo")->insert([
-                    'id_inventario' => $id,
-                    'cantidad' => $request->cantidad,
-                    'id_cliente' => $request->cliente,
-                    'id_empleado' => $request->empleado,
-                    'tipo' => 4,
-                    'created_by' => session('user'),
-                    'status' => 0,
-                    'fecha' => date("Y-m-d"),
-                ]);
-            } else if ($tipo == 5) {
-                DB::table("productos_asignados")->insert([
-                    'cantidad' => $request->cantidad,
-                    'id_empleado' => $request->empleado,
-                    'id_inventario' => $id,
-                    'descripcion' => session('user'),
-                    'fecha' => date("Y-m-d H:i:s"),
-                    'created_by' => session('user'),
-                    'status' => 0,
-                ]);
-            } else if ($tipo == 6) {
-                DB::table("instalaciones")->insert([
-                    'id_inventario' => $id,
-                    'id_cliente' => $request->cliente,
-                    'cantidad' => $request->cantidad,
-                    'tipo' => 6,
-                    'created_by' => session('user'),
-                    'status' => 1,
-                    'fecha' => date("Y-m-d"),
-                ]);
-            }
-
-            DB::commit();
-        } catch (Exception $ex) {
-            DB::rollBack();
-            return response()->json(['info' => 0, 'error' => 'Error al actualizar el inventario.']);
-            return $ex->getMessage();
         }
     }
 }

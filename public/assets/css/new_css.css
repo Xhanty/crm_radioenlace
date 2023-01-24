@@ -100,3 +100,8 @@ td {
 .slide:hover .side-menu__item {
     background: linear-gradient(45deg, rgb(53, 53, 53), #DA251D) !important;
 }
+
+#img_tbl_resize {
+    width: 100px;
+    height: 100px;
+}

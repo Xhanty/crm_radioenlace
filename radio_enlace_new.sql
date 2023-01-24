@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-01-2023 a las 13:26:30
+-- Tiempo de generación: 24-01-2023 a las 22:49:33
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.1.12
 
@@ -54,7 +54,8 @@ INSERT INTO `almacenes` (`id`, `cliente`, `nombre`, `observaciones`, `created_by
 (257, NULL, 'MIGUEL CASTELLANOS', NULL, 1, '2023-01-13', 1, 0, 246),
 (258, NULL, 'RACK 01', NULL, 1, '2023-01-13', 1, 0, 247),
 (261, 17, 'CHINOS DABEIBAAA', 'Proyecto en bogotá', 1, '2023-01-13', 1, 0, NULL),
-(262, 17, 'RUTA 40', NULL, 1, '2023-01-13', 1, 0, NULL);
+(262, 17, 'RUTA 40', NULL, 1, '2023-01-13', 1, 0, NULL),
+(263, 73, 'Proyecto prueba', NULL, 1, '2023-01-16', 1, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -231,6 +232,37 @@ CREATE TABLE `avances_tasks_projects` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `calendario_eventos`
+--
+
+CREATE TABLE `calendario_eventos` (
+  `id` int(11) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `empleado` int(11) NOT NULL,
+  `calendarId` int(1) NOT NULL,
+  `isAllDay` int(1) NOT NULL,
+  `isPrivate` int(1) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `state` varchar(255) NOT NULL,
+  `start` datetime NOT NULL,
+  `end` datetime NOT NULL,
+  `useCreationPopup` int(1) NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `calendario_eventos`
+--
+
+INSERT INTO `calendario_eventos` (`id`, `code`, `empleado`, `calendarId`, `isAllDay`, `isPrivate`, `name`, `description`, `state`, `start`, `end`, `useCreationPopup`, `created_at`) VALUES
+(22, 'CL-IPIHGH4OIVCDRFSTTB7F', 1, 1, 1, 0, 'Casaaa', '', 'Empresa', '2023-01-10 00:00:00', '2023-01-10 23:59:00', 1, '2023-01-16 16:38:37'),
+(23, 'CL-SH6KBNIJ2ZSBNOSOKZQP', 1, 1, 1, 0, 'pppppp', '', 'Empresa', '2023-01-11 00:00:00', '2023-01-11 23:59:00', 1, '2023-01-16 16:39:19'),
+(24, 'CL-AWEXWFWOBIHU7KR5RSBE', 1, 1, 0, 0, 'asdccasd', '', 'Empresa', '2023-01-17 10:29:00', '2023-01-18 17:30:00', 1, '2023-01-16 16:39:26');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `categorias_archivos`
 --
 
@@ -251,6 +283,34 @@ INSERT INTO `categorias_archivos` (`id`, `nombre`, `fecha`, `created_by`) VALUES
 (4, 'Fotos', '2022-03-03 17:13:12', 1),
 (5, 'Videos', '2022-03-03 17:13:16', 1),
 (6, 'Archivo', '2022-03-09 12:34:02', 6);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `categorias_calendario`
+--
+
+CREATE TABLE `categorias_calendario` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(255) NOT NULL,
+  `color` varchar(255) NOT NULL,
+  `bgColor` varchar(255) NOT NULL,
+  `dragBgColor` varchar(255) NOT NULL,
+  `borderColor` varchar(255) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `categorias_calendario`
+--
+
+INSERT INTO `categorias_calendario` (`id`, `nombre`, `color`, `bgColor`, `dragBgColor`, `borderColor`, `created_by`, `created_at`) VALUES
+(1, 'Tareas', '#ffffff', '#ff5583', '#ff5583', '#ff5583', 1, '2023-01-16 18:47:05'),
+(2, 'Eventos', '#ffffff', '#03bd9e', '#03bd9e', '#03bd9e', 1, '2023-01-16 18:47:05'),
+(3, 'Notas', '#ffffff', '#9e5fff', '#9e5fff', '#9e5fff', 1, '2023-01-16 18:47:05'),
+(4, 'Recordatorios', '#ffffff', '#00a9ff', '#00a9ff', '#00a9ff', 1, '2023-01-16 18:47:05'),
+(5, 'Casa', '#ffffff', '#e0e04a', '#e0e04a', '#e0e04a', 1, '2023-01-16 18:47:05');
 
 -- --------------------------------------------------------
 
@@ -724,6 +784,33 @@ CREATE TABLE `gastos_varios` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `inventario`
+--
+
+CREATE TABLE `inventario` (
+  `id` int(11) NOT NULL,
+  `producto_id` int(11) NOT NULL,
+  `serial` varchar(255) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `status` int(1) NOT NULL DEFAULT 1,
+  `created_by` int(11) NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `inventario`
+--
+
+INSERT INTO `inventario` (`id`, `producto_id`, `serial`, `cantidad`, `status`, `created_by`, `created_at`) VALUES
+(1, 1, '15455', 10, 1, 1, '2023-01-24 14:14:28'),
+(2, 2, '15455PP', 20, 1, 1, '2023-01-24 14:14:28'),
+(3, 3, '459AAA', 10, 1, 1, '2023-01-24 14:14:28'),
+(4, 1, '8655SSS', 0, 1, 1, '2023-01-24 14:14:28'),
+(5, 1, '45899AAAA', 1, 1, 1, '2023-01-24 16:25:54');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `migrations`
 --
 
@@ -812,101 +899,102 @@ INSERT INTO `permisos_new` (`id`, `empleado`, `modulo`, `administrador`, `fecha`
 (956, 6, 'ver_asignaciones_proyectos', 1, '2023-01-10 10:58:26'),
 (957, 6, 'ver_actividades', 1, '2023-01-10 10:58:26'),
 (958, 6, 'ver_puntos', 1, '2023-01-10 10:58:26'),
-(6484, 1, 'ver_asignaciones', 1, '2023-01-10 17:06:57'),
-(6485, 1, 'gestion_asignacion', 1, '2023-01-10 17:06:57'),
-(6486, 1, 'gestion_puntos', 1, '2023-01-10 17:06:57'),
-(6487, 1, 'ver_asignaciones_proyectos', 1, '2023-01-10 17:06:57'),
-(6488, 1, 'gestion_asignaciones_proyectos', 1, '2023-01-10 17:06:57'),
-(6489, 1, 'gestion_puntos_proyectos', 1, '2023-01-10 17:06:57'),
-(6490, 1, 'ver_actividades', 1, '2023-01-10 17:06:57'),
-(6491, 1, 'gestionar_actividades', 1, '2023-01-10 17:06:57'),
-(6492, 1, 'ver_puntos', 1, '2023-01-10 17:06:57'),
-(6493, 1, 'gestionar_puntos', 1, '2023-01-10 17:06:57'),
-(6494, 1, 'ver_vehiculos', 1, '2023-01-10 17:06:57'),
-(6495, 1, 'gestion_vehiculos', 1, '2023-01-10 17:06:57'),
-(6496, 1, 'enviar_checklist_vehiculos', 1, '2023-01-10 17:06:57'),
-(6497, 1, 'gestion_checklist_vehiculos', 1, '2023-01-10 17:06:57'),
-(6498, 1, 'gestion_salud_vehiculos', 1, '2023-01-10 17:06:57'),
-(6499, 1, 'ver_clientes', 1, '2023-01-10 17:06:57'),
-(6500, 1, 'add_clientes', 1, '2023-01-10 17:06:57'),
-(6501, 1, 'edit_clientes', 1, '2023-01-10 17:06:57'),
-(6502, 1, 'anexos_clientes', 1, '2023-01-10 17:06:57'),
-(6503, 1, 'eliminar_clientes', 1, '2023-01-10 17:06:57'),
-(6504, 1, 'ver_empleados', 1, '2023-01-10 17:06:57'),
-(6505, 1, 'add_empleados', 1, '2023-01-10 17:06:57'),
-(6506, 1, 'edit_empleados', 1, '2023-01-10 17:06:57'),
-(6507, 1, 'anexos_empleados', 1, '2023-01-10 17:06:57'),
-(6508, 1, 'clave_empleados', 1, '2023-01-10 17:06:57'),
-(6509, 1, 'novedades_empleados', 1, '2023-01-10 17:06:57'),
-(6510, 1, 'nomina_empleados', 1, '2023-01-10 17:06:57'),
-(6511, 1, 'ver_proveedores', 1, '2023-01-10 17:06:57'),
-(6512, 1, 'add_proveedores', 1, '2023-01-10 17:06:57'),
-(6513, 1, 'edit_proveedores', 1, '2023-01-10 17:06:57'),
-(6514, 1, 'anexos_proveedores', 1, '2023-01-10 17:06:57'),
-(6515, 1, 'gestion_categorias_inventario', 1, '2023-01-10 17:06:57'),
-(6516, 1, 'gestion_almacenes_inventario', 1, '2023-01-10 17:06:57'),
-(6517, 1, 'gestion_productos_inventario', 1, '2023-01-10 17:06:57'),
-(6518, 1, 'gestion_inventario', 1, '2023-01-10 17:06:57'),
-(6519, 1, 'gestion_actividades_inventario', 1, '2023-01-10 17:06:57'),
-(6520, 1, 'delete_existencias_inventario', 1, '2023-01-10 17:06:57'),
-(6521, 1, 'gestion_productos_baja', 1, '2023-01-10 17:06:57'),
-(6522, 1, 'gestion_repuestos_reparacion', 1, '2023-01-10 17:06:57'),
-(6523, 1, 'gestion_ventas', 1, '2023-01-10 17:06:57'),
-(6524, 1, 'gestion_prestamos', 1, '2023-01-10 17:06:57'),
-(6525, 1, 'gestion_alquileres', 1, '2023-01-10 17:06:57'),
-(6526, 1, 'gestion_productos_asignados', 1, '2023-01-10 17:06:57'),
-(6527, 1, 'solicitud_elementos', 1, '2023-01-10 17:06:57'),
-(6528, 1, 'gestion_solicitudes', 1, '2023-01-10 17:06:57'),
-(6529, 1, 'devolver_elementos', 1, '2023-01-10 17:06:57'),
-(6530, 1, 'gesion_categorias_proyectos', 1, '2023-01-10 17:06:57'),
-(6531, 1, 'gestion_proyectos', 1, '2023-01-10 17:06:57'),
-(6532, 1, 'gestion_actas_proyectos', 1, '2023-01-10 17:06:57'),
-(6533, 1, 'firma_cliente_proyectos', 1, '2023-01-10 17:06:57'),
-(6534, 1, 'visto_bueno_proyectos', 1, '2023-01-10 17:06:57'),
-(6535, 1, 'gestion_categorias_seguimientos', 1, '2023-01-10 17:06:57'),
-(6536, 1, 'gestion_seguimientos', 1, '2023-01-10 17:06:57'),
-(6537, 1, 'gestion_actas_seguimientos', 1, '2023-01-10 17:06:57'),
-(6538, 1, 'visto_bueno_seguimientos', 1, '2023-01-10 17:06:57'),
-(6539, 1, 'gestion_reparaciones', 1, '2023-01-10 17:06:57'),
-(6540, 1, 'ver_reparaciones_asignadas', 1, '2023-01-10 17:06:57'),
-(6541, 1, 'generar_informes_reparaciones', 1, '2023-01-10 17:06:57'),
-(6542, 1, 'devolver_repuesto_reparacion', 1, '2023-01-10 17:06:57'),
-(6543, 1, 'gestion_categorias_documentos', 1, '2023-01-10 17:06:57'),
-(6544, 1, 'gestion_archivos', 1, '2023-01-10 17:06:57'),
-(6545, 1, 'gestion_documentos', 1, '2023-01-10 17:06:57'),
-(6546, 1, 'gestion_orden_compra', 1, '2023-01-10 17:06:57'),
-(6547, 1, 'completar_orden_compra', 1, '2023-01-10 17:06:57'),
-(6548, 1, 'enviar_orden_compra', 1, '2023-01-10 17:06:57'),
-(6549, 1, 'eliminar_orden_compra', 1, '2023-01-10 17:06:57'),
-(6550, 1, 'gestionar_cotizaciones', 1, '2023-01-10 17:06:57'),
-(6551, 1, 'completar_cotizaciones', 1, '2023-01-10 17:06:57'),
-(6552, 1, 'enviar_cotizaciones', 1, '2023-01-10 17:06:57'),
-(6553, 1, 'eliminar_cotizaciones', 1, '2023-01-10 17:06:57'),
-(6554, 1, 'gestionar_remisiones', 1, '2023-01-10 17:06:57'),
-(6555, 1, 'completar_remisiones', 1, '2023-01-10 17:06:57'),
-(6556, 1, 'enviar_remisiones', 1, '2023-01-10 17:06:57'),
-(6557, 1, 'eliminar_remisiones', 1, '2023-01-10 17:06:57'),
-(6558, 1, 'gestion_facturacion', 1, '2023-01-10 17:06:57'),
-(6559, 1, 'completar_facturas', 1, '2023-01-10 17:06:57'),
-(6560, 1, 're_abrir_facturas', 1, '2023-01-10 17:06:57'),
-(6561, 1, 'anular_facturas', 1, '2023-01-10 17:06:57'),
-(6562, 1, 'gestion_causaciones', 1, '2023-01-10 17:06:57'),
-(6563, 1, 'enviar_facturas', 1, '2023-01-10 17:06:57'),
-(6564, 1, 'detalles_facturas', 1, '2023-01-10 17:06:57'),
-(6565, 1, 'eliminar_facturas', 1, '2023-01-10 17:06:57'),
-(6566, 1, 'estadistica_proveedores', 1, '2023-01-10 17:06:57'),
-(6567, 1, 'estadisticas_ventas', 1, '2023-01-10 17:06:57'),
-(6568, 1, 'estadisticas_orden_compra', 1, '2023-01-10 17:06:57'),
-(6569, 1, 'informes_contables', 1, '2023-01-10 17:06:57'),
-(6570, 1, 'gestion_viaticos', 1, '2023-01-10 17:06:57'),
-(6571, 1, 'gestion_nomina_general', 1, '2023-01-10 17:06:57'),
-(6572, 1, 'gestion_config_nomina_general', 1, '2023-01-10 17:06:57'),
-(6573, 1, 'gestion_arrendamientos', 1, '2023-01-10 17:06:57'),
-(6574, 1, 'gestion_gastos_varios', 1, '2023-01-10 17:06:57'),
-(6575, 1, 'gestion_gastos_fijos', 1, '2023-01-10 17:06:57'),
-(6576, 1, 'gestion_gastos_equivalentes', 1, '2023-01-10 17:06:57'),
-(6577, 1, 'configuracion_sistema', 1, '2023-01-10 17:06:57'),
-(6578, 1, 'permisos_usuarios', 1, '2023-01-10 17:06:57');
+(6579, 1, 'ver_asignaciones', 1, '2023-01-16 16:18:02'),
+(6580, 1, 'gestion_asignacion', 1, '2023-01-16 16:18:02'),
+(6581, 1, 'gestion_puntos', 1, '2023-01-16 16:18:02'),
+(6582, 1, 'ver_asignaciones_proyectos', 1, '2023-01-16 16:18:02'),
+(6583, 1, 'gestion_asignaciones_proyectos', 1, '2023-01-16 16:18:02'),
+(6584, 1, 'gestion_puntos_proyectos', 1, '2023-01-16 16:18:02'),
+(6585, 1, 'ver_actividades', 1, '2023-01-16 16:18:02'),
+(6586, 1, 'gestionar_actividades', 1, '2023-01-16 16:18:02'),
+(6587, 1, 'ver_puntos', 1, '2023-01-16 16:18:02'),
+(6588, 1, 'gestionar_puntos', 1, '2023-01-16 16:18:02'),
+(6589, 1, 'ver_vehiculos', 1, '2023-01-16 16:18:02'),
+(6590, 1, 'gestion_vehiculos', 1, '2023-01-16 16:18:02'),
+(6591, 1, 'enviar_checklist_vehiculos', 1, '2023-01-16 16:18:02'),
+(6592, 1, 'gestion_checklist_vehiculos', 1, '2023-01-16 16:18:02'),
+(6593, 1, 'gestion_salud_vehiculos', 1, '2023-01-16 16:18:02'),
+(6594, 1, 'ver_clientes', 1, '2023-01-16 16:18:02'),
+(6595, 1, 'add_clientes', 1, '2023-01-16 16:18:02'),
+(6596, 1, 'edit_clientes', 1, '2023-01-16 16:18:02'),
+(6597, 1, 'anexos_clientes', 1, '2023-01-16 16:18:02'),
+(6598, 1, 'eliminar_clientes', 1, '2023-01-16 16:18:02'),
+(6599, 1, 'ver_empleados', 1, '2023-01-16 16:18:02'),
+(6600, 1, 'add_empleados', 1, '2023-01-16 16:18:02'),
+(6601, 1, 'edit_empleados', 1, '2023-01-16 16:18:02'),
+(6602, 1, 'anexos_empleados', 1, '2023-01-16 16:18:02'),
+(6603, 1, 'clave_empleados', 1, '2023-01-16 16:18:02'),
+(6604, 1, 'novedades_empleados', 1, '2023-01-16 16:18:02'),
+(6605, 1, 'nomina_empleados', 1, '2023-01-16 16:18:02'),
+(6606, 1, 'ver_proveedores', 1, '2023-01-16 16:18:02'),
+(6607, 1, 'add_proveedores', 1, '2023-01-16 16:18:02'),
+(6608, 1, 'edit_proveedores', 1, '2023-01-16 16:18:02'),
+(6609, 1, 'anexos_proveedores', 1, '2023-01-16 16:18:02'),
+(6610, 1, 'gestion_categorias_inventario', 1, '2023-01-16 16:18:02'),
+(6611, 1, 'gestion_almacenes_inventario', 1, '2023-01-16 16:18:02'),
+(6612, 1, 'gestion_productos_inventario', 1, '2023-01-16 16:18:02'),
+(6613, 1, 'gestion_inventario', 1, '2023-01-16 16:18:02'),
+(6614, 1, 'gestion_actividades_inventario', 1, '2023-01-16 16:18:02'),
+(6615, 1, 'delete_existencias_inventario', 1, '2023-01-16 16:18:02'),
+(6616, 1, 'gestion_productos_baja', 1, '2023-01-16 16:18:02'),
+(6617, 1, 'gestion_repuestos_reparacion', 1, '2023-01-16 16:18:02'),
+(6618, 1, 'gestion_ventas', 1, '2023-01-16 16:18:02'),
+(6619, 1, 'gestion_prestamos', 1, '2023-01-16 16:18:02'),
+(6620, 1, 'gestion_alquileres', 1, '2023-01-16 16:18:02'),
+(6621, 1, 'gestion_productos_asignados', 1, '2023-01-16 16:18:02'),
+(6622, 1, 'solicitud_elementos', 1, '2023-01-16 16:18:02'),
+(6623, 1, 'gestion_solicitudes', 1, '2023-01-16 16:18:02'),
+(6624, 1, 'devolver_elementos', 1, '2023-01-16 16:18:02'),
+(6625, 1, 'gesion_categorias_proyectos', 1, '2023-01-16 16:18:02'),
+(6626, 1, 'gestion_proyectos', 1, '2023-01-16 16:18:02'),
+(6627, 1, 'gestion_actas_proyectos', 1, '2023-01-16 16:18:02'),
+(6628, 1, 'firma_cliente_proyectos', 1, '2023-01-16 16:18:02'),
+(6629, 1, 'visto_bueno_proyectos', 1, '2023-01-16 16:18:02'),
+(6630, 1, 'gestion_categorias_seguimientos', 1, '2023-01-16 16:18:02'),
+(6631, 1, 'gestion_seguimientos', 1, '2023-01-16 16:18:02'),
+(6632, 1, 'gestion_actas_seguimientos', 1, '2023-01-16 16:18:02'),
+(6633, 1, 'visto_bueno_seguimientos', 1, '2023-01-16 16:18:02'),
+(6634, 1, 'gestion_reparaciones', 1, '2023-01-16 16:18:02'),
+(6635, 1, 'ver_reparaciones_asignadas', 1, '2023-01-16 16:18:02'),
+(6636, 1, 'generar_informes_reparaciones', 1, '2023-01-16 16:18:02'),
+(6637, 1, 'devolver_repuesto_reparacion', 1, '2023-01-16 16:18:02'),
+(6638, 1, 'gestion_categorias_documentos', 1, '2023-01-16 16:18:02'),
+(6639, 1, 'gestion_archivos', 1, '2023-01-16 16:18:02'),
+(6640, 1, 'gestion_documentos', 1, '2023-01-16 16:18:02'),
+(6641, 1, 'gestion_orden_compra', 1, '2023-01-16 16:18:02'),
+(6642, 1, 'completar_orden_compra', 1, '2023-01-16 16:18:02'),
+(6643, 1, 'enviar_orden_compra', 1, '2023-01-16 16:18:02'),
+(6644, 1, 'eliminar_orden_compra', 1, '2023-01-16 16:18:02'),
+(6645, 1, 'gestionar_cotizaciones', 1, '2023-01-16 16:18:02'),
+(6646, 1, 'completar_cotizaciones', 1, '2023-01-16 16:18:02'),
+(6647, 1, 'enviar_cotizaciones', 1, '2023-01-16 16:18:02'),
+(6648, 1, 'eliminar_cotizaciones', 1, '2023-01-16 16:18:02'),
+(6649, 1, 'gestionar_remisiones', 1, '2023-01-16 16:18:02'),
+(6650, 1, 'completar_remisiones', 1, '2023-01-16 16:18:02'),
+(6651, 1, 'enviar_remisiones', 1, '2023-01-16 16:18:02'),
+(6652, 1, 'eliminar_remisiones', 1, '2023-01-16 16:18:02'),
+(6653, 1, 'gestion_facturacion', 1, '2023-01-16 16:18:02'),
+(6654, 1, 'completar_facturas', 1, '2023-01-16 16:18:02'),
+(6655, 1, 're_abrir_facturas', 1, '2023-01-16 16:18:02'),
+(6656, 1, 'anular_facturas', 1, '2023-01-16 16:18:02'),
+(6657, 1, 'gestion_causaciones', 1, '2023-01-16 16:18:02'),
+(6658, 1, 'enviar_facturas', 1, '2023-01-16 16:18:02'),
+(6659, 1, 'detalles_facturas', 1, '2023-01-16 16:18:02'),
+(6660, 1, 'eliminar_facturas', 1, '2023-01-16 16:18:02'),
+(6661, 1, 'estadistica_proveedores', 1, '2023-01-16 16:18:02'),
+(6662, 1, 'estadisticas_ventas', 1, '2023-01-16 16:18:02'),
+(6663, 1, 'estadisticas_orden_compra', 1, '2023-01-16 16:18:02'),
+(6664, 1, 'informes_contables', 1, '2023-01-16 16:18:02'),
+(6665, 1, 'gestion_viaticos', 1, '2023-01-16 16:18:02'),
+(6666, 1, 'gestion_nomina_general', 1, '2023-01-16 16:18:02'),
+(6667, 1, 'gestion_config_nomina_general', 1, '2023-01-16 16:18:02'),
+(6668, 1, 'gestion_arrendamientos', 1, '2023-01-16 16:18:02'),
+(6669, 1, 'gestion_gastos_varios', 1, '2023-01-16 16:18:02'),
+(6670, 1, 'gestion_gastos_fijos', 1, '2023-01-16 16:18:02'),
+(6671, 1, 'gestion_gastos_equivalentes', 1, '2023-01-16 16:18:02'),
+(6672, 1, 'configuracion_sistema', 1, '2023-01-16 16:18:02'),
+(6673, 1, 'permisos_usuarios', 1, '2023-01-16 16:18:02'),
+(6674, 1, 'categorias_calendario', 1, '2023-01-16 16:18:02');
 
 -- --------------------------------------------------------
 
@@ -934,7 +1022,7 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`id`, `cod_producto`, `id_creador`, `categoria`, `sub_categoria`, `marca`, `modelo`, `nombre`, `imagen`, `observaciones`, `created_at`, `status`) VALUES
-(1, 'PR-A6A417AP	', 1, 87, 9, 'MOTOROLA', '15455', 'PRO\n', 'noimagen.png', 'Excelente', '2023-01-13', 1),
+(1, 'PR-A6A417AP	', 1, 87, 9, 'MOTOROLA', '15455', 'PRO', 'noimagen.png', 'Excelente', '2023-01-13', 1),
 (2, 'PR-J6A417MP', 1, 87, 14, 'MOTOROLA', 'POCK', 'PLUS', '2109897227804105317.jpg', 'Muy buenoo', '2023-01-13', 1),
 (3, 'PR-SV5XWPL3', 1, 88, 13, 'MOTOROLA', '545154', 'PLUS PRO', '2036538564753935264.png', '', '2023-01-13', 1);
 
@@ -1108,12 +1196,33 @@ CREATE TABLE `puntos` (
   `corte_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- Volcado de datos para la tabla `puntos`
+-- Estructura de tabla para la tabla `salida_inventario`
 --
 
-INSERT INTO `puntos` (`id`, `id_empleado`, `descripcion`, `cantidad`, `fecha`, `tipo`, `status`, `created_by`, `corte_by`) VALUES
-(394, 1, '', 100, '2023-01-04 17:12:00', 1, 0, 1, 0);
+CREATE TABLE `salida_inventario` (
+  `id` int(11) NOT NULL,
+  `tipo` int(1) NOT NULL,
+  `producto_id` int(11) NOT NULL,
+  `inventario_id` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL DEFAULT 1,
+  `user_id` int(11) DEFAULT NULL,
+  `cliente_id` int(11) DEFAULT NULL,
+  `observaciones` text DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 0,
+  `created_by` int(11) NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `salida_inventario`
+--
+
+INSERT INTO `salida_inventario` (`id`, `tipo`, `producto_id`, `inventario_id`, `cantidad`, `user_id`, `cliente_id`, `observaciones`, `status`, `created_by`, `created_at`) VALUES
+(2, 1, 1, 1, 1, 28, NULL, NULL, 0, 28, '2023-01-24 17:36:28'),
+(4, 1, 1, 4, 1, 28, NULL, NULL, 0, 28, '2023-01-24 17:36:28');
 
 -- --------------------------------------------------------
 
@@ -1446,9 +1555,21 @@ ALTER TABLE `avances_tasks_projects`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `calendario_eventos`
+--
+ALTER TABLE `calendario_eventos`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `categorias_archivos`
 --
 ALTER TABLE `categorias_archivos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `categorias_calendario`
+--
+ALTER TABLE `categorias_calendario`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1518,6 +1639,14 @@ ALTER TABLE `gastos_varios`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `inventario`
+--
+ALTER TABLE `inventario`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `producto_id` (`producto_id`),
+  ADD KEY `created_by` (`created_by`);
+
+--
 -- Indices de la tabla `migrations`
 --
 ALTER TABLE `migrations`
@@ -1564,6 +1693,17 @@ ALTER TABLE `proyecto`
 --
 ALTER TABLE `puntos`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `salida_inventario`
+--
+ALTER TABLE `salida_inventario`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cliente_id` (`cliente_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `created_by` (`created_by`),
+  ADD KEY `producto_id` (`producto_id`),
+  ADD KEY `inventario_id` (`inventario_id`);
 
 --
 -- Indices de la tabla `salud`
@@ -1628,7 +1768,7 @@ ALTER TABLE `viaticos`
 -- AUTO_INCREMENT de la tabla `almacenes`
 --
 ALTER TABLE `almacenes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=263;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=264;
 
 --
 -- AUTO_INCREMENT de la tabla `anexos`
@@ -1691,10 +1831,22 @@ ALTER TABLE `avances_tasks_projects`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
+-- AUTO_INCREMENT de la tabla `calendario_eventos`
+--
+ALTER TABLE `calendario_eventos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
 -- AUTO_INCREMENT de la tabla `categorias_archivos`
 --
 ALTER TABLE `categorias_archivos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `categorias_calendario`
+--
+ALTER TABLE `categorias_calendario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias_productos`
@@ -1763,6 +1915,12 @@ ALTER TABLE `gastos_varios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT de la tabla `inventario`
+--
+ALTER TABLE `inventario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
@@ -1784,7 +1942,7 @@ ALTER TABLE `novedades_nomina`
 -- AUTO_INCREMENT de la tabla `permisos_new`
 --
 ALTER TABLE `permisos_new`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6579;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6675;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
@@ -1809,6 +1967,12 @@ ALTER TABLE `proyecto`
 --
 ALTER TABLE `puntos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=395;
+
+--
+-- AUTO_INCREMENT de la tabla `salida_inventario`
+--
+ALTER TABLE `salida_inventario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `salud`
@@ -1863,6 +2027,27 @@ ALTER TABLE `vehiculos`
 --
 ALTER TABLE `viaticos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `inventario`
+--
+ALTER TABLE `inventario`
+  ADD CONSTRAINT `inventario_ibfk_1` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`),
+  ADD CONSTRAINT `inventario_ibfk_2` FOREIGN KEY (`created_by`) REFERENCES `empleados` (`id`);
+
+--
+-- Filtros para la tabla `salida_inventario`
+--
+ALTER TABLE `salida_inventario`
+  ADD CONSTRAINT `salida_inventario_ibfk_2` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`),
+  ADD CONSTRAINT `salida_inventario_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `empleados` (`id`),
+  ADD CONSTRAINT `salida_inventario_ibfk_4` FOREIGN KEY (`created_by`) REFERENCES `empleados` (`id`),
+  ADD CONSTRAINT `salida_inventario_ibfk_5` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`),
+  ADD CONSTRAINT `salida_inventario_ibfk_6` FOREIGN KEY (`inventario_id`) REFERENCES `inventario` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

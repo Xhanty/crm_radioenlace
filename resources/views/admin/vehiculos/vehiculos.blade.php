@@ -1,5 +1,13 @@
 @extends('layouts.menu')
 
+@section('css')
+    <style>
+        tr td:nth-child(1) {
+            text-align: center;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="main-container container-fluid">
 

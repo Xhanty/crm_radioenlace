@@ -58,7 +58,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="main-content-label mg-b-5">
-                            SEDE PRINCIPAL
+                            ALMACENES DE LA EMPRESA
                         </div>
                         <p class="mg-b-10"></p>
                         <div class="row">
@@ -128,7 +128,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="main-content-label mg-b-5 d-flex">
-                            CLIENTES
+                           CLIENTES
                         </div>
                         <p class="mg-b-10"></p>
                         <div class="row">
