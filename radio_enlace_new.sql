@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-01-2023 a las 22:49:33
+-- Tiempo de generación: 25-01-2023 a las 20:19:22
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.1.12
 
@@ -802,11 +802,12 @@ CREATE TABLE `inventario` (
 --
 
 INSERT INTO `inventario` (`id`, `producto_id`, `serial`, `cantidad`, `status`, `created_by`, `created_at`) VALUES
-(1, 1, '15455', 10, 1, 1, '2023-01-24 14:14:28'),
-(2, 2, '15455PP', 20, 1, 1, '2023-01-24 14:14:28'),
+(1, 1, '15455', 0, 0, 1, '2023-01-24 14:14:28'),
+(2, 2, '15455PP', 10, 1, 1, '2023-01-24 14:14:28'),
 (3, 3, '459AAA', 10, 1, 1, '2023-01-24 14:14:28'),
-(4, 1, '8655SSS', 0, 1, 1, '2023-01-24 14:14:28'),
-(5, 1, '45899AAAA', 1, 1, 1, '2023-01-24 16:25:54');
+(4, 1, '8655SSS', 0, 0, 1, '2023-01-24 14:14:28'),
+(5, 1, '45899AAAA', 0, 0, 1, '2023-01-24 16:25:54'),
+(6, 3, '4ACZAAD', 2, 1, 1, '2023-01-25 09:38:49');
 
 -- --------------------------------------------------------
 
@@ -1222,7 +1223,16 @@ CREATE TABLE `salida_inventario` (
 
 INSERT INTO `salida_inventario` (`id`, `tipo`, `producto_id`, `inventario_id`, `cantidad`, `user_id`, `cliente_id`, `observaciones`, `status`, `created_by`, `created_at`) VALUES
 (2, 1, 1, 1, 1, 28, NULL, NULL, 0, 28, '2023-01-24 17:36:28'),
-(4, 1, 1, 4, 1, 28, NULL, NULL, 0, 28, '2023-01-24 17:36:28');
+(4, 1, 1, 4, 0, 28, NULL, 'Devuelto', 1, 28, '2023-01-24 17:36:28'),
+(5, 1, 1, 5, 1, NULL, 73, NULL, 0, 1, '2023-01-25 10:58:15'),
+(6, 1, 1, 1, 2, NULL, 79, NULL, 0, 1, '2023-01-25 11:00:10'),
+(7, 1, 1, 1, 1, NULL, 73, NULL, 0, 1, '2023-01-25 11:16:31'),
+(8, 2, 1, 1, 1, 1, NULL, NULL, 0, 1, '2023-01-25 11:16:48'),
+(9, 2, 1, 4, 1, 10, NULL, NULL, 0, 1, '2023-01-25 11:18:24'),
+(10, 3, 1, 1, 4, NULL, 73, NULL, 0, 1, '2023-01-25 12:28:01'),
+(11, 4, 1, 1, 1, NULL, 73, NULL, 0, 1, '2023-01-25 12:39:03'),
+(12, 5, 2, 2, 5, NULL, 24, NULL, 0, 1, '2023-01-25 12:39:22'),
+(13, 6, 2, 2, 6, NULL, NULL, NULL, 0, 1, '2023-01-25 12:47:34');
 
 -- --------------------------------------------------------
 
@@ -1918,7 +1928,7 @@ ALTER TABLE `gastos_varios`
 -- AUTO_INCREMENT de la tabla `inventario`
 --
 ALTER TABLE `inventario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `migrations`
@@ -1972,7 +1982,7 @@ ALTER TABLE `puntos`
 -- AUTO_INCREMENT de la tabla `salida_inventario`
 --
 ALTER TABLE `salida_inventario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `salud`
