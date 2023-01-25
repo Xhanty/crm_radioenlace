@@ -219,6 +219,8 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/data_detalle_producto', [App\Http\Controllers\Admin\Inventario\GestionController::class, 'data'])->name('data_detalle_producto');
     Route::post('/ingreso_inventario', [App\Http\Controllers\Admin\Inventario\GestionController::class, 'ingreso_inventario'])->name('ingreso_inventario');
     Route::post('/reingreso_inventario', [App\Http\Controllers\Admin\Inventario\GestionController::class, 'reingreso_inventario'])->name('reingreso_inventario');
+    Route::post('/get_inventario', [App\Http\Controllers\Admin\Inventario\GestionController::class, 'get_inventario'])->name('get_inventario');
+    Route::post('/salidas_inventario', [App\Http\Controllers\Admin\Inventario\GestionController::class, 'salidas_inventario'])->name('salidas_inventario');
 });
 
 Route::group(['middleware' => 'auth'], function () {
@@ -236,7 +238,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('tasks_delete', [App\Http\Controllers\TaskProjectController::class, 'tasks_delete'])->name('tasks_delete');
     Route::put('tasks/sync', [App\Http\Controllers\TaskProjectController::class, 'sync'])->name('tasks.sync');
     Route::put('tasks/{task}', [App\Http\Controllers\TaskProjectController::class, 'update'])->name('tasks.update');
-    
+
     Route::get('gantt',  [App\Http\Controllers\GanttController::class, 'index'])->name('gantt');
     Route::get('data_tasks_gantt',  [App\Http\Controllers\GanttController::class, 'data'])->name('data_tasks_gantt');
     //Route::get('gantt/{project}',  [App\Http\Controllers\GanttController::class, 'show'])->name('gantt.show');

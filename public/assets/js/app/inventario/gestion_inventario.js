@@ -67,10 +67,13 @@ $(document).ready(function () {
                         });
 
                         $("#modalCompra").modal("show");
+                    } else {
+                        toastr.error("Error al cargar los datos");
                     }
                 },
                 error: function (error) {
                     $("#global-loader").fadeOut("slow");
+                    toastr.error("Error al cargar los datos");
                     console.log(error);
                 },
             });
@@ -98,6 +101,21 @@ $(document).ready(function () {
                         inventario.forEach((element) => {
                             let salidas = element.salidas;
                             salidas.forEach((element2) => {
+                                let tipo = "";
+                                if (element2.tipo == 1) {
+                                    tipo = " (Alquilado)";
+                                } else if (element2.tipo == 2) {
+                                    tipo = " (Asignado)";
+                                } else if (element2.tipo == 3) {
+                                    tipo = " (Préstamo)";
+                                } else if (element2.tipo == 4) {
+                                    tipo = " (Instalación)";
+                                } else if (element2.tipo == 5) {
+                                    tipo = " (Venta)";
+                                } else if (element2.tipo == 6) {
+                                    tipo = " (Dañado)";
+                                }
+
                                 $("#producto_reingreso").append(
                                     "<option data-cantidad='" +
                                         element2.cantidad +
@@ -105,18 +123,22 @@ $(document).ready(function () {
                                         element2.id +
                                         "'>" +
                                         element.serial +
-                                        " (Cantidad: " +
+                                        " | (Cantidad: " +
                                         element2.cantidad +
-                                        ") " +
+                                        ") - " +
+                                        tipo +
                                         "</option>"
                                 );
                             });
                         });
                         $("#modalReingreso").modal("show");
+                    } else {
+                        toastr.error("Error al cargar los datos");
                     }
                 },
                 error: function (error) {
                     $("#global-loader").fadeOut("slow");
+                    toastr.error("Error al cargar los datos");
                     console.log(error);
                 },
             });
@@ -240,6 +262,735 @@ $(document).ready(function () {
                 error: function (error) {
                     toastr.error("Error al realizar el reingreso");
                     $("#btnReIngresoProducto").attr("disabled", false);
+                    console.log(error);
+                },
+            });
+        }
+    });
+
+    $(document).on("click", ".btn_View", function () {
+        let id = $(this).data("id");
+
+        $("#global-loader").fadeIn("slow");
+        $.ajax({
+            url: "get_inventario",
+            type: "POST",
+            data: { id: id },
+            success: function (response) {
+                let data = response.data;
+                let inventario = data.inventario;
+                if (response.info == 1) {
+                    $("#title_prodc_view").text(
+                        data.nombre + " " + data.marca + " - " + data.modelo
+                    );
+
+                    $("#imagen_view").attr(
+                        "src",
+                        url_general + "images/productos/" + data.imagen
+                    );
+
+                    $("#tbl_seriales_view tbody").html("");
+
+                    inventario.forEach((element) => {
+                        let estado = "";
+                        if (element.status == 0) {
+                            estado =
+                                '<span class="badge bg-danger side-badge">Agotado</span>';
+                        } else if (element.status == 1) {
+                            estado =
+                                '<span class="badge bg-success side-badge">Disponible</span>';
+                        }
+
+                        let tr = `<tr>
+                            <td>${element.serial}</td>
+                            <td>Cargando...</td>
+                            <td>${element.cantidad}</td>
+                            <td>${estado}</td>
+                            <td><a data-id="${element.id}" class="btn btn-primary btn-sm" title="Ver Historial"><i class="fa fa-book"></i></a></td>
+                            </tr>`;
+                        $("#tbl_seriales_view tbody").append(tr);
+                    });
+
+                    $("#modalVisualizar").modal("show");
+                }
+
+                $("#global-loader").fadeOut("slow");
+            },
+            error: function (error) {
+                $("#global-loader").fadeOut("slow");
+                console.log(error);
+            },
+        });
+    });
+
+    $("#btnSalidaProducto").click(function () {
+        let tipo = $("#tiposalida_select").val();
+        let producto_id = $("#producto_id_salida").val();
+
+        if (tipo == 1) {
+            $("#modalSalida").modal("hide");
+            $("#global-loader").fadeIn("slow");
+            $("#producto_id_alquiler").val(producto_id);
+            $.ajax({
+                url: "data_detalle_producto",
+                type: "POST",
+                data: { id: producto_id },
+                success: function (response) {
+                    $("#global-loader").fadeOut("slow");
+                    let data = response.data;
+                    let inventario = data.inventario;
+                    if (response.info == 1) {
+                        $("#title_prodc_alquiler").text(
+                            data.nombre + " " + data.marca + " - " + data.modelo
+                        );
+                        $("#imagen_alquiler").attr(
+                            "src",
+                            url_general + "images/productos/" + data.imagen
+                        );
+                        $("#serial_alquiler").empty();
+
+                        inventario.forEach((element) => {
+                            if (element.cantidad > 0) {
+                                $("#serial_alquiler").append(
+                                    "<option data-cantidad='" +
+                                        element.cantidad +
+                                        "' value='" +
+                                        element.id +
+                                        "'>" +
+                                        element.serial +
+                                        " (Cantidad: " +
+                                        element.cantidad +
+                                        ")" +
+                                        "</option>"
+                                );
+                            }
+                        });
+
+                        $("#modalAlquiler").modal("show");
+                    } else {
+                        toastr.error("Error al cargar los datos");
+                    }
+                },
+                error: function (error) {
+                    $("#global-loader").fadeOut("slow");
+                    toastr.error("Error al cargar los datos");
+                    console.log(error);
+                },
+            });
+        } else if (tipo == 2) {
+            $("#modalSalida").modal("hide");
+            $("#global-loader").fadeIn("slow");
+            $("#producto_id_asignado").val(producto_id);
+            $.ajax({
+                url: "data_detalle_producto",
+                type: "POST",
+                data: { id: producto_id },
+                success: function (response) {
+                    $("#global-loader").fadeOut("slow");
+                    let data = response.data;
+                    let inventario = data.inventario;
+                    if (response.info == 1) {
+                        $("#title_prodc_asignado").text(
+                            data.nombre + " " + data.marca + " - " + data.modelo
+                        );
+                        $("#imagen_asignado").attr(
+                            "src",
+                            url_general + "images/productos/" + data.imagen
+                        );
+                        $("#serial_asignado").empty();
+
+                        inventario.forEach((element) => {
+                            if (element.cantidad > 0) {
+                                $("#serial_asignado").append(
+                                    "<option data-cantidad='" +
+                                        element.cantidad +
+                                        "' value='" +
+                                        element.id +
+                                        "'>" +
+                                        element.serial +
+                                        " (Cantidad: " +
+                                        element.cantidad +
+                                        ")" +
+                                        "</option>"
+                                );
+                            }
+                        });
+
+                        $("#modalAsignado").modal("show");
+                    } else {
+                        toastr.error("Error al cargar los datos");
+                    }
+                },
+                error: function (error) {
+                    $("#global-loader").fadeOut("slow");
+                    toastr.error("Error al cargar los datos");
+                    console.log(error);
+                },
+            });
+        } else if (tipo == 3) {
+            $("#modalSalida").modal("hide");
+            $("#global-loader").fadeIn("slow");
+            $("#producto_id_prestamo").val(producto_id);
+            $.ajax({
+                url: "data_detalle_producto",
+                type: "POST",
+                data: { id: producto_id },
+                success: function (response) {
+                    $("#global-loader").fadeOut("slow");
+                    let data = response.data;
+                    let inventario = data.inventario;
+                    if (response.info == 1) {
+                        $("#title_prodc_prestamo").text(
+                            data.nombre + " " + data.marca + " - " + data.modelo
+                        );
+                        $("#imagen_prestamo").attr(
+                            "src",
+                            url_general + "images/productos/" + data.imagen
+                        );
+                        $("#serial_prestamo").empty();
+
+                        inventario.forEach((element) => {
+                            if (element.cantidad > 0) {
+                                $("#serial_prestamo").append(
+                                    "<option data-cantidad='" +
+                                        element.cantidad +
+                                        "' value='" +
+                                        element.id +
+                                        "'>" +
+                                        element.serial +
+                                        " (Cantidad: " +
+                                        element.cantidad +
+                                        ")" +
+                                        "</option>"
+                                );
+                            }
+                        });
+
+                        $("#modalPrestamo").modal("show");
+                    } else {
+                        toastr.error("Error al cargar los datos");
+                    }
+                },
+                error: function (error) {
+                    $("#global-loader").fadeOut("slow");
+                    toastr.error("Error al cargar los datos");
+                    console.log(error);
+                },
+            });
+        } else if (tipo == 4) {
+            $("#modalSalida").modal("hide");
+            $("#global-loader").fadeIn("slow");
+            $("#producto_id_instalar").val(producto_id);
+            $.ajax({
+                url: "data_detalle_producto",
+                type: "POST",
+                data: { id: producto_id },
+                success: function (response) {
+                    $("#global-loader").fadeOut("slow");
+                    let data = response.data;
+                    let inventario = data.inventario;
+                    if (response.info == 1) {
+                        $("#title_prodc_instalar").text(
+                            data.nombre + " " + data.marca + " - " + data.modelo
+                        );
+                        $("#imagen_instalar").attr(
+                            "src",
+                            url_general + "images/productos/" + data.imagen
+                        );
+                        $("#serial_instalar").empty();
+
+                        inventario.forEach((element) => {
+                            if (element.cantidad > 0) {
+                                $("#serial_instalar").append(
+                                    "<option data-cantidad='" +
+                                        element.cantidad +
+                                        "' value='" +
+                                        element.id +
+                                        "'>" +
+                                        element.serial +
+                                        " (Cantidad: " +
+                                        element.cantidad +
+                                        ")" +
+                                        "</option>"
+                                );
+                            }
+                        });
+
+                        $("#modalInstalar").modal("show");
+                    } else {
+                        toastr.error("Error al cargar los datos");
+                    }
+                },
+                error: function (error) {
+                    $("#global-loader").fadeOut("slow");
+                    toastr.error("Error al cargar los datos");
+                    console.log(error);
+                },
+            });
+        } else if (tipo == 5) {
+            $("#modalSalida").modal("hide");
+            $("#global-loader").fadeIn("slow");
+            $("#producto_id_vender").val(producto_id);
+            $.ajax({
+                url: "data_detalle_producto",
+                type: "POST",
+                data: { id: producto_id },
+                success: function (response) {
+                    $("#global-loader").fadeOut("slow");
+                    let data = response.data;
+                    let inventario = data.inventario;
+                    if (response.info == 1) {
+                        $("#title_prodc_vender").text(
+                            data.nombre + " " + data.marca + " - " + data.modelo
+                        );
+                        $("#imagen_vender").attr(
+                            "src",
+                            url_general + "images/productos/" + data.imagen
+                        );
+                        $("#serial_vender").empty();
+
+                        inventario.forEach((element) => {
+                            if (element.cantidad > 0) {
+                                $("#serial_vender").append(
+                                    "<option data-cantidad='" +
+                                        element.cantidad +
+                                        "' value='" +
+                                        element.id +
+                                        "'>" +
+                                        element.serial +
+                                        " (Cantidad: " +
+                                        element.cantidad +
+                                        ")" +
+                                        "</option>"
+                                );
+                            }
+                        });
+
+                        $("#modalVender").modal("show");
+                    } else {
+                        toastr.error("Error al cargar los datos");
+                    }
+                },
+                error: function (error) {
+                    $("#global-loader").fadeOut("slow");
+                    toastr.error("Error al cargar los datos");
+                    console.log(error);
+                },
+            });
+        } else if (tipo == 6) {
+            $("#modalSalida").modal("hide");
+            $("#global-loader").fadeIn("slow");
+            $("#producto_id_danado").val(producto_id);
+            $.ajax({
+                url: "data_detalle_producto",
+                type: "POST",
+                data: { id: producto_id },
+                success: function (response) {
+                    $("#global-loader").fadeOut("slow");
+                    let data = response.data;
+                    let inventario = data.inventario;
+                    if (response.info == 1) {
+                        $("#title_prodc_danado").text(
+                            data.nombre + " " + data.marca + " - " + data.modelo
+                        );
+                        $("#imagen_danado").attr(
+                            "src",
+                            url_general + "images/productos/" + data.imagen
+                        );
+                        $("#serial_danado").empty();
+
+                        inventario.forEach((element) => {
+                            if (element.cantidad > 0) {
+                                $("#serial_danado").append(
+                                    "<option data-cantidad='" +
+                                        element.cantidad +
+                                        "' value='" +
+                                        element.id +
+                                        "'>" +
+                                        element.serial +
+                                        " (Cantidad: " +
+                                        element.cantidad +
+                                        ")" +
+                                        "</option>"
+                                );
+                            }
+                        });
+
+                        $("#modalDanado").modal("show");
+                    } else {
+                        toastr.error("Error al cargar los datos");
+                    }
+                },
+                error: function (error) {
+                    $("#global-loader").fadeOut("slow");
+                    toastr.error("Error al cargar los datos");
+                    console.log(error);
+                },
+            });
+        }
+    });
+
+    $("#btnAlquilerProducto").click(function () {
+        let producto_id = $("#producto_id_alquiler").val();
+        let cliente = $("#cliente_alquiler").val();
+        let serial = $("#serial_alquiler").val();
+        let cantidad_old = $("#serial_alquiler")
+            .find(":selected")
+            .data("cantidad");
+        let cantidad = $("#cantidad_alquiler").val();
+        let observaciones = $("#observacion_alquiler").val();
+
+        if (cliente == "*" || cliente == null || cliente == "") {
+            toastr.error("Debe seleccionar un cliente");
+            return false;
+        } else if (serial == "*" || serial == null || serial == "") {
+            toastr.error("Debe seleccionar un serial");
+            return false;
+        } else if (cantidad == "" || cantidad < 1) {
+            toastr.error("Debe ingresar una cantidad valida");
+            return false;
+        } else if (cantidad > cantidad_old) {
+            toastr.error("La cantidad no puede ser mayor a la disponible");
+            return false;
+        } else {
+            $("#btnAlquilerProducto").attr("disabled", true);
+            $.ajax({
+                url: "salidas_inventario",
+                type: "POST",
+                data: {
+                    tipo: 1,
+                    producto_id: producto_id,
+                    cliente: cliente,
+                    serial: serial,
+                    cantidad: cantidad,
+                    observaciones: observaciones,
+                },
+                success: function (response) {
+                    $("#btnAlquilerProducto").attr("disabled", false);
+                    if (response.info == 1) {
+                        $("#modalAlquiler").modal("hide");
+                        Swal.fire({
+                            icon: "success",
+                            title: "Alquiler realizado correctamente",
+                            showConfirmButton: false,
+                            timer: 1500,
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        toastr.error("Error al realizar el alquiler");
+                    }
+                },
+                error: function (error) {
+                    toastr.error("Error al realizar el alquiler");
+                    $("#btnAlquilerProducto").attr("disabled", false);
+                    console.log(error);
+                },
+            });
+        }
+    });
+
+    $("#btnAsignadoProducto").click(function () {
+        let producto_id = $("#producto_id_asignado").val();
+        let empleado = $("#empleado_asignado").val();
+        let serial = $("#serial_asignado").val();
+        let cantidad_old = $("#serial_asignado")
+            .find(":selected")
+            .data("cantidad");
+        let cantidad = $("#cantidad_asignado").val();
+        let observaciones = $("#observacion_asignado").val();
+
+        if (empleado == "*" || empleado == null || empleado == "") {
+            toastr.error("Debe seleccionar un empleado");
+            return false;
+        } else if (serial == "*" || serial == null || serial == "") {
+            toastr.error("Debe seleccionar un serial");
+            return false;
+        } else if (cantidad == "" || cantidad < 1) {
+            toastr.error("Debe ingresar una cantidad valida");
+            return false;
+        } else if (cantidad > cantidad_old) {
+            toastr.error("La cantidad no puede ser mayor a la disponible");
+            return false;
+        } else {
+            $("#btnAsignadoProducto").attr("disabled", true);
+            $.ajax({
+                url: "salidas_inventario",
+                type: "POST",
+                data: {
+                    tipo: 2,
+                    producto_id: producto_id,
+                    empleado: empleado,
+                    serial: serial,
+                    cantidad: cantidad,
+                    observaciones: observaciones,
+                },
+                success: function (response) {
+                    $("#btnAsignadoProducto").attr("disabled", false);
+                    if (response.info == 1) {
+                        $("#modalAsignado").modal("hide");
+                        Swal.fire({
+                            icon: "success",
+                            title: "Asignado correctamente",
+                            showConfirmButton: false,
+                            timer: 1500,
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        toastr.error("Error al realizar al asignar");
+                    }
+                },
+                error: function (error) {
+                    toastr.error("Error al realizar al asignar");
+                    $("#btnAsignadoProducto").attr("disabled", false);
+                    console.log(error);
+                },
+            });
+        }
+    });
+
+    $("#btnPrestamoProducto").click(function () {
+        let producto_id = $("#producto_id_prestamo").val();
+        let cliente = $("#cliente_prestamo").val();
+        let empleado = $("#empleado_prestamo").val();
+        let serial = $("#serial_prestamo").val();
+        let cantidad_old = $("#serial_prestamo")
+            .find(":selected")
+            .data("cantidad");
+        let cantidad = $("#cantidad_prestamo").val();
+        let observaciones = $("#observacion_prestamo").val();
+
+        if (cliente > 1 && empleado > 1) {
+            toastr.error("Debe seleccionar un cliente o un empleado");
+            return false;
+        } else if (cliente == "*" && empleado == "*") {
+            toastr.error("Debe seleccionar un cliente o un empleado");
+            return false;
+        } else if (serial == "*" || serial == null || serial == "") {
+            toastr.error("Debe seleccionar un serial");
+            return false;
+        } else if (cantidad == "" || cantidad < 1) {
+            toastr.error("Debe ingresar una cantidad valida");
+            return false;
+        } else if (cantidad > cantidad_old) {
+            toastr.error("La cantidad no puede ser mayor a la disponible");
+            return false;
+        } else {
+            $("#btnPrestamoProducto").attr("disabled", true);
+
+            if (cliente == "*") {
+                cliente = null;
+            } else if (empleado == "*") {
+                empleado = null;
+            }
+
+            $.ajax({
+                url: "salidas_inventario",
+                type: "POST",
+                data: {
+                    tipo: 3,
+                    producto_id: producto_id,
+                    empleado: empleado,
+                    cliente: cliente,
+                    serial: serial,
+                    cantidad: cantidad,
+                    observaciones: observaciones,
+                },
+                success: function (response) {
+                    $("#btnPrestamoProducto").attr("disabled", false);
+                    if (response.info == 1) {
+                        $("#modalPrestamo").modal("hide");
+                        Swal.fire({
+                            icon: "success",
+                            title: "Préstamo realizado correctamente",
+                            showConfirmButton: false,
+                            timer: 1500,
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        toastr.error("Error al realizar al movimiento");
+                    }
+                },
+                error: function (error) {
+                    toastr.error("Error al realizar al movimiento");
+                    $("#btnPrestamoProducto").attr("disabled", false);
+                    console.log(error);
+                },
+            });
+        }
+    });
+
+    $("#btnInstalarProducto").click(function () {
+        let producto_id = $("#producto_id_instalar").val();
+        let cliente = $("#cliente_instalar").val();
+        let serial = $("#serial_instalar").val();
+        let cantidad_old = $("#serial_instalar")
+            .find(":selected")
+            .data("cantidad");
+        let cantidad = $("#cantidad_instalar").val();
+        let observaciones = $("#observacion_instalar").val();
+
+        if (cliente == "*" || cliente == null || cliente == "") {
+            toastr.error("Debe seleccionar un cliente");
+            return false;
+        } else if (serial == "*" || serial == null || serial == "") {
+            toastr.error("Debe seleccionar un serial");
+            return false;
+        } else if (cantidad == "" || cantidad < 1) {
+            toastr.error("Debe ingresar una cantidad valida");
+            return false;
+        } else if (cantidad > cantidad_old) {
+            toastr.error("La cantidad no puede ser mayor a la disponible");
+            return false;
+        } else {
+            $("#btnInstalarProducto").attr("disabled", true);
+            $.ajax({
+                url: "salidas_inventario",
+                type: "POST",
+                data: {
+                    tipo: 4,
+                    producto_id: producto_id,
+                    cliente: cliente,
+                    serial: serial,
+                    cantidad: cantidad,
+                    observaciones: observaciones,
+                },
+                success: function (response) {
+                    $("#btnInstalarProducto").attr("disabled", false);
+                    if (response.info == 1) {
+                        $("#modalInstalar").modal("hide");
+                        Swal.fire({
+                            icon: "success",
+                            title: "Instalación realizada correctamente",
+                            showConfirmButton: false,
+                            timer: 1500,
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        toastr.error("Error al realizar la instalación");
+                    }
+                },
+                error: function (error) {
+                    toastr.error("Error al realizar la instalación");
+                    $("#btnInstalarProducto").attr("disabled", false);
+                    console.log(error);
+                },
+            });
+        }
+    });
+
+    $("#btnVenderProducto").click(function () {
+        let producto_id = $("#producto_id_vender").val();
+        let cliente = $("#cliente_vender").val();
+        let serial = $("#serial_vender").val();
+        let cantidad_old = $("#serial_vender")
+            .find(":selected")
+            .data("cantidad");
+        let cantidad = $("#cantidad_vender").val();
+        let observaciones = $("#observacion_vender").val();
+
+        if (cliente == "*" || cliente == null || cliente == "") {
+            toastr.error("Debe seleccionar un cliente");
+            return false;
+        } else if (serial == "*" || serial == null || serial == "") {
+            toastr.error("Debe seleccionar un serial");
+            return false;
+        } else if (cantidad == "" || cantidad < 1) {
+            toastr.error("Debe ingresar una cantidad valida");
+            return false;
+        } else if (cantidad > cantidad_old) {
+            toastr.error("La cantidad no puede ser mayor a la disponible");
+            return false;
+        } else {
+            $("#btnVenderProducto").attr("disabled", true);
+            $.ajax({
+                url: "salidas_inventario",
+                type: "POST",
+                data: {
+                    tipo: 5,
+                    producto_id: producto_id,
+                    cliente: cliente,
+                    serial: serial,
+                    cantidad: cantidad,
+                    observaciones: observaciones,
+                },
+                success: function (response) {
+                    $("#btnVenderProducto").attr("disabled", false);
+                    if (response.info == 1) {
+                        $("#modalVender").modal("hide");
+                        Swal.fire({
+                            icon: "success",
+                            title: "Venta realizada correctamente",
+                            showConfirmButton: false,
+                            timer: 1500,
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        toastr.error("Error al realizar la venta");
+                    }
+                },
+                error: function (error) {
+                    toastr.error("Error al realizar la venta");
+                    $("#btnVenderProducto").attr("disabled", false);
+                    console.log(error);
+                },
+            });
+        }
+    });
+
+    $("#btnDanadoProducto").click(function () {
+        let producto_id = $("#producto_id_danado").val();
+        let serial = $("#serial_danado").val();
+        let cantidad_old = $("#serial_danado")
+            .find(":selected")
+            .data("cantidad");
+        let cantidad = $("#cantidad_danado").val();
+        let observaciones = $("#observacion_danado").val();
+
+        if (serial == "*" || serial == null || serial == "") {
+            toastr.error("Debe seleccionar un serial");
+            return false;
+        } else if (cantidad == "" || cantidad < 1) {
+            toastr.error("Debe ingresar una cantidad valida");
+            return false;
+        } else if (cantidad > cantidad_old) {
+            toastr.error("La cantidad no puede ser mayor a la disponible");
+            return false;
+        } else {
+            $("#btnDanadoProducto").attr("disabled", true);
+            $.ajax({
+                url: "salidas_inventario",
+                type: "POST",
+                data: {
+                    tipo: 6,
+                    producto_id: producto_id,
+                    serial: serial,
+                    cantidad: cantidad,
+                    observaciones: observaciones,
+                },
+                success: function (response) {
+                    $("#btnDanadoProducto").attr("disabled", false);
+                    if (response.info == 1) {
+                        $("#modalDanado").modal("hide");
+                        Swal.fire({
+                            icon: "success",
+                            title: "Movimiento realizado correctamente",
+                            showConfirmButton: false,
+                            timer: 1500,
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        toastr.error("Error al realizar el movimiento");
+                    }
+                },
+                error: function (error) {
+                    toastr.error("Error al realizar el movimiento");
+                    $("#btnDanadoProducto").attr("disabled", false);
                     console.log(error);
                 },
             });

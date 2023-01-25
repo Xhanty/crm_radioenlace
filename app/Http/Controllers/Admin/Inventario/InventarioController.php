@@ -159,7 +159,8 @@ class InventarioController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<a data-id="' . $row->id . '" title="Ingreso" class="edit btn btn-success btn-sm btn_Ingreso"><i class="fas fa-cloud-download-alt"></i></a>
+                    $actionBtn = '<a data-id="' . $row->id . '" title="Visualizar" class="ver btn btn-primary btn-sm btn_View"><i class="fa fa-eye"></i></a>
+                    <a data-id="' . $row->id . '" title="Ingreso" class="edit btn btn-success btn-sm btn_Ingreso"><i class="fas fa-cloud-download-alt"></i></a>
                     <a data-id="' . $row->id . '" title="Salida" class="edit btn btn-warning btn-sm btn_Salida"><i class="fas fa-cloud-upload-alt"></i></a>';
                     return $actionBtn;
                 })
@@ -254,6 +255,14 @@ class InventarioController extends Controller
                 ->groupBy("cliente.id", "cliente.razon_social")
                 ->get();
 
+            $clientes_all = DB::table('cliente')
+                ->select("cliente.id", "cliente.razon_social")
+                ->where("estado", 1)
+                ->orderBy("cliente.razon_social")
+                ->get();
+
+            $empleados = DB::table('empleados')->where('status', 1)->get();
+
             foreach ($clientes as $key => $value) {
                 $almacenes = DB::table('almacenes')
                     ->where("almacenes.cliente", $value->id)
@@ -300,7 +309,7 @@ class InventarioController extends Controller
             }
 
 
-            return view('admin.inventario.gestion_inventario', compact('proveedores', 'clientes', 'almacenes_sede'));
+            return view('admin.inventario.gestion_inventario', compact('proveedores', 'clientes', 'almacenes_sede', 'clientes_all', 'empleados'));
         } catch (Exception $ex) {
             return view('errors.500');
         }

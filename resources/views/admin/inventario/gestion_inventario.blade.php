@@ -82,7 +82,7 @@
                             </div>
                         </div>
                         <br>
-                        @include('admin.inventario.modals.almacenes')
+                        @include('admin.inventario.modals.ingreso.almacenes')
                     </div>
                     <div class="modal-footer">
                         <button class="btn ripple btn-primary" id="btnIngresoProducto" type="button">Seleccionar</button>
@@ -107,7 +107,7 @@
                                 <select id="tiposalida_select" class="form-select">
                                     <option value="*">Seleccione una opción</option>
                                     <option value="1">Alquiler</option>
-                                    <option value="2">Asignado</option>
+                                    <option value="2">Asignación</option>
                                     <option value="3">Préstamo</option>
                                     <option value="4">Instalación</option>
                                     <option value="5">Venta</option>
@@ -116,7 +116,7 @@
                             </div>
                         </div>
                         <br>
-                        @include('admin.inventario.modals.almacenes')
+                        @include('admin.inventario.modals.salida.almacenes')
                     </div>
                     <div class="modal-footer">
                         <button class="btn ripple btn-primary" id="btnSalidaProducto" type="button">Seleccionar</button>
@@ -125,8 +125,20 @@
             </div>
         </div>
 
+        @include('admin.inventario.modals.visualizar')
+        
+
         @include('admin.inventario.modals.ingreso.compra')
         @include('admin.inventario.modals.ingreso.reingreso')
+
+
+        @include('admin.inventario.modals.salida.alquiler')
+        @include('admin.inventario.modals.salida.asignado')
+        @include('admin.inventario.modals.salida.danado')
+        @include('admin.inventario.modals.salida.instalacion')
+        @include('admin.inventario.modals.salida.prestamo')
+        @include('admin.inventario.modals.salida.venta')
+
     </div>
 @endsection
 

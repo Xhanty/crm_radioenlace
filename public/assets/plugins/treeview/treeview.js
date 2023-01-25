@@ -62,3 +62,13 @@ $("#tree2").treed({
     openedClass: "si si-folder-alt",
     closedClass: "si si-folder",
 });
+
+$("#tree3").treed({
+    openedClass: "si si-folder-alt",
+    closedClass: "si si-folder",
+});
+
+$("#tree4").treed({
+    openedClass: "si si-folder-alt",
+    closedClass: "si si-folder",
+});
