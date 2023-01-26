@@ -113,8 +113,6 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/almacenes_create', [App\Http\Controllers\Admin\Inventario\AlmacenesController::class, 'almacenes_create'])->name('almacenes_create');
     Route::post('/almacenes_update', [App\Http\Controllers\Admin\Inventario\AlmacenesController::class, 'almacenes_update'])->name('almacenes_update');
     Route::post('/almacenes_delete', [App\Http\Controllers\Admin\Inventario\AlmacenesController::class, 'almacenes_delete'])->name('almacenes_delete');
-    Route::post('/almacenes_sede', [App\Http\Controllers\Admin\Inventario\AlmacenesController::class, 'almacenes_sede'])->name('almacenes_sede');
-    Route::post('/almacenes_cliente', [App\Http\Controllers\Admin\Inventario\AlmacenesController::class, 'almacenes_cliente'])->name('almacenes_cliente');
     Route::get('/categoria_productos', [App\Http\Controllers\Admin\Inventario\CategoriaProductosController::class, 'index'])->name('categoria_productos');
     Route::post('/categorias_create', [App\Http\Controllers\Admin\Inventario\CategoriaProductosController::class, 'categorias_create'])->name('categorias_create');
     Route::post('/subcategorias_get', [App\Http\Controllers\Admin\Inventario\CategoriaProductosController::class, 'subcategorias_get'])->name('subcategorias_get');
