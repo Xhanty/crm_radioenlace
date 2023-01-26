@@ -31,7 +31,7 @@
                         </div>
                         <div class="card-footer p-3">
                             <label class="form-switch float-end mb-0">
-                                <input type="checkbox" value="gestion_categorias_documentos" class="form-switch-input check-doc-1">
+                                <input type="checkbox" value="categorias_archivos" class="form-switch-input check-doc-1">
                                 <span class="form-switch-indicator custom-radius"></span>
                             </label>
                         </div>

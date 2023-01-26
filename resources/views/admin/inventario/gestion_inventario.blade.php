@@ -111,7 +111,7 @@
                                     <option value="3">Préstamo</option>
                                     <option value="4">Instalación</option>
                                     <option value="5">Venta</option>
-                                    <option value="6">Dañado</option>
+                                    <option value="6">Dado de baja</option>
                                 </select>
                             </div>
                         </div>

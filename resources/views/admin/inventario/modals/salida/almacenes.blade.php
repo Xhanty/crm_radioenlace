@@ -12,19 +12,13 @@
                         <ul id="tree3">
                             @foreach ($almacenes_sede as $sede)
                                 <li><a href="javascript:void(0);">{{ $sede->nombre }}</a>
-                                    &nbsp;
-                                    <a href="javascript:void(0);" class="btn_SelectAlmacen"
-                                        data-nombre="{{ $sede->nombre }}"
-                                        data-observaciones="{{ $sede->observaciones }}" data-nivel="1"
-                                        data-id="{{ $sede->id }}" title="Seleccionar"><i
-                                            class="fa fa-check"></i></a>
                                     @foreach ($sede->almacenes as $almacen)
                                         <ul>
                                             <li style="cursor: pointer;">
                                                 {{ $almacen->nombre }}
                                                 &nbsp;
-                                                <a href="javascript:void(0);" class="btn_SelectAlmacen"
-                                                    data-nombre="{{ $almacen->nombre }}" data-nivel="2"
+                                                <a href="javascript:void(0);" class="btn_AlmacenSalida"
+                                                    data-nombre="{{ $almacen->nombre }}" data-nivel="2" data-cliente="0"
                                                     data-observaciones="{{ $almacen->observaciones }}"
                                                     data-id="{{ $almacen->id }}" title="Seleccionar"><i
                                                         class="fa fa-check"></i></a>
@@ -35,7 +29,7 @@
                                                                 data-bs-toggle="tooltip-primary" title=""
                                                                 data-bs-original-title="{{ $estante->observaciones }}">
                                                                 {{ $estante->nombre }} &nbsp;
-                                                                <a href="javascript:void(0);" class="btn_SelectAlmacen"
+                                                                <a href="javascript:void(0);" data-cliente="0" class="btn_AlmacenSalida"
                                                                     data-nombre="{{ $estante->nombre }}"
                                                                     data-observaciones="{{ $estante->observaciones }}"
                                                                     data-nivel="3" data-id="{{ $estante->id }}"
@@ -77,7 +71,7 @@
                                             <li style="cursor: pointer;">
                                                 {{ $almacen->nombre }}
                                                 &nbsp;
-                                                <a href="javascript:void(0);"class="btn_SelectAlmacen_Cliente"
+                                                <a href="javascript:void(0);" data-cliente="1" class="btn_AlmacenSalida"
                                                     data-nombre="{{ $almacen->nombre }}" data-nivel="1"
                                                     data-observaciones="{{ $almacen->observaciones }}"
                                                     data-id="{{ $almacen->id }}" title="Seleccionar"><i
@@ -89,7 +83,7 @@
                                                                 data-bs-toggle="tooltip-primary" title=""
                                                                 data-bs-original-title="{{ $estante->observaciones }}">
                                                                 {{ $estante->nombre }}
-                                                                <a href="javascript:void(0);"class="btn_SelectAlmacen_Cliente"
+                                                                <a href="javascript:void(0);" data-cliente="1" class="btn_AlmacenSalida"
                                                                     data-nombre="{{ $estante->nombre }}"
                                                                     data-observaciones="{{ $estante->observaciones }}"
                                                                     data-nivel="2" data-id="{{ $estante->id }}"
