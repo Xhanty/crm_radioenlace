@@ -16,7 +16,17 @@ class CotizacionController extends Controller
                 return redirect()->route('home');
             }
 
-            return view('admin.comercial.cotizaciones');
+            $clientes = DB::table('cliente')
+                ->select('id', 'razon_social')
+                ->where('estado', 1)
+                ->get();
+
+            $productos = DB::table('productos')
+                ->select('id', 'nombre')
+                ->where('status', 1)
+                ->get();
+
+            return view('admin.comercial.cotizaciones', compact('clientes', 'productos'));
         } catch (Exception $ex) {
             return view('errors.500');
         }

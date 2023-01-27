@@ -107,5 +107,24 @@ td {
 }
 
 .select2-results__options {
-    color: #000 !important;s
+    color: #000 !important;
+}
+
+.wizard>.steps .done a {
+    color: #0BA360 !important;
+}
+
+.wizard>.steps .done a .number,
+.wizard>.steps .done a:hover .number,
+.wizard>.steps .done a:active .number {
+    background: #0BA360 !important;
+}
+
+.wizard>.actions>ul>li:last-child a {
+    background: #0BA360 !important;
+}
+
+.border-top-color {
+    border-top: 1px solid #ccc !important;
+    padding-top: 20px;
 }

@@ -85,7 +85,7 @@ $(function () {
         showMethod: "fadeIn",
         hideMethod: "fadeOut",
     };
-
+    
     $(".form-select").each(function () {
         $(this).select2({
             dropdownParent: $(this).parent(),

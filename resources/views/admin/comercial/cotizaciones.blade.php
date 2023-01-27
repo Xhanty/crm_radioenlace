@@ -25,7 +25,8 @@
                             <h3 class="card-title mt-2">Cotizaciones</h3>
                         </div>
                         <div class="div-2-tables-header">
-                            <button class="btn btn-primary" id="btnNewProveedor">Crear Cotización</button>
+                            <button class="btn btn-primary" data-bs-target="#modalAdd" data-bs-toggle="modal"
+                                data-bs-effect="effect-scale">Crear Cotización</button>
                         </div>
                     </div>
                     <div class="card-body">
@@ -82,9 +83,175 @@
             </div>
         </div>
         <!-- End Row -->
+
+        <!-- Modal Add -->
+        <div class="modal  fade" id="modalAdd">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Crear Cotización</h6>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="wizard2" role="application" class="wizard clearfix">
+                            <div class="steps clearfix">
+                                <ul role="tablist">
+                                    <li role="tab" class="done">
+                                        <a href="javascript:void(0);" id="title_basica">
+                                            <span class="number">1</span>
+                                            <span class="title">Información Básica</span>
+                                        </a>
+                                    </li>
+                                    <li role="tab" class="first current" id="title_productos">
+                                        <a href="javascript:void(0);">
+                                            <span class="number">2</span>
+                                            <span class="title">Productos</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="content clearfix">
+                                <div id="div_informacion">
+                                    <div class="row row-sm">
+                                        <div class="col-lg">
+                                            <label for="">Cliente</label>
+                                            <select id="cliente_add" class="form-select">
+                                                @foreach ($clientes as $cliente)
+                                                    <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-lg mg-t-10 mg-lg-t-0">
+                                            <label for="">Duración del contrato (Opcional)</label>
+                                            <input class="form-control" id="duracion_add" type="text"
+                                                placeholder="Duración del contrato (Opcional)">
+                                        </div>
+                                    </div>
+                                    <div class="row row-sm mt-3">
+                                        <div class="col-lg">
+                                            <label for="">Validez de la oferta</label>
+                                            <input class="form-control" id="validez_add" type="text"
+                                                placeholder="Validez de la oferta">
+                                        </div>
+                                        <div class="col-lg mg-t-10 mg-lg-t-0">
+                                            <label for="">Tiempo de entrega (Opcional)</label>
+                                            <input class="form-control" id="tiempo_add" type="text"
+                                                placeholder="Tiempo de entrega (Opcional)">
+                                        </div>
+                                    </div>
+                                    <div class="row row-sm mt-3">
+                                        <div class="col-lg">
+                                            <label for="">Forma de pago</label>
+                                            <input class="form-control" id="formapago_add" type="text"
+                                                placeholder="Forma de pago">
+                                        </div>
+                                        <div class="col-lg mg-t-10 mg-lg-t-0">
+                                            <label for="">Descuento % (Opcional)</label>
+                                            <input class="form-control" id="descuento_add" type="text"
+                                                placeholder="Descuento % (Opcional)">
+                                        </div>
+                                    </div>
+                                    <div class="row row-sm mt-3">
+                                        <div class="col-lg">
+                                            <label for="">Descripción (Opcional)</label>
+                                            <textarea class="form-control" placeholder="Descripción de la cotización (Opcional)" rows="3"
+                                                id="descripcion_add" style="height: 70px; resize: none"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row row-sm mt-3">
+                                        <div class="col-lg">
+                                            <label for="">Incluye (Opcional)</label>
+                                            <textarea class="form-control" placeholder="Incluye (Opcional)" rows="3" id="incluye_add"
+                                                style="height: 70px; resize: none"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="div_productos" class="d-none">
+                                    <div class="row row-sm">
+                                        <div class="col-lg">
+                                            <label for="">Productos</label>
+                                            <div class="row row-sm border-top-color">
+                                                <div class="col-6">
+                                                    <select class="form-select producto_add">
+                                                        <option value="">Seleccione un producto</option>
+                                                        @foreach ($productos as $producto)
+                                                            <option value="{{ $producto->id }}">
+                                                                {{ $producto->nombre }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <input class="form-control mt-3 cantidad_add" type="number" min="1" step="1"
+                                                        placeholder="Cantidad">
+                                                    <input class="form-control mt-3 precio_add" type="text"
+                                                        placeholder="Precio">
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="d-flex">
+                                                        <div class="col-lg">
+                                                            <select class="form-select divisa_add">
+                                                                <option value="">Seleccione un tipo de divisa
+                                                                </option>
+                                                                <option value="1">COP</option>
+                                                                <option value="2">USD</option>
+                                                            </select>
+                                                            <div class="mt-3">
+                                                                <select class="form-select mt-2 tipo_add">
+                                                                    <option value="">Seleccione un tipo
+                                                                    </option>
+                                                                    <option value="1">Alquiler</option>
+                                                                    <option value="2">Transporte</option>
+                                                                    <option value="3">Venta</option>
+                                                                    <option value="4">Visita Tecnica</option>
+                                                                </select>
+                                                            </div>
+                                                            <textarea class="form-control mt-3 descripcion_add" placeholder="Descripción" rows="3"
+                                                                style="height: 60px; resize: none"></textarea>
+                                                        </div>
+                                                        <div class="d-flex">
+                                                            <a class="center-vertical mg-s-10" href="javascript:void(0)"
+                                                                id="new_row_producto">
+                                                                <i class="fa fa-plus"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="div_list_productos"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="actions clearfix">
+                                <ul role="menu">
+                                    <li class="disabled">
+                                        <a href="javascript:void(0);" id="previus" role="menuitem">Anterior</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" id="next" role="menuitem">Siguiente</a>
+                                    </li>
+                                    <li class="d-none">
+                                        <a href="javascript:void(0);" id="finish" role="menuitem">Guardar</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
 @section('scripts')
+    <script>
+        $(document).ready(function () {
+            var clientes = @json($clientes);
+            var productos = @json($productos);
+
+            localStorage.setItem('clientes', JSON.stringify(clientes));
+            localStorage.setItem('productos', JSON.stringify(productos));
+        });
+    </script>
     <script src="{{ asset('assets/js/app/comercial/cotizacion.js') }}"></script>
 @endsection
