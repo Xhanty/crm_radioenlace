@@ -249,69 +249,43 @@ class InventarioController extends Controller
 
             $clientes = DB::table('cliente')
                 ->select("cliente.id", "cliente.razon_social")
-                ->join("almacenes", "almacenes.cliente", "=", "cliente.id")
-                ->where("estado", 1)
-                ->orderBy("cliente.razon_social")
-                ->groupBy("cliente.id", "cliente.razon_social")
-                ->get();
-
-            $clientes_all = DB::table('cliente')
-                ->select("cliente.id", "cliente.razon_social")
                 ->where("estado", 1)
                 ->orderBy("cliente.razon_social")
                 ->get();
 
             $empleados = DB::table('empleados')->where('status', 1)->get();
 
-            foreach ($clientes as $key => $value) {
-                $almacenes = DB::table('almacenes')
-                    ->where("almacenes.cliente", $value->id)
-                    ->orderBy("almacenes.nombre")
-                    ->get();
-                $clientes[$key]->almacenes = $almacenes;
-            }
+            $almacenes = DB::table('almacenes')->whereNull("parent_id")->get();
 
-            foreach ($clientes as $key => $value) {
-                foreach ($value->almacenes as $key2 => $value2) {
-                    $estantes = DB::table('ubicaciones_almacen')
-                        ->where("ubicaciones_almacen.almacen", $value2->id)
-                        ->orderBy("ubicaciones_almacen.nombre")
-                        ->get();
-                    $clientes[$key]->almacenes[$key2]->estantes = $estantes;
-                }
-            }
-
-            $almacenes_sede = DB::table('almacenes')
-                ->select("almacenes.id", "almacenes.nombre", "almacenes.observaciones")
-                ->whereNull("almacenes.cliente")
-                ->where("almacen", 1)
-                ->orderBy("almacenes.nombre")
-                ->groupBy("almacenes.id", "almacenes.nombre", "almacenes.observaciones")
-                ->get();
-
-            foreach ($almacenes_sede as $key => $value) {
-                $almacenes = DB::table('almacenes')
-                    ->whereNull("almacenes.cliente")
-                    ->where("almacen_id", $value->id)
-                    ->orderBy("almacenes.nombre")
-                    ->get();
-                $almacenes_sede[$key]->almacenes = $almacenes;
-            }
-
-            foreach ($almacenes_sede as $key => $value) {
-                foreach ($value->almacenes as $key2 => $value2) {
-                    $estantes = DB::table('ubicaciones_almacen')
-                        ->where("ubicaciones_almacen.almacen", $value2->id)
-                        ->orderBy("ubicaciones_almacen.nombre")
-                        ->get();
-                    $almacenes_sede[$key]->almacenes[$key2]->estantes = $estantes;
-                }
+            if ($almacenes->count() > 0) {
+                $almacenes = $almacenes->toArray();
+                $almacenes = $this->getAlmacenes($almacenes);
+            } else {
+                $almacenes = [];
             }
 
 
-            return view('admin.inventario.gestion_inventario', compact('proveedores', 'clientes', 'almacenes_sede', 'clientes_all', 'empleados'));
+            return view('admin.inventario.gestion_inventario', compact('proveedores', 'clientes', 'empleados', 'almacenes'));
         } catch (Exception $ex) {
+
+            return $ex;
             return view('errors.500');
         }
+    }
+
+    public function getAlmacenes($almacenes)
+    {
+        foreach ($almacenes as $key => $almacen) {
+            $almacenes[$key]->almacenes = DB::table('almacenes')->where('parent_id', $almacen->id)->get();
+
+            if ($almacenes[$key]->almacenes->count() > 0) {
+                $almacenes[$key]->almacenes = $almacenes[$key]->almacenes->toArray();
+                $almacenes[$key]->almacenes = $this->getAlmacenes($almacenes[$key]->almacenes);
+            } else {
+                $almacenes[$key]->almacenes = [];
+            }
+        }
+
+        return $almacenes;
     }
 }

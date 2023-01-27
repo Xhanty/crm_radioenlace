@@ -289,4 +289,20 @@ class GestionController extends Controller
             return response()->json(['info' => 0, 'error' => 'Error al eliminar el serial.']);
         }
     }
+
+    public function getAlmacenes($almacenes)
+    {
+        foreach ($almacenes as $key => $almacen) {
+            $almacenes[$key]->almacenes = DB::table('almacenes')->where('parent_id', $almacen->id)->get();
+
+            if ($almacenes[$key]->almacenes->count() > 0) {
+                $almacenes[$key]->almacenes = $almacenes[$key]->almacenes->toArray();
+                $almacenes[$key]->almacenes = $this->getAlmacenes($almacenes[$key]->almacenes);
+            } else {
+                $almacenes[$key]->almacenes = [];
+            }
+        }
+
+        return $almacenes;
+    }
 }

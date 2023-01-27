@@ -17,7 +17,7 @@
                         <label for="">Cliente</label>
                         <select id="cliente_vender" class="form-select">
                             <option value="*">Seleccione una opción</option>
-                            @foreach ($clientes_all as $cliente)
+                            @foreach ($clientes as $cliente)
                                 <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
                             @endforeach
                         </select>

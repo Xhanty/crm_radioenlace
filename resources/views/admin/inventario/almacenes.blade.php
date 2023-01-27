@@ -101,7 +101,8 @@
                                                                             @if (count($sub3->almacenes) > 0)
                                                                                 <ul>
                                                                                     @foreach ($sub3->almacenes as $sub4)
-                                                                                        <li style="cursor: pointer">{{ $sub4->nombre }}
+                                                                                        <li style="cursor: pointer">
+                                                                                            {{ $sub4->nombre }}
                                                                                             &nbsp;
                                                                                             <a href="javascript:void(0);"
                                                                                                 class="btn_AddNivel"
@@ -125,35 +126,39 @@
                                                                                                 <i class="fa fa-trash"></i>
                                                                                             </a>
                                                                                             @if (count($sub4->almacenes) > 0)
-                                                                                <ul>
-                                                                                    @foreach ($sub4->almacenes as $sub5)
-                                                                                        <li style="cursor: pointer">{{ $sub5->nombre }}
-                                                                                            &nbsp;
-                                                                                            <a href="javascript:void(0);"
-                                                                                                class="btn_AddNivel"
-                                                                                                data-id="{{ $sub5->id }}"
-                                                                                                title="Agregar">
-                                                                                                <i class="fa fa-plus"></i>
-                                                                                            </a>
-                                                                                            <a href="javascript:void(0);"
-                                                                                                class="btn_Edit"
-                                                                                                data-nombre="{{ $sub5->nombre }}"
-                                                                                                data-observaciones="{{ $sub5->observaciones }}"
-                                                                                                data-id="{{ $sub5->id }}"
-                                                                                                title="Editar">
-                                                                                                <i
-                                                                                                    class="fa fa-pencil-alt"></i>
-                                                                                            </a>
-                                                                                            <a href="javascript:void(0);"
-                                                                                                class="btn_Delete"
-                                                                                                data-id="{{ $sub5->id }}"
-                                                                                                title="Eliminar">
-                                                                                                <i class="fa fa-trash"></i>
-                                                                                            </a>
-                                                                                        </li>
-                                                                                    @endforeach
-                                                                                </ul>
-                                                                            @endif
+                                                                                                <ul>
+                                                                                                    @foreach ($sub4->almacenes as $sub5)
+                                                                                                        <li
+                                                                                                            style="cursor: pointer">
+                                                                                                            {{ $sub5->nombre }}
+                                                                                                            &nbsp;
+                                                                                                            <a href="javascript:void(0);"
+                                                                                                                class="btn_AddNivel"
+                                                                                                                data-id="{{ $sub5->id }}"
+                                                                                                                title="Agregar">
+                                                                                                                <i
+                                                                                                                    class="fa fa-plus"></i>
+                                                                                                            </a>
+                                                                                                            <a href="javascript:void(0);"
+                                                                                                                class="btn_Edit"
+                                                                                                                data-nombre="{{ $sub5->nombre }}"
+                                                                                                                data-observaciones="{{ $sub5->observaciones }}"
+                                                                                                                data-id="{{ $sub5->id }}"
+                                                                                                                title="Editar">
+                                                                                                                <i
+                                                                                                                    class="fa fa-pencil-alt"></i>
+                                                                                                            </a>
+                                                                                                            <a href="javascript:void(0);"
+                                                                                                                class="btn_Delete"
+                                                                                                                data-id="{{ $sub5->id }}"
+                                                                                                                title="Eliminar">
+                                                                                                                <i
+                                                                                                                    class="fa fa-trash"></i>
+                                                                                                            </a>
+                                                                                                        </li>
+                                                                                                    @endforeach
+                                                                                                </ul>
+                                                                                            @endif
                                                                                         </li>
                                                                                     @endforeach
                                                                                 </ul>

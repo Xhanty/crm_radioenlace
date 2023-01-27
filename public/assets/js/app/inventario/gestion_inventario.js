@@ -13,13 +13,9 @@ $(document).ready(function () {
 
     // ALMACENES INGRESO
     var id_almacen_ingreso = 0;
-    var cliente_almacen_ingreso = 0;
-    var nivel_almacen_ingreso = 0;
 
     // ALMACENES SALIDA
     var id_almacen_salida = 0;
-    var cliente_almacen_salida = 0;
-    var nivel_almacen_salida = 0;
 
     // VISUALIZAR
     $(document).on("click", ".btn_View", function () {
@@ -1128,8 +1124,6 @@ $(document).ready(function () {
     // OTROS
     $(document).on("click", ".btn_AlmacenIngreso", function () {
         id_almacen_ingreso = $(this).data("id");
-        cliente_almacen_ingreso = $(this).data("cliente");
-        nivel_almacen_ingreso = $(this).data("nivel");
 
         $(".btn_AlmacenIngreso").parent().css("color", "#56546d");
         $(this).parent().css("color", "#0ba360");
@@ -1137,8 +1131,6 @@ $(document).ready(function () {
 
     $(document).on("click", ".btn_AlmacenSalida", function () {
         id_almacen_salida = $(this).data("id");
-        cliente_almacen_salida = $(this).data("cliente");
-        nivel_almacen_salida = $(this).data("nivel");
 
         $(".btn_AlmacenSalida").parent().css("color", "#56546d");
         $(this).parent().css("color", "#0ba360");
