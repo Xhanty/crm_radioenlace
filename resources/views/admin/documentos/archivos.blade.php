@@ -78,7 +78,7 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Cliente</label>
-                                <select id="clienteadd" class="form-control select2">
+                                <select id="clienteadd" class="form-select">
                                     @foreach ($clientes as $value)
                                         <option value="{{ $value->id }}">{{ $value->razon_social }}</option>
                                     @endforeach

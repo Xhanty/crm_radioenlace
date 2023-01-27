@@ -214,7 +214,7 @@ $(function () {
                 let asignacion = data.asignacion;
                 let archivos = data.archivos;
                 $("#asignacion_show").val(asignacion.asignacion);
-                $("#cliente_show").val(asignacion.id_cliente);
+                $("#cliente_show").val(asignacion.id_cliente).trigger("change");
                 $("#observacion_show").val(asignacion.descripcion);
                 $("#fecha_inicio_show").val(asignacion.fecha);
                 $("#fecha_fin_show").val(asignacion.fecha_culminacion);

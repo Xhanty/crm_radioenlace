@@ -160,10 +160,10 @@ $(function () {
         let observacion = $(this).data("descripcion");
 
         $("#idpuntosedit").val(id);
-        $("#empleadoedit").val(empleado);
+        $("#empleadoedit").val(empleado).trigger("change");
         $("#fechaedit").val(fecha);
         $("#puntosedit").val(puntos);
-        $("#tipopuntosedit").val(tipo);
+        $("#tipopuntosedit").val(tipo).trigger("change");
         $("#observacionesedit").val(observacion);
         $("#modalEdit").modal("show");
     });

@@ -708,7 +708,7 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Festivo</label>
-                                <select class="form-control" id="festivo_add">
+                                <select class="form-select" id="festivo_add">
                                     <option value="0">No</option>
                                     <option value="1">Si</option>
                                 </select>
@@ -753,7 +753,7 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Tipo Documento</label>
-                                <select class="form-control" required id="tipo_document_anexo_add">
+                                <select class="form-select" required id="tipo_document_anexo_add">
                                     <option value="0">Hoja de vida</option>
                                     <option value="1">Afiliaciones</option>
                                     <option value="2">Contrato</option>

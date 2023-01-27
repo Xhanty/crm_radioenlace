@@ -62,41 +62,41 @@
                         <table class="invoice-table">
                             <thead>
                                 <tr>
+                                    <th>Imagen</th>
                                     <th>Producto</th>
                                     <th>Descripción</th>
                                     <th>Cantidad</th>
-                                    <th>Precio</th>
-                                    <th>IVA</th>
-                                    <th>Retención</th>
-                                    <th>Total</th>
+                                    <th>Precio U.</th>
+                                    <th>Subtotal</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
+                                    <td><img style="width: 90px; height: 77px;"
+                                            src="{{ asset('images/productos/noimagen.png') }}"></td>
                                     <td>UI/ UX Design</td>
                                     <td>Mobile Application Design</td>
                                     <td>8</td>
                                     <td>100.000 COP</td>
                                     <td>800.000 COP</td>
-                                    <td>800.000 COP</td>
-                                    <td>800.000 COP</td>
                                 </tr>
                                 <tr>
+                                    <td><img style="width: 90px; height: 77px;"
+                                            src="{{ asset('images/productos/noimagen.png') }}"></td>
                                     <td>Development</td>
                                     <td>Website &amp; App Development</td>
                                     <td>8</td>
                                     <td>120.000 COP</td>
-                                    <td>800.000 COP</td>
-                                    <td>800.000 COP</td>
                                     <td>960.000 COP</td>
                                 </tr>
                                 <tr>
+                                    <td><img style="width: 90px; height: 77px;"
+                                            src="{{ asset('images/productos/noimagen.png') }}"></td>
                                     <td>Web Design</td>
-                                    <td>Webpage Interface Design</td>
+                                    <td>Desinstalación de los equipos en Girardota pertenecientes a
+                                        Conconcreto para ser instalados en el centro Comercialn</td>
                                     <td>4</td>
                                     <td>800.000 COP</td>
-                                    <td>800.000 COP</td>
-                                    <td>60.000 COP</td>
                                     <td>240.000 COP</td>
                                 </tr>
                             </tbody>
@@ -113,7 +113,7 @@
                                     <tbody>
                                         <tr>
                                             <th>Subtotal:</th>
-                                            <td>2000.000 COP</td>
+                                            <td>200.000 COP</td>
                                         </tr>
                                         <tr>
                                             <th>IVA:</th>
@@ -121,11 +121,15 @@
                                         </tr>
                                         <tr>
                                             <th>Retenciones:</th>
-                                            <td>2250.000 COP</td>
+                                            <td>0 COP</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Descuentos:</th>
+                                            <td>0 COP</td>
                                         </tr>
                                         <tr>
                                             <th>Total:</th>
-                                            <td>2250.000 COP</td>
+                                            <td>450.000 COP</td>
                                         </tr>
                                     </tbody>
                                 </table>

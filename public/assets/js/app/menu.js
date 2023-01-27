@@ -86,10 +86,13 @@ $(function () {
         hideMethod: "fadeOut",
     };
 
-    /*$(".form-select").select2({
-        placeholder: "Seleccione una opción",
-        searchInputPlaceholder: "Buscar",
-    });*/
+    $(".form-select").each(function () {
+        $(this).select2({
+            dropdownParent: $(this).parent(),
+            placeholder: "Seleccione una opción",
+            searchInputPlaceholder: "Buscar",
+        });        
+    });
 
     //______Basic Data Table
     $(".basic-datatable-t").DataTable({
@@ -566,10 +569,10 @@ $(function () {
                     $("#celular_edit").val(cliente.celular);
                     $("#email_edit").val(cliente.email);
                     $("#direccion_edit").val(cliente.direccion);
-                    $("#tipo_cliente_edit").val(cliente.tipo);
-                    $("#tipo_doc_cliente_edit").val(
-                        cliente.tipo_identificacion
-                    );
+                    $("#tipo_cliente_edit").val(cliente.tipo).trigger("change");
+                    $("#tipo_doc_cliente_edit")
+                        .val(cliente.tipo_identificacion)
+                        .trigger("change");
                     $("#documento_cliente_edit").val(cliente.nit);
                     $("#telefono_edit").val(cliente.telefono_fijo);
                     $("#ciudad_cliente_edit").val(cliente.ciudad);
@@ -930,7 +933,7 @@ $(function () {
             $("#codigo_empleado_edit").val(data.codigo_empleado);
             $("#nombre_empleado_edit").val(data.nombre);
             $("#cargo_empleado_edit").val(data.cargo);
-            $("#rol_empleado_edit").val(data.rol);
+            $("#rol_empleado_edit").val(data.rol).trigger("change");
             $("#email_edit").val(data.email);
             $("#telefono_fij_edit").val(data.telefono_fijo);
             $("#telefono_cel_edit").val(data.telefono_celular);
@@ -942,18 +945,20 @@ $(function () {
             $("#caja_compensacion_edit").val(data.caja_compensacion);
             $("#arl_edit").val(data.arl);
             $("#fondo_pension_edit").val(data.fondo_pension);
-            $("#riesgos_prof_edit").val(data.riesgos_profesionales);
+            $("#riesgos_prof_edit")
+                .val(data.riesgos_profesionales)
+                .trigger("change");
 
             $("#observaciones_otra_info_edit").val(data.observaciones);
-            $("#prestamo_otra_info_edit").val(data.prestamo);
+            $("#prestamo_otra_info_edit").val(data.prestamo).trigger("change");
             $("#periodo_dotacion_otra_info_edit").val(data.periodo_dotacion);
             $("#licencia_otra_info_edit").val(data.numero_licencia_conduccion);
             $("#vencimiento_otra_info_edit").val(
                 data.vencimiento_licencia_conduccion
             );
-            $("#multas_pend_otra_info_edit").val(
-                data.multas_transito_pendiente
-            );
+            $("#multas_pend_otra_info_edit")
+                .val(data.multas_transito_pendiente)
+                .trigger("change");
             $("#implementos_otra_info_edit").val(data.implementos_seguridad);
             $("#fecha_culminacion_otra_info_edit").val(
                 data.culminacion_contrato

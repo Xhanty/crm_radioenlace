@@ -22,7 +22,7 @@
                 <div class="card">
                     <div class="card-header d-flex-header-table bg-warning" style="border-radius: 4px">
                         <div class="div-1-tables-header">
-                            <h3 class="card-title mt-2">Lista de Cotizaciones</h3>
+                            <h3 class="card-title mt-2">Cotizaciones</h3>
                         </div>
                         <div class="div-2-tables-header">
                             <button class="btn btn-primary" id="btnNewProveedor">Crear Cotización</button>
@@ -57,7 +57,7 @@
                 <div class="card">
                     <div class="card-header d-flex-header-table bg-success" style="border-radius: 4px">
                         <div class="div-1-tables-header">
-                            <h3 class="card-title mt-2">Lista de Cotizaciones Completadas</h3>
+                            <h3 class="card-title mt-2">Cotizaciones Completadas</h3>
                         </div>
                     </div>
                     <div class="card-body">

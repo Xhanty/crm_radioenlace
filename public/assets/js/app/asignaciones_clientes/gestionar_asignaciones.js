@@ -282,12 +282,12 @@ $(function () {
                 let asignacion = data.asignacion;
                 let archivos = data.archivos;
                 $("#idasignacionedit").val(asignacion.id);
-                $("#empleadoedit").val(asignacion.id_empleado);
+                $("#empleadoedit").val(asignacion.id_empleado).trigger("change");
                 $("#observacionesedit").val(asignacion.asignacion);
                 $("#observacion_generaledit").val(asignacion.descripcion);
                 $("#fecha_inicioedit").val(asignacion.fecha);
                 $("#fecha_finedit").val(asignacion.fecha_culminacion);
-                $("#cliente_edit").val(asignacion.id_cliente);
+                $("#cliente_edit").val(asignacion.id_cliente).trigger("change");
                 archivos.forEach((archivo) => {
                     $("#tbl_anexos_asignacion tbody").append(`
                         <tr>

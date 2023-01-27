@@ -208,8 +208,8 @@
                             <div class="col-lg">
                                 <label for="facturacion_add">¿Requiere Facturación?</label>
                                 <select id="facturacion_add" class="form-select">
-                                    <option value="">No</option>
-                                    <option value="">Sí</option>
+                                    <option value="0">No</option>
+                                    <option value="1">Sí</option>
                                 </select>
                             </div>
                         </div>
@@ -303,8 +303,8 @@
                             <div class="col-lg">
                                 <label for="facturacion_edit">¿Requiere Facturación?</label>
                                 <select id="facturacion_edit" class="form-select">
-                                    <option value="">No</option>
-                                    <option value="">Sí</option>
+                                    <option value="0">No</option>
+                                    <option value="1">Sí</option>
                                 </select>
                             </div>
                         </div>

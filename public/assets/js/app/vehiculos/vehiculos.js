@@ -119,14 +119,14 @@ $(function () {
                 );
                 $("#marcaedit").val(data.marca);
                 $("#modeloedit").val(data.modelo);
-                $("#tipo_combustibleedit").val(data.tipo_combustible);
+                $("#tipo_combustibleedit").val(data.tipo_combustible).trigger("change");
                 $("#yearedit").val(data.year);
                 $("#soatedit").val(data.soat);
                 $("#placaedit").val(data.placa);
                 $("#tecnomecanicaedit").val(data.tecnomecanica);
                 $("#coloredit").val(data.color);
                 $("#seguroedit").val(data.seguro);
-                $("#tipoedit").val(data.tipo);
+                $("#tipoedit").val(data.tipo).trigger("change");
                 $("#observacionesedit").val(data.observaciones);
                 $("#global-loader").fadeOut("fast");
             },
@@ -160,14 +160,14 @@ $(function () {
                 $("#idedit").val(data.id);
                 $("#marcaedit").val(data.marca);
                 $("#modeloedit").val(data.modelo);
-                $("#tipo_combustibleedit").val(data.tipo_combustible);
+                $("#tipo_combustibleedit").val(data.tipo_combustible).trigger("change");
                 $("#yearedit").val(data.year);
                 $("#soatedit").val(data.soat);
                 $("#placaedit").val(data.placa);
                 $("#tecnomecanicaedit").val(data.tecnomecanica);
                 $("#coloredit").val(data.color);
                 $("#seguroedit").val(data.seguro);
-                $("#tipoedit").val(data.tipo);
+                $("#tipoedit").val(data.tipo).trigger("change");
                 $("#observacionesedit").val(data.observaciones);
                 $("#global-loader").fadeOut("fast");
             },
@@ -412,19 +412,19 @@ $(function () {
                 $("#global-loader").fadeOut("fast");
 
                 $("#sede_view").val(data.sede);
-                $("#dolor_garganta_view").val(data.dolor_garganta);
-                $("#uno_view").val(data.malestar_general);
-                $("#dos_view").val(data.fiebre);
-                $("#tres_view").val(data.tos_seca);
-                $("#cuatro_view").val(data.perdida_olfato);
-                $("#cinco_view").val(data.contacto_covid19);
-                $("#seis_view").val(data.res_diagnostico_covid19);
-                $("#siete_view").val(data.res_servicio_salud);
-                $("#ocho_view").val(data.res_65years);
-                $("#nueve_view").val(data.res_enfermedades_cronicas);
-                $("#diez_view").val(data.botas);
-                $("#once_view").val(data.uniforme);
-                $("#doce_view").val(data.declaracion);
+                $("#dolor_garganta_view").val(data.dolor_garganta).trigger("change");
+                $("#uno_view").val(data.malestar_general).trigger("change");
+                $("#dos_view").val(data.fiebre).trigger("change");
+                $("#tres_view").val(data.tos_seca).trigger("change");
+                $("#cuatro_view").val(data.perdida_olfato).trigger("change");
+                $("#cinco_view").val(data.contacto_covid19).trigger("change");
+                $("#seis_view").val(data.res_diagnostico_covid19).trigger("change");
+                $("#siete_view").val(data.res_servicio_salud).trigger("change");
+                $("#ocho_view").val(data.res_65years).trigger("change");
+                $("#nueve_view").val(data.res_enfermedades_cronicas).trigger("change");
+                $("#diez_view").val(data.botas).trigger("change");
+                $("#once_view").val(data.uniforme).trigger("change");
+                $("#doce_view").val(data.declaracion).trigger("change");
                 $("#modalViewEncuesta").modal("show");
             },
             error: function (error) {

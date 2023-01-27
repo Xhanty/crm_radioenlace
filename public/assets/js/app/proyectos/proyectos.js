@@ -139,10 +139,10 @@ $(document).ready(function () {
 
                     console.log(data);
                     $("#id_proyect_edit").val(data.id);
-                    $("#categoria_edit").val(data.id_categoria);
-                    $("#cliente_edit").val(data.id_cliente);
+                    $("#categoria_edit").val(data.id_categoria).trigger("change");
+                    $("#cliente_edit").val(data.id_cliente).trigger("change");
                     $("#nombre_edit").val(data.nombre);
-                    $("#facturacion_edit").val(data.facturacion);
+                    $("#facturacion_edit").val(data.factura).trigger("change");
                     $("#puntos_edit").val(data.puntos);
                     $("#puntos_mensuales_edit").val(data.puntos_mensuales);
                     $("#porcentaje_tecnico_edit").val(data.porcentaje_tecnico);

@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -362,7 +363,7 @@
                                         <li><a class="slide-item" href="{{ route('ventas') }}">Ventas</a></li>
                                     @endif
                                     @if (auth()->user()->hasPermissionTo('gestion_prestamos'))
-                                        <li><a class="slide-item" href="{{ route('prestamos') }}">Prestamos</a></li>
+                                        <li><a class="slide-item" href="{{ route('prestamos') }}">Préstamos</a></li>
                                     @endif
                                     @if (auth()->user()->hasPermissionTo('gestion_alquileres'))
                                         <li><a class="slide-item" href="{{ route('alquileres') }}">Alquileres</a>
@@ -439,14 +440,14 @@
                             </ul>
                         </li>
 
-                        @if (auth()->user()->hasPermissionToMultiple('gestion_categorias_documentos|' . 'gestion_archivos|' . 'gestion_documentos'))
+                        @if (auth()->user()->hasPermissionToMultiple('categorias_archivos|' . 'gestion_archivos|' . 'gestion_documentos'))
                             <li class="slide">
                                 <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
                                         class="side-menu__icon fe fe-folder"></i><span
                                         class="side-menu__label">Documentos</span><i
                                         class="angle fe fe-chevron-down"></i></a>
                                 <ul class="slide-menu">
-                                    @if (auth()->user()->hasPermissionTo('gestion_categorias_documentos'))
+                                    @if (auth()->user()->hasPermissionTo('categorias_archivos'))
                                         <li><a class="slide-item"
                                                 href="{{ route('categorias_archivos') }}">Categorías
                                                 Documentos</a></li>
@@ -590,7 +591,7 @@
             </aside>
         </div>
         <!-- main-sidebar -->
-
+        
         <div class="main-content app-content">
             @yield('content')
         </div>
@@ -622,6 +623,9 @@
     <!--- Ionicons js --->
     <script src="{{ asset('assets/plugins/ionicons/ionicons.js') }}"></script>
 
+    <!--- Moment js --->
+	<script src="../assets/plugins/moment/moment.js"></script>
+
     <!--- Chart bundle min js --->
     <script src="{{ asset('assets/plugins/chart.js/Chart.bundle.min.js') }}"></script>
 
@@ -636,6 +640,9 @@
 
     <!--- Moment js --->
     <script src="{{ asset('assets/plugins/moment/moment.js') }}"></script>
+
+    <!--- Select2 js --->
+    <script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
 
     <!--- Perfect-scrollbar js --->
     <script src="{{ asset('assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
@@ -685,8 +692,7 @@
     <script src="{{ asset('assets/plugins/datatable/responsive.bootstrap5.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!--- Select2 js --->
-    <script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
+    
     <!--- Date Range --->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
