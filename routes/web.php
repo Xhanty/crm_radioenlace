@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Mail\Markdown;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/mail', function () {
+    $markdown = new Markdown(view(), config('mail.markdown'));
+
+    return $markdown->render('emails.CotizacionMail');
+})->name('mail');
 
 Route::get('/', function () {
     return view('auth.login');
