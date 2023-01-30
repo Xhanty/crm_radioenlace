@@ -180,11 +180,12 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/archivos_add', [App\Http\Controllers\Admin\Documentos\ArchivosController::class, 'archivos_add'])->name('archivos_add');
     Route::get('/documentos', [App\Http\Controllers\Admin\Documentos\DocumentosController::class, 'index'])->name('documentos');
 
-    // COMERCIAL  cotizacion_data
+    // COMERCIAL
     Route::get('/ordenes_compra', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'index'])->name('ordenes_compra');
     Route::get('/cotizaciones', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'index'])->name('cotizaciones');
     Route::post('/cotizacion_data', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'data'])->name('cotizacion_data');
     Route::post('/cotizacion_create', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'create'])->name('cotizacion_create');
+    Route::post('/cotizacion_edit', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'edit'])->name('cotizacion_edit');
     Route::post('/cotizacion_completar', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'completar'])->name('cotizacion_completar');
     Route::post('/cotizacion_delete', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'delete'])->name('cotizacion_delete');
     Route::get('/remisiones', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'index'])->name('remisiones');

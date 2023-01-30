@@ -220,29 +220,29 @@
                                             <label for="">Productos</label>
                                             <div class="row row-sm border-top-color">
                                                 <div class="col-6">
-                                                    <select class="form-select producto_add">
+                                                    <select title="Producto" class="form-select producto_add">
                                                         <option value="">Seleccione un producto</option>
                                                         @foreach ($productos as $producto)
                                                             <option value="{{ $producto->id }}">
                                                                 {{ $producto->nombre }}</option>
                                                         @endforeach
                                                     </select>
-                                                    <input class="form-control mt-3 cantidad_add" type="number"
+                                                    <input title="Cantidad" class="form-control mt-3 cantidad_add" type="number"
                                                         min="1" step="1" placeholder="Cantidad">
-                                                    <input class="form-control mt-3 precio_add" type="text"
+                                                    <input title="Precio" class="form-control mt-3 precio_add" type="text"
                                                         placeholder="Precio">
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="d-flex">
                                                         <div class="col-lg">
-                                                            <select class="form-select divisa_add">
+                                                            <select title="Tipo Divisa" class="form-select divisa_add">
                                                                 <option value="">Seleccione un tipo de divisa
                                                                 </option>
                                                                 <option value="1">COP</option>
                                                                 <option value="2">USD</option>
                                                             </select>
                                                             <div class="mt-3">
-                                                                <select class="form-select mt-2 tipo_add">
+                                                                <select title="Tipo Transacción" class="form-select mt-2 tipo_add">
                                                                     <option value="">Seleccione un tipo
                                                                     </option>
                                                                     <option value="1">Alquiler</option>
@@ -251,7 +251,7 @@
                                                                     <option value="4">Visita Tecnica</option>
                                                                 </select>
                                                             </div>
-                                                            <textarea class="form-control mt-3 descripcion_add" placeholder="Descripción" rows="3"
+                                                            <textarea title="Descripción" class="form-control mt-3 descripcion_add" placeholder="Descripción" rows="3"
                                                                 style="height: 60px; resize: none"></textarea>
                                                         </div>
                                                         <div class="d-flex">
@@ -315,7 +315,7 @@
                                 </ul>
                             </div>
                             <div class="content clearfix">
-                                <div id="div_informacion">
+                                <div id="div_informacion_view">
                                     <div class="row row-sm">
                                         <div class="col-lg">
                                             <label for="">Cliente</label>
@@ -371,56 +371,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="div_productos" class="d-none">
+                                <div id="div_productos_view" class="d-none">
                                     <div class="row row-sm">
                                         <div class="col-lg">
                                             <label for="">Productos</label>
-                                            <div class="row row-sm border-top-color">
-                                                <div class="col-6">
-                                                    <select class="form-select producto_add">
-                                                        <option value="">Seleccione un producto</option>
-                                                        @foreach ($productos as $producto)
-                                                            <option value="{{ $producto->id }}">
-                                                                {{ $producto->nombre }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <input class="form-control mt-3 cantidad_add" type="number"
-                                                        min="1" step="1" placeholder="Cantidad">
-                                                    <input class="form-control mt-3 precio_add" type="text"
-                                                        placeholder="Precio">
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="d-flex">
-                                                        <div class="col-lg">
-                                                            <select class="form-select divisa_add">
-                                                                <option value="">Seleccione un tipo de divisa
-                                                                </option>
-                                                                <option value="1">COP</option>
-                                                                <option value="2">USD</option>
-                                                            </select>
-                                                            <div class="mt-3">
-                                                                <select class="form-select mt-2 tipo_add">
-                                                                    <option value="">Seleccione un tipo
-                                                                    </option>
-                                                                    <option value="1">Alquiler</option>
-                                                                    <option value="2">Transporte</option>
-                                                                    <option value="3">Venta</option>
-                                                                    <option value="4">Visita Tecnica</option>
-                                                                </select>
-                                                            </div>
-                                                            <textarea class="form-control mt-3 descripcion_add" placeholder="Descripción" rows="3"
-                                                                style="height: 60px; resize: none"></textarea>
-                                                        </div>
-                                                        <div class="d-flex">
-                                                            <a class="center-vertical mg-s-10" href="javascript:void(0)"
-                                                                id="new_row_producto">
-                                                                <i class="fa fa-plus"></i>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="div_list_productos"></div>
+                                            <div id="div_list_productos_view"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -428,13 +383,10 @@
                             <div class="actions clearfix">
                                 <ul role="menu">
                                     <li class="disabled">
-                                        <a href="javascript:void(0);" id="previus" role="menuitem">Anterior</a>
+                                        <a href="javascript:void(0);" id="previus_view" role="menuitem">Anterior</a>
                                     </li>
                                     <li>
-                                        <a href="javascript:void(0);" id="next" role="menuitem">Siguiente</a>
-                                    </li>
-                                    <li class="d-none">
-                                        <a href="javascript:void(0);" id="finish" role="menuitem">Guardar</a>
+                                        <a href="javascript:void(0);" id="next_view" role="menuitem">Siguiente</a>
                                     </li>
                                 </ul>
                             </div>
@@ -449,7 +401,7 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
-                        <h6 class="modal-title">Crear Cotización</h6>
+                        <h6 class="modal-title">Modificar Cotización</h6>
                         <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span
                                 aria-hidden="true">&times;</span></button>
                     </div>
@@ -458,12 +410,12 @@
                             <div class="steps clearfix">
                                 <ul role="tablist">
                                     <li role="tab" class="done">
-                                        <a href="javascript:void(0);" id="title_basica">
+                                        <a href="javascript:void(0);" id="title_basica_edit">
                                             <span class="number">1</span>
                                             <span class="title">Información Básica</span>
                                         </a>
                                     </li>
-                                    <li role="tab" class="first current" id="title_productos">
+                                    <li role="tab" class="first current" id="title_productos_edit">
                                         <a href="javascript:void(0);">
                                             <span class="number">2</span>
                                             <span class="title">Productos</span>
@@ -472,11 +424,12 @@
                                 </ul>
                             </div>
                             <div class="content clearfix">
-                                <div id="div_informacion">
+                                <div id="div_informacion_edit">
+                                    <input id="id_cotizacion_edit" type="hidden" disabled readonly>
                                     <div class="row row-sm">
                                         <div class="col-lg">
                                             <label for="">Cliente</label>
-                                            <select id="cliente_add" class="form-select">
+                                            <select id="cliente_edit" class="form-select">
                                                 @foreach ($clientes as $cliente)
                                                     <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}
                                                     </option>
@@ -485,31 +438,31 @@
                                         </div>
                                         <div class="col-lg mg-t-10 mg-lg-t-0">
                                             <label for="">Duración del contrato (Opcional)</label>
-                                            <input class="form-control" id="duracion_add" type="text"
+                                            <input class="form-control" id="duracion_edit" type="text"
                                                 placeholder="Duración del contrato (Opcional)">
                                         </div>
                                     </div>
                                     <div class="row row-sm mt-3">
                                         <div class="col-lg">
                                             <label for="">Validez de la oferta</label>
-                                            <input class="form-control" id="validez_add" type="text"
+                                            <input class="form-control" id="validez_edit" type="text"
                                                 placeholder="Validez de la oferta">
                                         </div>
                                         <div class="col-lg mg-t-10 mg-lg-t-0">
                                             <label for="">Tiempo de entrega (Opcional)</label>
-                                            <input class="form-control" id="tiempo_add" type="text"
+                                            <input class="form-control" id="tiempo_edit" type="text"
                                                 placeholder="Tiempo de entrega (Opcional)">
                                         </div>
                                     </div>
                                     <div class="row row-sm mt-3">
                                         <div class="col-lg">
                                             <label for="">Forma de pago</label>
-                                            <input class="form-control" id="formapago_add" type="text"
+                                            <input class="form-control" id="formapago_edit" type="text"
                                                 placeholder="Forma de pago">
                                         </div>
                                         <div class="col-lg mg-t-10 mg-lg-t-0">
                                             <label for="">Descuento % (Opcional)</label>
-                                            <input class="form-control" id="descuento_add" type="text"
+                                            <input class="form-control" id="descuento_edit" type="text"
                                                 placeholder="Descuento % (Opcional)">
                                         </div>
                                     </div>
@@ -517,67 +470,22 @@
                                         <div class="col-lg">
                                             <label for="">Descripción (Opcional)</label>
                                             <textarea class="form-control" placeholder="Descripción de la cotización (Opcional)" rows="3"
-                                                id="descripcion_add" style="height: 70px; resize: none"></textarea>
+                                                id="descripcion_edit" style="height: 70px; resize: none"></textarea>
                                         </div>
                                     </div>
                                     <div class="row row-sm mt-3">
                                         <div class="col-lg">
                                             <label for="">Incluye (Opcional)</label>
-                                            <textarea class="form-control" placeholder="Incluye (Opcional)" rows="3" id="incluye_add"
+                                            <textarea class="form-control" placeholder="Incluye (Opcional)" rows="3" id="incluye_edit"
                                                 style="height: 70px; resize: none"></textarea>
                                         </div>
                                     </div>
                                 </div>
-                                <div id="div_productos" class="d-none">
+                                <div id="div_productos_edit" class="d-none">
                                     <div class="row row-sm">
                                         <div class="col-lg">
                                             <label for="">Productos</label>
-                                            <div class="row row-sm border-top-color">
-                                                <div class="col-6">
-                                                    <select class="form-select producto_add">
-                                                        <option value="">Seleccione un producto</option>
-                                                        @foreach ($productos as $producto)
-                                                            <option value="{{ $producto->id }}">
-                                                                {{ $producto->nombre }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <input class="form-control mt-3 cantidad_add" type="number"
-                                                        min="1" step="1" placeholder="Cantidad">
-                                                    <input class="form-control mt-3 precio_add" type="text"
-                                                        placeholder="Precio">
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="d-flex">
-                                                        <div class="col-lg">
-                                                            <select class="form-select divisa_add">
-                                                                <option value="">Seleccione un tipo de divisa
-                                                                </option>
-                                                                <option value="1">COP</option>
-                                                                <option value="2">USD</option>
-                                                            </select>
-                                                            <div class="mt-3">
-                                                                <select class="form-select mt-2 tipo_add">
-                                                                    <option value="">Seleccione un tipo
-                                                                    </option>
-                                                                    <option value="1">Alquiler</option>
-                                                                    <option value="2">Transporte</option>
-                                                                    <option value="3">Venta</option>
-                                                                    <option value="4">Visita Tecnica</option>
-                                                                </select>
-                                                            </div>
-                                                            <textarea class="form-control mt-3 descripcion_add" placeholder="Descripción" rows="3"
-                                                                style="height: 60px; resize: none"></textarea>
-                                                        </div>
-                                                        <div class="d-flex">
-                                                            <a class="center-vertical mg-s-10" href="javascript:void(0)"
-                                                                id="new_row_producto">
-                                                                <i class="fa fa-plus"></i>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="div_list_productos"></div>
+                                            <div id="div_list_productos_edit"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -585,13 +493,13 @@
                             <div class="actions clearfix">
                                 <ul role="menu">
                                     <li class="disabled">
-                                        <a href="javascript:void(0);" id="previus" role="menuitem">Anterior</a>
+                                        <a href="javascript:void(0);" id="previus_edit" role="menuitem">Anterior</a>
                                     </li>
                                     <li>
-                                        <a href="javascript:void(0);" id="next" role="menuitem">Siguiente</a>
+                                        <a href="javascript:void(0);" id="next_edit" role="menuitem">Siguiente</a>
                                     </li>
                                     <li class="d-none">
-                                        <a href="javascript:void(0);" id="finish" role="menuitem">Guardar</a>
+                                        <a href="javascript:void(0);" id="finish_edit" role="menuitem">Guardar</a>
                                     </li>
                                 </ul>
                             </div>

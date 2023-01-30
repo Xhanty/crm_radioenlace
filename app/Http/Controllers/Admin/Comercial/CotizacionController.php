@@ -77,6 +77,8 @@ class CotizacionController extends Controller
                 ->first();
 
             $cotizacion->detalle = DB::table('detalle_cotizaciones')
+                ->select('detalle_cotizaciones.*', 'productos.nombre as producto')
+                ->join('productos', 'productos.id', 'detalle_cotizaciones.producto_id')
                 ->where('detalle_cotizaciones.cotizacion_id', $request->id)
                 ->get();
 
@@ -153,6 +155,67 @@ class CotizacionController extends Controller
             DB::rollBack();
             return $ex->getMessage();
             return response()->json(['info' => 0, 'error' => 'Error al crear la cotización']);
+        }
+    }
+
+    public function edit(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $cotizacion = $request->id;
+            $cliente = $request->cliente;
+            $duracion = $request->duracion;
+            $validez = $request->validez;
+            $tiempo_entrega = $request->tiempo_entrega;
+            $forma_pago = $request->forma_pago;
+            $descuento = $request->descuento;
+            $descripcion_general = $request->descripcion_general;
+            $incluye = $request->incluye;
+
+            //PRODUCTOS
+            $productos = $request->productos;
+            $divisas = $request->divisas;
+            $cantidades = $request->cantidades;
+            $tipos = $request->tipos;
+            $precios = $request->precios;
+            $descripciones = $request->descripciones;
+
+            DB::table("cotizaciones")->where('id', $cotizacion)->update([
+                'cliente_id' => $cliente,
+                'descripcion' => $descripcion_general ? $descripcion_general : null,
+                'incluye' => $incluye ? $incluye : null,
+                'validez' => $validez,
+                'forma_pago' => $forma_pago,
+                'duracion' => $duracion,
+                'tiempo_entrega' => $tiempo_entrega ? $tiempo_entrega : null,
+                'descuento' => $descuento ? $descuento : null
+            ]);
+
+            DB::table("detalle_cotizaciones")->where('cotizacion_id', $cotizacion)->delete();
+
+            if ($productos) {
+                foreach ($productos as $key => $producto) {
+                    DB::table("detalle_cotizaciones")->insert([
+                        'producto_id' => $producto,
+                        'cotizacion_id' => $cotizacion,
+                        'tipo_divisa' => $divisas[$key],
+                        'cantidad' => $cantidades[$key],
+                        'tipo_transaccion' => $tipos[$key],
+                        'precio' => $precios[$key],
+                        'descripcion' => $descripciones[$key] ? $descripciones[$key] : null,
+                        'created_by' => auth()->user()->id,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                }
+            }
+
+            DB::commit();
+
+            return response()->json(['info' => 1, 'message' => 'Cotización actualizada correctamente']);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return $ex->getMessage();
+            return response()->json(['info' => 0, 'error' => 'Error al actualizar la cotización']);
         }
     }
 
