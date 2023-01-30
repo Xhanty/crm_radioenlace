@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-01-2023 a las 23:17:23
+-- Tiempo de generación: 30-01-2023 a las 18:44:27
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.1.12
 
@@ -507,17 +507,25 @@ INSERT INTO `configuracion_nomina` (`id`, `porcentaje_salud`, `porcentaje_pensio
 CREATE TABLE `cotizaciones` (
   `id` int(11) NOT NULL,
   `code` int(11) NOT NULL,
-  `cliente` int(11) NOT NULL,
-  `descripcion` text NOT NULL,
-  `consideraciones` text NOT NULL,
-  `incluye` text NOT NULL,
+  `cliente_id` int(11) NOT NULL,
+  `descripcion` text DEFAULT NULL,
+  `incluye` text DEFAULT NULL,
   `validez` varchar(255) NOT NULL,
+  `duracion` varchar(255) DEFAULT NULL,
   `forma_pago` varchar(255) NOT NULL,
-  `tiempo_entrega` varchar(255) NOT NULL,
-  `descuento` varchar(255) NOT NULL,
+  `tiempo_entrega` varchar(255) DEFAULT NULL,
+  `descuento` varchar(255) DEFAULT NULL,
+  `status` int(1) NOT NULL DEFAULT 0,
   `created_by` int(11) NOT NULL,
   `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `cotizaciones`
+--
+
+INSERT INTO `cotizaciones` (`id`, `code`, `cliente_id`, `descripcion`, `incluye`, `validez`, `duracion`, `forma_pago`, `tiempo_entrega`, `descuento`, `status`, `created_by`, `created_at`) VALUES
+(1, 1, 13, NULL, NULL, 'asdasd', NULL, 'adasd', NULL, NULL, 0, 1, '2023-01-30 10:46:07');
 
 -- --------------------------------------------------------
 
@@ -640,6 +648,33 @@ INSERT INTO `datos_tecnico` (`id`, `id_cliente`, `nombre`, `apellido`, `email`, 
 (118, 85, '', '', '', '', '', ''),
 (119, 86, '', '', '', '', '', ''),
 (120, 87, '', '', '', '', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detalle_cotizaciones`
+--
+
+CREATE TABLE `detalle_cotizaciones` (
+  `id` int(11) NOT NULL,
+  `producto_id` int(11) NOT NULL,
+  `cotizacion_id` int(11) NOT NULL,
+  `tipo_divisa` int(1) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `tipo_transaccion` int(1) NOT NULL,
+  `precio` varchar(255) NOT NULL,
+  `descripcion` text DEFAULT NULL,
+  `created_by` int(11) NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `detalle_cotizaciones`
+--
+
+INSERT INTO `detalle_cotizaciones` (`id`, `producto_id`, `cotizacion_id`, `tipo_divisa`, `cantidad`, `tipo_transaccion`, `precio`, `descripcion`, `created_by`, `created_at`) VALUES
+(1, 1, 1, 1, 1, 2, 'asddas', NULL, 1, '2023-01-30 10:46:07'),
+(2, 3, 1, 2, 1, 2, 'asd', 'asds', 1, '2023-01-30 10:46:07');
 
 -- --------------------------------------------------------
 
@@ -1652,6 +1687,12 @@ ALTER TABLE `datos_tecnico`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `detalle_cotizaciones`
+--
+ALTER TABLE `detalle_cotizaciones`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `empleados`
 --
 ALTER TABLE `empleados`
@@ -1921,7 +1962,7 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de la tabla `cotizaciones`
 --
 ALTER TABLE `cotizaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `datos_facturacion`
@@ -1934,6 +1975,12 @@ ALTER TABLE `datos_facturacion`
 --
 ALTER TABLE `datos_tecnico`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+
+--
+-- AUTO_INCREMENT de la tabla `detalle_cotizaciones`
+--
+ALTER TABLE `detalle_cotizaciones`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `empleados`
