@@ -19,7 +19,6 @@ class CategoriaProductosController extends Controller
             $categorias = DB::table('categorias_productos')
                 ->select("categorias_productos.*", "empleados.nombre as creador", DB::raw("count(subcategorias_productos.id) as total_subs"))
                 ->join("empleados", "empleados.id", "=", "categorias_productos.created_by")
-                ->leftJoin("productos", "productos.categoria", "=", "categorias_productos.id")
                 ->leftJoin("subcategorias_productos", "subcategorias_productos.categoria", "=", "categorias_productos.id")
                 ->groupBy("categorias_productos.id", "categorias_productos.nombre", "categorias_productos.created_by", "categorias_productos.fecha", "creador")
                 ->get();
