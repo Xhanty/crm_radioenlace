@@ -116,7 +116,7 @@ $(document).ready(function () {
         let cliente = $("#cliente_add").val();
         let duracion = $("#duracion_add").val();
         let validez = $("#validez_add").val();
-        let tipo_entrega = $("#tiempo_add").val();
+        let tiempo_entrega = $("#tiempo_add").val();
         let forma_pago = $("#formapago_add").val();
         let descuento = $("#descuento_add").val();
         let descripcion_general = $("#descripcion_add").val();
@@ -158,7 +158,7 @@ $(document).ready(function () {
             if (
                 $(this).val() == null ||
                 $(this).val() == "" ||
-                $(this).val() <= 0
+                $(this).val() < 1
             ) {
                 valid_cantidad++;
             }
@@ -191,17 +191,10 @@ $(document).ready(function () {
             descripciones.push($(this).val());
         });
 
-        console.log(productos);
-        console.log(divisa);
-        console.log(tipo);
-        console.log(cantidad);
-        console.log(precio);
-        console.log(descripciones);
-
         if (valid_products > 0) {
             toastr.error("Debe ingresar todos los datos de los productos");
             return false;
-        } else if (valid_products > 0) {
+        } else if (valid_cantidad > 0) {
             toastr.error("La cantidad del producto debe ser mayor a 0");
             return false;
         } else {
@@ -214,16 +207,16 @@ $(document).ready(function () {
                     cliente: cliente,
                     duracion: duracion,
                     validez: validez,
-                    tipo_entrega: tipo_entrega,
+                    tiempo_entrega: tiempo_entrega,
                     forma_pago: forma_pago,
                     descuento: descuento,
                     descripcion_general: descripcion_general,
                     incluye: incluye,
                     productos: productos,
-                    divisa: divisa,
-                    cantidad: cantidad,
-                    tipo: tipo,
-                    precio: precio,
+                    divisas: divisa,
+                    cantidades: cantidad,
+                    tipos: tipo,
+                    precios: precio,
                     descripciones: descripciones,
                 },
                 success: function (response) {
@@ -245,5 +238,129 @@ $(document).ready(function () {
                 },
             });
         }
+    });
+
+    $(document).on("click", ".btnView", function () {
+        let id = $(this).data("id");
+        $("#global-loader").fadeIn("fast");
+        $.ajax({
+            type: "POST",
+            url: "cotizacion_data",
+            data: { id: id },
+            success: function (response) {
+                $("#global-loader").fadeOut("fast");
+                let data = response.data;
+
+                if (response.info == 1) {
+                    console.log(data);
+                } else {
+                    toastr.error("Error al cargar la cotización");
+                }
+            },
+            error: function (response) {
+                $("#global-loader").fadeOut("fast");
+                toastr.error("Error al cargar la cotización");
+            },
+        });
+    });
+
+    $(document).on("click", ".btnEdit", function () {
+        let id = $(this).data("id");
+        $("#global-loader").fadeIn("fast");
+        $.ajax({
+            type: "POST",
+            url: "cotizacion_data",
+            data: { id: id },
+            success: function (response) {
+                $("#global-loader").fadeOut("fast");
+                let data = response.data;
+
+                if (response.info == 1) {
+                    console.log(data);
+                } else {
+                    toastr.error("Error al cargar la cotización");
+                }
+            },
+            error: function (response) {
+                $("#global-loader").fadeOut("fast");
+                toastr.error("Error al cargar la cotización");
+            },
+        });
+    });
+
+    $(document).on("click", ".btnCompletar", function () {
+        let id = $(this).data("id");
+
+        Swal.fire({
+            title: "¿Está seguro de completar la cotización?",
+            text: "No podrá revertir esta acción",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, completar",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: "POST",
+                    url: "cotizacion_completar",
+                    data: { id: id },
+                    success: function (response) {
+                        if (response.info == 1) {
+                            toastr.success(
+                                "Cotización completada correctamente"
+                            );
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000);
+                        } else {
+                            toastr.error("Error al completar la cotización");
+                        }
+                    },
+                    error: function (response) {
+                        toastr.error("Error al completar la cotización");
+                    },
+                });
+            }
+        });
+    });
+
+    $(document).on("click", ".btnEliminar", function () {
+        let id = $(this).data("id");
+
+        Swal.fire({
+            title: "¿Está seguro de eliminar la cotización?",
+            text: "No podrá revertir esta acción",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, eliminar",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: "POST",
+                    url: "cotizacion_delete",
+                    data: { id: id },
+                    success: function (response) {
+                        if (response.info == 1) {
+                            toastr.success(
+                                "Cotización eliminada correctamente"
+                            );
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000);
+                        } else {
+                            toastr.error("Error al eliminar la cotización");
+                        }
+                    },
+                    error: function (response) {
+                        toastr.error("Error al eliminar la cotización");
+                    },
+                });
+            }
+        });
     });
 });
