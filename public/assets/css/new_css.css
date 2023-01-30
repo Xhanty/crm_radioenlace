@@ -128,3 +128,9 @@ td {
     border-top: 1px solid #ccc !important;
     padding-top: 20px;
 }
+
+.select2-results__option {
+    padding: 6px !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+}
