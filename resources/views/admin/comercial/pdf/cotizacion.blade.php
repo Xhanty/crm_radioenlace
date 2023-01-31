@@ -222,11 +222,14 @@
                 @php
                     $total = $productos[$i]->cantidad * $productos[$i]->precio;
                     $subtotal += $total;
+                    if ($productos[$i]->imagen == null || $productos[$i]->imagen == '') {
+                        $productos[$i]->imagen = 'noimagen.png';
+                    }
                 @endphp
                 @if ($i == count($productos) - 1)
                     <tr class="item last">
                         <td class="text-align-right">
-                            <img src="https://radioenlacesas.com/wp-content/uploads/2017/08/cropped-logoradioenlace-2.png"
+                            <img src="{{ public_path('images/productos/') }}{{ $productos[$i]->imagen }}"
                                 style="width:100%; max-width:50px;">
                         </td>
                         <td style="text-align: center;">
@@ -241,7 +244,7 @@
                 @else
                     <tr class="item">
                         <td class="text-align-right">
-                            <img src="https://radioenlacesas.com/wp-content/uploads/2017/08/cropped-logoradioenlace-2.png"
+                            <img src="{{ public_path('images/productos/') }}{{ $productos[$i]->imagen }}"
                                 style="width:100%; max-width:50px;">
                         </td>
                         <td style="text-align: center;">

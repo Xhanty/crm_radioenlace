@@ -14,11 +14,11 @@ use Illuminate\Mail\Markdown;
 |
 */
 
-Route::get('/mail', function () {
+/*Route::get('/mail', function () {
     $markdown = new Markdown(view(), config('mail.markdown'));
 
     return $markdown->render('emails.CotizacionMail');
-})->name('mail');
+})->name('mail');*/
 
 Route::get('/', function () {
     return view('auth.login');
@@ -181,6 +181,7 @@ Route::middleware(['auth_user'])->group(function () {
     // COMERCIAL
     Route::get('/ordenes_compra', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'index'])->name('ordenes_compra');
     Route::get('/cotizaciones', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'index'])->name('cotizaciones');
+    Route::get('/cotizaciones_print', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'print'])->name('cotizaciones_print');
     Route::post('/cotizacion_data', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'data'])->name('cotizacion_data');
     Route::post('/cotizacion_create', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'create'])->name('cotizacion_create');
     Route::post('/cotizacion_edit', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'edit'])->name('cotizacion_edit');

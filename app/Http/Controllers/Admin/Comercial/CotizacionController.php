@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class CotizacionController extends Controller
 {
@@ -252,5 +253,34 @@ class CotizacionController extends Controller
             return $ex->getMessage();
             return response()->json(['info' => 0, 'error' => 'Error al eliminar la cotización']);
         }
+    }
+
+    public function print(Request $request)
+    {
+        $id = $request->get('token');
+
+        if (!$id || $id < 1) {
+            return view('errors.404');
+        }
+
+        $cotizacion = DB::table('cotizaciones')
+            ->select('cotizaciones.*', 'cliente.razon_social', 'cliente.nit', 'cliente.ciudad', 'cliente.codigo_verificacion')
+            ->join('cliente', 'cliente.id', 'cotizaciones.cliente_id')
+            ->where('cotizaciones.id', $id)
+            ->first();
+
+        if (!$cotizacion) {
+            return view('errors.404');
+        }
+
+        $productos = DB::table('detalle_cotizaciones')
+            ->select('detalle_cotizaciones.*', 'productos.nombre as producto', 'productos.imagen')
+            ->join('productos', 'productos.id', 'detalle_cotizaciones.producto_id')
+            ->where('detalle_cotizaciones.cotizacion_id', $id)
+            ->get();
+
+        $pdf = PDF::loadView('admin.comercial.pdf.cotizacion', compact('cotizacion', 'productos'));
+
+        return $pdf->stream('cotizacion.pdf');
     }
 }
