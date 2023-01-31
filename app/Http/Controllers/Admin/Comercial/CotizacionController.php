@@ -23,7 +23,7 @@ class CotizacionController extends Controller
                 ->get();
 
             $productos = DB::table('productos')
-                ->select('id', 'nombre')
+                ->select('id', 'nombre', 'marca', 'modelo')
                 ->where('status', 1)
                 ->get();
 

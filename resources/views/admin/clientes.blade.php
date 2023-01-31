@@ -53,6 +53,7 @@
                                     <tr>
                                         <th></th>
                                         <th>Razon Social</th>
+                                        <th>Nit</th>
                                         <th>Contacto</th>
                                         <th>Celular</th>
                                         <th>E-Mail</th>

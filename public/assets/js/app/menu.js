@@ -293,6 +293,9 @@ $(function () {
                 data: "razon_social",
             },
             {
+                data: "nit",
+            },
+            {
                 data: "contacto",
             },
             {

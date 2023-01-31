@@ -229,7 +229,7 @@
                                                         <option value="">Seleccione un producto</option>
                                                         @foreach ($productos as $producto)
                                                             <option value="{{ $producto->id }}">
-                                                                {{ $producto->nombre }}</option>
+                                                                {{ $producto->nombre }} ({{ $producto->marca }} - {{ $producto->modelo }})</option>
                                                         @endforeach
                                                     </select>
                                                     <input title="Cantidad" class="form-control mt-3 cantidad_add"
@@ -516,7 +516,7 @@
             </div>
         </div>
 
-        <!-- Modal Add -->
+        <!-- Modal Email -->
         <div class="modal  fade" id="modalEmail">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content modal-content-demo">

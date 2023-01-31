@@ -19,6 +19,7 @@ $(document).ready(function () {
                 producto.id +
                 '">' +
                 producto.nombre +
+                ' (' + producto.marca + ' - '  + producto.modelo + ')' +
                 "</option>"
             );
         }) +
@@ -70,6 +71,7 @@ $(document).ready(function () {
                 producto.id +
                 '">' +
                 producto.nombre +
+                ' (' + producto.marca + ' - ' + producto.modelo + ')' +
                 "</option>"
             );
         }) +
@@ -649,6 +651,7 @@ $(document).ready(function () {
                                         producto.id +
                                         '">' +
                                         producto.nombre +
+                                        ' (' + producto.marca + ' - ' + producto.modelo + ')' +
                                         "</option>"
                                     );
                                 }) +
