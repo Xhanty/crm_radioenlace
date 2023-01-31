@@ -179,44 +179,6 @@ class InventarioController extends Controller
         }
     }
 
-    public function actividades_inventario()
-    {
-        try {
-            if (!auth()->user()->hasPermissionTo('gestion_actividades_inventario')) {
-                return redirect()->route('home');
-            }
-
-            return view('admin.inventario.actividades');
-        } catch (Exception $ex) {
-            return view('errors.500');
-        }
-    }
-
-    public function actividades_inventario_list(Request $request)
-    {
-        if ($request->ajax()) {
-            $data = DB::table("actividad_productos")
-                ->select('actividad_productos.*', 'empleados.nombre as empleado', 'productos.imagen as img_producto', 'productos.nombre as producto')
-                ->join("inventario", "actividad_productos.id_inventario", "=", "inventario.id")
-                ->join("productos", "inventario.id_producto", "=", "productos.id")
-                ->join("empleados", "actividad_productos.id_usuario", "=", "empleados.id")
-                ->orderBy('actividad_productos.id', 'desc')
-                ->get();
-            return Datatables::of($data)
-                ->addIndexColumn()
-                ->addColumn('action', function ($row) {
-                    $actionBtn = '';
-                    if ($row->tipo == 3 || $row->tipo == 5 || $row->tipo == 4) {
-                        $actionBtn = '<a data-id="' . $row->id . '" title="Reingresar Producto" class="delete btn btn-primary btn-sm btn_Reingreso"><i class="fas fa-exchange-alt"></i></a>';
-                    }
-
-                    return $actionBtn;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
-    }
-
     public function baja_producto(Request $request)
     {
         try {

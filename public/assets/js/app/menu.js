@@ -243,63 +243,6 @@ $(function () {
         language: language,
     });
 
-    $("#tbl_actividades_inventario").DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "actividades_inventario_list",
-        columns: [
-            { data: "empleado", name: "empleado" },
-            {
-                data: null,
-                render: function (data) {
-                    var img =
-                        '<div><img src="' +
-                        url_general +
-                        "images/productos/" +
-                        data.img_producto +
-                        '" loading="lazy" id="img_tbl_resize" /></div>' +
-                        "<div>" +
-                        data.producto +
-                        "</div>";
-
-                    return img;
-                },
-            },
-            { data: "cantidad", name: "cantidad" },
-            { data: "fecha", name: "fecha" },
-            {
-                data: null,
-                render: function (data) {
-                    if (data.tipo == 0) {
-                        return "Existente";
-                    } else if (data.tipo == 1) {
-                        return "Compra";
-                    } else if (data.tipo == 2) {
-                        return "Venta";
-                    } else if (data.tipo == 3) {
-                        return "Alquiler";
-                    } else if (data.tipo == 4) {
-                        return "Prestamo";
-                    } else if (data.tipo == 5) {
-                        return "Asignado a Empleado";
-                    } else if (data.tipo == 6) {
-                        return "Instalación";
-                    } else {
-                        return "Otro";
-                    }
-                },
-            },
-            {
-                data: "action",
-                name: "action",
-                orderable: true,
-                searchable: true,
-            },
-        ],
-        language: language,
-        order: [],
-    });
-
     var table_clientes = $("#table_clientes_img").DataTable({
         dom:
             "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'<'float-md-right ml-2'B>f>>" +

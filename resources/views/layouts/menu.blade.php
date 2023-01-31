@@ -295,8 +295,7 @@
                                     'gestion_categorias_inventario|' .
                                         'gestion_almacenes_inventario|' .
                                         'gestion_productos_inventario|' .
-                                        'gestion_inventario|' .
-                                        'gestion_actividades_inventario'))
+                                        'gestion_inventario'))
                             <li class="slide">
                                 <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
                                         class="side-menu__icon fe fe-package"></i><span
@@ -320,11 +319,6 @@
                                                 /
                                                 Stock</a>
                                         </li>
-                                    @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_actividades_inventario'))
-                                        <li><a class="slide-item"
-                                                href="{{ route('actividades_inventario') }}">Actividades
-                                                Inventario</a></li>
                                     @endif
                                 </ul>
                             </li>

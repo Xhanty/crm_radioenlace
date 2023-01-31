@@ -134,9 +134,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/baja_producto', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'baja_producto'])->name('baja_producto');
     Route::post('/delete_producto', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'delete_producto'])->name('delete_producto');
     Route::post('/productos_edit', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'productos_edit'])->name('productos_edit');
-    Route::get('/actividades_inventario', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'actividades_inventario'])->name('actividades_inventario');
-    Route::get('/actividades_inventario_list', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'actividades_inventario_list'])->name('actividades_inventario_list');
-
+    
     // MOVIMIENTOS DE INVENTARIO
     Route::get('/productos_baja', [App\Http\Controllers\Admin\MovimientoInv\ProductosController::class, 'productos_baja'])->name('productos_baja');
     Route::get('/repuestos_reparacion', [App\Http\Controllers\Admin\MovimientoInv\RepuestosController::class, 'index'])->name('repuestos_reparacion');
