@@ -53,14 +53,14 @@
                                             <td>{{ date('d-m-Y g:i A', strtotime($cotizacion->created_at)) }}</td>
                                             <td>{{ $cotizacion->productos }}</td>
                                             <td>
-                                                <a href="#" data-id="{{ $cotizacion->id }}" title="Ver Detalles"
+                                                <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}" title="Ver Detalles"
                                                     class="btn btn-primary btn-sm btnView"><i class="fa fa-eye"></i></a>
-                                                <a href="#" data-id="{{ $cotizacion->id }}" title="Modificar"
+                                                <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}" title="Modificar"
                                                     class="btn btn-warning btn-sm btnEdit"><i class="fa fa-edit"></i></a>
-                                                <a href="#" data-id="{{ $cotizacion->id }}" title="Completar"
+                                                <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}" title="Completar"
                                                     class="btn btn-success btn-sm btnCompletar"><i
                                                         class="fa fa-check"></i></a>
-                                                <a href="#" data-id="{{ $cotizacion->id }}" title="Eliminar"
+                                                <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}" title="Eliminar"
                                                     class="btn btn-danger btn-sm btnEliminar"><i
                                                         class="fa fa-trash"></i></a>
                                             </td>
@@ -108,14 +108,14 @@
                                             <td>{{ date('d-m-Y g:i A', strtotime($cotizacion->created_at)) }}</td>
                                             <td>{{ $cotizacion->productos }}</td>
                                             <td>
-                                                <a href="#" data-id="{{ $cotizacion->id }}" title="Ver Detalles"
+                                                <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}" title="Ver Detalles"
                                                     class="btn btn-primary btn-sm btnView"><i class="fa fa-eye"></i></a>
-                                                <a href="#" data-id="{{ $cotizacion->id }}" title="Modificar"
+                                                <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}" title="Modificar"
                                                     class="btn btn-danger btn-sm btnEdit"><i class="fa fa-edit"></i></a>
-                                                <a href="#" data-id="{{ $cotizacion->id }}" title="Enviar por correo"
+                                                <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}" title="Enviar por correo"
                                                     class="btn btn-success btn-sm btnEmail"><i
                                                         class="fa fa-envelope"></i></a>
-                                                <a href="#" data-id="{{ $cotizacion->id }}" title="Imprimir"
+                                                <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}" title="Imprimir"
                                                     class="btn btn-warning btn-sm btnPrint"><i
                                                         class="fa fa-print"></i></a>
                                             </td>
