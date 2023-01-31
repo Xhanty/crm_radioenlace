@@ -85,6 +85,7 @@ class GestionController extends Controller
     {
         try {
             $tipo = $request->tipo;
+            $codigo_interno = $request->codigo_interno;
             $almacen_id = $request->almacen_id;
             $proveedor_id = $request->proveedor_id;
             $producto_id = $request->producto_id;
@@ -98,7 +99,8 @@ class GestionController extends Controller
             if ($serial != 0 && $serial > 0) {
                 $cantidad_old = DB::table('inventario')->where("id", $serial)->first();
                 DB::table('inventario')->where("id", $serial)->update([
-                    'cantidad' => $cantidad_old->cantidad + $cantidad
+                    'cantidad' => $cantidad_old->cantidad + $cantidad,
+                    'codigo_interno' => $codigo_interno ? $codigo_interno : null,
                 ]);
 
                 DB::table('movimientos_inventario')->insert([
@@ -116,6 +118,7 @@ class GestionController extends Controller
             } else {
                 $inventario_id = DB::table('inventario')->insertGetId([
                     'producto_id' => $producto_id,
+                    'codigo_interno' => $codigo_interno ? $codigo_interno : null,
                     'serial' => $serial_compra,
                     'cantidad' => $cantidad,
                     'status' => 1,

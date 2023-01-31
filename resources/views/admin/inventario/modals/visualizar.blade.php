@@ -1,5 +1,5 @@
 <div class="modal  fade" id="modalVisualizar">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content modal-content-demo">
             <div class="modal-header">
                 <h6 class="modal-title" id="title_prodc_view">Ver Producto</h6><button aria-label="Close" class="btn-close"
@@ -28,6 +28,7 @@
                                         id="tbl_seriales_view">
                                         <thead>
                                             <tr>
+                                                <th class="border-bottom-0">Código Interno</th>
                                                 <th class="border-bottom-0">Serial</th>
                                                 <th class="border-bottom-0">Ubicación</th>
                                                 <th class="border-bottom-0">Disponible</th>

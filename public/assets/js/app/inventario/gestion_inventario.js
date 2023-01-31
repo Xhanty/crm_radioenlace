@@ -52,18 +52,17 @@ $(document).ready(function () {
                         }
 
                         let tr = `<tr>
+                            <td>${element.codigo_interno ? element.codigo_interno : ""}</td>
                             <td>${element.serial}</td>
                             <td>Cargando...</td>
                             <td>${element.cantidad}</td>
                             <td>${estado}</td>
                             <td>
-                            <a href="${
-                                url_general +
-                                "historial_serial?token=" +
-                                element.id
+                            <a href="${url_general +
+                            "historial_serial?token=" +
+                            element.id
                             }" target="_blank" class="btn btn-success btn-sm" title="Ver Historial"><i class="fa fa-book"></i></a>
-                            <a data-id="${
-                                element.id
+                            <a data-id="${element.id
                             }" class="btn btn-danger btn-sm btn_EliminarSerial" title="Eliminar"><i class="fa fa-trash"></i></a>
                             </td>
                             </tr>`;
@@ -165,10 +164,10 @@ $(document).ready(function () {
                         if (response.info == 1) {
                             $("#title_prodc_compra").text(
                                 data.nombre +
-                                    " " +
-                                    data.marca +
-                                    " - " +
-                                    data.modelo
+                                " " +
+                                data.marca +
+                                " - " +
+                                data.modelo
                             );
                             $("#imagen_compra").attr(
                                 "src",
@@ -181,13 +180,13 @@ $(document).ready(function () {
                             inventario.forEach((element) => {
                                 $("#serialexistente_compra").append(
                                     "<option value='" +
-                                        element.id +
-                                        "'>" +
-                                        element.serial +
-                                        " (Cantidad: " +
-                                        element.cantidad +
-                                        ")" +
-                                        "</option>"
+                                    element.id +
+                                    "'>" +
+                                    element.serial +
+                                    " (Cantidad: " +
+                                    element.cantidad +
+                                    ")" +
+                                    "</option>"
                                 );
                             });
 
@@ -216,10 +215,10 @@ $(document).ready(function () {
                         if (response.info == 1) {
                             $("#title_prodc_reingreso").text(
                                 data.nombre +
-                                    " " +
-                                    data.marca +
-                                    " - " +
-                                    data.modelo
+                                " " +
+                                data.marca +
+                                " - " +
+                                data.modelo
                             );
                             $("#imagen_reingreso").attr(
                                 "src",
@@ -247,16 +246,16 @@ $(document).ready(function () {
 
                                     $("#producto_reingreso").append(
                                         "<option data-cantidad='" +
-                                            element2.cantidad +
-                                            "' value='" +
-                                            element2.id +
-                                            "'>" +
-                                            element.serial +
-                                            " | (Cantidad: " +
-                                            element2.cantidad +
-                                            ") - " +
-                                            tipo +
-                                            "</option>"
+                                        element2.cantidad +
+                                        "' value='" +
+                                        element2.id +
+                                        "'>" +
+                                        element.serial +
+                                        " | (Cantidad: " +
+                                        element2.cantidad +
+                                        ") - " +
+                                        tipo +
+                                        "</option>"
                                     );
                                 });
                             });
@@ -281,6 +280,7 @@ $(document).ready(function () {
 
     $("#btnCompraProducto").click(function () {
         let producto_id = $("#producto_id_compra").val();
+        let codigo_interno = $("#codigo_interno_compra").val();
         let serial = $("#serialexistente_compra").val();
         let proveedor = $("#proveedor_compra").val();
         let precio_venta = $("#precioventa_compra").val();
@@ -296,13 +296,16 @@ $(document).ready(function () {
             }
         }
 
-        if (cantidad == "" || cantidad < 1) {
+        if (codigo_interno.trim().length == 0) {
+            toastr.error("Debe ingresar el código interno del producto");
+            return false;
+        } else if (cantidad == "" || cantidad < 1) {
             toastr.error("Debe ingresar una cantidad valida");
             return false;
         } else {
             $("#btnCompraProducto").attr("disabled", true);
 
-            if(proveedor == "*" || proveedor == "") {
+            if (proveedor == "*" || proveedor == "") {
                 proveedor = null;
             }
             $.ajax({
@@ -310,6 +313,7 @@ $(document).ready(function () {
                 type: "POST",
                 data: {
                     tipo: 0,
+                    codigo_interno: codigo_interno,
                     proveedor_id: proveedor,
                     almacen_id: id_almacen_ingreso,
                     producto_id: producto_id,
@@ -431,10 +435,10 @@ $(document).ready(function () {
                         if (response.info == 1) {
                             $("#title_prodc_alquiler").text(
                                 data.nombre +
-                                    " " +
-                                    data.marca +
-                                    " - " +
-                                    data.modelo
+                                " " +
+                                data.marca +
+                                " - " +
+                                data.modelo
                             );
                             $("#imagen_alquiler").attr(
                                 "src",
@@ -446,15 +450,15 @@ $(document).ready(function () {
                                 if (element.cantidad > 0) {
                                     $("#serial_alquiler").append(
                                         "<option data-cantidad='" +
-                                            element.cantidad +
-                                            "' value='" +
-                                            element.id +
-                                            "'>" +
-                                            element.serial +
-                                            " (Cantidad: " +
-                                            element.cantidad +
-                                            ")" +
-                                            "</option>"
+                                        element.cantidad +
+                                        "' value='" +
+                                        element.id +
+                                        "'>" +
+                                        element.serial +
+                                        " (Cantidad: " +
+                                        element.cantidad +
+                                        ")" +
+                                        "</option>"
                                     );
                                 }
                             });
@@ -485,10 +489,10 @@ $(document).ready(function () {
                         if (response.info == 1) {
                             $("#title_prodc_asignado").text(
                                 data.nombre +
-                                    " " +
-                                    data.marca +
-                                    " - " +
-                                    data.modelo
+                                " " +
+                                data.marca +
+                                " - " +
+                                data.modelo
                             );
                             $("#imagen_asignado").attr(
                                 "src",
@@ -500,15 +504,15 @@ $(document).ready(function () {
                                 if (element.cantidad > 0) {
                                     $("#serial_asignado").append(
                                         "<option data-cantidad='" +
-                                            element.cantidad +
-                                            "' value='" +
-                                            element.id +
-                                            "'>" +
-                                            element.serial +
-                                            " (Cantidad: " +
-                                            element.cantidad +
-                                            ")" +
-                                            "</option>"
+                                        element.cantidad +
+                                        "' value='" +
+                                        element.id +
+                                        "'>" +
+                                        element.serial +
+                                        " (Cantidad: " +
+                                        element.cantidad +
+                                        ")" +
+                                        "</option>"
                                     );
                                 }
                             });
@@ -539,10 +543,10 @@ $(document).ready(function () {
                         if (response.info == 1) {
                             $("#title_prodc_prestamo").text(
                                 data.nombre +
-                                    " " +
-                                    data.marca +
-                                    " - " +
-                                    data.modelo
+                                " " +
+                                data.marca +
+                                " - " +
+                                data.modelo
                             );
                             $("#imagen_prestamo").attr(
                                 "src",
@@ -554,15 +558,15 @@ $(document).ready(function () {
                                 if (element.cantidad > 0) {
                                     $("#serial_prestamo").append(
                                         "<option data-cantidad='" +
-                                            element.cantidad +
-                                            "' value='" +
-                                            element.id +
-                                            "'>" +
-                                            element.serial +
-                                            " (Cantidad: " +
-                                            element.cantidad +
-                                            ")" +
-                                            "</option>"
+                                        element.cantidad +
+                                        "' value='" +
+                                        element.id +
+                                        "'>" +
+                                        element.serial +
+                                        " (Cantidad: " +
+                                        element.cantidad +
+                                        ")" +
+                                        "</option>"
                                     );
                                 }
                             });
@@ -593,10 +597,10 @@ $(document).ready(function () {
                         if (response.info == 1) {
                             $("#title_prodc_instalar").text(
                                 data.nombre +
-                                    " " +
-                                    data.marca +
-                                    " - " +
-                                    data.modelo
+                                " " +
+                                data.marca +
+                                " - " +
+                                data.modelo
                             );
                             $("#imagen_instalar").attr(
                                 "src",
@@ -608,15 +612,15 @@ $(document).ready(function () {
                                 if (element.cantidad > 0) {
                                     $("#serial_instalar").append(
                                         "<option data-cantidad='" +
-                                            element.cantidad +
-                                            "' value='" +
-                                            element.id +
-                                            "'>" +
-                                            element.serial +
-                                            " (Cantidad: " +
-                                            element.cantidad +
-                                            ")" +
-                                            "</option>"
+                                        element.cantidad +
+                                        "' value='" +
+                                        element.id +
+                                        "'>" +
+                                        element.serial +
+                                        " (Cantidad: " +
+                                        element.cantidad +
+                                        ")" +
+                                        "</option>"
                                     );
                                 }
                             });
@@ -647,10 +651,10 @@ $(document).ready(function () {
                         if (response.info == 1) {
                             $("#title_prodc_vender").text(
                                 data.nombre +
-                                    " " +
-                                    data.marca +
-                                    " - " +
-                                    data.modelo
+                                " " +
+                                data.marca +
+                                " - " +
+                                data.modelo
                             );
                             $("#imagen_vender").attr(
                                 "src",
@@ -662,15 +666,15 @@ $(document).ready(function () {
                                 if (element.cantidad > 0) {
                                     $("#serial_vender").append(
                                         "<option data-cantidad='" +
-                                            element.cantidad +
-                                            "' value='" +
-                                            element.id +
-                                            "'>" +
-                                            element.serial +
-                                            " (Cantidad: " +
-                                            element.cantidad +
-                                            ")" +
-                                            "</option>"
+                                        element.cantidad +
+                                        "' value='" +
+                                        element.id +
+                                        "'>" +
+                                        element.serial +
+                                        " (Cantidad: " +
+                                        element.cantidad +
+                                        ")" +
+                                        "</option>"
                                     );
                                 }
                             });
@@ -701,10 +705,10 @@ $(document).ready(function () {
                         if (response.info == 1) {
                             $("#title_prodc_danado").text(
                                 data.nombre +
-                                    " " +
-                                    data.marca +
-                                    " - " +
-                                    data.modelo
+                                " " +
+                                data.marca +
+                                " - " +
+                                data.modelo
                             );
                             $("#imagen_danado").attr(
                                 "src",
@@ -716,15 +720,15 @@ $(document).ready(function () {
                                 if (element.cantidad > 0) {
                                     $("#serial_danado").append(
                                         "<option data-cantidad='" +
-                                            element.cantidad +
-                                            "' value='" +
-                                            element.id +
-                                            "'>" +
-                                            element.serial +
-                                            " (Cantidad: " +
-                                            element.cantidad +
-                                            ")" +
-                                            "</option>"
+                                        element.cantidad +
+                                        "' value='" +
+                                        element.id +
+                                        "'>" +
+                                        element.serial +
+                                        " (Cantidad: " +
+                                        element.cantidad +
+                                        ")" +
+                                        "</option>"
                                     );
                                 }
                             });

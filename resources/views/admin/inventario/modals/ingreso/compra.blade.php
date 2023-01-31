@@ -20,9 +20,6 @@
                             <option value="0">Ninguno</option>
                         </select>
                     </div>
-                </div>
-                <br>
-                <div class="row row-sm">
                     <div class="col-lg">
                         <label for="">Proveedor (Opcional)</label>
                         <select id="proveedor_compra" class="form-select">
@@ -36,12 +33,8 @@
                 <br>
                 <div class="row row-sm">
                     <div class="col-lg">
-                        <label for="">Precio Venta (Opcional)</label>
-                        <input type="text" class="form-control" id="precioventa_compra">
-                    </div>
-                    <div class="col-lg">
-                        <label for="">Precio Compra (Opcional)</label>
-                        <input type="text" class="form-control" id="preciocompra_compra">
+                        <label for="">Código Interno</label>
+                        <input type="text" class="form-control" id="codigo_interno_compra">
                     </div>
                 </div>
                 <br>
@@ -53,6 +46,17 @@
                     <div class="col-lg">
                         <label for="">Cantidad</label>
                         <input type="number" min="1" step="1" class="form-control" id="cantidad_compra">
+                    </div>
+                </div>
+                <br>
+                <div class="row row-sm">
+                    <div class="col-lg">
+                        <label for="">Precio Venta (Opcional)</label>
+                        <input type="text" class="form-control" id="precioventa_compra">
+                    </div>
+                    <div class="col-lg">
+                        <label for="">Precio Compra (Opcional)</label>
+                        <input type="text" class="form-control" id="preciocompra_compra">
                     </div>
                 </div>
                 <br>
