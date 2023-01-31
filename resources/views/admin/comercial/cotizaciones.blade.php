@@ -116,7 +116,7 @@
                                                     class="btn btn-success btn-sm btnEmail"><i
                                                         class="fa fa-envelope"></i></a>
                                                 <a href="#" data-id="{{ $cotizacion->id }}" title="Imprimir"
-                                                    class="btn btn-warning btn-sm btnEliminar"><i
+                                                    class="btn btn-warning btn-sm btnPrint"><i
                                                         class="fa fa-print"></i></a>
                                             </td>
                                         </tr>
