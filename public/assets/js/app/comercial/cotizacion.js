@@ -59,6 +59,65 @@ $(document).ready(function () {
         "</div>" +
         "</div>";
 
+    let concat_edit =
+        '<div class="row row-sm mt-3 border-top-color">' +
+        '<div class="col-6">' +
+        '<select title="Producto" class="form-select producto_edit">' +
+        '<option value="">Seleccione un producto</option>' +
+        productos.map((producto) => {
+            return (
+                '<option value="' +
+                producto.id +
+                '">' +
+                producto.nombre +
+                "</option>"
+            );
+        }) +
+        "</select>" +
+        '<input title="Cantidad" class="form-control mt-3 cantidad_edit" type="number" min="1" step="1"' +
+        'placeholder="Cantidad">' +
+        '<input title="Precio" class="form-control mt-3 precio_edit" type="text"' +
+        'placeholder="Precio">' +
+        "</div>" +
+        '<div class="col-6">' +
+        '<div class="d-flex">' +
+        '<div class="col-lg">' +
+        '<select title="Tipo Divisa" class="form-select divisa_edit">' +
+        '<option value="">Seleccione un tipo de divisa' +
+        "</option>" +
+        '<option value="1">COP</option>' +
+        '<option value="2">USD</option>' +
+        "</select>" +
+        '<div class="mt-3">' +
+        '<select title="Tipo Transacción" class="form-select mt-2 tipo_edit">' +
+        '<option value="">Seleccione un tipo' +
+        "</option>" +
+        '<option value="1">Alquiler</option>' +
+        '<option value="2">Transporte</option>' +
+        '<option value="3">Venta</option>' +
+        '<option value="4">Visita Tecnica</option>' +
+        "</select>" +
+        "</div>" +
+        '<textarea title="Descripción" class="form-control mt-3 descripcion_edit" placeholder="Descripción" rows="3"' +
+        'style="height: 60px; resize: none"></textarea>' +
+        "</div>" +
+        '<div class="d-flex">' +
+        '<a class="center-vertical mg-s-10 delete_edit_row_producto" href="javascript:void(0)">' +
+        '<i class="fa fa-trash"></i>' +
+        "</a>" +
+        "</div>" +
+        "</div>" +
+        "</div>" +
+        "</div>";
+
+    let concat_email =
+        '<div class="row row-sm mt-2">' +
+        '<div class="col-lg" style="display: flex">' +
+        '<input class="form-control emailadd" placeholder="Email" type="email">' +
+        '<a class="center-vertical mg-s-10 btn_delete_row_email" href="javascript:void(0)"><i class="fa fa-trash"></i></a>' +
+        "</div>" +
+        "</div>";
+
     $(".open-toggle").trigger("click");
 
     $("#new_row_producto").click(function () {
@@ -73,7 +132,31 @@ $(document).ready(function () {
         });
     });
 
+    $(document).on("click", "#new_edit_row_producto", function () {
+        $("#div_list_productos_edit").append(concat_edit);
+
+        $(".form-select").each(function () {
+            $(this).select2({
+                dropdownParent: $(this).parent(),
+                placeholder: "Seleccione una opción",
+                searchInputPlaceholder: "Buscar",
+            });
+        });
+    });
+
     $(document).on("click", ".delete_row_producto", function () {
+        $(this).closest(".row").remove();
+    });
+
+    $(document).on("click", ".delete_edit_row_producto", function () {
+        $(this).closest(".row").remove();
+    });
+
+    $("#new_row_email").click(function () {
+        $("#div_list_email").append(concat_email);
+    });
+
+    $(document).on("click", ".btn_delete_row_email", function () {
         $(this).closest(".row").remove();
     });
 
@@ -540,26 +623,36 @@ $(document).ready(function () {
                     if (productos_data.length > 0) {
                         let html = "";
                         for (let i = 0; i < productos_data.length; i++) {
+                            let button = '<div class="d-flex">' +
+                                '<a class="center-vertical mg-s-10" href="javascript:void(0)" id="new_edit_row_producto">' +
+                                '<i class="fa fa-plus"></i>' +
+                                '</a>' +
+                                '</div>';
                             let spacing = "";
 
                             if (i > 0) {
                                 spacing = "mt-3";
+                                button = '<div class="d-flex">' +
+                                    '<a class="center-vertical mg-s-10 delete_edit_row_producto" href="javascript:void(0)">' +
+                                    '<i class="fa fa-trash"></i>' +
+                                    '</a>' +
+                                    '</div>';
                             }
 
                             html += `<div class="row row-sm ${spacing} border-top-color">
                                         <div class="col-6">
                                             <select data-value="${productos_data[i].producto_id}" title="Producto" class="form-select producto_edit">
                                             <option value="">Seleccione un producto</option>` +
-                                            productos.map((producto) => {
-                                                return (
-                                                    '<option value="' +
-                                                    producto.id +
-                                                    '">' +
-                                                    producto.nombre +
-                                                    "</option>"
-                                                );
-                                            }) +
-                                            `</select>
+                                productos.map((producto) => {
+                                    return (
+                                        '<option value="' +
+                                        producto.id +
+                                        '">' +
+                                        producto.nombre +
+                                        "</option>"
+                                    );
+                                }) +
+                                `</select>
                                             <input title="Cantidad" class="form-control mt-3 cantidad_edit" value="${productos_data[i].cantidad}" type="number" min="1"
                                                 step="1" placeholder="Cantidad">
                                             <input title="Precio" class="form-control mt-3 precio_edit" value="${productos_data[i].precio}" type="text" placeholder="Precio">
@@ -581,8 +674,9 @@ $(document).ready(function () {
                                                             <option value="4">Visita Tecnica</option>
                                                         </select>
                                                     </div>
-                                                    <textarea title="Descripción" class="form-control mt-3 descripcion_edit" placeholder="Descripción" rows="3" style="height: 60px; resize: none">${productos[i].descripcion ? productos[i].descripcion : ''}</textarea>
+                                                    <textarea title="Descripción" class="form-control mt-3 descripcion_edit" placeholder="Descripción" rows="3" style="height: 60px; resize: none">${productos_data[i].descripcion ? productos_data[i].descripcion : ''}</textarea>
                                                 </div>
+                                                ${button}
                                             </div>
                                         </div>
                                     </div>`;
@@ -706,5 +800,9 @@ $(document).ready(function () {
                 });
             }
         });
+    });
+
+    $(document).on("click", ".btnEmail", function () {
+        $("#modalEmail").modal("show");
     });
 });

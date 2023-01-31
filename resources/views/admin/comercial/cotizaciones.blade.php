@@ -227,10 +227,11 @@
                                                                 {{ $producto->nombre }}</option>
                                                         @endforeach
                                                     </select>
-                                                    <input title="Cantidad" class="form-control mt-3 cantidad_add" type="number"
-                                                        min="1" step="1" placeholder="Cantidad">
-                                                    <input title="Precio" class="form-control mt-3 precio_add" type="text"
-                                                        placeholder="Precio">
+                                                    <input title="Cantidad" class="form-control mt-3 cantidad_add"
+                                                        type="number" min="1" step="1"
+                                                        placeholder="Cantidad">
+                                                    <input title="Precio" class="form-control mt-3 precio_add"
+                                                        type="text" placeholder="Precio">
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="d-flex">
@@ -242,7 +243,8 @@
                                                                 <option value="2">USD</option>
                                                             </select>
                                                             <div class="mt-3">
-                                                                <select title="Tipo Transacción" class="form-select mt-2 tipo_add">
+                                                                <select title="Tipo Transacción"
+                                                                    class="form-select mt-2 tipo_add">
                                                                     <option value="">Seleccione un tipo
                                                                     </option>
                                                                     <option value="1">Alquiler</option>
@@ -503,6 +505,35 @@
                                     </li>
                                 </ul>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Add -->
+        <div class="modal  fade" id="modalEmail">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Enviar Cotización</h6>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-sm">
+                            <label for="">Emails</label>
+                            <div class="col-lg" style="display: flex">
+                                <input class="form-control emailadd" placeholder="Email" type="email">
+                                <a class="center-vertical mg-s-10" href="javascript:void(0)" id="new_row_email"><i
+                                        class="fa fa-plus"></i></a>
+                            </div>
+                        </div>
+                        <div id="div_list_email"></div>
+                        <br>
+                        <div class="text-center">
+                            <button class="btn ripple btn-primary" id="btn_save_email" type="button">Enviar
+                                Cotización</button>
                         </div>
                     </div>
                 </div>
