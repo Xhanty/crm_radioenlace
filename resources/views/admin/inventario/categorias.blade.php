@@ -50,10 +50,10 @@
                                             <td>{{ $value->total_subs }}</td>
                                             <td>{{ $value->total_productos }}</td>
                                             <td>
-                                                <a data-id="{{ $value->id }}" data-nombre={{ $value->nombre }}
+                                                <a data-id="{{ $value->id }}" data-nombre="{{ $value->nombre }}"
                                                     title="Ver" class="view btn btn-primary btn-sm btn_View"><i
                                                         class="fa fa-eye"></i></a>
-                                                <a data-id="{{ $value->id }}" data-nombre={{ $value->nombre }}
+                                                <a data-id="{{ $value->id }}" data-nombre="{{ $value->nombre }}"
                                                     title="Editar" class="edit btn btn-primary btn-sm btn_Edit"><i
                                                         class="fa fa-pencil-alt"></i></a>
                                                 <a data-id="{{ $value->id }}"
