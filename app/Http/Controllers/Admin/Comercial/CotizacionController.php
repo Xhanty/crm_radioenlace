@@ -283,9 +283,11 @@ class CotizacionController extends Controller
             ->orderByRaw('detalle_cotizaciones.precio * 1 DESC')
             ->get();
 
-        $pdf = PDF::loadView('admin.comercial.pdf.cotizacion', compact('cotizacion', 'productos'));
+        $creador = DB::table('empleados')->where('id', $cotizacion->created_by)->first();
 
-        return $pdf->stream('cotizacion.pdf');
+        $pdf = PDF::loadView('admin.comercial.pdf.cotizacion', compact('cotizacion', 'productos', 'creador'));
+
+        return $pdf->stream($cotizacion->razon_social . ' - (' . $cotizacion->code . ') (' . date('d-m-Y', strtotime($cotizacion->created_at)) . ').pdf');
     }
 
     public function send(Request $request)
@@ -311,6 +313,8 @@ class CotizacionController extends Controller
                 ->orderByRaw('detalle_cotizaciones.precio * 1 DESC')
                 ->get();
 
+            $creador = DB::table('empleados')->where('id', $cotizacion->created_by)->first();
+            
             //$pdf = PDF::loadView('admin.comercial.pdf.cotizacion', compact('cotizacion', 'productos'))
 
             Mail::to($emails)->send(new CotizacionMail($cotizacion, $productos));

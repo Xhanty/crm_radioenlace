@@ -7,6 +7,10 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        html {
+            font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        }
+
         .invoice-box {
             max-width: 800px;
             height: 969px;
@@ -21,7 +25,7 @@
             background-attachment: fixed;
             background-position: center center;
             background-size: 60%;
-            opacity: 0.08;
+            opacity: 0.07;
         }
 
         .invoice-box table {
@@ -152,6 +156,102 @@
                 </td>
             </tr>
 
+            @if ($cotizacion->descripcion)
+                <tr class="heading">
+                    <td colspan="5">
+                        Descripción
+                    </td>
+                </tr>
+
+
+                <tr class="details">
+                    <td colspan="5" style="font-size: 15px; text-align: justify;">
+                        {{ $cotizacion->descripcion }}
+                    </td>
+                </tr>
+            @endif
+
+            <tr class="heading">
+                <td style="width: 100px; text-align: center;"></td>
+                <td style="text-align: center;">Producto</td>
+                <td style="text-align: center;">Cantidad</td>
+                <td class="text-align-right">Precio U.</td>
+                <td class="text-align-right">Precio Total</td>
+            </tr>
+
+            @php
+                $subtotal = 0;
+            @endphp
+
+            @for ($i = 0; $i < count($productos); $i++)
+                @php
+                    $total = $productos[$i]->cantidad * $productos[$i]->precio;
+                    $subtotal += $total;
+                    if ($productos[$i]->imagen == null || $productos[$i]->imagen == '') {
+                        $productos[$i]->imagen = 'noimagen.png';
+                    }
+                @endphp
+                @if ($i == count($productos) - 1)
+                    <tr>
+                        <td style="text-align: center; padding-top: 2%;">
+                            <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
+                                style="width:100%; max-width:100px; max-height: 120px">
+                        </td>
+                        <td style="text-align: center; padding-top: 3%;">
+                            <b>{{ $productos[$i]->producto }}</b>
+                        </td>
+                        <td style="text-align: center; padding-top: 3%">{{ $productos[$i]->cantidad }}</td>
+                        <td class="text-align-right" style="padding-top: 3%">
+                            {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
+                        <td class="text-align-right" style="padding-top: 3%">{{ number_format($total, 0, ',', '.') }}
+                        </td>
+                    </tr>
+                    <tr class="item">
+                        <td colspan="5">
+                            <p style="font-size: 14px; margin-top: 0px; text-align: justify">
+                                {{ $productos[$i]->descripcion }}
+                            </p>
+                        </td>
+                    </tr>
+                @else
+                    <tr>
+                        <td style="text-align: center; padding-top: 2%;">
+                            <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
+                                style="width:100%; max-width:100px; max-height: 120px">
+                        </td>
+                        <td style="text-align: center; padding-top: 3%;">
+                            <b>{{ $productos[$i]->producto }}</b>
+                        </td>
+                        <td style="text-align: center; padding-top: 3%;">{{ $productos[$i]->cantidad }}</td>
+                        <td class="text-align-right" style="padding-top: 3%">
+                            {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
+                        <td class="text-align-right" style="padding-top: 3%">{{ number_format($total, 0, ',', '.') }}
+                        </td>
+                    </tr>
+                    <tr class="item">
+                        <td colspan="5">
+                            <p style="font-size: 14px; margin-top: 0px; text-align: justify">
+                                {{ $productos[$i]->descripcion }}
+                            </p>
+                        </td>
+                    </tr>
+                @endif
+            @endfor
+
+            @php
+                $iva = $subtotal * 0.19;
+            @endphp
+
+            <tr class="total">
+                <td colspan="5" class="text-align-right">
+                    Subtotal: {{ number_format($subtotal, 0, ',', '.') }}<br />
+                    IVA: {{ number_format($iva, 0, ',', '.') }}<br />
+                    <b>Total: {{ number_format($subtotal + $iva, 0, ',', '.') }}</b>
+                </td>
+            </tr>
+
+            <br>
+
             @if ($cotizacion->duracion || $cotizacion->tiempo_entrega)
                 <tr class="heading">
                     <td colspan="2">
@@ -196,86 +296,115 @@
                 </tr>
             @endif
 
-            @if ($cotizacion->descripcion)
-                <tr class="heading">
-                    <td colspan="5">
-                        Descripción
-                    </td>
-                </tr>
-
-
-                <tr class="details">
-                    <td colspan="5" style="font-size: 15px; text-align: justify;">
-                        {{ $cotizacion->descripcion }}
-                    </td>
-                </tr>
-            @endif
-
             <tr class="heading">
-                <td style="width: 100px; text-align: center;"></td>
-                <td style="text-align: center;">Producto</td>
-                <td style="text-align: center;">Cantidad</td>
-                <td class="text-align-right">Precio U.</td>
-                <td class="text-align-right">Precio Total</td>
-            </tr>
-
-            @php
-                $subtotal = 0;
-            @endphp
-
-            @for ($i = 0; $i < count($productos); $i++)
-                @php
-                    $total = $productos[$i]->cantidad * $productos[$i]->precio;
-                    $subtotal += $total;
-                    if ($productos[$i]->imagen == null || $productos[$i]->imagen == '') {
-                        $productos[$i]->imagen = 'noimagen.png';
-                    }
-                @endphp
-                @if ($i == count($productos) - 1)
-                    <tr class="item last">
-                        <td style="text-align: center;">
-                            <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
-                                style="width:100%; max-width:100px;">
-                        </td>
-                        <td style="text-align: center;">
-                            <b>{{ $productos[$i]->producto }}</b> <br>
-                            <p style="font-size: 14px; margin-top: 0px; width: 265px; text-align: justify">{{ $productos[$i]->descripcion }}
-                            </p>
-                        </td>
-                        <td style="text-align: center;">{{ $productos[$i]->cantidad }}</td>
-                        <td class="text-align-right">{{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
-                        <td class="text-align-right">{{ number_format($total, 0, ',', '.') }}</td>
-                    </tr>
-                @else
-                    <tr class="item">
-                        <td style="text-align: center;">
-                            <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
-                                style="width:100%; max-width:100px;">
-                        </td>
-                        <td style="text-align: center;">
-                            <b>{{ $productos[$i]->producto }}</b>
-                            <p style="font-size: 14px; margin-top: 0px; width: 265px; text-align: justify">{{ $productos[$i]->descripcion }}
-                            </p>
-                        </td>
-                        <td style="text-align: center;">{{ $productos[$i]->cantidad }}</td>
-                        <td class="text-align-right">{{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
-                        <td class="text-align-right">{{ number_format($total, 0, ',', '.') }}</td>
-                    </tr>
-                @endif
-            @endfor
-
-            @php
-                $iva = $subtotal * 0.19;
-            @endphp
-
-            <tr class="total">
-                <td colspan="5" class="text-align-right">
-                    Subtotal: {{ number_format($subtotal, 0, ',', '.') }}<br />
-                    IVA: {{ number_format($iva, 0, ',', '.') }}<br />
-                    <b>Total: {{ number_format($subtotal + $iva, 0, ',', '.') }}</b>
+                <td colspan="5" style="text-align: center">
+                    CONDICIONES COMERCIALES DE PAGO
                 </td>
             </tr>
 
+            <tr class="details">
+                <td colspan="3" style="font-size: 15px; padding-left: 10px;">
+                    IVA del 19%
+                </td>
+
+                <td colspan="2" style="font-size: 15px; text-align: left">
+                    Incluido en la oferta.
+                </td>
+            </tr>
+
+            <tr class="details">
+                <td colspan="3" style="font-size: 15px; padding-left: 10px;">
+                    Moneda
+                </td>
+
+                <td colspan="2" style="font-size: 15px; text-align: left">
+                    Peso colombiano. (COP)
+                </td>
+            </tr>
+
+            <tr class="details">
+                <td colspan="3" style="font-size: 15px; padding-left: 10px;">
+                    Cuenta bancaria
+                </td>
+
+                <td colspan="2" style="font-size: 15px; text-align: left">
+                    Bancolombia <br>
+                    Cuenta de ahorros no. 555555555 <br>
+                    RADIO ENLACE S.A.S
+                </td>
+            </tr>
+
+            <tr class="details">
+                <td colspan="3" style="font-size: 15px; padding-left: 10px;">
+                    Garantía
+                </td>
+
+                <td colspan="2" style="font-size: 15px; text-align: left">
+                    6 meses
+                </td>
+            </tr>
+
+            <table cellpadding="0" width="500px"
+                style="border-collapse: collapse; font-size: 14.4px; bottom: 80; position: fixed;">
+                <tr>
+                    <td style="margin: 0.1px; padding: 0px;">
+                        <table cellpadding="0" style="border-collapse: collapse; font-size: 18px;">
+                            <tr>
+                                <td valign="top">
+                                    <img src="https://radioenlacesas.com/wp-content/uploads/2017/08/cropped-logoradioenlace-2.png"
+                                        width="120" style="display: block;">
+                                </td>
+                                <td valign="top"
+                                    style="border-left: 1px solid rgb(176, 70, 70); margin: 0.1px; padding: 0px 0px 0px 12px; color: rgb(124, 124, 124);">
+                                    <table cellpadding="0" style="border-collapse: collapse;">
+                                        <tr>
+                                            <td
+                                                style="margin: 0.1px; padding: 0px 0px 8px; color: #DD3932; font-size: 18px; margin-top: 5px">
+                                                {{ $creador->nombre }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="margin: 0.9px; padding: 0px;">
+                                                <table cellpadding="0" style="border-collapse: collapse;">
+                                                    <tr style="cursor: pointer;">
+                                                        <td
+                                                            style="margin: 0.1px; padding: 0px 5px 0px 0px; color: rgb(124, 124, 124);;">
+                                                            {{ $creador->cargo }} <br>
+                                                            Email: {{ $creador->email }}
+                                                        </td>
+                                                        <td
+                                                            style="margin: 0.1px; padding: 0px; color: rgb(124, 124, 124);">
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="cursor: pointer;">
+                                                        <td
+                                                            style="margin: 0.1px; padding: 0px 5px 0px 0px; color: rgb(124, 124, 124);;">
+                                                            Dirección: Medellín, Colombia
+                                                        </td>
+                                                        <td
+                                                            style="margin: 0.1px; padding: 0px; color: rgb(124, 124, 124);">
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="cursor: pointer; text-align: left;">
+                                                        <td
+                                                            style="margin: 0.1px; padding: 0px 5px 0px 0px; color: rgb(124, 124, 124);;">
+                                                            Celular: {{ $creador->telefono_celular }}
+                                                        </td>
+                                                        <td
+                                                            style="margin: 0.1px; padding: 0px; color: rgb(124, 124, 124);; text-align: left;">
+
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
         </table>
     </div>
 </body>
