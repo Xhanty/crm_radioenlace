@@ -13,14 +13,18 @@ class CotizacionMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $cotizacion;
+    public $productos;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($cotizacion, $productos)
     {
-        //
+        $this->cotizacion = $cotizacion;
+        $this->productos = $productos;
     }
 
     /**
@@ -31,7 +35,7 @@ class CotizacionMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Cotizacion Mail',
+            subject: 'Cotización Radio Enlace',
         );
     }
 

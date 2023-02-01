@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Artisan;
 
 /*Route::get('/mail', function () {
     $markdown = new Markdown(view(), config('mail.markdown'));
-
     return $markdown->render('emails.CotizacionMail');
 })->name('mail');*/
 

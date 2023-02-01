@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Comercial;
 
 use App\Http\Controllers\Controller;
 use App\Mail\Cotizacion;
+use App\Mail\CotizacionMail;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -308,11 +309,9 @@ class CotizacionController extends Controller
                 ->where('detalle_cotizaciones.cotizacion_id', $cotizacion->id)
                 ->get();
 
-            $pdf = PDF::loadView('admin.comercial.pdf.cotizacion', compact('cotizacion', 'productos'));
+            //$pdf = PDF::loadView('admin.comercial.pdf.cotizacion', compact('cotizacion', 'productos'))
 
-            $emails = explode(',', $emails);
-
-            //Mail::to($emails)->send(new Cotizacion($pdf, $cotizacion));
+            Mail::to($emails)->send(new CotizacionMail($cotizacion, $productos));
 
             return response()->json(['info' => 1, 'message' => 'Cotización enviada correctamente']);
         } catch (Exception $ex) {
