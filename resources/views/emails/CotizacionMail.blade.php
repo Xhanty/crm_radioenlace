@@ -18,6 +18,12 @@
         font-size: 16px;
         font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
         color: #555;
+        background-image: url("https://radioenlacesas.com/wp-content/uploads/2017/08/cropped-logoradioenlace-2.png");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center center;
+        background-size: 60%;
+        opacity: 0.08;
     }
 
     .invoice-box table {
@@ -239,8 +245,8 @@
                             </p>
                         </td>
                         <td style="text-align: center;">{{ $productos[$i]->cantidad }}</td>
-                        <td class="text-align-right">{{ number_format($productos[$i]->precio, 2) }}</td>
-                        <td class="text-align-right">{{ number_format($total, 2) }}</td>
+                        <td class="text-align-right">{{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
+                        <td class="text-align-right">{{ number_format($total, 0, ',', '.') }}</td>
                     </tr>
                 @else
                     <tr class="item">
@@ -255,8 +261,8 @@
                             </p>
                         </td>
                         <td style="text-align: center;">{{ $productos[$i]->cantidad }}</td>
-                        <td class="text-align-right">{{ number_format($productos[$i]->precio, 2) }}</td>
-                        <td class="text-align-right">{{ number_format($total, 2) }}</td>
+                        <td class="text-align-right">{{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
+                        <td class="text-align-right">{{ number_format($total, 0, ',', '.') }}</td>
                     </tr>
                 @endif
             @endfor
@@ -267,9 +273,9 @@
 
             <tr class="total">
                 <td colspan="5" class="text-align-right">
-                    Subtotal: {{ number_format($subtotal, 2) }}<br />
-                    IVA: {{ number_format($iva, 2) }}<br />
-                    <b>Total: {{ number_format($subtotal + $iva, 2) }}</b>
+                    Subtotal: {{ number_format($subtotal, 0, ',', '.') }}<br />
+                    IVA: {{ number_format($iva, 0, ',', '.') }}<br />
+                    <b>Total: {{ number_format($subtotal + $iva, 0, ',', '.') }}</b>
                 </td>
             </tr>
 

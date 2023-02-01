@@ -829,6 +829,7 @@ $(document).ready(function () {
             toastr.error("Debe ingresar un correo válido");
             return false;
         } else {
+            $("#btn_save_email").attr("disabled", true);
             $.ajax({
                 type: "POST",
                 url: "cotizacion_email",
@@ -836,13 +837,16 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response.info == 1) {
                         toastr.success("Correo enviado correctamente");
+                        $(".emailadd").val("");
                         $("#modalEmail").modal("hide");
                     } else {
                         toastr.error("Error al enviar el correo");
+                        $("#btn_save_email").attr("disabled", false);
                     }
                 },
                 error: function (response) {
                     toastr.error("Error al enviar el correo");
+                    $("#btn_save_email").attr("disabled", false);
                 },
             });
         }

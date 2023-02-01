@@ -280,6 +280,7 @@ class CotizacionController extends Controller
             ->select('detalle_cotizaciones.*', 'productos.nombre as producto', 'productos.imagen')
             ->join('productos', 'productos.id', 'detalle_cotizaciones.producto_id')
             ->where('detalle_cotizaciones.cotizacion_id', $id)
+            ->orderByRaw('detalle_cotizaciones.precio * 1 DESC')
             ->get();
 
         $pdf = PDF::loadView('admin.comercial.pdf.cotizacion', compact('cotizacion', 'productos'));
@@ -307,6 +308,7 @@ class CotizacionController extends Controller
                 ->select('detalle_cotizaciones.*', 'productos.nombre as producto', 'productos.imagen')
                 ->join('productos', 'productos.id', 'detalle_cotizaciones.producto_id')
                 ->where('detalle_cotizaciones.cotizacion_id', $cotizacion->id)
+                ->orderByRaw('detalle_cotizaciones.precio * 1 DESC')
                 ->get();
 
             //$pdf = PDF::loadView('admin.comercial.pdf.cotizacion', compact('cotizacion', 'productos'))
