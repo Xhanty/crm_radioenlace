@@ -19,7 +19,7 @@ $(document).ready(function () {
                 producto.id +
                 '">' +
                 producto.nombre +
-                ' (' + producto.marca + ' - '  + producto.modelo + ')' +
+                ' (' + producto.marca + ' - ' + producto.modelo + ')' +
                 "</option>"
             );
         }) +
@@ -806,6 +806,45 @@ $(document).ready(function () {
     });
 
     $(document).on("click", ".btnEmail", function () {
+        let id = $(this).data("id");
+        $("#id_cotizacion_email").val(id);
         $("#modalEmail").modal("show");
+    });
+
+    $("#btn_save_email").click(function () {
+        let id = $("#id_cotizacion_email").val();
+        let emails = [];
+        let valid = 0;
+
+        $(".emailadd").each(function () {
+            let email = $(this).val();
+            if (email && email.trim().length > 3) {
+                emails.push(email);
+            } else {
+                valid = 1;
+            }
+        });
+
+        if (valid == 1) {
+            toastr.error("Debe ingresar un correo válido");
+            return false;
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "cotizacion_email",
+                data: { id: id, emails: emails },
+                success: function (response) {
+                    if (response.info == 1) {
+                        toastr.success("Correo enviado correctamente");
+                        $("#modalEmail").modal("hide");
+                    } else {
+                        toastr.error("Error al enviar el correo");
+                    }
+                },
+                error: function (response) {
+                    toastr.error("Error al enviar el correo");
+                },
+            });
+        }
     });
 });

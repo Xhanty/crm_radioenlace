@@ -33,7 +33,7 @@ class VehiculosController extends Controller
                     $actionBtn = '<a data-id="' . $row->id . '" title="Ver" class="edit btn btn-primary btn-sm btn_Show"><i class="fa fa-eye"></i></a>
                     <a data-id="' . $row->id . '" title="Editar" class="edit btn btn-primary btn-sm btn_Edit"><i class="fa fa-pencil-alt"></i></a>
                     <a data-id="' . $row->id . '" title="Eliminar" class="delete btn btn-danger btn-sm btn_Delete"><i class="fa fa-trash"></i></a>';
-                    
+
                     if (auth()->user()->hasPermissionTo('gestion_checklist_vehiculos')) {
                         $actionBtn .= ' <a data-id="' . $row->id . '" title="Gestionar" class="edit btn btn-success btn-sm btn_Gestionar"><i class="fa fa-file"></i></a> ';
                     }
@@ -344,6 +344,18 @@ class VehiculosController extends Controller
                 ->get();
             return response()->json(['info' => 1, 'gruas' => $data, 'success' => 'Inspeccion eliminada correctamente.']);
         } catch (Exception $ex) {
+        }
+    }
+
+    public function send_email(Request $request)
+    {
+        try {
+            $vehiculo = $request->vehiculo;
+            $checklist = $request->checklist;
+            $emails = $request->emails;
+            
+        } catch (Exception $ex) {
+            return response()->json(['info' => 0, 'error' => 'Error al obtener los datos del vehiculo.']);
         }
     }
 }

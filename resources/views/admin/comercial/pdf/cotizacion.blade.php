@@ -149,7 +149,7 @@
 
             @if ($cotizacion->duracion || $cotizacion->tiempo_entrega)
                 <tr class="heading">
-                    <td colspan="4">
+                    <td colspan="3">
                         Duración
                     </td>
 
@@ -159,7 +159,7 @@
                 </tr>
 
                 <tr class="details">
-                    <td colspan="4">
+                    <td colspan="3">
                         {{ $cotizacion->duracion }}
                     </td>
 
@@ -171,7 +171,7 @@
 
             @if ($cotizacion->validez || $cotizacion->forma_pago)
                 <tr class="heading">
-                    <td colspan="4">
+                    <td colspan="3">
                         Validez de la oferta
                     </td>
 
@@ -181,7 +181,7 @@
                 </tr>
 
                 <tr class="details">
-                    <td colspan="4">
+                    <td colspan="3">
                         {{ $cotizacion->validez }}
                     </td>
 

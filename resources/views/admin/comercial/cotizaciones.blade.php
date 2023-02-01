@@ -65,6 +65,10 @@
                                                 <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}"
                                                     title="Eliminar" class="btn btn-danger btn-sm btnEliminar"><i
                                                         class="fa fa-trash"></i></a>
+                                                <a target="_BLANK"
+                                                    href="{{ route('cotizaciones_print') }}?token={{ $cotizacion->id }}"
+                                                    title="Imprimir" class="btn btn-warning btn-sm btnPrint"><i
+                                                        class="fa fa-print"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -526,6 +530,7 @@
                                 aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
+                        <input type="hidden" disabled readonly id="id_cotizacion_email">
                         <div class="row row-sm">
                             <label for="">Emails</label>
                             <div class="col-lg" style="display: flex">

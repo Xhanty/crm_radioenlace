@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin\Comercial;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Cotizacion;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use PDF;
 
 class CotizacionController extends Controller
@@ -282,5 +284,40 @@ class CotizacionController extends Controller
         $pdf = PDF::loadView('admin.comercial.pdf.cotizacion', compact('cotizacion', 'productos'));
 
         return $pdf->stream('cotizacion.pdf');
+    }
+
+    public function send(Request $request)
+    {
+        try {
+            $cotizacion = $request->id;
+            $emails = $request->emails;
+
+            $cotizacion = DB::table('cotizaciones')
+                ->select('cotizaciones.*', 'cliente.razon_social', 'cliente.nit', 'cliente.ciudad', 'cliente.codigo_verificacion')
+                ->join('cliente', 'cliente.id', 'cotizaciones.cliente_id')
+                ->where('cotizaciones.id', $cotizacion)
+                ->first();
+
+            if (!$cotizacion) {
+                return response()->json(['info' => 0, 'error' => 'Error al enviar la cotización']);
+            }
+
+            $productos = DB::table('detalle_cotizaciones')
+                ->select('detalle_cotizaciones.*', 'productos.nombre as producto', 'productos.imagen')
+                ->join('productos', 'productos.id', 'detalle_cotizaciones.producto_id')
+                ->where('detalle_cotizaciones.cotizacion_id', $cotizacion->id)
+                ->get();
+
+            $pdf = PDF::loadView('admin.comercial.pdf.cotizacion', compact('cotizacion', 'productos'));
+
+            $emails = explode(',', $emails);
+
+            //Mail::to($emails)->send(new Cotizacion($pdf, $cotizacion));
+
+            return response()->json(['info' => 1, 'message' => 'Cotización enviada correctamente']);
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+            return response()->json(['info' => 0, 'error' => 'Error al enviar la cotización']);
+        }
     }
 }

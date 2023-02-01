@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Mail\Markdown;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,15 @@ use Illuminate\Mail\Markdown;
 Route::get('/', function () {
     return view('auth.login');
 })->name('/');
+
+Route::get('/clear-cache', function () {
+    Artisan::call('config:cache');
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('view:clear');
+    Artisan::call('route:clear');
+    return 'DONE'; //Return anything
+});
 
 Route::post('/login', [App\Http\Controllers\LoginController::class, 'login'])->name('login');
 
@@ -81,6 +91,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/delete_encuesta_tecnico', [App\Http\Controllers\Admin\VehiculosController::class, 'delete_encuesta_tecnico'])->name('delete_encuesta_tecnico');
     Route::post('/delete_encuesta_inspeccion', [App\Http\Controllers\Admin\VehiculosController::class, 'delete_encuesta_inspeccion'])->name('delete_encuesta_inspeccion');
     Route::get('/checklist_email', [App\Http\Controllers\Admin\VehiculosController::class, 'checklist_email'])->name('checklist_email');
+    Route::post('/checklist_send_email', [App\Http\Controllers\Admin\VehiculosController::class, 'send_email'])->name('checklist_send_email');
 
     // CLIENTES
     Route::get('/clientes', [App\Http\Controllers\Admin\ClientesController::class, 'index'])->name('clientes');
@@ -187,6 +198,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/cotizacion_edit', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'edit'])->name('cotizacion_edit');
     Route::post('/cotizacion_completar', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'completar'])->name('cotizacion_completar');
     Route::post('/cotizacion_delete', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'delete'])->name('cotizacion_delete');
+    Route::post('/cotizacion_email', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'send'])->name('cotizacion_email');
     Route::get('/remisiones', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'index'])->name('remisiones');
 
     // CONTABILIDAD
