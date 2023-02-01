@@ -11,8 +11,7 @@
             max-width: 800px;
             height: 969px;
             margin: auto;
-            padding: 22px;
-            border: 1px solid #eee;
+            padding: 0px;
             box-shadow: 0 0 10px rgba(0, 0, 0, .15);
             font-size: 16px;
             font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
@@ -149,21 +148,21 @@
 
             @if ($cotizacion->duracion || $cotizacion->tiempo_entrega)
                 <tr class="heading">
-                    <td colspan="3">
+                    <td colspan="2">
                         Duración
                     </td>
 
-                    <td>
+                    <td colspan="3">
                         Tiempo de entrega
                     </td>
                 </tr>
 
                 <tr class="details">
-                    <td colspan="3">
+                    <td colspan="2" style="font-size: 15px">
                         {{ $cotizacion->duracion }}
                     </td>
 
-                    <td>
+                    <td colspan="3" style="font-size: 15px">
                         {{ $cotizacion->tiempo_entrega }}
                     </td>
                 </tr>
@@ -175,17 +174,17 @@
                         Validez de la oferta
                     </td>
 
-                    <td>
+                    <td colspan="2">
                         Forma de pago
                     </td>
                 </tr>
 
                 <tr class="details">
-                    <td colspan="3">
+                    <td colspan="3" style="font-size: 15px">
                         {{ $cotizacion->validez }}
                     </td>
 
-                    <td>
+                    <td colspan="2" style="font-size: 15px">
                         {{ $cotizacion->forma_pago }}
                     </td>
                 </tr>
@@ -200,14 +199,14 @@
 
 
                 <tr class="details">
-                    <td colspan="5">
+                    <td colspan="5" style="font-size: 15px; text-align: justify;">
                         {{ $cotizacion->descripcion }}
                     </td>
                 </tr>
             @endif
 
             <tr class="heading">
-                <td></td>
+                <td style="width: 100px; text-align: center;"></td>
                 <td style="text-align: center;">Producto</td>
                 <td style="text-align: center;">Cantidad</td>
                 <td class="text-align-right">Precio U.</td>
@@ -228,13 +227,13 @@
                 @endphp
                 @if ($i == count($productos) - 1)
                     <tr class="item last">
-                        <td class="text-align-right">
-                            <img src="{{ public_path('images/productos/') }}{{ $productos[$i]->imagen }}"
-                                style="width:100%; max-width:50px;">
+                        <td style="text-align: center;">
+                            <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
+                                style="width:100%; max-width:100px;">
                         </td>
                         <td style="text-align: center;">
                             <b>{{ $productos[$i]->producto }}</b> <br>
-                            <p style="font-size: 14px; margin-top: 0px; width: 255px">{{ $productos[$i]->descripcion }}
+                            <p style="font-size: 14px; margin-top: 0px; width: 265px; text-align: justify">{{ $productos[$i]->descripcion }}
                             </p>
                         </td>
                         <td style="text-align: center;">{{ $productos[$i]->cantidad }}</td>
@@ -243,13 +242,13 @@
                     </tr>
                 @else
                     <tr class="item">
-                        <td class="text-align-right">
-                            <img src="{{ public_path('images/productos/') }}{{ $productos[$i]->imagen }}"
-                                style="width:100%; max-width:50px;">
+                        <td style="text-align: center;">
+                            <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
+                                style="width:100%; max-width:100px;">
                         </td>
                         <td style="text-align: center;">
                             <b>{{ $productos[$i]->producto }}</b>
-                            <p style="font-size: 14px; margin-top: 0px">{{ $productos[$i]->descripcion }}
+                            <p style="font-size: 14px; margin-top: 0px; width: 265px; text-align: justify">{{ $productos[$i]->descripcion }}
                             </p>
                         </td>
                         <td style="text-align: center;">{{ $productos[$i]->cantidad }}</td>
