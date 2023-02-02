@@ -28,9 +28,9 @@
                                         id="tbl_seriales_view">
                                         <thead>
                                             <tr>
-                                                <th class="border-bottom-0">Código Interno</th>
+                                                <th class="border-bottom-0">Código<br>Interno</th>
                                                 <th class="border-bottom-0">Serial</th>
-                                                <th class="border-bottom-0">Ubicación</th>
+                                                <th class="border-bottom-0">Ubicación Actual</th>
                                                 <th class="border-bottom-0">Disponible</th>
                                                 <th class="border-bottom-0">Status</th>
                                                 <th class="border-bottom-0">Acciones</th>

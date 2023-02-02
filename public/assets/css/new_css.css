@@ -102,8 +102,10 @@ td {
 }
 
 #img_tbl_resize {
-    width: 100px;
-    height: 100px;
+    width: auto;
+    height: auto;
+    max-width: 140px;
+    max-height: 140px;
 }
 
 .select2-results__options {

@@ -54,7 +54,7 @@
                                             </div>
                                             <div class="timeline-body">
                                                 <p>
-                                                    <strong>Ubicación:</strong> Cargando...
+                                                    <strong>Ubicación:</strong> {{ $value->ubicacion }}
                                                     <br>
                                                     @if ($value->tipo == 0)
                                                         <strong>Proveedor:</strong> {{ $value->proveedor }}
@@ -91,7 +91,7 @@
                                             </div>
                                             <div class="timeline-body">
                                                 <p>
-                                                    <strong>Ubicación:</strong> Cargando...
+                                                    <strong>Ubicación:</strong> {{ $value->ubicacion }}
                                                     <br>
                                                     @if ($value->tipo == 0)
                                                         <strong>Proveedor:</strong> {{ $value->proveedor }}

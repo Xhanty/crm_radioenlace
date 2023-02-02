@@ -9,12 +9,17 @@ use Illuminate\Support\Facades\DB;
 
 class GestionController extends Controller
 {
+    public $names_almacenes = [];
+
     public function historial(Request $request)
     {
         try {
+            $this->names_almacenes = [];
+
             /*if (!auth()->user()->hasPermissionTo('gestion_categorias_inventario')) {
                 return redirect()->route('home');
             }*/
+
             $id = $request->get('token');
 
             if ($id == null || $id == '' || $id < 1) {
@@ -40,6 +45,41 @@ class GestionController extends Controller
                 ->where('movimientos_inventario.inventario_id', $id)
                 ->orderBy('movimientos_inventario.id', 'desc')
                 ->get();
+
+            if (count($inventario->movimientos) > 0) {
+                foreach ($inventario->movimientos as $key => $value) {
+
+                    $almacen = DB::table('almacenes')
+                        ->select('almacenes.*')
+                        ->where('almacenes.id', $value->almacen_id)
+                        ->get();
+
+                    if ($almacen->count() > 0) {
+                        $almacen = $almacen->toArray();
+                        $almacen = $this->getNameAlmacen($almacen);
+                    }
+
+                    $nombre  = '';
+
+                    if ($this->names_almacenes) {
+                        $this->names_almacenes = array_reverse($this->names_almacenes);
+                        for ($i = 0; $i < count($this->names_almacenes); $i++) {
+                            if ($i == 0) {
+                                $nombre = $this->names_almacenes[$i] . ', ';
+                            } else if ($i == count($this->names_almacenes) - 1) {
+                                $nombre = $nombre . ' ' . $almacen[0]->nombre;
+                            } else {
+                                $nombre = $nombre . ' ' . $this->names_almacenes[$i] . ', ';
+                            }
+                        }
+                    } else {
+                        $nombre = $almacen[0]->nombre;
+                    }
+
+                    $inventario->movimientos[$key]->ubicacion = $nombre;
+                    $this->names_almacenes = [];
+                }
+            }
 
             return view('admin.inventario.historial', compact('inventario'));
         } catch (Exception $ex) {
@@ -172,7 +212,8 @@ class GestionController extends Controller
             }
 
             DB::table('inventario')->where("id", $data_old->inventario_id)->update([
-                'cantidad' => $count_inventario
+                'cantidad' => $count_inventario,
+                'status' => $status,
             ]);
 
             DB::table('salida_inventario')->where("id", $serial)->update([
@@ -213,6 +254,47 @@ class GestionController extends Controller
                 ->where('inventario.producto_id', $id)
                 ->orderBy('inventario.id', 'desc')
                 ->get();
+
+            if ($producto->inventario) {
+                foreach ($producto->inventario as $key => $value) {
+                    $last = DB::table('movimientos_inventario')
+                        ->select('movimientos_inventario.almacen_id')
+                        ->where('movimientos_inventario.inventario_id', $value->id)
+                        ->orderBy('movimientos_inventario.id', 'desc')
+                        ->first();
+
+                    $almacen = DB::table('almacenes')
+                        ->select('almacenes.*')
+                        ->where('almacenes.id', $last->almacen_id)
+                        ->get();
+
+
+                    if ($almacen->count() > 0) {
+                        $almacen = $almacen->toArray();
+                        $almacen = $this->getNameAlmacen($almacen);
+                    }
+
+                    $nombre  = '';
+
+                    if ($this->names_almacenes) {
+                        $this->names_almacenes = array_reverse($this->names_almacenes);
+                        for ($i = 0; $i < count($this->names_almacenes); $i++) {
+                            if ($i == 0) {
+                                $nombre = $this->names_almacenes[$i] . '<br>';
+                            } else if ($i == count($this->names_almacenes) - 1) {
+                                $nombre = $nombre . ' ' . $almacen[0]->nombre;
+                            } else {
+                                $nombre = $nombre . ' ' . $this->names_almacenes[$i] . '<br>';
+                            }
+                        }
+                    } else {
+                        $nombre = $almacen[0]->nombre;
+                    }
+
+                    $producto->inventario[$key]->almacen = $nombre;
+                    $this->names_almacenes = [];
+                }
+            }
 
             return response()->json(['info' => 1, 'data' => $producto]);
         } catch (Exception $ex) {
@@ -293,14 +375,16 @@ class GestionController extends Controller
         }
     }
 
-    public function getAlmacenes($almacenes)
+    public function getNameAlmacen($almacenes)
     {
         foreach ($almacenes as $key => $almacen) {
-            $almacenes[$key]->almacenes = DB::table('almacenes')->where('parent_id', $almacen->id)->get();
+            $almacenes[$key]->almacenes = DB::table('almacenes')->where('id', $almacen->parent_id)->get();
+
+            array_push($this->names_almacenes, $almacenes[$key]->nombre);
 
             if ($almacenes[$key]->almacenes->count() > 0) {
                 $almacenes[$key]->almacenes = $almacenes[$key]->almacenes->toArray();
-                $almacenes[$key]->almacenes = $this->getAlmacenes($almacenes[$key]->almacenes);
+                $almacenes[$key]->almacenes = $this->getNameAlmacen($almacenes[$key]->almacenes);
             } else {
                 $almacenes[$key]->almacenes = [];
             }

@@ -54,7 +54,7 @@ $(document).ready(function () {
                         let tr = `<tr>
                             <td>${element.codigo_interno ? element.codigo_interno : ""}</td>
                             <td>${element.serial}</td>
-                            <td>Cargando...</td>
+                            <td>${element.almacen}</td>
                             <td>${element.cantidad}</td>
                             <td>${estado}</td>
                             <td>
