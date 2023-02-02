@@ -330,7 +330,7 @@ class CotizacionController extends Controller
 
             array_push($attach, $route);
 
-            Mail::to($emails)->send(new CotizacionMail($route, $attach));
+            Mail::to($emails)->send(new CotizacionMail($route, $attach, $creador));
 
             unlink(storage_path('app/public/cotizaciones/' . $cotizacion->razon_social . ' - (' . $cotizacion->code . ') (' . date('d-m-Y', strtotime($cotizacion->created_at)) . ').pdf'));
 

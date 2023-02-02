@@ -839,6 +839,7 @@ $(document).ready(function () {
                         toastr.success("Correo enviado correctamente");
                         $(".emailadd").val("");
                         $("#modalEmail").modal("hide");
+                        $("#btn_save_email").attr("disabled", false);
                     } else {
                         toastr.error("Error al enviar el correo");
                         $("#btn_save_email").attr("disabled", false);

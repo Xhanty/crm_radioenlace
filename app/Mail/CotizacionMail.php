@@ -15,16 +15,18 @@ class CotizacionMail extends Mailable
 
     public $file;
     public $attach;
+    public $creador;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($file, $attach)
+    public function __construct($file, $attach, $creador)
     {
         $this->file = $file;
         $this->attach = $attach;
+        $this->creador = $creador;
     }
 
     /**
@@ -35,7 +37,7 @@ class CotizacionMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Cotización Radio Enlace',
+            subject: 'Cotización',
         );
     }
 
