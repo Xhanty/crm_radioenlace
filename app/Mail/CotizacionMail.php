@@ -13,18 +13,18 @@ class CotizacionMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $cotizacion;
-    public $productos;
+    public $file;
+    public $attach;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($cotizacion, $productos)
+    public function __construct($file, $attach)
     {
-        $this->cotizacion = $cotizacion;
-        $this->productos = $productos;
+        $this->file = $file;
+        $this->attach = $attach;
     }
 
     /**
@@ -58,6 +58,6 @@ class CotizacionMail extends Mailable
      */
     public function attachments()
     {
-        return [];
+        return $this->attach;
     }
 }

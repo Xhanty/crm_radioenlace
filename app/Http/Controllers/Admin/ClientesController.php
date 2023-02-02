@@ -25,7 +25,7 @@ class ClientesController extends Controller
     public function clientes_list()
     {
         try {
-            $clientes = DB::table('cliente')->get();
+            $clientes = DB::table('cliente')->orderBy("id", "DESC")->get();
             return response()->json(["data" => $clientes]);
         } catch (Exception $ex) {
             return $ex;

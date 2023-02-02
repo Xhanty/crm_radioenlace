@@ -420,15 +420,17 @@ $(function () {
                     }
 
                     //Técnicos
-                    $("#nombre_tecn_edit").val(tecnicos.nombre);
-                    $("#indicativo_tecn_edit").val(
-                        tecnicos.indicativo_telefono
-                    );
-                    $("#apellido_tecn_edit").val(tecnicos.apellido);
-                    $("#telefono_tecn_edit").val(tecnicos.telefono);
-                    $("#email_tecn_edit").val(tecnicos.email);
-                    $("#extension_tecn_edit").val(tecnicos.extension);
-
+                    if (tecnicos) {
+                        $("#nombre_tecn_edit").val(tecnicos.nombre);
+                        $("#indicativo_tecn_edit").val(
+                            tecnicos.indicativo_telefono
+                        );
+                        $("#apellido_tecn_edit").val(tecnicos.apellido);
+                        $("#telefono_tecn_edit").val(tecnicos.telefono);
+                        $("#email_tecn_edit").val(tecnicos.email);
+                        $("#extension_tecn_edit").val(tecnicos.extension);
+                    }
+                    
                     //Anexos
                     anexos.forEach((anexo) => {
                         var date = new Date(anexo.fecha);

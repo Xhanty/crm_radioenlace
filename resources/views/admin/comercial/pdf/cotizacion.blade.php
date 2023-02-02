@@ -245,7 +245,7 @@
             <tr class="total">
                 <td colspan="5" class="text-align-right">
                     Subtotal: {{ number_format($subtotal, 0, ',', '.') }}<br />
-                    IVA: {{ number_format($iva, 0, ',', '.') }}<br />
+                    IVA (19%): {{ number_format($iva, 0, ',', '.') }}<br />
                     <b>Total: {{ number_format($subtotal + $iva, 0, ',', '.') }}</b>
                 </td>
             </tr>
@@ -297,50 +297,43 @@
             @endif
 
             <tr class="heading">
-                <td colspan="5" style="text-align: center">
-                    CONDICIONES COMERCIALES DE PAGO
-                </td>
-            </tr>
-
-            <tr class="details">
-                <td colspan="3" style="font-size: 15px; padding-left: 10px;">
-                    IVA del 19%
-                </td>
-
-                <td colspan="2" style="font-size: 15px; text-align: left">
-                    Incluido en la oferta.
-                </td>
-            </tr>
-
-            <tr class="details">
-                <td colspan="3" style="font-size: 15px; padding-left: 10px;">
+                <td colspan="3">
                     Moneda
                 </td>
 
-                <td colspan="2" style="font-size: 15px; text-align: left">
-                    Peso colombiano. (COP)
-                </td>
-            </tr>
-
-            <tr class="details">
-                <td colspan="3" style="font-size: 15px; padding-left: 10px;">
-                    Cuenta bancaria
-                </td>
-
-                <td colspan="2" style="font-size: 15px; text-align: left">
-                    Bancolombia <br>
-                    Cuenta de ahorros no. 555555555 <br>
-                    RADIO ENLACE S.A.S
-                </td>
-            </tr>
-
-            <tr class="details">
-                <td colspan="3" style="font-size: 15px; padding-left: 10px;">
+                <td colspan="2">
                     Garantía
                 </td>
+            </tr>
 
-                <td colspan="2" style="font-size: 15px; text-align: left">
-                    6 meses
+            <tr class="details">
+                <td colspan="3" style="font-size: 15px">
+                    Peso colombiano. (COP)
+                </td>
+
+                <td colspan="2" style="font-size: 15px">
+                    6 Meses
+                </td>
+            </tr>
+
+            <tr class="heading">
+                <td colspan="3">
+                    IVA (19%)
+                </td>
+
+                <td colspan="2">
+                    Cuenta Bancaria
+                </td>
+            </tr>
+
+            <tr class="details">
+                <td colspan="3" style="font-size: 15px">
+                    Incluido en la oferta
+                </td>
+
+                <td colspan="2" style="font-size: 15px">
+                    Bancolombia <br>
+                    Cuenta de ahorros no. 000-000000-00
                 </td>
             </tr>
 

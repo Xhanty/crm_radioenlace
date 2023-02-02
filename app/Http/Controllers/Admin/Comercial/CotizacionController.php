@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use PDF;
 
 class CotizacionController extends Controller
@@ -293,13 +294,13 @@ class CotizacionController extends Controller
     public function send(Request $request)
     {
         try {
-            $cotizacion = $request->id;
+            $cotizacion_id = $request->id;
             $emails = $request->emails;
 
             $cotizacion = DB::table('cotizaciones')
                 ->select('cotizaciones.*', 'cliente.razon_social', 'cliente.nit', 'cliente.ciudad', 'cliente.codigo_verificacion')
                 ->join('cliente', 'cliente.id', 'cotizaciones.cliente_id')
-                ->where('cotizaciones.id', $cotizacion)
+                ->where('cotizaciones.id', $cotizacion_id)
                 ->first();
 
             if (!$cotizacion) {
@@ -314,10 +315,24 @@ class CotizacionController extends Controller
                 ->get();
 
             $creador = DB::table('empleados')->where('id', $cotizacion->created_by)->first();
-            
-            //$pdf = PDF::loadView('admin.comercial.pdf.cotizacion', compact('cotizacion', 'productos'))
 
-            Mail::to($emails)->send(new CotizacionMail($cotizacion, $productos));
+            $pdf = PDF::loadView('admin.comercial.pdf.cotizacion', compact('cotizacion', 'productos', 'creador'));
+
+            $name = $cotizacion->razon_social . ' - (' . $cotizacion->code . ') (' . date('d-m-Y', strtotime($cotizacion->created_at)) . ').pdf';
+
+            $content = $pdf->download()->getOriginalContent();
+
+            Storage::put('public/cotizaciones/' . $name, $content);
+
+            $route = storage_path('app/public/cotizaciones/' . $name);
+
+            $attach = [];
+
+            array_push($attach, $route);
+
+            Mail::to($emails)->send(new CotizacionMail($route, $attach));
+
+            unlink(storage_path('app/public/cotizaciones/' . $cotizacion->razon_social . ' - (' . $cotizacion->code . ') (' . date('d-m-Y', strtotime($cotizacion->created_at)) . ').pdf'));
 
             return response()->json(['info' => 1, 'message' => 'Cotización enviada correctamente']);
         } catch (Exception $ex) {
