@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-01-2023 a las 18:44:27
+-- Tiempo de generación: 08-02-2023 a las 18:47:24
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.1.12
 
@@ -323,7 +323,7 @@ CREATE TABLE `categorias_productos` (
 --
 
 INSERT INTO `categorias_productos` (`id`, `nombre`, `created_by`, `fecha`) VALUES
-(87, 'RADIOS', 1, '2023-01-12'),
+(87, 'RADIOS CASA', 1, '2023-01-12'),
 (88, 'REPETIDORAS', 1, '2023-01-12');
 
 -- --------------------------------------------------------
@@ -402,7 +402,7 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`id`, `nit`, `razon_social`, `direccion`, `telefono_fijo`, `celular`, `contacto`, `email`, `observaciones`, `avatar`, `tipo_regimen`, `estado`, `ciudad`, `codigo_verificacion`, `tipo`, `tipo_identificacion`, `documento`, `codigo_sucursal`, `indicativo_telefono`, `extencion`) VALUES
-(9, '890917141', 'Seguridad Atempi de Colombia Limitada', 'Cl 16 B Sur Cra 42 - 97', '4486110', '3148288903', 'Andres', 'Almacen@atempi.co', '', 'a6d06a8d45fe0e84c035eb060197a4ba.png', 'Jurídico', 1, 'Medellín ', 6, 0, 0, '', '', '604', '0'),
+(9, '890917141', 'Seguridad Atempi de Colombia Limitada', 'Cl 16 B Sur Cra 42 - 97', '4486110', '3148288903', 'Andres', 'Almacen@atempi.co', '', 'a6d06a8d45fe0e84c035eb060197a4ba.png', 'Jurídico', 0, 'Medellín ', 6, 0, 0, '', '', '604', '0'),
 (11, '890922447', 'Construcciones el Condor S.A', 'Cr 25 No. 3 - 45 piso 3', '4480029', '3206754334', 'Maria Isabel Castaño', 'notificaciones.judiciales@elcondor.com', '', '3327c921fe873e6aa11fb6944fda8752.png', 'Jurídico', 1, 'Medellín', 4, 0, 0, '', '057', '604', '0'),
 (13, '900888228', 'Minerales Camino Real S.A.S', 'Cl 113 No. 7-21 To A P 11 Of 1101', '6585893', '3153052609', 'Luis Puerto', 'lpuerto@mineralescaminoreal.com', '', 'f6152d1798adb99f5f5cd2c4dc8a9770.png', 'Jurídico', 1, 'Bogotá ', 8, 0, 0, '', '0', '001', '0'),
 (14, '900768355', 'Inversiones Entre Rios S.A.S', 'Cl 48 No. 19- 100 Ca 13 A La Castellana', '3137295328', '3165399135', 'Juan Casas', 'gerencia@inversionesentrerios.com', '', '7034cb162ecf72dff4ad832aa2598164.png', 'Jurídico', 1, 'Pereira Risaralda', 0, 0, 0, '', '0', '606', '0'),
@@ -516,6 +516,7 @@ CREATE TABLE `cotizaciones` (
   `tiempo_entrega` varchar(255) DEFAULT NULL,
   `descuento` varchar(255) DEFAULT NULL,
   `status` int(1) NOT NULL DEFAULT 0,
+  `aprobado` int(1) NOT NULL DEFAULT 0,
   `created_by` int(11) NOT NULL,
   `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -524,8 +525,8 @@ CREATE TABLE `cotizaciones` (
 -- Volcado de datos para la tabla `cotizaciones`
 --
 
-INSERT INTO `cotizaciones` (`id`, `code`, `cliente_id`, `descripcion`, `incluye`, `validez`, `duracion`, `forma_pago`, `tiempo_entrega`, `descuento`, `status`, `created_by`, `created_at`) VALUES
-(1, 1, 13, NULL, NULL, 'asdasd', NULL, 'adasd', NULL, NULL, 0, 1, '2023-01-30 10:46:07');
+INSERT INTO `cotizaciones` (`id`, `code`, `cliente_id`, `descripcion`, `incluye`, `validez`, `duracion`, `forma_pago`, `tiempo_entrega`, `descuento`, `status`, `aprobado`, `created_by`, `created_at`) VALUES
+(1, 1, 13, 'Se realizara la instalación en planta', '2 cables y una fuente', '7 días', NULL, 'Crédito', NULL, NULL, 1, 0, 1, '2023-01-30 10:46:07');
 
 -- --------------------------------------------------------
 
@@ -673,8 +674,60 @@ CREATE TABLE `detalle_cotizaciones` (
 --
 
 INSERT INTO `detalle_cotizaciones` (`id`, `producto_id`, `cotizacion_id`, `tipo_divisa`, `cantidad`, `tipo_transaccion`, `precio`, `descripcion`, `created_by`, `created_at`) VALUES
-(1, 1, 1, 1, 1, 2, 'asddas', NULL, 1, '2023-01-30 10:46:07'),
-(2, 3, 1, 2, 1, 2, 'asd', 'asds', 1, '2023-01-30 10:46:07');
+(15, 1, 1, 1, 1, 1, '10000', NULL, 1, '2023-02-02 08:37:44');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detalle_ordenes`
+--
+
+CREATE TABLE `detalle_ordenes` (
+  `id` int(11) NOT NULL,
+  `orden_id` int(11) NOT NULL,
+  `producto_id` int(11) NOT NULL,
+  `cantidad` varchar(255) DEFAULT NULL,
+  `precio` varchar(255) DEFAULT '0',
+  `iva` varchar(255) DEFAULT '0',
+  `retencion` varchar(255) DEFAULT '0',
+  `descripcion` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `detalle_ordenes`
+--
+
+INSERT INTO `detalle_ordenes` (`id`, `orden_id`, `producto_id`, `cantidad`, `precio`, `iva`, `retencion`, `descripcion`) VALUES
+(1, 1, 2, '1', '1000', '19', '0', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detalle_precios`
+--
+
+CREATE TABLE `detalle_precios` (
+  `id` int(11) NOT NULL,
+  `precio_id` int(11) NOT NULL,
+  `producto_id` int(11) NOT NULL,
+  `cantidad_requerida` int(11) NOT NULL DEFAULT 0,
+  `cantidad_disponible` int(11) NOT NULL DEFAULT 0,
+  `precio` varchar(255) DEFAULT '0',
+  `descuento` varchar(255) DEFAULT '0',
+  `iva` varchar(255) NOT NULL DEFAULT '0',
+  `nota` text DEFAULT NULL,
+  `comentario` text DEFAULT NULL,
+  `status` int(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `detalle_precios`
+--
+
+INSERT INTO `detalle_precios` (`id`, `precio_id`, `producto_id`, `cantidad_requerida`, `cantidad_disponible`, `precio`, `descuento`, `iva`, `nota`, `comentario`, `status`) VALUES
+(22, 9, 1, 2, 2, '20000', '10', '0', 'sad', NULL, 1),
+(23, 9, 2, 1, 1, '50000', '50', '0', NULL, NULL, 1),
+(24, 9, 3, 4, 3, '100000', '20', '0', NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -684,37 +737,37 @@ INSERT INTO `detalle_cotizaciones` (`id`, `producto_id`, `cotizacion_id`, `tipo_
 
 CREATE TABLE `empleados` (
   `id` int(11) NOT NULL,
-  `codigo_empleado` varchar(50) NOT NULL,
-  `nombre` varchar(50) NOT NULL,
-  `cargo` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL,
-  `rol` int(11) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `telefono_fijo` varchar(20) NOT NULL,
-  `telefono_celular` varchar(20) NOT NULL,
-  `direccion` text NOT NULL,
-  `fecha_ingreso` date NOT NULL,
-  `fecha_retiro` date NOT NULL,
-  `avatar` varchar(100) NOT NULL,
-  `fecha_nacimiento` date NOT NULL,
-  `eps` varchar(50) NOT NULL,
-  `caja_compensacion` varchar(50) NOT NULL,
-  `arl` varchar(50) NOT NULL,
-  `fondo_pension` varchar(50) NOT NULL,
-  `periodo_vacaciones` text NOT NULL,
-  `observaciones` text NOT NULL,
-  `prestamo` int(11) NOT NULL,
-  `periodo_dotacion` text NOT NULL,
-  `numero_licencia_conduccion` varchar(50) NOT NULL,
-  `vencimiento_licencia_conduccion` date NOT NULL,
-  `multas_transito_pendiente` int(11) NOT NULL,
-  `implementos_seguridad` text NOT NULL,
-  `riesgos_profesionales` int(11) NOT NULL,
-  `culminacion_contrato` date NOT NULL,
-  `status` int(11) NOT NULL,
-  `licencia_conduccion_moto` varchar(100) NOT NULL,
-  `vencimiento_licencia_moto` varchar(100) NOT NULL,
-  `puntos` int(11) NOT NULL
+  `codigo_empleado` varchar(50) DEFAULT NULL,
+  `nombre` varchar(50) DEFAULT NULL,
+  `cargo` varchar(100) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `rol` int(11) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `telefono_fijo` varchar(20) DEFAULT NULL,
+  `telefono_celular` varchar(20) DEFAULT NULL,
+  `direccion` text DEFAULT NULL,
+  `fecha_ingreso` date DEFAULT NULL,
+  `fecha_retiro` date DEFAULT NULL,
+  `avatar` varchar(100) DEFAULT NULL,
+  `fecha_nacimiento` date DEFAULT NULL,
+  `eps` varchar(50) DEFAULT NULL,
+  `caja_compensacion` varchar(50) DEFAULT NULL,
+  `arl` varchar(50) DEFAULT NULL,
+  `fondo_pension` varchar(50) DEFAULT NULL,
+  `periodo_vacaciones` text DEFAULT NULL,
+  `observaciones` text DEFAULT NULL,
+  `prestamo` int(11) DEFAULT NULL,
+  `periodo_dotacion` text DEFAULT NULL,
+  `numero_licencia_conduccion` varchar(50) DEFAULT NULL,
+  `vencimiento_licencia_conduccion` date DEFAULT NULL,
+  `multas_transito_pendiente` int(11) DEFAULT NULL,
+  `implementos_seguridad` text DEFAULT NULL,
+  `riesgos_profesionales` int(11) DEFAULT NULL,
+  `culminacion_contrato` date DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `licencia_conduccion_moto` varchar(100) DEFAULT NULL,
+  `vencimiento_licencia_moto` varchar(100) DEFAULT NULL,
+  `puntos` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -859,6 +912,7 @@ CREATE TABLE `gastos_varios` (
 CREATE TABLE `inventario` (
   `id` int(11) NOT NULL,
   `producto_id` int(11) NOT NULL,
+  `codigo_interno` varchar(255) DEFAULT NULL,
   `serial` varchar(255) NOT NULL,
   `cantidad` int(11) NOT NULL,
   `status` int(1) NOT NULL DEFAULT 1,
@@ -870,9 +924,11 @@ CREATE TABLE `inventario` (
 -- Volcado de datos para la tabla `inventario`
 --
 
-INSERT INTO `inventario` (`id`, `producto_id`, `serial`, `cantidad`, `status`, `created_by`, `created_at`) VALUES
-(9, 1, '655656', 1, 0, 1, '2023-01-26 09:00:33'),
-(10, 1, '4444', 1, 1, 1, '2023-01-27 07:47:51');
+INSERT INTO `inventario` (`id`, `producto_id`, `codigo_interno`, `serial`, `cantidad`, `status`, `created_by`, `created_at`) VALUES
+(9, 1, NULL, '655656', 1, 0, 1, '2023-01-26 09:00:33'),
+(10, 1, NULL, '4444', 1, 1, 1, '2023-01-27 07:47:51'),
+(11, 1, NULL, '213', 1, 1, 1, '2023-01-31 08:37:09'),
+(12, 1, 'asdd', '1233', 1, 1, 1, '2023-01-31 08:42:49');
 
 -- --------------------------------------------------------
 
@@ -922,10 +978,18 @@ CREATE TABLE `movimientos_inventario` (
 --
 
 INSERT INTO `movimientos_inventario` (`id`, `tipo`, `inventario_id`, `almacen_id`, `cantidad`, `empleado_id`, `cliente_id`, `proveedor_id`, `precio_venta`, `precio_compra`, `observaciones`, `created_by`, `created_at`) VALUES
-(8, 0, 9, 257, 1, NULL, NULL, 4, '3333', '66353535', NULL, 1, '2023-01-26 09:00:33'),
-(9, 4, 9, 16, 1, NULL, 25, NULL, NULL, NULL, NULL, 1, '2023-01-26 09:00:52'),
-(10, 0, 9, 258, 1, NULL, NULL, 7, NULL, NULL, NULL, 1, '2023-01-26 09:44:30'),
-(11, 0, 10, 284, 1, NULL, NULL, 20, '3333', NULL, NULL, 1, '2023-01-27 07:47:51');
+(8, 0, 9, 280, 1, NULL, NULL, 4, '3333', '66353535', NULL, 1, '2023-01-26 09:00:33'),
+(9, 4, 9, 281, 1, NULL, 25, NULL, NULL, NULL, NULL, 1, '2023-01-26 09:00:52'),
+(10, 0, 9, 282, 1, NULL, NULL, 7, NULL, NULL, NULL, 1, '2023-01-26 09:44:30'),
+(11, 0, 10, 284, 1, NULL, NULL, 20, '3333', NULL, NULL, 1, '2023-01-27 07:47:51'),
+(12, 0, 11, 283, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2023-01-31 08:37:09'),
+(13, 0, 12, 282, 1, NULL, NULL, NULL, 'sd', NULL, NULL, 1, '2023-01-31 08:42:49'),
+(14, 2, 12, 286, 1, NULL, 73, NULL, NULL, NULL, NULL, 1, '2023-02-02 14:57:58'),
+(15, 1, 12, 283, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2023-02-02 14:58:26'),
+(16, 2, 12, 284, 1, NULL, 73, NULL, NULL, NULL, NULL, 1, '2023-02-02 15:01:56'),
+(17, 1, 12, 282, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2023-02-02 15:02:38'),
+(18, 3, 12, 283, 1, 6, NULL, NULL, NULL, NULL, NULL, 1, '2023-02-02 15:03:08'),
+(19, 1, 12, 283, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2023-02-02 15:04:25');
 
 -- --------------------------------------------------------
 
@@ -973,6 +1037,30 @@ CREATE TABLE `novedades_nomina` (
   `motivo` text DEFAULT NULL,
   `dias` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ordenes_compra`
+--
+
+CREATE TABLE `ordenes_compra` (
+  `id` int(11) NOT NULL,
+  `code` int(11) NOT NULL,
+  `cliente_id` int(11) NOT NULL,
+  `descripcion` int(11) DEFAULT NULL,
+  `status` int(1) NOT NULL DEFAULT 0,
+  `aprobado` int(1) NOT NULL DEFAULT 0,
+  `created_by` int(11) NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `ordenes_compra`
+--
+
+INSERT INTO `ordenes_compra` (`id`, `code`, `cliente_id`, `descripcion`, `status`, `aprobado`, `created_by`, `created_at`) VALUES
+(1, 1, 13, NULL, 1, 0, 1, '2023-02-07 15:50:39');
 
 -- --------------------------------------------------------
 
@@ -1097,6 +1185,35 @@ INSERT INTO `permisos_new` (`id`, `empleado`, `modulo`, `administrador`, `fecha`
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `precio_proveedores`
+--
+
+CREATE TABLE `precio_proveedores` (
+  `id` int(11) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `proveedor_id` int(11) NOT NULL,
+  `moneda` varchar(255) DEFAULT NULL,
+  `fecha_limite` date DEFAULT NULL,
+  `fecha_entrega` text DEFAULT NULL,
+  `condiciones_entrega` text DEFAULT NULL,
+  `condiciones_pago` text DEFAULT NULL,
+  `precio_dolar` varchar(255) NOT NULL DEFAULT '0',
+  `total` varchar(255) NOT NULL DEFAULT '0',
+  `status` int(1) NOT NULL DEFAULT 0,
+  `created_by` int(11) NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `precio_proveedores`
+--
+
+INSERT INTO `precio_proveedores` (`id`, `code`, `proveedor_id`, `moneda`, `fecha_limite`, `fecha_entrega`, `condiciones_entrega`, `condiciones_pago`, `precio_dolar`, `total`, `status`, `created_by`, `created_at`) VALUES
+(9, 'PR-TTVTLD', 43, 'COP', '2023-02-11', '03/2/2023', 'Excelente', NULL, '0', '$358,190', 1, 1, '2023-02-07 11:50:49');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `productos`
 --
 
@@ -1145,103 +1262,104 @@ CREATE TABLE `proveedores` (
   `tipo_regimen` varchar(50) NOT NULL,
   `estado` int(11) NOT NULL,
   `ciudad` varchar(50) NOT NULL,
-  `email_comercial` varchar(100) NOT NULL
+  `email_comercial` varchar(100) NOT NULL,
+  `clave` varchar(255) NOT NULL DEFAULT '123456'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `proveedores`
 --
 
-INSERT INTO `proveedores` (`id`, `nit`, `razon_social`, `direccion`, `telefono_fijo`, `celular`, `contacto`, `email`, `observaciones`, `avatar`, `codigo_verificacion`, `tipo_regimen`, `estado`, `ciudad`, `email_comercial`) VALUES
-(4, '900382335', 'Radiotrans Colombia S.A.S', 'Carrera 71 Circular 1 - 42', '(604) 4481991', '3137487534', 'Martha Liliana Leon', 'mleon@radiotrans.com', '', 'bfbcb18259412a2d6ec5884d55437a6c.png', 5, '', 1, 'Medellín', ''),
-(5, '800162165', 'Sistemas Electrónicos y Telecomunicaciones S.A.S', 'Carrera 33 No. 62 - 34', '(601) 6433825', '3114772496', 'David Roldan', 'david.roldan@sistelec.com.co', '', '08b883f641ae8473d574cdbec7221fe8.png', 3, '', 1, '', ''),
-(6, '901192317', 'Syscom Colombia S.A.S', 'Cra. 90A No. 64C 38 Álamos Norte', '(601) 7443650', '3147209764', 'William Cárdenas', 'luis@syscomcolombia.com', '', '8d07ce149e754e0c0d7c96075b8db3e2.png', 0, '', 1, '', ''),
-(7, '890941103', 'Equielect S.A.S', 'Carrera 72 No. 30-53', '(604) 4443133', '', '', 'equielect@equielect.com.co', '', '7c101e2faed734ec911ce2ffe4290d22.png', 7, '', 1, '', ''),
-(8, '830079015', 'Meltec Comunicaciones S.A', 'CL 130A # 58A 29', '(601) 4111899 ', '3143956689', 'Alejandro Arango', 'cartera@meltec.com.co', '', 'e817c1d6da72e09bdb041b3379421e39.png', 1, '', 1, '', ''),
-(9, '800170775', 'Transmicosta S.A.S', 'CL 75 58 48', '(605) 3689050', '3157187962', 'Cecilia Danies', 'gerencia@transmicosta.com', '', '138ea9cb785d4a19b9e5d64eaffaf185.png', 1, '', 1, '', ''),
-(11, '900245554', 'Amarillo LTDA', 'Calle 8C N° 87B - 40 oficina 223', '(601)7460018 EXT 03', '(601) 7460018', 'Gloria Díaz', ' admon.amarilloltda@gmail.com', '', '9ad2a29267149e68f27582cefb4c0172.png', 5, '', 1, '', ''),
-(12, '890913902', 'Antioqueña de Automotores y Repuestos S.A.S  ANDAR', 'CARRERA 77 N° 28 - 13 BELEN', '(604) 4440800', '3213139234', 'Leonardo Vásquez', 'leonardo.velasquez@andar.com.co', '', '0638eaa95b618e76d814eac90f0974f6.png', 6, '', 1, '', ''),
-(13, '98490197', 'Baterías JV', 'Diagonal 44 31 41', '', '3155182035', 'Marcela', 'ventasbateriasjv@gmail.com', '', '7b552d80ddb53403e0536b78794e6915.png', 1, '', 1, '', ''),
-(14, '900413864', 'Calza Soluciones ', 'Carrera 67 A N°51-79', '(604) 4488584', '3175163310', 'Melissa', 'comercial@radioenlacesas.com', '', '829763b900cba9a5063863f49f896808.png', 4, '', 1, '', ''),
-(15, '900722974', 'Copimarks S.A.S', 'Carrera 78 45 E 61', '(604) 4482874', '3105025201 / 3134909757', 'Jorge Sánchez', 'copimarks@gmail.com', '', '33aa09f76666e6e2e51e96ba775416b7.png', 1, '', 1, '', ''),
-(16, '811015782', 'Elian Comunicaciones y Montajes S.A.S', 'Calle 36 SA Sur N° 46 A 81 Of. 237', '(604) 3317287', '31038372530', 'Cesar Hoyos', 'eliancomunicaciones@hotmail.com', '', '0ac198f3fd1f3db014321505bab757a7.png', 9, '', 1, '', ''),
-(18, '10883737', 'Juan Eduardo Alvarado Solorzano', 'Carrera 52, Calle 82 -24 Medellín', '(604) 2131785', '', 'Juan Alvarado', 'metrofuego@une.net.co', '', 'c19fa572fa0ad7d5081b9841c8234a36.png', 4, '', 1, '', ''),
-(19, '900323290', 'Estación de Servicio Estrella del Norte S.A.S', 'Aut. Norte KM 16 Vda. Zarzal', '(604) 4480313 / 4015252', '', 'Sebastián Vélez', 'edsestrelladelnorte@une.net,co', '', '42e2a66f84519c31f1904a26fd7a43e3.png', 0, '', 1, '', ''),
-(20, '860500630', 'Isec', 'Carrera 43A # 14 -27 Oficina 202', '(604) 2666434', '3153838392', 'Luz Stella Vásquez ', 'stella.vasquez@isec.com.co', '', '87a7a92578531a3c8ba5778a1a6f927f.png', 6, '', 1, '', ''),
-(21, '900225832', 'Luchos Lujomania LTDA', 'Carrera 64 N° 42B - 31', '(604) 4082320 / 4087942', '', 'Alexandra Restrepo', 'contacto@luchoslujomania.com', '', '98c016f888a2f9257dc9d9ae9143093a.png', 2, '', 1, '', ''),
-(22, '811000995', 'Mas Frenos S.A.S', 'Calle 30 A 65 B 66', '(604) 4798744 / 4798461', '', 'German Hernández', 'masfrenos@gmail.com', '', '551c5c6b0068c144a559fe35e3467522.png', 0, '', 1, '', ''),
-(23, '901436594', 'Inversiones Mas Repuestos S.A.S', 'Carera 61 N°45 - 08', '', '3003641449 / 3007631988', 'Karen', 'masrepuestos@gmail.com', '', '6beb3c5bb911d29e684faf35564e7d06.png', 3, '', 1, '', ''),
-(24, '901446306', 'Grupo Empresarial ADSL S.A.S', 'Calle 48 # 10-45 CC Monterrey Loc. 315-316', '(604) 6090123', '3122510095', 'Mauricio Franco', 'm.franco@grupoadsl.com', '', '', 1, '', 1, '', ''),
-(25, '900585869', 'Mega Storage Colombia S.A.S', 'Calle 8 B N° 65 251', '(604) 6051525', '3216390098', 'Yurani Mendez', 'contabilidad@megastorage.com.co', '', 'a261bf5349156150b4d68835d461b52e.png', 8, '', 1, '', ''),
-(26, '900744916', 'Mundirepuestos  del Norte S.A.S', 'Diagonal 52 N° 15 A 351 - Interior 5 Centro Logístico del Norte - Bello', '(604) 3666709', '3113555851', 'Carolina Castro', 'administracion@mundirepuestosdelnorte.com.co', '', 'a04872500ff3a5c3469bc04ff4f7f871.png', 9, '', 1, '', ''),
-(27, '900986403', 'Radiofrecuencia e Ingeniería en Comunicaciones S.A.S', 'Carrera 37 B N° 1 G  - 20', '(601) 3843687', '3102256990', 'William Marín', 'williammartincom@gmail.com', '', '5e4adc3438c110f95dc526885b0bad77.png', 0, '', 1, '', ''),
-(28, '900906969', 'Soluciones en Seguridad y Salud en el Trabajo S3 S.A.S', 'Carera 53 N°  36 - 35', '(604) 4796057', '3044783532', 'Laura', 'cartera3soluciones@gmail.com', '', 'a6fcc619567ef2feef6e591d852dd027.png', 5, 'Común', 1, 'Medellín', 'foracionalturas@s3soluciones.com.co'),
-(29, '900265297', 'Sociedad de Seguridad Electrónica y Telecomunicaciones S.A.S', 'Av. Carera 20 N° 85 A - 21', '(601) 4321757', '3125085416 / 3115446076', 'Lucia González / Diany Delgado', 'contabilidad@setronics.net', '', 'fa966e69754c8fb7701fc5d3714641ea.png', 2, 'Común', 1, 'Bogotá', 'consultor.diany@setronics.net'),
-(30, '890942699', 'Almacén Sus Llantas S.A.S', 'Carrera 59 N° 48 - 20 Barrio Triste', '(604) 5112424', '3215112424', 'Ana Gil', 'conta.susllantas@une.net.co', '', 'b339711c7a2df622bf33b12b4dc66d07.png', 9, 'Común', 1, 'Medellín', 'facturacionsusllantas@gmail.com'),
-(31, '900034424', 'Electrónica  I+D S.A.S ', 'Calle 48 D N° 65 A - 35', '(604) 6073333', '3159282544', '', 'administrtivo@didacticaselectronicas.com', '', 'd7797cb044065303b7982449bf23457e.png', 0, '', 1, '', ''),
-(32, '900597685', 'Sustento Jurídico ', 'Calle 8 B N° 65 167', '(604) 4199704', '3104415759', 'Edison Garcia', 'edisongarcia@sustentojuridico.com', '', '9ef3a8963714462abc64b441a3ae6a40.png', 1, '', 1, '', ''),
-(33, '900037505', 'Felda S.A', 'Calle 30 A N° 69 C - 11', '(604) 2350517', '3117229415', 'Francia Zapata', 'primaxbelenauxiliar@gmail.com', '', '', 2, 'Común', 1, 'Medellín', ''),
-(34, '800224025', 'Tablecol S.A.S', 'Carrera 56 N° 29-72 ', '(604) 44083129', '3104525720 / 3122581879', 'Margoth Rincon', 'cartera@tablecol.com.co', '', 'e0ad738367faee457a6d7eb79e105e62.png', 8, 'Común', 1, 'Medellín', ''),
-(35, '900529671', 'Ferretería Servillaves la 30 S.A.S', 'Calle 30 N° 75-04', '(604) 4449471', '3148851469', '', 'servillavesla30@une.net.co', '', 'd7beaa386ac040062c8aef0bc3664b78.png', 9, 'Común', 1, 'Medellín ', ''),
-(36, '900653389', 'Grupo Empresarial Camaleón S.A.S', 'Calle 30 N° 74-77', '(604) 5821080', '3041733035', '', 'pinturaselcamaleondela30@gmail.com', '', '88aa84cb01113f26141423fe28a2c96c.png', 6, 'Común', 1, 'Medellín', ''),
-(37, '830504313', 'Radio Enlace S.A.S', 'Calle 27 N°81 - 70 Belén la Palma', '(604) 4448280', '3116307079', 'Oscar Sánchez ', 'facturacionelectronica@radioenlacesas.com', '', 'e5f8af09c439c8602ceab505144e8879.png', 5, 'Común', 1, 'Medellín', 'gcomercial@radioenlacesas.com'),
-(38, '901248086', 'Uno A Tecnología S.A.S', 'Calle 14 # 48-33 CC. Monterrey Local 380A ', '(604) 4441818', '', '', 'www.unoacomputadores.com', '', '76726cc66c2b4bbe4efe00f0df965afe.png', 7, 'Común', 1, 'Medellín', ''),
-(39, '800242106', 'Sodimac Colombia S.A.', 'Calle 30 A N° 82 A - 26', '', '3208899933', '', 'servicioalcliente@corp.homecenter.cpm.co', '', '61689d16f9f015cf10096e217d9143be.png', 2, 'Común', 1, 'Medellín', ''),
-(40, '900525717', 'Almacén LCC S.A.S', 'Cra. 65 No. 8 B 91 LC174', '3611263', '', '', 'contabilidad.lcc@dotakondor.com', '', '18a4b3c5eef3d3e8a22a795637fc7c72.png', 0, 'Juridico', 1, 'Medellín ', ''),
-(41, '900933129', 'Meca S.A.S', 'Cra. 54 No. 29c120 loc 101', '5017013', '3117655802', '', 'meca701@hotmail.com', '', '7e93e958bf92c10b91b7378cf01eec5e.png', 1, 'Juridico', 1, 'Medellín ', ''),
-(42, '43094755', 'Moto Veloz', 'Cl 38 No. 51-32', '2328265', '', '', '', '', 'cbbc9342f18b9ba5c51dab8873e3de5f.png', 1, 'Juridico', 1, 'Medellín ', ''),
-(43, '900702001', 'Fénix Producciones S.A.S', 'Cl 49 No. 67 A 32', '4482246', '2304408', '', 'info♠fenixcomercial.com.co', '', '13ed291c09189f15fc05994b080c20f7.png', 5, 'Juridico', 1, 'Medellín ', ''),
-(44, '800227071', 'Tornifer S.A.S', 'Cl 30 No. 54-11', '3228015', '3137466', '', '', '', 'b7b02797d0b7410fe16c7b9685be934f.png', 0, '', 1, 'Medellín ', ''),
-(45, '890943055', 'Suconel Suministros y Controles Electronicos', 'Cra 53 No. 50 - 51 Of 506', '4487830', '3012578952', 'Suconel', 'suconel@suconel.com', '', 'df0a29132fca02bc7fa1c2971e4fbf42.png', 0, 'Juridico', 1, 'Medellín ', ''),
-(46, '800147520', 'Compel  S.A Tecnología &amp; Vigilancia ', 'Cra 70 No. 32b -147', '3512492', '3006351247', 'Compel', 'Compel@compel.com.co', '', '5347b32148d744287cb069a0984a799f.png', 2, 'Juridico', 1, 'Medellín ', ''),
-(47, '890922294', 'Protokimica S.A.S', 'Cra 56b No. 49-58', '4448787', '3117192216', 'Efren Villalba ', 'protokimica@une.net.co', '', '0d38a412b45f03cd3d5eddfeadb4d242.png', 4, 'Juridico', 1, 'Medellín ', ''),
-(48, '900529671', 'Ferretería Serví Llaves la 30', 'Cl 30 # 75-04', '4449471', '3148851469', 'Jairo León Álvarez ', 'servillavezla30@une.net.co', '', '455aa1c12281e108f6f3df4456755fe1.png', 9, 'Juridico', 1, 'Medellín ', ''),
-(49, '900434009', 'Macrotics S.A.S', 'Carrera 50 C 10 sur 35 BRR la Aguacatala', '6048418828', '3330333228', 'Jaime García', 'ventas@macrotics.com', '', '1962dbc1e33a9ee7d07aeded0e9e32e1.png', 3, 'Común', 1, 'Medellín', ''),
-(50, '900164446', 'Grupo Empresarial de Radiocomunicaciones E.U.', 'Calle 79B N 69 R-28', '6012516969', '3124347142', 'Jaime Hernández', 'radiotelefonos@hotmail.com', '', '66541273565ad7d34453f484ae6225a0.png', 1, 'Común', 1, 'Bogotá', ''),
-(51, '811039882', 'Comercializadora Jagir S.A.S', 'Cra  52 #38-58', '', '3157804512', '', '', '', 'ea54ab55a65a9519a3a97cad065e8213.png', 0, '', 1, 'Medellín ', ''),
-(52, '900458715', 'Uricamperos &amp; Diesel  S.A.S', 'Cra 51 No 39-21', '3229673', '3122574274', '', 'ventas@uricamperos.com', '', 'e38fe9b8f6f32d71ed86968ba9bb323a.png', 9, '', 1, '', ''),
-(53, '2684800', 'Jairo Vásquez', 'Medellín', '2684800', '', 'Jairo Vásquez', '', 'Cta. Ahorros Bancolombia 10349100332  //  \r\nCliente Seguridad de Colombia  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Medellín', ''),
-(54, '15381163', 'Luis Antonio Giraldo Rincón', 'CALLE 27 81 70', '3054551899', '3006659005', 'Luis Antonio Giraldo', 'comercial@radioenlacesas.com', 'Cta. Ahorros Bancolombia 10309362858  / /  \r\nCliente Masivos de Occidente  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 57, 'Simplificado', 1, 'Medellín', ''),
-(55, '70257077', 'Edwar Ernesto Gallego', 'Cerro el Rubí - Yolombo', '', '3504869245', 'Edwar Ernesto Gallego', '', 'Cta. Ahorros Bancolombia 0-7299667612 //  \r\nCliente Vinus  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Yolombo', ''),
-(56, '3401378', 'Miguel Vahos', 'Cerro Horizonte', '', '3103790947', 'Miguel Vahos', '', 'Cta. Ahorros Bancolombia 41867033597  / /  \r\nCliente Continental Gold  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n\r\n', '', 0, 'Simplificado', 1, 'Horizonte', ''),
-(57, '3669716', 'Alfonso Tapias Machado', 'Finca el Mico, Remedios.', '', '3137968328', 'Alfonso Tapias Machado', '', 'Cta. Ahorros Bancolombia62527282204  //  \r\nCliente Conexión Norte, Grupo Ortiz, Intramaq y Atempi  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Remedios', ''),
-(58, '15421478', 'Luis Alberto Pérez Arboleda', 'Finca Boquerón', '', '', 'Luis Alberto Pérez Arboleda', '', 'Cta. Ahorros Banco Bogotá  //  \r\nCliente Seracis  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Bogotá', ''),
-(59, '21580004', 'Belarmina Durango', 'Cerro Cativo', '', '3217582751', 'Belarmina Durango', '', 'Cta. Ahorros CFC 0-1201053377  //  \r\nCliente Continental Gold y Atempi  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Cativo', ''),
-(60, '43905052', 'Beatriz Correa', 'Cerro Toto ', '', '3127238853', 'Beatriz Correa', '', 'Cta. Ahorro a la Mano 13127238853  //  \r\nCliente Seracis  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Mutata', ''),
-(61, '1128452089', 'Esneider Espinosa ', 'Cerro la Meseta', '', '3007729918', 'Esneider Espinosa', '', 'Cta. Ahorros Bancolombia 1560885543  / /  \r\nCliente Consorcio R&amp;S  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Titiribí', ''),
-(62, '8415976', 'José Ignacio Higuita Vásquez', 'Cerro Dabeiba', '', '3108440238', 'Luis Ignacio Higuita Vásquez', '', 'Cta. Ahorros Bancolombia  //  \r\nCliente Sp. Ingenieros Mar II  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Dabeiba', ''),
-(63, '43363356', 'Gloria Ruiz', 'Cerro Bello San Félix', '', '3205417102', 'Gloria Ruiz', '', 'Cta. Ahorros Bancolombia 54100033634  //  \r\nCliente Seguridad de Colombia  //  \r\nSe debe incrementar en Octubre de cada año según el porcentaje del IPC.\r\n\r\n', '', 0, 'Simplificado', 1, 'San Félix ', ''),
-(64, '32210151', 'María Hilda Quintero Zabala', 'Cerro Otú, Vereda la Brava', '', '3122415933', 'María Hilda Quintero Zabala', '', 'Cta. Ahorros Bancolombia 52700015548  //  \r\nCliente Seracis  //  \r\nSe debe incrementar en Marzo de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Remedios', ''),
-(65, '71578126', 'Gabriel Jaime Ochoa Peláez', 'Cerro Sevilla', '', '3233001425', 'Gabriel Jaime Ochoa Peláez', '', 'Cta. Ahorros Bancolombia 2167007751  //  \r\nCliente Minerales Camino Real  //  \r\n Se debe incrementar en Junio de cada año según el porcentaje del IPC.\r\n\r\n', '', 0, 'Simplificado', 1, 'Sevilla', ''),
-(66, '1026159146', 'Yeison David Henao Atehortúa', 'Cerro el Colombianito', '', '3194508493', 'Yeison David Henao Atehortúa ', '', 'Cta. Ahorros Bancolombia 27900001266  //  \r\nCliente Consorcio R&amp;S  //  \r\nSe debe incrementar en Agosto de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Caldas', ''),
-(67, '16075309', 'Camilo Andres Lopera', 'Cerro San José de la Montaña', '', '3206322680', 'Camilo Andres Lopera', '', 'Cta. Corriente Bancolombia 7014384380  //                                                                                                                                          Cliente Hdroituango y Conconcreto  //                                                                                                                                             \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, '', 1, 'San José ', ''),
-(68, '7530716', 'Guillermo Adolfo Atehortúa Agudelo ', 'Cerro el Cedro, Amaga', '', '3223093528', 'Guillermo Adolfo Atehortúa Agudelo ', '', 'Cta. Ahorros Bancolombia 52001440071  //  \r\nCliente Consorcio R&amp;S  //  \r\nSe debe incrementar en Septiembre de cada año según el porcentaje del IPC.\r\n', '', 0, '', 1, 'Amaga', ''),
-(69, '1037368146', 'Eliana María Suarez', 'Cerro Maceo', '', '3108255728', 'Eliana María Suarez', '', 'Cta. Ahorros Bancolombia 16390361991  //  \r\nCliente Intramaq  //  \r\nSe debe incrementar en Abril de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Maceo', ''),
-(70, '8075270', 'Oscar Darío Giraldo Ramírez', 'Dabeiba - Chinos', '', '3218735537', 'Oscar Darío Giraldo / Flor', '', 'Cta. Ahorro a la Mano 03126059317 / /\r\nSolo se cancelan los servicios una vez que ellos envían la factura, del recibo se debe restar (140.000 pesos) que es lo que normalmente ellos pagaban de luz y se le debe pagar el diferencial.', '', 0, 'Simplificado', 1, 'Dabeiba', ''),
-(71, '43424223', 'Omaira del Socorro escobar Sánchez ', 'Cerro Pantanillo', '', '3113136979', 'Omaira del Socorro Escobar Sánchez', '', 'Gana BArbosa  //  \r\nCliente Hatovial  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Barbosa', ''),
-(72, '1039284416', 'Robinson Flores Vargas', 'Dabeiba', '', '31732002976', 'Robinson Flores Vargas', '', 'Gana Dabeiba  //  \r\nCliente Seracis Chinos  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n\r\n\r\n', '', 0, 'Simplificado', 1, 'Dabeiba', ''),
-(73, '8333249', 'José Joaquín León Gases ', 'Mutata', '', '3218903562', 'José Joaquim León Gases', '', 'Gana Mutata  //  \r\nCliente Seracis Chinos  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Mutata', ''),
-(74, '8417622', 'Rubiel  Benítez ', 'Dabeiba', '', '3183757447', 'Rubiel Benítez', '', 'Gana Dabeiba  //  \r\nCliente Seracis Chinos  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Dabeiba', ''),
-(75, '21818287', 'María Nidia Macías Flores ', 'Vegachí', '', '3165676391', 'María Nidia Flores', '', 'Gana Vegachí  //  \r\nCliente  //  \r\nSe debe incrementar en Febrero de cada año según el porcentaje del IPC.\r\n\r\n', '', 0, 'Simplificado', 1, 'Vegachí', ''),
-(76, '6271627', 'Eduardo Calderón', 'Santa Fe ', '', '3148895933', 'Eduardo Calderón ', '', 'Gana Santa Fe  //  \r\nCliente El Cóndor  //  \r\nSe debe incrementar en Febrero de cada año según el porcentaje del IPC.\r\n\r\n', '', 0, 'Simplificado', 1, 'Santa Fe', ''),
-(77, '30760476', 'Rocío Beltrán Castro', 'Codazzi el Cesar', '', '3144245571', 'Rocío Beltrán Castro', '', 'Cta Ahorro a la Mano Bancolombia 52491370742  // \r\nCliente Isla Caribe  //  \r\nSe debe incrementar en Agosto de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'El Cesar', ''),
-(78, '71023107', 'Jorge Humberto Lopera Durando', 'Frontino', '', '3122814104', 'Jorge Humberto Lopera Durando ', '', 'Cta. Ahorro a la Mano Bancolombia 03122814104  //  \r\nCliente Sp. Ingenieros Mar II  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Frontino', ''),
-(79, '900802615', 'Solarplus Energy S.A.S', 'Calle 65 Calle 8 B 91 IN 372', '6044483363', '3137330883', 'Juan Bernal ', 'tradecontabilidad@gmail.com', '', '40d568165a13576e7db2432794952b8e.png', 6, 'Común', 1, 'Medellín', ''),
-(80, '900986403', 'RFI Comunicaciones S.A.S', 'Cra 37 B No. 1 g - 20', '3843687', '3102256990', 'William Martin Vargas ', '', '', '1855330a09a42d68e131fc6b676eca82.png', 0, 'Juridico', 1, 'Bogotá', ''),
-(81, '890980958', 'MUNICIPIO DE MACEO', 'Carrera 30 #30-32', '8640209', '8640209', '', 'alcaldia@maceo-antioquia.gov.co', '', '', 3, '', 1, 'MACEO', ''),
-(82, '19708332', 'ROBERTO CARLOS 	LEIVA PEREZ', 'VEREDA 4 VIENTOS', '', '3002349561', 'ROBERTO CARLOS 	LEIVA PEREZ', '', '', '', 1, 'SIMPLE', 1, '', ''),
-(83, '830114921', 'COLOMBIA MOVIL S A E S P', 'CR 65 30A 58', '', '018003000000', 'TIGO BUSINES', 'atencionprimercontacto@mail.tigo.com.co', '', 'c8fb2c2ab13b2cbb0a75db1749c2f859.png', 1, 'GRANDES CONTRIBUYENTES', 1, 'MEDELLIN', ''),
-(84, '800153993', 'COMUNICACION CELULAR S A COMCEL S A', 'Cl 30 A 82 a-26 C.C Los Molinos L 3031 ', '01-800-0341818', '01-800-0341818', 'CLARO', 'solucionesclaro@claro.com.co', '', 'b5f2dc14220cc7faec83e84120c5e7a8.png', 7, 'GRANDES CONTRIBUYENTES', 1, 'MEDELLIN', ''),
-(85, '890904996', 'EMPRESAS PUBLICAS DE MEDELLIN E.S.P.', 'CRA 58  42 125', '3808080', '', 'EPM', 'notificacionesjudicialesepm@epm.com.co', '', '3486570319715963e6ec1f22ee3dd5bb.png', 1, 'GRANDES CONTRIBUYENTES', 1, 'MEDELLIN', 'notificacionesjudicialesepm@epm.com.co'),
-(86, '1128404557', 'JUAN PABLO CADAVID MUÑOS', '', '', '3015353766', 'JUAN PABLO CADAVID MUÑOS', '', '', '', 0, 'SIMPLE', 1, 'MEDELLIN', ''),
-(87, '1036610363', 'SIRLEY TATIANA MURILLO GOMEZ', 'Carre 69 calle 34 b sur 102', '', '3148783053', 'SIRLEY TATIANA MURILLO GOMEZ', 'coordinadora.sst@radioenlacesas.com', '', '', 0, 'SIMPLE', 1, 'MEDELLIN', ''),
-(88, '41948443', 'ANGELA MARIAPEREZ ARANGO', 'CL 39 SUR 25C 89 APTO 428', '', '3122476898', 'ANGELA MARIAPEREZ ARANGO', 'angelaperez1980@hotmail.com', '', '', 0, 'SIMPLE', 1, '', ''),
-(89, '71687072', 'JEFERSON ARANGO RESTREPO', 'Cra 98#22h 57', '311 6396382', '311 6396382', 'JEFERSON ARANGO RESTREPO', 'jefersonarango@gmail.com', '', '', 0, 'SIMPLE', 1, 'MEDELLIN', ''),
-(90, '901296977', 'PUNTA DEL PARQUE - PROPIEDAD HORIZONTAL', 'CL 37B SUR 27 30', '', '3501546', 'PUNTA DEL PARQUE - PROPIEDAD HORIZONTAL', 'puntadelparqueph@gmail.com', '', '', 9, 'REGIMEN COMUN', 1, 'MEDELLIN', ''),
-(91, '3518230', 'Electrónicas ADM ', 'Cra 53 No.  51-51 Local 311 CC La Cascada', '4807950', '', '', '', '', '', 3, '', 1, 'Medellín ', ''),
-(92, '901291245', 'ICANN GROUP S.A.S', 'cl 33 74e 84', '2503941', '313 7366882', 'Alejandro Torres', 'orestrepo@hotmail.com', '', 'ccc209e3e7abc29adcfd6edd4ee8fcdc.png', 3, 'REGIMEN COMUN', 1, 'MEDELLIN', ''),
-(93, '800060880', 'Ferragro S.A.S', 'Cra. 42 # 51 - 34', '4483797', '3117207435', '', 'jjrestrepo@ferragro.com', '', 'c4f0d1c3ac3ef4e1880f6338c4bd6e3a.png', 3, '', 1, 'Medellín ', ''),
-(94, '43620699', 'Marcela Ríos Urrea / Enactivo Consulting', 'CR 35 65 SUR 135 AP 1505', '', '3187170367', '', 'marcelariosurrea@gmail.com', '', 'e6724d6b019cd529315f3818a51c4924.png', 4, '', 1, 'Medellín ', '');
+INSERT INTO `proveedores` (`id`, `nit`, `razon_social`, `direccion`, `telefono_fijo`, `celular`, `contacto`, `email`, `observaciones`, `avatar`, `codigo_verificacion`, `tipo_regimen`, `estado`, `ciudad`, `email_comercial`, `clave`) VALUES
+(4, '900382335', 'Radiotrans Colombia S.A.S', 'Carrera 71 Circular 1 - 42', '(604) 4481991', '3137487534', 'Martha Liliana Leon', 'mleon@radiotrans.com', '', 'bfbcb18259412a2d6ec5884d55437a6c.png', 5, '', 1, 'Medellín', '', '123456'),
+(5, '800162165', 'Sistemas Electrónicos y Telecomunicaciones S.A.S', 'Carrera 33 No. 62 - 34', '(601) 6433825', '3114772496', 'David Roldan', 'david.roldan@sistelec.com.co', '', '08b883f641ae8473d574cdbec7221fe8.png', 3, '', 1, '', '', '123456'),
+(6, '901192317', 'Syscom Colombia S.A.S', 'Cra. 90A No. 64C 38 Álamos Norte', '(601) 7443650', '3147209764', 'William Cárdenas', 'luis@syscomcolombia.com', '', '8d07ce149e754e0c0d7c96075b8db3e2.png', 0, '', 1, '', '', '123456'),
+(7, '890941103', 'Equielect S.A.S', 'Carrera 72 No. 30-53', '(604) 4443133', '', '', 'equielect@equielect.com.co', '', '7c101e2faed734ec911ce2ffe4290d22.png', 7, '', 1, '', '', '123456'),
+(8, '830079015', 'Meltec Comunicaciones S.A', 'CL 130A # 58A 29', '(601) 4111899 ', '3143956689', 'Alejandro Arango', 'cartera@meltec.com.co', '', 'e817c1d6da72e09bdb041b3379421e39.png', 1, '', 1, '', '', '123456'),
+(9, '800170775', 'Transmicosta S.A.S', 'CL 75 58 48', '(605) 3689050', '3157187962', 'Cecilia Danies', 'gerencia@transmicosta.com', '', '138ea9cb785d4a19b9e5d64eaffaf185.png', 1, '', 1, '', '', '123456'),
+(11, '900245554', 'Amarillo LTDA', 'Calle 8C N° 87B - 40 oficina 223', '(601)7460018 EXT 03', '(601) 7460018', 'Gloria Díaz', ' admon.amarilloltda@gmail.com', '', '9ad2a29267149e68f27582cefb4c0172.png', 5, '', 1, '', '', '123456'),
+(12, '890913902', 'Antioqueña de Automotores y Repuestos S.A.S  ANDAR', 'CARRERA 77 N° 28 - 13 BELEN', '(604) 4440800', '3213139234', 'Leonardo Vásquez', 'leonardo.velasquez@andar.com.co', '', '0638eaa95b618e76d814eac90f0974f6.png', 6, '', 1, '', '', '123456'),
+(13, '98490197', 'Baterías JV', 'Diagonal 44 31 41', '', '3155182035', 'Marcela', 'ventasbateriasjv@gmail.com', '', '7b552d80ddb53403e0536b78794e6915.png', 1, '', 1, '', '', '123456'),
+(14, '900413864', 'Calza Soluciones ', 'Carrera 67 A N°51-79', '(604) 4488584', '3175163310', 'Melissa', 'comercial@radioenlacesas.com', '', '829763b900cba9a5063863f49f896808.png', 4, '', 1, '', '', '123456'),
+(15, '900722974', 'Copimarks S.A.S', 'Carrera 78 45 E 61', '(604) 4482874', '3105025201 / 3134909757', 'Jorge Sánchez', 'copimarks@gmail.com', '', '33aa09f76666e6e2e51e96ba775416b7.png', 1, '', 1, '', '', '123456'),
+(16, '811015782', 'Elian Comunicaciones y Montajes S.A.S', 'Calle 36 SA Sur N° 46 A 81 Of. 237', '(604) 3317287', '31038372530', 'Cesar Hoyos', 'eliancomunicaciones@hotmail.com', '', '0ac198f3fd1f3db014321505bab757a7.png', 9, '', 1, '', '', '123456'),
+(18, '10883737', 'Juan Eduardo Alvarado Solorzano', 'Carrera 52, Calle 82 -24 Medellín', '(604) 2131785', '', 'Juan Alvarado', 'metrofuego@une.net.co', '', 'c19fa572fa0ad7d5081b9841c8234a36.png', 4, '', 1, '', '', '123456'),
+(19, '900323290', 'Estación de Servicio Estrella del Norte S.A.S', 'Aut. Norte KM 16 Vda. Zarzal', '(604) 4480313 / 4015252', '', 'Sebastián Vélez', 'edsestrelladelnorte@une.net,co', '', '42e2a66f84519c31f1904a26fd7a43e3.png', 0, '', 1, '', '', '123456'),
+(20, '860500630', 'Isec', 'Carrera 43A # 14 -27 Oficina 202', '(604) 2666434', '3153838392', 'Luz Stella Vásquez ', 'stella.vasquez@isec.com.co', '', '87a7a92578531a3c8ba5778a1a6f927f.png', 6, '', 1, '', '', '123456'),
+(21, '900225832', 'Luchos Lujomania LTDA', 'Carrera 64 N° 42B - 31', '(604) 4082320 / 4087942', '', 'Alexandra Restrepo', 'contacto@luchoslujomania.com', '', '98c016f888a2f9257dc9d9ae9143093a.png', 2, '', 1, '', '', '123456'),
+(22, '811000995', 'Mas Frenos S.A.S', 'Calle 30 A 65 B 66', '(604) 4798744 / 4798461', '', 'German Hernández', 'masfrenos@gmail.com', '', '551c5c6b0068c144a559fe35e3467522.png', 0, '', 1, '', '', '123456'),
+(23, '901436594', 'Inversiones Mas Repuestos S.A.S', 'Carera 61 N°45 - 08', '', '3003641449 / 3007631988', 'Karen', 'masrepuestos@gmail.com', '', '6beb3c5bb911d29e684faf35564e7d06.png', 3, '', 1, '', '', '123456'),
+(24, '901446306', 'Grupo Empresarial ADSL S.A.S', 'Calle 48 # 10-45 CC Monterrey Loc. 315-316', '(604) 6090123', '3122510095', 'Mauricio Franco', 'm.franco@grupoadsl.com', '', '', 1, '', 1, '', '', '123456'),
+(25, '900585869', 'Mega Storage Colombia S.A.S', 'Calle 8 B N° 65 251', '(604) 6051525', '3216390098', 'Yurani Mendez', 'contabilidad@megastorage.com.co', '', 'a261bf5349156150b4d68835d461b52e.png', 8, '', 1, '', '', '123456'),
+(26, '900744916', 'Mundirepuestos  del Norte S.A.S', 'Diagonal 52 N° 15 A 351 - Interior 5 Centro Logístico del Norte - Bello', '(604) 3666709', '3113555851', 'Carolina Castro', 'administracion@mundirepuestosdelnorte.com.co', '', 'a04872500ff3a5c3469bc04ff4f7f871.png', 9, '', 1, '', '', '123456'),
+(27, '900986403', 'Radiofrecuencia e Ingeniería en Comunicaciones S.A.S', 'Carrera 37 B N° 1 G  - 20', '(601) 3843687', '3102256990', 'William Marín', 'williammartincom@gmail.com', '', '5e4adc3438c110f95dc526885b0bad77.png', 0, '', 1, '', '', '123456'),
+(28, '900906969', 'Soluciones en Seguridad y Salud en el Trabajo S3 S.A.S', 'Carera 53 N°  36 - 35', '(604) 4796057', '3044783532', 'Laura', 'cartera3soluciones@gmail.com', '', 'a6fcc619567ef2feef6e591d852dd027.png', 5, 'Común', 1, 'Medellín', 'foracionalturas@s3soluciones.com.co', '123456'),
+(29, '900265297', 'Sociedad de Seguridad Electrónica y Telecomunicaciones S.A.S', 'Av. Carera 20 N° 85 A - 21', '(601) 4321757', '3125085416 / 3115446076', 'Lucia González / Diany Delgado', 'contabilidad@setronics.net', '', 'fa966e69754c8fb7701fc5d3714641ea.png', 2, 'Común', 1, 'Bogotá', 'consultor.diany@setronics.net', '123456'),
+(30, '890942699', 'Almacén Sus Llantas S.A.S', 'Carrera 59 N° 48 - 20 Barrio Triste', '(604) 5112424', '3215112424', 'Ana Gil', 'conta.susllantas@une.net.co', '', 'b339711c7a2df622bf33b12b4dc66d07.png', 9, 'Común', 1, 'Medellín', 'facturacionsusllantas@gmail.com', '123456'),
+(31, '900034424', 'Electrónica  I+D S.A.S ', 'Calle 48 D N° 65 A - 35', '(604) 6073333', '3159282544', '', 'administrtivo@didacticaselectronicas.com', '', 'd7797cb044065303b7982449bf23457e.png', 0, '', 1, '', '', '123456'),
+(32, '900597685', 'Sustento Jurídico ', 'Calle 8 B N° 65 167', '(604) 4199704', '3104415759', 'Edison Garcia', 'edisongarcia@sustentojuridico.com', '', '9ef3a8963714462abc64b441a3ae6a40.png', 1, '', 1, '', '', '123456'),
+(33, '900037505', 'Felda S.A', 'Calle 30 A N° 69 C - 11', '(604) 2350517', '3117229415', 'Francia Zapata', 'primaxbelenauxiliar@gmail.com', '', '', 2, 'Común', 1, 'Medellín', '', '123456'),
+(34, '800224025', 'Tablecol S.A.S', 'Carrera 56 N° 29-72 ', '(604) 44083129', '3104525720 / 3122581879', 'Margoth Rincon', 'cartera@tablecol.com.co', '', 'e0ad738367faee457a6d7eb79e105e62.png', 8, 'Común', 1, 'Medellín', '', '123456'),
+(35, '900529671', 'Ferretería Servillaves la 30 S.A.S', 'Calle 30 N° 75-04', '(604) 4449471', '3148851469', '', 'servillavesla30@une.net.co', '', 'd7beaa386ac040062c8aef0bc3664b78.png', 9, 'Común', 1, 'Medellín ', '', '123456'),
+(36, '900653389', 'Grupo Empresarial Camaleón S.A.S', 'Calle 30 N° 74-77', '(604) 5821080', '3041733035', '', 'pinturaselcamaleondela30@gmail.com', '', '88aa84cb01113f26141423fe28a2c96c.png', 6, 'Común', 1, 'Medellín', '', '123456'),
+(37, '830504313', 'Radio Enlace S.A.S', 'Calle 27 N°81 - 70 Belén la Palma', '(604) 4448280', '3116307079', 'Oscar Sánchez ', 'facturacionelectronica@radioenlacesas.com', '', 'e5f8af09c439c8602ceab505144e8879.png', 5, 'Común', 1, 'Medellín', 'gcomercial@radioenlacesas.com', '123456'),
+(38, '901248086', 'Uno A Tecnología S.A.S', 'Calle 14 # 48-33 CC. Monterrey Local 380A ', '(604) 4441818', '', '', 'www.unoacomputadores.com', '', '76726cc66c2b4bbe4efe00f0df965afe.png', 7, 'Común', 1, 'Medellín', '', '123456'),
+(39, '800242106', 'Sodimac Colombia S.A.', 'Calle 30 A N° 82 A - 26', '', '3208899933', '', 'servicioalcliente@corp.homecenter.cpm.co', '', '61689d16f9f015cf10096e217d9143be.png', 2, 'Común', 1, 'Medellín', '', '123456'),
+(40, '900525717', 'Almacén LCC S.A.S', 'Cra. 65 No. 8 B 91 LC174', '3611263', '', '', 'contabilidad.lcc@dotakondor.com', '', '18a4b3c5eef3d3e8a22a795637fc7c72.png', 0, 'Juridico', 1, 'Medellín ', '', '123456'),
+(41, '900933129', 'Meca S.A.S', 'Cra. 54 No. 29c120 loc 101', '5017013', '3117655802', '', 'meca701@hotmail.com', '', '7e93e958bf92c10b91b7378cf01eec5e.png', 1, 'Juridico', 1, 'Medellín ', '', '123456'),
+(42, '43094755', 'Moto Veloz', 'Cl 38 No. 51-32', '2328265', '', '', '', '', 'cbbc9342f18b9ba5c51dab8873e3de5f.png', 1, 'Juridico', 1, 'Medellín ', '', '123456'),
+(43, '900702001', 'Fénix Producciones S.A.S', 'Cl 49 No. 67 A 32', '4482246', '2304408', '', 'info♠fenixcomercial.com.co', '', '13ed291c09189f15fc05994b080c20f7.png', 5, 'Juridico', 1, 'Medellín ', '', '123456'),
+(44, '800227071', 'Tornifer S.A.S', 'Cl 30 No. 54-11', '3228015', '3137466', '', '', '', 'b7b02797d0b7410fe16c7b9685be934f.png', 0, '', 1, 'Medellín ', '', '123456'),
+(45, '890943055', 'Suconel Suministros y Controles Electronicos', 'Cra 53 No. 50 - 51 Of 506', '4487830', '3012578952', 'Suconel', 'suconel@suconel.com', '', 'df0a29132fca02bc7fa1c2971e4fbf42.png', 0, 'Juridico', 1, 'Medellín ', '', '123456'),
+(46, '800147520', 'Compel  S.A Tecnología &amp; Vigilancia ', 'Cra 70 No. 32b -147', '3512492', '3006351247', 'Compel', 'Compel@compel.com.co', '', '5347b32148d744287cb069a0984a799f.png', 2, 'Juridico', 1, 'Medellín ', '', '123456'),
+(47, '890922294', 'Protokimica S.A.S', 'Cra 56b No. 49-58', '4448787', '3117192216', 'Efren Villalba ', 'protokimica@une.net.co', '', '0d38a412b45f03cd3d5eddfeadb4d242.png', 4, 'Juridico', 1, 'Medellín ', '', '123456'),
+(48, '900529671', 'Ferretería Serví Llaves la 30', 'Cl 30 # 75-04', '4449471', '3148851469', 'Jairo León Álvarez ', 'servillavezla30@une.net.co', '', '455aa1c12281e108f6f3df4456755fe1.png', 9, 'Juridico', 1, 'Medellín ', '', '123456'),
+(49, '900434009', 'Macrotics S.A.S', 'Carrera 50 C 10 sur 35 BRR la Aguacatala', '6048418828', '3330333228', 'Jaime García', 'ventas@macrotics.com', '', '1962dbc1e33a9ee7d07aeded0e9e32e1.png', 3, 'Común', 1, 'Medellín', '', '123456'),
+(50, '900164446', 'Grupo Empresarial de Radiocomunicaciones E.U.', 'Calle 79B N 69 R-28', '6012516969', '3124347142', 'Jaime Hernández', 'radiotelefonos@hotmail.com', '', '66541273565ad7d34453f484ae6225a0.png', 1, 'Común', 1, 'Bogotá', '', '123456'),
+(51, '811039882', 'Comercializadora Jagir S.A.S', 'Cra  52 #38-58', '', '3157804512', '', '', '', 'ea54ab55a65a9519a3a97cad065e8213.png', 0, '', 1, 'Medellín ', '', '123456'),
+(52, '900458715', 'Uricamperos &amp; Diesel  S.A.S', 'Cra 51 No 39-21', '3229673', '3122574274', '', 'ventas@uricamperos.com', '', 'e38fe9b8f6f32d71ed86968ba9bb323a.png', 9, '', 1, '', '', '123456'),
+(53, '2684800', 'Jairo Vásquez', 'Medellín', '2684800', '', 'Jairo Vásquez', '', 'Cta. Ahorros Bancolombia 10349100332  //  \r\nCliente Seguridad de Colombia  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Medellín', '', '123456'),
+(54, '15381163', 'Luis Antonio Giraldo Rincón', 'CALLE 27 81 70', '3054551899', '3006659005', 'Luis Antonio Giraldo', 'comercial@radioenlacesas.com', 'Cta. Ahorros Bancolombia 10309362858  / /  \r\nCliente Masivos de Occidente  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 57, 'Simplificado', 1, 'Medellín', '', '123456'),
+(55, '70257077', 'Edwar Ernesto Gallego', 'Cerro el Rubí - Yolombo', '', '3504869245', 'Edwar Ernesto Gallego', '', 'Cta. Ahorros Bancolombia 0-7299667612 //  \r\nCliente Vinus  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Yolombo', '', '123456'),
+(56, '3401378', 'Miguel Vahos', 'Cerro Horizonte', '', '3103790947', 'Miguel Vahos', '', 'Cta. Ahorros Bancolombia 41867033597  / /  \r\nCliente Continental Gold  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n\r\n', '', 0, 'Simplificado', 1, 'Horizonte', '', '123456'),
+(57, '3669716', 'Alfonso Tapias Machado', 'Finca el Mico, Remedios.', '', '3137968328', 'Alfonso Tapias Machado', '', 'Cta. Ahorros Bancolombia62527282204  //  \r\nCliente Conexión Norte, Grupo Ortiz, Intramaq y Atempi  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Remedios', '', '123456'),
+(58, '15421478', 'Luis Alberto Pérez Arboleda', 'Finca Boquerón', '', '', 'Luis Alberto Pérez Arboleda', '', 'Cta. Ahorros Banco Bogotá  //  \r\nCliente Seracis  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Bogotá', '', '123456'),
+(59, '21580004', 'Belarmina Durango', 'Cerro Cativo', '', '3217582751', 'Belarmina Durango', '', 'Cta. Ahorros CFC 0-1201053377  //  \r\nCliente Continental Gold y Atempi  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Cativo', '', '123456'),
+(60, '43905052', 'Beatriz Correa', 'Cerro Toto ', '', '3127238853', 'Beatriz Correa', '', 'Cta. Ahorro a la Mano 13127238853  //  \r\nCliente Seracis  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Mutata', '', '123456'),
+(61, '1128452089', 'Esneider Espinosa ', 'Cerro la Meseta', '', '3007729918', 'Esneider Espinosa', '', 'Cta. Ahorros Bancolombia 1560885543  / /  \r\nCliente Consorcio R&amp;S  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Titiribí', '', '123456'),
+(62, '8415976', 'José Ignacio Higuita Vásquez', 'Cerro Dabeiba', '', '3108440238', 'Luis Ignacio Higuita Vásquez', '', 'Cta. Ahorros Bancolombia  //  \r\nCliente Sp. Ingenieros Mar II  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Dabeiba', '', '123456'),
+(63, '43363356', 'Gloria Ruiz', 'Cerro Bello San Félix', '', '3205417102', 'Gloria Ruiz', '', 'Cta. Ahorros Bancolombia 54100033634  //  \r\nCliente Seguridad de Colombia  //  \r\nSe debe incrementar en Octubre de cada año según el porcentaje del IPC.\r\n\r\n', '', 0, 'Simplificado', 1, 'San Félix ', '', '123456'),
+(64, '32210151', 'María Hilda Quintero Zabala', 'Cerro Otú, Vereda la Brava', '', '3122415933', 'María Hilda Quintero Zabala', '', 'Cta. Ahorros Bancolombia 52700015548  //  \r\nCliente Seracis  //  \r\nSe debe incrementar en Marzo de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Remedios', '', '123456'),
+(65, '71578126', 'Gabriel Jaime Ochoa Peláez', 'Cerro Sevilla', '', '3233001425', 'Gabriel Jaime Ochoa Peláez', '', 'Cta. Ahorros Bancolombia 2167007751  //  \r\nCliente Minerales Camino Real  //  \r\n Se debe incrementar en Junio de cada año según el porcentaje del IPC.\r\n\r\n', '', 0, 'Simplificado', 1, 'Sevilla', '', '123456'),
+(66, '1026159146', 'Yeison David Henao Atehortúa', 'Cerro el Colombianito', '', '3194508493', 'Yeison David Henao Atehortúa ', '', 'Cta. Ahorros Bancolombia 27900001266  //  \r\nCliente Consorcio R&amp;S  //  \r\nSe debe incrementar en Agosto de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Caldas', '', '123456'),
+(67, '16075309', 'Camilo Andres Lopera', 'Cerro San José de la Montaña', '', '3206322680', 'Camilo Andres Lopera', '', 'Cta. Corriente Bancolombia 7014384380  //                                                                                                                                          Cliente Hdroituango y Conconcreto  //                                                                                                                                             \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, '', 1, 'San José ', '', '123456'),
+(68, '7530716', 'Guillermo Adolfo Atehortúa Agudelo ', 'Cerro el Cedro, Amaga', '', '3223093528', 'Guillermo Adolfo Atehortúa Agudelo ', '', 'Cta. Ahorros Bancolombia 52001440071  //  \r\nCliente Consorcio R&amp;S  //  \r\nSe debe incrementar en Septiembre de cada año según el porcentaje del IPC.\r\n', '', 0, '', 1, 'Amaga', '', '123456'),
+(69, '1037368146', 'Eliana María Suarez', 'Cerro Maceo', '', '3108255728', 'Eliana María Suarez', '', 'Cta. Ahorros Bancolombia 16390361991  //  \r\nCliente Intramaq  //  \r\nSe debe incrementar en Abril de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Maceo', '', '123456'),
+(70, '8075270', 'Oscar Darío Giraldo Ramírez', 'Dabeiba - Chinos', '', '3218735537', 'Oscar Darío Giraldo / Flor', '', 'Cta. Ahorro a la Mano 03126059317 / /\r\nSolo se cancelan los servicios una vez que ellos envían la factura, del recibo se debe restar (140.000 pesos) que es lo que normalmente ellos pagaban de luz y se le debe pagar el diferencial.', '', 0, 'Simplificado', 1, 'Dabeiba', '', '123456'),
+(71, '43424223', 'Omaira del Socorro escobar Sánchez ', 'Cerro Pantanillo', '', '3113136979', 'Omaira del Socorro Escobar Sánchez', '', 'Gana BArbosa  //  \r\nCliente Hatovial  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Barbosa', '', '123456'),
+(72, '1039284416', 'Robinson Flores Vargas', 'Dabeiba', '', '31732002976', 'Robinson Flores Vargas', '', 'Gana Dabeiba  //  \r\nCliente Seracis Chinos  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n\r\n\r\n', '', 0, 'Simplificado', 1, 'Dabeiba', '', '123456'),
+(73, '8333249', 'José Joaquín León Gases ', 'Mutata', '', '3218903562', 'José Joaquim León Gases', '', 'Gana Mutata  //  \r\nCliente Seracis Chinos  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Mutata', '', '123456'),
+(74, '8417622', 'Rubiel  Benítez ', 'Dabeiba', '', '3183757447', 'Rubiel Benítez', '', 'Gana Dabeiba  //  \r\nCliente Seracis Chinos  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Dabeiba', '', '123456'),
+(75, '21818287', 'María Nidia Macías Flores ', 'Vegachí', '', '3165676391', 'María Nidia Flores', '', 'Gana Vegachí  //  \r\nCliente  //  \r\nSe debe incrementar en Febrero de cada año según el porcentaje del IPC.\r\n\r\n', '', 0, 'Simplificado', 1, 'Vegachí', '', '123456'),
+(76, '6271627', 'Eduardo Calderón', 'Santa Fe ', '', '3148895933', 'Eduardo Calderón ', '', 'Gana Santa Fe  //  \r\nCliente El Cóndor  //  \r\nSe debe incrementar en Febrero de cada año según el porcentaje del IPC.\r\n\r\n', '', 0, 'Simplificado', 1, 'Santa Fe', '', '123456'),
+(77, '30760476', 'Rocío Beltrán Castro', 'Codazzi el Cesar', '', '3144245571', 'Rocío Beltrán Castro', '', 'Cta Ahorro a la Mano Bancolombia 52491370742  // \r\nCliente Isla Caribe  //  \r\nSe debe incrementar en Agosto de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'El Cesar', '', '123456'),
+(78, '71023107', 'Jorge Humberto Lopera Durando', 'Frontino', '', '3122814104', 'Jorge Humberto Lopera Durando ', '', 'Cta. Ahorro a la Mano Bancolombia 03122814104  //  \r\nCliente Sp. Ingenieros Mar II  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 0, 'Simplificado', 1, 'Frontino', '', '123456'),
+(79, '900802615', 'Solarplus Energy S.A.S', 'Calle 65 Calle 8 B 91 IN 372', '6044483363', '3137330883', 'Juan Bernal ', 'tradecontabilidad@gmail.com', '', '40d568165a13576e7db2432794952b8e.png', 6, 'Común', 1, 'Medellín', '', '123456'),
+(80, '900986403', 'RFI Comunicaciones S.A.S', 'Cra 37 B No. 1 g - 20', '3843687', '3102256990', 'William Martin Vargas ', '', '', '1855330a09a42d68e131fc6b676eca82.png', 0, 'Juridico', 1, 'Bogotá', '', '123456'),
+(81, '890980958', 'MUNICIPIO DE MACEO', 'Carrera 30 #30-32', '8640209', '8640209', '', 'alcaldia@maceo-antioquia.gov.co', '', '', 3, '', 1, 'MACEO', '', '123456'),
+(82, '19708332', 'ROBERTO CARLOS 	LEIVA PEREZ', 'VEREDA 4 VIENTOS', '', '3002349561', 'ROBERTO CARLOS 	LEIVA PEREZ', '', '', '', 1, 'SIMPLE', 1, '', '', '123456'),
+(83, '830114921', 'COLOMBIA MOVIL S A E S P', 'CR 65 30A 58', '', '018003000000', 'TIGO BUSINES', 'atencionprimercontacto@mail.tigo.com.co', '', 'c8fb2c2ab13b2cbb0a75db1749c2f859.png', 1, 'GRANDES CONTRIBUYENTES', 1, 'MEDELLIN', '', '123456'),
+(84, '800153993', 'COMUNICACION CELULAR S A COMCEL S A', 'Cl 30 A 82 a-26 C.C Los Molinos L 3031 ', '01-800-0341818', '01-800-0341818', 'CLARO', 'solucionesclaro@claro.com.co', '', 'b5f2dc14220cc7faec83e84120c5e7a8.png', 7, 'GRANDES CONTRIBUYENTES', 1, 'MEDELLIN', '', '123456'),
+(85, '890904996', 'EMPRESAS PUBLICAS DE MEDELLIN E.S.P.', 'CRA 58  42 125', '3808080', '', 'EPM', 'notificacionesjudicialesepm@epm.com.co', '', '3486570319715963e6ec1f22ee3dd5bb.png', 1, 'GRANDES CONTRIBUYENTES', 1, 'MEDELLIN', 'notificacionesjudicialesepm@epm.com.co', '123456'),
+(86, '1128404557', 'JUAN PABLO CADAVID MUÑOS', '', '', '3015353766', 'JUAN PABLO CADAVID MUÑOS', '', '', '', 0, 'SIMPLE', 1, 'MEDELLIN', '', '123456'),
+(87, '1036610363', 'SIRLEY TATIANA MURILLO GOMEZ', 'Carre 69 calle 34 b sur 102', '', '3148783053', 'SIRLEY TATIANA MURILLO GOMEZ', 'coordinadora.sst@radioenlacesas.com', '', '', 0, 'SIMPLE', 1, 'MEDELLIN', '', '123456'),
+(88, '41948443', 'ANGELA MARIAPEREZ ARANGO', 'CL 39 SUR 25C 89 APTO 428', '', '3122476898', 'ANGELA MARIAPEREZ ARANGO', 'angelaperez1980@hotmail.com', '', '', 0, 'SIMPLE', 1, '', '', '123456'),
+(89, '71687072', 'JEFERSON ARANGO RESTREPO', 'Cra 98#22h 57', '311 6396382', '311 6396382', 'JEFERSON ARANGO RESTREPO', 'jefersonarango@gmail.com', '', '', 0, 'SIMPLE', 1, 'MEDELLIN', '', '123456'),
+(90, '901296977', 'PUNTA DEL PARQUE - PROPIEDAD HORIZONTAL', 'CL 37B SUR 27 30', '', '3501546', 'PUNTA DEL PARQUE - PROPIEDAD HORIZONTAL', 'puntadelparqueph@gmail.com', '', '', 9, 'REGIMEN COMUN', 1, 'MEDELLIN', '', '123456'),
+(91, '3518230', 'Electrónicas ADM ', 'Cra 53 No.  51-51 Local 311 CC La Cascada', '4807950', '', '', '', '', '', 3, '', 1, 'Medellín ', '', '123456'),
+(92, '901291245', 'ICANN GROUP S.A.S', 'cl 33 74e 84', '2503941', '313 7366882', 'Alejandro Torres', 'orestrepo@hotmail.com', '', 'ccc209e3e7abc29adcfd6edd4ee8fcdc.png', 3, 'REGIMEN COMUN', 1, 'MEDELLIN', '', '123456'),
+(93, '800060880', 'Ferragro S.A.S', 'Cra. 42 # 51 - 34', '4483797', '3117207435', '', 'jjrestrepo@ferragro.com', '', 'c4f0d1c3ac3ef4e1880f6338c4bd6e3a.png', 3, '', 1, 'Medellín ', '', '123456'),
+(94, '43620699', 'Marcela Ríos Urrea / Enactivo Consulting', 'CR 35 65 SUR 135 AP 1505', '', '3187170367', '', 'marcelariosurrea@gmail.com', '', 'e6724d6b019cd529315f3818a51c4924.png', 4, '', 1, 'Medellín ', '', '123456');
 
 -- --------------------------------------------------------
 
@@ -1326,7 +1444,10 @@ CREATE TABLE `salida_inventario` (
 --
 
 INSERT INTO `salida_inventario` (`id`, `tipo`, `producto_id`, `inventario_id`, `cantidad`, `user_id`, `cliente_id`, `observaciones`, `status`, `created_by`, `created_at`) VALUES
-(16, 3, 1, 9, 1, NULL, 25, NULL, 0, 1, '2023-01-26 09:00:52');
+(16, 3, 1, 9, 1, NULL, 25, NULL, 0, 1, '2023-01-26 09:00:52'),
+(17, 1, 1, 12, 0, NULL, 73, NULL, 1, 1, '2023-02-02 14:57:58'),
+(18, 1, 1, 12, 0, NULL, 73, NULL, 0, 1, '2023-02-02 15:01:56'),
+(19, 2, 1, 12, 0, 6, NULL, NULL, 1, 1, '2023-02-02 15:03:08');
 
 -- --------------------------------------------------------
 
@@ -1379,6 +1500,54 @@ CREATE TABLE `seguimiento_clientes` (
   `visto_bueno` int(11) NOT NULL,
   `firma` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `solicitud_inventario`
+--
+
+CREATE TABLE `solicitud_inventario` (
+  `id` int(11) NOT NULL,
+  `codigo` varchar(200) NOT NULL,
+  `solicitante_id` int(11) NOT NULL,
+  `aprobador_id` int(11) DEFAULT NULL,
+  `cliente_id` int(11) NOT NULL,
+  `descripcion` text NOT NULL,
+  `estado` int(1) NOT NULL DEFAULT 0,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `solicitud_inventario`
+--
+
+INSERT INTO `solicitud_inventario` (`id`, `codigo`, `solicitante_id`, `aprobador_id`, `cliente_id`, `descripcion`, `estado`, `created_at`) VALUES
+(7, 'SOL-KAMTN', 1, NULL, 17, 'Mirar el cliente', 0, '2023-02-03 15:07:31');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `solicitud_inventario_detalle`
+--
+
+CREATE TABLE `solicitud_inventario_detalle` (
+  `id` int(11) NOT NULL,
+  `solicitud_id` int(11) NOT NULL,
+  `elemento` text NOT NULL,
+  `cantidad` varchar(100) NOT NULL,
+  `status` int(1) NOT NULL DEFAULT 0,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `solicitud_inventario_detalle`
+--
+
+INSERT INTO `solicitud_inventario_detalle` (`id`, `solicitud_id`, `elemento`, `cantidad`, `status`, `created_at`) VALUES
+(8, 7, 'Perillas', '2', 0, '2023-02-03 15:10:44'),
+(9, 7, 'Cables 3B', '1', 0, '2023-02-03 15:10:44'),
+(10, 7, 'Tornillos', '100', 0, '2023-02-03 15:10:44');
 
 -- --------------------------------------------------------
 
@@ -1693,6 +1862,18 @@ ALTER TABLE `detalle_cotizaciones`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `detalle_ordenes`
+--
+ALTER TABLE `detalle_ordenes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `detalle_precios`
+--
+ALTER TABLE `detalle_precios`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `empleados`
 --
 ALTER TABLE `empleados`
@@ -1757,9 +1938,21 @@ ALTER TABLE `novedades_nomina`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `ordenes_compra`
+--
+ALTER TABLE `ordenes_compra`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `permisos_new`
 --
 ALTER TABLE `permisos_new`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `precio_proveedores`
+--
+ALTER TABLE `precio_proveedores`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1807,6 +2000,18 @@ ALTER TABLE `salud`
 -- Indices de la tabla `seguimiento_clientes`
 --
 ALTER TABLE `seguimiento_clientes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `solicitud_inventario`
+--
+ALTER TABLE `solicitud_inventario`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `solicitud_inventario_detalle`
+--
+ALTER TABLE `solicitud_inventario_detalle`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1980,7 +2185,19 @@ ALTER TABLE `datos_tecnico`
 -- AUTO_INCREMENT de la tabla `detalle_cotizaciones`
 --
 ALTER TABLE `detalle_cotizaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT de la tabla `detalle_ordenes`
+--
+ALTER TABLE `detalle_ordenes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `detalle_precios`
+--
+ALTER TABLE `detalle_precios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `empleados`
@@ -2016,7 +2233,7 @@ ALTER TABLE `gastos_varios`
 -- AUTO_INCREMENT de la tabla `inventario`
 --
 ALTER TABLE `inventario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `migrations`
@@ -2028,7 +2245,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT de la tabla `movimientos_inventario`
 --
 ALTER TABLE `movimientos_inventario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `nomina`
@@ -2043,10 +2260,22 @@ ALTER TABLE `novedades_nomina`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
+-- AUTO_INCREMENT de la tabla `ordenes_compra`
+--
+ALTER TABLE `ordenes_compra`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de la tabla `permisos_new`
 --
 ALTER TABLE `permisos_new`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7153;
+
+--
+-- AUTO_INCREMENT de la tabla `precio_proveedores`
+--
+ALTER TABLE `precio_proveedores`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
@@ -2076,7 +2305,7 @@ ALTER TABLE `puntos`
 -- AUTO_INCREMENT de la tabla `salida_inventario`
 --
 ALTER TABLE `salida_inventario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `salud`
@@ -2089,6 +2318,18 @@ ALTER TABLE `salud`
 --
 ALTER TABLE `seguimiento_clientes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+
+--
+-- AUTO_INCREMENT de la tabla `solicitud_inventario`
+--
+ALTER TABLE `solicitud_inventario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de la tabla `solicitud_inventario_detalle`
+--
+ALTER TABLE `solicitud_inventario_detalle`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `statuses`

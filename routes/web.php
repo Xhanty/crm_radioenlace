@@ -144,7 +144,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/baja_producto', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'baja_producto'])->name('baja_producto');
     Route::post('/delete_producto', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'delete_producto'])->name('delete_producto');
     Route::post('/productos_edit', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'productos_edit'])->name('productos_edit');
-    
+
     // MOVIMIENTOS DE INVENTARIO
     Route::get('/productos_baja', [App\Http\Controllers\Admin\MovimientoInv\ProductosController::class, 'productos_baja'])->name('productos_baja');
     Route::get('/repuestos_reparacion', [App\Http\Controllers\Admin\MovimientoInv\RepuestosController::class, 'index'])->name('repuestos_reparacion');
@@ -156,8 +156,17 @@ Route::middleware(['auth_user'])->group(function () {
 
     // SOLICITUDES DE INVENTARIO
     Route::get('/solicitud_inventario', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'index'])->name('solicitud_inventario');
+    Route::post('/data_solicitud_inventario', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'data'])->name('data_solicitud_inventario');
+    Route::post('/solicitud_inventario_add', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'solicitud_add'])->name('solicitud_inventario_add');
+    Route::post('/solicitud_inventario_update', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'solicitud_edit'])->name('solicitud_inventario_update');
 
-    // PROYECTOS 
+    // GESTIÓN SOLICITUDES DE INVENTARIO
+    Route::get('/gestion_solicitudes', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'gestion'])->name('gestion_solicitudes');
+    Route::post('/delete_solicitud_inventario', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'delete'])->name('delete_solicitud_inventario');
+    Route::post('/rechazar_solicitud_inventario', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'rechazar'])->name('rechazar_solicitud_inventario');
+    Route::post('/aceptar_solicitud_inventario', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'aceptar'])->name('aceptar_solicitud_inventario');
+
+    // PROYECTOS
     Route::get('/categorias_proyectos', [App\Http\Controllers\Admin\Proyectos\CategoriasController::class, 'index'])->name('categorias_proyectos');
     Route::post('/categorias_proyectos_add', [App\Http\Controllers\Admin\Proyectos\CategoriasController::class, 'add'])->name('categorias_proyectos_add');
     Route::post('/categorias_proyectos_delete', [App\Http\Controllers\Admin\Proyectos\CategoriasController::class, 'delete'])->name('categorias_proyectos_delete');
@@ -190,6 +199,12 @@ Route::middleware(['auth_user'])->group(function () {
 
     // COMERCIAL
     Route::get('/ordenes_compra', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'index'])->name('ordenes_compra');
+    Route::post('/orden_compra_create', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'create'])->name('orden_compra_create');
+    Route::post('/orden_compra_data', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'data'])->name('orden_compra_data');
+    Route::post('/orden_compra_completar', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'completar'])->name('orden_compra_completar');
+    Route::post('/orden_compra_delete', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'delete'])->name('orden_compra_delete');
+    Route::post('/orden_compra_edit', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'edit'])->name('orden_compra_edit');
+    Route::get('/ordenes_print', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'print'])->name('ordenes_print');
     Route::get('/cotizaciones', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'index'])->name('cotizaciones');
     Route::get('/cotizaciones_print', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'print'])->name('cotizaciones_print');
     Route::post('/cotizacion_data', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'data'])->name('cotizacion_data');
@@ -198,7 +213,14 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/cotizacion_completar', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'completar'])->name('cotizacion_completar');
     Route::post('/cotizacion_delete', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'delete'])->name('cotizacion_delete');
     Route::post('/cotizacion_email', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'send'])->name('cotizacion_email');
+    Route::post('/cotizacion_aprobado', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'aprobacion'])->name('cotizacion_aprobado');
     Route::get('/remisiones', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'index'])->name('remisiones');
+    Route::get('/precios_proveedores', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'index'])->name('precios_proveedores');
+    Route::post('/precios_proveedores_add', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'add'])->name('precios_proveedores_add');
+    Route::post('/precios_proveedores_delete', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'delete'])->name('precios_proveedores_delete');
+    Route::post('/precios_proveedores_send_email', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'send_email'])->name('precios_proveedores_send_email');
+    Route::post('/precios_proveedores_data', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'data_precios'])->name('precios_proveedores_data');
+    Route::post('/precios_proveedores_edit', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'edit'])->name('precios_proveedores_edit');
 
     // CONTABILIDAD
     Route::get('/facturacion', [App\Http\Controllers\Admin\Contabilidad\FacturacionController::class, 'index'])->name('facturacion');
@@ -270,3 +292,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('statuses', [App\Http\Controllers\StatusController::class, 'store'])->name('statuses.store');
     Route::put('statuses', [App\Http\Controllers\StatusController::class, 'update'])->name('statuses.update');
 });
+
+// PRECIOS PROVEEDORES 
+Route::get('/precios_update', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'precios_update'])->name('precios_update');
+Route::post('/precios_edit', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'precios_edit'])->name('precios_edit');

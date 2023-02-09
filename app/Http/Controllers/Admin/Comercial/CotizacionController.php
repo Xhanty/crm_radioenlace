@@ -56,6 +56,7 @@ class CotizacionController extends Controller
                     'cotizaciones.created_at',
                     'cotizaciones.descripcion',
                     'cotizaciones.status',
+                    'cotizaciones.aprobado',
                     'cliente.razon_social',
                     'empleados.nombre as creador',
                     DB::raw('COUNT(detalle_cotizaciones.id) as productos')
@@ -64,7 +65,7 @@ class CotizacionController extends Controller
                 ->join('cliente', 'cotizaciones.cliente_id', '=', 'cliente.id')
                 ->join('empleados', 'cotizaciones.created_by', '=', 'empleados.id')
                 ->where('cotizaciones.status', 1)
-                ->groupBy('cotizaciones.id', 'cotizaciones.code', 'cotizaciones.created_at', 'cotizaciones.descripcion', 'cotizaciones.status', 'cliente.razon_social', 'empleados.nombre')
+                ->groupBy('cotizaciones.id', 'cotizaciones.code', 'cotizaciones.created_at', 'cotizaciones.descripcion', 'cotizaciones.status', 'cotizaciones.aprobado', 'cliente.razon_social', 'empleados.nombre')
                 ->get();
 
             return view('admin.comercial.cotizaciones', compact('clientes', 'productos', 'cotizaciones_pendientes', 'cotizaciones_aprobadas'));
@@ -278,7 +279,7 @@ class CotizacionController extends Controller
         }
 
         $productos = DB::table('detalle_cotizaciones')
-            ->select('detalle_cotizaciones.*', 'productos.nombre as producto', 'productos.imagen')
+            ->select('detalle_cotizaciones.*', 'productos.nombre as producto', 'productos.imagen', 'productos.modelo')
             ->join('productos', 'productos.id', 'detalle_cotizaciones.producto_id')
             ->where('detalle_cotizaciones.cotizacion_id', $id)
             ->orderByRaw('detalle_cotizaciones.precio * 1 DESC')
@@ -308,7 +309,7 @@ class CotizacionController extends Controller
             }
 
             $productos = DB::table('detalle_cotizaciones')
-                ->select('detalle_cotizaciones.*', 'productos.nombre as producto', 'productos.imagen')
+                ->select('detalle_cotizaciones.*', 'productos.nombre as producto', 'productos.imagen', 'productos.modelo')
                 ->join('productos', 'productos.id', 'detalle_cotizaciones.producto_id')
                 ->where('detalle_cotizaciones.cotizacion_id', $cotizacion->id)
                 ->orderByRaw('detalle_cotizaciones.precio * 1 DESC')
@@ -338,6 +339,23 @@ class CotizacionController extends Controller
         } catch (Exception $ex) {
             return $ex->getMessage();
             return response()->json(['info' => 0, 'error' => 'Error al enviar la cotización']);
+        }
+    }
+
+    public function aprobacion(Request $request)
+    {
+        try {
+            $cotizacion = $request->id;
+            $aprobado = $request->aprobado;
+
+            DB::table("cotizaciones")->where('id', $cotizacion)->update([
+                'aprobado' => $aprobado,
+            ]);
+
+            return response()->json(['info' => 1, 'message' => 'Cotización aprobada correctamente']);
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+            return response()->json(['info' => 0, 'error' => 'Error al aprobar la cotización']);
         }
     }
 }

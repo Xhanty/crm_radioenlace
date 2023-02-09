@@ -22,7 +22,7 @@
                 <div class="card">
                     <div class="card-header d-flex-header-table bg-warning" style="border-radius: 4px">
                         <div class="div-1-tables-header">
-                            <h3 class="card-title mt-2">Cotizaciones</h3>
+                            <h3 class="card-title mt-2">Cotizaciones Pendientes</h3>
                         </div>
                         <div class="div-2-tables-header">
                             <button class="btn btn-primary" data-bs-target="#modalAdd" data-bs-toggle="modal"
@@ -34,12 +34,12 @@
                             <table class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
                                 <thead>
                                     <tr>
-                                        <th># Orden</th>
+                                        <th>No.</th>
+                                        <th>Creador</th>
                                         <th>Cliente</th>
-                                        <th>Creado Por</th>
                                         <th>Descripción</th>
                                         <th>Fecha</th>
-                                        <th>Cant. Productos</th>
+                                        <th>Cant.<br>Productos</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -47,8 +47,8 @@
                                     @foreach ($cotizaciones_pendientes as $cotizacion)
                                         <tr>
                                             <td>{{ $cotizacion->code }}</td>
-                                            <td>{{ $cotizacion->razon_social }}</td>
                                             <td>{{ $cotizacion->creador }}</td>
+                                            <td>{{ $cotizacion->razon_social }}</td>
                                             <td>{{ $cotizacion->descripcion }}</td>
                                             <td>{{ date('d-m-Y g:i A', strtotime($cotizacion->created_at)) }}</td>
                                             <td>{{ $cotizacion->productos }}</td>
@@ -95,24 +95,49 @@
                             <table class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
                                 <thead>
                                     <tr>
-                                        <th># Orden</th>
+                                        <th>No</th>
+                                        <th>Creador</th>
                                         <th>Cliente</th>
-                                        <th>Creado Por</th>
                                         <th>Descripción</th>
                                         <th>Fecha</th>
-                                        <th>Cant. Productos</th>
+                                        <th>Cant.<br>Productos</th>
+                                        <th class="text-center">¿Aprobada?</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($cotizaciones_aprobadas as $cotizacion)
-                                        <tr>
+                                        @php
+                                            $aprobado = $cotizacion->aprobado;
+                                            $color = '';
+                                            
+                                            if ($aprobado == 0) {
+                                                $color = 'rgb(255 193 7 / 30%);';
+                                            } elseif ($aprobado == 1) {
+                                                $color = 'rgb(11 163 96 / 30%);';
+                                            } elseif ($aprobado == 2) {
+                                                $color = 'rgb(245 60 91 / 30%);';
+                                            }
+                                        @endphp
+                                        <tr style="background: {{ $color }}">
                                             <td>{{ $cotizacion->code }}</td>
-                                            <td>{{ $cotizacion->razon_social }}</td>
                                             <td>{{ $cotizacion->creador }}</td>
+                                            <td>{{ $cotizacion->razon_social }}</td>
                                             <td>{{ $cotizacion->descripcion }}</td>
-                                            <td>{{ date('d-m-Y g:i A', strtotime($cotizacion->created_at)) }}</td>
+                                            <td>{{ date('d-m-Y', strtotime($cotizacion->created_at)) }}</td>
                                             <td>{{ $cotizacion->productos }}</td>
+                                            <td class="text-center">
+                                                <select class="form-select aprobado_select"
+                                                    data-id="{{ $cotizacion->id }}">
+                                                    <option value="0"
+                                                        {{ $cotizacion->aprobado == 0 ? 'selected' : '' }}>Pendiente
+                                                    </option>
+                                                    <option value="1"
+                                                        {{ $cotizacion->aprobado == 1 ? 'selected' : '' }}>Sí</option>
+                                                    <option value="2"
+                                                        {{ $cotizacion->aprobado == 2 ? 'selected' : '' }}>No</option>
+                                                </select>
+                                            </td>
                                             <td>
                                                 <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}"
                                                     title="Ver Detalles" class="btn btn-primary btn-sm btnView"><i
@@ -233,7 +258,8 @@
                                                         <option value="">Seleccione un producto</option>
                                                         @foreach ($productos as $producto)
                                                             <option value="{{ $producto->id }}">
-                                                                {{ $producto->nombre }} ({{ $producto->marca }} - {{ $producto->modelo }})</option>
+                                                                {{ $producto->nombre }} ({{ $producto->marca }} -
+                                                                {{ $producto->modelo }})</option>
                                                         @endforeach
                                                     </select>
                                                     <input title="Cantidad" class="form-control mt-3 cantidad_add"

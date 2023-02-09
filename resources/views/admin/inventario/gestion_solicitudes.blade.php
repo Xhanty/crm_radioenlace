@@ -8,7 +8,7 @@
                 <h4 class="content-title mb-2">CRM | Radio Enlace</h4>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">Solicitudes Inventario</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Gestionar Solicitudes Inventario</a></li>
                     </ol>
                 </nav>
             </div>
@@ -23,10 +23,6 @@
                         <div class="div-1-tables-header">
                             <h3 class="card-title mt-2">Solicitudes Pendientes</h3>
                         </div>
-                        <div class="div-2-tables-header">
-                            <button class="btn btn-primary" data-bs-target="#modalAdd" data-bs-toggle="modal"
-                                data-bs-effect="effect-scale">Solicitar</button>
-                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -34,6 +30,7 @@
                                 <thead>
                                     <tr>
                                         <th>Código</th>
+                                        <th>Empleado</th>
                                         <th>Fecha Solicitud</th>
                                         <th>Cliente</th>
                                         <th>Descripción</th>
@@ -45,16 +42,32 @@
                                     @foreach ($pendientes as $solicitud)
                                         <tr>
                                             <td>{{ $solicitud->codigo }}</td>
+                                            <td>{{ $solicitud->empleado }}</td>
                                             <td>{{ date('d-m-Y h:i A', strtotime($solicitud->created_at)) }}</td>
                                             <td>{{ $solicitud->cliente }}</td>
                                             <td>{{ $solicitud->descripcion }}</td>
                                             <td>{{ $solicitud->elementos }}</td>
                                             <td>
-                                                <a href="javascript:void(0)" title="Ver" data-id="{{ $solicitud->id }}" class="btn btn-primary btn-sm btnView">
+                                                <a href="javascript:void(0)" title="Ver" data-id="{{ $solicitud->id }}"
+                                                    class="btn btn-primary btn-sm btnView">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
-                                                <a href="javascript:void(0)" title="Editar" data-id="{{ $solicitud->id }}" class="btn btn-primary btn-sm btnEditar">
+                                                <a href="javascript:void(0)" title="Editar" data-id="{{ $solicitud->id }}"
+                                                    class="btn btn-primary btn-sm btnEditar">
                                                     <i class="fa fa-pencil-alt"></i>
+                                                </a>
+                                                <a href="javascript:void(0)" title="Aceptar" data-id="{{ $solicitud->id }}"
+                                                    class="btn btn-success btn-sm btnAceptar">
+                                                    <i class="fa fa-check"></i>
+                                                </a>
+                                                <a href="javascript:void(0)" title="Rechazar" data-id="{{ $solicitud->id }}"
+                                                    class="btn btn-warning btn-sm btnRechazar">
+                                                    <i class="fas fa-times"></i>
+                                                </a>
+                                                <a href="javascript:void(0)" title="Eliminar"
+                                                    data-id="{{ $solicitud->id }}"
+                                                    class="btn btn-danger btn-sm btnEliminar">
+                                                    <i class="fa fa-trash"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -83,6 +96,7 @@
                                 <thead>
                                     <tr>
                                         <th>Código</th>
+                                        <th>Empleado</th>
                                         <th>Fecha Solicitud</th>
                                         <th>Cliente</th>
                                         <th>Descripción</th>
@@ -95,20 +109,27 @@
                                     @foreach ($gestionados as $solicitud)
                                         <tr>
                                             <td>{{ $solicitud->codigo }}</td>
+                                            <td>{{ $solicitud->empleado }}</td>
                                             <td>{{ date('d-m-Y h:i A', strtotime($solicitud->created_at)) }}</td>
                                             <td>{{ $solicitud->cliente }}</td>
                                             <td>{{ $solicitud->descripcion }}</td>
                                             <td>{{ $solicitud->elementos }}</td>
                                             <td>
-                                                @if($solicitud->estado == 1)
-                                                    <span class="badge badge-success">Aceptado</span>
+                                                @if ($solicitud->estado == 1)
+                                                    <span class="badge bg-success side-badge">Aceptado</span>
                                                 @elseif($solicitud->estado == 2)
-                                                    <span class="badge badge-danger">Rechazado</span>
+                                                    <span class="badge bg-danger side-badge">Rechazado</span>
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="javascript:void(0)" title="Ver" data-id="{{ $solicitud->id }}" class="btn btn-primary btn-sm btnView">
+                                                <a href="javascript:void(0)" title="Ver" data-id="{{ $solicitud->id }}"
+                                                    class="btn btn-primary btn-sm btnView">
                                                     <i class="fa fa-eye"></i>
+                                                </a>
+                                                <a href="javascript:void(0)" title="Eliminar"
+                                                    data-id="{{ $solicitud->id }}"
+                                                    class="btn btn-danger btn-sm btnEliminar">
+                                                    <i class="fa fa-trash"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -122,70 +143,13 @@
         </div>
         <!-- End Row -->
 
-        <!-- Modal Add -->
-        <div class="modal  fade" id="modalAdd">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content modal-content-demo">
-                    <div class="modal-header">
-                        <h6 class="modal-title">Realizar una solicitud de elementos</h6><button aria-label="Close"
-                            class="btn-close" data-bs-dismiss="modal" type="button"><span
-                                aria-hidden="true">&times;</span></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row row-sm">
-                            <div class="col-lg">
-                                <label for="">Cliente</label>
-                                <select class="form-select" id="clienteadd">
-                                    <option value="">Seleccione un cliente</option>
-                                    @foreach ($clientes as $cliente)
-                                        <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row row-sm">
-                            <div class="col-lg">
-                                <label for="">Descripción de la solicitud</label>
-                                <textarea class="form-control" placeholder="Descripción de la solicitud" rows="3" id="descripcionadd"
-                                    style="height: 70px; resize: none"></textarea>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row row-sm">
-                            <div class="col-8">
-                                <label for="">Elementos</label>
-                                <input class="form-control elementoadd" placeholder="Elemento" type="text">
-                            </div>
-                            <div class="col-3">
-                                <label for="">Cantidades</label>
-                                <input class="form-control cantidadadd" placeholder="Cantidad" type="number" min="1"
-                                    step="1">
-                            </div>
-                            <div class="col-1 center-vertical">
-                                <a style="margin-top: 30px;" href="javascript:void(0)" id="new_row_elemento">
-                                    <i class="fa fa-plus"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div id="div_list_elementos"></div>
-                        <br>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn ripple btn-primary" id="btn_save_solicitud" type="button">Solicitar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Modal View -->
         <div class="modal  fade" id="modalView">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
-                        <h6 class="modal-title">Solicitud de elementos</h6><button aria-label="Close"
-                            class="btn-close" data-bs-dismiss="modal" type="button"><span
-                                aria-hidden="true">&times;</span></button>
+                        <h6 class="modal-title">Solicitud de elementos</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
                         <div class="row row-sm">
@@ -215,14 +179,47 @@
             </div>
         </div>
 
+        <!-- Modal Asignar -->
+        <div class="modal  fade" id="modalAsignar">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Asignar elemento</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" disabled id="id_solicitud_gestion">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Elemento</label>
+                                <select class="form-select" id="elementogestion">
+                                    <option value="">Seleccione un elemento</option>
+                                    @foreach ($productos as $producto)
+                                        <option value="{{ $producto->id }}">{{ $producto->nombre }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Cantidad</label>
+                                <input type="number" class="form-control" min="1" step="1" id="cantidadgestion" placeholder="Cantidad">
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Modal Edit -->
         <div class="modal  fade" id="modalEdit">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
-                        <h6 class="modal-title">Solicitud de elementos</h6><button aria-label="Close"
-                            class="btn-close" data-bs-dismiss="modal" type="button"><span
-                                aria-hidden="true">&times;</span></button>
+                        <h6 class="modal-title">Solicitud de elementos</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" disabled readonly id="solicitudid">
@@ -253,8 +250,8 @@
                             </div>
                             <div class="col-3">
                                 <label for="">Cantidades</label>
-                                <input class="form-control cantidadedit" placeholder="Cantidad" type="number" min="1"
-                                    step="1">
+                                <input class="form-control cantidadedit" placeholder="Cantidad" type="number"
+                                    min="1" step="1">
                             </div>
                             <div class="col-1 center-vertical">
                                 <a style="margin-top: 30px;" href="javascript:void(0)" id="new_row_elemento_edit">
@@ -266,7 +263,8 @@
                         <br>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn ripple btn-primary" id="btn_update_solicitud" type="button">Modificar</button>
+                        <button class="btn ripple btn-primary" id="btn_update_solicitud"
+                            type="button">Modificar</button>
                     </div>
                 </div>
             </div>

@@ -852,4 +852,25 @@ $(document).ready(function () {
             });
         }
     });
+
+    $(document).on("change", ".aprobado_select", function () {
+        let id = $(this).data("id");
+        let val = $(this).val();
+
+        $.ajax({
+            type: "POST",
+            url: "cotizacion_aprobado",
+            data: { id: id, aprobado: val },
+            success: function (response) {
+                if (response.info == 1) {
+                    toastr.success("Cambio realizado correctamente");
+                } else {
+                    toastr.error("Error al realizar el cambio");
+                }
+            },
+            error: function (response) {
+                toastr.error("Error al realizar el cambio");
+            }
+        });
+    });
 });

@@ -173,7 +173,7 @@
 
             <tr class="heading">
                 <td style="width: 100px; text-align: center;"></td>
-                <td style="text-align: center;">Producto</td>
+                <td style="width: 280px; text-align: center;">Producto</td>
                 <td style="text-align: center;">Cantidad</td>
                 <td class="text-align-right">Precio U.</td>
                 <td class="text-align-right">Precio Total</td>
@@ -198,7 +198,8 @@
                                 style="width:100%; max-width:100px; max-height: 120px">
                         </td>
                         <td style="text-align: center; padding-top: 3%;">
-                            <b>{{ $productos[$i]->producto }}</b>
+                            <b>{{ $productos[$i]->producto }}</b><br>
+                            <b>{{ $productos[$i]->modelo }}</b>
                         </td>
                         <td style="text-align: center; padding-top: 3%">{{ $productos[$i]->cantidad }}</td>
                         <td class="text-align-right" style="padding-top: 3%">
@@ -220,7 +221,8 @@
                                 style="width:100%; max-width:100px; max-height: 120px">
                         </td>
                         <td style="text-align: center; padding-top: 3%;">
-                            <b>{{ $productos[$i]->producto }}</b>
+                            <b>{{ $productos[$i]->producto }}</b> <br>
+                            <b>{{ $productos[$i]->modelo }}</b>
                         </td>
                         <td style="text-align: center; padding-top: 3%;">{{ $productos[$i]->cantidad }}</td>
                         <td class="text-align-right" style="padding-top: 3%">
@@ -264,11 +266,11 @@
                 </tr>
 
                 <tr class="details">
-                    <td colspan="2" style="font-size: 15px">
+                    <td colspan="2" style="font-size: 15px;">
                         {{ $cotizacion->duracion }}
                     </td>
 
-                    <td colspan="3" style="font-size: 15px">
+                    <td colspan="3" style="font-size: 15px;">
                         {{ $cotizacion->tiempo_entrega }}
                     </td>
                 </tr>
@@ -316,26 +318,25 @@
                 </td>
             </tr>
 
-            <tr class="heading">
-                <td colspan="3">
+            <!--<tr class="heading">
+                <td colspan="2">
                     IVA (19%)
                 </td>
 
-                <td colspan="2">
-                    Cuenta Bancaria
+                <td colspan="3">
+                    Transporte Nacional
                 </td>
             </tr>
 
             <tr class="details">
-                <td colspan="3" style="font-size: 15px">
+                <td colspan="2" style="font-size: 15px">
                     Incluido en la oferta
                 </td>
 
-                <td colspan="2" style="font-size: 15px">
-                    Bancolombia <br>
-                    Cuenta de ahorros no. 000-000000-00
+                <td colspan="3" style="font-size: 15px;">
+                    El envío se realizará por la transportadora indicada por el cliente, el flete será cancelado en el destino, la responsabilidad del envío será bajo responsabilidad del cliente. 
                 </td>
-            </tr>
+            </tr>-->
 
             <table cellpadding="0" width="500px"
                 style="border-collapse: collapse; font-size: 14.4px; bottom: 80; position: fixed;">

@@ -16,14 +16,171 @@ class OrdenCompraController extends Controller
                 return redirect()->route('home');
             }
 
-            $ordenes_pendientes = [];
+            $ordenes_pendientes = DB::table('ordenes_compra')
+                ->select('ordenes_compra.id', 'ordenes_compra.code', 'ordenes_compra.descripcion', 'ordenes_compra.created_at', 'cliente.razon_social', 'empleados.nombre as creador', DB::raw('COUNT(detalle_ordenes.id) as productos'))
+                ->join('cliente', 'cliente.id', '=', 'ordenes_compra.cliente_id')
+                ->join('empleados', 'empleados.id', '=', 'ordenes_compra.created_by')
+                ->join('detalle_ordenes', 'ordenes_compra.id', '=', 'detalle_ordenes.orden_id')
+                ->where('ordenes_compra.status', 0)
+                ->groupBy('ordenes_compra.id', 'ordenes_compra.code', 'ordenes_compra.descripcion', 'ordenes_compra.created_at', 'cliente.razon_social', 'empleados.nombre')
+                ->get();
 
-            $ordenes_completadas = [];
+            $ordenes_completadas = DB::table('ordenes_compra')
+                ->select('ordenes_compra.id', 'ordenes_compra.code', 'ordenes_compra.aprobado', 'ordenes_compra.descripcion', 'ordenes_compra.created_at', 'cliente.razon_social', 'empleados.nombre as creador', DB::raw('COUNT(detalle_ordenes.id) as productos'))
+                ->join('cliente', 'cliente.id', '=', 'ordenes_compra.cliente_id')
+                ->join('empleados', 'empleados.id', '=', 'ordenes_compra.created_by')
+                ->join('detalle_ordenes', 'ordenes_compra.id', '=', 'detalle_ordenes.orden_id')
+                ->where('ordenes_compra.status', 1)
+                ->groupBy('ordenes_compra.id', 'ordenes_compra.code', 'ordenes_compra.aprobado', 'ordenes_compra.descripcion', 'ordenes_compra.created_at', 'cliente.razon_social', 'empleados.nombre')
+                ->get();
 
-            return view('admin.comercial.orden_compra', compact('ordenes_pendientes', 'ordenes_completadas'));
+            $clientes = DB::table('cliente')
+                ->select('id', 'razon_social')
+                ->where('estado', 1)
+                ->get();
+
+            $productos = DB::table('productos')
+                ->select('id', 'nombre', 'marca', 'modelo')
+                ->where('status', 1)
+                ->get();
+
+            return view('admin.comercial.orden_compra', compact('ordenes_pendientes', 'ordenes_completadas', 'clientes', 'productos'));
         } catch (Exception $ex) {
             return $ex;
             return view('errors.500');
         }
+    }
+
+    /*public function edit(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $id
+
+        } catch (Exception $ex) {
+        }
+    }*/
+
+    public function create(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $cliente = $request->cliente;
+            $descripcion_general = $request->descripcion_general;
+
+            //PRODUCTOS
+            $productos = $request->productos;
+            $cantidades = $request->cantidades;
+            $precios = $request->precios;
+            $ivas = $request->ivas;
+            $retenciones = $request->retenciones;
+            $descripciones = $request->descripciones;
+
+            $code = DB::table('ordenes_compra')->max('code') + 1;
+
+            $cotizacion_id = DB::table("ordenes_compra")->insertGetId([
+                'code' => $code,
+                'cliente_id' => $cliente,
+                'descripcion' => $descripcion_general ? $descripcion_general : null,
+                'created_by' => auth()->user()->id,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+
+            if ($cotizacion_id) {
+                if ($productos) {
+                    foreach ($productos as $key => $producto) {
+                        DB::table("detalle_ordenes")->insert([
+                            'orden_id' => $cotizacion_id,
+                            'producto_id' => $producto,
+                            'cantidad' => $cantidades[$key],
+                            'precio' => $precios[$key],
+                            'iva' => $ivas[$key],
+                            'retencion' => $retenciones[$key],
+                            'descripcion' => $descripciones[$key]
+                        ]);
+                    }
+                }
+            }
+
+            DB::commit();
+
+            return response()->json(['info' => 1, 'message' => 'Orden de compra creada correctamente']);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return $ex->getMessage();
+            return response()->json(['info' => 0, 'error' => 'Error al crear la orden de compra']);
+        }
+    }
+
+    public function delete(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            DB::table('detalle_ordenes')
+                ->where('orden_id', $request->id)
+                ->delete();
+
+            DB::table('ordenes_compra')
+                ->where('id', $request->id)
+                ->delete();
+
+            DB::commit();
+
+            return response()->json(['info' => 1, 'message' => 'Orden de compra eliminada correctamente']);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return $ex->getMessage();
+            return response()->json(['info' => 0, 'error' => 'Error al eliminar la orden de compra']);
+        }
+    }
+
+    public function completar(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            DB::table('ordenes_compra')
+                ->where('id', $request->id)
+                ->update([
+                    'status' => 1,
+                ]);
+
+            DB::commit();
+
+            return response()->json(['info' => 1, 'message' => 'Orden de compra completada correctamente']);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return $ex->getMessage();
+            return response()->json(['info' => 0, 'error' => 'Error al completar la orden de compra']);
+        }
+    }
+
+    public function data(Request $request)
+    {
+        try {
+            $orden = DB::table('ordenes_compra')
+                ->where('ordenes_compra.id', $request->id)
+                ->first();
+
+            $orden->detalle = DB::table('detalle_ordenes')
+                ->select('detalle_ordenes.*', 'productos.nombre as producto', 'productos.modelo')
+                ->join('productos', 'productos.id', 'detalle_ordenes.producto_id')
+                ->where('detalle_ordenes.orden_id', $request->id)
+                ->get();
+
+            return response()->json([
+                'info' => 1,
+                'orden' => $orden,
+            ]);
+        } catch (Exception $ex) {
+            return response()->json([
+                'error' => $ex->getMessage(),
+            ]);
+        }
+    }
+
+    public function print(Request $request)
+    {
     }
 }

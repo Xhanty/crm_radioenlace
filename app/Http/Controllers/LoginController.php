@@ -23,9 +23,14 @@ class LoginController extends Controller
             if (Auth::attempt($credentials)) {
                 $user = User::where('id', auth()->user()->id)->first();
                 if ($user && $user->id) {
-                    session(['user' => $user->id]);
-                    session(['user_img' => $user->avatar]);
-                    return response()->json(['data' => 'success', 'user' => $user]);
+                    if($user->status == 1) {
+                        session(['user' => $user->id]);
+                        session(['user_img' => $user->avatar]);
+                        return response()->json(['data' => 'success', 'user' => $user]);
+                    } else {
+                        return response()->json(['data' => 'incorrect']);
+                    }
+                    
                 } else {
                     return response()->json(['data' => 'incorrect']);
                 }

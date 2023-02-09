@@ -100,7 +100,7 @@
                                         <div class="main-header-profile header-img">
                                             <div class="main-img-user"><img alt=""
                                                     src="{{ asset('images/empleados/' . session('user_img')) }}"></div>
-                                            <h6 class="name_user_val">Petey Cruiser</h6><span
+                                            <h6 class="name_user_val text-center">Petey Cruiser</h6><span
                                                 class="cargo_user_val">Premium Member</span>
                                         </div>
                                         <a class="dropdown-item" href="javascript:void(0)"><i class="far fa-user"></i>
@@ -295,7 +295,8 @@
                                     'gestion_categorias_inventario|' .
                                         'gestion_almacenes_inventario|' .
                                         'gestion_productos_inventario|' .
-                                        'gestion_inventario'))
+                                        'gestion_inventario|' .
+                                        'gestion_solicitudes')) 
                             <li class="slide">
                                 <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
                                         class="side-menu__icon fe fe-package"></i><span
@@ -318,6 +319,10 @@
                                         <li><a class="slide-item" href="{{ route('gestion_inventario') }}">Inventario
                                                 /
                                                 Stock</a>
+                                        </li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_solicitudes'))
+                                        <li><a class="slide-item" href="{{ route('gestion_solicitudes') }}">Solicitudes Inventario</a>
                                         </li>
                                     @endif
                                 </ul>
@@ -371,7 +376,7 @@
                             </li>
                         @endif
 
-                        @if (auth()->user()->hasPermissionTo('gestion_solicitudes'))
+                        @if (auth()->user()->hasPermissionTo('solicitud_elementos'))
                             <li class="slide">
                                 <a class="side-menu__item" href="{{ route('solicitud_inventario') }}"><i
                                         class="side-menu__icon fe fe-sliders"></i><span
@@ -477,6 +482,10 @@
                                     @endif
                                     @if (auth()->user()->hasPermissionTo('gestionar_remisiones'))
                                         <li><a class="slide-item" href="{{ route('remisiones') }}">Remisiones</a>
+                                        </li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_orden_compra'))
+                                        <li><a class="slide-item" href="{{ route('precios_proveedores') }}">Precios Proveedores</a>
                                         </li>
                                     @endif
                                 </ul>
