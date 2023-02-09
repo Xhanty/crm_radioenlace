@@ -95,7 +95,8 @@ $(function () {
     });
 
     //______Basic Data Table
-    $(".basic-datatable-t").DataTable({
+    var table_ll = $(".basic-datatable-t").DataTable({
+        responsive: true,
         language: language,
         order: [],
     });
@@ -103,6 +104,7 @@ $(function () {
     $("#table_vehiculos_img").DataTable({
         processing: true,
         serverSide: true,
+        responsive: true,
         order: [],
         ajax: "vehiculos_list",
         columns: [
@@ -149,6 +151,7 @@ $(function () {
     $("#table_productos_img").DataTable({
         processing: true,
         serverSide: true,
+        responsive: true,
         order: [],
         ajax: "productos_list",
         columns: [
@@ -197,6 +200,7 @@ $(function () {
     $("#table_productos_gestion_img").DataTable({
         processing: true,
         serverSide: true,
+        responsive: true,
         order: [],
         ajax: "productos_gestion_list",
         columns: [
@@ -266,6 +270,7 @@ $(function () {
             },
         ],
         select: "single",
+        responsive: true,
         language: language,
         columns: [
             {
@@ -568,6 +573,7 @@ $(function () {
             },
         ],
         select: "single",
+        responsive: true,
         language: language,
         columns: [
             {

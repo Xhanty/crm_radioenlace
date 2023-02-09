@@ -627,7 +627,7 @@
     <script src="{{ asset('assets/plugins/ionicons/ionicons.js') }}"></script>
 
     <!--- Moment js --->
-	<script src="../assets/plugins/moment/moment.js"></script>
+	<script src="{{ asset('assets/plugins/moment/moment.js') }}"></script>
 
     <!--- Chart bundle min js --->
     <script src="{{ asset('assets/plugins/chart.js/Chart.bundle.min.js') }}"></script>
@@ -640,9 +640,6 @@
 
     <!--- Eva-icons js --->
     <script src="{{ asset('assets/js/eva-icons.min.js') }}"></script>
-
-    <!--- Moment js --->
-    <script src="{{ asset('assets/plugins/moment/moment.js') }}"></script>
 
     <!--- Select2 js --->
     <script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>

@@ -119,7 +119,7 @@
     <div class="invoice-box">
         <table>
             <tr class="top">
-                <td colspan="5">
+                <td colspan="7">
                     <table>
                         <tr>
                             <td class="title">
@@ -138,13 +138,13 @@
             </tr>
 
             <tr class="information">
-                <td colspan="5">
+                <td colspan="7">
                     <table>
                         <tr>
                             <td>
-                                <b>{{ $orden->razon_social }}<br>
-                                    {{ $orden->nit }}-{{ $orden->codigo_verificacion }}<br>
-                                    {{ $orden->ciudad }}, Colombia</b>
+                                <b>{{ $proveedor->razon_social }}<br>
+                                    {{ $proveedor->nit }}-{{ $proveedor->codigo_verificacion }}<br>
+                                    {{ $proveedor->ciudad }}, Colombia</b>
                             </td>
                             <td>
                                 <b>Radio Enlace S.A.S<br>
@@ -158,14 +158,14 @@
 
             @if ($orden->descripcion)
                 <tr class="heading">
-                    <td colspan="5">
+                    <td colspan="7">
                         Descripción
                     </td>
                 </tr>
 
 
                 <tr class="details">
-                    <td colspan="5" style="font-size: 15px; text-align: justify;">
+                    <td colspan="7" style="font-size: 15px; text-align: justify;">
                         {{ $orden->descripcion }}
                     </td>
                 </tr>
@@ -173,9 +173,11 @@
 
             <tr class="heading">
                 <td style="width: 100px; text-align: center;"></td>
-                <td style="width: 280px; text-align: center;">Producto</td>
-                <td style="text-align: center;">Cantidad</td>
-                <td class="text-align-right">Precio U.</td>
+                <td style="width: 220px; text-align: center;">Producto</td>
+                <td style="text-align: center;">Cant.</td>
+                <td style="text-align: center;">Precio Unit.</td>
+                <td style="text-align: center;">IVA(%)</td>
+                <td style="text-align: center;">Retención(%)</td>
                 <td class="text-align-right">Precio Total</td>
             </tr>
 
@@ -185,7 +187,10 @@
 
             @for ($i = 0; $i < count($productos); $i++)
                 @php
-                    $total = $productos[$i]->cantidad * $productos[$i]->precio;
+                    //$total = $productos[$i]->cantidad * $productos[$i]->precio;
+                    $total = $productos[$i]->precio + ($productos[$i]->precio * $productos[$i]->iva / 100);
+                    $total = $total + ($total * $productos[$i]->retencion / 100);
+                    $total = $total * $productos[$i]->cantidad;
                     $subtotal += $total;
                     if ($productos[$i]->imagen == null || $productos[$i]->imagen == '') {
                         $productos[$i]->imagen = 'noimagen.png';
@@ -202,13 +207,14 @@
                             <b>{{ $productos[$i]->modelo }}</b>
                         </td>
                         <td style="text-align: center; padding-top: 3%">{{ $productos[$i]->cantidad }}</td>
-                        <td class="text-align-right" style="padding-top: 3%">
-                            {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
+                        <td style="padding-top: 3%; text-align: center;">{{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
+                        <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
+                        <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>
                         <td class="text-align-right" style="padding-top: 3%">{{ number_format($total, 0, ',', '.') }}
                         </td>
                     </tr>
                     <tr class="item">
-                        <td colspan="5">
+                        <td colspan="7">
                             <p style="font-size: 14px; margin-top: 0px; text-align: justify">
                                 {{ $productos[$i]->descripcion }}
                             </p>
@@ -225,13 +231,15 @@
                             <b>{{ $productos[$i]->modelo }}</b>
                         </td>
                         <td style="text-align: center; padding-top: 3%;">{{ $productos[$i]->cantidad }}</td>
-                        <td class="text-align-right" style="padding-top: 3%">
+                        <td style="padding-top: 3%; text-align: center;">
                             {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
+                            <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
+                        <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>
                         <td class="text-align-right" style="padding-top: 3%">{{ number_format($total, 0, ',', '.') }}
                         </td>
                     </tr>
                     <tr class="item">
-                        <td colspan="5">
+                        <td colspan="7">
                             <p style="font-size: 14px; margin-top: 0px; text-align: justify">
                                 {{ $productos[$i]->descripcion }}
                             </p>
@@ -245,7 +253,7 @@
             @endphp
 
             <tr class="total">
-                <td colspan="5" class="text-align-right">
+                <td colspan="7" class="text-align-right">
                     Subtotal: {{ number_format($subtotal, 0, ',', '.') }}<br />
                     IVA (19%): {{ number_format($iva, 0, ',', '.') }}<br />
                     <b>Total: {{ number_format($subtotal + $iva, 0, ',', '.') }}</b>
