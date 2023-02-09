@@ -419,7 +419,7 @@
                                 aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" disabled readonly id="id_cotizacion_email">
+                        <input type="hidden" disabled readonly id="id_orden_email">
                         <div class="row row-sm">
                             <label for="">Emails</label>
                             <div class="col-lg" style="display: flex">

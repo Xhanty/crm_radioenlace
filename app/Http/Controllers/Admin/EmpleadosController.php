@@ -127,27 +127,47 @@ class EmpleadosController extends Controller
                     $archivo = 'avatar_' . time() . "." . $file->getClientOriginalExtension();
                     $path = 'images/empleados/' . $archivo;
                     file_put_contents($path, file_get_contents($file));
-                }
 
-                DB::table("empleados")->where("id", $empleado)->update([
-                    "codigo_empleado" => $request->codigo,
-                    "nombre" => $request->nombre,
-                    "cargo" => $request->cargo,
-                    "rol" => $request->rol,
-                    "email" => $request->email,
-                    "telefono_fijo" => $request->telefono,
-                    "telefono_celular" => $request->celular,
-                    "direccion" => $request->direccion,
-                    "fecha_ingreso" => $request->fecha_ingreso,
-                    "fecha_retiro" => $request->fecha_retiro,
-                    "fecha_nacimiento" => $request->fecha_nacimiento,
-                    "eps" => $request->eps,
-                    "caja_compensacion" => $request->caja,
-                    "arl" => $request->arl,
-                    "fondo_pension" => $request->fondo,
-                    "riesgos_profesionales" => $request->riesgos,
-                    "avatar" => $archivo
-                ]);
+                    DB::table("empleados")->where("id", $empleado)->update([
+                        "codigo_empleado" => $request->codigo,
+                        "nombre" => $request->nombre,
+                        "cargo" => $request->cargo,
+                        "rol" => $request->rol,
+                        "email" => $request->email,
+                        "telefono_fijo" => $request->telefono,
+                        "telefono_celular" => $request->celular,
+                        "direccion" => $request->direccion,
+                        "fecha_ingreso" => $request->fecha_ingreso,
+                        "fecha_retiro" => $request->fecha_retiro,
+                        "fecha_nacimiento" => $request->fecha_nacimiento,
+                        "eps" => $request->eps,
+                        "caja_compensacion" => $request->caja,
+                        "arl" => $request->arl,
+                        "fondo_pension" => $request->fondo,
+                        "riesgos_profesionales" => $request->riesgos,
+                        "avatar" => $archivo
+                    ]);
+                    
+                } else {
+                    DB::table("empleados")->where("id", $empleado)->update([
+                        "codigo_empleado" => $request->codigo,
+                        "nombre" => $request->nombre,
+                        "cargo" => $request->cargo,
+                        "rol" => $request->rol,
+                        "email" => $request->email,
+                        "telefono_fijo" => $request->telefono,
+                        "telefono_celular" => $request->celular,
+                        "direccion" => $request->direccion,
+                        "fecha_ingreso" => $request->fecha_ingreso,
+                        "fecha_retiro" => $request->fecha_retiro,
+                        "fecha_nacimiento" => $request->fecha_nacimiento,
+                        "eps" => $request->eps,
+                        "caja_compensacion" => $request->caja,
+                        "arl" => $request->arl,
+                        "fondo_pension" => $request->fondo,
+                        "riesgos_profesionales" => $request->riesgos
+                    ]);
+                }
             } else if ($tipo_form == 2) {
                 DB::table("empleados")->where("id", $empleado)->update([
                     "observaciones" => $request->observaciones,

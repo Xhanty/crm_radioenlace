@@ -678,12 +678,12 @@ $(document).ready(function () {
 
     $(document).on("click", ".btnEmail", function () {
         let id = $(this).data("id");
-        $("#id_cotizacion_email").val(id);
+        $("#id_orden_email").val(id);
         $("#modalEmail").modal("show");
     });
 
     $("#btn_save_email").click(function () {
-        let id = $("#id_cotizacion_email").val();
+        let id = $("#id_orden_email").val();
         let emails = [];
         let valid = 0;
 

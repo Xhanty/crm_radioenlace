@@ -217,6 +217,7 @@
                 var preciofinal = precio - (precio * descuento / 100);
                 var preciofinal = preciofinal + (preciofinal * iva / 100);
                 $(this).parent().find('.preciofinal').text(formatter.format(preciofinal));
+                calcularPrecioFinal();
             });
 
             $("#btnSave").click(function() {

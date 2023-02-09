@@ -204,6 +204,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/orden_compra_completar', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'completar'])->name('orden_compra_completar');
     Route::post('/orden_compra_delete', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'delete'])->name('orden_compra_delete');
     Route::post('/orden_compra_edit', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'edit'])->name('orden_compra_edit');
+    Route::post('/orden_compra_email', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'send_email'])->name('orden_compra_email');
     Route::get('/ordenes_print', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'print'])->name('ordenes_print');
     Route::get('/cotizaciones', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'index'])->name('cotizaciones');
     Route::get('/cotizaciones_print', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'print'])->name('cotizaciones_print');

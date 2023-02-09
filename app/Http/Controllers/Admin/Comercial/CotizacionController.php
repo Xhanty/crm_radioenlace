@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\Comercial;
 
 use App\Http\Controllers\Controller;
-use App\Mail\Cotizacion;
 use App\Mail\CotizacionMail;
 use Exception;
 use Illuminate\Http\Request;
