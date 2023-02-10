@@ -16,17 +16,19 @@ class OrdenCompraMail extends Mailable
     public $file;
     public $attach;
     public $creador;
+    public $proveedor;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($file, $attach, $creador)
+    public function __construct($file, $attach, $creador, $proveedor)
     {
         $this->file = $file;
         $this->attach = $attach;
         $this->creador = $creador;
+        $this->proveedor = $proveedor;
     }
 
     /**

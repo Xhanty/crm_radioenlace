@@ -284,7 +284,7 @@ class OrdenCompraController extends Controller
 
             $creador = DB::table('empleados')->where('id', $orden->created_by)->first();
 
-            $pdf = PDF::loadView('admin.comercial.pdf.orden_compra', compact('orden', 'productos', 'creador'));
+            $pdf = PDF::loadView('admin.comercial.pdf.orden_compra', compact('orden', 'productos', 'creador', 'proveedor'));
 
             $name = 'Orden de compra' . ' - (' . $orden->code . ') (' . date('d-m-Y', strtotime($orden->created_at)) . ').pdf';
 
