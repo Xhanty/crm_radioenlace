@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Comercial;
 
 use App\Http\Controllers\Controller;
+use App\Mail\CopyPreciosMail;
 use App\Mail\PreciosMail;
 use Exception;
 use Illuminate\Http\Request;
@@ -207,6 +208,47 @@ class PreciosController extends Controller
         }
     }
 
+    public function precios_update_view(Request $request)
+    {
+        try {
+            $id = $request->get('id');
+            $code = $request->get('token');
+            $status = 1;
+            $date = date('Y-m-d');
+
+            if ($id == null || $code == null) {
+                return view('errors.404');
+            }
+
+            $precio = DB::table('precio_proveedores')
+                ->select('precio_proveedores.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.clave', 'proveedores.codigo_verificacion')
+                ->join('proveedores', 'proveedores.id', '=', 'precio_proveedores.proveedor_id')
+                ->where('precio_proveedores.id', $id)
+                ->where('precio_proveedores.code', $code)
+                ->where('precio_proveedores.status', $status)
+                ->first();
+
+            if ($precio == null) {
+                return view('errors.404');
+            }
+
+            if ($precio->fecha_limite < $date) {
+                return view('errors.404');
+            }
+
+            $productos = DB::table('detalle_precios')
+                ->select('detalle_precios.*', 'productos.nombre', 'productos.modelo')
+                ->join('productos', 'productos.id', '=', 'detalle_precios.producto_id')
+                ->where('detalle_precios.precio_id', $id)
+                ->get();
+
+            return view('admin.comercial.precios_update_view', compact('precio', 'productos'));
+        } catch (Exception $ex) {
+            return view('errors.500');
+            return $ex->getMessage();
+        }
+    }
+
     public function precios_edit(Request $request)
     {
         try {
@@ -217,7 +259,9 @@ class PreciosController extends Controller
             $precio_dolar = $request->precio_dolar;
             $total = $request->total;
             $productos = $request->productos;
+            $email = $request->email;
             $precio = DB::table("detalle_precios")->where('id', $productos[0]['id'])->first();
+
 
             foreach ($productos as $producto) {
                 DB::table('detalle_precios')->where('id', $producto['id'])->update([
@@ -237,6 +281,14 @@ class PreciosController extends Controller
                 'total' => $total,
                 'status' => 1
             ]);
+
+            $data = DB::table('precio_proveedores')
+                ->select('precio_proveedores.*', 'proveedores.razon_social', 'proveedores.nit')
+                ->join('proveedores', 'proveedores.id', '=', 'precio_proveedores.proveedor_id')
+                ->where('precio_proveedores.id', $precio->precio_id)
+                ->first();
+
+            Mail::to($email)->send(new CopyPreciosMail($data->id, $data->code, $data->razon_social, $data->fecha_limite));
 
             DB::commit();
             return response()->json(['info' => 1, 'message' => 'Precio actualizado correctamente.']);

@@ -294,6 +294,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('statuses', [App\Http\Controllers\StatusController::class, 'update'])->name('statuses.update');
 });
 
-// PRECIOS PROVEEDORES 
+// PRECIOS PROVEEDORES
 Route::get('/precios_update', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'precios_update'])->name('precios_update');
+Route::get('/precios_update_view', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'precios_update_view'])->name('precios_update_view');
 Route::post('/precios_edit', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'precios_edit'])->name('precios_edit');

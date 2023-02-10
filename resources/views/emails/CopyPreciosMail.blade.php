@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Actualización Precios</title>
+    <title>Copa Actualización Precios</title>
 </head>
 
 <body style="background-color:#f9f9f9">
@@ -52,7 +52,7 @@
                                                     align="center" valign="top" class="subTitle">
                                                     <h4 class="text"
                                                         style="color:#999;font-family:Poppins,Helvetica,Arial,sans-serif;font-size:16px;font-weight:500;font-style:normal;letter-spacing:normal;line-height:24px;text-transform:none;text-align:center;padding:0;margin:0">
-                                                        Nueva Solicitud</h4>
+                                                        Copia Actualización Precios</h4>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -66,10 +66,13 @@
                                                                     valign="top" class="description">
                                                                     <p class="text"
                                                                         style="color:#666;font-family:'Open Sans',Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;font-style:normal;letter-spacing:normal;line-height:22px;text-transform:none;text-align:center;padding:0;margin:0">
-                                                                        Cordial saludo, requerimos actualización sobre precios<br>
-                                                                        de los siguientes productos, dar click en <br>
-                                                                        "REVISAR PRECIOS" <br><br>
-                                                                        Fecha Límite: {{ date('d-m-Y', strtotime($fecha)) }}
+                                                                        Cordial saludo, gracias por actualizar los
+                                                                        precios de los <br>
+                                                                        productos, si deseas ver una copia, da click en
+                                                                        <br>
+                                                                        "VER PRECIOS" <br><br>
+                                                                        Fecha Límite:
+                                                                        {{ date('d-m-Y', strtotime($fecha)) }}
                                                                     </p>
                                                                 </td>
                                                             </tr>
@@ -87,12 +90,10 @@
                                                                             <tr>
                                                                                 <td style="background-color: #B52923; padding: 12px 35px; border-radius: 50px;"
                                                                                     align="center" class="ctaButton">
-                                                                                    <a
-                                                                                        href="{{ url('/precios_update') . '?token=' . $code . '&id=' . $id }}"
+                                                                                    <a href="{{ url('/precios_update_view') . '?token=' . $code . '&id=' . $id }}"
                                                                                         style="color:#fff;font-family:Poppins,Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;font-style:normal;letter-spacing:1px;line-height:20px;text-transform:uppercase;text-decoration:none;display:block"
-                                                                                        target="_blank"
-                                                                                        class="text">
-                                                                                        Revisar Precios
+                                                                                        target="_blank" class="text">
+                                                                                        Ver Precios
                                                                                     </a>
                                                                                 </td>
                                                                             </tr>

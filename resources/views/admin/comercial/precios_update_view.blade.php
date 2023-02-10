@@ -2,7 +2,7 @@
 <html lang="es">
 
 <head>
-    <title>Actualización Precios</title>
+    <title>Copia Actualización Precios</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -64,21 +64,16 @@
                                     <td class="column1">{{ $producto->nombre }} ({{ $producto->modelo }})</td>
                                     <td class="column1 text-center">{{ $producto->nota }}</td>
                                     <td class="column1 text-center">{{ $producto->cantidad_requerida }}</td>
-                                    <td class="column1 text-center cantidad"
-                                        @if (!auth()->user()) contenteditable="true" @endif>
+                                    <td class="column1 text-center cantidad">
                                         {{ $producto->cantidad_disponible }}</td>
-                                    <td class="column1 text-center precio" data-id="{{ $producto->id }}"
-                                        @if (!auth()->user()) contenteditable="true" @endif>
+                                    <td class="column1 text-center precio" data-id="{{ $producto->id }}">
                                         {{ $producto->precio ?? 0 }}</td>
-                                    <td class="column1 text-center descuento"
-                                        @if (!auth()->user()) contenteditable="true" @endif>
+                                    <td class="column1 text-center descuento">
                                         {{ $producto->descuento ?? 0 }}</td>
-                                    <td class="column1 text-center iva"
-                                        @if (!auth()->user()) contenteditable="true" @endif>
+                                    <td class="column1 text-center iva">
                                         {{ $producto->iva ?? 0 }}</td>
                                     <td class="column1 text-center preciofinal">0</td>
-                                    <td class="column1 comentario"
-                                        @if (!auth()->user()) contenteditable="true" @endif>
+                                    <td class="column1 comentario">
                                         {{ $producto->comentario }}</td>
                                 </tr>
                             @endforeach
@@ -92,26 +87,22 @@
                         <tbody>
                             <tr class="table100-head">
                                 <th class="column1" style="background: #36304a">Fecha Entrega</th>
-                                <th class="column1 price_final" id="fecha_entrega"
-                                    @if (!auth()->user()) contenteditable="true" @endif style="color: gray">
+                                <th class="column1 price_final" id="fecha_entrega" style="color: gray">
                                     {{ $precio->fecha_entrega }}</th>
                             </tr>
                             <tr class="table100-head">
                                 <th class="column1" style="background: #36304a">Condiciones de entrega</th>
-                                <th class="column1 price_final" id="condicion_entrega"
-                                    @if (!auth()->user()) contenteditable="true" @endif style="color: gray">
+                                <th class="column1 price_final" id="condicion_entrega" style="color: gray">
                                     {{ $precio->condiciones_entrega }}</th>
                             </tr>
                             <tr class="table100-head">
                                 <th class="column1" style="background: #36304a">Condiciones de pago</th>
-                                <th class="column1 price_final" id="condiciones_pago"
-                                    @if (!auth()->user()) contenteditable="true" @endif style="color: gray">
+                                <th class="column1 price_final" id="condiciones_pago" style="color: gray">
                                     {{ $precio->condiciones_pago }}</th>
                             </tr>
                             <tr class="table100-head">
                                 <th class="column1" style="background: #36304a">Precio Dolar</th>
-                                <th class="column1 price_final" id="precio_dolar"
-                                    @if (!auth()->user()) contenteditable="true" @endif style="color: gray">
+                                <th class="column1 price_final" id="precio_dolar" style="color: gray">
                                     {{ $precio->precio_dolar }}</th>
                             </tr>
                             <tr class="table100-head">
@@ -124,11 +115,6 @@
                 </div>
                 <br>
                 <br>
-                <input type="hidden" id="nit_val" value="{{ $precio->nit }}" disabled readonly>
-                <input type="hidden" id="clave_val" value="{{ $precio->clave }}" disabled readonly>
-                @if (!auth()->user())
-                    <button class="btn btn-primary" id="btnSave">Actualizar Precios</button>
-                @endif
             </div>
         </div>
     </div>
@@ -140,27 +126,6 @@
     <script>
         $(document).ready(function() {
             var preciofinal_total = 0;
-            @if (!auth()->user())
-                let nit = $("#nit_val").val();
-                let value_nit = prompt("Ingrese el nit:");
-                if (nit != value_nit) {
-                    alert("El nit ingresado no es correcto");
-                    location.reload();
-                } else {
-                    let clave = $("#clave_val").val();
-                    let value_clave = prompt("Ingrese la clave:");
-                    if (clave != value_clave) {
-                        alert("La clave ingresada no es correcta");
-                        location.reload();
-                    } else {
-                        $(".d-none").removeClass("d-none");
-                    }
-                }
-            @endif
-
-            @if (auth()->user())
-                $(".d-none").removeClass("d-none");
-            @endif
 
             const formatter = new Intl.NumberFormat('en-US', {
                 style: 'currency',
@@ -227,96 +192,6 @@
                 var preciofinal = preciofinal + (preciofinal * iva / 100);
                 $(this).parent().find('.preciofinal').text(formatter.format(preciofinal));
                 calcularPrecioFinal();
-            });
-
-            $("#btnSave").click(function() {
-                var fecha_entrega = $("#fecha_entrega").text();
-                var condicion_entrega = $("#condicion_entrega").text();
-                var condiciones_pago = $("#condiciones_pago").text();
-                var precio_dolar = $("#precio_dolar").text();
-                var total = $("#preciofinal_total").text();
-                var productos = [];
-                var cantidad = 0;
-                var precio = 0;
-                var descuento = 0;
-                var preciofinal = 0;
-                var comentario = "";
-                var id = 0;
-                var i = 0;
-                var valid = 0;
-
-                $('.precio').each(function() {
-                    cantidad = $(this).parent().find('.cantidad').text();
-                    precio = $(this).text();
-                    descuento = $(this).parent().find('.descuento').text();
-                    preciofinal = $(this).parent().find('.preciofinal').text();
-                    comentario = $(this).parent().find('.comentario').text();
-                    id = $(this).data('id');
-
-                    if (preciofinal == "" || preciofinal == 0 || preciofinal == "0" ||
-                        preciofinal == "0.00" || preciofinal == "$0" || preciofinal == "$NaN") {
-                        valid = 1;
-                    }
-
-                    productos[i] = {
-                        cantidad: cantidad,
-                        precio: precio,
-                        descuento: descuento,
-                        preciofinal: preciofinal,
-                        comentario: comentario,
-                        id: id
-                    };
-                    i++;
-                });
-
-                if(total == "" || total == 0 || total == "0" || total == "0.00" || total == "$0" || total == "$NaN") {
-                    valid = 1;
-                }
-
-                if (fecha_entrega == "") {
-                    valid = 1;
-                }
-
-                if (valid == 1) {
-                    alert("Debe llenar todos los campos");
-                    return false;
-                } else {
-                    if (window.confirm("¿Está seguro de actualizar los precios?")) {
-                        let email = prompt("Ingrese su email para enviar una copia:");
-
-                        if (email != null && email.trim().length > 5) {
-                            $.ajax({
-                                url: "{{ route('precios_edit') }}",
-                                type: "POST",
-                                data: {
-                                    _token: "{{ csrf_token() }}",
-                                    fecha_entrega: fecha_entrega,
-                                    condicion_entrega: condicion_entrega,
-                                    condiciones_pago: condiciones_pago,
-                                    precio_dolar: precio_dolar,
-                                    total: total,
-                                    productos: productos,
-                                    email: email
-                                },
-                                success: function(response) {
-                                    if (response.info == 1) {
-                                        alert("Precios actualizados correctamente");
-                                        location.reload();
-                                    } else {
-                                        alert("Error al actualizar los precios");
-                                    }
-                                },
-                                error: function(response) {
-                                    alert("Error al actualizar los precios");
-                                }
-                            });
-                        } else {
-                            alert("Debe ingresar un email válido");
-                        }
-                    }
-                }
-
-
             });
         });
     </script>
