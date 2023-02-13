@@ -201,6 +201,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::get('/ordenes_compra', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'index'])->name('ordenes_compra');
     Route::post('/orden_compra_create', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'create'])->name('orden_compra_create');
     Route::post('/orden_compra_data', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'data'])->name('orden_compra_data');
+    Route::post('/orden_compra_data_proveedores', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'data_proveedores'])->name('orden_compra_data_proveedores');
     Route::post('/orden_compra_completar', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'completar'])->name('orden_compra_completar');
     Route::post('/orden_compra_delete', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'delete'])->name('orden_compra_delete');
     Route::post('/orden_compra_edit', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'edit'])->name('orden_compra_edit');

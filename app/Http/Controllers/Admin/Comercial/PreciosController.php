@@ -271,6 +271,7 @@ class PreciosController extends Controller
                     'precio' => $producto['precio'],
                     'descuento' => $producto['descuento'],
                     'comentario' => $producto['comentario'],
+                    'iva' => $producto['iva'],
                     'status' => 1
                 ]);
             }

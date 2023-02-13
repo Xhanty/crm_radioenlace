@@ -9,6 +9,7 @@ $(document).ready(function () {
 
     var clientes = JSON.parse(localStorage.getItem("clientes"));
     var productos = JSON.parse(localStorage.getItem("productos"));
+    var proveedores = JSON.parse(localStorage.getItem("proveedores"));
 
     let concat =
         '<div class="row row-sm mt-3 border-top-color">' +
@@ -28,8 +29,20 @@ $(document).ready(function () {
         "</select>" +
         '<input title="Cantidad" class="form-control mt-3 cantidad_add" type="number" min="1" step="1"' +
         'placeholder="Cantidad">' +
-        '<input title="Precio" class="form-control mt-3 precio_add" type="text"' +
+        '<input title="Precio" class="form-control mt-3 mb-3 precio_add" type="text"' +
         'placeholder="Precio">' +
+        '<select title="Proveedor" class="form-select proveedor_add">' +
+        '<option value="">Seleccione un proveedor</option>' +
+        proveedores.map((proveedor) => {
+            return (
+                '<option value="' +
+                proveedor.id +
+                '">' +
+                proveedor.razon_social +
+                "</option>"
+            );
+        }) +
+        "</select>" +
         "</div>" +
         '<div class="col-6">' +
         '<div class="d-flex">' +
@@ -39,7 +52,7 @@ $(document).ready(function () {
         '<input title="Retención" class="form-control mt-3 retencion_add" type="number" placeholder="% Retención">' +
         "</div>" +
         '<textarea title="Descripción" class="form-control mt-3 descripcion_add" placeholder="Descripción" rows="3"' +
-        'style="height: 60px; resize: none"></textarea>' +
+        'style="height: 84px; resize: none"></textarea>' +
         "</div>" +
         '<div class="d-flex">' +
         '<a class="center-vertical mg-s-10 delete_row_producto" href="javascript:void(0)">' +
@@ -68,8 +81,20 @@ $(document).ready(function () {
         "</select>" +
         '<input title="Cantidad" class="form-control mt-3 cantidad_edit" type="number" min="1" step="1"' +
         'placeholder="Cantidad">' +
-        '<input title="Precio" class="form-control mt-3 precio_edit" type="text"' +
+        '<input title="Precio" class="form-control mt-3 mb-3 precio_edit" type="text"' +
         'placeholder="Precio">' +
+        '<select title="Proveedor" class="form-select proveedor_edit">' +
+        '<option value="">Seleccione un proveedor</option>' +
+        proveedores.map((proveedor) => {
+            return (
+                '<option value="' +
+                proveedor.id +
+                '">' +
+                proveedor.razon_social +
+                "</option>"
+            );
+        }) +
+        "</select>" +
         "</div>" +
         '<div class="col-6">' +
         '<div class="d-flex">' +
@@ -79,7 +104,7 @@ $(document).ready(function () {
         '<input title="Retención" class="form-control mt-3 retencion_edit" type="number" placeholder="% Retención">' +
         "</div>" +
         '<textarea title="Descripción" class="form-control mt-3 descripcion_edit" placeholder="Descripción" rows="3"' +
-        'style="height: 60px; resize: none"></textarea>' +
+        'style="height: 84px; resize: none"></textarea>' +
         "</div>" +
         '<div class="d-flex">' +
         '<a class="center-vertical mg-s-10 delete_edit_row_producto" href="javascript:void(0)">' +
@@ -214,12 +239,14 @@ $(document).ready(function () {
         let cliente = $("#cliente_add").val();
         let descripcion_general = $("#descripcion_add").val();
         let valid_products = 0;
+        let valid_proveedores = 0;
         let valid_cantidad = 0;
 
         // PRODUCTOS
         let productos = [];
         let cantidad = [];
         let precio = [];
+        let proveedores = [];
         let iva = [];
         let retencion = [];
         let descripciones = [];
@@ -257,6 +284,17 @@ $(document).ready(function () {
             precio.push($(this).val());
         });
 
+        $(".proveedor_add").each(function () {
+            if (
+                $(this).val() == null ||
+                $(this).val() == "" ||
+                $(this).val() == "*"
+            ) {
+                valid_proveedores++;
+            }
+            proveedores.push($(this).val());
+        });
+
         $(".iva_add").each(function () {
             iva.push($(this).val());
         });
@@ -275,6 +313,9 @@ $(document).ready(function () {
         } else if (valid_cantidad > 0) {
             toastr.error("La cantidad del producto debe ser mayor a 0");
             return false;
+        } else if (valid_proveedores > 0) {
+            toastr.error("Debe ingresar todos los datos de los proveedores");
+            return false;
         } else {
             $("#modalAdd").modal("hide");
             $("#global-loader").fadeIn("fast");
@@ -287,6 +328,7 @@ $(document).ready(function () {
                     productos: productos,
                     cantidades: cantidad,
                     precios: precio,
+                    proveedores: proveedores,
                     ivas: iva,
                     retenciones: retencion,
                     descripciones: descripciones,
@@ -317,11 +359,13 @@ $(document).ready(function () {
         let cliente = $("#cliente_edit").val();
         let descripcion_general = $("#descripcion_edit").val();
         let valid_products = 0;
+        let valid_proveedores = 0;
         let valid_cantidad = 0;
 
         // PRODUCTOS
         let productos = [];
         let cantidad = [];
+        let proveedores = [];
         let precio = [];
         let iva = [];
         let retencion = [];
@@ -360,6 +404,17 @@ $(document).ready(function () {
             precio.push($(this).val());
         });
 
+        $(".proveedor_edit").each(function () {
+            if (
+                $(this).val() == null ||
+                $(this).val() == "" ||
+                $(this).val() == "*"
+            ) {
+                valid_proveedores++;
+            }
+            proveedores.push($(this).val());
+        });
+
         $(".iva_edit").each(function () {
             iva.push($(this).val());
         });
@@ -378,6 +433,9 @@ $(document).ready(function () {
         } else if (valid_cantidad > 0) {
             toastr.error("La cantidad del producto debe ser mayor a 0");
             return false;
+        } else if (valid_proveedores > 0) {
+            toastr.error("Debe ingresar todos los datos de los proveedores");
+            return false;
         } else {
             $("#modalEdit").modal("hide");
             $("#global-loader").fadeIn("fast");
@@ -391,6 +449,7 @@ $(document).ready(function () {
                     productos: productos,
                     cantidades: cantidad,
                     precios: precio,
+                    proveedores: proveedores,
                     ivas: iva,
                     retenciones: retencion,
                     descripciones: descripciones,
@@ -448,7 +507,10 @@ $(document).ready(function () {
                                             </select>
                                             <input title="Cantidad" class="form-control mt-3" value="${productos[i].cantidad}" disabled type="number" min="1"
                                                 step="1" placeholder="Cantidad">
-                                            <input title="Precio" class="form-control mt-3" value="${productos[i].precio}" disabled type="text" placeholder="Precio">
+                                            <input title="Precio" class="form-control mt-3 mb-3" value="${productos[i].precio}" disabled type="text" placeholder="Precio">
+                                            <select title="Proveedor" class="form-select" disabled>
+                                                <option value="1">${productos[i].name_proveedor}</option>
+                                            </select>
                                         </div>
                                         <div class="col-6">
                                             <div class="d-flex">
@@ -457,7 +519,7 @@ $(document).ready(function () {
                                                     <div class="mt-3">
                                                         <input title="Retención" class="form-control mt-3" value="${productos[i].retencion}" disabled type="text" placeholder="% Retención">
                                                     </div>
-                                                    <textarea title="Descripción" disabled class="form-control mt-3" placeholder="Descripción" rows="3" style="height: 60px; resize: none">${productos[i].descripcion ? productos[i].descripcion : ''}</textarea>
+                                                    <textarea title="Descripción" disabled class="form-control mt-3" placeholder="Descripción" rows="3" style="height: 84px; resize: none">${productos[i].descripcion ? productos[i].descripcion : ''}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -539,7 +601,19 @@ $(document).ready(function () {
                                 `</select>
                                             <input title="Cantidad" class="form-control mt-3 cantidad_edit" value="${productos_data[i].cantidad}" type="number" min="1"
                                                 step="1" placeholder="Cantidad">
-                                            <input title="Precio" class="form-control mt-3 precio_edit" value="${productos_data[i].precio}" type="text" placeholder="Precio">
+                                            <input title="Precio" class="form-control mt-3 mb-3 precio_edit" value="${productos_data[i].precio}" type="text" placeholder="Precio">
+                                            <select data-value="${productos_data[i].proveedor}" title="Proveedor" class="form-select proveedor_edit">
+                                            <option value="">Seleccione un proveedor</option>` +
+                                proveedores.map((proveedor) => {
+                                                return (
+                                                    '<option value="' +
+                                                    proveedor.id +
+                                                    '">' +
+                                                    proveedor.razon_social +
+                                                    "</option>"
+                                                );
+                                            }) +
+                                            `</select>
                                         </div>
                                         <div class="col-6">
                                             <div class="d-flex">
@@ -548,7 +622,7 @@ $(document).ready(function () {
                                                     <div class="mt-3">
                                                         <input title="Retención" class="form-control retencion_edit" value="${productos_data[i].retencion}" type="number" placeholder="% Retención">
                                                     </div>
-                                                    <textarea title="Descripción" class="form-control mt-3 descripcion_edit" placeholder="Descripción" rows="3" style="height: 60px; resize: none">${productos_data[i].descripcion ? productos_data[i].descripcion : ''}</textarea>
+                                                    <textarea title="Descripción" class="form-control mt-3 descripcion_edit" placeholder="Descripción" rows="3" style="height: 84px; resize: none">${productos_data[i].descripcion ? productos_data[i].descripcion : ''}</textarea>
                                                 </div>
                                                 ${button}
                                             </div>
@@ -566,6 +640,14 @@ $(document).ready(function () {
                         });
 
                         $(".producto_edit").each(function () {
+                            let value = $(this).data("value");
+
+                            if (value) {
+                                $(this).val(value).trigger("change");
+                            }
+                        });
+
+                        $(".proveedor_edit").each(function () {
                             let value = $(this).data("value");
 
                             if (value) {
@@ -678,12 +760,88 @@ $(document).ready(function () {
 
     $(document).on("click", ".btnEmail", function () {
         let id = $(this).data("id");
-        $("#id_orden_email").val(id);
-        $("#modalEmail").modal("show");
+
+        $("#global-loader").fadeIn("fast");
+        $.ajax({
+            type: "POST",
+            url: "orden_compra_data_proveedores",
+            data: { id: id },
+            success: function (response) {
+                $("#global-loader").fadeOut("fast");
+                let data = response.data;
+
+                if (response.info == 1) {
+                    $("#id_orden_email").val(id);
+                    $("#proveedor_email").empty();
+                    data.forEach((item) => {
+                        $("#proveedor_email").append(
+                            `<option value="${item.id}">${item.razon_social}</option>`
+                        );
+                    });
+
+                    $(".form-select").each(function () {
+                        $(this).select2({
+                            dropdownParent: $(this).parent(),
+                            placeholder: "Seleccione una opción",
+                            searchInputPlaceholder: "Buscar",
+                        });
+                    });
+
+                    $("#modalEmail").modal("show");
+                } else {
+                    toastr.error("Error al cargar los proveedores");
+                }
+            },
+            error: function (response) {
+                $("#global-loader").fadeOut("fast");
+                toastr.error("Error al cargar los proveedores");
+            },
+        });
+    });
+
+    $(document).on("click", ".btnPrint", function () {
+        let id = $(this).data("id");
+        $("#global-loader").fadeIn("fast");
+        $.ajax({
+            type: "POST",
+            url: "orden_compra_data_proveedores",
+            data: { id: id },
+            success: function (response) {
+                $("#global-loader").fadeOut("fast");
+                let data = response.data;
+
+                if (response.info == 1) {
+                    $("#id_orden_open").val(id);
+                    $("#proveedor_view").empty();
+                    data.forEach((item) => {
+                        $("#proveedor_view").append(
+                            `<option value="${item.id}">${item.razon_social}</option>`
+                        );
+                    });
+
+                    $(".form-select").each(function () {
+                        $(this).select2({
+                            dropdownParent: $(this).parent(),
+                            placeholder: "Seleccione una opción",
+                            searchInputPlaceholder: "Buscar",
+                        });
+                    });
+
+                    $("#modalOpen").modal("show");
+                } else {
+                    toastr.error("Error al cargar los proveedores");
+                }
+            },
+            error: function (response) {
+                $("#global-loader").fadeOut("fast");
+                toastr.error("Error al cargar los proveedores");
+            },
+        });
     });
 
     $("#btn_save_email").click(function () {
         let id = $("#id_orden_email").val();
+        let proveeedor = $("#proveedor_email").val();
         let emails = [];
         let valid = 0;
 
@@ -696,7 +854,10 @@ $(document).ready(function () {
             }
         });
 
-        if (valid == 1) {
+        if (proveeedor == "" || proveeedor == null) {
+            toastr.error("Debe seleccionar un proveedor");
+            return false;
+        } else if (valid == 1) {
             toastr.error("Debe ingresar un correo válido");
             return false;
         } else {
@@ -704,7 +865,7 @@ $(document).ready(function () {
             $.ajax({
                 type: "POST",
                 url: "orden_compra_email",
-                data: { id: id, emails: emails },
+                data: { id: id, emails: emails, proveedor: proveeedor },
                 success: function (response) {
                     if (response.info == 1) {
                         toastr.success("Correo enviado correctamente");
@@ -724,7 +885,22 @@ $(document).ready(function () {
         }
     });
 
-    $(document).on("change", ".aprobado_select", function () {
+    $("#btn_open_pdf").click(function () {
+        let id = $("#id_orden_open").val();
+        let proveedor = $("#proveedor_view").val();
+
+        if (proveedor == "") {
+            toastr.error("Debe seleccionar un proveedor");
+            return false;
+        } else {
+            window.open(
+                `ordenes_print?token=${id}&recibed=${proveedor}`,
+                "_blank"
+            );
+        }
+    });
+
+    /*$(document).on("change", ".aprobado_select", function () {
         let id = $(this).data("id");
         let val = $(this).val();
 
@@ -743,5 +919,5 @@ $(document).ready(function () {
                 toastr.error("Error al realizar el cambio");
             }
         });
-    });
+    });*/
 });

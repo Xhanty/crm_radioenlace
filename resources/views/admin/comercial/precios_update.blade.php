@@ -29,8 +29,12 @@
 
 <body>
     <style>
+        body, html {
+            background: linear-gradient(45deg, rgb(53, 53, 53), #DA251D) !important;
+        }
+        
         .container-table100 {
-            background: linear-gradient(45deg, rgb(53, 53, 53), #DA251D) !important
+            background: transparent;
         }
 
         .price_final {
@@ -38,7 +42,7 @@
             padding-right: 20px;
         }
     </style>
-    <div class="limiter ">
+    <div class="limiter d-none">
         <div class="container-table100">
             <div class="wrap-table100 text-center" style="width: 90%">
                 <h3 class="text-white">{{ $precio->razon_social }}</h3>
@@ -64,21 +68,22 @@
                                     <td class="column1">{{ $producto->nombre }} ({{ $producto->modelo }})</td>
                                     <td class="column1 text-center">{{ $producto->nota }}</td>
                                     <td class="column1 text-center">{{ $producto->cantidad_requerida }}</td>
-                                    <td class="column1 text-center cantidad"
-                                        @if (!auth()->user()) contenteditable="true" @endif>
-                                        {{ $producto->cantidad_disponible }}</td>
-                                    <td class="column1 text-center precio" data-id="{{ $producto->id }}"
-                                        @if (!auth()->user()) contenteditable="true" @endif>
-                                        {{ $producto->precio ?? 0 }}</td>
-                                    <td class="column1 text-center descuento"
-                                        @if (!auth()->user()) contenteditable="true" @endif>
-                                        {{ $producto->descuento ?? 0 }}</td>
-                                    <td class="column1 text-center iva"
-                                        @if (!auth()->user()) contenteditable="true" @endif>
-                                        {{ $producto->iva ?? 0 }}</td>
-                                    <td class="column1 text-center preciofinal">0</td>
-                                    <td class="column1 comentario"
-                                        @if (!auth()->user()) contenteditable="true" @endif>
+                                    <td class="column1 text-center">
+                                        <input type="text" @if(auth()->user()) disabled @endif style="background: transparent" class="text-center cantidad" value="{{ $producto->cantidad_disponible }}">
+                                    </td>
+                                    <td class="column1 text-center">
+                                        <input type="text" @if(auth()->user()) disabled @endif data-id="{{ $producto->id }}" style="background: transparent" class="text-center precio" value="{{ $producto->precio ?? 0 }}">
+                                    </td>
+                                    <td class="column1 text-center">
+                                        <input type="text" @if(auth()->user()) disabled @endif style="background: transparent" class="text-center descuento" value="{{ $producto->descuento ?? 0 }}">
+                                    </td>
+                                    <td class="column1 text-center">
+                                        <input type="text" @if(auth()->user()) disabled @endif style="background: transparent" class="text-center iva" value="{{ $producto->iva ?? 0 }}">
+                                    </td>
+                                    <td class="column1 text-center preciofinal">
+                                        0
+                                    </td>
+                                    <td class="column1 comentario" @if (!auth()->user()) contenteditable="true" @endif>
                                         {{ $producto->comentario }}</td>
                                 </tr>
                             @endforeach
@@ -108,16 +113,19 @@
                                     @if (!auth()->user()) contenteditable="true" @endif style="color: gray">
                                     {{ $precio->condiciones_pago }}</th>
                             </tr>
-                            <tr class="table100-head">
-                                <th class="column1" style="background: #36304a">Precio Dolar</th>
-                                <th class="column1 price_final" id="precio_dolar"
-                                    @if (!auth()->user()) contenteditable="true" @endif style="color: gray">
-                                    {{ $precio->precio_dolar }}</th>
-                            </tr>
+                            @if($precio->moneda == 'USD')
+                                <tr class="table100-head">
+                                    <th class="column1" style="background: #36304a">Precio Dolar</th>
+                                    <th class="column1 price_final" id="precio_dolar"
+                                        @if (!auth()->user()) contenteditable="true" @endif style="color: gray">
+                                        {{ $precio->precio_dolar }}</th>
+                                </tr>
+                            @endif
                             <tr class="table100-head">
                                 <th class="column1" style="background: #36304a">Total</th>
                                 <th class="column1 price_final" id="preciofinal_total" style="color: gray">
-                                    {{ $precio->total }}</th>
+                                    {{ $precio->total }}
+                                </th>
                             </tr>
                         </tbody>
                     </table>
@@ -162,9 +170,16 @@
                 $(".d-none").removeClass("d-none");
             @endif
 
-            const formatter = new Intl.NumberFormat('en-US', {
+            let money = "{{ $precio->moneda }}";
+            let type_money = "en-US";
+
+            if (money == 'COP') {
+                type_money = "es-CO";
+            }
+
+            const formatter = new Intl.NumberFormat(type_money, {
                 style: 'currency',
-                currency: 'USD',
+                currency: money,
                 minimumFractionDigits: 0
             });
 
@@ -172,9 +187,10 @@
                 var preciofinal_total = 0;
                 $('.preciofinal').each(function() {
                     var preciofinal = $(this).text();
-                    var cantidad = $(this).parent().find('.cantidad').text();
+                    var cantidad = $(this).parent().parent().find('.cantidad').val();
                     preciofinal = preciofinal.replace("$", "");
                     preciofinal = preciofinal.replace(",", "");
+                    preciofinal = preciofinal.replace(".", "");
                     preciofinal_total = preciofinal_total + (preciofinal * cantidad);
                 });
 
@@ -185,49 +201,60 @@
                 calcularPrecioFinal();
             });
 
-            $('.precio').on('input', function() {
-                var precio = $(this).text();
-                var descuento = $(this).parent().find('.descuento').text();
-                var cantidad = $(this).parent().find('.cantidad').text();
-                var iva = $(this).parent().find('.iva').text();
+            $('.precio').change( function() {
+                var precio = $(this).val();
+                precio = precio.replace("$", "");
+                precio = precio.replace(",", "");
+                var descuento = $(this).parent().parent().find('.descuento').val();
+                var iva = $(this).parent().parent().find('.iva').val();
+                var cantidad = $(this).parent().parent().find('.cantidad').val();
                 var preciofinal = precio - (precio * descuento / 100);
                 var preciofinal = preciofinal + (preciofinal * iva / 100);
-                $(this).parent().find('.preciofinal').text(formatter.format(preciofinal));
+                $(this).parent().parent().find('.preciofinal').text(formatter.format(preciofinal));
+                calcularPrecioFinal();
+                $(this).val(formatter.format(precio));
+            });
+
+            $('.descuento').change( function() {
+                var descuento = $(this).val();
+                var precio = $(this).parent().parent().find('.precio').val();
+                precio = precio.replace("$", "");
+                precio = precio.replace(",", "");
+                var iva = $(this).parent().parent().find('.iva').val();
+                var cantidad = $(this).parent().parent().find('.cantidad').val();
+                var preciofinal = precio - (precio * descuento / 100);
+                var preciofinal = preciofinal + (preciofinal * iva / 100);
+                $(this).parent().parent().find('.preciofinal').text(formatter.format(preciofinal));
                 calcularPrecioFinal();
             });
 
-            $('.descuento').on('input', function() {
-                var descuento = $(this).text();
-                var precio = $(this).parent().find('.precio').text();
-                var iva = $(this).parent().find('.iva').text();
-                var cantidad = $(this).parent().find('.cantidad').text();
+            $('.iva').change( function() {
+                var iva = $(this).val();
+                var precio = $(this).parent().parent().find('.precio').val();
+                precio = precio.replace("$", "");
+                precio = precio.replace(",", "");
+                var descuento = $(this).parent().parent().find('.descuento').val();
+                var cantidad = $(this).parent().parent().find('.cantidad').val();
                 var preciofinal = precio - (precio * descuento / 100);
                 var preciofinal = preciofinal + (preciofinal * iva / 100);
-                $(this).parent().find('.preciofinal').text(formatter.format(preciofinal));
-                calcularPrecioFinal();
-            });
-
-            $('.iva').on('input', function() {
-                var iva = $(this).text();
-                var precio = $(this).parent().find('.precio').text();
-                var descuento = $(this).parent().find('.descuento').text();
-                var cantidad = $(this).parent().find('.cantidad').text();
-                var preciofinal = precio - (precio * descuento / 100);
-                var preciofinal = preciofinal + (preciofinal * iva / 100);
-                $(this).parent().find('.preciofinal').text(formatter.format(preciofinal));
+                $(this).parent().parent().find('.preciofinal').text(formatter.format(preciofinal));
                 calcularPrecioFinal();
             });
 
             $('.precio').each(function() {
-                var precio = $(this).text();
-                var descuento = $(this).parent().find('.descuento').text();
-                var iva = $(this).parent().find('.iva').text();
-                var cantidad = $(this).parent().find('.cantidad').text();
+                var precio = $(this).val();
+                precio = precio.replace("$", "");
+                precio = precio.replace(",", "");
+                var descuento = $(this).parent().parent().find('.descuento').val();
+                var iva = $(this).parent().parent().find('.iva').val();
+                var cantidad = $(this).parent().parent().find('.cantidad').val();
                 var preciofinal = precio - (precio * descuento / 100);
                 var preciofinal = preciofinal + (preciofinal * iva / 100);
-                $(this).parent().find('.preciofinal').text(formatter.format(preciofinal));
-                calcularPrecioFinal();
+                $(this).val(formatter.format(precio));
+                $(this).parent().parent().find('.preciofinal').text(formatter.format(preciofinal));
             });
+
+            calcularPrecioFinal();
 
             $("#btnSave").click(function() {
                 var fecha_entrega = $("#fecha_entrega").text();
@@ -237,6 +264,7 @@
                 var total = $("#preciofinal_total").text();
                 var productos = [];
                 var cantidad = 0;
+                var iva = 0;
                 var precio = 0;
                 var descuento = 0;
                 var preciofinal = 0;
@@ -246,11 +274,12 @@
                 var valid = 0;
 
                 $('.precio').each(function() {
-                    cantidad = $(this).parent().find('.cantidad').text();
-                    precio = $(this).text();
-                    descuento = $(this).parent().find('.descuento').text();
-                    preciofinal = $(this).parent().find('.preciofinal').text();
-                    comentario = $(this).parent().find('.comentario').text();
+                    iva = $(this).parent().parent().find('.iva').val();
+                    cantidad = $(this).parent().parent().find('.cantidad').val();
+                    precio = $(this).val();
+                    descuento = $(this).parent().parent().find('.descuento').val();
+                    preciofinal = $(this).parent().parent().find('.preciofinal').text();
+                    comentario = $(this).parent().parent().find('.comentario').text();
                     id = $(this).data('id');
 
                     if (preciofinal == "" || preciofinal == 0 || preciofinal == "0" ||
@@ -259,6 +288,7 @@
                     }
 
                     productos[i] = {
+                        iva: iva,
                         cantidad: cantidad,
                         precio: precio,
                         descuento: descuento,
@@ -315,8 +345,6 @@
                         }
                     }
                 }
-
-
             });
         });
     </script>

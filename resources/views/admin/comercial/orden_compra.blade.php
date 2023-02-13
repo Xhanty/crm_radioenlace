@@ -65,9 +65,7 @@
                                                 <a href="javascript:void(0);" data-id="{{ $orden->id }}" title="Eliminar"
                                                     class="btn btn-danger btn-sm btnEliminar"><i
                                                         class="fa fa-trash"></i></a>
-                                                <a target="_BLANK"
-                                                    href="{{ route('ordenes_print') }}?token={{ $orden->id }}"
-                                                    title="Imprimir" class="btn btn-warning btn-sm btnPrint"><i
+                                                <a data-id="{{ $orden->id }}" title="Imprimir" class="btn btn-warning btn-sm btnPrint"><i
                                                         class="fa fa-print"></i></a>
                                             </td>
                                         </tr>
@@ -116,9 +114,12 @@
                                             <td>{{ $orden->productos }}</td>
                                             <td class="text-center">
                                                 <select class="form-select aprobado_select" data-id="{{ $orden->id }}">
-                                                    <option value="0" {{ $orden->aprobado == 0 ? 'selected' : '' }}>Pendiente</option>
-                                                    <option value="1" {{ $orden->aprobado == 1 ? 'selected' : '' }}>Sí</option>
-                                                    <option value="0" {{ $orden->aprobado == 2 ? 'selected' : '' }}>No</option>
+                                                    <option value="0" {{ $orden->aprobado == 0 ? 'selected' : '' }}>
+                                                        Pendiente</option>
+                                                    <option value="1" {{ $orden->aprobado == 1 ? 'selected' : '' }}>Sí
+                                                    </option>
+                                                    <option value="0" {{ $orden->aprobado == 2 ? 'selected' : '' }}>No
+                                                    </option>
                                                 </select>
                                             </td>
                                             <td>
@@ -131,9 +132,7 @@
                                                 <a href="javascript:void(0);" data-id="{{ $orden->id }}"
                                                     title="Enviar por correo" class="btn btn-success btn-sm btnEmail"><i
                                                         class="fa fa-envelope"></i></a>
-                                                <a target="_BLANK"
-                                                    href="{{ route('ordenes_print') }}?token={{ $orden->id }}"
-                                                    title="Imprimir" class="btn btn-warning btn-sm btnPrint"><i
+                                                <a title="Imprimir" data-id="{{ $orden->id }}" class="btn btn-warning btn-sm btnPrint"><i
                                                         class="fa fa-print"></i></a>
                                             </td>
                                         </tr>
@@ -213,18 +212,30 @@
                                                     <input title="Cantidad" class="form-control mt-3 cantidad_add"
                                                         type="number" min="1" step="1"
                                                         placeholder="Cantidad">
-                                                    <input title="Precio" class="form-control mt-3 precio_add"
+
+                                                    <input title="Precio" class="form-control mt-3 mb-3 precio_add"
                                                         type="text" placeholder="Precio">
+
+                                                    <select title="Proveedor" class="form-select proveedor_add">
+                                                        <option value="">Seleccione un proveedor</option>
+                                                        @foreach ($proveedores as $proveedor)
+                                                            <option value="{{ $proveedor->id }}">
+                                                                {{ $proveedor->razon_social }}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="d-flex">
                                                         <div class="col-lg">
-                                                            <input title="IVA" class="form-control iva_add" type="number" placeholder="% IVA">
+                                                            <input title="IVA" class="form-control iva_add"
+                                                                type="number" placeholder="% IVA">
                                                             <div class="mt-3">
-                                                                <input title="Retención" class="form-control mt-3 retencion_add" type="number" placeholder="% Retención">
+                                                                <input title="Retención"
+                                                                    class="form-control mt-3 retencion_add" type="number"
+                                                                    placeholder="% Retención">
                                                             </div>
                                                             <textarea title="Descripción" class="form-control mt-3 descripcion_add" placeholder="Descripción" rows="3"
-                                                                style="height: 60px; resize: none"></textarea>
+                                                                style="height: 84px; resize: none"></textarea>
                                                         </div>
                                                         <div class="d-flex">
                                                             <a class="center-vertical mg-s-10" href="javascript:void(0)"
@@ -421,6 +432,13 @@
                     <div class="modal-body">
                         <input type="hidden" disabled readonly id="id_orden_email">
                         <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Proveedor</label>
+                                <select id="proveedor_email" class="form-select"></select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
                             <label for="">Emails</label>
                             <div class="col-lg" style="display: flex">
                                 <input class="form-control emailadd" placeholder="Email" type="email">
@@ -438,6 +456,32 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal Open -->
+        <div class="modal  fade" id="modalOpen">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Selecciona un proveedor</h6>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" disabled readonly id="id_orden_open">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Proveedor</label>
+                                <select id="proveedor_view" class="form-select"></select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="text-center">
+                            <button class="btn ripple btn-primary" id="btn_open_pdf" type="button">Abrir Orden de Compra</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -446,9 +490,11 @@
         $(document).ready(function() {
             var clientes = @json($clientes);
             var productos = @json($productos);
+            var proveedores = @json($proveedores);
 
             localStorage.setItem('clientes', JSON.stringify(clientes));
             localStorage.setItem('productos', JSON.stringify(productos));
+            localStorage.setItem('proveedores', JSON.stringify(proveedores));
         });
     </script>
     <script src="{{ asset('assets/js/app/comercial/orden_compra.js') }}"></script>

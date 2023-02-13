@@ -45,7 +45,7 @@
         }
 
         .invoice-box table tr.top table td {
-            padding-bottom: 20px;
+            padding-bottom: 8px;
         }
 
         .invoice-box table tr.top table td.title {
@@ -55,7 +55,7 @@
         }
 
         .invoice-box table tr.information table td {
-            padding-bottom: 40px;
+            padding-bottom: 12px;
         }
 
         .invoice-box table tr.heading td {
@@ -143,7 +143,7 @@
                             <td>
                                 <b>{{ $proveedor->razon_social }}<br>
                                     {{ $proveedor->nit }}-{{ $proveedor->codigo_verificacion }}<br>
-                                    {{ $proveedor->ciudad }}Medellín, Colombia</b>
+                                    {{ $proveedor->ciudad }}, Colombia</b>
                             </td>
                             <td>
                                 <b>Radio Enlace S.A.S<br>

@@ -48,7 +48,12 @@ class OrdenCompraController extends Controller
                 ->where('status', 1)
                 ->get();
 
-            return view('admin.comercial.orden_compra', compact('ordenes_pendientes', 'ordenes_completadas', 'clientes', 'productos'));
+            $proveedores = DB::table('proveedores')
+                ->select('id', 'razon_social')
+                ->where('estado', 1)
+                ->get();
+
+            return view('admin.comercial.orden_compra', compact('ordenes_pendientes', 'ordenes_completadas', 'clientes', 'productos', 'proveedores'));
         } catch (Exception $ex) {
             return $ex;
             return view('errors.500');
@@ -66,6 +71,7 @@ class OrdenCompraController extends Controller
             $productos = $request->productos;
             $cantidades = $request->cantidades;
             $precios = $request->precios;
+            $proveedores = $request->proveedores;
             $ivas = $request->ivas;
             $retenciones = $request->retenciones;
             $descripciones = $request->descripciones;
@@ -90,6 +96,7 @@ class OrdenCompraController extends Controller
                             'precio' => $precios[$key],
                             'iva' => $ivas[$key],
                             'retencion' => $retenciones[$key],
+                            'proveedor' => $proveedores[$key],
                             'descripcion' => $descripciones[$key]
                         ]);
                     }
@@ -118,6 +125,7 @@ class OrdenCompraController extends Controller
             $productos = $request->productos;
             $cantidades = $request->cantidades;
             $precios = $request->precios;
+            $proveedores = $request->proveedores;
             $ivas = $request->ivas;
             $retenciones = $request->retenciones;
             $descripciones = $request->descripciones;
@@ -140,6 +148,7 @@ class OrdenCompraController extends Controller
                         'precio' => $precios[$key],
                         'iva' => $ivas[$key],
                         'retencion' => $retenciones[$key],
+                        'proveedor' => $proveedores[$key],
                         'descripcion' => $descripciones[$key]
                     ]);
                 }
@@ -207,8 +216,9 @@ class OrdenCompraController extends Controller
                 ->first();
 
             $orden->detalle = DB::table('detalle_ordenes')
-                ->select('detalle_ordenes.*', 'productos.nombre as producto', 'productos.modelo')
+                ->select('detalle_ordenes.*', 'productos.nombre as producto', 'productos.modelo', 'proveedores.razon_social as name_proveedor')
                 ->join('productos', 'productos.id', 'detalle_ordenes.producto_id')
+                ->join('proveedores', 'proveedores.id', 'detalle_ordenes.proveedor')
                 ->where('detalle_ordenes.orden_id', $request->id)
                 ->get();
 
@@ -223,12 +233,34 @@ class OrdenCompraController extends Controller
         }
     }
 
+    public function data_proveedores(Request $request)
+    {
+        try {
+
+            $data = DB::table('detalle_ordenes')
+            ->select('proveedores.razon_social', 'proveedores.id')
+            ->join('proveedores', 'proveedores.id', 'detalle_ordenes.proveedor')
+            ->groupBy('proveedores.razon_social', 'proveedores.id')
+            ->where('detalle_ordenes.orden_id', $request->id)
+            ->get();
+
+            return response()->json([
+                'info' => 1,
+                'data' => $data,
+            ]);
+        } catch (Exception $ex) {
+            return response()->json([
+                'error' => $ex->getMessage(),
+            ]);
+        }
+    }
+
     public function print(Request $request)
     {
         $id = $request->get('token');
-        $proveedor_id = 20;
+        $proveedor_id = $request->get('recibed');
 
-        if (!$id || $id < 1) {
+        if (!$id || $id < 1 || !$proveedor_id || $proveedor_id < 1) {
             return view('errors.404');
         }
 
@@ -248,13 +280,14 @@ class OrdenCompraController extends Controller
             ->select('detalle_ordenes.*', 'productos.nombre as producto', 'productos.modelo', 'productos.imagen')
             ->join('productos', 'productos.id', 'detalle_ordenes.producto_id')
             ->where('detalle_ordenes.orden_id', $id)
+            ->where('detalle_ordenes.proveedor', $proveedor_id)
             ->get();
 
         $creador = DB::table('empleados')->where('id', $orden->created_by)->first();
 
         $pdf = PDF::loadView('admin.comercial.pdf.orden_compra', compact('orden', 'productos', 'creador', 'proveedor'));
 
-        return $pdf->stream('Orden de compra' . ' - (' . $orden->code . ') (' . date('d-m-Y', strtotime($orden->created_at)) . ').pdf');
+        return $pdf->stream($proveedor->razon_social . ' - (' . $orden->code . ') (' . date('d-m-Y', strtotime($orden->created_at)) . ').pdf');
     }
 
     public function send_email(Request $request)
@@ -262,7 +295,7 @@ class OrdenCompraController extends Controller
         try {
             $orden_id = $request->id;
             $emails = $request->emails;
-            $proveedor_id = 20;
+            $proveedor_id = $request->proveedor;
 
             $orden = DB::table('ordenes_compra')
             ->select('ordenes_compra.*', 'cliente.razon_social', 'cliente.nit', 'cliente.ciudad', 'cliente.codigo_verificacion')
@@ -278,6 +311,7 @@ class OrdenCompraController extends Controller
             ->select('detalle_ordenes.*', 'productos.nombre as producto', 'productos.modelo', 'productos.imagen')
             ->join('productos', 'productos.id', 'detalle_ordenes.producto_id')
             ->where('detalle_ordenes.orden_id', $orden_id)
+            ->where('detalle_ordenes.proveedor', $proveedor_id)
             ->get();
 
             $proveedor = DB::table('proveedores')->where('id', $proveedor_id)->first();
@@ -286,7 +320,7 @@ class OrdenCompraController extends Controller
 
             $pdf = PDF::loadView('admin.comercial.pdf.orden_compra', compact('orden', 'productos', 'creador', 'proveedor'));
 
-            $name = 'Orden de compra' . ' - (' . $orden->code . ') (' . date('d-m-Y', strtotime($orden->created_at)) . ').pdf';
+            $name = $proveedor->razon_social . ' - (' . $orden->code . ') (' . date('d-m-Y', strtotime($orden->created_at)) . ').pdf';
 
             $content = $pdf->download()->getOriginalContent();
 
@@ -300,12 +334,12 @@ class OrdenCompraController extends Controller
 
             Mail::to($emails)->send(new OrdenCompraMail($route, $attach, $creador, $proveedor));
 
-            unlink(storage_path('app/public/ordenes_compra/' . 'Orden de compra' . ' - (' . $orden->code . ') (' . date('d-m-Y', strtotime($orden->created_at)) . ').pdf'));
+            unlink(storage_path('app/public/ordenes_compra/' . $proveedor->razon_social . ' - (' . $orden->code . ') (' . date('d-m-Y', strtotime($orden->created_at)) . ').pdf'));
 
-            return response()->json(['info' => 1, 'message' => 'Cotización enviada correctamente']);
+            return response()->json(['info' => 1, 'message' => 'Orden de compra enviada correctamente']);
         } catch (Exception $ex) {
             return $ex->getMessage();
-            return response()->json(['info' => 0, 'error' => 'Error al enviar la cotización']);
+            return response()->json(['info' => 0, 'error' => 'Error al enviar la orden de compra']);
         }
     }
 }
