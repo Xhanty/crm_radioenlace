@@ -340,21 +340,21 @@
             @endif
 
             <tr class="heading">
-                <td colspan="3">
+                <td colspan="2">
                     Moneda
                 </td>
 
-                <td colspan="2">
+                <td colspan="3">
                     Garantía
                 </td>
             </tr>
 
             <tr class="details">
-                <td colspan="3" style="font-size: 15px">
+                <td colspan="2" style="font-size: 15px">
                     Peso colombiano. (COP)
                 </td>
 
-                <td colspan="2" style="font-size: 15px">
+                <td colspan="3" style="font-size: 15px">
                     {{ $cotizacion->garantia }}
                 </td>
             </tr>
