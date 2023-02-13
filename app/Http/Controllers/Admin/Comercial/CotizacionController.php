@@ -121,6 +121,7 @@ class CotizacionController extends Controller
             $cantidades = $request->cantidades;
             $tipos = $request->tipos;
             $precios = $request->precios;
+            $tipo_pago = $request->tipo_pago;
             $descripciones = $request->descripciones;
 
             $code = DB::table('cotizaciones')->max('code') + 1;
@@ -151,6 +152,7 @@ class CotizacionController extends Controller
                             'cantidad' => $cantidades[$key],
                             'tipo_transaccion' => $tipos[$key],
                             'precio' => $precios[$key],
+                            'tipo_pago' => $tipo_pago[$key],
                             'descripcion' => $descripciones[$key] ? $descripciones[$key] : null,
                             'created_by' => auth()->user()->id,
                             'created_at' => date('Y-m-d H:i:s'),
@@ -191,6 +193,7 @@ class CotizacionController extends Controller
             $cantidades = $request->cantidades;
             $tipos = $request->tipos;
             $precios = $request->precios;
+            $tipo_pago = $request->tipo_pago;
             $descripciones = $request->descripciones;
 
             DB::table("cotizaciones")->where('id', $cotizacion)->update([
@@ -217,6 +220,7 @@ class CotizacionController extends Controller
                         'cantidad' => $cantidades[$key],
                         'tipo_transaccion' => $tipos[$key],
                         'precio' => $precios[$key],
+                        'tipo_pago' => $tipo_pago[$key],
                         'descripcion' => $descripciones[$key] ? $descripciones[$key] : null,
                         'created_by' => auth()->user()->id,
                         'created_at' => date('Y-m-d H:i:s'),

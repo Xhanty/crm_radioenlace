@@ -28,6 +28,8 @@ $(document).ready(function () {
         'placeholder="Cantidad">' +
         '<input title="Precio" class="form-control mt-3 precio_add" type="text"' +
         'placeholder="Precio">' +
+        '<input type="checkbox" class="mt-3 tipo_pago_add" data-value="0"> Pago Único' +
+        '<input type="checkbox" style="margin-left: 50px;" class="mt-3 tipo_pago_add" data-value="1"> Pago Mensual' +
         "</div>" +
         '<div class="col-6">' +
         '<div class="d-flex">' +
@@ -49,7 +51,7 @@ $(document).ready(function () {
         "</select>" +
         "</div>" +
         '<textarea title="Descripción" class="form-control mt-3 descripcion_add" placeholder="Descripción" rows="3"' +
-        'style="height: 60px; resize: none"></textarea>' +
+        'style="height: 70px; resize: none"></textarea>' +
         "</div>" +
         '<div class="d-flex">' +
         '<a class="center-vertical mg-s-10 delete_row_producto" href="javascript:void(0)">' +
@@ -80,6 +82,8 @@ $(document).ready(function () {
         'placeholder="Cantidad">' +
         '<input title="Precio" class="form-control mt-3 precio_edit" type="text"' +
         'placeholder="Precio">' +
+        '<input type="checkbox" class="mt-3 tipo_pago_edit" data-value="0"> Pago Único' +
+        '<input type="checkbox" style="margin-left: 50px;" class="mt-3 tipo_pago_edit" data-value="1"> Pago Mensual' +
         "</div>" +
         '<div class="col-6">' +
         '<div class="d-flex">' +
@@ -101,7 +105,7 @@ $(document).ready(function () {
         "</select>" +
         "</div>" +
         '<textarea title="Descripción" class="form-control mt-3 descripcion_edit" placeholder="Descripción" rows="3"' +
-        'style="height: 60px; resize: none"></textarea>' +
+        'style="height: 70px; resize: none"></textarea>' +
         "</div>" +
         '<div class="d-flex">' +
         '<a class="center-vertical mg-s-10 delete_edit_row_producto" href="javascript:void(0)">' +
@@ -263,6 +267,8 @@ $(document).ready(function () {
         let envio = $("#envio_add").val();
         let valid_products = 0;
         let valid_cantidad = 0;
+        let count_1 = 0;
+        let count_2 = 0;
 
         // PRODUCTOS
         let productos = [];
@@ -270,6 +276,7 @@ $(document).ready(function () {
         let cantidad = [];
         let tipo = [];
         let precio = [];
+        let tipo_pago = [];
         let descripciones = [];
 
         $(".producto_add").each(function () {
@@ -281,6 +288,7 @@ $(document).ready(function () {
                 valid_products++;
             }
             productos.push($(this).val());
+            count_1++;
         });
 
         $(".divisa_add").each(function () {
@@ -327,6 +335,12 @@ $(document).ready(function () {
             precio.push($(this).val());
         });
 
+        $(".tipo_pago_add:checked").each(function () {
+            let value = $(this).data("value");
+            tipo_pago.push(value);
+            count_2++;
+        });
+
         $(".descripcion_add").each(function () {
             descripciones.push($(this).val());
         });
@@ -336,6 +350,9 @@ $(document).ready(function () {
             return false;
         } else if (valid_cantidad > 0) {
             toastr.error("La cantidad del producto debe ser mayor a 0");
+            return false;
+        } else if (count_1 != count_2) {
+            toastr.error("Debe seleccionar el tipo de pago de cada producto");
             return false;
         } else {
             $("#modalAdd").modal("hide");
@@ -358,6 +375,7 @@ $(document).ready(function () {
                     tipos: tipo,
                     precios: precio,
                     descripciones: descripciones,
+                    tipo_pago: tipo_pago,
                     garantia: garantia,
                     envio: envio,
                 },
@@ -396,6 +414,8 @@ $(document).ready(function () {
         let envio = $("#envio_edit").val();
         let valid_products = 0;
         let valid_cantidad = 0;
+        let count_1 = 0;
+        let count_2 = 0;
 
         // PRODUCTOS
         let productos = [];
@@ -403,6 +423,7 @@ $(document).ready(function () {
         let cantidad = [];
         let tipo = [];
         let precio = [];
+        let tipo_pago = [];
         let descripciones = [];
 
         $(".producto_edit").each(function () {
@@ -414,6 +435,7 @@ $(document).ready(function () {
                 valid_products++;
             }
             productos.push($(this).val());
+            count_1++;
         });
 
         $(".divisa_edit").each(function () {
@@ -460,6 +482,12 @@ $(document).ready(function () {
             precio.push($(this).val());
         });
 
+        $(".tipo_pago_edit:checked").each(function () {
+            let value = $(this).data("value");
+            tipo_pago.push(value);
+            count_2++;
+        });
+
         $(".descripcion_edit").each(function () {
             descripciones.push($(this).val());
         });
@@ -469,6 +497,9 @@ $(document).ready(function () {
             return false;
         } else if (valid_cantidad > 0) {
             toastr.error("La cantidad del producto debe ser mayor a 0");
+            return false;
+        } else if (count_1 != count_2) {
+            toastr.error("Debe seleccionar el tipo de pago de cada producto");
             return false;
         } else {
             $("#modalEdit").modal("hide");
@@ -492,6 +523,7 @@ $(document).ready(function () {
                     tipos: tipo,
                     precios: precio,
                     descripciones: descripciones,
+                    tipo_pago: tipo_pago,
                     garantia: garantia,
                     envio: envio,
                 },
@@ -543,6 +575,15 @@ $(document).ready(function () {
                     if (productos.length > 0) {
                         let html = "";
                         for (let i = 0; i < productos.length; i++) {
+                            let check1 = "";
+                            let check2 = "";
+
+                            if (productos[i].tipo_pago == 0) {
+                                check1 = "checked";
+                            } else if (productos[i].tipo_pago == 1) {
+                                check2 = "checked";
+                            }
+
                             let tipo = productos[i].tipo_transaccion;
                             let spacing = "";
 
@@ -568,6 +609,8 @@ $(document).ready(function () {
                                             <input title="Cantidad" class="form-control mt-3" value="${productos[i].cantidad}" disabled type="number" min="1"
                                                 step="1" placeholder="Cantidad">
                                             <input title="Precio" class="form-control mt-3" value="${productos[i].precio}" disabled type="text" placeholder="Precio">
+                                            <input type="checkbox" disabled class="mt-3" ${check1} data-value="0"> Pago Único
+                                            <input type="checkbox" disabled style="margin-left: 50px;" ${check2} class="mt-3" data-value="1"> Pago Mensual
                                         </div>
                                         <div class="col-6">
                                             <div class="d-flex">
@@ -637,6 +680,15 @@ $(document).ready(function () {
                     if (productos_data.length > 0) {
                         let html = "";
                         for (let i = 0; i < productos_data.length; i++) {
+                            let check1 = "";
+                            let check2 = "";
+
+                            if (productos_data[i].tipo_pago == 0) {
+                                check1 = "checked";
+                            } else if (productos_data[i].tipo_pago == 1) {
+                                check2 = "checked";
+                            }
+
                             let button = '<div class="d-flex">' +
                                 '<a class="center-vertical mg-s-10" href="javascript:void(0)" id="new_edit_row_producto">' +
                                 '<i class="fa fa-plus"></i>' +
@@ -671,6 +723,8 @@ $(document).ready(function () {
                                             <input title="Cantidad" class="form-control mt-3 cantidad_edit" value="${productos_data[i].cantidad}" type="number" min="1"
                                                 step="1" placeholder="Cantidad">
                                             <input title="Precio" class="form-control mt-3 precio_edit" value="${productos_data[i].precio}" type="text" placeholder="Precio">
+                                            <input type="checkbox" class="mt-3 tipo_pago_edit" ${check1} data-value="0"> Pago Único
+                                            <input type="checkbox" style="margin-left: 50px;" ${check2} class="mt-3 tipo_pago_edit" data-value="1"> Pago Mensual
                                         </div>
                                         <div class="col-6">
                                             <div class="d-flex">
@@ -689,7 +743,7 @@ $(document).ready(function () {
                                                             <option value="4">Visita Tecnica</option>
                                                         </select>
                                                     </div>
-                                                    <textarea title="Descripción" class="form-control mt-3 descripcion_edit" placeholder="Descripción" rows="3" style="height: 60px; resize: none">${productos_data[i].descripcion ? productos_data[i].descripcion : ''}</textarea>
+                                                    <textarea title="Descripción" class="form-control mt-3 descripcion_edit" placeholder="Descripción" rows="3" style="height: 70px; resize: none">${productos_data[i].descripcion ? productos_data[i].descripcion : ''}</textarea>
                                                 </div>
                                                 ${button}
                                             </div>

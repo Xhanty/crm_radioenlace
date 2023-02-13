@@ -156,21 +156,6 @@
                 </td>
             </tr>
 
-            @if ($cotizacion->incluye)
-                <tr class="heading">
-                    <td colspan="5">
-                        Incluye
-                    </td>
-                </tr>
-
-
-                <tr class="details">
-                    <td colspan="5" style="font-size: 15px; text-align: justify;">
-                        {{ $cotizacion->incluye }}
-                    </td>
-                </tr>
-            @endif
-
             @if ($cotizacion->descripcion)
                 <tr class="heading">
                     <td colspan="5">
@@ -186,22 +171,48 @@
                 </tr>
             @endif
 
+            @if ($cotizacion->incluye)
+                <tr class="heading">
+                    <td colspan="5">
+                        Incluye
+                    </td>
+                </tr>
+
+
+                <tr class="details">
+                    <td colspan="5" style="font-size: 15px; text-align: justify;">
+                        {{ $cotizacion->incluye }}
+                    </td>
+                </tr>
+            @endif
+
             <tr class="heading">
                 <td style="width: 100px; text-align: center;"></td>
                 <td style="width: 280px; text-align: center;">Producto</td>
                 <td style="text-align: center;">Cantidad</td>
                 <td class="text-align-right">Precio U.</td>
-                <td class="text-align-right">Precio Total</td>
+                <td class="text-align-right">Subtotal</td>
             </tr>
 
             @php
                 $subtotal = 0;
+                $subtotal_mensual = 0;
+                $incluye_mensual = 0;
+                $incluye_anual = 0;
             @endphp
 
             @for ($i = 0; $i < count($productos); $i++)
                 @php
-                    $total = $productos[$i]->cantidad * $productos[$i]->precio;
-                    $subtotal += $total;
+                    if ($productos[$i]->tipo_pago == 1) {
+                        $total = $productos[$i]->cantidad * $productos[$i]->precio;
+                        $subtotal_mensual += $productos[$i]->cantidad * $productos[$i]->precio;
+                        $incluye_mensual++;
+                    } else {
+                        $total = $productos[$i]->cantidad * $productos[$i]->precio;
+                        $subtotal += $productos[$i]->cantidad * $productos[$i]->precio;
+                        $incluye_anual++;
+                    }
+
                     if ($productos[$i]->imagen == null || $productos[$i]->imagen == '') {
                         $productos[$i]->imagen = 'noimagen.png';
                     }
@@ -257,14 +268,29 @@
 
             @php
                 $iva = $subtotal * 0.19;
+                $iva_mensual = $subtotal_mensual * 0.19;
             @endphp
 
             <tr class="total">
-                <td colspan="5" class="text-align-right">
-                    Subtotal: {{ number_format($subtotal, 0, ',', '.') }}<br />
-                    IVA (19%): {{ number_format($iva, 0, ',', '.') }}<br />
-                    <b>Total: {{ number_format($subtotal + $iva, 0, ',', '.') }}</b>
-                </td>
+                @if ($incluye_mensual > 0)
+                    <td @if ($incluye_anual == 0) colspan="5" @else colspan="2" @endif class="text-align-left">
+                        <b>Pago Mensual</b><br />
+                        Subtotal: {{ number_format($subtotal_mensual, 0, ',', '.') }}<br />
+                        IVA: {{ number_format($iva_mensual, 0, ',', '.') }}<br />
+                        <b>Total: {{ number_format($subtotal_mensual + $iva_mensual, 0, ',', '.') }}</b>
+                    </td>
+                @endif
+
+                @if ($incluye_anual > 0)
+                    <td @if ($incluye_mensual > 0) colspan="3" @else colspan="5" @endif class="text-align-right">
+                        @if ($incluye_mensual > 0)
+                            <b>Pago Único</b><br />
+                        @endif
+                        Subtotal: {{ number_format($subtotal, 0, ',', '.') }}<br />
+                        IVA: {{ number_format($iva, 0, ',', '.') }}<br />
+                        <b>Total: {{ number_format($subtotal + $iva, 0, ',', '.') }}</b>
+                    </td>
+                @endif
             </tr>
 
             <br>
@@ -334,17 +360,17 @@
             </tr>
 
             @if ($cotizacion->envio)
-            <tr class="heading">
-                <td colspan="5">
-                    Envío
-                </td>
-            </tr>
+                <tr class="heading">
+                    <td colspan="5">
+                        Envío
+                    </td>
+                </tr>
 
-            <tr class="details">
-                <td colspan="5" style="font-size: 15px;">
-                    {{ $cotizacion->envio }} 
-                </td>
-            </tr>
+                <tr class="details">
+                    <td colspan="5" style="font-size: 15px;">
+                        {{ $cotizacion->envio }}
+                    </td>
+                </tr>
             @endif
 
             <table cellpadding="0" width="500px"

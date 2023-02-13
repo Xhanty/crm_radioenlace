@@ -281,6 +281,8 @@
                                                         placeholder="Cantidad">
                                                     <input title="Precio" class="form-control mt-3 precio_add"
                                                         type="text" placeholder="Precio">
+                                                    <input type="checkbox" class="mt-3 tipo_pago_add" data-value="0"> Pago Único
+                                                    <input type="checkbox" style="margin-left: 50px;" class="mt-3 tipo_pago_add" data-value="1"> Pago Mensual
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="d-flex">
@@ -303,7 +305,7 @@
                                                                 </select>
                                                             </div>
                                                             <textarea title="Descripción" class="form-control mt-3 descripcion_add" placeholder="Descripción" rows="3"
-                                                                style="height: 60px; resize: none"></textarea>
+                                                                style="height: 70px; resize: none"></textarea>
                                                         </div>
                                                         <div class="d-flex">
                                                             <a class="center-vertical mg-s-10" href="javascript:void(0)"
