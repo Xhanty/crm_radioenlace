@@ -247,6 +247,20 @@
                                                 style="height: 70px; resize: none"></textarea>
                                         </div>
                                     </div>
+                                    <div class="row row-sm mt-3">
+                                        <div class="col-lg">
+                                            <label for="">Garantía (Opcional)</label>
+                                            <textarea class="form-control" placeholder="Garantía de la cotización (Opcional)" rows="2"
+                                                id="garantia_add" style="height: 60px; resize: none"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row row-sm mt-3">
+                                        <div class="col-lg">
+                                            <label for="">Envío (Opcional)</label>
+                                            <textarea class="form-control" placeholder="Envío (Opcional)" rows="2"
+                                                id="envio_add" style="height: 60px; resize: none"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div id="div_productos" class="d-none">
                                     <div class="row row-sm">
@@ -407,6 +421,20 @@
                                                 style="height: 70px; resize: none"></textarea>
                                         </div>
                                     </div>
+                                    <div class="row row-sm mt-3">
+                                        <div class="col-lg">
+                                            <label for="">Garantía (Opcional)</label>
+                                            <textarea class="form-control" disabled placeholder="Garantía de la cotización (Opcional)" rows="2"
+                                                id="garantia_view" style="height: 60px; resize: none"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row row-sm mt-3">
+                                        <div class="col-lg">
+                                            <label for="">Envío (Opcional)</label>
+                                            <textarea class="form-control" disabled placeholder="Envío (Opcional)" rows="2"
+                                                id="envio_view" style="height: 60px; resize: none"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div id="div_productos_view" class="d-none">
                                     <div class="row row-sm">
@@ -515,6 +543,20 @@
                                             <label for="">Incluye (Opcional)</label>
                                             <textarea class="form-control" placeholder="Incluye (Opcional)" rows="3" id="incluye_edit"
                                                 style="height: 70px; resize: none"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row row-sm mt-3">
+                                        <div class="col-lg">
+                                            <label for="">Garantía (Opcional)</label>
+                                            <textarea class="form-control" placeholder="Garantía de la cotización (Opcional)" rows="2"
+                                                id="garantia_edit" style="height: 60px; resize: none"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row row-sm mt-3">
+                                        <div class="col-lg">
+                                            <label for="">Envío (Opcional)</label>
+                                            <textarea class="form-control" placeholder="Envío (Opcional)" rows="2"
+                                                id="envio_edit" style="height: 60px; resize: none"></textarea>
                                         </div>
                                     </div>
                                 </div>

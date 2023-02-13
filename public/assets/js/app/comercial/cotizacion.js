@@ -259,6 +259,8 @@ $(document).ready(function () {
         let descuento = $("#descuento_add").val();
         let descripcion_general = $("#descripcion_add").val();
         let incluye = $("#incluye_add").val();
+        let garantia = $("#garantia_add").val();
+        let envio = $("#envio_add").val();
         let valid_products = 0;
         let valid_cantidad = 0;
 
@@ -356,6 +358,8 @@ $(document).ready(function () {
                     tipos: tipo,
                     precios: precio,
                     descripciones: descripciones,
+                    garantia: garantia,
+                    envio: envio,
                 },
                 success: function (response) {
                     if (response.info == 1) {
@@ -388,6 +392,8 @@ $(document).ready(function () {
         let descuento = $("#descuento_edit").val();
         let descripcion_general = $("#descripcion_edit").val();
         let incluye = $("#incluye_edit").val();
+        let garantia = $("#garantia_edit").val();
+        let envio = $("#envio_edit").val();
         let valid_products = 0;
         let valid_cantidad = 0;
 
@@ -486,6 +492,8 @@ $(document).ready(function () {
                     tipos: tipo,
                     precios: precio,
                     descripciones: descripciones,
+                    garantia: garantia,
+                    envio: envio,
                 },
                 success: function (response) {
                     if (response.info == 1) {
@@ -529,6 +537,8 @@ $(document).ready(function () {
                     $("#descuento_view").val(data.descuento);
                     $("#descripcion_view").val(data.descripcion);
                     $("#incluye_view").val(data.incluye);
+                    $("#garantia_view").val(data.garantia);
+                    $("#envio_view").val(data.envio);
 
                     if (productos.length > 0) {
                         let html = "";
@@ -621,6 +631,8 @@ $(document).ready(function () {
                     $("#descuento_edit").val(data.descuento);
                     $("#descripcion_edit").val(data.descripcion);
                     $("#incluye_edit").val(data.incluye);
+                    $("#garantia_edit").val(data.garantia);
+                    $("#envio_edit").val(data.envio);
 
                     if (productos_data.length > 0) {
                         let html = "";

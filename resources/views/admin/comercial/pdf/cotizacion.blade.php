@@ -45,7 +45,7 @@
         }
 
         .invoice-box table tr.top table td {
-            padding-bottom: 20px;
+            padding-bottom: 5px;
         }
 
         .invoice-box table tr.top table td.title {
@@ -55,7 +55,7 @@
         }
 
         .invoice-box table tr.information table td {
-            padding-bottom: 40px;
+            padding-bottom: 10px;
         }
 
         .invoice-box table tr.heading td {
@@ -155,6 +155,21 @@
                     </table>
                 </td>
             </tr>
+
+            @if ($cotizacion->incluye)
+                <tr class="heading">
+                    <td colspan="5">
+                        Incluye
+                    </td>
+                </tr>
+
+
+                <tr class="details">
+                    <td colspan="5" style="font-size: 15px; text-align: justify;">
+                        {{ $cotizacion->incluye }}
+                    </td>
+                </tr>
+            @endif
 
             @if ($cotizacion->descripcion)
                 <tr class="heading">
@@ -314,35 +329,29 @@
                 </td>
 
                 <td colspan="2" style="font-size: 15px">
-                    6 Meses
+                    {{ $cotizacion->garantia }}
                 </td>
             </tr>
 
-            <!--<tr class="heading">
-                <td colspan="2">
-                    IVA (19%)
-                </td>
-
-                <td colspan="3">
-                    Transporte Nacional
+            @if ($cotizacion->envio)
+            <tr class="heading">
+                <td colspan="5">
+                    Envío
                 </td>
             </tr>
 
             <tr class="details">
-                <td colspan="2" style="font-size: 15px">
-                    Incluido en la oferta
+                <td colspan="5" style="font-size: 15px;">
+                    {{ $cotizacion->envio }} 
                 </td>
-
-                <td colspan="3" style="font-size: 15px;">
-                    El envío se realizará por la transportadora indicada por el cliente, el flete será cancelado en el destino, la responsabilidad del envío será bajo responsabilidad del cliente. 
-                </td>
-            </tr>-->
+            </tr>
+            @endif
 
             <table cellpadding="0" width="500px"
-                style="border-collapse: collapse; font-size: 14.4px; bottom: 80; position: fixed;">
+                style="border-collapse: collapse; font-size: 14.4px; bottom: 77; position: fixed;">
                 <tr>
                     <td style="margin: 0.1px; padding: 0px;">
-                        <table cellpadding="0" style="border-collapse: collapse; font-size: 18px;">
+                        <table cellpadding="0" style="border-collapse: collapse; font-size: 17px;">
                             <tr>
                                 <td valign="top">
                                     <img src="https://radioenlacesas.com/wp-content/uploads/2017/08/cropped-logoradioenlace-2.png"

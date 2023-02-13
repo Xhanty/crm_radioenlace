@@ -45,6 +45,7 @@ class CotizacionController extends Controller
                 ->join('cliente', 'cotizaciones.cliente_id', '=', 'cliente.id')
                 ->join('empleados', 'cotizaciones.created_by', '=', 'empleados.id')
                 ->where('cotizaciones.status', 0)
+                ->orderBy('cotizaciones.id', 'desc')
                 ->groupBy('cotizaciones.id', 'cotizaciones.code', 'cotizaciones.created_at', 'cotizaciones.descripcion', 'cotizaciones.status', 'cliente.razon_social', 'empleados.nombre')
                 ->get();
 
@@ -64,6 +65,7 @@ class CotizacionController extends Controller
                 ->join('cliente', 'cotizaciones.cliente_id', '=', 'cliente.id')
                 ->join('empleados', 'cotizaciones.created_by', '=', 'empleados.id')
                 ->where('cotizaciones.status', 1)
+                ->orderBy('cotizaciones.id', 'desc')
                 ->groupBy('cotizaciones.id', 'cotizaciones.code', 'cotizaciones.created_at', 'cotizaciones.descripcion', 'cotizaciones.status', 'cotizaciones.aprobado', 'cliente.razon_social', 'empleados.nombre')
                 ->get();
 
@@ -110,6 +112,8 @@ class CotizacionController extends Controller
             $descuento = $request->descuento;
             $descripcion_general = $request->descripcion_general;
             $incluye = $request->incluye;
+            $garantia = $request->garantia;
+            $envio = $request->envio;
 
             //PRODUCTOS
             $productos = $request->productos;
@@ -131,6 +135,8 @@ class CotizacionController extends Controller
                 'duracion' => $duracion,
                 'tiempo_entrega' => $tiempo_entrega ? $tiempo_entrega : null,
                 'descuento' => $descuento ? $descuento : null,
+                'garantia' => $garantia ? $garantia : null,
+                'envio' => $envio ? $envio : null,
                 'created_by' => auth()->user()->id,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
@@ -176,6 +182,8 @@ class CotizacionController extends Controller
             $descuento = $request->descuento;
             $descripcion_general = $request->descripcion_general;
             $incluye = $request->incluye;
+            $garantia = $request->garantia;
+            $envio = $request->envio;
 
             //PRODUCTOS
             $productos = $request->productos;
@@ -193,7 +201,9 @@ class CotizacionController extends Controller
                 'forma_pago' => $forma_pago,
                 'duracion' => $duracion,
                 'tiempo_entrega' => $tiempo_entrega ? $tiempo_entrega : null,
-                'descuento' => $descuento ? $descuento : null
+                'descuento' => $descuento ? $descuento : null,
+                'garantia' => $garantia ? $garantia : null,
+                'envio' => $envio ? $envio : null,
             ]);
 
             DB::table("detalle_cotizaciones")->where('cotizacion_id', $cotizacion)->delete();
