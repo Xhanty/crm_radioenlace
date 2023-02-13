@@ -191,8 +191,10 @@ class PreciosController extends Controller
                 return view('errors.404');
             }
 
-            if ($precio->fecha_limite < $date) {
-                return view('errors.404');
+            if (!auth()->user()) {
+                if ($precio->fecha_limite < $date) {
+                    return view('errors.404');
+                }
             }
 
             $productos = DB::table('detalle_precios')
