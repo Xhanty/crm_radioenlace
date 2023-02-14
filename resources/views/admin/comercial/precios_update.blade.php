@@ -42,7 +42,7 @@
             padding-right: 20px;
         }
     </style>
-    <div class="limiter d-none">
+    <div class="limiter ">
         <div class="container-table100">
             <div class="wrap-table100 text-center" style="width: 90%">
                 <h3 class="text-white">{{ $precio->razon_social }}</h3>
@@ -113,12 +113,30 @@
                                     @if (!auth()->user()) contenteditable="true" @endif style="color: gray">
                                     {{ $precio->condiciones_pago }}</th>
                             </tr>
+
                             @if($precio->moneda == 'USD')
                                 <tr class="table100-head">
                                     <th class="column1" style="background: #36304a">Precio Dolar</th>
                                     <th class="column1 price_final" id="precio_dolar"
                                         @if (!auth()->user()) contenteditable="true" @endif style="color: gray">
                                         {{ $precio->precio_dolar }}</th>
+                                </tr>
+                            @endif
+
+                            @if($precio->total == 0)
+                                <tr class="table100-head">
+                                    <th class="column1" style="background: #36304a">Archivo (Opcional)</th>
+                                    <th style="color: gray;">
+                                        <input type="file" id="file_cotizacion" style="width: 100%">
+                                        {{ $precio->condiciones_pago }}
+                                    </th>
+                                </tr>
+                            @elseif($precio->file_cotizacion != null)
+                                <tr class="table100-head">
+                                    <th class="column1" style="background: #36304a">Archivo</th>
+                                    <th style="color: gray; text-align: right; padding-right: 20px">
+                                        <a href="{{ $precio->file_cotizacion }}" target="_blank">Descargar</a>
+                                    </th>
                                 </tr>
                             @endif
                             <tr class="table100-head">
@@ -147,8 +165,14 @@
     <script src="https://colorlib.com/etc/tb/Table_Responsive_v1/vendor/bootstrap/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+            });
+
             var preciofinal_total = 0;
-            @if (!auth()->user())
+            /*@if (!auth()->user())
                 let nit = $("#nit_val").val();
                 let value_nit = prompt("Ingrese el nit:");
                 if (nit != value_nit) {
@@ -168,7 +192,7 @@
 
             @if (auth()->user())
                 $(".d-none").removeClass("d-none");
-            @endif
+            @endif*/
 
             let money = "{{ $precio->moneda }}";
             let type_money = "en-US";
@@ -262,6 +286,7 @@
                 var condiciones_pago = $("#condiciones_pago").text();
                 var precio_dolar = $("#precio_dolar").text();
                 var total = $("#preciofinal_total").text();
+                var file = $("#file_cotizacion").val();
                 var productos = [];
                 var cantidad = 0;
                 var iva = 0;
@@ -283,7 +308,7 @@
                     id = $(this).data('id');
 
                     if (preciofinal == "" || preciofinal == 0 || preciofinal == "0" ||
-                        preciofinal == "0.00" || preciofinal == "$0" || preciofinal == "$NaN") {
+                        preciofinal == "0.00" || preciofinal == "$0" || preciofinal == "$NaN" || preciofinal == "$ 0") {
                         valid = 1;
                     }
 
@@ -299,11 +324,11 @@
                     i++;
                 });
 
-                if(total == "" || total == 0 || total == "0" || total == "0.00" || total == "$0" || total == "$NaN") {
+                if(total == "$ 0") {
                     valid = 1;
                 }
 
-                if (fecha_entrega == "") {
+                if (fecha_entrega.trim().length < 1) {
                     valid = 1;
                 }
 
@@ -314,20 +339,25 @@
                     if (window.confirm("¿Está seguro de actualizar los precios?")) {
                         let email = prompt("Ingrese su email para enviar una copia:");
 
-                        if (email != null && email.trim().length > 5) {
+                        if (email != null && email.trim().length > 1) {
+
+                            let formData = new FormData();
+                            formData.append('fecha_entrega', fecha_entrega);
+                            formData.append('condicion_entrega', condicion_entrega);
+                            formData.append('condiciones_pago', condiciones_pago);
+                            formData.append('precio_dolar', precio_dolar);
+                            formData.append('total', total);
+                            formData.append('productos', JSON.stringify(productos));
+                            formData.append('email', email);
+                            formData.append('file', $('#file_cotizacion')[0].files[0]);
+
                             $.ajax({
                                 url: "{{ route('precios_edit') }}",
                                 type: "POST",
-                                data: {
-                                    _token: "{{ csrf_token() }}",
-                                    fecha_entrega: fecha_entrega,
-                                    condicion_entrega: condicion_entrega,
-                                    condiciones_pago: condiciones_pago,
-                                    precio_dolar: precio_dolar,
-                                    total: total,
-                                    productos: productos,
-                                    email: email
-                                },
+                                cache: false,
+                                contentType: false,
+                                processData: false,
+                                data: { formData },
                                 success: function(response) {
                                     if (response.info == 1) {
                                         alert("Precios actualizados correctamente");

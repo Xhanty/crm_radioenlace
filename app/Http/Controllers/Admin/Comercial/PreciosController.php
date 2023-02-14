@@ -191,6 +191,10 @@ class PreciosController extends Controller
                 return view('errors.404');
             }
 
+            if ($precio->file_cotizacion != null) {
+                $precio->file_cotizacion = 'images/precios_proveedores/' . ($precio->file_cotizacion);
+            }
+
             if (!auth()->user()) {
                 if ($precio->fecha_limite < $date) {
                     return view('errors.404');
@@ -234,6 +238,10 @@ class PreciosController extends Controller
                 return view('errors.404');
             }
 
+            if ($precio->file_cotizacion != null) {
+                $precio->file_cotizacion = 'images/precios_proveedores/' . ($precio->file_cotizacion);
+            }
+
             if ($precio->fecha_limite < $date) {
                 return view('errors.404');
             }
@@ -262,8 +270,12 @@ class PreciosController extends Controller
             $total = $request->total;
             $productos = $request->productos;
             $email = $request->email;
+            $file = $request->file;
             $precio = DB::table("detalle_precios")->where('id', $productos[0]['id'])->first();
 
+            if ($file != null) {
+                return $fecha_entrega;
+            }
 
             foreach ($productos as $producto) {
                 DB::table('detalle_precios')->where('id', $producto['id'])->update([

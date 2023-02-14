@@ -65,16 +65,21 @@
                                     <td class="column1 text-center">{{ $producto->nota }}</td>
                                     <td class="column1 text-center">{{ $producto->cantidad_requerida }}</td>
                                     <td class="column1 text-center">
-                                        <input type="text" disabled syle="background: transparent" class="text-center cantidad" value="{{ $producto->cantidad_disponible }}">
-                                    </td>
-                                    <td class="column1 text-center" >
-                                        <input type="text" disabled data-id="{{ $producto->id }}" style="background: transparent" class="text-center precio" value="{{ $producto->precio }}">
+                                        <input type="text" disabled syle="background: transparent"
+                                            class="text-center cantidad" value="{{ $producto->cantidad_disponible }}">
                                     </td>
                                     <td class="column1 text-center">
-                                        <input type="text" disabled syle="background: transparent" class="text-center descuento" value="{{ $producto->descuento }}">
+                                        <input type="text" disabled data-id="{{ $producto->id }}"
+                                            style="background: transparent" class="text-center precio"
+                                            value="{{ $producto->precio }}">
                                     </td>
                                     <td class="column1 text-center">
-                                        <input type="text" disabled syle="background: transparent" class="text-center iva" value="{{ $producto->iva }}">
+                                        <input type="text" disabled syle="background: transparent"
+                                            class="text-center descuento" value="{{ $producto->descuento }}">
+                                    </td>
+                                    <td class="column1 text-center">
+                                        <input type="text" disabled syle="background: transparent"
+                                            class="text-center iva" value="{{ $producto->iva }}">
                                     </td>
                                     <td class="column1 text-center preciofinal">0</td>
                                     <td class="column1 comentario">
@@ -104,11 +109,23 @@
                                 <th class="column1 price_final" id="condiciones_pago" style="color: gray">
                                     {{ $precio->condiciones_pago }}</th>
                             </tr>
-                            <tr class="table100-head">
-                                <th class="column1" style="background: #36304a">Precio Dolar</th>
-                                <th class="column1 price_final" id="precio_dolar" style="color: gray">
-                                    {{ $precio->precio_dolar }}</th>
-                            </tr>
+                            @if ($precio->moneda == 'USD')
+                                <tr class="table100-head">
+                                    <th class="column1" style="background: #36304a">Precio Dolar</th>
+                                    <th class="column1 price_final" id="precio_dolar" style="color: gray">
+                                        {{ $precio->precio_dolar }}</th>
+                                </tr>
+                            @endif
+
+                            @if ($precio->file_cotizacion != null)
+                                <tr class="table100-head">
+                                    <th class="column1" style="background: #36304a">Archivo</th>
+                                    <th style="color: gray; text-align: right; padding-right: 20px">
+                                        <a href="{{ $precio->file_cotizacion }}" target="_blank">Descargar</a>
+                                    </th>
+                                </tr>
+                            @endif
+
                             <tr class="table100-head">
                                 <th class="column1" style="background: #36304a">Total</th>
                                 <th class="column1 price_final" id="preciofinal_total" style="color: gray">
