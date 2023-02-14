@@ -64,14 +64,18 @@
                                     <td class="column1">{{ $producto->nombre }} ({{ $producto->modelo }})</td>
                                     <td class="column1 text-center">{{ $producto->nota }}</td>
                                     <td class="column1 text-center">{{ $producto->cantidad_requerida }}</td>
-                                    <td class="column1 text-center cantidad">
-                                        {{ $producto->cantidad_disponible }}</td>
-                                    <td class="column1 text-center precio" data-id="{{ $producto->id }}">
-                                        {{ $producto->precio ?? 0 }}</td>
-                                    <td class="column1 text-center descuento">
-                                        {{ $producto->descuento ?? 0 }}</td>
-                                    <td class="column1 text-center iva">
-                                        {{ $producto->iva ?? 0 }}</td>
+                                    <td class="column1 text-center">
+                                        <input type="text" disabled syle="background: transparent" class="text-center cantidad" value="{{ $producto->cantidad_disponible }}">
+                                    </td>
+                                    <td class="column1 text-center" >
+                                        <input type="text" disabled data-id="{{ $producto->id }}" style="background: transparent" class="text-center precio" value="{{ $producto->precio }}">
+                                    </td>
+                                    <td class="column1 text-center">
+                                        <input type="text" disabled syle="background: transparent" class="text-center descuento" value="{{ $producto->descuento }}">
+                                    </td>
+                                    <td class="column1 text-center">
+                                        <input type="text" disabled syle="background: transparent" class="text-center iva" value="{{ $producto->iva }}">
+                                    </td>
                                     <td class="column1 text-center preciofinal">0</td>
                                     <td class="column1 comentario">
                                         {{ $producto->comentario }}</td>
@@ -127,9 +131,16 @@
         $(document).ready(function() {
             var preciofinal_total = 0;
 
-            const formatter = new Intl.NumberFormat('en-US', {
+            let money = "{{ $precio->moneda }}";
+            let type_money = "en-US";
+
+            if (money == 'COP') {
+                type_money = "es-CO";
+            }
+
+            const formatter = new Intl.NumberFormat(type_money, {
                 style: 'currency',
-                currency: 'USD',
+                currency: money,
                 minimumFractionDigits: 0
             });
 
@@ -137,62 +148,30 @@
                 var preciofinal_total = 0;
                 $('.preciofinal').each(function() {
                     var preciofinal = $(this).text();
-                    var cantidad = $(this).parent().find('.cantidad').text();
+                    var cantidad = $(this).parent().parent().find('.cantidad').val();
                     preciofinal = preciofinal.replace("$", "");
                     preciofinal = preciofinal.replace(",", "");
+                    preciofinal = preciofinal.replace(".", "");
                     preciofinal_total = preciofinal_total + (preciofinal * cantidad);
                 });
 
                 $("#preciofinal_total").text(formatter.format(preciofinal_total));
             }
 
-            $('.cantidad').on('input', function() {
-                calcularPrecioFinal();
-            });
-
-            $('.precio').on('input', function() {
-                var precio = $(this).text();
-                var descuento = $(this).parent().find('.descuento').text();
-                var cantidad = $(this).parent().find('.cantidad').text();
-                var iva = $(this).parent().find('.iva').text();
-                var preciofinal = precio - (precio * descuento / 100);
-                var preciofinal = preciofinal + (preciofinal * iva / 100);
-                $(this).parent().find('.preciofinal').text(formatter.format(preciofinal));
-                calcularPrecioFinal();
-            });
-
-            $('.descuento').on('input', function() {
-                var descuento = $(this).text();
-                var precio = $(this).parent().find('.precio').text();
-                var iva = $(this).parent().find('.iva').text();
-                var cantidad = $(this).parent().find('.cantidad').text();
-                var preciofinal = precio - (precio * descuento / 100);
-                var preciofinal = preciofinal + (preciofinal * iva / 100);
-                $(this).parent().find('.preciofinal').text(formatter.format(preciofinal));
-                calcularPrecioFinal();
-            });
-
-            $('.iva').on('input', function() {
-                var iva = $(this).text();
-                var precio = $(this).parent().find('.precio').text();
-                var descuento = $(this).parent().find('.descuento').text();
-                var cantidad = $(this).parent().find('.cantidad').text();
-                var preciofinal = precio - (precio * descuento / 100);
-                var preciofinal = preciofinal + (preciofinal * iva / 100);
-                $(this).parent().find('.preciofinal').text(formatter.format(preciofinal));
-                calcularPrecioFinal();
-            });
-
             $('.precio').each(function() {
-                var precio = $(this).text();
-                var descuento = $(this).parent().find('.descuento').text();
-                var iva = $(this).parent().find('.iva').text();
-                var cantidad = $(this).parent().find('.cantidad').text();
+                var precio = $(this).val();
+                precio = precio.replace("$", "");
+                precio = precio.replace(",", "");
+                var descuento = $(this).parent().parent().find('.descuento').val();
+                var iva = $(this).parent().parent().find('.iva').val();
+                var cantidad = $(this).parent().parent().find('.cantidad').val();
                 var preciofinal = precio - (precio * descuento / 100);
                 var preciofinal = preciofinal + (preciofinal * iva / 100);
-                $(this).parent().find('.preciofinal').text(formatter.format(preciofinal));
-                calcularPrecioFinal();
+                $(this).val(formatter.format(precio));
+                $(this).parent().parent().find('.preciofinal').text(formatter.format(preciofinal));
             });
+
+            calcularPrecioFinal();
         });
     </script>
 </body>
