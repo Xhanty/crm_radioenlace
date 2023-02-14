@@ -489,7 +489,11 @@
                                         </li>
                                     @endif
                                     @if (auth()->user()->hasPermissionTo('gestion_orden_compra'))
-                                        <li><a class="slide-item" href="{{ route('prospectos_bd') }}">Prospectos</a>
+                                        <li><a class="slide-item" href="{{ route('prospectos_bd') }}">Prospectos Personas</a>
+                                        </li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_orden_compra'))
+                                        <li><a class="slide-item" href="{{ route('prospectos_empresas_bd') }}">Prospectos Empresas</a>
                                         </li>
                                     @endif
                                 </ul>

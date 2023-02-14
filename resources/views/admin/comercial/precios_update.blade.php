@@ -42,7 +42,7 @@
             padding-right: 20px;
         }
     </style>
-    <div class="limiter ">
+    <div class="limiter d-none">
         <div class="container-table100">
             <div class="wrap-table100 text-center" style="width: 90%">
                 <h3 class="text-white">{{ $precio->razon_social }}</h3>
@@ -172,7 +172,7 @@
             });
 
             var preciofinal_total = 0;
-            /*@if (!auth()->user())
+            @if (!auth()->user())
                 let nit = $("#nit_val").val();
                 let value_nit = prompt("Ingrese el nit:");
                 if (nit != value_nit) {
@@ -192,7 +192,7 @@
 
             @if (auth()->user())
                 $(".d-none").removeClass("d-none");
-            @endif*/
+            @endif
 
             let money = "{{ $precio->moneda }}";
             let type_money = "en-US";
@@ -286,7 +286,6 @@
                 var condiciones_pago = $("#condiciones_pago").text();
                 var precio_dolar = $("#precio_dolar").text();
                 var total = $("#preciofinal_total").text();
-                var file = $("#file_cotizacion").val();
                 var productos = [];
                 var cantidad = 0;
                 var iva = 0;
@@ -340,7 +339,7 @@
                         let email = prompt("Ingrese su email para enviar una copia:");
 
                         if (email != null && email.trim().length > 1) {
-
+                            $("#btnSave").prop("disabled", true);
                             let formData = new FormData();
                             formData.append('fecha_entrega', fecha_entrega);
                             formData.append('condicion_entrega', condicion_entrega);
@@ -354,20 +353,21 @@
                             $.ajax({
                                 url: "{{ route('precios_edit') }}",
                                 type: "POST",
-                                cache: false,
+                                data: formData,
                                 contentType: false,
                                 processData: false,
-                                data: { formData },
                                 success: function(response) {
                                     if (response.info == 1) {
                                         alert("Precios actualizados correctamente");
                                         location.reload();
                                     } else {
                                         alert("Error al actualizar los precios");
+                                        $("#btnSave").prop("disabled", false);
                                     }
                                 },
                                 error: function(response) {
                                     alert("Error al actualizar los precios");
+                                    $("#btnSave").prop("disabled", false);
                                 }
                             });
                         } else {

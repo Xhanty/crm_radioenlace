@@ -9,7 +9,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0);">Comercial</a></li>
-                        <li class="breadcrumb-item active" aria-current="page"> Prospectos Personas</li>
+                        <li class="breadcrumb-item active" aria-current="page"> Prospectos Empresas</li>
                     </ol>
                 </nav>
             </div>
@@ -22,7 +22,7 @@
                 <div class="card">
                     <div class="card-header d-flex-header-table" style="border-radius: 4px">
                         <div class="div-1-tables-header">
-                            <h3 class="card-title mt-2">Prospectos Personas</h3>
+                            <h3 class="card-title mt-2">Prospectos Empresas</h3>
                         </div>
                         <div class="div-2-tables-header">
                             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAdd">
@@ -194,7 +194,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="d-flex justify-content-center">
-                            <img id="imagen_edit" src="{{ asset('images/prospectos_personas/noavatar.png') }}"
+                            <img id="imagen_edit" src="{{ asset('images/prospectos_empresas/noavatar.png') }}"
                                 style="width: 140px; height: 140px;" loading="lazy">
                         </div>
                         <br>
@@ -299,7 +299,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="d-flex justify-content-center">
-                            <img id="imagen_view" src="{{ asset('images/prospectos_personas/noavatar.png') }}"
+                            <img id="imagen_view" src="{{ asset('images/prospectos_empresas/noavatar.png') }}"
                                 style="width: 140px; height: 140px;" loading="lazy">
                         </div>
                         <br>
@@ -386,5 +386,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('assets/js/app/comercial/prospectos.js') }}"></script>
+    <script src="{{ asset('assets/js/app/comercial/prospectos_empresas.js') }}"></script>
 @endsection

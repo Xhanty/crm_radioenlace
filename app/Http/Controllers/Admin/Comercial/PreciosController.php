@@ -268,13 +268,16 @@ class PreciosController extends Controller
             $condiciones_pago = $request->condiciones_pago;
             $precio_dolar = $request->precio_dolar;
             $total = $request->total;
-            $productos = $request->productos;
+            $productos = json_decode($request->productos, true);
             $email = $request->email;
             $file = $request->file;
+            $name = null;
             $precio = DB::table("detalle_precios")->where('id', $productos[0]['id'])->first();
+            
 
-            if ($file != null) {
-                return $fecha_entrega;
+            if ($file) {
+                $name = time() . $file->getClientOriginalName();
+                $file->move(public_path() . '/images/precios_proveedores/', $name);
             }
 
             foreach ($productos as $producto) {
@@ -292,8 +295,9 @@ class PreciosController extends Controller
                 'fecha_entrega' => $fecha_entrega,
                 'condiciones_entrega' => $condicion_entrega,
                 'condiciones_pago' => $condiciones_pago,
-                'precio_dolar' => $precio_dolar,
+                'precio_dolar' => $precio_dolar == null ? 0 : $precio_dolar,
                 'total' => $total,
+                'file_cotizacion' => $name,
                 'status' => 1
             ]);
 

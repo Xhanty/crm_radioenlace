@@ -35,7 +35,7 @@ $(document).ready(function () {
 
         $("#global-loader").fadeIn("slow");
         $.ajax({
-            url: "prospectos_bd_view",
+            url: "prospectos_empresas_bd_view",
             type: "POST",
             data: {
                 id: id,
@@ -43,14 +43,14 @@ $(document).ready(function () {
             success: function (response) {
                 let data = response.prospectos;
                 if (response.info == 1) {
-
-                    if(data.logo == null || data.logo == "") {
+                    if (data.logo == null || data.logo == "") {
                         data.logo = "noavatar.png";
                     } else {
                         data.logo = data.logo;
                     }
 
-                    $("#imagen_view").attr("src", "images/prospectos_personas/" + data.logo);
+                    $("#imagen_view").attr("src", "images/prospectos_empresas/" + data.logo);
+
                     $("#tipocliente_view").val(data.tipo_cliente).trigger("change");
                     $("#empresa_view").val(data.empresa);
                     $("#nombres_view").val(data.nombres);
@@ -85,7 +85,7 @@ $(document).ready(function () {
 
         $("#global-loader").fadeIn("slow");
         $.ajax({
-            url: "prospectos_bd_view",
+            url: "prospectos_empresas_bd_view",
             type: "POST",
             data: {
                 id: id,
@@ -99,7 +99,7 @@ $(document).ready(function () {
                         data.logo = data.logo;
                     }
 
-                    $("#imagen_edit").attr("src", "images/prospectos_personas/" + data.logo);
+                    $("#imagen_edit").attr("src", "images/prospectos_empresas/" + data.logo);
 
                     $("#id_prospecto_edit").val(data.id);
                     $("#tipocliente_edit").val(data.tipo_cliente).trigger("change");
@@ -147,7 +147,7 @@ $(document).ready(function () {
             if (result.value) {
                 $("#global-loader").fadeIn("slow");
                 $.ajax({
-                    url: "prospectos_bd_delete",
+                    url: "prospectos_empresas_bd_delete",
                     type: "POST",
                     data: {
                         id: id,
@@ -274,7 +274,7 @@ $(document).ready(function () {
             formData.append("file", $("#logo_add")[0].files[0]);
 
             $.ajax({
-                url: "prospectos_bd_add",
+                url: "prospectos_empresas_bd_add",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -402,7 +402,7 @@ $(document).ready(function () {
             formData.append("file", $("#logo_edit")[0].files[0]);
 
             $.ajax({
-                url: "prospectos_bd_edit",
+                url: "prospectos_empresas_bd_edit",
                 type: "POST",
                 data: formData,
                 contentType: false,

@@ -268,12 +268,19 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/salidas_inventario', [App\Http\Controllers\Admin\Inventario\GestionController::class, 'salidas_inventario'])->name('salidas_inventario');
     Route::post('/eliminar_serial', [App\Http\Controllers\Admin\Inventario\GestionController::class, 'eliminar_serial'])->name('eliminar_serial');
 
-    // PROSPECTOS
+    // PROSPECTOS PERSONAS
     Route::get('/prospectos_bd', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'index'])->name('prospectos_bd');
     Route::post('/prospectos_bd_add', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'add'])->name('prospectos_bd_add');
     Route::post('/prospectos_bd_edit', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'edit'])->name('prospectos_bd_edit');
     Route::post('/prospectos_bd_view', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'data'])->name('prospectos_bd_view');
     Route::post('/prospectos_bd_delete', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'delete'])->name('prospectos_bd_delete');
+
+    // PROSPECTOS EMPRESAS
+    Route::get('/prospectos_empresas_bd', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'index'])->name('prospectos_empresas_bd');
+    Route::post('/prospectos_empresas_bd_add', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'add'])->name('prospectos_empresas_bd_add');
+    Route::post('/prospectos_empresas_bd_edit', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'edit'])->name('prospectos_empresas_bd_edit');
+    Route::post('/prospectos_empresas_bd_view', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'data'])->name('prospectos_empresas_bd_view');
+    Route::post('/prospectos_empresas_bd_delete', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'delete'])->name('prospectos_empresas_bd_delete');
 });
 
 Route::group(['middleware' => 'auth'], function () {

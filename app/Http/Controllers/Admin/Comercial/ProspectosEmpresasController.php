@@ -7,18 +7,18 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ProspectosController extends Controller
+class ProspectosEmpresasController extends Controller
 {
     public function index()
     {
         try {
-            /*if (!auth()->user()->hasPermissionTo('gestionar_prospectos')) {
+            /*if (!auth()->user()->hasPermissionTo('gestionar_prospectos_empresas')) {
                 return redirect()->route('home');
             }*/
 
-            $prospectos = DB::table("prospectos")->get();
+            $prospectos = DB::table("prospectos_empresas")->get();
 
-            return view('admin.comercial.prospectos', compact('prospectos'));
+            return view('admin.comercial.prospectos_empresas', compact('prospectos'));
         } catch (Exception $ex) {
             return view('errors.500');
             return $ex->getMessage();
@@ -28,7 +28,7 @@ class ProspectosController extends Controller
     public function data(Request $request)
     {
         try {
-            $prospectos = DB::table("prospectos")->where('id', $request->id)->first();
+            $prospectos = DB::table("prospectos_empresas")->where('id', $request->id)->first();
 
             return response()->json([
                 'info' => 1,
@@ -47,15 +47,17 @@ class ProspectosController extends Controller
     {
         try {
             DB::beginTransaction();
+
             $file = $request->file('file');
             $name = null;
 
             if ($file) {
                 $name = time() . $file->getClientOriginalName();
-                $file->move(public_path() . '/images/prospectos_personas/', $name);
+                $file->move(public_path() . '/images/prospectos_empresas/', $name);
             }
 
-            DB::table("prospectos")->insert([
+
+            DB::table("prospectos_empresas")->insert([
                 'tipo_cliente' => $request->tipo_cliente,
                 'empresa' => $request->empresa ? $request->empresa : null,
                 'nombres' => $request->nombres,
@@ -77,7 +79,7 @@ class ProspectosController extends Controller
 
             DB::commit();
 
-            $prospectos = DB::table("prospectos")->get();
+            $prospectos = DB::table("prospectos_empresas")->get();
 
             return response()->json([
                 'info' => 1,
@@ -102,9 +104,9 @@ class ProspectosController extends Controller
 
             if ($file) {
                 $name = time() . $file->getClientOriginalName();
-                $file->move(public_path() . '/images/prospectos_personas/', $name);
+                $file->move(public_path() . '/images/prospectos_empresas/', $name);
 
-                DB::table("prospectos")->where('id', $request->id)->update([
+                DB::table("prospectos_empresas")->where('id', $request->id)->update([
                     'tipo_cliente' => $request->tipo_cliente,
                     'empresa' => $request->empresa ? $request->empresa : null,
                     'nombres' => $request->nombres,
@@ -121,9 +123,8 @@ class ProspectosController extends Controller
                     'referido' => $request->referido ? $request->referido : null,
                     'logo' => $name,
                 ]);
-                
             } else {
-                DB::table("prospectos")->where('id', $request->id)->update([
+                DB::table("prospectos_empresas")->where('id', $request->id)->update([
                     'tipo_cliente' => $request->tipo_cliente,
                     'empresa' => $request->empresa ? $request->empresa : null,
                     'nombres' => $request->nombres,
@@ -143,7 +144,7 @@ class ProspectosController extends Controller
 
             DB::commit();
 
-            $prospectos = DB::table("prospectos")->get();
+            $prospectos = DB::table("prospectos_empresas")->get();
 
             return response()->json([
                 'info' => 1,
@@ -164,11 +165,11 @@ class ProspectosController extends Controller
         try {
             DB::beginTransaction();
 
-            DB::table("prospectos")->where('id', $request->id)->delete();
+            DB::table("prospectos_empresas")->where('id', $request->id)->delete();
 
             DB::commit();
 
-            $prospectos = DB::table("prospectos")->get();
+            $prospectos = DB::table("prospectos_empresas")->get();
 
             return response()->json([
                 'info' => 1,
