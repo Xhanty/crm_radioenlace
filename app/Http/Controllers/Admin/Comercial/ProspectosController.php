@@ -52,7 +52,7 @@ class ProspectosController extends Controller
 
             if ($file) {
                 $name = time() . $file->getClientOriginalName();
-                $file->move(public_path() . '/images/prospectos_personas/', $name);
+                $file->move('images/prospectos_personas/', $name);
             }
 
             DB::table("prospectos")->insert([
@@ -102,7 +102,7 @@ class ProspectosController extends Controller
 
             if ($file) {
                 $name = time() . $file->getClientOriginalName();
-                $file->move(public_path() . '/images/prospectos_personas/', $name);
+                $file->move('images/prospectos_personas/', $name);
 
                 DB::table("prospectos")->where('id', $request->id)->update([
                     'tipo_cliente' => $request->tipo_cliente,

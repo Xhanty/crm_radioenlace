@@ -53,7 +53,7 @@ class ProspectosEmpresasController extends Controller
 
             if ($file) {
                 $name = time() . $file->getClientOriginalName();
-                $file->move(public_path() . '/images/prospectos_empresas/', $name);
+                $file->move('images/prospectos_empresas/', $name);
             }
 
 
@@ -104,7 +104,7 @@ class ProspectosEmpresasController extends Controller
 
             if ($file) {
                 $name = time() . $file->getClientOriginalName();
-                $file->move(public_path() . '/images/prospectos_empresas/', $name);
+                $file->move('images/prospectos_empresas/', $name);
 
                 DB::table("prospectos_empresas")->where('id', $request->id)->update([
                     'tipo_cliente' => $request->tipo_cliente,

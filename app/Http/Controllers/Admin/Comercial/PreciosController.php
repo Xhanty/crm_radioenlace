@@ -277,7 +277,7 @@ class PreciosController extends Controller
 
             if ($file) {
                 $name = time() . $file->getClientOriginalName();
-                $file->move(public_path() . '/images/precios_proveedores/', $name);
+                $file->move('images/precios_proveedores/', $name);
             }
 
             foreach ($productos as $producto) {
