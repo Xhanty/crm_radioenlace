@@ -147,10 +147,16 @@ $(document).ready(function () {
 
                             if (data.length > 0) {
                                 data.forEach((element) => {
+                                    let chat_api = "";
+                                    element.created_at = moment(element.created_at).format("DD/MM/YYYY H:mm A");
                                     if (element.tipo_cliente == 0) {
                                         element.tipo_cliente = "Posible Cliente";
                                     } else {
                                         element.tipo_cliente = "Cliente Existente";
+                                    }
+
+                                    if (!element.celular || element.celular == "") {
+                                        chat_api = 'disabled';
                                     }
                                     let row = `<tr>
                                     <td>${element.tipo_cliente}</td>
@@ -158,7 +164,7 @@ $(document).ready(function () {
                                     <td>${element.apellidos ? element.apellidos : ""}</td>
                                     <td>${element.email ? element.email : ""}</td>
                                     <td>${element.celular ? element.celular : ""}</td>
-                                    <td>${element.created_at ? element.created_at : ""}</td>
+                                    <td>${element.created_at}</td>
                                     <td>
                                         <a title="Ver" href="javascript:void(0);" data-id="${element.id}" class="btn btn-primary btn-sm btnView">
                                             <i class="fa fa-eye"></i>
@@ -169,7 +175,7 @@ $(document).ready(function () {
                                         <a title="Eliminar" href="javascript:void(0);" data-id="${element.id}" class="btn btn-danger btn-sm btnDelete">
                                             <i class="fa fa-trash"></i>
                                         </a>
-                                        <a title="WhatsApp" href="javascript:void(0);" data-id="${element.id}" class="btn btn-success btn-sm btnWhatsapp">
+                                        <a title="WhatsApp" href="javascript:void(0);" data-id="${element.id}" data-celular="${element.celular}" class="btn btn-success btn-sm btnWhatsapp ${chat_api}">
                                             <i class="fab fa-whatsapp"></i>
                                         </a>
                                     </td>
@@ -203,6 +209,8 @@ $(document).ready(function () {
 
     $(document).on("click", ".btnWhatsapp", function () {
         let id = $(this).data("id");
+        let celular = $(this).data("celular");
+        window.open(`https://api.whatsapp.com/send?phone=57${celular}&text=Hola, Somos Radio Enlace`, '_blank');
     });
 
     $("#btnGuardar").click(function () {
@@ -261,10 +269,16 @@ $(document).ready(function () {
 
                         if (data.length > 0) {
                             data.forEach((element) => {
+                                let chat_api = "";
+                                element.created_at = moment(element.created_at).format("DD/MM/YYYY H:mm A");
                                 if (element.tipo_cliente == 0) {
                                     element.tipo_cliente = "Posible Cliente";
                                 } else {
                                     element.tipo_cliente = "Cliente Existente";
+                                }
+
+                                if (!element.celular || element.celular == "") {
+                                    chat_api = 'disabled';
                                 }
                                 let row = `<tr>
                                     <td>${element.tipo_cliente}</td>
@@ -272,7 +286,7 @@ $(document).ready(function () {
                                     <td>${element.apellidos ? element.apellidos : ""}</td>
                                     <td>${element.email ? element.email : ""}</td>
                                     <td>${element.celular ? element.celular : ""}</td>
-                                    <td>${element.created_at ? element.created_at : ""}</td>
+                                    <td>${element.created_at}</td>
                                     <td>
                                         <a title="Ver" href="javascript:void(0);" data-id="${element.id}" class="btn btn-primary btn-sm btnView">
                                             <i class="fa fa-eye"></i>
@@ -283,7 +297,7 @@ $(document).ready(function () {
                                         <a title="Eliminar" href="javascript:void(0);" data-id="${element.id}" class="btn btn-danger btn-sm btnDelete">
                                             <i class="fa fa-trash"></i>
                                         </a>
-                                        <a title="WhatsApp" href="javascript:void(0);" data-id="${element.id}" class="btn btn-success btn-sm btnWhatsapp">
+                                        <a title="WhatsApp" href="javascript:void(0);" data-id="${element.id}" data-celular="${element.celular}" class="btn btn-success btn-sm btnWhatsapp ${chat_api}">
                                             <i class="fab fa-whatsapp"></i>
                                         </a>
                                     </td>
@@ -379,10 +393,16 @@ $(document).ready(function () {
 
                         if (data.length > 0) {
                             data.forEach((element) => {
+                                let chat_api = "";
+                                element.created_at = moment(element.created_at).format("DD/MM/YYYY H:mm A");
                                 if (element.tipo_cliente == 0) {
                                     element.tipo_cliente = "Posible Cliente";
                                 } else {
                                     element.tipo_cliente = "Cliente Existente";
+                                }
+
+                                if (!element.celular || element.celular == "") {
+                                    chat_api = 'disabled';
                                 }
                                 let row = `<tr>
                                     <td>${element.tipo_cliente}</td>
@@ -390,7 +410,7 @@ $(document).ready(function () {
                                     <td>${element.apellidos ? element.apellidos : ""}</td>
                                     <td>${element.email ? element.email : ""}</td>
                                     <td>${element.celular ? element.celular : ""}</td>
-                                    <td>${element.created_at ? element.created_at : ""}</td>
+                                    <td>${element.created_at}</td>
                                     <td>
                                         <a title="Ver" href="javascript:void(0);" data-id="${element.id}" class="btn btn-primary btn-sm btnView">
                                             <i class="fa fa-eye"></i>
@@ -401,7 +421,7 @@ $(document).ready(function () {
                                         <a title="Eliminar" href="javascript:void(0);" data-id="${element.id}" class="btn btn-danger btn-sm btnDelete">
                                             <i class="fa fa-trash"></i>
                                         </a>
-                                        <a title="WhatsApp" href="javascript:void(0);" data-id="${element.id}" class="btn btn-success btn-sm btnWhatsapp">
+                                        <a title="WhatsApp" href="javascript:void(0);" data-id="${element.id}" data-celular="${element.celular}" class="btn btn-success btn-sm btnWhatsapp ${chat_api}">
                                             <i class="fab fa-whatsapp"></i>
                                         </a>
                                     </td>

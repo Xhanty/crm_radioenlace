@@ -69,7 +69,7 @@
                                                     <i class="fa fa-trash"></i>
                                                 </a>
                                                 <a title="WhatsApp" href="javascript:void(0);"
-                                                    data-id="{{ $prospecto->id }}" class="btn btn-success btn-sm btnWhatsapp">
+                                                    data-id="{{ $prospecto->id }}" data-celular="{{ $prospecto->celular }}" class="btn btn-success btn-sm btnWhatsapp @if($prospecto->celular == null) disabled @endif">
                                                     <i class="fab fa-whatsapp"></i>
                                                 </a>
                                             </td>
