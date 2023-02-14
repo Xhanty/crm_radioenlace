@@ -488,6 +488,10 @@
                                         <li><a class="slide-item" href="{{ route('precios_proveedores') }}">Precios Proveedores</a>
                                         </li>
                                     @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_orden_compra'))
+                                        <li><a class="slide-item" href="{{ route('prospectos_bd') }}">Prospectos</a>
+                                        </li>
+                                    @endif
                                 </ul>
                             </li>
                         @endif
