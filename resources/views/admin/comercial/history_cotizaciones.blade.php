@@ -16,10 +16,14 @@
             </div>
         </div>
         <!-- /breadcrumb -->
-
+        <input type="hidden" disabled readonly id="cotizacion_id" value="{{ $cotizacion->id }}">
         <div class="row">
             <div class="col-lg-12">
                 <div class="card custom-card">
+                    <div style="text-align: right">
+                        <i data-bs-toggle="modal" data-bs-target="#modalAdd" class="fa fa-plus-circle"
+                            style="font-size: 30px; color: #0d6efd; cursor: pointer; margin: 10px;"></i>
+                    </div>
                     <div class="card-body">
                         <div class="vtimeline">
                             @foreach ($cotizacion->observaciones as $key => $value)
@@ -27,16 +31,21 @@
                                     <div class="timeline-wrapper timeline-wrapper-primary">
                                         <div class="timeline-badge"></div>
                                         <div class="timeline-panel">
-                                            <div class="timeline-heading">
-                                                <h6 class="timeline-title">{{ $title }}</h6>
+                                            <div class="timeline-heading" style="text-align: right">
+                                                <a href="javascript:void(0);" class="btnEdit" data-id="{{ $value->id }}"
+                                                    data-mensaje="{{ $value->observacion }}">
+                                                    <i class="fa fa-pencil-alt text-muted me-1"></i>
+                                                </a>
+                                                <a href="javascript:void(0);" class="btnDelete"
+                                                    data-id="{{ $value->id }}" data-mensaje="{{ $value->observacion }}">
+                                                    <i class="fa fa-trash text-muted me-1"></i>
+                                                </a>
                                             </div>
                                             <div class="timeline-body">
                                                 <p>
-                                                    <strong>Mensaje:</strong> {{ $value->observacion }}
+                                                    <strong>Observación:</strong> {{ $value->observacion }}
                                                     <br>
                                                     <strong>Usuario:</strong> {{ $value->creador }}
-                                                    <br>
-                                                    <strong>Fecha:</strong> {{ $value->created_at }}
                                                 </p>
                                             </div>
                                             <div class="timeline-footer d-flex align-items-center flex-wrap">
@@ -49,16 +58,22 @@
                                     <div class="timeline-wrapper timeline-inverted timeline-wrapper-primary">
                                         <div class="timeline-badge"></div>
                                         <div class="timeline-panel">
-                                            <div class="timeline-heading">
-                                                <h6 class="timeline-title">{{ $title }}</h6>
+                                            <div class="timeline-heading" style="text-align: right">
+                                                <a href="javascript:void(0);" class="btnEdit" data-id="{{ $value->id }}"
+                                                    data-mensaje="{{ $value->observacion }}">
+                                                    <i class="fa fa-pencil-alt text-muted me-1"></i>
+                                                </a>
+                                                <a href="javascript:void(0);" class="btnDelete"
+                                                    data-id="{{ $value->id }}"
+                                                    data-mensaje="{{ $value->observacion }}">
+                                                    <i class="fa fa-trash text-muted me-1"></i>
+                                                </a>
                                             </div>
                                             <div class="timeline-body">
                                                 <p>
-                                                    <strong>Mensaje:</strong> {{ $value->observacion }}
+                                                    <strong>Observación:</strong> {{ $value->observacion }}
                                                     <br>
                                                     <strong>Usuario:</strong> {{ $value->creador }}
-                                                    <br>
-                                                    <strong>Fecha:</strong> {{ $value->created_at }}
                                                 </p>
                                             </div>
                                             <div class="timeline-footer d-flex align-items-center flex-wrap">
@@ -74,8 +89,57 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal Add -->
+        <div class="modal  fade" id="modalAdd">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Agregar Observación</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Observación</label>
+                                <textarea class="form-control" placeholder="Observaciones" rows="4" id="observacion_add"
+                                    style="height: 120px; resize: none"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" id="btnGuardar" type="button">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Edit -->
+        <div class="modal  fade" id="modalEdit">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Modificar Observación</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Observación</label>
+                                <textarea class="form-control" placeholder="Observaciones" rows="4" id="observacion_edit"
+                                    style="height: 120px; resize: none"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" id="btnGuardarEdit" type="button">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('assets/js/app/comercial/history_cotizaciones.js') }}"></script>
 @endsection

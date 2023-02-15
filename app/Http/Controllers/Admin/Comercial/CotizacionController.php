@@ -435,4 +435,55 @@ class CotizacionController extends Controller
             return $ex->getMessage();
         }
     }
+
+    public function history_add(Request $request)
+    {
+        try {
+            $cotizacion = $request->id;
+            $observacion = $request->observacion;
+
+            DB::table("history_cotizaciones")->insert([
+                'cotizacion_id' => $cotizacion,
+                'observacion' => $observacion,
+                'created_by' => auth()->user()->id,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+
+            return response()->json(['info' => 1, 'message' => 'Observación agregada correctamente']);
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+            return response()->json(['info' => 0, 'error' => 'Error al agregar la observación']);
+        }
+    }
+
+    public function history_delete(Request $request)
+    {
+        try {
+            $id = $request->id;
+
+            DB::table("history_cotizaciones")->where('id', $id)->delete();
+
+            return response()->json(['info' => 1, 'message' => 'Observación eliminada correctamente']);
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+            return response()->json(['info' => 0, 'error' => 'Error al eliminar la observación']);
+        }
+    }
+
+    public function history_edit(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $observacion = $request->observacion;
+
+            DB::table("history_cotizaciones")->where('id', $id)->update([
+                'observacion' => $observacion,
+            ]);
+
+            return response()->json(['info' => 1, 'message' => 'Observación actualizada correctamente']);
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+            return response()->json(['info' => 0, 'error' => 'Error al actualizar la observación']);
+        }
+    }
 }

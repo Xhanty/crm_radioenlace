@@ -227,6 +227,9 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/precios_proveedores_edit', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'edit'])->name('precios_proveedores_edit');
     
     Route::get('/history_cotizaciones', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'history'])->name('history_cotizaciones');
+    Route::post('/history_cotizaciones_add', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'history_add'])->name('history_cotizaciones_add');
+    Route::post('/history_cotizaciones_edit', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'history_edit'])->name('history_cotizaciones_edit');
+    Route::post('/history_cotizaciones_delete', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'history_delete'])->name('history_cotizaciones_delete');
 
     // CONTABILIDAD
     Route::get('/facturacion', [App\Http\Controllers\Admin\Contabilidad\FacturacionController::class, 'index'])->name('facturacion');
