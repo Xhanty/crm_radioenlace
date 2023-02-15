@@ -979,6 +979,27 @@ $(document).ready(function () {
         }
     });
 
+    $(document).on("change", ".date_revision", function () {
+        let id = $(this).data("id");
+        let value = $(this).val();
+
+        $.ajax({
+            type: "POST",
+            url: "cotizacion_fecha_revision",
+            data: { id: id, fecha_revision: value },
+            success: function (response) {
+                if (response.info == 1) {
+                    toastr.success("Cambio realizado correctamente");
+                } else {
+                    toastr.error("Error al realizar el cambio");
+                }
+            },
+            error: function (response) {
+                toastr.error("Error al realizar el cambio");
+            }
+        });
+    });
+
     $(document).on("change", ".aprobado_select", function () {
         let id = $(this).data("id");
         let val = $(this).val();
