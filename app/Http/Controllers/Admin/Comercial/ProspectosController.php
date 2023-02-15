@@ -16,7 +16,7 @@ class ProspectosController extends Controller
                 return redirect()->route('home');
             }*/
 
-            $prospectos = DB::table("prospectos")->get();
+            $prospectos = DB::table("prospectos")->limit(100)->orderBy('id', 'desc')->get();
 
             return view('admin.comercial.prospectos', compact('prospectos'));
         } catch (Exception $ex) {
@@ -77,7 +77,7 @@ class ProspectosController extends Controller
 
             DB::commit();
 
-            $prospectos = DB::table("prospectos")->get();
+            $prospectos = DB::table("prospectos")->limit(100)->orderBy('id', 'desc')->get();
 
             return response()->json([
                 'info' => 1,
@@ -143,7 +143,7 @@ class ProspectosController extends Controller
 
             DB::commit();
 
-            $prospectos = DB::table("prospectos")->get();
+            $prospectos = DB::table("prospectos")->limit(100)->orderBy('id', 'desc')->get();
 
             return response()->json([
                 'info' => 1,
@@ -175,7 +175,7 @@ class ProspectosController extends Controller
 
             DB::commit();
 
-            $prospectos = DB::table("prospectos")->get();
+            $prospectos = DB::table("prospectos")->limit(100)->orderBy('id', 'desc')->get();
 
             return response()->json([
                 'info' => 1,

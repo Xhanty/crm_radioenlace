@@ -52,7 +52,7 @@
                                             <td>{{ $cotizacion->descripcion }}</td>
                                             <td>{{ date('d-m-Y g:i A', strtotime($cotizacion->created_at)) }}</td>
                                             <td>{{ $cotizacion->productos }}</td>
-                                            <td>
+                                            <td class="text-center">
                                                 <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}"
                                                     title="Ver Detalles" class="btn btn-primary btn-sm btnView"><i
                                                         class="fa fa-eye"></i></a>
@@ -156,6 +156,9 @@
                                                     href="{{ route('cotizaciones_print') }}?token={{ $cotizacion->id }}"
                                                     title="Imprimir" class="btn btn-warning btn-sm btnPrint"><i
                                                         class="fa fa-print"></i></a>
+                                                <a target="_BLANK" href="{{ route('history_cotizaciones') }}?token={{ $cotizacion->id }}"
+                                                    title="Observaciones/Avances" class="btn btn-primary btn-sm btnHistory"><i
+                                                        class="fa fa-book"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

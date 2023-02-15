@@ -176,6 +176,7 @@ $(document).ready(function () {
                                     }
                                     let row = `<tr>
                                     <td>${element.tipo_cliente}</td>
+                                    <td>${element.empresa}</td>
                                     <td>${element.nombres}</td>
                                     <td>${element.apellidos ? element.apellidos : ""}</td>
                                     <td>${element.email ? element.email : ""}</td>
@@ -303,6 +304,7 @@ $(document).ready(function () {
                                 }
                                 let row = `<tr>
                                     <td>${element.tipo_cliente}</td>
+                                    <td>${element.empresa}</td>
                                     <td>${element.nombres}</td>
                                     <td>${element.apellidos ? element.apellidos : ""}</td>
                                     <td>${element.email ? element.email : ""}</td>
@@ -432,6 +434,7 @@ $(document).ready(function () {
                                 }
                                 let row = `<tr>
                                     <td>${element.tipo_cliente}</td>
+                                    <td>${element.empresa}</td>
                                     <td>${element.nombres}</td>
                                     <td>${element.apellidos ? element.apellidos : ""}</td>
                                     <td>${element.email ? element.email : ""}</td>

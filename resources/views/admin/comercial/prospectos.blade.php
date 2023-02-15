@@ -37,6 +37,7 @@
                                 <thead>
                                     <tr>
                                         <th>Tipo Cliente</th>
+                                        <th>Empresa</th>
                                         <th>Nombres</th>
                                         <th>Apellidos</th>
                                         <th>Email</th>
@@ -50,6 +51,7 @@
                                         <tr>
                                             <td>{{ $prospecto->tipo_cliente = $prospecto->tipo_cliente == 0 ? 'Posible Cliente' : 'Cliente Existente' }}
                                             </td>
+                                            <td>{{ $prospecto->empresa }}</td>
                                             <td>{{ $prospecto->nombres }}</td>
                                             <td>{{ $prospecto->apellidos }}</td>
                                             <td>{{ $prospecto->email }}</td>

@@ -398,4 +398,41 @@ class CotizacionController extends Controller
             return response()->json(['info' => 0, 'error' => 'Error al actualizar la fecha de revisión']);
         }
     }
+
+    public function history(Request $request)
+    {
+        try {
+            /*if (!auth()->user()->hasPermissionTo('gestionar_cotizaciones')) {
+                return redirect()->route('home');
+            }*/
+
+            $id = $request->get('token');
+
+            if (!$id || $id < 1) {
+                return view('errors.404');
+            }
+
+            $cotizacion = DB::table('cotizaciones')
+                ->select('cotizaciones.*', 'cliente.razon_social', 'cliente.nit', 'cliente.ciudad', 'cliente.codigo_verificacion')
+                ->join('cliente', 'cliente.id', 'cotizaciones.cliente_id')
+                ->where('cotizaciones.id', $id)
+                ->first();
+
+            if (!$cotizacion) {
+                return view('errors.404');
+            }
+
+            $cotizacion->observaciones = DB::table('history_cotizaciones')
+                ->select('history_cotizaciones.*', 'empleados.nombre AS creador')
+                ->join('empleados', 'empleados.id', 'history_cotizaciones.created_by')
+                ->where('history_cotizaciones.cotizacion_id', $id)
+                ->orderBy('history_cotizaciones.id', 'DESC')
+                ->get();
+
+            return view('admin.comercial.history_cotizaciones', compact('cotizacion'));
+        } catch (Exception $ex) {
+            return view('errors.500');
+            return $ex->getMessage();
+        }
+    }
 }
