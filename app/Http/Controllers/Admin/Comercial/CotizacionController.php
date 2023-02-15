@@ -37,6 +37,7 @@ class CotizacionController extends Controller
                     'cotizaciones.created_at',
                     'cotizaciones.descripcion',
                     'cotizaciones.status',
+                    'cotizaciones.fecha_revision',
                     'cliente.razon_social',
                     'empleados.nombre as creador',
                     DB::raw('COUNT(detalle_cotizaciones.id) as productos')
@@ -46,7 +47,7 @@ class CotizacionController extends Controller
                 ->join('empleados', 'cotizaciones.created_by', '=', 'empleados.id')
                 ->where('cotizaciones.status', 0)
                 ->orderBy('cotizaciones.id', 'desc')
-                ->groupBy('cotizaciones.id', 'cotizaciones.code', 'cotizaciones.created_at', 'cotizaciones.descripcion', 'cotizaciones.status', 'cliente.razon_social', 'empleados.nombre')
+                ->groupBy('cotizaciones.id', 'cotizaciones.code', 'cotizaciones.created_at', 'cotizaciones.descripcion', 'cotizaciones.status', 'cotizaciones.fecha_revision', 'cliente.razon_social', 'empleados.nombre')
                 ->get();
 
             $cotizaciones_aprobadas = DB::table('cotizaciones')
@@ -57,6 +58,7 @@ class CotizacionController extends Controller
                     'cotizaciones.descripcion',
                     'cotizaciones.status',
                     'cotizaciones.aprobado',
+                    'cotizaciones.fecha_revision',
                     'cliente.razon_social',
                     'empleados.nombre as creador',
                     DB::raw('COUNT(detalle_cotizaciones.id) as productos')
@@ -66,7 +68,7 @@ class CotizacionController extends Controller
                 ->join('empleados', 'cotizaciones.created_by', '=', 'empleados.id')
                 ->where('cotizaciones.status', 1)
                 ->orderBy('cotizaciones.id', 'desc')
-                ->groupBy('cotizaciones.id', 'cotizaciones.code', 'cotizaciones.created_at', 'cotizaciones.descripcion', 'cotizaciones.status', 'cotizaciones.aprobado', 'cliente.razon_social', 'empleados.nombre')
+                ->groupBy('cotizaciones.id', 'cotizaciones.code', 'cotizaciones.created_at', 'cotizaciones.descripcion', 'cotizaciones.status', 'cotizaciones.fecha_revision', 'cotizaciones.aprobado', 'cliente.razon_social', 'empleados.nombre')
                 ->get();
 
             return view('admin.comercial.cotizaciones', compact('clientes', 'productos', 'cotizaciones_pendientes', 'cotizaciones_aprobadas'));
@@ -377,6 +379,23 @@ class CotizacionController extends Controller
         } catch (Exception $ex) {
             return $ex->getMessage();
             return response()->json(['info' => 0, 'error' => 'Error al aprobar la cotización']);
+        }
+    }
+
+    public function update_revision(Request $request)
+    {
+        try {
+            $cotizacion = $request->id;
+            $fecha_revision = $request->fecha_revision;
+
+            DB::table("cotizaciones")->where('id', $cotizacion)->update([
+                'fecha_revision' => $fecha_revision,
+            ]);
+
+            return response()->json(['info' => 1, 'message' => 'Fecha de revisión actualizada correctamente']);
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+            return response()->json(['info' => 0, 'error' => 'Error al actualizar la fecha de revisión']);
         }
     }
 }

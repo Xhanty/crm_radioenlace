@@ -217,6 +217,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/cotizacion_delete', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'delete'])->name('cotizacion_delete');
     Route::post('/cotizacion_email', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'send'])->name('cotizacion_email');
     Route::post('/cotizacion_aprobado', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'aprobacion'])->name('cotizacion_aprobado');
+    Route::post('/cotizacion_fecha_revision', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'update_revision'])->name('cotizacion_fecha_revision');
     Route::get('/remisiones', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'index'])->name('remisiones');
     Route::get('/precios_proveedores', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'index'])->name('precios_proveedores');
     Route::post('/precios_proveedores_add', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'add'])->name('precios_proveedores_add');

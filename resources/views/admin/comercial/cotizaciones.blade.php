@@ -138,7 +138,8 @@
                                                         {{ $cotizacion->aprobado == 2 ? 'selected' : '' }}>No</option>
                                                 </select>
                                             </td>
-                                            <td>
+                                            <td class="text-center">
+                                                <input type="text" placeholder="Fecha Revisión" onfocus="(this.type='date')" class="form-control mb-2" value="{{ $cotizacion->fecha_revision }}">
                                                 <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}"
                                                     title="Ver Detalles" class="btn btn-primary btn-sm btnView"><i
                                                         class="fa fa-eye"></i></a>
