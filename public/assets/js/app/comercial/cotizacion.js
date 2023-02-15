@@ -24,12 +24,20 @@ $(document).ready(function () {
             );
         }) +
         "</select>" +
+        '<div class="d-flex">' +
         '<input title="Cantidad" class="form-control mt-3 cantidad_add" type="number" min="1" step="1"' +
         'placeholder="Cantidad">' +
-        '<input title="Precio" class="form-control mt-3 precio_add" type="text"' +
+        '<input title="Precio" style="margin-left: 20px;" class="form-control mt-3 precio_add" type="text"' +
         'placeholder="Precio">' +
+        "</div>" +
+        '<div class="d-flex">' +
+        '<input title="Iva" class="form-control mt-3 iva_add" type="text" placeholder="Iva (%)"' +
+        'placeholder="Cantidad">' +
+        '<input title="Retención" style="margin-left: 20px;" class="form-control mt-3 retencion_add" type="text"' +
+        'placeholder="Retención (%)">' +
+        "</div>" +
         '<input type="checkbox" class="mt-3 tipo_pago_add" data-value="0"> Pago Único' +
-        '<input type="checkbox" style="margin-left: 50px;" class="mt-3 tipo_pago_add" data-value="1"> Pago Mensual' +
+        '<input type="checkbox" style="margin-left: 92px;" class="mt-3 tipo_pago_add" data-value="1"> Pago Mensual' +
         "</div>" +
         '<div class="col-6">' +
         '<div class="d-flex">' +
@@ -51,7 +59,7 @@ $(document).ready(function () {
         "</select>" +
         "</div>" +
         '<textarea title="Descripción" class="form-control mt-3 descripcion_add" placeholder="Descripción" rows="3"' +
-        'style="height: 70px; resize: none"></textarea>' +
+        'style="height: 80px; resize: none"></textarea>' +
         "</div>" +
         '<div class="d-flex">' +
         '<a class="center-vertical mg-s-10 delete_row_producto" href="javascript:void(0)">' +
@@ -78,12 +86,20 @@ $(document).ready(function () {
             );
         }) +
         "</select>" +
+        '<div class="d-flex">' +
         '<input title="Cantidad" class="form-control mt-3 cantidad_edit" type="number" min="1" step="1"' +
         'placeholder="Cantidad">' +
-        '<input title="Precio" class="form-control mt-3 precio_edit" type="text"' +
+        '<input title="Precio" style="margin-left: 20px;" class="form-control mt-3 precio_edit" type="text"' +
         'placeholder="Precio">' +
+        "</div>" +
+        '<div class="d-flex">' +
+        '<input title="Iva" class="form-control mt-3 iva_edit" type="text" placeholder="Iva (%)"' +
+        'placeholder="Cantidad">' +
+        '<input title="Retención" style="margin-left: 20px;" class="form-control mt-3 retencion_edit" type="text"' +
+        'placeholder="Retención (%)">' +
+        "</div>" +
         '<input type="checkbox" class="mt-3 tipo_pago_edit" data-value="0"> Pago Único' +
-        '<input type="checkbox" style="margin-left: 50px;" class="mt-3 tipo_pago_edit" data-value="1"> Pago Mensual' +
+        '<input type="checkbox" style="margin-left: 92px;" class="mt-3 tipo_pago_edit" data-value="1"> Pago Mensual' +
         "</div>" +
         '<div class="col-6">' +
         '<div class="d-flex">' +
@@ -105,7 +121,7 @@ $(document).ready(function () {
         "</select>" +
         "</div>" +
         '<textarea title="Descripción" class="form-control mt-3 descripcion_edit" placeholder="Descripción" rows="3"' +
-        'style="height: 70px; resize: none"></textarea>' +
+        'style="height: 80px; resize: none"></textarea>' +
         "</div>" +
         '<div class="d-flex">' +
         '<a class="center-vertical mg-s-10 delete_edit_row_producto" href="javascript:void(0)">' +
@@ -276,6 +292,8 @@ $(document).ready(function () {
         let cantidad = [];
         let tipo = [];
         let precio = [];
+        let ivas = [];
+        let retenciones = [];
         let tipo_pago = [];
         let descripciones = [];
 
@@ -335,6 +353,16 @@ $(document).ready(function () {
             precio.push($(this).val());
         });
 
+        $(".iva_add").each(function () {
+            let value = $(this).val();
+            ivas.push(value);
+        });
+
+        $(".retencion_add").each(function () {
+            let value = $(this).val();
+            retenciones.push(value);
+        });
+
         $(".tipo_pago_add:checked").each(function () {
             let value = $(this).data("value");
             tipo_pago.push(value);
@@ -374,6 +402,8 @@ $(document).ready(function () {
                     cantidades: cantidad,
                     tipos: tipo,
                     precios: precio,
+                    ivas: ivas,
+                    retenciones: retenciones,
                     descripciones: descripciones,
                     tipo_pago: tipo_pago,
                     garantia: garantia,
@@ -423,6 +453,8 @@ $(document).ready(function () {
         let cantidad = [];
         let tipo = [];
         let precio = [];
+        let ivas = [];
+        let retenciones = [];
         let tipo_pago = [];
         let descripciones = [];
 
@@ -482,6 +514,16 @@ $(document).ready(function () {
             precio.push($(this).val());
         });
 
+        $(".iva_edit").each(function () {
+            let value = $(this).val();
+            ivas.push(value);
+        });
+
+        $(".retencion_edit").each(function () {
+            let value = $(this).val();
+            retenciones.push(value);
+        });
+
         $(".tipo_pago_edit:checked").each(function () {
             let value = $(this).data("value");
             tipo_pago.push(value);
@@ -522,6 +564,8 @@ $(document).ready(function () {
                     cantidades: cantidad,
                     tipos: tipo,
                     precios: precio,
+                    ivas: ivas,
+                    retenciones: retenciones,
                     descripciones: descripciones,
                     tipo_pago: tipo_pago,
                     garantia: garantia,
@@ -606,11 +650,19 @@ $(document).ready(function () {
                                             <select title="Producto" class="form-select" disabled>
                                                 <option value="1">${productos[i].producto}</option>
                                             </select>
-                                            <input title="Cantidad" class="form-control mt-3" value="${productos[i].cantidad}" disabled type="number" min="1"
-                                                step="1" placeholder="Cantidad">
-                                            <input title="Precio" class="form-control mt-3" value="${productos[i].precio}" disabled type="text" placeholder="Precio">
+                                            <div class="d-flex">
+                                                <input title="Cantidad" class="form-control mt-3" value="${productos[i].cantidad}" disabled type="number" min="1"
+                                                    step="1" placeholder="Cantidad">
+                                                <input title="Precio" style="margin-left:20px" class="form-control mt-3" value="${productos[i].precio}" disabled type="text" placeholder="Precio">
+                                            </div>
+                                            <div class="d-flex">
+                                                <input title="Iva" value="${productos[i].iva}" class="form-control mt-3" disabled type="text" placeholder="Iva (%)"
+                                                placeholder="Cantidad">
+                                                <input title="Retención" value="${productos[i].retencion}" style="margin-left: 20px;" disabled class="form-control mt-3" type="text"
+                                                placeholder="Retención (%)">
+                                            </div>
                                             <input type="checkbox" disabled class="mt-3" ${check1} data-value="0"> Pago Único
-                                            <input type="checkbox" disabled style="margin-left: 50px;" ${check2} class="mt-3" data-value="1"> Pago Mensual
+                                            <input type="checkbox" disabled style="margin-left: 92px;" ${check2} class="mt-3" data-value="1"> Pago Mensual
                                         </div>
                                         <div class="col-6">
                                             <div class="d-flex">
@@ -623,7 +675,7 @@ $(document).ready(function () {
                                                             <option value="1">${tipo}</option>
                                                         </select>
                                                     </div>
-                                                    <textarea title="Descripción" disabled class="form-control mt-3" placeholder="Descripción" rows="3" style="height: 60px; resize: none">${productos[i].descripcion ? productos[i].descripcion : ''}</textarea>
+                                                    <textarea title="Descripción" disabled class="form-control mt-3" placeholder="Descripción" rows="3" style="height: 80px; resize: none">${productos[i].descripcion ? productos[i].descripcion : ''}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -720,11 +772,19 @@ $(document).ready(function () {
                                     );
                                 }) +
                                 `</select>
+                                <div class="d-flex">
                                             <input title="Cantidad" class="form-control mt-3 cantidad_edit" value="${productos_data[i].cantidad}" type="number" min="1"
                                                 step="1" placeholder="Cantidad">
-                                            <input title="Precio" class="form-control mt-3 precio_edit" value="${productos_data[i].precio}" type="text" placeholder="Precio">
+                                            <input title="Precio" style="margin-left: 20px;" class="form-control mt-3 precio_edit" value="${productos_data[i].precio}" type="text" placeholder="Precio">
+                                        </div>
+                                            <div class="d-flex">
+                                                <input title="Iva" value="${productos_data[i].iva}" class="form-control mt-3 iva_edit" type="text" placeholder="Iva (%)"
+                                                placeholder="Cantidad">
+                                                <input title="Retención" value="${productos_data[i].retencion}" style="margin-left: 20px;" class="form-control mt-3 retencion_edit" type="text"
+                                                placeholder="Retención (%)">
+                                            </div>
                                             <input type="checkbox" class="mt-3 tipo_pago_edit" ${check1} data-value="0"> Pago Único
-                                            <input type="checkbox" style="margin-left: 50px;" ${check2} class="mt-3 tipo_pago_edit" data-value="1"> Pago Mensual
+                                            <input type="checkbox" style="margin-left: 92px;" ${check2} class="mt-3 tipo_pago_edit" data-value="1"> Pago Mensual
                                         </div>
                                         <div class="col-6">
                                             <div class="d-flex">
@@ -743,7 +803,7 @@ $(document).ready(function () {
                                                             <option value="4">Visita Tecnica</option>
                                                         </select>
                                                     </div>
-                                                    <textarea title="Descripción" class="form-control mt-3 descripcion_edit" placeholder="Descripción" rows="3" style="height: 70px; resize: none">${productos_data[i].descripcion ? productos_data[i].descripcion : ''}</textarea>
+                                                    <textarea title="Descripción" class="form-control mt-3 descripcion_edit" placeholder="Descripción" rows="3" style="height: 80px; resize: none">${productos_data[i].descripcion ? productos_data[i].descripcion : ''}</textarea>
                                                 </div>
                                                 ${button}
                                             </div>

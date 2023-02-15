@@ -250,15 +250,15 @@
                                     <div class="row row-sm mt-3">
                                         <div class="col-lg">
                                             <label for="">Garantía (Opcional)</label>
-                                            <textarea class="form-control" placeholder="Garantía de la cotización (Opcional)" rows="2"
-                                                id="garantia_add" style="height: 60px; resize: none"></textarea>
+                                            <textarea class="form-control" placeholder="Garantía de la cotización (Opcional)" rows="2" id="garantia_add"
+                                                style="height: 60px; resize: none"></textarea>
                                         </div>
                                     </div>
                                     <div class="row row-sm mt-3">
                                         <div class="col-lg">
                                             <label for="">Envío (Opcional)</label>
-                                            <textarea class="form-control" placeholder="Envío (Opcional)" rows="2"
-                                                id="envio_add" style="height: 60px; resize: none"></textarea>
+                                            <textarea class="form-control" placeholder="Envío (Opcional)" rows="2" id="envio_add"
+                                                style="height: 60px; resize: none"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -276,13 +276,25 @@
                                                                 {{ $producto->modelo }})</option>
                                                         @endforeach
                                                     </select>
-                                                    <input title="Cantidad" class="form-control mt-3 cantidad_add"
-                                                        type="number" min="1" step="1"
-                                                        placeholder="Cantidad">
-                                                    <input title="Precio" class="form-control mt-3 precio_add"
-                                                        type="text" placeholder="Precio">
-                                                    <input type="checkbox" class="mt-3 tipo_pago_add" data-value="0"> Pago Único
-                                                    <input type="checkbox" style="margin-left: 50px;" class="mt-3 tipo_pago_add" data-value="1"> Pago Mensual
+                                                    <div class="d-flex">
+                                                        <input title="Cantidad" class="form-control mt-3 cantidad_add"
+                                                            type="number" min="1" step="1"
+                                                            placeholder="Cantidad">
+                                                        <input title="Precio" class="form-control mt-3 precio_add"
+                                                            style="margin-left: 20px;" type="text"
+                                                            placeholder="Precio">
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <input title="Iva" type="text" placeholder="Iva (%)"
+                                                            class="mt-3 form-control iva_add">
+                                                        <input title="Retención" type="text"
+                                                            placeholder="Retención (%)" style="margin-left: 20px;"
+                                                            class="mt-3 form-control retencion_add">
+                                                    </div>
+                                                    <input type="checkbox" class="mt-3 tipo_pago_add" data-value="0">
+                                                    Pago Único
+                                                    <input type="checkbox" style="margin-left: 92px;"
+                                                        class="mt-3 tipo_pago_add" data-value="1"> Pago Mensual
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="d-flex">
@@ -305,7 +317,7 @@
                                                                 </select>
                                                             </div>
                                                             <textarea title="Descripción" class="form-control mt-3 descripcion_add" placeholder="Descripción" rows="3"
-                                                                style="height: 70px; resize: none"></textarea>
+                                                                style="height: 80px; resize: none"></textarea>
                                                         </div>
                                                         <div class="d-flex">
                                                             <a class="center-vertical mg-s-10" href="javascript:void(0)"
@@ -433,8 +445,8 @@
                                     <div class="row row-sm mt-3">
                                         <div class="col-lg">
                                             <label for="">Envío (Opcional)</label>
-                                            <textarea class="form-control" disabled placeholder="Envío (Opcional)" rows="2"
-                                                id="envio_view" style="height: 60px; resize: none"></textarea>
+                                            <textarea class="form-control" disabled placeholder="Envío (Opcional)" rows="2" id="envio_view"
+                                                style="height: 60px; resize: none"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -550,15 +562,15 @@
                                     <div class="row row-sm mt-3">
                                         <div class="col-lg">
                                             <label for="">Garantía (Opcional)</label>
-                                            <textarea class="form-control" placeholder="Garantía de la cotización (Opcional)" rows="2"
-                                                id="garantia_edit" style="height: 60px; resize: none"></textarea>
+                                            <textarea class="form-control" placeholder="Garantía de la cotización (Opcional)" rows="2" id="garantia_edit"
+                                                style="height: 60px; resize: none"></textarea>
                                         </div>
                                     </div>
                                     <div class="row row-sm mt-3">
                                         <div class="col-lg">
                                             <label for="">Envío (Opcional)</label>
-                                            <textarea class="form-control" placeholder="Envío (Opcional)" rows="2"
-                                                id="envio_edit" style="height: 60px; resize: none"></textarea>
+                                            <textarea class="form-control" placeholder="Envío (Opcional)" rows="2" id="envio_edit"
+                                                style="height: 60px; resize: none"></textarea>
                                         </div>
                                     </div>
                                 </div>

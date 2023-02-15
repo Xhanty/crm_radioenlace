@@ -119,7 +119,7 @@
     <div class="invoice-box">
         <table>
             <tr class="top">
-                <td colspan="5">
+                <td colspan="6">
                     <table>
                         <tr>
                             <td class="title">
@@ -138,7 +138,7 @@
             </tr>
 
             <tr class="information">
-                <td colspan="5">
+                <td colspan="6">
                     <table>
                         <tr>
                             <td>
@@ -158,14 +158,14 @@
 
             @if ($cotizacion->descripcion)
                 <tr class="heading">
-                    <td colspan="5">
+                    <td colspan="6">
                         Descripción
                     </td>
                 </tr>
 
 
                 <tr class="details">
-                    <td colspan="5" style="font-size: 15px; text-align: justify;">
+                    <td colspan="6" style="font-size: 15px; text-align: justify;">
                         {{ $cotizacion->descripcion }}
                     </td>
                 </tr>
@@ -173,14 +173,14 @@
 
             @if ($cotizacion->incluye)
                 <tr class="heading">
-                    <td colspan="5">
+                    <td colspan="6">
                         Incluye
                     </td>
                 </tr>
 
 
                 <tr class="details">
-                    <td colspan="5" style="font-size: 15px; text-align: justify;">
+                    <td colspan="6" style="font-size: 15px; text-align: justify;">
                         {{ $cotizacion->incluye }}
                     </td>
                 </tr>
@@ -188,9 +188,10 @@
 
             <tr class="heading">
                 <td style="width: 100px; text-align: center;"></td>
-                <td style="width: 280px; text-align: center;">Producto</td>
+                <td style="width: 222px; text-align: center;">Producto</td>
                 <td style="text-align: center;">Cantidad</td>
                 <td class="text-align-right">Precio U.</td>
+                <td class="text-align-right">Iva(%)</td>
                 <td class="text-align-right">Subtotal</td>
             </tr>
 
@@ -199,6 +200,10 @@
                 $subtotal_mensual = 0;
                 $incluye_mensual = 0;
                 $incluye_anual = 0;
+                $iva = 0;
+                $iva_mensual = 0;
+                $retencion = 0;
+                $retencion_mensual = 0;
             @endphp
 
             @for ($i = 0; $i < count($productos); $i++)
@@ -230,11 +235,12 @@
                         <td style="text-align: center; padding-top: 3%">{{ $productos[$i]->cantidad }}</td>
                         <td class="text-align-right" style="padding-top: 3%">
                             {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
+                        <td class="text-align-right" style="padding-top: 3%">{{ $productos[$i]->iva }}%</td>
                         <td class="text-align-right" style="padding-top: 3%">{{ number_format($total, 0, ',', '.') }}
                         </td>
                     </tr>
                     <tr class="item">
-                        <td colspan="5">
+                        <td colspan="6">
                             <p style="font-size: 14px; margin-top: 0px; text-align: justify">
                                 {{ $productos[$i]->descripcion }}
                             </p>
@@ -253,42 +259,48 @@
                         <td style="text-align: center; padding-top: 3%;">{{ $productos[$i]->cantidad }}</td>
                         <td class="text-align-right" style="padding-top: 3%">
                             {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
+                        <td class="text-align-right" style="padding-top: 3%">{{ $productos[$i]->iva }}%</td>
                         <td class="text-align-right" style="padding-top: 3%">{{ number_format($total, 0, ',', '.') }}
                         </td>
                     </tr>
                     <tr class="item">
-                        <td colspan="5">
+                        <td colspan="6">
                             <p style="font-size: 14px; margin-top: 0px; text-align: justify">
                                 {{ $productos[$i]->descripcion }}
                             </p>
                         </td>
                     </tr>
                 @endif
-            @endfor
 
-            @php
-                $iva = $subtotal * 0.19;
-                $iva_mensual = $subtotal_mensual * 0.19;
-            @endphp
+                @php
+                    $iva += $total * ($productos[$i]->iva / 100);
+                    $iva_mensual += $total * ($productos[$i]->iva / 100);
+
+                    $retencion += $total * ($productos[$i]->retencion / 100);
+                    $retencion_mensual += $total * ($productos[$i]->retencion / 100);
+                @endphp
+            @endfor
 
             <tr class="total">
                 @if ($incluye_mensual > 0)
-                    <td @if ($incluye_anual == 0) colspan="5" @else colspan="2" @endif class="text-align-left">
+                    <td @if ($incluye_anual == 0) colspan="6" @else colspan="2" @endif class="text-align-left">
                         <b>Pago Mensual</b><br />
                         Subtotal: {{ number_format($subtotal_mensual, 0, ',', '.') }}<br />
-                        IVA: {{ number_format($iva_mensual, 0, ',', '.') }}<br />
-                        <b>Total: {{ number_format($subtotal_mensual + $iva_mensual, 0, ',', '.') }}</b>
+                        Iva: {{ number_format($iva_mensual, 0, ',', '.') }}<br />
+                        Retención: {{ number_format($retencion_mensual, 0, ',', '.') }}<br />
+                        <b>Total: {{ number_format($subtotal_mensual + $iva_mensual - $retencion_mensual, 0, ',', '.') }}</b>
                     </td>
                 @endif
 
                 @if ($incluye_anual > 0)
-                    <td @if ($incluye_mensual > 0) colspan="3" @else colspan="5" @endif class="text-align-right">
+                    <td @if ($incluye_mensual > 0) colspan="4" @else colspan="6" @endif class="text-align-right">
                         @if ($incluye_mensual > 0)
                             <b>Pago Único</b><br />
                         @endif
                         Subtotal: {{ number_format($subtotal, 0, ',', '.') }}<br />
-                        IVA: {{ number_format($iva, 0, ',', '.') }}<br />
-                        <b>Total: {{ number_format($subtotal + $iva, 0, ',', '.') }}</b>
+                        Iva: {{ number_format($iva, 0, ',', '.') }}<br />
+                        Retención: {{ number_format($retencion, 0, ',', '.') }}<br />
+                        <b>Total: {{ number_format($subtotal + $iva - $retencion, 0, ',', '.') }}</b>
                     </td>
                 @endif
             </tr>
@@ -301,7 +313,7 @@
                         Duración
                     </td>
 
-                    <td colspan="3">
+                    <td colspan="4">
                         Tiempo de entrega
                     </td>
                 </tr>
@@ -311,7 +323,7 @@
                         {{ $cotizacion->duracion }}
                     </td>
 
-                    <td colspan="3" style="font-size: 15px;">
+                    <td colspan="4" style="font-size: 15px;">
                         {{ $cotizacion->tiempo_entrega }}
                     </td>
                 </tr>
@@ -323,7 +335,7 @@
                         Validez de la oferta
                     </td>
 
-                    <td colspan="2">
+                    <td colspan="3">
                         Forma de pago
                     </td>
                 </tr>
@@ -333,7 +345,7 @@
                         {{ $cotizacion->validez }}
                     </td>
 
-                    <td colspan="2" style="font-size: 15px">
+                    <td colspan="3" style="font-size: 15px">
                         {{ $cotizacion->forma_pago }}
                     </td>
                 </tr>
@@ -344,7 +356,7 @@
                     Moneda
                 </td>
 
-                <td colspan="3">
+                <td colspan="4">
                     Garantía
                 </td>
             </tr>
@@ -354,14 +366,14 @@
                     Peso colombiano. (COP)
                 </td>
 
-                <td colspan="3" style="font-size: 15px">
+                <td colspan="4" style="font-size: 15px">
                     {{ $cotizacion->garantia }}
                 </td>
             </tr>
 
             @if ($cotizacion->envio)
                 <tr class="heading">
-                    <td colspan="5">
+                    <td colspan="6">
                         Envío
                     </td>
                 </tr>

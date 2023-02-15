@@ -175,7 +175,7 @@
                 <td style="width: 220px; text-align: center;">Producto</td>
                 <td style="text-align: center;">Cant.</td>
                 <td style="text-align: center;">Precio Unit.</td>
-                <td style="text-align: center;">IVA(%)</td>
+                <td style="text-align: center;">Iva(%)</td>
                 <td style="text-align: center;">Retención(%)</td>
                 <td class="text-align-right">Precio Total</td>
             </tr>
@@ -256,7 +256,7 @@
                 <tr class="total">
                     <td colspan="7" class="text-align-right">
                         Subtotal: {{ number_format($subtotal, 0, ',', '.') }}<br />
-                        IVA: {{ number_format($iva, 0, ',', '.') }}<br />
+                        Iva: {{ number_format($iva, 0, ',', '.') }}<br />
                         Retención: {{ number_format($retencion, 0, ',', '.') }}<br />
                         <b>Total: {{ number_format($total_todo, 0, ',', '.') }}</b>
                     </td>

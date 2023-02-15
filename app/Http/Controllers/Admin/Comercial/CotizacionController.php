@@ -121,6 +121,8 @@ class CotizacionController extends Controller
             $cantidades = $request->cantidades;
             $tipos = $request->tipos;
             $precios = $request->precios;
+            $ivas = $request->ivas;
+            $retenciones = $request->retenciones;
             $tipo_pago = $request->tipo_pago;
             $descripciones = $request->descripciones;
 
@@ -152,6 +154,8 @@ class CotizacionController extends Controller
                             'cantidad' => $cantidades[$key],
                             'tipo_transaccion' => $tipos[$key],
                             'precio' => $precios[$key],
+                            'iva' => $ivas[$key] ? $ivas[$key] : 0,
+                            'retencion' => $retenciones[$key] ? $retenciones[$key] : 0,
                             'tipo_pago' => $tipo_pago[$key],
                             'descripcion' => $descripciones[$key] ? $descripciones[$key] : null,
                             'created_by' => auth()->user()->id,
@@ -193,6 +197,8 @@ class CotizacionController extends Controller
             $cantidades = $request->cantidades;
             $tipos = $request->tipos;
             $precios = $request->precios;
+            $ivas = $request->ivas;
+            $retenciones = $request->retenciones;
             $tipo_pago = $request->tipo_pago;
             $descripciones = $request->descripciones;
 
@@ -220,6 +226,8 @@ class CotizacionController extends Controller
                         'cantidad' => $cantidades[$key],
                         'tipo_transaccion' => $tipos[$key],
                         'precio' => $precios[$key],
+                        'iva' => $ivas[$key] ? $ivas[$key] : 0,
+                        'retencion' => $retenciones[$key] ? $retenciones[$key] : 0,
                         'tipo_pago' => $tipo_pago[$key],
                         'descripcion' => $descripciones[$key] ? $descripciones[$key] : null,
                         'created_by' => auth()->user()->id,
