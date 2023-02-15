@@ -214,7 +214,9 @@
                     var cantidad = $(this).parent().parent().find('.cantidad').val();
                     preciofinal = preciofinal.replace("$", "");
                     preciofinal = preciofinal.replace(",", "");
-                    preciofinal = preciofinal.replace(".", "");
+                    if(money == 'COP') {
+                        preciofinal = preciofinal.replace(".", "");
+                    }
                     preciofinal_total = preciofinal_total + (preciofinal * cantidad);
                 });
 
@@ -229,6 +231,9 @@
                 var precio = $(this).val();
                 precio = precio.replace("$", "");
                 precio = precio.replace(",", "");
+                if(money == 'COP') {
+                    precio = precio.replace(".", "");
+                }
                 var descuento = $(this).parent().parent().find('.descuento').val();
                 var iva = $(this).parent().parent().find('.iva').val();
                 var cantidad = $(this).parent().parent().find('.cantidad').val();
@@ -244,6 +249,9 @@
                 var precio = $(this).parent().parent().find('.precio').val();
                 precio = precio.replace("$", "");
                 precio = precio.replace(",", "");
+                if(money == 'COP') {
+                    precio = precio.replace(".", "");
+                }
                 var iva = $(this).parent().parent().find('.iva').val();
                 var cantidad = $(this).parent().parent().find('.cantidad').val();
                 var preciofinal = precio - (precio * descuento / 100);
@@ -257,6 +265,9 @@
                 var precio = $(this).parent().parent().find('.precio').val();
                 precio = precio.replace("$", "");
                 precio = precio.replace(",", "");
+                if(money == 'COP') {
+                    precio = precio.replace(".", "");
+                }
                 var descuento = $(this).parent().parent().find('.descuento').val();
                 var cantidad = $(this).parent().parent().find('.cantidad').val();
                 var preciofinal = precio - (precio * descuento / 100);
@@ -269,6 +280,10 @@
                 var precio = $(this).val();
                 precio = precio.replace("$", "");
                 precio = precio.replace(",", "");
+                if(money == 'COP') {
+                    precio = precio.replace(".", "");
+                }
+                console.log(precio);
                 var descuento = $(this).parent().parent().find('.descuento').val();
                 var iva = $(this).parent().parent().find('.iva').val();
                 var cantidad = $(this).parent().parent().find('.cantidad').val();

@@ -275,7 +275,7 @@ class PreciosController extends Controller
             $precio = DB::table("detalle_precios")->where('id', $productos[0]['id'])->first();
             
 
-            if ($file) {
+            if ($file != null && $file != 'null' && $file != 'undefined') {
                 $name = time() . $file->getClientOriginalName();
                 $file->move('images/precios_proveedores/', $name);
             }

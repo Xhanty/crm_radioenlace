@@ -168,7 +168,9 @@
                     var cantidad = $(this).parent().parent().find('.cantidad').val();
                     preciofinal = preciofinal.replace("$", "");
                     preciofinal = preciofinal.replace(",", "");
-                    preciofinal = preciofinal.replace(".", "");
+                    if(money == 'COP') {
+                        preciofinal = preciofinal.replace(".", "");
+                    }
                     preciofinal_total = preciofinal_total + (preciofinal * cantidad);
                 });
 
@@ -179,6 +181,9 @@
                 var precio = $(this).val();
                 precio = precio.replace("$", "");
                 precio = precio.replace(",", "");
+                if(money == 'COP') {
+                    precio = precio.replace(".", "");
+                }
                 var descuento = $(this).parent().parent().find('.descuento').val();
                 var iva = $(this).parent().parent().find('.iva').val();
                 var cantidad = $(this).parent().parent().find('.cantidad').val();
