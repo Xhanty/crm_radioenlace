@@ -163,6 +163,13 @@ class ProspectosController extends Controller
     {
         try {
             DB::beginTransaction();
+            $file = DB::table("prospectos")->where('id', $request->id)->first();
+
+            if($file->logo != null) {
+                $file_path = 'images/prospectos_personas/' . $file->logo;
+                unlink($file_path);
+            }
+            
 
             DB::table("prospectos")->where('id', $request->id)->delete();
 
