@@ -65,8 +65,8 @@
                                                 <a href="javascript:void(0);" data-id="{{ $orden->id }}" title="Eliminar"
                                                     class="btn btn-danger btn-sm btnEliminar"><i
                                                         class="fa fa-trash"></i></a>
-                                                <a data-id="{{ $orden->id }}" title="Imprimir" class="btn btn-warning btn-sm btnPrint"><i
-                                                        class="fa fa-print"></i></a>
+                                                <a data-id="{{ $orden->id }}" title="Imprimir"
+                                                    class="btn btn-warning btn-sm btnPrint"><i class="fa fa-print"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -105,7 +105,20 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($ordenes_completadas as $orden)
-                                        <tr>
+                                        @php
+                                            $aprobado = $orden->aprobado;
+                                            $color = '';
+                                            
+                                            if ($aprobado == 0) {
+                                                $color = 'rgb(255 193 7 / 30%);';
+                                            } elseif ($aprobado == 1) {
+                                                $color = 'rgb(11 163 96 / 30%);';
+                                            } elseif ($aprobado == 2) {
+                                                $color = 'rgb(245 60 91 / 30%);';
+                                            }
+                                        @endphp
+
+                                        <tr style="background: {{ $color }}">
                                             <td>{{ $orden->code }}</td>
                                             <td>{{ $orden->creador }}</td>
                                             <td>{{ $orden->razon_social }}</td>
@@ -116,9 +129,9 @@
                                                 <select class="form-select aprobado_select" data-id="{{ $orden->id }}">
                                                     <option value="0" {{ $orden->aprobado == 0 ? 'selected' : '' }}>
                                                         Pendiente</option>
-                                                    <option value="1" {{ $orden->aprobado == 1 ? 'selected' : '' }}>Sí
+                                                    <option value="1" {{ $orden->aprobado == 1 ? 'selected' : '' }}>Completado
                                                     </option>
-                                                    <option value="0" {{ $orden->aprobado == 2 ? 'selected' : '' }}>No
+                                                    <option value="2" {{ $orden->aprobado == 2 ? 'selected' : '' }}>No Completado
                                                     </option>
                                                 </select>
                                             </td>
@@ -132,8 +145,8 @@
                                                 <a href="javascript:void(0);" data-id="{{ $orden->id }}"
                                                     title="Enviar por correo" class="btn btn-success btn-sm btnEmail"><i
                                                         class="fa fa-envelope"></i></a>
-                                                <a title="Imprimir" data-id="{{ $orden->id }}" class="btn btn-warning btn-sm btnPrint"><i
-                                                        class="fa fa-print"></i></a>
+                                                <a title="Imprimir" data-id="{{ $orden->id }}"
+                                                    class="btn btn-warning btn-sm btnPrint"><i class="fa fa-print"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -476,7 +489,8 @@
                         </div>
                         <br>
                         <div class="text-center">
-                            <button class="btn ripple btn-primary" id="btn_open_pdf" type="button">Abrir Orden de Compra</button>
+                            <button class="btn ripple btn-primary" id="btn_open_pdf" type="button">Abrir Orden de
+                                Compra</button>
                         </div>
                     </div>
                 </div>

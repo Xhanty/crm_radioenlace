@@ -900,13 +900,13 @@ $(document).ready(function () {
         }
     });
 
-    /*$(document).on("change", ".aprobado_select", function () {
+    $(document).on("change", ".aprobado_select", function () {
         let id = $(this).data("id");
         let val = $(this).val();
 
         $.ajax({
             type: "POST",
-            url: "cotizacion_aprobado",
+            url: "orden_compra_aprobado",
             data: { id: id, aprobado: val },
             success: function (response) {
                 if (response.info == 1) {
@@ -919,5 +919,5 @@ $(document).ready(function () {
                 toastr.error("Error al realizar el cambio");
             }
         });
-    });*/
+    });
 });

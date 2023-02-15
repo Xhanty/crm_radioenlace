@@ -342,4 +342,21 @@ class OrdenCompraController extends Controller
             return response()->json(['info' => 0, 'error' => 'Error al enviar la orden de compra']);
         }
     }
+
+    public function aprobacion(Request $request)
+    {
+        try {
+            $cotizacion = $request->id;
+            $aprobado = $request->aprobado;
+
+            DB::table("ordenes_compra")->where('id', $cotizacion)->update([
+                'aprobado' => $aprobado,
+            ]);
+
+            return response()->json(['info' => 1, 'message' => 'Orden de compra aprobada correctamente']);
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+            return response()->json(['info' => 0, 'error' => 'Error al aprobar la orden de compra']);
+        }
+    }
 }
