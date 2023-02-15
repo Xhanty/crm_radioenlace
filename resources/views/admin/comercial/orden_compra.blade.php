@@ -37,7 +37,7 @@
                                         <th>No.</th>
                                         <th>Creador</th>
                                         <th>Cliente</th>
-                                        <th>Descripción</th>
+                                        <th style="width: 37%">Descripción</th>
                                         <th>Fecha</th>
                                         <th>Cant.<br>Productos</th>
                                         <th>Acciones</th>
@@ -96,7 +96,7 @@
                                         <th>No.</th>
                                         <th>Creador</th>
                                         <th>Cliente</th>
-                                        <th>Descripción</th>
+                                        <th style="width: 37%">Descripción</th>
                                         <th>Fecha</th>
                                         <th>Cant.<br>Productos</th>
                                         <th>Status</th>
