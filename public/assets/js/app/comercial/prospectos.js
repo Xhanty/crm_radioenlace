@@ -52,6 +52,7 @@ $(document).ready(function () {
 
                     $("#imagen_view").attr("src", "images/prospectos_personas/" + data.logo);
                     $("#tipocliente_view").val(data.tipo_cliente).trigger("change");
+                    $("#pais_view").val(data.pais_id).trigger("change");
                     $("#empresa_view").val(data.empresa);
                     $("#nombres_view").val(data.nombres);
                     $("#apellidos_view").val(data.apellidos);
@@ -103,6 +104,7 @@ $(document).ready(function () {
 
                     $("#id_prospecto_edit").val(data.id);
                     $("#tipocliente_edit").val(data.tipo_cliente).trigger("change");
+                    $("#pais_edit").val(data.pais_id).trigger("change");
                     $("#empresa_edit").val(data.empresa);
                     $("#nombres_edit").val(data.nombres);
                     $("#apellidos_edit").val(data.apellidos);
@@ -176,7 +178,8 @@ $(document).ready(function () {
                                     }
                                     let row = `<tr>
                                     <td>${element.tipo_cliente}</td>
-                                    <td>${element.empresa}</td>
+                                    <td>${element.pais}</td>
+                                    <td>${element.empresa ? element.empresa : ""}</td>
                                     <td>${element.nombres}</td>
                                     <td>${element.apellidos ? element.apellidos : ""}</td>
                                     <td>${element.email ? element.email : ""}</td>
@@ -232,6 +235,7 @@ $(document).ready(function () {
 
     $("#btnGuardar").click(function () {
         let tipo_cliente = $("#tipocliente_add").val();
+        let pais = $("#pais_add").val();
         let empresa = $("#empresa_add").val();
         let nombres = $("#nombres_add").val();
         let apellidos = $("#apellidos_add").val();
@@ -246,7 +250,10 @@ $(document).ready(function () {
         let instagram = $("#instagram_add").val();
         let referido = $("#referido_add").val();
 
-        if (tipo_cliente == "") {
+        if (pais == "") {
+            toastr.error("Seleccione un país");
+            return false;
+        } else if (tipo_cliente == "") {
             toastr.error("Seleccione un tipo de cliente");
             return false;
         } else if (nombres.trim().length < 3) {
@@ -259,6 +266,7 @@ $(document).ready(function () {
 
             let formData = new FormData();
             formData.append("tipo_cliente", tipo_cliente);
+            formData.append("pais", pais);
             formData.append("empresa", empresa);
             formData.append("nombres", nombres);
             formData.append("apellidos", apellidos);
@@ -304,7 +312,8 @@ $(document).ready(function () {
                                 }
                                 let row = `<tr>
                                     <td>${element.tipo_cliente}</td>
-                                    <td>${element.empresa}</td>
+                                    <td>${element.pais}</td>
+                                    <td>${element.empresa ? element.empresa : ""}</td>
                                     <td>${element.nombres}</td>
                                     <td>${element.apellidos ? element.apellidos : ""}</td>
                                     <td>${element.email ? element.email : ""}</td>
@@ -360,6 +369,7 @@ $(document).ready(function () {
     $("#btnModificar").click(function () {
         let id = $("#id_prospecto_edit").val();
         let tipo_cliente = $("#tipocliente_edit").val();
+        let pais = $("#pais_edit").val();
         let empresa = $("#empresa_edit").val();
         let nombres = $("#nombres_edit").val();
         let apellidos = $("#apellidos_edit").val();
@@ -374,7 +384,10 @@ $(document).ready(function () {
         let instagram = $("#instagram_edit").val();
         let referido = $("#referido_edit").val();
 
-        if (tipo_cliente == "") {
+        if (pais == "") {
+            toastr.error("Seleccione un país");
+            return false;
+        } else if (tipo_cliente == "") {
             toastr.error("Seleccione un tipo de cliente");
             return false;
         } else if (nombres.trim().length < 3) {
@@ -388,6 +401,7 @@ $(document).ready(function () {
             let formData = new FormData();
             formData.append("id", id);
             formData.append("tipo_cliente", tipo_cliente);
+            formData.append("pais", pais);
             formData.append("empresa", empresa);
             formData.append("nombres", nombres);
             formData.append("apellidos", apellidos);
@@ -434,7 +448,8 @@ $(document).ready(function () {
                                 }
                                 let row = `<tr>
                                     <td>${element.tipo_cliente}</td>
-                                    <td>${element.empresa}</td>
+                                    <td>${element.pais}</td>
+                                    <td>${element.empresa ? element.empresa : ""}</td>
                                     <td>${element.nombres}</td>
                                     <td>${element.apellidos ? element.apellidos : ""}</td>
                                     <td>${element.email ? element.email : ""}</td>

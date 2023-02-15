@@ -16,12 +16,17 @@ class ProspectosEmpresasController extends Controller
                 return redirect()->route('home');
             }*/
 
-            $prospectos = DB::table("prospectos_empresas")->get();
+            $prospectos = DB::table("prospectos_empresas")
+            ->select('prospectos_empresas.*', 'paises.name as pais')
+            ->join('paises', 'paises.id', '=', 'prospectos_empresas.pais_id')
+            ->get();
 
-            return view('admin.comercial.prospectos_empresas', compact('prospectos'));
+            $paises = DB::table("paises")->get();
+
+            return view('admin.comercial.prospectos_empresas', compact('prospectos', 'paises'));
         } catch (Exception $ex) {
-            return view('errors.500');
             return $ex->getMessage();
+            return view('errors.500');
         }
     }
 
@@ -59,6 +64,7 @@ class ProspectosEmpresasController extends Controller
 
             DB::table("prospectos_empresas")->insert([
                 'tipo_cliente' => $request->tipo_cliente,
+                'pais_id' => $request->pais,
                 'empresa' => $request->empresa ? $request->empresa : null,
                 'nombres' => $request->nombres,
                 'apellidos' => $request->apellidos ? $request->apellidos : null,
@@ -79,7 +85,8 @@ class ProspectosEmpresasController extends Controller
 
             DB::commit();
 
-            $prospectos = DB::table("prospectos_empresas")->get();
+            $prospectos = DB::table("prospectos_empresas")->select('prospectos_empresas.*', 'paises.name as pais')
+                ->join('paises', 'paises.id', '=', 'prospectos_empresas.pais_id')->get();
 
             return response()->json([
                 'info' => 1,
@@ -108,6 +115,7 @@ class ProspectosEmpresasController extends Controller
 
                 DB::table("prospectos_empresas")->where('id', $request->id)->update([
                     'tipo_cliente' => $request->tipo_cliente,
+                    'pais_id' => $request->pais,
                     'empresa' => $request->empresa ? $request->empresa : null,
                     'nombres' => $request->nombres,
                     'apellidos' => $request->apellidos ? $request->apellidos : null,
@@ -126,6 +134,7 @@ class ProspectosEmpresasController extends Controller
             } else {
                 DB::table("prospectos_empresas")->where('id', $request->id)->update([
                     'tipo_cliente' => $request->tipo_cliente,
+                    'pais_id' => $request->pais,
                     'empresa' => $request->empresa ? $request->empresa : null,
                     'nombres' => $request->nombres,
                     'apellidos' => $request->apellidos ? $request->apellidos : null,
@@ -144,7 +153,8 @@ class ProspectosEmpresasController extends Controller
 
             DB::commit();
 
-            $prospectos = DB::table("prospectos_empresas")->get();
+            $prospectos = DB::table("prospectos_empresas")->select('prospectos_empresas.*', 'paises.name as pais')
+                ->join('paises', 'paises.id', '=', 'prospectos_empresas.pais_id')->get();
 
             return response()->json([
                 'info' => 1,
@@ -165,7 +175,7 @@ class ProspectosEmpresasController extends Controller
         try {
             DB::beginTransaction();
 
-            $file = DB::table("prospectos")->where('id', $request->id)->first();
+            $file = DB::table("prospectos_empresas")->where('id', $request->id)->first();
 
             if ($file->logo != null) {
                 $file_path = 'images/prospectos_empresas/' . $file->logo;
@@ -176,7 +186,9 @@ class ProspectosEmpresasController extends Controller
 
             DB::commit();
 
-            $prospectos = DB::table("prospectos_empresas")->get();
+            $prospectos = DB::table("prospectos_empresas")->select('prospectos_empresas.*', 'paises.name as pais')
+            ->join('paises', 'paises.id', '=', 'prospectos_empresas.pais_id')
+            ->limit(100)->orderBy('id', 'desc')->get();
 
             return response()->json([
                 'info' => 1,

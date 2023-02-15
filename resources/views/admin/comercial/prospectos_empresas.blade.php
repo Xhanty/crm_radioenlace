@@ -37,6 +37,7 @@
                                 <thead>
                                     <tr>
                                         <th>Tipo Cliente</th>
+                                        <th>País</th>
                                         <th>Nombres</th>
                                         <th>Apellidos</th>
                                         <th>Email</th>
@@ -50,6 +51,7 @@
                                         <tr>
                                             <td>{{ $prospecto->tipo_cliente = $prospecto->tipo_cliente == 0 ? 'Posible Cliente' : 'Cliente Existente' }}
                                             </td>
+                                            <td>{{ $prospecto->pais }}</td>
                                             <td>{{ $prospecto->nombres }}</td>
                                             <td>{{ $prospecto->apellidos }}</td>
                                             <td>{{ $prospecto->email }}</td>
@@ -94,6 +96,18 @@
                                 aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">País *</label>
+                                <select class="form-select" id="pais_add">
+                                    <option value="">Seleccione una opción</option>
+                                    @foreach ($paises as $pais)
+                                        <option value="{{ $pais->id }}">{{ $pais->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <br>
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Tipo Cliente *</label>
@@ -201,6 +215,18 @@
                         <input type="hidden" disabled readonly id="id_prospecto_edit">
                         <div class="row row-sm">
                             <div class="col-lg">
+                                <label for="">País *</label>
+                                <select class="form-select" id="pais_edit">
+                                    <option value="">Seleccione una opción</option>
+                                    @foreach ($paises as $pais)
+                                        <option value="{{ $pais->id }}">{{ $pais->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
                                 <label for="">Tipo Cliente *</label>
                                 <select class="form-select" id="tipocliente_edit">
                                     <option value="">Seleccione una opción</option>
@@ -301,6 +327,18 @@
                         <div class="d-flex justify-content-center">
                             <img id="imagen_view" src="{{ asset('images/prospectos_empresas/noavatar.png') }}"
                                 style="width: 140px; height: 140px;" loading="lazy">
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">País *</label>
+                                <select class="form-select" disabled id="pais_view">
+                                    <option value="">Seleccione una opción</option>
+                                    @foreach ($paises as $pais)
+                                        <option value="{{ $pais->id }}">{{ $pais->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         <br>
                         <div class="row row-sm">

@@ -16,9 +16,13 @@ class ProspectosController extends Controller
                 return redirect()->route('home');
             }*/
 
-            $prospectos = DB::table("prospectos")->limit(100)->orderBy('id', 'desc')->get();
+            $prospectos = DB::table("prospectos")->select('prospectos.*', 'paises.name as pais')
+            ->join('paises', 'paises.id', '=', 'prospectos.pais_id')
+            ->limit(100)->orderBy('id', 'desc')->get();
 
-            return view('admin.comercial.prospectos', compact('prospectos'));
+            $paises = DB::table("paises")->get();
+
+            return view('admin.comercial.prospectos', compact('prospectos', 'paises'));
         } catch (Exception $ex) {
             return view('errors.500');
             return $ex->getMessage();
@@ -57,6 +61,7 @@ class ProspectosController extends Controller
 
             DB::table("prospectos")->insert([
                 'tipo_cliente' => $request->tipo_cliente,
+                'pais_id' => $request->pais,
                 'empresa' => $request->empresa ? $request->empresa : null,
                 'nombres' => $request->nombres,
                 'apellidos' => $request->apellidos ? $request->apellidos : null,
@@ -77,7 +82,9 @@ class ProspectosController extends Controller
 
             DB::commit();
 
-            $prospectos = DB::table("prospectos")->limit(100)->orderBy('id', 'desc')->get();
+            $prospectos = DB::table("prospectos")->select('prospectos.*', 'paises.name as pais')
+            ->join('paises', 'paises.id', '=', 'prospectos.pais_id')
+            ->limit(100)->orderBy('id', 'desc')->get();
 
             return response()->json([
                 'info' => 1,
@@ -106,6 +113,7 @@ class ProspectosController extends Controller
 
                 DB::table("prospectos")->where('id', $request->id)->update([
                     'tipo_cliente' => $request->tipo_cliente,
+                    'pais_id' => $request->pais,
                     'empresa' => $request->empresa ? $request->empresa : null,
                     'nombres' => $request->nombres,
                     'apellidos' => $request->apellidos ? $request->apellidos : null,
@@ -125,6 +133,7 @@ class ProspectosController extends Controller
             } else {
                 DB::table("prospectos")->where('id', $request->id)->update([
                     'tipo_cliente' => $request->tipo_cliente,
+                    'pais_id' => $request->pais,
                     'empresa' => $request->empresa ? $request->empresa : null,
                     'nombres' => $request->nombres,
                     'apellidos' => $request->apellidos ? $request->apellidos : null,
@@ -143,7 +152,9 @@ class ProspectosController extends Controller
 
             DB::commit();
 
-            $prospectos = DB::table("prospectos")->limit(100)->orderBy('id', 'desc')->get();
+            $prospectos = DB::table("prospectos")->select('prospectos.*', 'paises.name as pais')
+            ->join('paises', 'paises.id', '=', 'prospectos.pais_id')
+            ->limit(100)->orderBy('id', 'desc')->get();
 
             return response()->json([
                 'info' => 1,
@@ -175,7 +186,9 @@ class ProspectosController extends Controller
 
             DB::commit();
 
-            $prospectos = DB::table("prospectos")->limit(100)->orderBy('id', 'desc')->get();
+            $prospectos = DB::table("prospectos")->select('prospectos.*', 'paises.name as pais')
+            ->join('paises', 'paises.id', '=', 'prospectos.pais_id')
+            ->limit(100)->orderBy('id', 'desc')->get();
 
             return response()->json([
                 'info' => 1,

@@ -276,11 +276,13 @@
                 @endif
 
                 @php
-                    $iva += $total * ($productos[$i]->iva / 100);
-                    $iva_mensual += $total * ($productos[$i]->iva / 100);
-
-                    $retencion += $total * ($productos[$i]->retencion / 100);
-                    $retencion_mensual += $total * ($productos[$i]->retencion / 100);
+                    if($productos[$i]->tipo_pago == 1){
+                        $iva_mensual += $total * ($productos[$i]->iva / 100);
+                        $retencion_mensual += $total * ($productos[$i]->retencion / 100);
+                    } else {
+                        $iva += $total * ($productos[$i]->iva / 100);
+                        $retencion += $total * ($productos[$i]->retencion / 100);
+                    }
                 @endphp
             @endfor
 
