@@ -282,7 +282,9 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/prospectos_bd_edit', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'edit'])->name('prospectos_bd_edit');
     Route::post('/prospectos_bd_view', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'data'])->name('prospectos_bd_view');
     Route::post('/prospectos_bd_delete', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'delete'])->name('prospectos_bd_delete');
+    Route::get('/prospectos_bd_plantilla', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'download_plantilla'])->name('prospectos_bd_plantilla');
     Route::get('/prospectos_bd_excel', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'download_excel'])->name('prospectos_bd_excel');
+    Route::post('/prospectos_bd_import', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'import_excel'])->name('prospectos_bd_import');
 
     // PROSPECTOS EMPRESAS
     Route::get('/prospectos_empresas_bd', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'index'])->name('prospectos_empresas_bd');
@@ -291,7 +293,9 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/prospectos_empresas_bd_edit', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'edit'])->name('prospectos_empresas_bd_edit');
     Route::post('/prospectos_empresas_bd_view', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'data'])->name('prospectos_empresas_bd_view');
     Route::post('/prospectos_empresas_bd_delete', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'delete'])->name('prospectos_empresas_bd_delete');
+    Route::get('/prospectos_empresas_bd_plantilla', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'download_plantilla'])->name('prospectos_empresas_bd_plantilla');
     Route::get('/prospectos_empresas_bd_excel', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'download_excel'])->name('prospectos_empresas_bd_excel');
+    Route::post('/prospectos_empresas_bd_import', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'import_excel'])->name('prospectos_empresas_bd_import');
 });
 
 Route::group(['middleware' => 'auth'], function () {

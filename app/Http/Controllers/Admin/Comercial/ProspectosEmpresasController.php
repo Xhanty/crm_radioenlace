@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin\Comercial;
 
 use App\Exports\ProspectosEmpresaExcel;
+use App\Exports\ProspectosEmpresaPlantilla;
 use App\Http\Controllers\Controller;
+use App\Imports\ProspectosEmpresasImport;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -233,5 +235,40 @@ class ProspectosEmpresasController extends Controller
     public function download_excel()
     {
         return Excel::download(new ProspectosEmpresaExcel, 'prospectos_empresas.xlsx');
+    }
+
+    public function download_plantilla()
+    {
+        return Excel::download(new ProspectosEmpresaPlantilla, 'prospectos_empresas.xlsx');
+    }
+
+    public function import_excel(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $file = $request->file('file');
+
+            $name = time() . $file->getClientOriginalName();
+            $file->move('images/prospectos_empresas/', $name);
+
+            Excel::import(new ProspectosEmpresasImport, 'images/prospectos_empresas/' . $name);
+
+            DB::commit();
+
+            $prospectos = [];
+
+            return response()->json([
+                'info' => 1,
+                'prospectos' => $prospectos,
+            ]);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return response()->json([
+                'info' => 0,
+                'prospectos' => [],
+                'error' => $ex->getMessage(),
+            ]);
+        }
     }
 }

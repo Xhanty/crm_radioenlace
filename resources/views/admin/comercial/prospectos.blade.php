@@ -25,8 +25,14 @@
                             <h3 class="card-title mt-2">Prospectos Personas</h3>
                         </div>
                         <div class="div-2-tables-header">
-                            <a class="btn btn-primary" href="{{ route('prospectos_bd_excel') }}" target="_blank">
-                                Exportar
+                            <a title="Exportar" class="btn btn-warning" href="{{ route('prospectos_bd_excel') }}" target="_blank">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Microsoft_Office_Excel_%282019%E2%80%93present%29.svg/826px-Microsoft_Office_Excel_%282019%E2%80%93present%29.svg.png" 
+                                alt="" width="21px">
+                            </a>
+                            &nbsp;
+                            <a title="Importar" class="btn btn-danger" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalImport">
+                                <img src="https://cdn-icons-png.flaticon.com/512/3616/3616929.png" 
+                                alt="" width="21px">
                             </a>
                             &nbsp;
                             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAdd">
@@ -390,6 +396,35 @@
                                 <input class="form-control" type="text" id="referido_view" disabled placeholder="Referido">
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal File -->
+        <div class="modal  fade" id="modalImport">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Importar prospectos</h6>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Archivo (.xlsx) *</label>
+                                <input type="file" class="form-control" id="file_import">
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="text-center">
+                            <a href="{{ route('prospectos_bd_plantilla') }}" target="_blank">Descargar plantilla</a>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" id="btnSubirArchivo" type="button">Guardar</button>
                     </div>
                 </div>
             </div>

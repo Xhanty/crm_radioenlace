@@ -374,4 +374,51 @@ $(document).ready(function () {
             language: language,
         });
     }
+
+    $("#btnSubirArchivo").click(function () {
+        let file_excel = $("#file_import").val();
+        let tamano = 2097152;
+        if (file_excel == "") {
+            toastr.error("Seleccione un archivo");
+            return false;
+        } else if (file_excel.split(".").pop() != "xlsx") {
+            toastr.error("El archivo debe ser de tipo .xlsx");
+            return false;
+        } else if ($("#file_import")[0].files[0].size > tamano) {
+            toastr.error("El archivo no debe superar los 2MB");
+            return false;
+        } else {
+            $("#btnSubirArchivo").prop("disabled", true);
+            $("#global-loader").fadeIn("slow");
+            $("#modalImport").modal("hide");
+
+            let formData = new FormData();
+            formData.append("file", $("#file_import")[0].files[0]);
+
+            $.ajax({
+                url: "prospectos_empresas_bd_import",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    $("#global-loader").fadeOut("slow");
+                    if (response.info == 1) {
+                        init_table();
+                        $("#modalImport input").val("");
+                        $("#btnSubirArchivo").prop("disabled", false);
+                        toastr.success("Se ha importado el archivo correctamente");
+                    } else {
+                        $("#btnSubirArchivo").prop("disabled", false);
+                        toastr.error("Ha ocurrido un error al importar el archivo");
+                    }
+                },
+                error: function (data) {
+                    $("#global-loader").fadeOut("slow");
+                    $("#btnSubirArchivo").prop("disabled", false);
+                    toastr.error("Ha ocurrido un error al importar el archivo");
+                },
+            });
+        }
+    });
 });
