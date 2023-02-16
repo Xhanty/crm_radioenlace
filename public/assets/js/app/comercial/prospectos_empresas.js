@@ -5,6 +5,8 @@ $(document).ready(function () {
         },
     });
 
+    init_table();
+
     var language = {
         searchPlaceholder: "Buscar...",
         sSearch: "",
@@ -155,61 +157,8 @@ $(document).ready(function () {
                         id: id,
                     },
                     success: function (response) {
-                        let data = response.prospectos;
                         if (response.info == 1) {
-                            if ($.fn.DataTable.isDataTable("#tbl_data")) {
-                                $("#tbl_data").DataTable().destroy();
-                            }
-
-                            $("#tbl_data tbody").empty();
-
-                            if (data.length > 0) {
-                                data.forEach((element) => {
-                                    let chat_api = "";
-                                    element.created_at = moment(element.created_at).format("DD/MM/YYYY H:mm A");
-                                    if (element.tipo_cliente == 0) {
-                                        element.tipo_cliente = "Posible Cliente";
-                                    } else {
-                                        element.tipo_cliente = "Cliente Existente";
-                                    }
-
-                                    if (!element.celular || element.celular == "") {
-                                        chat_api = 'disabled';
-                                    }
-                                    let row = `<tr>
-                                    <td>${element.tipo_cliente}</td>
-                                    <td>${element.pais}</td>
-                                    <td>${element.nombres ? element.nombres : ""}</td>
-                                    <td>${element.apellidos ? element.apellidos : ""}</td>
-                                    <td>${element.email ? element.email : ""}</td>
-                                    <td>${element.celular ? element.celular : ""}</td>
-                                    <td>${element.created_at}</td>
-                                    <td>
-                                        <a title="Ver" href="javascript:void(0);" data-id="${element.id}" class="btn btn-primary btn-sm btnView">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                        <a title="Modificar" href="javascript:void(0);" data-id="${element.id}" class="btn btn-warning btn-sm btnEdit">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                        <a title="Eliminar" href="javascript:void(0);" data-id="${element.id}" class="btn btn-danger btn-sm btnDelete">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                        <a title="WhatsApp" href="javascript:void(0);" data-id="${element.id}" data-celular="${element.celular}" class="btn btn-success btn-sm btnWhatsapp ${chat_api}">
-                                            <i class="fab fa-whatsapp"></i>
-                                        </a>
-                                    </td>
-                                </tr>`;
-
-                                    $("#tbl_data tbody").append(row);
-                                });
-                            }
-
-                            $("#tbl_data").DataTable({
-                                language: language,
-                                responsive: true,
-                                order: [],
-                            });
-
+                            init_table();
                             $("#global-loader").fadeOut("slow");
                             toastr.success("Prospecto eliminado correctamente");
                         } else {
@@ -288,61 +237,8 @@ $(document).ready(function () {
                 contentType: false,
                 processData: false,
                 success: function (response) {
-                    let data = response.prospectos;
                     if (response.info == 1) {
-                        if ($.fn.DataTable.isDataTable("#tbl_data")) {
-                            $("#tbl_data").DataTable().destroy();
-                        }
-
-                        $("#tbl_data tbody").empty();
-
-                        if (data.length > 0) {
-                            data.forEach((element) => {
-                                let chat_api = "";
-                                element.created_at = moment(element.created_at).format("DD/MM/YYYY H:mm A");
-                                if (element.tipo_cliente == 0) {
-                                    element.tipo_cliente = "Posible Cliente";
-                                } else {
-                                    element.tipo_cliente = "Cliente Existente";
-                                }
-
-                                if (!element.celular || element.celular == "") {
-                                    chat_api = 'disabled';
-                                }
-                                let row = `<tr>
-                                    <td>${element.tipo_cliente}</td>
-                                    <td>${element.pais}</td>
-                                    <td>${element.nombres ? element.nombres : ""}</td>
-                                    <td>${element.apellidos ? element.apellidos : ""}</td>
-                                    <td>${element.email ? element.email : ""}</td>
-                                    <td>${element.celular ? element.celular : ""}</td>
-                                    <td>${element.created_at}</td>
-                                    <td>
-                                        <a title="Ver" href="javascript:void(0);" data-id="${element.id}" class="btn btn-primary btn-sm btnView">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                        <a title="Modificar" href="javascript:void(0);" data-id="${element.id}" class="btn btn-warning btn-sm btnEdit">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                        <a title="Eliminar" href="javascript:void(0);" data-id="${element.id}" class="btn btn-danger btn-sm btnDelete">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                        <a title="WhatsApp" href="javascript:void(0);" data-id="${element.id}" data-celular="${element.celular}" class="btn btn-success btn-sm btnWhatsapp ${chat_api}">
-                                            <i class="fab fa-whatsapp"></i>
-                                        </a>
-                                    </td>
-                                </tr>`;
-
-                                $("#tbl_data tbody").append(row);
-                            });
-                        }
-
-                        $("#tbl_data").DataTable({
-                            language: language,
-                            responsive: true,
-                            order: [],
-                        });
-
+                        init_table();
                         $("#modalAdd input").val("");
                         $("#modalAdd select").val("").trigger("change");
                         $("#global-loader").fadeOut("slow");
@@ -423,61 +319,8 @@ $(document).ready(function () {
                 processData: false,
                 success: function (response) {
                     $("#global-loader").fadeOut("slow");
-                    let data = response.prospectos;
                     if (response.info == 1) {
-                        if ($.fn.DataTable.isDataTable("#tbl_data")) {
-                            $("#tbl_data").DataTable().destroy();
-                        }
-
-                        $("#tbl_data tbody").empty();
-
-                        if (data.length > 0) {
-                            data.forEach((element) => {
-                                let chat_api = "";
-                                element.created_at = moment(element.created_at).format("DD/MM/YYYY H:mm A");
-                                if (element.tipo_cliente == 0) {
-                                    element.tipo_cliente = "Posible Cliente";
-                                } else {
-                                    element.tipo_cliente = "Cliente Existente";
-                                }
-
-                                if (!element.celular || element.celular == "") {
-                                    chat_api = 'disabled';
-                                }
-                                let row = `<tr>
-                                    <td>${element.tipo_cliente}</td>
-                                    <td>${element.pais}</td>
-                                    <td>${element.nombres ? element.nombres : ""}</td>
-                                    <td>${element.apellidos ? element.apellidos : ""}</td>
-                                    <td>${element.email ? element.email : ""}</td>
-                                    <td>${element.celular ? element.celular : ""}</td>
-                                    <td>${element.created_at}</td>
-                                    <td>
-                                        <a title="Ver" href="javascript:void(0);" data-id="${element.id}" class="btn btn-primary btn-sm btnView">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                        <a title="Modificar" href="javascript:void(0);" data-id="${element.id}" class="btn btn-warning btn-sm btnEdit">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                        <a title="Eliminar" href="javascript:void(0);" data-id="${element.id}" class="btn btn-danger btn-sm btnDelete">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                        <a title="WhatsApp" href="javascript:void(0);" data-id="${element.id}" data-celular="${element.celular}" class="btn btn-success btn-sm btnWhatsapp ${chat_api}">
-                                            <i class="fab fa-whatsapp"></i>
-                                        </a>
-                                    </td>
-                                </tr>`;
-
-                                $("#tbl_data tbody").append(row);
-                            });
-                        }
-
-                        $("#tbl_data").DataTable({
-                            language: language,
-                            responsive: true,
-                            order: [],
-                        });
-
+                        init_table();
                         $("#modalEdit input").val("");
                         $("#modalEdit select").val("").trigger("change");
                         $("#global-loader").fadeOut("slow");
@@ -498,4 +341,37 @@ $(document).ready(function () {
             });
         }
     });
+
+    function init_table() {
+        if ($.fn.DataTable.isDataTable("#tbl_data")) {
+            $("#tbl_data").DataTable().destroy();
+        }
+
+        $("#tbl_data tbody").empty();
+
+        $("#tbl_data").DataTable({
+            processing: true,
+            serverSide: true,
+            responsive: true,
+            order: [],
+            ajax: "prospectos_empresas_list",
+            columns: [
+                { data: "tipo_cliente", name: "tipo_cliente" },
+                { data: "pais", name: "pais" },
+                { data: "empresa", name: "empresa" },
+                { data: "nombres", name: "nombres" },
+                { data: "apellidos", name: "apellidos" },
+                { data: "email", name: "email" },
+                { data: "celular", name: "celular" },
+                { data: "created_at", name: "created_at" },
+                {
+                    data: "action",
+                    name: "action",
+                    orderable: true,
+                    searchable: true,
+                },
+            ],
+            language: language,
+        });
+    }
 });

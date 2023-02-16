@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use DataTables;
 
 class ProspectosEmpresasController extends Controller
 {
@@ -17,18 +18,45 @@ class ProspectosEmpresasController extends Controller
             /*if (!auth()->user()->hasPermissionTo('gestionar_prospectos_empresas')) {
                 return redirect()->route('home');
             }*/
-
-            $prospectos = DB::table("prospectos_empresas")
-                ->select('prospectos_empresas.*', 'paises.name as pais')
-                ->join('paises', 'paises.id', '=', 'prospectos_empresas.pais_id')
-                ->get();
-
             $paises = DB::table("paises")->get();
 
-            return view('admin.comercial.prospectos_empresas', compact('prospectos', 'paises'));
+            return view('admin.comercial.prospectos_empresas', compact('paises'));
         } catch (Exception $ex) {
             return $ex->getMessage();
             return view('errors.500');
+        }
+    }
+
+    public function list(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = DB::table("prospectos_empresas")->select('prospectos_empresas.*', 'paises.name as pais')
+            ->join('paises', 'paises.id', '=', 'prospectos_empresas.pais_id')->orderBy('id', 'desc')->get();
+
+            foreach ($data as $key => $value) {
+                $data[$key]->created_at = date('d/m/Y H:i A', strtotime($value->created_at));
+
+                if ($data[$key]->tipo_cliente == 0) {
+                    $data[$key]->tipo_cliente = 'Posible Cliente';
+                } else {
+                    $data[$key]->tipo_cliente = 'Cliente Existente';
+                }
+            }
+
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '<a data-id="' . $row->id . '" title="Ver" class="edit btn btn-primary btn-sm btnView"><i class="fa fa-eye"></i></a>
+
+                    <a data-id="' . $row->id . '" title="Modificar" class="edit btn btn-primary btn-sm btnEdit"><i class="fa fa-pencil-alt"></i></a>
+
+                    <a data-id="' . $row->id . '" title="Eliminar" class="delete btn btn-danger btn-sm btnDelete"><i class="fa fa-trash"></i></a>
+
+                    <a data-id="' . $row->id . '" data-celular="' . $row->celular . '" title="WhatsApp" class="btn btn-success btn-sm btnWhatsapp"><i class="fab fa-whatsapp"></i></a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
     }
 
@@ -87,8 +115,7 @@ class ProspectosEmpresasController extends Controller
 
             DB::commit();
 
-            $prospectos = DB::table("prospectos_empresas")->select('prospectos_empresas.*', 'paises.name as pais')
-                ->join('paises', 'paises.id', '=', 'prospectos_empresas.pais_id')->get();
+            $prospectos = [];
 
             return response()->json([
                 'info' => 1,
@@ -155,8 +182,7 @@ class ProspectosEmpresasController extends Controller
 
             DB::commit();
 
-            $prospectos = DB::table("prospectos_empresas")->select('prospectos_empresas.*', 'paises.name as pais')
-                ->join('paises', 'paises.id', '=', 'prospectos_empresas.pais_id')->get();
+            $prospectos = [];
 
             return response()->json([
                 'info' => 1,
@@ -188,9 +214,7 @@ class ProspectosEmpresasController extends Controller
 
             DB::commit();
 
-            $prospectos = DB::table("prospectos_empresas")->select('prospectos_empresas.*', 'paises.name as pais')
-                ->join('paises', 'paises.id', '=', 'prospectos_empresas.pais_id')
-                ->limit(100)->orderBy('id', 'desc')->get();
+            $prospectos = [];
 
             return response()->json([
                 'info' => 1,

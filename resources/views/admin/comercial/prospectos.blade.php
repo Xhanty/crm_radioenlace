@@ -51,39 +51,7 @@
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach ($prospectos as $prospecto)
-                                        <tr>
-                                            <td>{{ $prospecto->tipo_cliente = $prospecto->tipo_cliente == 0 ? 'Posible Cliente' : 'Cliente Existente' }}
-                                            </td>
-                                            <td>{{ $prospecto->pais }}</td>
-                                            <td>{{ $prospecto->empresa }}</td>
-                                            <td>{{ $prospecto->nombres }}</td>
-                                            <td>{{ $prospecto->apellidos }}</td>
-                                            <td>{{ $prospecto->email }}</td>
-                                            <td>{{ $prospecto->celular }}</td>
-                                            <td>{{ date('d-m-Y H:i A', strtotime($prospecto->created_at)) }}</td>
-                                            <td>
-                                                <a title="Ver" href="javascript:void(0);" data-id="{{ $prospecto->id }}"
-                                                    class="btn btn-primary btn-sm btnView">
-                                                    <i class="fa fa-eye"></i>
-                                                </a>
-                                                <a title="Modificar" href="javascript:void(0);"
-                                                    data-id="{{ $prospecto->id }}" class="btn btn-warning btn-sm btnEdit">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a title="Eliminar" href="javascript:void(0);"
-                                                    data-id="{{ $prospecto->id }}" class="btn btn-danger btn-sm btnDelete">
-                                                    <i class="fa fa-trash"></i>
-                                                </a>
-                                                <a title="WhatsApp" href="javascript:void(0);"
-                                                    data-id="{{ $prospecto->id }}" data-celular="{{ $prospecto->celular }}" class="btn btn-success btn-sm btnWhatsapp @if($prospecto->celular == null) disabled @endif">
-                                                    <i class="fab fa-whatsapp"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
+                                <tbody></tbody>
                             </table>
                         </div>
                     </div>

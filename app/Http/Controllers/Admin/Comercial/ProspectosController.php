@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use DataTables;
 
 class ProspectosController extends Controller
 {
@@ -18,16 +19,45 @@ class ProspectosController extends Controller
                 return redirect()->route('home');
             }*/
 
-            $prospectos = DB::table("prospectos")->select('prospectos.*', 'paises.name as pais')
-            ->join('paises', 'paises.id', '=', 'prospectos.pais_id')
-            ->limit(100)->orderBy('id', 'desc')->get();
-
             $paises = DB::table("paises")->get();
 
-            return view('admin.comercial.prospectos', compact('prospectos', 'paises'));
+            return view('admin.comercial.prospectos', compact('paises'));
         } catch (Exception $ex) {
             return view('errors.500');
             return $ex->getMessage();
+        }
+    }
+
+    public function list(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = DB::table("prospectos")->select('prospectos.*', 'paises.name as pais')
+                ->join('paises', 'paises.id', '=', 'prospectos.pais_id')->orderBy('id', 'desc')->get();
+
+            foreach ($data as $key => $value) {
+                $data[$key]->created_at = date('d/m/Y H:i A', strtotime($value->created_at));
+
+                if ($data[$key]->tipo_cliente == 0) {
+                    $data[$key]->tipo_cliente = 'Posible Cliente';
+                } else {
+                    $data[$key]->tipo_cliente = 'Cliente Existente';
+                }
+            }
+
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '<a data-id="' . $row->id . '" title="Ver" class="edit btn btn-primary btn-sm btnView"><i class="fa fa-eye"></i></a>
+
+                    <a data-id="' . $row->id . '" title="Modificar" class="edit btn btn-primary btn-sm btnEdit"><i class="fa fa-pencil-alt"></i></a>
+
+                    <a data-id="' . $row->id . '" title="Eliminar" class="delete btn btn-danger btn-sm btnDelete"><i class="fa fa-trash"></i></a>
+
+                    <a data-id="' . $row->id . '" data-celular="' . $row->celular . '" title="WhatsApp" class="btn btn-success btn-sm btnWhatsapp"><i class="fab fa-whatsapp"></i></a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
     }
 
@@ -84,9 +114,7 @@ class ProspectosController extends Controller
 
             DB::commit();
 
-            $prospectos = DB::table("prospectos")->select('prospectos.*', 'paises.name as pais')
-            ->join('paises', 'paises.id', '=', 'prospectos.pais_id')
-            ->limit(100)->orderBy('id', 'desc')->get();
+            $prospectos = [];
 
             return response()->json([
                 'info' => 1,
@@ -131,7 +159,6 @@ class ProspectosController extends Controller
                     'referido' => $request->referido ? $request->referido : null,
                     'logo' => $name,
                 ]);
-                
             } else {
                 DB::table("prospectos")->where('id', $request->id)->update([
                     'tipo_cliente' => $request->tipo_cliente,
@@ -154,9 +181,7 @@ class ProspectosController extends Controller
 
             DB::commit();
 
-            $prospectos = DB::table("prospectos")->select('prospectos.*', 'paises.name as pais')
-            ->join('paises', 'paises.id', '=', 'prospectos.pais_id')
-            ->limit(100)->orderBy('id', 'desc')->get();
+            $prospectos = [];
 
             return response()->json([
                 'info' => 1,
@@ -178,19 +203,17 @@ class ProspectosController extends Controller
             DB::beginTransaction();
             $file = DB::table("prospectos")->where('id', $request->id)->first();
 
-            if($file->logo != null) {
+            if ($file->logo != null) {
                 $file_path = 'images/prospectos_personas/' . $file->logo;
                 unlink($file_path);
             }
-            
+
 
             DB::table("prospectos")->where('id', $request->id)->delete();
 
             DB::commit();
 
-            $prospectos = DB::table("prospectos")->select('prospectos.*', 'paises.name as pais')
-            ->join('paises', 'paises.id', '=', 'prospectos.pais_id')
-            ->limit(100)->orderBy('id', 'desc')->get();
+            $prospectos = [];
 
             return response()->json([
                 'info' => 1,

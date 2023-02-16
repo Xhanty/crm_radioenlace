@@ -277,6 +277,7 @@ Route::middleware(['auth_user'])->group(function () {
 
     // PROSPECTOS PERSONAS
     Route::get('/prospectos_bd', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'index'])->name('prospectos_bd');
+    Route::get('/prospectos_list', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'list'])->name('prospectos_list');
     Route::post('/prospectos_bd_add', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'add'])->name('prospectos_bd_add');
     Route::post('/prospectos_bd_edit', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'edit'])->name('prospectos_bd_edit');
     Route::post('/prospectos_bd_view', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'data'])->name('prospectos_bd_view');
@@ -285,6 +286,7 @@ Route::middleware(['auth_user'])->group(function () {
 
     // PROSPECTOS EMPRESAS
     Route::get('/prospectos_empresas_bd', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'index'])->name('prospectos_empresas_bd');
+    Route::get('/prospectos_empresas_list', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'list'])->name('prospectos_empresas_list');
     Route::post('/prospectos_empresas_bd_add', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'add'])->name('prospectos_empresas_bd_add');
     Route::post('/prospectos_empresas_bd_edit', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'edit'])->name('prospectos_empresas_bd_edit');
     Route::post('/prospectos_empresas_bd_view', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'data'])->name('prospectos_empresas_bd_view');
