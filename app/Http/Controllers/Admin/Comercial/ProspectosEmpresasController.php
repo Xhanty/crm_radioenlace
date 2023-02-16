@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Comercial;
 
+use App\Exports\ProspectosEmpresaExcel;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProspectosEmpresasController extends Controller
 {
@@ -17,9 +19,9 @@ class ProspectosEmpresasController extends Controller
             }*/
 
             $prospectos = DB::table("prospectos_empresas")
-            ->select('prospectos_empresas.*', 'paises.name as pais')
-            ->join('paises', 'paises.id', '=', 'prospectos_empresas.pais_id')
-            ->get();
+                ->select('prospectos_empresas.*', 'paises.name as pais')
+                ->join('paises', 'paises.id', '=', 'prospectos_empresas.pais_id')
+                ->get();
 
             $paises = DB::table("paises")->get();
 
@@ -187,8 +189,8 @@ class ProspectosEmpresasController extends Controller
             DB::commit();
 
             $prospectos = DB::table("prospectos_empresas")->select('prospectos_empresas.*', 'paises.name as pais')
-            ->join('paises', 'paises.id', '=', 'prospectos_empresas.pais_id')
-            ->limit(100)->orderBy('id', 'desc')->get();
+                ->join('paises', 'paises.id', '=', 'prospectos_empresas.pais_id')
+                ->limit(100)->orderBy('id', 'desc')->get();
 
             return response()->json([
                 'info' => 1,
@@ -202,5 +204,10 @@ class ProspectosEmpresasController extends Controller
                 'error' => $ex->getMessage(),
             ]);
         }
+    }
+
+    public function download_excel()
+    {
+        return Excel::download(new ProspectosEmpresaExcel, 'prospectos_empresas.xlsx');
     }
 }

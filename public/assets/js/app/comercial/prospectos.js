@@ -180,7 +180,7 @@ $(document).ready(function () {
                                     <td>${element.tipo_cliente}</td>
                                     <td>${element.pais}</td>
                                     <td>${element.empresa ? element.empresa : ""}</td>
-                                    <td>${element.nombres}</td>
+                                    <td>${element.nombres ? element.nombres : ""}</td>
                                     <td>${element.apellidos ? element.apellidos : ""}</td>
                                     <td>${element.email ? element.email : ""}</td>
                                     <td>${element.celular ? element.celular : ""}</td>
@@ -314,7 +314,7 @@ $(document).ready(function () {
                                     <td>${element.tipo_cliente}</td>
                                     <td>${element.pais}</td>
                                     <td>${element.empresa ? element.empresa : ""}</td>
-                                    <td>${element.nombres}</td>
+                                    <td>${element.nombres ? element.nombres : ""}</td>
                                     <td>${element.apellidos ? element.apellidos : ""}</td>
                                     <td>${element.email ? element.email : ""}</td>
                                     <td>${element.celular ? element.celular : ""}</td>
@@ -450,7 +450,7 @@ $(document).ready(function () {
                                     <td>${element.tipo_cliente}</td>
                                     <td>${element.pais}</td>
                                     <td>${element.empresa ? element.empresa : ""}</td>
-                                    <td>${element.nombres}</td>
+                                    <td>${element.nombres ? element.nombres : ""}</td>
                                     <td>${element.apellidos ? element.apellidos : ""}</td>
                                     <td>${element.email ? element.email : ""}</td>
                                     <td>${element.celular ? element.celular : ""}</td>

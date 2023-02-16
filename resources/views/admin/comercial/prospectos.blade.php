@@ -25,6 +25,10 @@
                             <h3 class="card-title mt-2">Prospectos Personas</h3>
                         </div>
                         <div class="div-2-tables-header">
+                            <a class="btn btn-primary" href="{{ route('prospectos_bd_excel') }}" target="_blank">
+                                Exportar
+                            </a>
+                            &nbsp;
                             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAdd">
                                 Añadir Nuevo
                             </button>

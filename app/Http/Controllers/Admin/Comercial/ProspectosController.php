@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Comercial;
 
+use App\Exports\ProspectosExcel;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProspectosController extends Controller
 {
@@ -202,5 +204,10 @@ class ProspectosController extends Controller
                 'error' => $ex->getMessage(),
             ]);
         }
+    }
+
+    public function download_excel()
+    {
+        return Excel::download(new ProspectosExcel, 'prospectos.xlsx');
     }
 }
