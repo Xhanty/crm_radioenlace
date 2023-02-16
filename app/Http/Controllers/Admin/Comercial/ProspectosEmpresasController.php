@@ -50,7 +50,7 @@ class ProspectosEmpresasController extends Controller
                 ->addColumn('action', function ($row) {
                     $actionBtn = '<a data-id="' . $row->id . '" title="Ver" class="edit btn btn-primary btn-sm btnView"><i class="fa fa-eye"></i></a>
 
-                    <a data-id="' . $row->id . '" title="Modificar" class="edit btn btn-primary btn-sm btnEdit"><i class="fa fa-pencil-alt"></i></a>
+                    <a data-id="' . $row->id . '" title="Modificar" class="edit btn btn-warning btn-sm btnEdit"><i class="fa fa-pencil-alt"></i></a>
 
                     <a data-id="' . $row->id . '" title="Eliminar" class="delete btn btn-danger btn-sm btnDelete"><i class="fa fa-trash"></i></a>
 
