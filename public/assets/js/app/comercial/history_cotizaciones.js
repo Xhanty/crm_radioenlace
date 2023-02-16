@@ -43,8 +43,10 @@ $(document).ready(function () {
     });
 
     $(document).on("click", ".btnEdit", function () {
+        let id = $(this).data("id");
         let observacion = $(this).data("mensaje");
 
+        $("#observacion_id").val(id);
         $("#observacion_edit").val(observacion);
         $("#modalEdit").modal("show");
     });
@@ -82,7 +84,7 @@ $(document).ready(function () {
     });
 
     $("#btnGuardarEdit").click(function () {
-        let id = $("#cotizacion_id").val();
+        let id = $("#observacion_id").val();
         let observacion = $("#observacion_edit").val();
 
         if (observacion == "") {

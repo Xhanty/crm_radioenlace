@@ -123,6 +123,7 @@
                             data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
+                        <input type="hidden" disabled readonly id="observacion_id">
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Observación</label>

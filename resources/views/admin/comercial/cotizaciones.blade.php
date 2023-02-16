@@ -110,6 +110,7 @@
                                         @php
                                             $aprobado = $cotizacion->aprobado;
                                             $color = '';
+                                            $color_fecha = '';
                                             
                                             if ($aprobado == 0) {
                                                 $color = 'rgb(255 193 7 / 30%);';
@@ -117,6 +118,10 @@
                                                 $color = 'rgb(11 163 96 / 30%);';
                                             } elseif ($aprobado == 2) {
                                                 $color = 'rgb(245 60 91 / 30%);';
+                                            }
+
+                                            if($cotizacion->fecha_revision) {
+                                                $color_fecha = 'rgb(245 60 91 / 30%);';
                                             }
                                         @endphp
                                         <tr style="background: {{ $color }}">
@@ -140,7 +145,7 @@
                                             </td>
                                             <td class="text-center">
                                                 <input type="text" data-id="{{ $cotizacion->id }}"
-                                                    title="Fecha Revisión" placeholder="Fecha Revisión"
+                                                    title="Fecha Revisión" style="background: {{ $color_fecha }}" placeholder="Fecha Revisión"
                                                     onfocus="(this.type='date')" class="form-control mb-2 date_revision text-center"
                                                     value="{{ $cotizacion->fecha_revision }}">
                                                 <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}"
