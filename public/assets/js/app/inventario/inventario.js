@@ -33,6 +33,9 @@ $(function () {
         formData.append("observaciones", observaciones);
 
         $("#btnGuardarProducto").attr("disabled", true);
+        $("#btnGuardarProducto").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+        );
         $.ajax({
             url: "productos_create",
             data: formData,
@@ -50,11 +53,13 @@ $(function () {
                 } else {
                     toastr.error("Error al guardar el producto");
                     $("#btnGuardarProducto").attr("disabled", false);
+                    $("#btnGuardarProducto").html("Guardar");
                 }
             },
             error: function (error) {
                 toastr.error("Error al guardar el producto");
                 $("#btnGuardarProducto").attr("disabled", false);
+                $("#btnGuardarProducto").html("Guardar");
             },
         });
     });
@@ -80,6 +85,9 @@ $(function () {
         formData.append("observaciones", observaciones);
 
         $("#btnEditarProducto").attr("disabled", true);
+        $("#btnEditarProducto").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+        );
         $.ajax({
             url: "productos_edit",
             data: formData,
@@ -97,11 +105,13 @@ $(function () {
                 } else {
                     toastr.error("Error al modificar el producto");
                     $("#btnEditarProducto").attr("disabled", false);
+                    $("#btnEditarProducto").html("Modificar");
                 }
             },
             error: function (error) {
                 toastr.error("Error al modificar el producto");
                 $("#btnEditarProducto").attr("disabled", false);
+                $("#btnEditarProducto").html("Modificar");
             },
         });
     });

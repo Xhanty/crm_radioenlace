@@ -80,6 +80,9 @@ $(function () {
         }
 
         $("#btnGuardarAsignacion").attr("disabled", true);
+        $("#btnGuardarAsignacion").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+        );
         $.ajax({
             url: "asignacion_add",
             data: formData,
@@ -97,11 +100,13 @@ $(function () {
                 } else {
                     toastr.error("Error al crear la asignación");
                     $("#btnGuardarAsignacion").attr("disabled", false);
+                    $("#btnGuardarAsignacion").html("Guardar");
                 }
             },
             error: function (error) {
                 toastr.error("Error al crear la asignación");
                 $("#btnGuardarAsignacion").attr("disabled", false);
+                $("#btnGuardarAsignacion").html("Guardar");
             },
         });
     });
@@ -373,6 +378,9 @@ $(function () {
         }
 
         $("#btnEditarAsignacion").attr("disabled", true);
+        $("#btnEditarAsignacion").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+        );
         $.ajax({
             url: "asignacion_edit",
             data: formData,
@@ -390,11 +398,13 @@ $(function () {
                 } else {
                     toastr.error("Error al modificar la asignación");
                     $("#btnEditarAsignacion").attr("disabled", false);
+                    $("#btnEditarAsignacion").html("Modificar");
                 }
             },
             error: function (error) {
                 toastr.error("Error al modificar la asignación");
                 $("#btnEditarAsignacion").attr("disabled", false);
+                $("#btnEditarAsignacion").html("Modificar");
             },
         });
     });

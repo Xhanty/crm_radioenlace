@@ -33,8 +33,14 @@ Route::get('/clear-cache', function () {
     return 'DONE'; //Return anything
 });
 
+// PRECIOS PROVEEDORES
+Route::get('/precios_update', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'precios_update'])->name('precios_update');
+Route::get('/precios_update_view', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'precios_update_view'])->name('precios_update_view');
+Route::post('/precios_edit', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'precios_edit'])->name('precios_edit');
+
 Route::post('/login', [App\Http\Controllers\LoginController::class, 'login'])->name('login');
 
+// RUTAS PARA USUARIOS
 Route::middleware(['auth_user'])->group(function () {
     // CERRAR SESION
     Route::post('/logout_user', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout_user');
@@ -197,7 +203,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/archivos_add', [App\Http\Controllers\Admin\Documentos\ArchivosController::class, 'archivos_add'])->name('archivos_add');
     Route::get('/documentos', [App\Http\Controllers\Admin\Documentos\DocumentosController::class, 'index'])->name('documentos');
 
-    // COMERCIAL history_cotizaciones
+    // COMERCIAL
     Route::get('/ordenes_compra', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'index'])->name('ordenes_compra');
     Route::post('/orden_compra_create', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'create'])->name('orden_compra_create');
     Route::post('/orden_compra_data', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'data'])->name('orden_compra_data');
@@ -218,7 +224,6 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/cotizacion_email', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'send'])->name('cotizacion_email');
     Route::post('/cotizacion_aprobado', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'aprobacion'])->name('cotizacion_aprobado');
     Route::post('/cotizacion_fecha_revision', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'update_revision'])->name('cotizacion_fecha_revision');
-    Route::get('/remisiones', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'index'])->name('remisiones');
     Route::get('/precios_proveedores', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'index'])->name('precios_proveedores');
     Route::post('/precios_proveedores_add', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'add'])->name('precios_proveedores_add');
     Route::post('/precios_proveedores_delete', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'delete'])->name('precios_proveedores_delete');
@@ -226,6 +231,13 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/precios_proveedores_data', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'data_precios'])->name('precios_proveedores_data');
     Route::post('/precios_proveedores_edit', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'edit'])->name('precios_proveedores_edit');
     
+    // REMISIONES
+    Route::get('/remisiones', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'index'])->name('remisiones');
+    Route::post('/remisiones_add', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'add'])->name('remisiones_add');
+    Route::post('/remisiones_edit', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'edit'])->name('remisiones_edit');
+    Route::post('/remisiones_delete', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'delete'])->name('remisiones_delete');
+    
+    // HISTORIAL DE COTIZACIONES
     Route::get('/history_cotizaciones', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'history'])->name('history_cotizaciones');
     Route::post('/history_cotizaciones_add', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'history_add'])->name('history_cotizaciones_add');
     Route::post('/history_cotizaciones_edit', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'history_edit'])->name('history_cotizaciones_edit');
@@ -298,6 +310,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/prospectos_empresas_bd_import', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'import_excel'])->name('prospectos_empresas_bd_import');
 });
 
+// RUTAS PARA EL CALENDARIO
 Route::group(['middleware' => 'auth'], function () {
     Route::get('tasks',  [App\Http\Controllers\TaskProjectController::class, 'index'])->name('tasks.index');
     Route::post('tasks', [App\Http\Controllers\TaskProjectController::class, 'store'])->name('tasks.store');
@@ -314,17 +327,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('tasks/sync', [App\Http\Controllers\TaskProjectController::class, 'sync'])->name('tasks.sync');
     Route::put('tasks/{task}', [App\Http\Controllers\TaskProjectController::class, 'update'])->name('tasks.update');
 
+    Route::post('statuses', [App\Http\Controllers\StatusController::class, 'store'])->name('statuses.store');
+    Route::put('statuses', [App\Http\Controllers\StatusController::class, 'update'])->name('statuses.update');
+
     Route::get('gantt',  [App\Http\Controllers\GanttController::class, 'index'])->name('gantt');
     Route::get('data_tasks_gantt',  [App\Http\Controllers\GanttController::class, 'data'])->name('data_tasks_gantt');
     //Route::get('gantt/{project}',  [App\Http\Controllers\GanttController::class, 'show'])->name('gantt.show');
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::post('statuses', [App\Http\Controllers\StatusController::class, 'store'])->name('statuses.store');
-    Route::put('statuses', [App\Http\Controllers\StatusController::class, 'update'])->name('statuses.update');
+    Route::get('facturas',  [App\Http\Controllers\Admin\Siigo\FacturasController::class, 'get_facturas'])->name('facturas');
 });
-
-// PRECIOS PROVEEDORES
-Route::get('/precios_update', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'precios_update'])->name('precios_update');
-Route::get('/precios_update_view', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'precios_update_view'])->name('precios_update_view');
-Route::post('/precios_edit', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'precios_edit'])->name('precios_edit');

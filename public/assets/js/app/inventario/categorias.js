@@ -49,6 +49,9 @@ $(document).ready(function () {
             toastr.error("No puedes dejar campos vacíos");
         } else {
             $("#btnGuardarCategoria").attr("disabled", true);
+            $("#btnGuardarCategoria").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "categorias_create",
                 type: "POST",
@@ -62,12 +65,14 @@ $(document).ready(function () {
                         }, 1000);
                     } else {
                         $("#btnGuardarCategoria").attr("disabled", false);
+                        $("#btnGuardarCategoria").html("Guardar");
                         toastr.error("Error al guardar la categoría");
                     }
                 },
                 error: function (error) {
                     console.log(error);
                     $("#btnGuardarCategoria").attr("disabled", false);
+                    $("#btnGuardarCategoria").html("Guardar");
                     toastr.error("Error al guardar la categoría");
                 },
             });
@@ -221,6 +226,9 @@ $(document).ready(function () {
         } else {
 
             $("#btnModificarCategoria").attr("disabled", true);
+            $("#btnModificarCategoria").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "categorias_edit",
                 type: "POST",
@@ -234,12 +242,14 @@ $(document).ready(function () {
                         }, 1000);
                     } else {
                         $("#btnModificarCategoria").attr("disabled", false);
+                        $("#btnModificarCategoria").html("Modificar");
                         toastr.error("Error al modificar la categoría");
                     }
                 },
                 error: function (error) {
                     console.log(error);
-                     $("#btnModificarCategoria").attr("disabled", false);
+                    $("#btnModificarCategoria").attr("disabled", false);
+                    $("#btnModificarCategoria").html("Modificar");
                     toastr.error("Error al modificar la categoría");
                 },
             });

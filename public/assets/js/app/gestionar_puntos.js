@@ -87,6 +87,9 @@ $(function () {
             return false;
         } else {
             $("#btnGuardarPuntos").attr("disabled", true);
+            $("#btnGuardarPuntos").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "puntos_add",
                 type: "POST",
@@ -105,11 +108,13 @@ $(function () {
                         }, 1000);
                     } else {
                         $("#btnGuardarPuntos").attr("disabled", false);
+                        $("#btnGuardarPuntos").html("Guardar");
                         toastr.error("Error al asignar los puntos");
                     }
                 },
                 error: function (data) {
                     $("#btnGuardarPuntos").attr("disabled", false);
+                    $("#btnGuardarPuntos").html("Guardar");
                     toastr.error("Error al asignar los puntos");
                 },
             });
@@ -184,6 +189,9 @@ $(function () {
             return false;
         } else {
             $("#btnModificarPuntos").attr("disabled", true);
+            $("#btnModificarPuntos").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Modificando...'
+            );
             $.ajax({
                 url: "puntos_edit",
                 type: "POST",
@@ -203,11 +211,13 @@ $(function () {
                         }, 1000);
                     } else {
                         $("#btnModificarPuntos").attr("disabled", false);
+                        $("#btnModificarPuntos").html("Modificar");
                         toastr.error("Error al modificar los puntos");
                     }
                 },
                 error: function (data) {
                     $("#btnModificarPuntos").attr("disabled", false);
+                    $("#btnModificarPuntos").html("Modificar");
                     toastr.error("Error al modificar los puntos");
                 },
             });

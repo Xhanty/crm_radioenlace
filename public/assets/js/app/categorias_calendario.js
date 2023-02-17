@@ -72,6 +72,9 @@ $(document).ready(function () {
             toastr.error("El campo nombre es obligatorio");
         } else {
             $("#btnGuardarCategoria").attr("disabled", true);
+            $("#btnGuardarCategoria").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "categorias_calendario_add",
                 type: "POST",
@@ -91,11 +94,13 @@ $(document).ready(function () {
                             "Ha ocurrido un error al crear la categoría"
                         );
                         $("#btnGuardarCategoria").attr("disabled", false);
+                        $("#btnGuardarCategoria").html("Modificar");
                     }
                 },
                 error: function (error) {
                     toastr.error("Ha ocurrido un error al crear la categoría");
                     $("#btnGuardarCategoria").attr("disabled", false);
+                    $("#btnGuardarCategoria").html("Modificar");
                     console.log(error);
                 },
             });
@@ -113,6 +118,9 @@ $(document).ready(function () {
             toastr.error("El campo nombre es obligatorio");
         } else {
             $("#btnEditarCategoria").attr("disabled", true);
+            $("#btnEditarCategoria").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "categorias_calendario_update",
                 type: "POST",
@@ -133,11 +141,13 @@ $(document).ready(function () {
                             "Ha ocurrido un error al modificar la categoría"
                         );
                         $("#btnEditarCategoria").attr("disabled", false);
+                        $("#btnEditarCategoria").html("Guardar");
                     }
                 },
                 error: function (error) {
                     toastr.error("Ha ocurrido un error al editar la categoría");
                     $("#btnEditarCategoria").attr("disabled", false);
+                    $("#btnEditarCategoria").html("Guardar");
                     console.log(error);
                 },
             });

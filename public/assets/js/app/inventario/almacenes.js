@@ -30,6 +30,9 @@ $(document).ready(function () {
             toastr.error("El campo nombre es obligatorio");
         } else {
             $("#btnGuardarAlmacen").attr("disabled", true);
+            $("#btnGuardarAlmacen").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "almacenes_create",
                 type: "POST",
@@ -48,12 +51,14 @@ $(document).ready(function () {
                         }, 1000);
                     } else {
                         $("#btnGuardarAlmacen").attr("disabled", false);
+                        $("#btnGuardarAlmacen").html("Guardar");
                         toastr.error("Error al guardar el almacén");
                     }
                 },
                 error: function (error) {
                     console.log(error);
                     $("#btnGuardarAlmacen").attr("disabled", false);
+                    $("#btnGuardarAlmacen").html("Guardar");
                     toastr.error("Error al guardar el almacén");
                 },
             });
@@ -81,6 +86,9 @@ $(document).ready(function () {
             toastr.error("El campo nombre es obligatorio");
         } else {
             $("#btnModificarAlmacen").attr("disabled", true);
+            $("#btnModificarAlmacen").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "almacenes_update",
                 type: "POST",
@@ -98,12 +106,14 @@ $(document).ready(function () {
                         }, 1000);
                     } else {
                         $("#btnModificarAlmacen").attr("disabled", false);
+                        $("#btnModificarAlmacen").html("Modificar");
                         toastr.error("Error al modificar el almacén");
                     }
                 },
                 error: function (error) {
                     console.log(error);
                     $("#btnModificarAlmacen").attr("disabled", false);
+                    $("#btnModificarAlmacen").html("Modificar");
                     toastr.error("Error al modificar el almacén");
                 },
             });

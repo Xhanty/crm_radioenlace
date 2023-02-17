@@ -956,6 +956,9 @@ $(document).ready(function () {
             return false;
         } else {
             $("#btn_save_email").attr("disabled", true);
+            $("#btn_save_email").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Enviando...'
+            );
             $.ajax({
                 type: "POST",
                 url: "cotizacion_email",
@@ -966,14 +969,17 @@ $(document).ready(function () {
                         $(".emailadd").val("");
                         $("#modalEmail").modal("hide");
                         $("#btn_save_email").attr("disabled", false);
+                        $("#btn_save_email").html("Enviar Cotización");
                     } else {
                         toastr.error("Error al enviar el correo");
                         $("#btn_save_email").attr("disabled", false);
+                        $("#btn_save_email").html("Enviar Cotización");
                     }
                 },
                 error: function (response) {
                     toastr.error("Error al enviar el correo");
                     $("#btn_save_email").attr("disabled", false);
+                    $("#btn_save_email").html("Enviar Cotización");
                 },
             });
         }

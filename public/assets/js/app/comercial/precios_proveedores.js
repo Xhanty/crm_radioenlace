@@ -308,6 +308,9 @@ $(document).ready(function () {
             toastr.error("Debe completar todos los campos de los productos");
         } else {
             $("#btnGuardar").attr("disabled", true);
+            $("#btnGuardar").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "precios_proveedores_add",
                 type: "POST",
@@ -328,11 +331,13 @@ $(document).ready(function () {
                     } else {
                         toastr.error("Error al guardar");
                         $("#btnGuardar").attr("disabled", false);
+                        $("#btnGuardar").html("Guardar");
                     }
                 },
                 error: function (data) {
                     toastr.error("Error al guardar");
                     $("#btnGuardar").attr("disabled", false);
+                    $("#btnGuardar").html("Guardar");
                 }
             });
         }
@@ -376,6 +381,9 @@ $(document).ready(function () {
             toastr.error("Debe completar todos los campos de los productos");
         } else {
             $("#btnUpdate").attr("disabled", true);
+            $("#btnUpdate").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "precios_proveedores_edit",
                 type: "POST",
@@ -397,11 +405,13 @@ $(document).ready(function () {
                     } else {
                         toastr.error("Error al guardar");
                         $("#btnUpdate").attr("disabled", false);
+                        $("#btnUpdate").html("Modificar");
                     }
                 },
                 error: function (data) {
                     toastr.error("Error al guardar");
                     $("#btnUpdate").attr("disabled", false);
+                    $("#btnUpdate").html("Modificar");
                 }
             });
         }
@@ -422,6 +432,9 @@ $(document).ready(function () {
             toastr.error("Debe ingresar los emails");
         } else {
             $("#btnSendEmail").attr("disabled", true);
+            $("#btnSendEmail").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Enviando...'
+            );
             $.ajax({
                 url: "precios_proveedores_send_email",
                 type: "POST",
@@ -434,17 +447,20 @@ $(document).ready(function () {
                         toastr.success("Enviado con éxito");
                         $("#modalEmail").modal("hide");
                         $("#btnSendEmail").attr("disabled", false);
+                        $("#btnSendEmail").html("Enviar");
                         $(".emailadd").each(function () {
                             $(this).val("");
                         });
                     } else {
                         toastr.error("Error al enviar");
                         $("#btnSendEmail").attr("disabled", false);
+                        $("#btnSendEmail").html("Enviar");
                     }
                 },
                 error: function (data) {
                     toastr.error("Error al enviar");
                     $("#btnSendEmail").attr("disabled", false);
+                    $("#btnSendEmail").html("Enviar");
                 }
             });
         }

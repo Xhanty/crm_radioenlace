@@ -59,6 +59,9 @@ $(document).ready(function () {
             toastr.error("Debe ingresar una observación");
         } else {
             $("#btnGuardar").attr("disabled", true);
+            $("#btnGuardar").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "history_cotizaciones_add",
                 data: { id: id, observacion: observacion },
@@ -71,11 +74,13 @@ $(document).ready(function () {
                         }, 1000);
                     } else {
                         $("#btnGuardar").attr("disabled", false);
+                        $("#btnGuardar").html("Guardar");
                         toastr.error("Error al guardar la observación");
                     }
                 },
                 error: function (error) {
                     $("#btnGuardar").attr("disabled", false);
+                    $("#btnGuardar").html("Guardar");
                     toastr.error("Error al guardar la observación");
                     console.log(error);
                 }
@@ -91,6 +96,9 @@ $(document).ready(function () {
             toastr.error("Debe ingresar una observación");
         } else {
             $("#btnGuardarEdit").attr("disabled", true);
+            $("#btnGuardarEdit").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "history_cotizaciones_edit",
                 data: { id: id, observacion: observacion },
@@ -103,11 +111,13 @@ $(document).ready(function () {
                         }, 1000);
                     } else {
                         $("#btnGuardarEdit").attr("disabled", false);
+                        $("#btnGuardarEdit").html("Guardar");
                         toastr.error("Error al editar la observación");
                     }
                 },
                 error: function (error) {
                     $("#btnGuardarEdit").attr("disabled", false);
+                    $("#btnGuardarEdit").html("Guardar");
                     toastr.error("Error al editar la observación");
                     console.log(error);
                 }

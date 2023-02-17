@@ -88,6 +88,9 @@ $(document).ready(function () {
         formData.append("archivo", $("#avataradd")[0].files[0]);
 
         $("#btnAddCliente").attr("disabled", true);
+        $("#btnAddCliente").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+        );
         $.ajax({
             url: "clientes_add",
             type: "POST",
@@ -98,13 +101,13 @@ $(document).ready(function () {
             data: formData,
             success: function (data) {
                 if (data.info == 1) {
-                    $("#btnAddCliente").attr("disabled", false);
                     toastr.success("Cliente agregado correctamente");
                     setTimeout(function () {
                         window.location.reload();
                     }, 1000);
                 } else {
                     $("#btnAddCliente").attr("disabled", false);
+                    $("#btnAddCliente").html("Agregar Cliente");
                     toastr.error("Error al agregar cliente");
                 }
             },
@@ -148,6 +151,9 @@ $(document).ready(function () {
         formData.append("archivo", $("#avataredit")[0].files[0]);
 
         $("#btnModificarCliente1").attr("disabled", true);
+        $("#btnModificarCliente1").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+        );
         $.ajax({
             url: "clientes_update",
             type: "POST",
@@ -159,14 +165,17 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.info == 1) {
                     $("#btnModificarCliente1").attr("disabled", false);
+                    $("#btnModificarCliente1").html("Modificar Datos Básicos");
                     toastr.success("Cliente actualizado correctamente");
                 } else {
                     $("#btnModificarCliente1").attr("disabled", false);
+                    $("#btnModificarCliente1").html("Modificar Datos Básicos");
                     toastr.error("Error al actualizar cliente");
                 }
             },
             error: function (response) {
                 $("#btnModificarCliente1").attr("disabled", false);
+                $("#btnModificarCliente1").html("Modificar Datos Básicos");
                 toastr.error("Error al actualizar cliente");
             },
         });
@@ -185,6 +194,9 @@ $(document).ready(function () {
         let indicativo_telefono = $("#indicativo_fact_edit").val();
 
         $("#btnModificarCliente2").attr("disabled", true);
+        $("#btnModificarCliente2").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+        );
         $.ajax({
             url: "clientes_update",
             type: "POST",
@@ -204,14 +216,17 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.info == 1) {
                     $("#btnModificarCliente2").attr("disabled", false);
+                    $("#btnModificarCliente2").html("Modificar Datos Facturación");
                     toastr.success("Cliente actualizado correctamente");
                 } else {
                     $("#btnModificarCliente2").attr("disabled", false);
+                    $("#btnModificarCliente2").html("Modificar Datos Facturación");
                     toastr.error("Error al actualizar cliente");
                 }
             },
             error: function (response) {
                 $("#btnModificarCliente2").attr("disabled", false);
+                $("#btnModificarCliente2").html("Modificar Datos Facturación");
                 toastr.error("Error al actualizar cliente");
             },
         });
@@ -227,6 +242,9 @@ $(document).ready(function () {
         let extension = $("#extension_tecn_edit").val();
 
         $("#btnModificarCliente3").attr("disabled", true);
+        $("#btnModificarCliente3").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+        );
         $.ajax({
             url: "clientes_update",
             type: "POST",
@@ -243,14 +261,17 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.info == 1) {
                     $("#btnModificarCliente3").attr("disabled", false);
+                    $("#btnModificarCliente3").html("Modificar Datos Técnicos");
                     toastr.success("Cliente actualizado correctamente");
                 } else {
                     $("#btnModificarCliente3").attr("disabled", false);
+                    $("#btnModificarCliente3").html("Modificar Datos Técnicos");
                     toastr.error("Error al actualizar cliente");
                 }
             },
             error: function (response) {
                 $("#btnModificarCliente3").attr("disabled", false);
+                $("#btnModificarCliente3").html("Modificar Datos Técnicos");
                 toastr.error("Error al actualizar cliente");
             },
         });
@@ -321,21 +342,21 @@ $(document).ready(function () {
                                 }
                                 $("#table_anexos_edit").append(
                                     "<tr><td>" +
-                                        tipo_badge +
-                                        "</td><td>" +
-                                        date.toLocaleString() +
-                                        "</td><td>" +
-                                        anexo.descripcion +
-                                        "</td><td>" +
-                                        anexo.creador +
-                                        "</td><td>" +
-                                        '<a target="_BLANK" href="https://formrad.com/radio_enlace/documentos_clientes/' +
-                                        anexo.documento +
-                                        '"><i class="fa fa-download"></i>&nbsp;Descargar</a><br>' +
-                                        '<a class="btn_delete_archivo" data-id="' +
-                                        anexo.id +
-                                        '" href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>' +
-                                        "</td></tr>"
+                                    tipo_badge +
+                                    "</td><td>" +
+                                    date.toLocaleString() +
+                                    "</td><td>" +
+                                    anexo.descripcion +
+                                    "</td><td>" +
+                                    anexo.creador +
+                                    "</td><td>" +
+                                    '<a target="_BLANK" href="https://formrad.com/radio_enlace/documentos_clientes/' +
+                                    anexo.documento +
+                                    '"><i class="fa fa-download"></i>&nbsp;Descargar</a><br>' +
+                                    '<a class="btn_delete_archivo" data-id="' +
+                                    anexo.id +
+                                    '" href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>' +
+                                    "</td></tr>"
                                 );
                             });
 
@@ -452,6 +473,9 @@ $(document).ready(function () {
         formData.append("archivo", $("#archivoadd")[0].files[0]);
 
         $("#btnModificarCliente4").attr("disabled", true);
+        $("#btnModificarCliente4").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+        );
         $.ajax({
             url: "clientes_update",
             type: "POST",
@@ -501,21 +525,21 @@ $(document).ready(function () {
                         }
                         $("#table_anexos_edit").append(
                             "<tr><td>" +
-                                tipo_badge +
-                                "</td><td>" +
-                                date.toLocaleString() +
-                                "</td><td>" +
-                                anexo.descripcion +
-                                "</td><td>" +
-                                anexo.creador +
-                                "</td><td>" +
-                                '<a target="_BLANK" href="https://formrad.com/radio_enlace/documentos_clientes/' +
-                                anexo.documento +
-                                '"><i class="fa fa-download"></i>&nbsp;Descargar</a><br>' +
-                                '<a class="btn_delete_archivo" data-id="' +
-                                anexo.id +
-                                '" href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>' +
-                                "</td></tr>"
+                            tipo_badge +
+                            "</td><td>" +
+                            date.toLocaleString() +
+                            "</td><td>" +
+                            anexo.descripcion +
+                            "</td><td>" +
+                            anexo.creador +
+                            "</td><td>" +
+                            '<a target="_BLANK" href="https://formrad.com/radio_enlace/documentos_clientes/' +
+                            anexo.documento +
+                            '"><i class="fa fa-download"></i>&nbsp;Descargar</a><br>' +
+                            '<a class="btn_delete_archivo" data-id="' +
+                            anexo.id +
+                            '" href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>' +
+                            "</td></tr>"
                         );
                     });
 
@@ -524,6 +548,7 @@ $(document).ready(function () {
                     });
 
                     $("#btnModificarCliente4").attr("disabled", false);
+                    $("#btnModificarCliente4").html("Guardar");
 
                     $("#tipodocumentoadd").val(0);
                     $("#descripcionadd").val("");
@@ -532,11 +557,13 @@ $(document).ready(function () {
                     toastr.success("Cliente actualizado correctamente");
                 } else {
                     $("#btnModificarCliente4").attr("disabled", false);
+                    $("#btnModificarCliente4").html("Guardar");
                     toastr.error("Error al actualizar cliente");
                 }
             },
             error: function (response) {
                 $("#btnModificarCliente4").attr("disabled", false);
+                $("#btnModificarCliente4").html("Guardar");
                 toastr.error("Error al actualizar cliente");
             },
         });

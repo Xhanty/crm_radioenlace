@@ -304,7 +304,9 @@ $(document).ready(function () {
             return false;
         } else {
             $("#btnCompraProducto").attr("disabled", true);
-
+            $("#btnCompraProducto").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             if (proveedor == "*" || proveedor == "") {
                 proveedor = null;
             }
@@ -326,6 +328,7 @@ $(document).ready(function () {
                 },
                 success: function (response) {
                     $("#btnCompraProducto").attr("disabled", false);
+                    $("#btnCompraProducto").html("Guardar");
                     if (response.info == 1) {
                         $("#modalCompra").modal("hide");
                         $("#modalIngreso").modal("hide");
@@ -344,6 +347,7 @@ $(document).ready(function () {
                 error: function (error) {
                     toastr.error("Error al realizar el ingreso");
                     $("#btnCompraProducto").attr("disabled", false);
+                    $("#btnCompraProducto").html("Guardar");
                     console.log(error);
                 },
             });
@@ -371,6 +375,9 @@ $(document).ready(function () {
             return false;
         } else {
             $("#btnReIngresoProducto").attr("disabled", true);
+            $("#btnReIngresoProducto").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "reingreso_inventario",
                 type: "POST",
@@ -383,6 +390,7 @@ $(document).ready(function () {
                 },
                 success: function (response) {
                     $("#btnReIngresoProducto").attr("disabled", false);
+                    $("#btnReIngresoProducto").html("Guardar");
                     if (response.info == 1) {
                         $("#modalIngreso").modal("hide");
                         $("#modalReingreso").modal("hide");
@@ -401,6 +409,7 @@ $(document).ready(function () {
                 error: function (error) {
                     toastr.error("Error al realizar el reingreso");
                     $("#btnReIngresoProducto").attr("disabled", false);
+                    $("#btnReIngresoProducto").html("Guardar");
                     console.log(error);
                 },
             });
@@ -776,6 +785,9 @@ $(document).ready(function () {
             return false;
         } else {
             $("#btnAlquilerProducto").attr("disabled", true);
+            $("#btnAlquilerProducto").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "salidas_inventario",
                 type: "POST",
@@ -790,6 +802,7 @@ $(document).ready(function () {
                 },
                 success: function (response) {
                     $("#btnAlquilerProducto").attr("disabled", false);
+                    $("#btnAlquilerProducto").html("Guardar");
                     if (response.info == 1) {
                         $("#modalAlquiler").modal("hide");
                         Swal.fire({
@@ -807,6 +820,7 @@ $(document).ready(function () {
                 error: function (error) {
                     toastr.error("Error al realizar el alquiler");
                     $("#btnAlquilerProducto").attr("disabled", false);
+                    $("#btnAlquilerProducto").html("Guardar");
                     console.log(error);
                 },
             });
@@ -837,6 +851,9 @@ $(document).ready(function () {
             return false;
         } else {
             $("#btnAsignadoProducto").attr("disabled", true);
+            $("#btnAsignadoProducto").html(     
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "salidas_inventario",
                 type: "POST",
@@ -851,6 +868,7 @@ $(document).ready(function () {
                 },
                 success: function (response) {
                     $("#btnAsignadoProducto").attr("disabled", false);
+                    $("#btnAsignadoProducto").html("Guardar");
                     if (response.info == 1) {
                         $("#modalAsignado").modal("hide");
                         Swal.fire({
@@ -868,6 +886,7 @@ $(document).ready(function () {
                 error: function (error) {
                     toastr.error("Error al realizar al asignar");
                     $("#btnAsignadoProducto").attr("disabled", false);
+                    $("#btnAsignadoProducto").html("Guardar");
                     console.log(error);
                 },
             });
@@ -902,6 +921,9 @@ $(document).ready(function () {
             return false;
         } else {
             $("#btnPrestamoProducto").attr("disabled", true);
+            $("#btnPrestamoProducto").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
 
             if (cliente == "*") {
                 cliente = null;
@@ -924,6 +946,7 @@ $(document).ready(function () {
                 },
                 success: function (response) {
                     $("#btnPrestamoProducto").attr("disabled", false);
+                    $("#btnPrestamoProducto").html("Guardar");
                     if (response.info == 1) {
                         $("#modalPrestamo").modal("hide");
                         Swal.fire({
@@ -941,6 +964,7 @@ $(document).ready(function () {
                 error: function (error) {
                     toastr.error("Error al realizar al movimiento");
                     $("#btnPrestamoProducto").attr("disabled", false);
+                    $("#btnPrestamoProducto").html("Guardar");
                     console.log(error);
                 },
             });
@@ -971,6 +995,9 @@ $(document).ready(function () {
             return false;
         } else {
             $("#btnInstalarProducto").attr("disabled", true);
+            $("#btnInstalarProducto").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "salidas_inventario",
                 type: "POST",
@@ -985,6 +1012,7 @@ $(document).ready(function () {
                 },
                 success: function (response) {
                     $("#btnInstalarProducto").attr("disabled", false);
+                    $("#btnInstalarProducto").html("Guardar");
                     if (response.info == 1) {
                         $("#modalInstalar").modal("hide");
                         Swal.fire({
@@ -1002,6 +1030,7 @@ $(document).ready(function () {
                 error: function (error) {
                     toastr.error("Error al realizar la instalación");
                     $("#btnInstalarProducto").attr("disabled", false);
+                    $("#btnInstalarProducto").html("Guardar");
                     console.log(error);
                 },
             });
@@ -1032,6 +1061,9 @@ $(document).ready(function () {
             return false;
         } else {
             $("#btnVenderProducto").attr("disabled", true);
+            $("#btnVenderProducto").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "salidas_inventario",
                 type: "POST",
@@ -1046,6 +1078,7 @@ $(document).ready(function () {
                 },
                 success: function (response) {
                     $("#btnVenderProducto").attr("disabled", false);
+                    $("#btnVenderProducto").html("Guardar");
                     if (response.info == 1) {
                         $("#modalVender").modal("hide");
                         Swal.fire({
@@ -1063,6 +1096,7 @@ $(document).ready(function () {
                 error: function (error) {
                     toastr.error("Error al realizar la venta");
                     $("#btnVenderProducto").attr("disabled", false);
+                    $("#btnVenderProducto").html("Guardar");
                     console.log(error);
                 },
             });
@@ -1089,6 +1123,9 @@ $(document).ready(function () {
             return false;
         } else {
             $("#btnDanadoProducto").attr("disabled", true);
+            $("#btnDanadoProducto").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "salidas_inventario",
                 type: "POST",
@@ -1102,6 +1139,7 @@ $(document).ready(function () {
                 },
                 success: function (response) {
                     $("#btnDanadoProducto").attr("disabled", false);
+                    $("#btnDanadoProducto").html("Guardar");
                     if (response.info == 1) {
                         $("#modalDanado").modal("hide");
                         Swal.fire({
@@ -1119,6 +1157,7 @@ $(document).ready(function () {
                 error: function (error) {
                     toastr.error("Error al realizar el movimiento");
                     $("#btnDanadoProducto").attr("disabled", false);
+                    $("#btnDanadoProducto").html("Guardar");
                     console.log(error);
                 },
             });

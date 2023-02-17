@@ -28,6 +28,9 @@ $(document).ready(function () {
             return false;
         } else {
             $("#btnGuardarProyecto").attr("disabled", true);
+            $("#btnGuardarProyecto").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "proyectos_add",
                 type: "POST",
@@ -53,12 +56,14 @@ $(document).ready(function () {
                     } else {
                         toastr.error("Error al agregar el proyecto");
                         $("#btnGuardarProyecto").attr("disabled", false);
+                        $("#btnGuardarProyecto").html("Guardar");
                     }
                 },
                 error: function (response) {
                     toastr.error("Error al agregar el proyecto");
                     console.log(response);
                     $("#btnGuardarProyecto").attr("disabled", false);
+                    $("#btnGuardarProyecto").html("Guardar");
                 },
             });
         }
@@ -86,6 +91,9 @@ $(document).ready(function () {
             return false;
         } else {
             $("#btnModificarProyecto").attr("disabled", true);
+            $("#btnModificarProyecto").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Modificando...'
+            );
             $.ajax({
                 url: "proyectos_edit",
                 type: "POST",
@@ -112,12 +120,14 @@ $(document).ready(function () {
                     } else {
                         toastr.error("Error al modificar el proyecto");
                         $("#btnModificarProyecto").attr("disabled", false);
+                        $("#btnModificarProyecto").html("Modificar");
                     }
                 },
                 error: function (response) {
                     toastr.error("Error al modificar el proyecto");
                     console.log(response);
                     $("#btnModificarProyecto").attr("disabled", false);
+                    $("#btnModificarProyecto").html("Modificar");
                 },
             });
         }

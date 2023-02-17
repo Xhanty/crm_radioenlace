@@ -65,7 +65,10 @@ $(document).ready(function () {
         if (nombre == "") {
             toastr.error("El campo nombre es obligatorio");
         } else {
-            $("#btnGuardarCategoria").attr("disabled", true);
+            $("#btnGuardarCategoria")
+            $("#btnGuardarCategoria").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "categorias_seguimientos_add",
                 type: "POST",
@@ -83,11 +86,13 @@ $(document).ready(function () {
                             "Ha ocurrido un error al crear la categoría"
                         );
                         $("#btnGuardarCategoria").attr("disabled", false);
+                        $("#btnGuardarCategoria").html("Guardar");
                     }
                 },
                 error: function (error) {
                     toastr.error("Ha ocurrido un error al crear la categoría");
                     $("#btnGuardarCategoria").attr("disabled", false);
+                    $("#btnGuardarCategoria").html("Guardar");
                     console.log(error);
                 },
             });

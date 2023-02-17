@@ -70,7 +70,10 @@ $(function () {
         formData.append("observaciones", observaciones);
         formData.append("foto", foto);
 
-        $("#btnGuardarVehiculo").attr("disabled", true);
+        $("#btnGuardarVehiculo")
+        $("#btnGuardarVehiculo").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+        );
         $.ajax({
             url: "vehiculos_create",
             data: formData,
@@ -88,11 +91,13 @@ $(function () {
                 } else {
                     toastr.error("Error al guardar el vehiculo");
                     $("#btnGuardarVehiculo").attr("disabled", false);
+                    $("#btnGuardarVehiculo").html("Guardar");
                 }
             },
             error: function (error) {
                 toastr.error("Error al guardar el vehiculo");
                 $("#btnGuardarVehiculo").attr("disabled", false);
+                $("#btnGuardarVehiculo").html("Guardar");
             },
         });
     });
@@ -155,7 +160,7 @@ $(function () {
 
                 $("#imagenedit").attr(
                     "src",
-                    url_general +"images/vehiculos/" + data.foto
+                    url_general + "images/vehiculos/" + data.foto
                 );
                 $("#idedit").val(data.id);
                 $("#marcaedit").val(data.marca);
@@ -209,7 +214,10 @@ $(function () {
         formData.append("observaciones", observaciones);
         formData.append("foto", foto);
 
-        $("#btnEditarVehiculo").attr("disabled", true);
+        $("#btnEditarVehiculo")
+        $("#btnEditarVehiculo").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+        );
         $.ajax({
             url: "vehiculos_edit",
             data: formData,
@@ -227,11 +235,13 @@ $(function () {
                 } else {
                     toastr.error("Error al modificar el vehiculo");
                     $("#btnEditarVehiculo").attr("disabled", false);
+                    $("#btnEditarVehiculo").html("Modificar");
                 }
             },
             error: function (error) {
                 toastr.error("Error al modificar el vehiculo");
                 $("#btnEditarVehiculo").attr("disabled", false);
+                $("#btnEditarVehiculo").html("Modificar");
             },
         });
     });
@@ -341,8 +351,10 @@ $(function () {
             toastr.error("Debe ingresar una sede");
             return false;
         } else {
-            $("#btnAgregarEncuesta").attr("disabled", true);
-
+            $("#btnAgregarEncuesta")
+            $("#btnAgregarEncuesta").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "add_encuesta_salud",
                 data: {
@@ -388,10 +400,12 @@ $(function () {
                         });
                         $("#sede_add").val("");
                         $("#btnAgregarEncuesta").attr("disabled", false);
+                        $("#btnAgregarEncuesta").html("Agregar Encuesta");
                         toastr.success("Encuesta agregada correctamente");
                     } else {
                         toastr.error("Error al agregar la encuesta");
                         $("#btnAgregarEncuesta").attr("disabled", false);
+                        $("#btnAgregarEncuesta").html("Agregar Encuesta");
                     }
                 },
             });

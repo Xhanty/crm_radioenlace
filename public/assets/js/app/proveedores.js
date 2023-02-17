@@ -58,7 +58,9 @@ $(function () {
         formData.append("archivo", $("#avataradd")[0].files[0]);
 
         $("#btnAddProveedor").attr("disabled", true);
-
+        $("#btnAddProveedor").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+        );
         $.ajax({
             url: "proveedores_add",
             type: "POST",
@@ -75,11 +77,13 @@ $(function () {
                     }, 1000);
                 } else {
                     $("#btnAddProveedor").attr("disabled", false);
+                    $("#btnAddProveedor").html("Agregar Proveedor");
                     toastr.error("Error al agregar el proveedor");
                 }
             },
             error: function (data) {
                 $("#btnAddProveedor").attr("disabled", false);
+                $("#btnAddProveedor").html("Agregar Proveedor");
                 toastr.error("Error al agregar el proveedor");
             },
         });
@@ -117,6 +121,9 @@ $(function () {
         formData.append("archivo", $("#avataredit")[0].files[0]);
 
         $("#btnEditProveedor").attr("disabled", true);
+        $("#btnEditProveedor").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+        );
 
         $.ajax({
             url: "proveedores_edit",
@@ -130,13 +137,16 @@ $(function () {
                 if (data.info == 1) {
                     toastr.success("Proveedor modificado correctamente");
                     $("#btnEditProveedor").attr("disabled", false); 
+                    $("#btnEditProveedor").html("Modificar Proveedor");
                 } else {
                     $("#btnEditProveedor").attr("disabled", false);
+                    $("#btnEditProveedor").html("Modificar Proveedor");
                     toastr.error("Error al modificar el proveedor");
                 }
             },
             error: function (data) {
                 $("#btnEditProveedor").attr("disabled", false);
+                $("#btnEditProveedor").html("Modificar Proveedor");
                 toastr.error("Error al modificar el proveedor");
             },
         });
@@ -386,6 +396,9 @@ $(function () {
         formData.append("archivo", $("#archivo_anexoadd")[0].files[0]);
 
         $("#btnAgregarAnexo").attr("disabled", true);
+        $("#btnAgregarAnexo").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+        );
         $.ajax({
             url: "proveedores_anexos_add",
             type: "POST",
@@ -445,6 +458,7 @@ $(function () {
                     });
 
                     $("#btnAgregarAnexo").attr("disabled", false);
+                    $("#btnAgregarAnexo").html("Guardar");
 
                     $("#tipodocumento_anexoadd").val(0);
                     $("#descripcion_anexoadd").val("");
@@ -453,11 +467,13 @@ $(function () {
                     toastr.success("Anexos actualizados correctamente");
                 } else {
                     $("#btnAgregarAnexo").attr("disabled", false);
+                    $("#btnAgregarAnexo").html("Guardar");
                     toastr.error("Error al actualizar los anexos");
                 }
             },
             error: function (response) {
                 $("#btnAgregarAnexo").attr("disabled", false);
+                $("#btnAgregarAnexo").html("Guardar");
                 toastr.error("Error al actualizar los anexos");
             },
         });

@@ -44,6 +44,7 @@ class LoginController extends Controller
 
     public function logout()
     {
+        Auth::logout();
         session()->forget('user');
         return true;
     }

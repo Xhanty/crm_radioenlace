@@ -323,6 +323,9 @@ $(document).ready(function () {
             return;
         } else {
             $("#btn_save_solicitud").attr("disabled", true);
+            $("#btn_save_solicitud").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "solicitud_inventario_add",
                 type: "POST",
@@ -340,11 +343,13 @@ $(document).ready(function () {
                         }, 2000);
                     } else {
                         $("#btn_save_solicitud").attr("disabled", false);
+                        $("#btn_save_solicitud").html("Guardar");
                         toastr.error("Error al guardar la solicitud");
                     }
                 },
                 error: function (data) {
                     $("#btn_save_solicitud").attr("disabled", false);
+                    $("#btn_save_solicitud").html("Guardar");
                     toastr.error("Error al guardar la solicitud");
                 },
             });
@@ -385,6 +390,9 @@ $(document).ready(function () {
             return;
         } else {
             $("#btn_update_solicitud").attr("disabled", true);
+            $("#btn_update_solicitud").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Actualizando...'
+            );
             $.ajax({
                 url: "solicitud_inventario_update",
                 type: "POST",
@@ -403,11 +411,13 @@ $(document).ready(function () {
                         }, 2000);
                     } else {
                         $("#btn_update_solicitud").attr("disabled", false);
+                        $("#btn_update_solicitud").html("Modificar");
                         toastr.error("Error al actualizar la solicitud");
                     }
                 },
                 error: function (data) {
                     $("#btn_update_solicitud").attr("disabled", false);
+                    $("#btn_update_solicitud").html("Modificar");
                     toastr.error("Error al actualizar la solicitud");
                 },
             });

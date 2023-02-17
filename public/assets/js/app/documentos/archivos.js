@@ -19,6 +19,9 @@ $(document).ready(function () {
             return false;
         } else {
             $("#btnGuardarArchivo").attr("disabled", true);
+            $("#btnGuardarArchivo").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "archivos_add",
                 type: "POST",
@@ -35,12 +38,14 @@ $(document).ready(function () {
                     } else {
                         toastr.error("Error al guardar el archivo");
                         $("#btnGuardarArchivo").attr("disabled", false);
+                        $("#btnGuardarArchivo").html("Guardar");
                     }
                 },
                 error: function (error) {
                     console.log(error);
                     toastr.error("Error al guardar el archivo");
                     $("#btnGuardarArchivo").attr("disabled", false);
+                    $("#btnGuardarArchivo").html("Guardar");
                 },
             });
         }

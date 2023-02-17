@@ -382,6 +382,9 @@ $(document).ready(function () {
         let clave = $("#new_clave_empleado").val();
 
         $("#btnChangeClave").attr("disabled", true);
+        $("#btnChangeClave").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+        );
         $.ajax({
             url: "empleados_change_clave",
             type: "POST",
@@ -398,14 +401,17 @@ $(document).ready(function () {
 
                     toastr.success("Clave actualizada correctamente");
                     $("#btnChangeClave").attr("disabled", false);
+                    $("#btnChangeClave").html("Modificar");
                 } else {
                     toastr.error("Error al actualizar la clave");
                     $("#btnChangeClave").attr("disabled", false);
+                    $("#btnChangeClave").html("Modificar");
                 }
             },
             error: function (error) {
                 toastr.error("Error al actualizar la clave");
                 $("#btnChangeClave").attr("disabled", false);
+                $("#btnChangeClave").html("Modificar");
                 console.log(error);
             },
         });
@@ -424,6 +430,9 @@ $(document).ready(function () {
             return false;
         } else {
             $("#btnAgregarNovedad").attr("disabled", true);
+            $("#btnAgregarNovedad").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "empleados_novedades",
                 type: "POST",
@@ -466,15 +475,18 @@ $(document).ready(function () {
                         $("#modalAddNovedad").modal("hide");
                         toastr.success("Novedad agregada correctamente");
                         $("#btnAgregarNovedad").attr("disabled", false);
+                        $("#btnAgregarNovedad").html("Guardar");
                     } else {
                         toastr.error("Error al agregar la novedad");
                         $("#btnAgregarNovedad").attr("disabled", false);
+                        $("#btnAgregarNovedad").html("Guardar");
                     }
                 },
                 error: function (error) {
                     console.log(error);
                     toastr.error("Error al agregar la novedad");
                     $("#btnAgregarNovedad").attr("disabled", false);
+                    $("#btnAgregarNovedad").html("Guardar");
                 },
             });
         }
@@ -496,6 +508,9 @@ $(document).ready(function () {
             return false;
         } else {
             $("#btnAgregarAnexo").attr("disabled", true);
+            $("#btnAgregarAnexo").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "empleados_anexo_add",
                 type: "POST",
@@ -602,15 +617,18 @@ $(document).ready(function () {
                         $("#modalAddAnexo").modal("hide");
                         toastr.success("Anexo agregado correctamente");
                         $("#btnAgregarAnexo").attr("disabled", false);
+                        $("#btnAgregarAnexo").html("Guardar");
                     } else {
                         toastr.error("Error al agregar el anexo");
                         $("#btnAgregarAnexo").attr("disabled", false);
+                        $("#btnAgregarAnexo").html("Guardar");
                     }
                 },
                 error: function (error) {
                     console.log(error);
                     toastr.error("Error al agregar el anexo");
                     $("#btnAgregarAnexo").attr("disabled", false);
+                    $("#btnAgregarAnexo").html("Guardar");
                 },
             });
         }
@@ -662,7 +680,9 @@ $(document).ready(function () {
             toastr.error("El nombre es obligatorio");
         } else {
             $("#btnModificarEmpleado1").attr("disabled", true);
-
+            $("#btnModificarEmpleado1").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "empleados_update",
                 type: "POST",
@@ -673,15 +693,18 @@ $(document).ready(function () {
                     if (data.info == 1) {
                         toastr.success("Empleado modificado correctamente");
                         $("#btnModificarEmpleado1").attr("disabled", false);
+                        $("#btnModificarEmpleado1").html("Modificar Datos Básicos");
                     } else {
                         toastr.error("Error al modificar el empleado");
                         $("#btnModificarEmpleado1").attr("disabled", false);
+                        $("#btnModificarEmpleado1").html("Modificar Datos Básicos");
                     }
                 },
                 error: function (error) {
                     console.log(error);
                     toastr.error("Error al modificar el empleado");
                     $("#btnModificarEmpleado1").attr("disabled", false);
+                    $("#btnModificarEmpleado1").html("Modificar Datos Básicos");
                 },
             });
         }
@@ -711,7 +734,9 @@ $(document).ready(function () {
         formData.append("terminacion_contrato", terminacion_contrato);
 
         $("#btnModificarEmpleado2").attr("disabled", true);
-
+        $("#btnModificarEmpleado2").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+        );
         $.ajax({
             url: "empleados_update",
             type: "POST",
@@ -722,15 +747,18 @@ $(document).ready(function () {
                 if (data.info == 1) {
                     toastr.success("Empleado modificado correctamente");
                     $("#btnModificarEmpleado2").attr("disabled", false);
+                    $("#btnModificarEmpleado2").html("Modificar Otra Información");
                 } else {
                     toastr.error("Error al modificar el empleado");
                     $("#btnModificarEmpleado2").attr("disabled", false);
+                    $("#btnModificarEmpleado2").html("Modificar Otra Información");
                 }
             },
             error: function (error) {
                 console.log(error);
                 toastr.error("Error al modificar el empleado");
                 $("#btnModificarEmpleado2").attr("disabled", false);
+                $("#btnModificarEmpleado2").html("Modificar Otra Información");
             },
         });
     });
@@ -771,7 +799,9 @@ $(document).ready(function () {
         formData.append("total_global", total_global);
 
         $("#btnModificarEmpleado3").attr("disabled", true);
-
+        $("#btnModificarEmpleado3").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+        );
         $.ajax({
             url: "empleados_update",
             type: "POST",
@@ -782,15 +812,18 @@ $(document).ready(function () {
                 if (data.info == 1) {
                     toastr.success("Empleado modificado correctamente");
                     $("#btnModificarEmpleado3").attr("disabled", false);
+                    $("#btnModificarEmpleado3").html("Modificar Configuración Nomina");
                 } else {
                     toastr.error("Error al modificar el empleado");
                     $("#btnModificarEmpleado3").attr("disabled", false);
+                    $("#btnModificarEmpleado3").html("Modificar Configuración Nomina");
                 }
             },
             error: function (error) {
                 console.log(error);
                 toastr.error("Error al modificar el empleado");
                 $("#btnModificarEmpleado3").attr("disabled", false);
+                $("#btnModificarEmpleado3").html("Modificar Configuración Nomina");
             },
         });
     });
@@ -840,7 +873,9 @@ $(document).ready(function () {
             toastr.error("El email es obligatorio");
         } else {
             $("#btnAgregarEmpleado").attr("disabled", true);
-
+            $("#btnAgregarEmpleado").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "empleados_add",
                 type: "POST",
@@ -856,12 +891,14 @@ $(document).ready(function () {
                     } else {
                         toastr.error("Error al crear el empleado");
                         $("#btnAgregarEmpleado").attr("disabled", false);
+                        $("#btnAgregarEmpleado").html("Agregar Empleado");
                     }
                 },
                 error: function (error) {
                     console.log(error);
                     toastr.error("Error al crear el empleado");
                     $("#btnAgregarEmpleado").attr("disabled", false);
+                    $("#btnAgregarEmpleado").html("Agregar Empleado");
                 },
             });
         }

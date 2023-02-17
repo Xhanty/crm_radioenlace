@@ -19,6 +19,9 @@ $(document).ready(function () {
         } else {
             
             $("#btnUpdateConfig").attr("disabled", true);
+            $("#btnUpdateConfig").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
             $.ajax({
                 url: "update_config_nomina",
                 type: "POST",
@@ -34,14 +37,17 @@ $(document).ready(function () {
                             "Configuración actualizada correctamente"
                         );
                         $("#btnUpdateConfig").attr("disabled", false);
+                        $("#btnUpdateConfig").html("Modificar");
                     } else {
                         toastr.error("Error al actualizar la configuración");
                         $("#btnUpdateConfig").attr("disabled", false);
+                        $("#btnUpdateConfig").html("Modificar");
                     }
                 },
                 error: function (error) {
                     toastr.error("Error al actualizar la configuración");
                     $("#btnUpdateConfig").attr("disabled", false);
+                    $("#btnUpdateConfig").html("Modificar");
                 },
             });
         }
