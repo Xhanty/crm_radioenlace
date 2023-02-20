@@ -53,17 +53,27 @@
                                             <td>{{ $value->cantidad_productos }}</td>
                                             <td>{{ $value->creador }}</td>
                                             <td>
-                                                <a href="javascript:void(0);" data-id="{{ $value->id }}"
-                                                    class="btn btn-primary btn-sm">
+                                                <a title="Ver" href="javascript:void(0);" data-id="{{ $value->id }}"
+                                                    class="btn btn-primary btn-sm btnView">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
-                                                <a href="javascript:void(0);" data-id="{{ $value->id }}"
-                                                    class="btn btn-success btn-sm">
+                                                <a title="Modificar" href="javascript:void(0);"
+                                                    data-id="{{ $value->id }}" class="btn btn-warning btn-sm btnEdit">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <a href="javascript:void(0);" data-id="{{ $value->id }}"
-                                                    class="btn btn-danger btn-sm">
+                                                <a title="Completar" href="javascript:void(0);"
+                                                    data-id="{{ $value->id }}"
+                                                    class="btn btn-success btn-sm btnCompletar">
+                                                    <i class="fa fa-check"></i>
+                                                </a>
+                                                <a title="Eliminar" href="javascript:void(0);"
+                                                    data-id="{{ $value->id }}" class="btn btn-danger btn-sm btnDelete">
                                                     <i class="fas fa-trash"></i>
+                                                </a>
+                                                <a title="Imprimir" target="_BLANK"
+                                                    href="{{ route('remisiones_print') }}?token={{ $value->id }}"
+                                                    class="btn btn-warning btn-sm btnPrint">
+                                                    <i class="fa fa-print"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -110,17 +120,26 @@
                                             <td>{{ $value->cantidad_productos }}</td>
                                             <td>{{ $value->creador }}</td>
                                             <td>
-                                                <a href="javascript:void(0);" data-id="{{ $value->id }}"
-                                                    class="btn btn-primary btn-sm">
+                                                <a title="Ver" href="javascript:void(0);" data-id="{{ $value->id }}"
+                                                    class="btn btn-primary btn-sm btnView">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
-                                                <a href="javascript:void(0);" data-id="{{ $value->id }}"
-                                                    class="btn btn-success btn-sm">
+                                                <a title="Modificar" href="javascript:void(0);"
+                                                    data-id="{{ $value->id }}" class="btn btn-warning btn-sm btnEdit">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <a href="javascript:void(0);" data-id="{{ $value->id }}"
-                                                    class="btn btn-danger btn-sm">
+                                                <a title="Enviar por correo" href="javascript:void(0);"
+                                                    data-id="{{ $value->id }}" class="btn btn-success btn-sm btnEmail">
+                                                    <i class="fa fa-envelope"></i>
+                                                </a>
+                                                <a title="Eliminar" href="javascript:void(0);"
+                                                    data-id="{{ $value->id }}" class="btn btn-danger btn-sm btnDelete">
                                                     <i class="fas fa-trash"></i>
+                                                </a>
+                                                <a title="Imprimir" target="_BLANK"
+                                                    href="{{ route('remisiones_print') }}?token={{ $value->id }}"
+                                                    class="btn btn-warning btn-sm btnPrint">
+                                                    <i class="fa fa-print"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -203,6 +222,125 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn ripple btn-primary" id="btnGuardar" type="button">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal View -->
+        <div class="modal  fade" id="modalView">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Ver Remisión</h6>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Cliente *</label>
+                                <select class="form-select" disabled id="cliente_view">
+                                    <option value="">Seleccione una opción</option>
+                                    @foreach ($clientes as $cliente)
+                                        <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row row-sm mt-3">
+                            <div class="col-lg">
+                                <label for="">Asunto *</label>
+                                <input class="form-control" id="asunto_view" disabled type="text"
+                                    placeholder="Asunto">
+                            </div>
+                        </div>
+                        <div class="row row-sm mt-3">
+                            <div class="col-lg">
+                                <label for="">Nota (Opcional)</label>
+                                <textarea class="form-control" placeholder="Nota (Opcional)" rows="3" disabled id="descripcion_view"
+                                    style="height: 70px; resize: none"></textarea>
+                            </div>
+                        </div>
+                        <br>
+                        Productos
+                        <div id="div_list_productos_view"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Edit -->
+        <div class="modal  fade" id="modalEdit">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Modificar Remisión</h6>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" disabled readonly id="id_remision_edit">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Cliente *</label>
+                                <select class="form-select" id="cliente_edit">
+                                    <option value="">Seleccione una opción</option>
+                                    @foreach ($clientes as $cliente)
+                                        <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row row-sm mt-3">
+                            <div class="col-lg">
+                                <label for="">Asunto *</label>
+                                <input class="form-control" type="text" id="asunto_edit" placeholder="Asunto">
+                            </div>
+                        </div>
+                        <div class="row row-sm mt-3">
+                            <div class="col-lg">
+                                <label for="">Nota (Opcional)</label>
+                                <textarea class="form-control" placeholder="Nota (Opcional)" rows="3" id="descripcion_edit"
+                                    style="height: 70px; resize: none"></textarea>
+                            </div>
+                        </div>
+                        <br>
+                        Productos
+                        <div id="div_list_productos_edit"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" id="btnUpdate" type="button">Modificar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Email -->
+        <div class="modal  fade" id="modalEmail">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Enviar Cotización</h6>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" disabled readonly id="id_remision_email">
+                        <div class="row row-sm">
+                            <label for="">Emails</label>
+                            <div class="col-lg" style="display: flex">
+                                <input class="form-control emailadd" placeholder="Email" type="email">
+                                <a class="center-vertical mg-s-10" href="javascript:void(0)" id="new_row_email"><i
+                                        class="fa fa-plus"></i></a>
+                            </div>
+                        </div>
+                        <div id="div_list_email"></div>
+                        <br>
+                        <div class="text-center">
+                            <button class="btn ripple btn-primary" id="btn_save_email" type="button">Enviar
+                                Remisión</button>
+                        </div>
                     </div>
                 </div>
             </div>

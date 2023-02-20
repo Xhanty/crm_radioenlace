@@ -233,9 +233,13 @@ Route::middleware(['auth_user'])->group(function () {
     
     // REMISIONES
     Route::get('/remisiones', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'index'])->name('remisiones');
+    Route::get('/remisiones_print', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'print'])->name('remisiones_print');
+    Route::post('/remisiones_data', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'data'])->name('remisiones_data');
     Route::post('/remisiones_add', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'add'])->name('remisiones_add');
     Route::post('/remisiones_edit', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'edit'])->name('remisiones_edit');
     Route::post('/remisiones_delete', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'delete'])->name('remisiones_delete');
+    Route::post('/remisiones_completar', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'completar'])->name('remisiones_completar');
+    Route::post('/remisiones_email', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'email'])->name('remisiones_email');
     
     // HISTORIAL DE COTIZACIONES
     Route::get('/history_cotizaciones', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'history'])->name('history_cotizaciones');
