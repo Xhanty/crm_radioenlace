@@ -247,15 +247,9 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/history_cotizaciones_edit', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'history_edit'])->name('history_cotizaciones_edit');
     Route::post('/history_cotizaciones_delete', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'history_delete'])->name('history_cotizaciones_delete');
 
-    // CONTABILIDAD
+    // CONTABILIDAD 
+    Route::get('/configuracion_contabilidad', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'index'])->name('configuracion_contabilidad');
     Route::get('/facturacion', [App\Http\Controllers\Admin\Contabilidad\FacturacionController::class, 'index'])->name('facturacion');
-    Route::get('/estadistica_proveedores', [App\Http\Controllers\Admin\Contabilidad\EstadisticasController::class, 'estadistica_proveedores'])->name('estadistica_proveedores');
-    Route::get('/estadistica_compra', [App\Http\Controllers\Admin\Contabilidad\EstadisticasController::class, 'estadistica_compra'])->name('estadistica_compra');
-    Route::get('/estadistica_ventas', [App\Http\Controllers\Admin\Contabilidad\EstadisticasController::class, 'estadistica_ventas'])->name('estadistica_ventas');
-    Route::get('/viaticos', [App\Http\Controllers\Admin\Contabilidad\ViaticosController::class, 'index'])->name('viaticos');
-    Route::get('/causaciones', [App\Http\Controllers\Admin\Contabilidad\CausacionesController::class, 'index'])->name('causaciones');
-    Route::get('/informe_contable', [App\Http\Controllers\Admin\Contabilidad\InformeContableController::class, 'index'])->name('informe_contable');
-    Route::get('/nomina', [App\Http\Controllers\Admin\Contabilidad\NominaController::class, 'nomina'])->name('nomina');
     Route::get('/config_nomina', [App\Http\Controllers\Admin\Contabilidad\NominaController::class, 'config_nomina'])->name('config_nomina');
     Route::post('/update_config_nomina', [App\Http\Controllers\Admin\Contabilidad\NominaController::class, 'update_config_nomina'])->name('update_config_nomina');
 

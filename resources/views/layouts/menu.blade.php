@@ -501,15 +501,7 @@
                         @endif
 
                         @if (auth()->user()->hasPermissionToMultiple(
-                                    'gestion_facturacion|' .
-                                        'gestion_causaciones|' .
-                                        'estadistica_proveedores|' .
-                                        'estadisticas_ventas|' .
-                                        'estadisticas_orden_compra|' .
-                                        'informes_contables|' .
-                                        'gestion_viaticos|' .
-                                        'gestion_nomina_general|' .
-                                        'gestion_config_nomina_general'))
+                                    'gestion_facturacion'))
                             <li class="slide">
                                 <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
                                         class="side-menu__icon fe fe-dollar-sign"></i><span
@@ -517,40 +509,12 @@
                                         class="angle fe fe-chevron-down"></i></a>
                                 <ul class="slide-menu">
                                     @if (auth()->user()->hasPermissionTo('gestion_facturacion'))
+                                        <li><a class="slide-item" href="{{ route('configuracion_contabilidad') }}">Configuración</a>
+                                        </li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_facturacion'))
                                         <li><a class="slide-item" href="{{ route('facturacion') }}">Facturación</a>
                                         </li>
-                                    @endif
-                                    @if (auth()->user()->hasPermissionTo('estadistica_proveedores'))
-                                        <li><a class="slide-item"
-                                                href="{{ route('estadistica_proveedores') }}">Estadística
-                                                Proveedores</a></li>
-                                    @endif
-                                    @if (auth()->user()->hasPermissionTo('estadisticas_orden_compra'))
-                                        <li><a class="slide-item"
-                                                href="{{ route('estadistica_compra') }}">Estadística
-                                                Compra</a></li>
-                                    @endif
-                                    @if (auth()->user()->hasPermissionTo('estadisticas_ventas'))
-                                        <li><a class="slide-item"
-                                                href="{{ route('estadistica_ventas') }}">Estadística
-                                                Ventas</a></li>
-                                    @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_viaticos'))
-                                        <li><a class="slide-item" href="{{ route('viaticos') }}">Gestionar
-                                                Viáticos</a>
-                                        </li>
-                                    @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_causaciones'))
-                                        <li><a class="slide-item" href="{{ route('causaciones') }}">Gestionar
-                                                Causaciones</a>
-                                        </li>
-                                    @endif
-                                    @if (auth()->user()->hasPermissionTo('informes_contables'))
-                                        <li><a class="slide-item" href="{{ route('informe_contable') }}">Informes
-                                                Contables</a></li>
-                                    @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_nomina_general'))
-                                        <li><a class="slide-item" href="{{ route('nomina') }}">Nómina</a></li>
                                     @endif
                                     @if (auth()->user()->hasPermissionTo('gestion_config_nomina_general'))
                                         <li><a class="slide-item" href="{{ route('config_nomina') }}">Configuración
