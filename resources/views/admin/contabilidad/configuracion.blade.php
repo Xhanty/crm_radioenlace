@@ -61,6 +61,30 @@
                 animation: 1s ease-in-out 0s 1 slideInFromTop
             }
 
+            #div_clientes {
+                -webkit-transition: 1s linear;
+                transition: 1s linear;
+                animation: 1s ease-in-out 0s 1 slideInFromTop
+            }
+
+            #div_proveedores {
+                -webkit-transition: 1s linear;
+                transition: 1s linear;
+                animation: 1s ease-in-out 0s 1 slideInFromTop
+            }
+
+            #div_empleados {
+                -webkit-transition: 1s linear;
+                transition: 1s linear;
+                animation: 1s ease-in-out 0s 1 slideInFromTop
+            }
+
+            #div_centros_costos {
+                -webkit-transition: 1s linear;
+                transition: 1s linear;
+                animation: 1s ease-in-out 0s 1 slideInFromTop
+            }
+
             @keyframes slideInFromTop {
                 0% {
                     transform: translateY(-100%);
@@ -134,9 +158,9 @@
                 <div class="box box-down cyan">
                     <h2>Terceros</h2>
                     <ul>
-                        <li><a href="javascript:void(0);">Clientes</a></li>
-                        <li><a href="javascript:void(0);">Proveedores</a></li>
-                        <li><a href="javascript:void(0);">Empleados</a></li>
+                        <li><a href="javascript:void(0);" id="btnClientes">Clientes</a></li>
+                        <li><a href="javascript:void(0);" id="btnProveedores">Proveedores</a></li>
+                        <li><a href="javascript:void(0);" id="btnEmpleados">Empleados</a></li>
                     </ul>
                     <img style="float:right; width: 40px;" src="https://assets.codepen.io/2301174/icon-team-builder.svg"
                         alt="Terceros">
@@ -156,7 +180,7 @@
                     <h2>Catálogo</h2>
                     <ul>
                         <li><a href="javascript:void(0);" id="btnPuc">PUC</a></li>
-                        <li><a href="javascript:void(0);">Centros de costos</a></li>
+                        <li><a href="javascript:void(0);" id="btnCentrosCostos">Centros de costos</a></li>
                     </ul>
                     <img style="float:right; width: 40px;" src="https://assets.codepen.io/2301174/icon-calculator.svg"
                         alt="Catálogo">
@@ -178,6 +202,10 @@
         @include('admin.contabilidad.configuracion.organizacion')
         @include('admin.contabilidad.configuracion.formas_pago')
         @include('admin.contabilidad.configuracion.pucs')
+        @include('admin.contabilidad.configuracion.centros_costos')
+        @include('admin.contabilidad.configuracion.clientes')
+        @include('admin.contabilidad.configuracion.proveedores')
+        @include('admin.contabilidad.configuracion.empleados')
 
     </div>
 @endsection

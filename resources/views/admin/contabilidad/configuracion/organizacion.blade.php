@@ -22,13 +22,15 @@
                         <label for="">Tipo Empresa</label>
                         <select id="tipo_empresa_organizacion" class="form-select">
                             <option value="">Seleccione un tipo de cliente</option>
-                            <option value="1">Empresa</option>
-                            <option value="0">Persona Natural</option>
+                            <option value="0">Persona Jurídica</option>
+                            <option value="1">Persona Natural</option>
+                            <option value="2">Consoricio</option>
+                            <option value="3">Unión Temporal</option>
                         </select>
                     </div>
                     <div class="col-lg mg-t-10 mg-lg-t-0">
-                        <label for="">Razon Social</label>
-                        <input class="form-control" id="nombre_organizacion" placeholder="Razon Social" type="text">
+                        <label for="">Nombre</label>
+                        <input class="form-control" id="nombre_organizacion" placeholder="Nombre    " type="text">
                     </div>
                 </div>
                 <br>
@@ -49,14 +51,17 @@
                             <option value="10">Permiso especial de permanencia PEP</option>
                             <option value="11">Sin identificación del exterior o para uso definido por la DIAN
                             </option>
-                            <option value="12">NIT de otro país/ Sin identificación del exterior (43 medios
-                                magnéticos)</option>
+                            <option value="12">NIT de otro país/ Sin identificación del exterior (43 medios magnéticos)</option>
                             <option value="13">Salvoconducto de permanencia</option>
                         </select>
                     </div>
                     <div class="col-lg mg-t-10 mg-lg-t-0">
-                        <label for="">Documento</label>
-                        <input class="form-control" id="documento_organizacion" placeholder="Documento" type="text">
+                        <label for="">Número Documento</label>
+                        <input class="form-control" id="documento_organizacion" placeholder="Número Documento" type="text">
+                    </div>
+                    <div class="col-sm mg-t-10 mg-lg-t-0 d-none">
+                        <label for="">Dígito Verificación</label>
+                        <input class="form-control" id="digito_verifi_organizacion" placeholder="Dígito Verificación" type="text">
                     </div>
                 </div>
                 <br>
@@ -80,8 +85,11 @@
                         <label for="">Tipo Régimen</label>
                         <select id="tipo_regimen_organizacion" class="form-select">
                             <option value="">Seleccione un opción</option>
-                            <option value="1">002 - Responble de IVA</option>
-                            <option value="2">003 - No Responsable de IVA</option>
+                            <option value="1">001 - Gran Contribuyente</option>
+                            <option value="2">002 - Responble de IVA</option>
+                            <option value="3">003 - No Responsable de IVA</option>
+                            <option value="4">004 - Empresa del Estado</option>
+                            <option value="5">099 - Régimen simple de tributación</option>
                         </select>
                     </div>
                     <div class="col-lg mg-t-10 mg-lg-t-0">
@@ -114,7 +122,7 @@
                         Información</button>
                 </div>
                 <br>
-
+                <h3 class="card-title mt-2">Datos Fiscales</h3>
                 <div class="">
                     <div class="row">
                         <div class="col-12">
