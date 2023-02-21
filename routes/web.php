@@ -251,6 +251,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::get('/configuracion_contabilidad', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'index'])->name('configuracion_contabilidad');
     Route::get('/facturacion', [App\Http\Controllers\Admin\Contabilidad\FacturacionController::class, 'index'])->name('facturacion');
     Route::get('/config_nomina', [App\Http\Controllers\Admin\Contabilidad\NominaController::class, 'config_nomina'])->name('config_nomina');
+    Route::get('/pucs_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'pucs'])->name('pucs_data');
     Route::post('/update_config_nomina', [App\Http\Controllers\Admin\Contabilidad\NominaController::class, 'update_config_nomina'])->name('update_config_nomina');
 
     // GASTOS

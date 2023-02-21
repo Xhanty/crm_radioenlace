@@ -55,6 +55,12 @@
                 animation: 1s ease-in-out 0s 1 slideInFromTop
             }
 
+            #div_pucs {
+                -webkit-transition: 1s linear;
+                transition: 1s linear;
+                animation: 1s ease-in-out 0s 1 slideInFromTop
+            }
+
             @keyframes slideInFromTop {
                 0% {
                     transform: translateY(-100%);
@@ -149,7 +155,7 @@
                 <div class="box box-down blue">
                     <h2>Catálogo</h2>
                     <ul>
-                        <li><a href="javascript:void(0);">PUC</a></li>
+                        <li><a href="javascript:void(0);" id="btnPuc">PUC</a></li>
                         <li><a href="javascript:void(0);">Centros de costos</a></li>
                     </ul>
                     <img style="float:right; width: 40px;" src="https://assets.codepen.io/2301174/icon-calculator.svg"
@@ -171,9 +177,16 @@
 
         @include('admin.contabilidad.configuracion.organizacion')
         @include('admin.contabilidad.configuracion.formas_pago')
+        @include('admin.contabilidad.configuracion.pucs')
+
     </div>
 @endsection
 
 @section('scripts')
+    <script>
+        $(document).ready(function() {
+        });
+    </script>
+    <script src="https://homfen.github.io/dataTables.treeGrid.js/dataTables.treeGrid.js"></script>
     <script src="{{ asset('assets/js/app/contabilidad/configuracion.js') }}"></script>
 @endsection
