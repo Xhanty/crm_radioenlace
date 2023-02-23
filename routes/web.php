@@ -250,6 +250,8 @@ Route::middleware(['auth_user'])->group(function () {
     // CONTABILIDAD
     Route::get('/configuracion_contabilidad', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'index'])->name('configuracion_contabilidad');
     
+    Route::post('/edit_organizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_organizacion'])->name('edit_organizacion');
+    
     Route::post('/tipo_empresa_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'tipo_empresa_data'])->name('tipo_empresa_data');
     Route::post('/add_tipo_empresa', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_tipo_empresa'])->name('add_tipo_empresa');
     Route::post('/edit_tipo_empresa', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_tipo_empresa'])->name('edit_tipo_empresa');

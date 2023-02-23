@@ -166,7 +166,7 @@
                         <div class="row row-sm mt-3">
                             <div class="col-lg">
                                 <label for="">Logo/Avatar</label>
-                                <input class="form-control" type="file" id="logo_add">
+                                <input class="form-control" type="file" id="logo_add" accept="image/*">
                             </div>
                         </div>
                     </div>
@@ -283,7 +283,7 @@
                         <div class="row row-sm mt-3">
                             <div class="col-lg">
                                 <label for="">Logo/Avatar</label>
-                                <input class="form-control" type="file" id="logo_edit">
+                                <input class="form-control" type="file" id="logo_edit" accept="image/*">
                             </div>
                         </div>
                     </div>
@@ -414,7 +414,7 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Archivo (.xlsx) *</label>
-                                <input type="file" class="form-control" id="file_import">
+                                <input type="file" class="form-control" id="file_import" accept=".xlsx">
                             </div>
                         </div>
                         <br>

@@ -412,7 +412,7 @@
                         </div>
                         <div class="col-lg mg-t-10 mg-lg-t-0">
                             <label for="">Foto</label>
-                            <input class="form-control" id="fotoadd" type="file" accept="image/png, image/jpeg">
+                            <input class="form-control" id="fotoadd" type="file" accept="image/*">
                         </div>
                     </div>
                 </div>
@@ -684,7 +684,7 @@
                         </div>
                         <div class="col-lg mg-t-10 mg-lg-t-0">
                             <label for="">Foto</label>
-                            <input class="form-control" id="fotoedit" type="file" accept="image/png, image/jpeg">
+                            <input class="form-control" id="fotoedit" type="file" accept="image/*">
                         </div>
                     </div>
                 </div>

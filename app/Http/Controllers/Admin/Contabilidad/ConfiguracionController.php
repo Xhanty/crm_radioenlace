@@ -12,6 +12,41 @@ class ConfiguracionController extends Controller
     public function index()
     {
         try {
+            $organizacion = DB::table('organizacion')->where('id', 1)->first();
+
+            if (!$organizacion) {
+                DB::table('organizacion')->insert([
+                    'tipo_empresa' => null,
+                ]);
+
+                DB::table('datos_tributarios')->insert([
+                    'actividad_economica' => null,
+                ]);
+
+                DB::table('representante_legal')->insert([
+                    'tipo_documento' => null,
+                ]);
+
+                DB::table('contador')->insert([
+                    'tipo_documento' => null,
+                ]);
+
+                DB::table('revisor_fiscal')->insert([
+                    'tipo_documento' => null,
+                ]);
+
+                $organizacion = DB::table('organizacion')->where('id', 1)->first();
+                $datos_tributarios = DB::table('datos_tributarios')->where('id', 1)->first();
+                $representantes = DB::table('representante_legal')->where('id', 1)->first();
+                $contador = DB::table('contador')->where('id', 1)->first();
+                $revisor_fiscal = DB::table('revisor_fiscal')->where('id', 1)->first();
+            } else {
+                $datos_tributarios = DB::table('datos_tributarios')->where('id', 1)->first();
+                $representantes = DB::table('representante_legal')->where('id', 1)->first();
+                $contador = DB::table('contador')->where('id', 1)->first();
+                $revisor_fiscal = DB::table('revisor_fiscal')->where('id', 1)->first();
+            }
+
             $tipos_empresas = DB::table('tipos_empresas')->where("status", 1)->get();
             $tipos_documentos = DB::table('tipos_documentos')->where("status", 1)->get();
             $tipos_regimenes = DB::table('tipos_regimenes')->where("status", 1)->get();
@@ -28,11 +63,16 @@ class ConfiguracionController extends Controller
                 'tipos_regimenes',
                 'tipos_documentos',
                 'actividades_economicas',
-                'ciudades'
+                'ciudades',
+                'organizacion',
+                'datos_tributarios',
+                'representantes',
+                'contador',
+                'revisor_fiscal'
             ));
         } catch (Exception $ex) {
-            return view('errors.500');
             return $ex->getMessage();
+            return view('errors.500');
         }
     }
 
@@ -522,6 +562,90 @@ class ConfiguracionController extends Controller
         DB::table('centros_costo')->where('id', $request->id)->update([
             'status' => $status,
         ]);
+
+        return response()->json([
+            'info' => 1,
+        ]);
+    }
+
+    // ORGANIZACION
+    public function edit_organizacion(Request $request)
+    {
+        if ($request->tipo == 1) {
+            $avatar = null;
+
+            if ($request->hasFile('avatar')) {
+                $file = $request->file('avatar');
+                $name = time() . $file->getClientOriginalName();
+                $file->move('images/logo_organizacion/', $name);
+                $avatar = $name;
+            }
+
+            DB::table('organizacion')->where('id', 1)->update([
+                'tipo_empresa' => $request->tipo_empresa ? $request->tipo_empresa : null,
+                'organizacion' => $request->organizacion ? $request->organizacion : null,
+                'tipo_documento' => $request->tipo_documento ? $request->tipo_documento : null,
+                'documento' => $request->documento ? $request->documento : null,
+                'digito' => $request->digito ? $request->digito : null,
+                'ciudad' => $request->ciudad ? $request->ciudad : null,
+                'direccion' => $request->direccion ? $request->direccion : null,
+                'tipo_regimen' => $request->tipo_regimen ? $request->tipo_regimen : null,
+                'telefono' => $request->telefono ? $request->telefono : null,
+                'contacto' => $request->contacto ? $request->contacto : null,
+                'email_contacto' => $request->email_contacto ? $request->email_contacto : null,
+                'pagina_web' => $request->pagina_web ? $request->pagina_web : null,
+                'avatar' => $avatar ? $avatar : null,
+            ]);
+        } else if ($request->tipo == 2) {
+            $anexo = null;
+
+            if ($request->hasFile('anexo_dian')) {
+                $file = $request->file('anexo_dian');
+                $name = time() . $file->getClientOriginalName();
+                $file->move('images/anexos_organizacion/', $name);
+                $anexo = $name;
+            }
+
+            DB::table('datos_tributarios')->where('id', 1)->update([
+                'actividad_economica' => $request->actividades ? $request->actividades : null,
+                'ica' => $request->ica ? $request->ica : null,
+                'aiu' => $request->aiu ? $request->aiu : null,
+                'dos_impuestos' => $request->impuestos ? $request->impuestos : null,
+                'iva' => $request->iva ? $request->iva : null,
+                'valorem' => $request->valorem ? $request->valorem : null,
+                'responsabilidad_fiscal' => $request->responsabilidad_fiscal ? $request->responsabilidad_fiscal : null,
+                'tributos' => $request->tributos ? $request->tributos : null,
+                'anexo_dian' => $anexo ? $anexo : null,
+            ]);
+        } else if ($request->tipo == 3) {
+            DB::table('representante_legal')->where('id', 1)->update([
+                'nombres' => $request->nombres ? $request->nombres : null,
+                'apellidos' => $request->apellidos ? $request->apellidos : null,
+                'tipo_documento' => $request->tipo_documento ? $request->tipo_documento : null,
+                'documento' => $request->documento ? $request->documento : null,
+            ]);
+        } else if ($request->tipo == 4) {
+            DB::table('representante_legal')->where('id', 1)->update([
+                'nombres_suplente' => $request->nombres_suplente ? $request->nombres_suplente : null,
+                'apellidos_suplente' => $request->apellidos_suplente ? $request->apellidos_suplente : null,
+                'tipo_documento_suplente' => $request->tipo_documento_suplente ? $request->tipo_documento_suplente : null,
+                'documento_suplente' => $request->documento_suplente ? $request->documento_suplente : null,
+            ]);
+        } else if ($request->tipo == 5) {
+            DB::table('contador')->where('id', 1)->update([
+                'nombres' => $request->nombres ? $request->nombres : null,
+                'apellidos' => $request->apellidos ? $request->apellidos : null,
+                'tipo_documento' => $request->tipo_documento ? $request->tipo_documento : null,
+                'documento' => $request->documento ? $request->documento : null,
+            ]);
+        } else if ($request->tipo == 6) {
+            DB::table('revisor_fiscal')->where('id', 1)->update([
+                'nombres' => $request->nombres ? $request->nombres : null,
+                'apellidos' => $request->apellidos ? $request->apellidos : null,
+                'tipo_documento' => $request->tipo_documento ? $request->tipo_documento : null,
+                'documento' => $request->documento ? $request->documento : null,
+            ]);
+        }
 
         return response()->json([
             'info' => 1,

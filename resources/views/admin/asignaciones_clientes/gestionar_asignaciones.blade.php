@@ -203,8 +203,7 @@
                     <div class="row row-sm">
                         <div class="col-lg mg-t-10 mg-lg-t-0">
                             <label for="">Anexos de la asignación (Opcional)</label>
-                            <input class="form-control" id="anexosadd" multiple type="file"
-                                accept="image/png, image/jpeg">
+                            <input class="form-control" id="anexosadd" multiple type="file">
                         </div>
                     </div>
                     <br>
@@ -273,8 +272,7 @@
                     <div class="row row-sm">
                         <div class="col-lg mg-t-10 mg-lg-t-0">
                             <label for="">Anexos de la asignación (Opcional)</label>
-                            <input class="form-control" id="anexosedit" multiple type="file"
-                                accept="image/png, image/jpeg">
+                            <input class="form-control" id="anexosedit" multiple type="file">
                         </div>
                     </div>
                     <br>

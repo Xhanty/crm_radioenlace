@@ -21,15 +21,20 @@
                     <div class="col-lg">
                         <label for="">Tipo Empresa</label>
                         <select id="tipo_empresa_organizacion" class="form-select">
-                            <option value="">Seleccione un tipo de cliente</option>
+                            <option value="">Seleccione una opción</option>
                             @foreach ($tipos_empresas as $item)
-                                <option value="{{ $item->id }}">{{ $item->nombre }}</option>
+                                @if ($item->id == $organizacion->tipo_empresa)
+                                    <option value="{{ $item->id }}" selected>{{ $item->nombre }}</option>
+                                @else
+                                    <option value="{{ $item->id }}">{{ $item->nombre }}</option>
+                                @endif
                             @endforeach
                         </select>
                     </div>
                     <div class="col-lg mg-t-10 mg-lg-t-0">
                         <label for="">Nombre</label>
-                        <input class="form-control" id="nombre_organizacion" placeholder="Nombre" type="text">
+                        <input class="form-control" value="{{ $organizacion->organizacion }}" id="nombre_organizacion"
+                            placeholder="Nombre" type="text">
                     </div>
                 </div>
                 <br>
@@ -39,19 +44,29 @@
                         <select id="tipo_doc_organizacion" class="form-select">
                             <option value="">Seleccione un opción</option>
                             @foreach ($tipos_documentos as $item)
-                                <option value="{{ $item->id }}">{{ $item->nombre }}</option>
+                                @if ($item->id == $organizacion->tipo_documento)
+                                    <option value="{{ $item->id }}" selected>{{ $item->nombre }}</option>
+                                @else
+                                    <option value="{{ $item->id }}">{{ $item->nombre }}</option>
+                                @endif
                             @endforeach
                         </select>
                     </div>
                     <div class="col-lg mg-t-10 mg-lg-t-0">
                         <label for="">Número Documento</label>
-                        <input class="form-control" id="documento_organizacion" placeholder="Número Documento"
-                            type="text">
+                        <input class="form-control" id="documento_organizacion" value="{{ $organizacion->documento }}"
+                            placeholder="Número Documento" type="text">
                     </div>
-                    <div class="col-sm mg-t-10 mg-lg-t-0 d-none">
+                    @php
+                        $digito = 'd-none';
+                        if ($organizacion->tipo_documento == 5) {
+                            $digito = '';
+                        }
+                    @endphp
+                    <div class="col-sm mg-t-10 mg-lg-t-0 {{ $digito }}">
                         <label for="">Dígito Verificación</label>
-                        <input class="form-control" id="digito_verifi_organizacion" placeholder="Dígito Verificación"
-                            type="text">
+                        <input class="form-control" id="digito_verifi_organizacion" value="{{ $organizacion->digito }}"
+                            placeholder="Dígito Verificación" type="text">
                     </div>
                 </div>
                 <br>
@@ -61,14 +76,20 @@
                         <select id="ciudad_organizacion" class="form-select">
                             <option value="">Seleccione un opción</option>
                             @foreach ($ciudades as $item)
-                                <option value="{{ $item->id }}">{{ $item->nombre }} - {{ $item->departamento }}
-                                </option>
+                                @if ($item->id == $organizacion->ciudad)
+                                    <option value="{{ $item->id }}" selected>{{ $item->nombre }} -
+                                        {{ $item->departamento }}</option>
+                                @else
+                                    <option value="{{ $item->id }}">{{ $item->nombre }} -
+                                        {{ $item->departamento }}</option>
+                                @endif
                             @endforeach
                         </select>
                     </div>
                     <div class="col-lg mg-t-10 mg-lg-t-0">
                         <label for="">Dirección</label>
-                        <input class="form-control" id="direccion_organizacion" placeholder="Dirección" type="text">
+                        <input class="form-control" id="direccion_organizacion" value="{{ $organizacion->direccion }}"
+                            placeholder="Dirección" type="text">
                     </div>
                 </div>
                 <br>
@@ -78,24 +99,33 @@
                         <select id="tipo_regimen_organizacion" class="form-select">
                             <option value="">Seleccione un opción</option>
                             @foreach ($tipos_regimenes as $item)
-                                <option value="{{ $item->id }}">{{ $item->code }} - {{ $item->nombre }}</option>
+                                @if ($item->id == $organizacion->tipo_regimen)
+                                    <option value="{{ $item->id }}" selected>{{ $item->code }} -
+                                        {{ $item->nombre }}</option>
+                                @else
+                                    <option value="{{ $item->id }}">{{ $item->code }} - {{ $item->nombre }}
+                                    </option>
+                                @endif
                             @endforeach
                         </select>
                     </div>
                     <div class="col-lg mg-t-10 mg-lg-t-0">
                         <label for="">Teléfono</label>
-                        <input class="form-control" id="telefono_organizacion" placeholder="Teléfono" type="text">
+                        <input class="form-control" id="telefono_organizacion" value="{{ $organizacion->telefono }}"
+                            placeholder="Teléfono" type="text">
                     </div>
                 </div>
                 <br>
                 <div class="row row-sm">
                     <div class="col-lg mg-t-10 mg-lg-t-0">
                         <label for="">Contacto</label>
-                        <input class="form-control" id="contacto_organizacion" placeholder="Contacto" type="text">
+                        <input class="form-control" id="contacto_organizacion" value="{{ $organizacion->contacto }}"
+                            placeholder="Contacto" type="text">
                     </div>
                     <div class="col-lg">
                         <label for="">Correo del contacto</label>
-                        <input class="form-control" id="email_contacto_organizacion" placeholder="Correo del contacto"
+                        <input class="form-control" id="email_contacto_organizacion"
+                            value="{{ $organizacion->email_contacto }}" placeholder="Correo del contacto"
                             type="email">
                     </div>
                 </div>
@@ -103,12 +133,12 @@
                 <div class="row row-sm">
                     <div class="col-lg">
                         <label for="">Página Web</label>
-                        <input class="form-control" id="pagina_web_organizacion" placeholder="Página Web"
-                            type="text">
+                        <input class="form-control" id="pagina_web_organizacion"
+                            value="{{ $organizacion->pagina_web }}" placeholder="Página Web" type="text">
                     </div>
                     <div class="col-lg">
                         <label for="">Logo/Avatar</label>
-                        <input class="form-control" id="avatar_organizacion" type="file">
+                        <input class="form-control" id="avatar_organizacion" type="file" accept="image/*">
                     </div>
                 </div>
                 <br>
@@ -161,16 +191,26 @@
                                                 <select id="actividades_tribu_organizacion" class="form-select"
                                                     multiple="multiple">
                                                     <option value="">Seleccione un opción</option>
+                                                    @php
+                                                        $actividades_economicas_organizacion = explode(',', $datos_tributarios->actividad_economica);
+                                                    @endphp
                                                     @foreach ($actividades_economicas as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->code }} -
-                                                            {{ $item->nombre }}</option>
+                                                        @if (in_array($item->id, $actividades_economicas_organizacion))
+                                                            <option value="{{ $item->id }}" selected>
+                                                                {{ $item->code }}
+                                                                - {{ $item->nombre }}</option>
+                                                        @else
+                                                            <option value="{{ $item->id }}">{{ $item->code }} -
+                                                                {{ $item->nombre }}</option>
+                                                        @endif
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                                 <label for="">Tarifa ICA</label>
                                                 <input class="form-control" id="ica_tribu_organizacion"
-                                                    placeholder="Tarifa ICA" type="number">
+                                                    value="{{ $datos_tributarios->ica }}" placeholder="Tarifa ICA"
+                                                    type="number">
                                             </div>
                                         </div>
                                         <br>
@@ -180,8 +220,10 @@
                                                 <label for="">Maneja AIU</label>
                                                 <select id="maneja_aiu_tribu_organizacion" class="form-select">
                                                     <option value="">Seleccione un opción</option>
-                                                    <option value="1">Sí</option>
-                                                    <option value="2">No</option>
+                                                    <option @if ($datos_tributarios->aiu == 1) selected @endif
+                                                        value="1">Sí</option>
+                                                    <option @if ($datos_tributarios->aiu == 2) selected @endif
+                                                        value="2">No</option>
                                                 </select>
                                             </div>
                                             <div class="col-lg mg-t-10 mg-lg-t-0">
@@ -189,8 +231,10 @@
                                                     venta</label>
                                                 <select id="nimpuestos_tribu_organizacion" class="form-select">
                                                     <option value="">Seleccione un opción</option>
-                                                    <option value="1">Sí</option>
-                                                    <option value="2">No</option>
+                                                    <option @if ($datos_tributarios->dos_impuestos == 1) selected @endif
+                                                        value="1">Sí</option>
+                                                    <option @if ($datos_tributarios->dos_impuestos == 2) selected @endif
+                                                        value="2">No</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -201,8 +245,10 @@
                                                     IVA</label>
                                                 <select id="retenedor_tribu_organizacion" class="form-select">
                                                     <option value="">Seleccione un opción</option>
-                                                    <option value="1">Sí</option>
-                                                    <option value="2">No</option>
+                                                    <option @if ($datos_tributarios->iva == 1) selected @endif
+                                                        value="1">Sí</option>
+                                                    <option @if ($datos_tributarios->iva == 2) selected @endif
+                                                        value="2">No</option>
                                                 </select>
                                             </div>
                                             <div class="col-lg mg-t-10 mg-lg-t-0">
@@ -210,8 +256,10 @@
                                                     licores)</label>
                                                 <select id="impuesto_valorem_tribu_organizacion" class="form-select">
                                                     <option value="">Seleccione un opción</option>
-                                                    <option value="1">Sí</option>
-                                                    <option value="2">No</option>
+                                                    <option @if ($datos_tributarios->valorem == 1) selected @endif
+                                                        value="1">Sí</option>
+                                                    <option @if ($datos_tributarios->valorem == 2) selected @endif
+                                                        value="2">No</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -221,16 +269,20 @@
                                                 <label for="">Responsabilidades Fiscales</label>
                                                 <select id="responsabilidades_tribu_organizacion" class="form-select">
                                                     <option value="">Seleccione un opción</option>
-                                                    <option value="1">Sí</option>
-                                                    <option value="2">No</option>
+                                                    <option @if ($datos_tributarios->responsabilidad_fiscal == 1) selected @endif
+                                                        value="1">Sí</option>
+                                                    <option @if ($datos_tributarios->responsabilidad_fiscal == 2) selected @endif
+                                                        value="2">No</option>
                                                 </select>
                                             </div>
                                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                                 <label for="">Tributos</label>
                                                 <select id="tributos_tribu_organizacion" class="form-select">
                                                     <option value="">Seleccione un opción</option>
-                                                    <option value="1">Sí</option>
-                                                    <option value="2">No</option>
+                                                    <option @if ($datos_tributarios->tributos == 1) selected @endif
+                                                        value="1">Sí</option>
+                                                    <option @if ($datos_tributarios->tributos == 2) selected @endif
+                                                        value="2">No</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -238,7 +290,8 @@
                                         <div class="row row-sm">
                                             <div class="col-lg">
                                                 <label for="">Anexo Dian</label>
-                                                <input class="form-control" id="anexo_dian_organizacion" type="file">
+                                                <input class="form-control" id="anexo_dian_organizacion"
+                                                    type="file" accept="application/pdf">
                                             </div>
                                         </div>
                                         <br>
@@ -254,12 +307,14 @@
                                             <div class="col-lg">
                                                 <label for="">Nombres</label>
                                                 <input class="form-control" id="nombres_repre_organizacion"
-                                                    placeholder="Nombres" type="text">
+                                                    value="{{ $representantes->nombres }}" placeholder="Nombres"
+                                                    type="text">
                                             </div>
                                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                                 <label for="">Apellidos</label>
                                                 <input class="form-control" id="apellidos_repre_organizacion"
-                                                    placeholder="Apellidos" type="text">
+                                                    value="{{ $representantes->apellidos }}" placeholder="Apellidos"
+                                                    type="text">
                                             </div>
                                         </div>
                                         <br>
@@ -270,14 +325,21 @@
                                                 <select id="tipo_doc_repre_organizacion" class="form-select">
                                                     <option value="">Seleccione un opción</option>
                                                     @foreach ($tipos_documentos as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->nombre }}
-                                                        </option>
+                                                        @if ($item->id == $representantes->tipo_documento)
+                                                            <option selected value="{{ $item->id }}">
+                                                                {{ $item->nombre }}
+                                                            </option>
+                                                        @else
+                                                            <option value="{{ $item->id }}">{{ $item->nombre }}
+                                                            </option>
+                                                        @endif
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                                 <label for="">Número Documento</label>
                                                 <input class="form-control" id="documento_repre_organizacion"
+                                                    value="{{ $representantes->documento }}"
                                                     placeholder="Número Documento" type="text">
                                             </div>
                                         </div>
@@ -294,11 +356,13 @@
                                             <div class="col-lg">
                                                 <label for="">Nombres</label>
                                                 <input class="form-control" id="nombres_represuple_organizacion"
+                                                    value="{{ $representantes->nombres_suplente }}"
                                                     placeholder="Nombres" type="text">
                                             </div>
                                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                                 <label for="">Apellidos</label>
                                                 <input class="form-control" id="apellidos_represuple_organizacion"
+                                                    value="{{ $representantes->apellidos_suplente }}"
                                                     placeholder="Apellidos" type="text">
                                             </div>
                                         </div>
@@ -310,14 +374,21 @@
                                                 <select id="tipo_doc_represuple_organizacion" class="form-select">
                                                     <option value="">Seleccione un opción</option>
                                                     @foreach ($tipos_documentos as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->nombre }}
-                                                        </option>
+                                                        @if ($item->id == $representantes->tipo_documento_suplente)
+                                                            <option selected value="{{ $item->id }}">
+                                                                {{ $item->nombre }}
+                                                            </option>
+                                                        @else
+                                                            <option value="{{ $item->id }}">{{ $item->nombre }}
+                                                            </option>
+                                                        @endif
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                                 <label for="">Número Documento</label>
                                                 <input class="form-control" id="documento_represuple_organizacion"
+                                                    value="{{ $representantes->documento_suplente }}"
                                                     placeholder="Número Documento" type="text">
                                             </div>
                                         </div>
@@ -334,12 +405,14 @@
                                             <div class="col-lg">
                                                 <label for="">Nombres</label>
                                                 <input class="form-control" id="nombres_contador_organizacion"
-                                                    placeholder="Nombres" type="text">
+                                                    value="{{ $contador->nombres }}" placeholder="Nombres"
+                                                    type="text">
                                             </div>
                                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                                 <label for="">Apellidos</label>
                                                 <input class="form-control" id="apellidos_contador_organizacion"
-                                                    placeholder="Apellidos" type="text">
+                                                    value="{{ $contador->apellidos }}" placeholder="Apellidos"
+                                                    type="text">
                                             </div>
                                         </div>
                                         <br>
@@ -350,15 +423,22 @@
                                                 <select id="tipo_doc_contador_organizacion" class="form-select">
                                                     <option value="">Seleccione un opción</option>
                                                     @foreach ($tipos_documentos as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->nombre }}
-                                                        </option>
+                                                        @if ($item->id == $contador->tipo_documento)
+                                                            <option selected value="{{ $item->id }}">
+                                                                {{ $item->nombre }}
+                                                            </option>
+                                                        @else
+                                                            <option value="{{ $item->id }}">{{ $item->nombre }}
+                                                            </option>
+                                                        @endif
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                                 <label for="">Número Documento</label>
                                                 <input class="form-control" id="documento_contador_organizacion"
-                                                    placeholder="Número Documento" type="text">
+                                                    value="{{ $contador->documento }}" placeholder="Número Documento"
+                                                    type="text">
                                             </div>
                                         </div>
                                         <br>
@@ -374,12 +454,14 @@
                                             <div class="col-lg">
                                                 <label for="">Nombres</label>
                                                 <input class="form-control" id="nombres_revisor_organizacion"
-                                                    placeholder="Nombres" type="text">
+                                                    value="{{ $revisor_fiscal->nombres }}" placeholder="Nombres"
+                                                    type="text">
                                             </div>
                                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                                 <label for="">Apellidos</label>
                                                 <input class="form-control" id="apellidos_revisor_organizacion"
-                                                    placeholder="Apellidos" type="text">
+                                                    value="{{ $revisor_fiscal->apellidos }}" placeholder="Apellidos"
+                                                    type="text">
                                             </div>
                                         </div>
                                         <br>
@@ -390,14 +472,21 @@
                                                 <select id="tipo_doc_revisor_organizacion" class="form-select">
                                                     <option value="">Seleccione un opción</option>
                                                     @foreach ($tipos_documentos as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->nombre }}
-                                                        </option>
+                                                        @if ($item->id == $revisor_fiscal->tipo_documento)
+                                                            <option selected value="{{ $item->id }}">
+                                                                {{ $item->nombre }}
+                                                            </option>
+                                                        @else
+                                                            <option value="{{ $item->id }}">{{ $item->nombre }}
+                                                            </option>
+                                                        @endif
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                                 <label for="">Número Documento</label>
                                                 <input class="form-control" id="documento_revisor_organizacion"
+                                                    value="{{ $revisor_fiscal->documento }}"
                                                     placeholder="Número Documento" type="text">
                                             </div>
                                         </div>

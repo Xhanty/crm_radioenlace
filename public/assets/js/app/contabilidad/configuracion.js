@@ -185,16 +185,6 @@ $(document).ready(function () {
         $("#five_detail").addClass("active");
     });
 
-    //ORGANIZACIÓN
-    $("#tipo_doc_organizacion").on("change", function () {
-        var tipo_doc = $(this).val();
-        if (tipo_doc == 5) {
-            $("#digito_verifi_organizacion").parent().removeClass("d-none");
-        } else {
-            $("#digito_verifi_organizacion").parent().addClass("d-none");
-        }
-    });
-
     // CARGAR INFORMACIÓN
     function load_pucs() {
         var columns = [
@@ -1583,6 +1573,15 @@ $(document).ready(function () {
     });
 
     //ORGANIZACION
+    $("#tipo_doc_organizacion").on("change", function () {
+        var tipo_doc = $(this).val();
+        if (tipo_doc == 5) {
+            $("#digito_verifi_organizacion").parent().removeClass("d-none");
+        } else {
+            $("#digito_verifi_organizacion").parent().addClass("d-none");
+        }
+    });
+
     $("#actividades_tribu_organizacion").change(function () {
         let value = $(this).val();
 
@@ -1590,6 +1589,377 @@ $(document).ready(function () {
             toastr.error("Solo se permiten 4 actividades tributarias");
             value.pop();
             $(this).val(value).trigger('change');
+        }
+    });
+
+    $("#btnModificarOrganizacion1").on("click", function () {
+        let tipo_empresa = $("#tipo_empresa_organizacion").val();
+        let organizacion = $("#nombre_organizacion").val();
+        let tipo_documento = $("#tipo_doc_organizacion").val();
+        let documento = $("#documento_organizacion").val();
+        let digito = $("#digito_verifi_organizacion").val();
+        let ciudad = $("#ciudad_organizacion").val();
+        let direccion = $("#direccion_organizacion").val();
+        let tipo_regimen = $("#tipo_regimen_organizacion").val();
+        let telefono = $("#telefono_organizacion").val();
+        let contacto = $("#contacto_organizacion").val();
+        let email_contacto = $("#email_contacto_organizacion").val();
+        let pagina_web = $("#pagina_web_organizacion").val();
+        let avatar = $("#avatar_organizacion").val();
+
+        if (tipo_empresa == "") {
+            toastr.error("El tipo de empresa es obligatorio");
+            return false;
+        } else if (organizacion.trim().length == 0) {
+            toastr.error("El nombre de la organización es obligatorio");
+            return false;
+        } else if (tipo_documento == "") {
+            toastr.error("El tipo de documento es obligatorio");
+            return false;
+        } else if (documento.trim().length == 0) {
+            toastr.error("El documento es obligatorio");
+            return false;
+        } else if (ciudad == "") {
+            toastr.error("La ciudad es obligatoria");
+            return false;
+        } else if (tipo_regimen == "") {
+            toastr.error("El tipo de régimen es obligatorio");
+            return false;
+        } else if (telefono.trim().length == 0) {
+            toastr.error("El teléfono es obligatorio");
+            return false;
+        } else if (contacto.trim().length == 0) {
+            toastr.error("El contacto es obligatorio");
+            return false;
+        } else if (email_contacto.trim().length == 0) {
+            toastr.error("El email de contacto es obligatorio");
+            return false;
+        } else {
+
+            var formData = new FormData();
+            formData.append("tipo", 1);
+            formData.append("tipo_empresa", tipo_empresa);
+            formData.append("organizacion", organizacion);
+            formData.append("tipo_documento", tipo_documento);
+            formData.append("documento", documento);
+            formData.append("digito", digito);
+            formData.append("ciudad", ciudad);
+            formData.append("direccion", direccion);
+            formData.append("tipo_regimen", tipo_regimen);
+            formData.append("telefono", telefono);
+            formData.append("contacto", contacto);
+            formData.append("email_contacto", email_contacto);
+            formData.append("pagina_web", pagina_web);
+            formData.append("avatar", $("#avatar_organizacion")[0].files[0]);
+
+            $("#btnModificarOrganizacion1").attr("disabled", true);
+            $("#btnModificarOrganizacion1").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
+
+            $.ajax({
+                url: "edit_organizacion",
+                type: "POST",
+                dataType: "json",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.info == 1) {
+                        toastr.success("Organización actualizada correctamente");
+                    } else {
+                        toastr.error("Error al actualizar la organización");
+                    }
+                    $("#btnModificarOrganizacion1").attr("disabled", false);
+                    $("#btnModificarOrganizacion1").html("Actualizar Información");
+                },
+                error: function (data) {
+                    $("#btnModificarOrganizacion1").attr("disabled", false);
+                    $("#btnModificarOrganizacion1").html("Actualizar Información");
+                    toastr.error("Error al actualizar la organización");
+                    console.log(data);
+                }
+            });
+        }
+    });
+
+    $("#btnModificarOrganizacion2").on("click", function () {
+        let actividades = $("#actividades_tribu_organizacion").val();
+        let ica = $("#ica_tribu_organizacion").val();
+        let aiu = $("#maneja_aiu_tribu_organizacion").val();
+        let impuestos = $("#nimpuestos_tribu_organizacion").val();
+        let iva = $("#retenedor_tribu_organizacion").val();
+        let valorem = $("#impuesto_valorem_tribu_organizacion").val();
+        let responsabilidad_fiscal = $("#responsabilidades_tribu_organizacion").val();
+        let tributos = $("#tributos_tribu_organizacion").val();
+
+        if (actividades.length < 1) {
+            toastr.error("Las actividades tributarias son obligatorias");
+            return false;
+        } else {
+            $("#btnModificarOrganizacion2").attr("disabled", true);
+            $("#btnModificarOrganizacion2").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
+            var formData = new FormData();
+            formData.append("tipo", 2);
+            formData.append("actividades", actividades);
+            formData.append("ica", ica);
+            formData.append("aiu", aiu);
+            formData.append("impuestos", impuestos);
+            formData.append("iva", iva);
+            formData.append("valorem", valorem);
+            formData.append("responsabilidad_fiscal", responsabilidad_fiscal);
+            formData.append("tributos", tributos);
+            formData.append("anexo_dian", $("#anexo_dian_organizacion")[0].files[0]);
+
+            $.ajax({
+                url: "edit_organizacion",
+                type: "POST",
+                dataType: "json",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.info == 1) {
+                        toastr.success("Organización actualizada correctamente");
+                    } else {
+                        toastr.error("Error al actualizar la organización");
+                    }
+                    $("#btnModificarOrganizacion2").attr("disabled", false);
+                    $("#btnModificarOrganizacion2").html("Actualizar Información");
+                },
+                error: function (data) {
+                    $("#btnModificarOrganizacion2").attr("disabled", false);
+                    $("#btnModificarOrganizacion2").html("Actualizar Información");
+                    toastr.error("Error al actualizar la organización");
+                    console.log(data);
+                }
+            });
+        }
+    });
+
+    $("#btnModificarOrganizacion3").on("click", function () {
+        let nombres = $("#nombres_repre_organizacion").val();
+        let apellidos = $("#apellidos_repre_organizacion").val();
+        let tipo_documento = $("#tipo_doc_repre_organizacion").val();
+        let documento = $("#documento_repre_organizacion").val();
+
+        if (nombres.trim().length == 0) {
+            toastr.error("El nombre del representante es obligatorio");
+            return false;
+        } else if (apellidos.trim().length == 0) {
+            toastr.error("El apellido del representante es obligatorio");
+            return false;
+        } else if (tipo_documento == "") {
+            toastr.error("El tipo de documento del representante es obligatorio");
+            return false;
+        } else if (documento.trim().length == 0) {
+            toastr.error("El documento del representante es obligatorio");
+            return false;
+        } else {
+            $("#btnModificarOrganizacion3").attr("disabled", true);
+            $("#btnModificarOrganizacion3").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
+            var formData = new FormData();
+            formData.append("tipo", 3);
+            formData.append("nombres", nombres);
+            formData.append("apellidos", apellidos);
+            formData.append("tipo_documento", tipo_documento);
+            formData.append("documento", documento);
+
+            $.ajax({
+                url: "edit_organizacion",
+                type: "POST",
+                dataType: "json",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.info == 1) {
+                        toastr.success("Organización actualizada correctamente");
+                    } else {
+                        toastr.error("Error al actualizar la organización");
+                    }
+                    $("#btnModificarOrganizacion3").attr("disabled", false);
+                    $("#btnModificarOrganizacion3").html("Actualizar Información");
+                },
+                error: function (data) {
+                    $("#btnModificarOrganizacion3").attr("disabled", false);
+                    $("#btnModificarOrganizacion3").html("Actualizar Información");
+                    toastr.error("Error al actualizar la organización");
+                    console.log(data);
+                }
+            });
+        }
+    });
+
+    $("#btnModificarOrganizacion4").on("click", function () {
+        let nombres = $("#nombres_represuple_organizacion").val();
+        let apellidos = $("#apellidos_represuple_organizacion").val();
+        let tipo_documento = $("#tipo_doc_represuple_organizacion").val();
+        let documento = $("#documento_represuple_organizacion").val();
+
+        if (nombres.trim().length == 0) {
+            toastr.error("El nombre del representante suplente es obligatorio");
+            return false;
+        } else if (apellidos.trim().length == 0) {
+            toastr.error("El apellido del representante suplente es obligatorio");
+            return false;
+        } else if (tipo_documento == "") {
+            toastr.error("El tipo de documento del representante suplente es obligatorio");
+            return false;
+        } else if (documento.trim().length == 0) {
+            toastr.error("El documento del representante suplente es obligatorio");
+            return false;
+        } else {
+            $("#btnModificarOrganizacion4").attr("disabled", true);
+            $("#btnModificarOrganizacion4").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
+            var formData = new FormData();
+            formData.append("tipo", 4);
+            formData.append("nombres_suplente", nombres);
+            formData.append("apellidos_suplente", apellidos);
+            formData.append("tipo_documento_suplente", tipo_documento);
+            formData.append("documento_suplente", documento);
+
+            $.ajax({
+                url: "edit_organizacion",
+                type: "POST",
+                dataType: "json",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.info == 1) {
+                        toastr.success("Organización actualizada correctamente");
+                    } else {
+                        toastr.error("Error al actualizar la organización");
+                    }
+                    $("#btnModificarOrganizacion4").attr("disabled", false);
+                    $("#btnModificarOrganizacion4").html("Actualizar Información");
+                },
+                error: function (data) {
+                    $("#btnModificarOrganizacion4").attr("disabled", false);
+                    $("#btnModificarOrganizacion4").html("Actualizar Información");
+                    toastr.error("Error al actualizar la organización");
+                    console.log(data);
+                }
+            });
+        }
+    });
+
+    $("#btnModificarOrganizacion5").on("click", function () {
+        let nombres = $("#nombres_contador_organizacion").val();
+        let apellidos = $("#apellidos_contador_organizacion").val();
+        let tipo_documento = $("#tipo_doc_contador_organizacion").val();
+        let documento = $("#documento_contador_organizacion").val();
+
+        if (nombres.trim().length == 0) {
+            toastr.error("El nombre del contador es obligatorio");
+            return false;
+        } else if (apellidos.trim().length == 0) {
+            toastr.error("El apellido del contador es obligatorio");
+            return false;
+        } else if (tipo_documento == "") {
+            toastr.error("El tipo de documento del contador es obligatorio");
+            return false;
+        } else if (documento.trim().length == 0) {
+            toastr.error("El documento del contador es obligatorio");
+            return false;
+        } else {
+            $("#btnModificarOrganizacion5").attr("disabled", true);
+            $("#btnModificarOrganizacion5").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
+            var formData = new FormData();
+            formData.append("tipo", 5);
+            formData.append("nombres", nombres);
+            formData.append("apellidos", apellidos);
+            formData.append("tipo_documento", tipo_documento);
+            formData.append("documento", documento);
+
+            $.ajax({
+                url: "edit_organizacion",
+                type: "POST",
+                dataType: "json",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.info == 1) {
+                        toastr.success("Organización actualizada correctamente");
+                    } else {
+                        toastr.error("Error al actualizar la organización");
+                    }
+                    $("#btnModificarOrganizacion5").attr("disabled", false);
+                    $("#btnModificarOrganizacion5").html("Actualizar Información");
+                },
+                error: function (data) {
+                    $("#btnModificarOrganizacion5").attr("disabled", false);
+                    $("#btnModificarOrganizacion5").html("Actualizar Información");
+                    toastr.error("Error al actualizar la organización");
+                    console.log(data);
+                }
+            });
+        }
+    });
+
+    $("#btnModificarOrganizacion6").on("click", function () {
+        let nombres = $("#nombres_revisor_organizacion").val();
+        let apellidos = $("#apellidos_revisor_organizacion").val();
+        let tipo_documento = $("#tipo_doc_revisor_organizacion").val();
+        let documento = $("#documento_revisor_organizacion").val();
+
+        if (nombres.trim().length == 0) {
+            toastr.error("El nombre del revisor fiscal es obligatorio");
+            return false;
+        } else if (apellidos.trim().length == 0) {
+            toastr.error("El apellido del revisor fiscal es obligatorio");
+            return false;
+        } else if (tipo_documento == "") {
+            toastr.error("El tipo de documento del revisor fiscal es obligatorio");
+            return false;
+        } else if (documento.trim().length == 0) {
+            toastr.error("El documento del revisor fiscal es obligatorio");
+            return false;
+        } else {
+            $("#btnModificarOrganizacion6").attr("disabled", true);
+            $("#btnModificarOrganizacion6").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
+            var formData = new FormData();
+            formData.append("tipo", 6);
+            formData.append("nombres", nombres);
+            formData.append("apellidos", apellidos);
+            formData.append("tipo_documento", tipo_documento);
+            formData.append("documento", documento);
+
+            $.ajax({
+                url: "edit_organizacion",
+                type: "POST",
+                dataType: "json",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.info == 1) {
+                        toastr.success("Organización actualizada correctamente");
+                    } else {
+                        toastr.error("Error al actualizar la organización");
+                    }
+                    $("#btnModificarOrganizacion6").attr("disabled", false);
+                    $("#btnModificarOrganizacion6").html("Actualizar Información");
+                },
+                error: function (data) {
+                    $("#btnModificarOrganizacion6").attr("disabled", false);
+                    $("#btnModificarOrganizacion6").html("Actualizar Información");
+                    toastr.error("Error al actualizar la organización");
+                    console.log(data);
+                }
+            });
         }
     });
 });

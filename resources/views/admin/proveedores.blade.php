@@ -177,7 +177,7 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Logo/Avatar</label>
-                                <input class="form-control" id="avataradd" type="file">
+                                <input class="form-control" id="avataradd" type="file" accept="image/*">
                             </div>
                         </div>
                         <br>
@@ -286,7 +286,7 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Logo/Avatar</label>
-                                <input class="form-control" id="avataredit" type="file">
+                                <input class="form-control" id="avataredit" type="file" accept="image/*">
                             </div>
                         </div>
                         @if (auth()->user()->hasPermissionTo('edit_proveedores'))
