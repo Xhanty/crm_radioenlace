@@ -1529,4 +1529,15 @@ $(document).ready(function () {
             },
         });
     });
+
+    //ORGANIZACION
+    $("#actividades_tribu_organizacion").change(function () {
+        let value = $(this).val();
+
+        if(value.length > 4){
+            toastr.error("Solo se permiten 4 actividades tributarias");
+            value.pop();
+            $(this).val(value).trigger('change');
+        }
+    });
 });

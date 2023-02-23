@@ -134,11 +134,16 @@
 
                                 <div class="tab-content">
                                     <div class="tab-pane fade show p-3 active" id="one_detail">
+                                        <br>
                                         <div class="row row-sm">
                                             <div class="col-lg">
                                                 <label for="">Actividad Económica</label>
-                                                <input class="form-control" id="actividades_tribu_organizacion"
-                                                    placeholder="Nombre" type="text">
+                                                <select id="actividades_tribu_organizacion" class="form-select" multiple="multiple">
+                                                    <option value="">Seleccione un opción</option>
+                                                    @foreach ($actividades_economicas as $item)
+                                                        <option value="{{ $item->id }}">{{ $item->code }} - {{ $item->nombre }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                                 <label for="">Tarifa ICA</label>
@@ -168,7 +173,6 @@
                                             </div>
                                         </div>
                                         <br>
-
                                         <div class="row row-sm">
                                             <div class="col-lg">
                                                 <label for="">Es agente retenedor del impuesto sobre las ventas
@@ -209,10 +213,12 @@
                                             </div>
                                         </div>
                                         <br>
+                                        <br>
                                         <div class="text-center">
                                             <button class="btn ripple btn-primary" id="btnModificarOrganizacion2"
                                                 type="button">Actualizar Información</button>
                                         </div>
+                                        <br>
                                     </div>
 
                                     <div class="tab-pane fade show p-3" id="two_detail">
