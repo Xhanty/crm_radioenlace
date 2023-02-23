@@ -102,6 +102,11 @@
                 <br>
                 <div class="row row-sm">
                     <div class="col-lg">
+                        <label for="">Página Web</label>
+                        <input class="form-control" id="pagina_web_organizacion" placeholder="Página Web"
+                            type="text">
+                    </div>
+                    <div class="col-lg">
                         <label for="">Logo/Avatar</label>
                         <input class="form-control" id="avatar_organizacion" type="file">
                     </div>
@@ -129,6 +134,21 @@
                                                 Representante Legal
                                             </a>
                                         </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link nav-link-3" href="javascript:void(0)">
+                                                Representante Legal Suplente
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link nav-link-4" href="javascript:void(0)">
+                                                Contador
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link nav-link-5" href="javascript:void(0)">
+                                                Revisor Fiscal
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
 
@@ -138,10 +158,12 @@
                                         <div class="row row-sm">
                                             <div class="col-lg">
                                                 <label for="">Actividad Económica</label>
-                                                <select id="actividades_tribu_organizacion" class="form-select" multiple="multiple">
+                                                <select id="actividades_tribu_organizacion" class="form-select"
+                                                    multiple="multiple">
                                                     <option value="">Seleccione un opción</option>
                                                     @foreach ($actividades_economicas as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->code }} - {{ $item->nombre }}</option>
+                                                        <option value="{{ $item->id }}">{{ $item->code }} -
+                                                            {{ $item->nombre }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -213,6 +235,12 @@
                                             </div>
                                         </div>
                                         <br>
+                                        <div class="row row-sm">
+                                            <div class="col-lg">
+                                                <label for="">Anexo Dian</label>
+                                                <input class="form-control" id="anexo_dian_organizacion" type="file">
+                                            </div>
+                                        </div>
                                         <br>
                                         <div class="text-center">
                                             <button class="btn ripple btn-primary" id="btnModificarOrganizacion2"
@@ -254,22 +282,131 @@
                                             </div>
                                         </div>
                                         <br>
-
-                                        <div class="row row-sm">
-                                            <div class="col-lg">
-                                                <label for="">¿Tienes socios en la empresa?</label>
-                                                <select id="socios_repre_organizacion" class="form-select">
-                                                    <option value="">Seleccione un opción</option>
-                                                    <option value="1">Sí</option>
-                                                    <option value="2">No</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <br>
                                         <div class="text-center">
                                             <button class="btn ripple btn-primary" id="btnModificarOrganizacion3"
                                                 type="button">Actualizar Información</button>
                                         </div>
+                                        <br>
+                                    </div>
+
+                                    <div class="tab-pane fade show p-3" id="three_detail">
+                                        <div class="row row-sm">
+                                            <div class="col-lg">
+                                                <label for="">Nombres</label>
+                                                <input class="form-control" id="nombres_represuple_organizacion"
+                                                    placeholder="Nombres" type="text">
+                                            </div>
+                                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                                <label for="">Apellidos</label>
+                                                <input class="form-control" id="apellidos_represuple_organizacion"
+                                                    placeholder="Apellidos" type="text">
+                                            </div>
+                                        </div>
+                                        <br>
+
+                                        <div class="row row-sm">
+                                            <div class="col-lg">
+                                                <label for="">Tipo Identificación</label>
+                                                <select id="tipo_doc_represuple_organizacion" class="form-select">
+                                                    <option value="">Seleccione un opción</option>
+                                                    @foreach ($tipos_documentos as $item)
+                                                        <option value="{{ $item->id }}">{{ $item->nombre }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                                <label for="">Número Documento</label>
+                                                <input class="form-control" id="documento_represuple_organizacion"
+                                                    placeholder="Número Documento" type="text">
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="text-center">
+                                            <button class="btn ripple btn-primary" id="btnModificarOrganizacion4"
+                                                type="button">Actualizar Información</button>
+                                        </div>
+                                        <br>
+                                    </div>
+
+                                    <div class="tab-pane fade show p-3" id="four_detail">
+                                        <div class="row row-sm">
+                                            <div class="col-lg">
+                                                <label for="">Nombres</label>
+                                                <input class="form-control" id="nombres_contador_organizacion"
+                                                    placeholder="Nombres" type="text">
+                                            </div>
+                                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                                <label for="">Apellidos</label>
+                                                <input class="form-control" id="apellidos_contador_organizacion"
+                                                    placeholder="Apellidos" type="text">
+                                            </div>
+                                        </div>
+                                        <br>
+
+                                        <div class="row row-sm">
+                                            <div class="col-lg">
+                                                <label for="">Tipo Identificación</label>
+                                                <select id="tipo_doc_contador_organizacion" class="form-select">
+                                                    <option value="">Seleccione un opción</option>
+                                                    @foreach ($tipos_documentos as $item)
+                                                        <option value="{{ $item->id }}">{{ $item->nombre }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                                <label for="">Número Documento</label>
+                                                <input class="form-control" id="documento_contador_organizacion"
+                                                    placeholder="Número Documento" type="text">
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="text-center">
+                                            <button class="btn ripple btn-primary" id="btnModificarOrganizacion5"
+                                                type="button">Actualizar Información</button>
+                                        </div>
+                                        <br>
+                                    </div>
+
+                                    <div class="tab-pane fade show p-3" id="five_detail">
+                                        <div class="row row-sm">
+                                            <div class="col-lg">
+                                                <label for="">Nombres</label>
+                                                <input class="form-control" id="nombres_revisor_organizacion"
+                                                    placeholder="Nombres" type="text">
+                                            </div>
+                                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                                <label for="">Apellidos</label>
+                                                <input class="form-control" id="apellidos_revisor_organizacion"
+                                                    placeholder="Apellidos" type="text">
+                                            </div>
+                                        </div>
+                                        <br>
+
+                                        <div class="row row-sm">
+                                            <div class="col-lg">
+                                                <label for="">Tipo Identificación</label>
+                                                <select id="tipo_doc_revisor_organizacion" class="form-select">
+                                                    <option value="">Seleccione un opción</option>
+                                                    @foreach ($tipos_documentos as $item)
+                                                        <option value="{{ $item->id }}">{{ $item->nombre }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                                <label for="">Número Documento</label>
+                                                <input class="form-control" id="documento_revisor_organizacion"
+                                                    placeholder="Número Documento" type="text">
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="text-center">
+                                            <button class="btn ripple btn-primary" id="btnModificarOrganizacion6"
+                                                type="button">Actualizar Información</button>
+                                        </div>
+                                        <br>
                                     </div>
                                 </div>
                             </div>

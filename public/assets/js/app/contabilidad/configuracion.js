@@ -119,18 +119,70 @@ $(document).ready(function () {
         $(this).addClass("active");
         $(".nav-link-2").removeClass("active");
         $(".nav-link-3").removeClass("active");
+        $(".nav-link-4").removeClass("active");
+        $(".nav-link-5").removeClass("active");
 
         $("#one_detail").addClass("active");
         $("#two_detail").removeClass("active");
+        $("#three_detail").removeClass("active");
+        $("#four_detail").removeClass("active");
+        $("#five_detail").removeClass("active");
     });
 
     $(".nav-link-2").click(function () {
         $(this).addClass("active");
         $(".nav-link-1").removeClass("active");
         $(".nav-link-3").removeClass("active");
+        $(".nav-link-4").removeClass("active");
+        $(".nav-link-5").removeClass("active");
 
         $("#one_detail").removeClass("active");
         $("#two_detail").addClass("active");
+        $("#three_detail").removeClass("active");
+        $("#four_detail").removeClass("active");
+        $("#five_detail").removeClass("active");
+    });
+
+    $(".nav-link-3").click(function () {
+        $(this).addClass("active");
+        $(".nav-link-1").removeClass("active");
+        $(".nav-link-2").removeClass("active");
+        $(".nav-link-4").removeClass("active");
+        $(".nav-link-5").removeClass("active");
+
+        $("#one_detail").removeClass("active");
+        $("#two_detail").removeClass("active");
+        $("#three_detail").addClass("active");
+        $("#four_detail").removeClass("active");
+        $("#five_detail").removeClass("active");
+    });
+
+    $(".nav-link-4").click(function () {
+        $(this).addClass("active");
+        $(".nav-link-1").removeClass("active");
+        $(".nav-link-2").removeClass("active");
+        $(".nav-link-3").removeClass("active");
+        $(".nav-link-5").removeClass("active");
+
+        $("#one_detail").removeClass("active");
+        $("#two_detail").removeClass("active");
+        $("#three_detail").removeClass("active");
+        $("#four_detail").addClass("active");
+        $("#five_detail").removeClass("active");
+    });
+
+    $(".nav-link-5").click(function () {
+        $(this).addClass("active");
+        $(".nav-link-1").removeClass("active");
+        $(".nav-link-2").removeClass("active");
+        $(".nav-link-3").removeClass("active");
+        $(".nav-link-4").removeClass("active");
+
+        $("#one_detail").removeClass("active");
+        $("#two_detail").removeClass("active");
+        $("#three_detail").removeClass("active");
+        $("#four_detail").removeClass("active");
+        $("#five_detail").addClass("active");
     });
 
     //ORGANIZACIÓN
