@@ -200,16 +200,18 @@
                     <h2>General</h2>
                     <ul>
                         <li><a href="javascript:void(0);" id="btnOrganizacion">Organización</a></li>
+                        <li><a href="javascript:void(0);" id="btnCentrosCostos">Centros de costos</a></li>
+                        <li><a href="javascript:void(0);" id="btnPucCliente">PUC</a></li>
                     </ul>
                     <img style="float:right; width: 40px;" src="https://assets.codepen.io/2301174/icon-supervisor.svg"
                         alt="General">
                 </div>
 
                 <div class="box box-down blue">
-                    <h2>Catálogo</h2>
+                    <h2>Catálogo General</h2>
                     <ul>
+                        <li><a href="javascript:void(0);" id="btnAdminActividadEconomica">Actividades Económicas</a></li>
                         <li><a href="javascript:void(0);" id="btnPuc">PUC</a></li>
-                        <li><a href="javascript:void(0);" id="btnCentrosCostos">Centros de costos</a></li>
                     </ul>
                     <img style="float:right; width: 40px;" src="https://assets.codepen.io/2301174/icon-karma.svg"
                         alt="Catálogo">
@@ -219,7 +221,6 @@
                 <div class="box orange">
                     <h2>Administrativo</h2>
                     <ul>
-                        <li><a href="javascript:void(0);" id="btnAdminActividadEconomica">Actividades Económicas</a></li>
                         <li><a href="javascript:void(0);" id="btnAdminTipoDocumento">Tipos Documentos</a></li>
                         <li><a href="javascript:void(0);" id="btnAdminTipoRegimen">Tipos Régimenes</a></li>
                         <li><a href="javascript:void(0);" id="btnAdminTipoEmpresa">Tipos Empresas</a></li>
