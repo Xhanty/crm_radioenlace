@@ -3,7 +3,7 @@
     <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
         <!--div-->
         <div class="card">
-            <div class="card-header d-flex-header-table">
+            <div class="card-header d-flex-header-table" style="border-radius: 4px; background: hsl(0, 78%, 62%)">
                 <div class="div-1-tables-header">
                     <h3 class="card-title mt-2">Organización</h3>
                 </div>
@@ -11,7 +11,7 @@
                     <button class="btn btn-primary back_to_menu">&times;</button>
                 </div>
             </div>
-            <div class="card-body" style="margin-top: -18px;">
+            <div class="card-body">
                 <div class="d-flex justify-content-center">
                     <img id="img_cliente_edit" class="avatar border rounded-circle" style="width: 10pc; height: 10pc;"
                         src="{{ asset('images/clientes/noavatar.png') }}">
@@ -22,15 +22,14 @@
                         <label for="">Tipo Empresa</label>
                         <select id="tipo_empresa_organizacion" class="form-select">
                             <option value="">Seleccione un tipo de cliente</option>
-                            <option value="0">Persona Jurídica</option>
-                            <option value="1">Persona Natural</option>
-                            <option value="2">Consoricio</option>
-                            <option value="3">Unión Temporal</option>
+                            @foreach ($tipos_empresas as $item)
+                                <option value="{{ $item->id }}">{{ $item->nombre }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-lg mg-t-10 mg-lg-t-0">
                         <label for="">Nombre</label>
-                        <input class="form-control" id="nombre_organizacion" placeholder="Nombre    " type="text">
+                        <input class="form-control" id="nombre_organizacion" placeholder="Nombre" type="text">
                     </div>
                 </div>
                 <br>
@@ -39,29 +38,20 @@
                         <label for="">Tipo Documento</label>
                         <select id="tipo_doc_organizacion" class="form-select">
                             <option value="">Seleccione un opción</option>
-                            <option value="1">Registro Civil</option>
-                            <option value="2">Tarjeta de identidad</option>
-                            <option value="3">Cédula de ciudadanía</option>
-                            <option value="4">Tarjeta de extranjería</option>
-                            <option value="5">NIT</option>
-                            <option value="6">Pasaporte</option>
-                            <option value="7">Documento de identificación extranjero</option>
-                            <option value="8">NUIP</option>
-                            <option value="9">No obligado a registrarse en RUT PN</option>
-                            <option value="10">Permiso especial de permanencia PEP</option>
-                            <option value="11">Sin identificación del exterior o para uso definido por la DIAN
-                            </option>
-                            <option value="12">NIT de otro país/ Sin identificación del exterior (43 medios magnéticos)</option>
-                            <option value="13">Salvoconducto de permanencia</option>
+                            @foreach ($tipos_documentos as $item)
+                                <option value="{{ $item->id }}">{{ $item->nombre }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-lg mg-t-10 mg-lg-t-0">
                         <label for="">Número Documento</label>
-                        <input class="form-control" id="documento_organizacion" placeholder="Número Documento" type="text">
+                        <input class="form-control" id="documento_organizacion" placeholder="Número Documento"
+                            type="text">
                     </div>
                     <div class="col-sm mg-t-10 mg-lg-t-0 d-none">
                         <label for="">Dígito Verificación</label>
-                        <input class="form-control" id="digito_verifi_organizacion" placeholder="Dígito Verificación" type="text">
+                        <input class="form-control" id="digito_verifi_organizacion" placeholder="Dígito Verificación"
+                            type="text">
                     </div>
                 </div>
                 <br>
@@ -70,8 +60,10 @@
                         <label for="">Ciudad</label>
                         <select id="ciudad_organizacion" class="form-select">
                             <option value="">Seleccione un opción</option>
-                            <option value="1">Medellín</option>
-                            <option value="2">Bogotá</option>
+                            @foreach ($ciudades as $item)
+                                <option value="{{ $item->id }}">{{ $item->nombre }} - {{ $item->departamento }}
+                                </option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-lg mg-t-10 mg-lg-t-0">
@@ -85,11 +77,9 @@
                         <label for="">Tipo Régimen</label>
                         <select id="tipo_regimen_organizacion" class="form-select">
                             <option value="">Seleccione un opción</option>
-                            <option value="1">001 - Gran Contribuyente</option>
-                            <option value="2">002 - Responble de IVA</option>
-                            <option value="3">003 - No Responsable de IVA</option>
-                            <option value="4">004 - Empresa del Estado</option>
-                            <option value="5">099 - Régimen simple de tributación</option>
+                            @foreach ($tipos_regimenes as $item)
+                                <option value="{{ $item->id }}">{{ $item->code }} - {{ $item->nombre }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-lg mg-t-10 mg-lg-t-0">
@@ -245,24 +235,10 @@
                                                 <label for="">Tipo Identificación</label>
                                                 <select id="tipo_doc_repre_organizacion" class="form-select">
                                                     <option value="">Seleccione un opción</option>
-                                                    <option value="1">Registro Civil</option>
-                                                    <option value="2">Tarjeta de identidad</option>
-                                                    <option value="3">Cédula de ciudadanía</option>
-                                                    <option value="4">Tarjeta de extranjería</option>
-                                                    <option value="5">NIT</option>
-                                                    <option value="6">Pasaporte</option>
-                                                    <option value="7">Documento de identificación extranjero
-                                                    </option>
-                                                    <option value="8">NUIP</option>
-                                                    <option value="9">No obligado a registrarse en RUT PN</option>
-                                                    <option value="10">Permiso especial de permanencia PEP</option>
-                                                    <option value="11">Sin identificación del exterior o para uso
-                                                        definido por la DIAN
-                                                    </option>
-                                                    <option value="12">NIT de otro país/ Sin identificación del
-                                                        exterior (43 medios
-                                                        magnéticos)</option>
-                                                    <option value="13">Salvoconducto de permanencia</option>
+                                                    @foreach ($tipos_documentos as $item)
+                                                        <option value="{{ $item->id }}">{{ $item->nombre }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-lg mg-t-10 mg-lg-t-0">

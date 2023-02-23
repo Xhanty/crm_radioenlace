@@ -85,6 +85,36 @@
                 animation: 1s ease-in-out 0s 1 slideInFromTop
             }
 
+            #div_tipos_empresas {
+                -webkit-transition: 1s linear;
+                transition: 1s linear;
+                animation: 1s ease-in-out 0s 1 slideInFromTop
+            }
+
+            #div_tipos_regimenes {
+                -webkit-transition: 1s linear;
+                transition: 1s linear;
+                animation: 1s ease-in-out 0s 1 slideInFromTop
+            }
+
+            #div_actividades_economicas {
+                -webkit-transition: 1s linear;
+                transition: 1s linear;
+                animation: 1s ease-in-out 0s 1 slideInFromTop
+            }
+
+            #div_tipos_documentos {
+                -webkit-transition: 1s linear;
+                transition: 1s linear;
+                animation: 1s ease-in-out 0s 1 slideInFromTop
+            }
+
+            #div_ciudades {
+                -webkit-transition: 1s linear;
+                transition: 1s linear;
+                animation: 1s ease-in-out 0s 1 slideInFromTop
+            }
+
             @keyframes slideInFromTop {
                 0% {
                     transform: translateY(-100%);
@@ -170,7 +200,6 @@
                     <h2>General</h2>
                     <ul>
                         <li><a href="javascript:void(0);" id="btnOrganizacion">Organización</a></li>
-                        <li><a href="javascript:void(0);" id="btnFormasPago">Formas de pago</a></li>
                     </ul>
                     <img style="float:right; width: 40px;" src="https://assets.codepen.io/2301174/icon-supervisor.svg"
                         alt="General">
@@ -182,18 +211,22 @@
                         <li><a href="javascript:void(0);" id="btnPuc">PUC</a></li>
                         <li><a href="javascript:void(0);" id="btnCentrosCostos">Centros de costos</a></li>
                     </ul>
-                    <img style="float:right; width: 40px;" src="https://assets.codepen.io/2301174/icon-calculator.svg"
+                    <img style="float:right; width: 40px;" src="https://assets.codepen.io/2301174/icon-karma.svg"
                         alt="Catálogo">
                 </div>
             </div>
             <div class="row2-container">
                 <div class="box orange">
-                    <h2>Opción</h2>
+                    <h2>Administrativo</h2>
                     <ul>
-                        <li><a href="javascript:void(0);">Opción 1</a></li>
-                        <li><a href="javascript:void(0);">Opción 2</a></li>
+                        <li><a href="javascript:void(0);" id="btnAdminActividadEconomica">Actividades Económicas</a></li>
+                        <li><a href="javascript:void(0);" id="btnAdminTipoDocumento">Tipos Documentos</a></li>
+                        <li><a href="javascript:void(0);" id="btnAdminTipoRegimen">Tipos Régimenes</a></li>
+                        <li><a href="javascript:void(0);" id="btnAdminTipoEmpresa">Tipos Empresas</a></li>
+                        <li><a href="javascript:void(0);" id="btnFormasPago">Formas de pago</a></li>
+                        <li><a href="javascript:void(0);" id="btnAdminCiudades">Ciudades</a></li>
                     </ul>
-                    <img style="float:right; width: 40px;" src="https://assets.codepen.io/2301174/icon-karma.svg"
+                    <img style="float:right; width: 40px;" src="https://assets.codepen.io/2301174/icon-calculator.svg"
                         alt="Opción">
                 </div>
             </div>
@@ -206,14 +239,18 @@
         @include('admin.contabilidad.configuracion.clientes')
         @include('admin.contabilidad.configuracion.proveedores')
         @include('admin.contabilidad.configuracion.empleados')
+        @include('admin.contabilidad.configuracion.actividades_economicas')
+        @include('admin.contabilidad.configuracion.ciudades')
+        @include('admin.contabilidad.configuracion.tipos_documentos')
+        @include('admin.contabilidad.configuracion.tipos_empresas')
+        @include('admin.contabilidad.configuracion.tipos_regimenes')
 
     </div>
 @endsection
 
 @section('scripts')
     <script>
-        $(document).ready(function() {
-        });
+        $(document).ready(function() {});
     </script>
     <script src="https://homfen.github.io/dataTables.treeGrid.js/dataTables.treeGrid.js"></script>
     <script src="{{ asset('assets/js/app/contabilidad/configuracion.js') }}"></script>
