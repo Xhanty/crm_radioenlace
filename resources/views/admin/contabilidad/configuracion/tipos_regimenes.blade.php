@@ -34,7 +34,7 @@
                         <thead>
                             <tr>
                                 <th>Código</th>
-                                <th>Nombre</th>
+                                <th style="width: 500px">Nombre</th>
                                 <th>Creador</th>
                                 <th>Fecha</th>
                                 <th>Status</th>
@@ -45,6 +45,35 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalEditTipoRegimen">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h6 class="modal-title">Modificar Tipo de Régimen</h6><button aria-label="Close" class="btn-close"
+                    data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="id_edit_tiporegi" disabled readonly>
+                <div class="row row-sm">
+                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                        <label for="">Código</label>
+                        <input class="form-control" id="codigo_edit_tiporegi" placeholder="Código" type="text">
+                    </div>
+                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                        <label for="">Tipo Régimen</label>
+                        <input class="form-control" id="tipo_regimen_edit_tiporegi"
+                            placeholder="Tipo Régimen" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn ripple btn-primary" id="btnEditTipoRegimen" type="button">Actualizar Tipo Régimen</button>
             </div>
         </div>
     </div>

@@ -129,6 +129,39 @@ class ConfiguracionController extends Controller
         ]);
     }
 
+    public function edit_tipo_regimen(Request $request)
+    {
+
+        DB::table('tipos_regimenes')->where('id', $request->id)->update([
+            'code' => $request->code,
+            'nombre' => $request->name,
+        ]);
+
+        return response()->json([
+            'info' => 1,
+        ]);
+    }
+
+    public function status_tipo_regimen(Request $request)
+    {
+        $status = $request->status;
+
+        if ($status == 1) {
+            $status = 0;
+        } else {
+            $status = 1;
+        }
+
+        DB::table('tipos_regimenes')->where('id', $request->id)->update([
+            'status' => $status,
+        ]);
+
+        return response()->json([
+            'info' => 1,
+        ]);
+    }
+
+
     // TIPOS DE EMPRESAS
     public function tipo_empresa_data()
     {
@@ -156,6 +189,38 @@ class ConfiguracionController extends Controller
             'info' => 1,
         ]);
     }
+
+    public function edit_tipo_empresa(Request $request)
+    {
+
+        DB::table('tipos_empresas')->where('id', $request->id)->update([
+            'nombre' => $request->name,
+        ]);
+
+        return response()->json([
+            'info' => 1,
+        ]);
+    }
+
+    public function status_tipo_empresa(Request $request)
+    {
+        $status = $request->status;
+
+        if ($status == 1) {
+            $status = 0;
+        } else {
+            $status = 1;
+        }
+
+        DB::table('tipos_empresas')->where('id', $request->id)->update([
+            'status' => $status,
+        ]);
+
+        return response()->json([
+            'info' => 1,
+        ]);
+    }
+
 
     // TIPOS DE DOCUMENTOS
     public function tipo_documento_data()
@@ -185,6 +250,38 @@ class ConfiguracionController extends Controller
         ]);
     }
 
+    public function edit_tipo_documento(Request $request)
+    {
+
+        DB::table('tipos_documentos')->where('id', $request->id)->update([
+            'nombre' => $request->name,
+        ]);
+
+        return response()->json([
+            'info' => 1,
+        ]);
+    }
+
+    public function status_tipo_documento(Request $request)
+    {
+        $status = $request->status;
+
+        if ($status == 1) {
+            $status = 0;
+        } else {
+            $status = 1;
+        }
+
+        DB::table('tipos_documentos')->where('id', $request->id)->update([
+            'status' => $status,
+        ]);
+
+        return response()->json([
+            'info' => 1,
+        ]);
+    }
+
+
     // ACTIVIDADES ECONOMICAS
     public function actividades_economicas_data()
     {
@@ -213,6 +310,39 @@ class ConfiguracionController extends Controller
             'info' => 1,
         ]);
     }
+
+    public function edit_actividad_economica(Request $request)
+    {
+
+        DB::table('actividades_economicas')->where('id', $request->id)->update([
+            'code' => $request->code,
+            'nombre' => $request->name,
+        ]);
+
+        return response()->json([
+            'info' => 1,
+        ]);
+    }
+
+    public function status_actividad_economica(Request $request)
+    {
+        $status = $request->status;
+
+        if ($status == 1) {
+            $status = 0;
+        } else {
+            $status = 1;
+        }
+
+        DB::table('actividades_economicas')->where('id', $request->id)->update([
+            'status' => $status,
+        ]);
+
+        return response()->json([
+            'info' => 1,
+        ]);
+    }
+
 
     //CIUDADES
     public function ciudades_data()
@@ -244,6 +374,39 @@ class ConfiguracionController extends Controller
         ]);
     }
 
+    public function edit_ciudad(Request $request)
+    {
+
+        DB::table('ciudades')->where('id', $request->id)->update([
+            'nombre' => $request->name,
+            'departamento_id' => $request->departamento,
+        ]);
+
+        return response()->json([
+            'info' => 1,
+        ]);
+    }
+
+    public function status_ciudad(Request $request)
+    {
+        $status = $request->status;
+
+        if ($status == 1) {
+            $status = 0;
+        } else {
+            $status = 1;
+        }
+
+        DB::table('ciudades')->where('id', $request->id)->update([
+            'status' => $status,
+        ]);
+
+        return response()->json([
+            'info' => 1,
+        ]);
+    }
+
+
     // FORMAS DE PAGO
     public function formas_pago_data()
     {
@@ -265,6 +428,99 @@ class ConfiguracionController extends Controller
             'nombre' => $request->name,
             'created_by' => auth()->user()->id,
             'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        return response()->json([
+            'info' => 1,
+        ]);
+    }
+
+    public function edit_forma_pago(Request $request)
+    {
+
+        DB::table('formas_pago')->where('id', $request->id)->update([
+            'nombre' => $request->name,
+        ]);
+
+        return response()->json([
+            'info' => 1,
+        ]);
+    }
+
+    public function status_forma_pago(Request $request)
+    {
+        $status = $request->status;
+
+        if ($status == 1) {
+            $status = 0;
+        } else {
+            $status = 1;
+        }
+
+        DB::table('formas_pago')->where('id', $request->id)->update([
+            'status' => $status,
+        ]);
+
+        return response()->json([
+            'info' => 1,
+        ]);
+    }
+
+
+    // CENTROS DE COSTOS
+    public function centros_costos_data()
+    {
+        $tipo_documentos = DB::table('centros_costo')
+            ->select('centros_costo.*', 'empleados.nombre as creador')
+            ->join('empleados', 'empleados.id', '=', 'centros_costo.created_by')
+            ->get();
+
+        return response()->json([
+            'info' => 1,
+            'data' => $tipo_documentos
+        ]);
+    }
+
+    public function add_centros_costos(Request $request)
+    {
+
+        DB::table('centros_costo')->insert([
+            'code' => $request->code,
+            'nombre' => $request->name,
+            'created_by' => auth()->user()->id,
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        return response()->json([
+            'info' => 1,
+        ]);
+    }
+
+    public function edit_centros_costos(Request $request)
+    {
+
+        DB::table('centros_costo')->where('id', $request->id)->update([
+            'code' => $request->code,
+            'nombre' => $request->name,
+        ]);
+
+        return response()->json([
+            'info' => 1,
+        ]);
+    }
+
+    public function status_centros_costos(Request $request)
+    {
+        $status = $request->status;
+
+        if ($status == 1) {
+            $status = 0;
+        } else {
+            $status = 1;
+        }
+
+        DB::table('centros_costo')->where('id', $request->id)->update([
+            'status' => $status,
         ]);
 
         return response()->json([

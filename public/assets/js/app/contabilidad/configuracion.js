@@ -29,12 +29,13 @@ $(document).ready(function () {
     };
 
     load_pucs();
+    load_ciudades();
+    load_formas_pago();
     load_tipo_empresa();
     load_tipo_regimen();
     load_tipo_documento();
+    load_centros_costos();
     load_actividad_economica();
-    load_ciudades();
-    load_formas_pago();
 
     $(".open-toggle").trigger("click");
 
@@ -210,8 +211,8 @@ $(document).ready(function () {
                         html += '<td>' + data[i].created_at + '</td>';
                         html += '<td>' + status + '</td>';
                         html += '<td class="text-center">';
-                        html += '<button type="button" class="btn btn-sm btn-primary" title="Modificar" data-id="' + data[i].id + '" data-nombre="' + data[i].nombre + '"><i class="fa fa-edit"></i></button>&nbsp;';
-                        html += '<button type="button" class="btn btn-sm btn-warning" title="Cambiar Status" data-id="' + data[i].id + '"><i class="fa fa-times"></i></button>';
+                        html += '<button type="button" class="btn btn-sm btn-primary btnEditTipoEmpresa" title="Modificar" data-id="' + data[i].id + '" data-nombre="' + data[i].nombre + '"><i class="fa fa-edit"></i></button>&nbsp;';
+                        html += '<button type="button" class="btn btn-sm btn-warning btnStatusTipoEmpresa" title="Cambiar Status" data-id="' + data[i].id + '" data-status="' + data[i].status + '"><i class="fa fa-times"></i></button>';
                         html += '</td>';
                         html += '</tr>';
                     }
@@ -268,8 +269,8 @@ $(document).ready(function () {
                         html += '<td>' + data[i].created_at + '</td>';
                         html += '<td>' + status + '</td>';
                         html += '<td class="text-center">';
-                        html += '<button type="button" class="btn btn-sm btn-primary" title="Modificar" data-id="' + data[i].id + '" data-nombre="' + data[i].nombre + '"><i class="fa fa-edit"></i></button>&nbsp;';
-                        html += '<button type="button" class="btn btn-sm btn-warning" title="Cambiar Status" data-id="' + data[i].id + '"><i class="fa fa-times"></i></button>';
+                        html += '<button type="button" class="btn btn-sm btn-primary btnEditTipoRegimen" title="Modificar" data-id="' + data[i].id + '" data-nombre="' + data[i].nombre + '" data-code="' + data[i].code + '"><i class="fa fa-edit"></i></button>&nbsp;';
+                        html += '<button type="button" class="btn btn-sm btn-warning btnStatusTipoRegimen" title="Cambiar Status" data-id="' + data[i].id + '" data-status="' + data[i].status + '"><i class="fa fa-times"></i></button>';
                         html += '</td>';
                         html += '</tr>';
                     }
@@ -325,8 +326,8 @@ $(document).ready(function () {
                         html += '<td>' + data[i].created_at + '</td>';
                         html += '<td>' + status + '</td>';
                         html += '<td class="text-center">';
-                        html += '<button type="button" class="btn btn-sm btn-primary" title="Modificar" data-id="' + data[i].id + '" data-nombre="' + data[i].nombre + '"><i class="fa fa-edit"></i></button>&nbsp;';
-                        html += '<button type="button" class="btn btn-sm btn-warning" title="Cambiar Status" data-id="' + data[i].id + '"><i class="fa fa-times"></i></button>';
+                        html += '<button type="button" class="btn btn-sm btn-primary btnEditTipoDocumento" title="Modificar" data-id="' + data[i].id + '" data-nombre="' + data[i].nombre + '"><i class="fa fa-edit"></i></button>&nbsp;';
+                        html += '<button type="button" class="btn btn-sm btn-warning btnStatusTipoDocumento" title="Cambiar Status" data-id="' + data[i].id + '" data-status="' + data[i].status + '"><i class="fa fa-times"></i></button>';
                         html += '</td>';
                         html += '</tr>';
                     }
@@ -383,8 +384,8 @@ $(document).ready(function () {
                         html += '<td>' + data[i].created_at + '</td>';
                         html += '<td>' + status + '</td>';
                         html += '<td class="text-center">';
-                        html += '<button type="button" class="btn btn-sm btn-primary" title="Modificar" data-id="' + data[i].id + '" data-nombre="' + data[i].nombre + '"><i class="fa fa-edit"></i></button>&nbsp;';
-                        html += '<button type="button" class="btn btn-sm btn-warning" title="Cambiar Status" data-id="' + data[i].id + '"><i class="fa fa-times"></i></button>';
+                        html += '<button type="button" class="btn btn-sm btn-primary btnEditActividadEconomica" title="Modificar" data-id="' + data[i].id + '" data-nombre="' + data[i].nombre + '" data-code="' + data[i].code + '"><i class="fa fa-edit"></i></button>&nbsp;';
+                        html += '<button type="button" class="btn btn-sm btn-warning btnStatusActividadEconomica" title="Cambiar Status" data-id="' + data[i].id + '" data-status="' + data[i].status + '"><i class="fa fa-times"></i></button>';
                         html += '</td>';
                         html += '</tr>';
                     }
@@ -441,8 +442,8 @@ $(document).ready(function () {
                         html += '<td>' + data[i].created_at + '</td>';
                         html += '<td>' + status + '</td>';
                         html += '<td class="text-center">';
-                        html += '<button type="button" class="btn btn-sm btn-primary" title="Modificar" data-id="' + data[i].id + '" data-nombre="' + data[i].nombre + '"><i class="fa fa-edit"></i></button>&nbsp;';
-                        html += '<button type="button" class="btn btn-sm btn-warning" title="Cambiar Status" data-id="' + data[i].id + '"><i class="fa fa-times"></i></button>';
+                        html += '<button type="button" class="btn btn-sm btn-primary btnEditCiudad" title="Modificar" data-id="' + data[i].id + '" data-nombre="' + data[i].nombre + '" data-departamento="' + data[i].departamento_id + '"><i class="fa fa-edit"></i></button>&nbsp;';
+                        html += '<button type="button" class="btn btn-sm btn-warning btnStatusCiudad" title="Cambiar Status" data-id="' + data[i].id + '" data-status="' + data[i].status + '"><i class="fa fa-times"></i></button>';
                         html += '</td>';
                         html += '</tr>';
                     }
@@ -498,8 +499,8 @@ $(document).ready(function () {
                         html += '<td>' + data[i].created_at + '</td>';
                         html += '<td>' + status + '</td>';
                         html += '<td class="text-center">';
-                        html += '<button type="button" class="btn btn-sm btn-primary" title="Modificar" data-id="' + data[i].id + '" data-nombre="' + data[i].nombre + '"><i class="fa fa-edit"></i></button>&nbsp;';
-                        html += '<button type="button" class="btn btn-sm btn-warning" title="Cambiar Status" data-id="' + data[i].id + '"><i class="fa fa-times"></i></button>';
+                        html += '<button type="button" class="btn btn-sm btn-primary btnEditFormaPago" title="Modificar" data-id="' + data[i].id + '" data-nombre="' + data[i].nombre + '"><i class="fa fa-edit"></i></button>&nbsp;';
+                        html += '<button type="button" class="btn btn-sm btn-warning btnStatusFormaPago" title="Cambiar Status" data-id="' + data[i].id + '" data-status="' + data[i].status + '"><i class="fa fa-times"></i></button>';
                         html += '</td>';
                         html += '</tr>';
                     }
@@ -513,6 +514,64 @@ $(document).ready(function () {
                     $("#tbl_formas_pago tbody").html(html);
 
                     $("#tbl_formas_pago").DataTable({
+                        "responsive": true,
+                        "language": language,
+                        "order": [],
+                    });
+                } else {
+                    toastr.error("Error al cargar la información");
+
+                }
+                $("#tipo_empresa").html(data);
+            },
+            error: function (data) {
+                toastr.error("Error al cargar la información");
+                console.log(data);
+            },
+        });
+    }
+
+    function load_centros_costos() {
+        $.ajax({
+            url: "centros_costos_data",
+            type: "POST",
+            dataType: "json",
+            success: function (response) {
+                if (response.info == 1) {
+                    var data = response.data;
+                    var html = '';
+
+                    for (let i = 0; i < data.length; i++) {
+                        data[i].created_at = new Date(data[i].created_at);
+                        data[i].created_at = data[i].created_at.toLocaleDateString('es-CO') + ' ' + data[i].created_at.toLocaleTimeString('es-CO');
+                        let status = '';
+                        if (data[i].status == 1) {
+                            status = '<span class="badge bg-success side-badge">Activo</span>';
+                        } else {
+                            status = '<span class="badge bg-danger side-badge">Inactivo</span>';
+                        }
+                        html += '<tr>';
+                        html += '<td>' + data[i].code + '</td>';
+                        html += '<td>' + data[i].nombre + '</td>';
+                        html += '<td>' + data[i].creador + '</td>';
+                        html += '<td>' + data[i].created_at + '</td>';
+                        html += '<td>' + status + '</td>';
+                        html += '<td class="text-center">';
+                        html += '<button type="button" class="btn btn-sm btn-primary btnEditCentroCosto" title="Modificar" data-id="' + data[i].id + '" data-nombre="' + data[i].nombre + '" data-code="' + data[i].code + '"><i class="fa fa-edit"></i></button>&nbsp;';
+                        html += '<button type="button" class="btn btn-sm btn-warning btnStatusCentroCosto" title="Cambiar Status" data-id="' + data[i].id + '" data-status="' + data[i].status + '"><i class="fa fa-times"></i></button>';
+                        html += '</td>';
+                        html += '</tr>';
+                    }
+
+                    if ($.fn.DataTable.isDataTable("#tbl_centros_costos")) {
+                        $("#tbl_centros_costos").DataTable().destroy();
+                    }
+
+                    $("#tbl_centros_costos tbody").empty();
+
+                    $("#tbl_centros_costos tbody").html(html);
+
+                    $("#tbl_centros_costos").DataTable({
                         "responsive": true,
                         "language": language,
                         "order": [],
@@ -576,6 +635,101 @@ $(document).ready(function () {
         }
     });
 
+    $(document).on("click", ".btnEditActividadEconomica", function () {
+        let id = $(this).data("id");
+        let code = $(this).data("code");
+        let name = $(this).data("nombre");
+
+        $("#id_edit_actividadecono").val(id);
+        $("#codigo_edit_actividadecono").val(code);
+        $("#actividad_economica_edit_actividadecono").val(name);
+        $("#modalEditActividadEconomica").modal("show");
+    });
+
+    $(document).on("click", "#btnEditActividadEconomica", function () {
+        let id = $("#id_edit_actividadecono").val();
+        let code = $("#codigo_edit_actividadecono").val();
+        let name = $("#actividad_economica_edit_actividadecono").val();
+
+        if (code.trim().length == 0) {
+            toastr.error("El código es obligatorio");
+            return false;
+        } else if (name.trim().length == 0) {
+            toastr.error("El nombre es obligatorio");
+            return false;
+        } else {
+            $("#btnEditActividadEconomica").attr("disabled", true);
+            $("#btnEditActividadEconomica").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
+            $.ajax({
+                url: "edit_actividad_economica",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id: id,
+                    code: code,
+                    name: name,
+                },
+                success: function (response) {
+                    if (response.info == 1) {
+                        load_actividad_economica();
+                        $("#modalEditActividadEconomica").modal("hide");
+                        $("#id_edit_actividadecono").val('');
+                        $("#codigo_edit_actividadecono").val('');
+                        $("#actividad_economica_edit_actividadecono").val('');
+                        toastr.success("Actividad económica actualizada correctamente");
+                    } else {
+                        toastr.error("Error al actualizar la actividad económica");
+                    }
+                    $("#btnEditActividadEconomica").attr("disabled", false);
+                    $("#btnEditActividadEconomica").html("Actualizar Actividad Económica");
+                },
+                error: function (data) {
+                    $("#btnEditActividadEconomica").attr("disabled", false);
+                    $("#btnEditActividadEconomica").html("Actualizar Actividad Económica");
+                    toastr.error("Error al actualizar la actividad económica");
+                    console.log(data);
+                },
+            });
+        }
+    });
+
+    $(document).on("click", ".btnStatusActividadEconomica", function () {
+        let id = $(this).data("id");
+        let status = $(this).data("status");
+
+        $(".btnStatusActividadEconomica").attr("disabled", true);
+        $(".btnStatusActividadEconomica").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'
+        );
+        $.ajax({
+            url: "status_actividad_economica",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id: id,
+                status: status,
+            },
+            success: function (response) {
+                if (response.info == 1) {
+                    load_actividad_economica();
+                    toastr.success("Actividad económica actualizada correctamente");
+                } else {
+                    $(".btnStatusActividadEconomica").attr("disabled", false);
+                    $(".btnStatusActividadEconomica").html('<i class="fa fa-times"></i>');
+                    toastr.error("Error al actualizar la actividad económica");
+                }
+            },
+            error: function (data) {
+                $(".btnStatusActividadEconomica").attr("disabled", false);
+                $(".btnStatusActividadEconomica").html('<i class="fa fa-times"></i>');
+                toastr.error("Error al actualizar la actividad económica");
+                console.log(data);
+            },
+        });
+    });
+
     //TIPOS DOCUMENTOS
     $(document).on("click", "#btnAddTipoDocumento", function () {
         let name = $("#tipo_documento_add_tipodoc").val();
@@ -614,6 +768,93 @@ $(document).ready(function () {
                 },
             });
         }
+    });
+
+    $(document).on("click", ".btnEditTipoDocumento", function () {
+        let id = $(this).data("id");
+        let name = $(this).data("nombre");
+
+        $("#id_edit_tipodoc").val(id);
+        $("#tipo_documento_edit_tipodoc").val(name);
+        $("#modalEditTipoDocumento").modal("show");
+    });
+
+    $(document).on("click", "#btnEditTipoDocumento", function () {
+        let id = $("#id_edit_tipodoc").val();
+        let name = $("#tipo_documento_edit_tipodoc").val();
+        
+        if (name.trim().length == 0) {
+            toastr.error("El nombre es obligatorio");
+            return false;
+        } else {
+            $("#btnEditTipoDocumento").attr("disabled", true);
+            $("#btnEditTipoDocumento").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
+            $.ajax({
+                url: "edit_tipo_documento",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id: id,
+                    name: name,
+                },
+                success: function (response) {
+                    if (response.info == 1) {
+                        load_tipo_documento();
+                        $("#modalEditTipoDocumento").modal("hide");
+                        $("#id_edit_tipodoc").val('');
+                        $("#tipo_documento_edit_tipodoc").val('');
+                        toastr.success("Tipo de documento actualizado correctamente");
+                    } else {
+                        toastr.error("Error al actualizar el tipo de documento");
+                    }
+                    $("#btnEditTipoDocumento").attr("disabled", false);
+                    $("#btnEditTipoDocumento").html("Actualizar Tipo Documento");
+                },
+                error: function (data) {
+                    $("#btnEditTipoDocumento").attr("disabled", false);
+                    $("#btnEditTipoDocumento").html("Actualizar Tipo Documento");
+                    toastr.error("Error al actualizar el tipo de documento");
+                    console.log(data);
+                },
+            });
+        }
+    });
+
+    $(document).on("click", ".btnStatusTipoDocumento", function () {
+        let id = $(this).data("id");
+        let status = $(this).data("status");
+
+        $(".btnStatusTipoDocumento").attr("disabled", true);
+        $(".btnStatusTipoDocumento").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'
+        );
+        $.ajax({
+            url: "status_tipo_documento",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id: id,
+                status: status,
+            },
+            success: function (response) {
+                if (response.info == 1) {
+                    load_tipo_documento();
+                    toastr.success("Tipo de documento actualizado correctamente");
+                } else {
+                    $(".btnStatusTipoDocumento").attr("disabled", false);
+                    $(".btnStatusTipoDocumento").html('<i class="fa fa-times"></i>');
+                    toastr.error("Error al actualizar el tipo de documento");
+                }
+            },
+            error: function (data) {
+                $(".btnStatusTipoDocumento").attr("disabled", false);
+                $(".btnStatusTipoDocumento").html('<i class="fa fa-times"></i>');
+                toastr.error("Error al actualizar el tipo de documento");
+                console.log(data);
+            },
+        });
     });
 
     //TIPOS REGIMENES
@@ -662,6 +903,100 @@ $(document).ready(function () {
         }
     });
 
+    $(document).on("click", ".btnEditTipoRegimen", function () {
+        let id = $(this).data("id");
+        let code = $(this).data("code");
+        let name = $(this).data("nombre");
+
+        $("#id_edit_tiporegi").val(id);
+        $("#codigo_edit_tiporegi").val(code);
+        $("#tipo_regimen_edit_tiporegi").val(name);
+        $("#modalEditTipoRegimen").modal("show");
+    });
+
+    $(document).on("click", "#btnEditTipoRegimen", function () {
+        let id = $("#id_edit_tiporegi").val();
+        let code = $("#codigo_edit_tiporegi").val();
+        let name = $("#tipo_regimen_edit_tiporegi").val();
+
+        if (code.trim().length == 0) {
+            toastr.error("El código es obligatorio");
+            return false;
+        } else if (name.trim().length == 0) {
+            toastr.error("El nombre es obligatorio");
+            return false;
+        } else {
+            $("#btnEditTipoRegimen").attr("disabled", true);
+            $("#btnEditTipoRegimen").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
+            $.ajax({
+                url: "edit_tipo_regimen",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id: id,
+                    code: code,
+                    name: name,
+                },
+                success: function (response) {
+                    if (response.info == 1) {
+                        load_tipo_regimen();
+                        $("#codigo_edit_tiporegi").val('');
+                        $("#tipo_regimen_edit_tiporegi").val('');
+                        $("#modalEditTipoRegimen").modal("hide");
+                        toastr.success("Tipo de régimen actualizado correctamente");
+                    } else {
+                        toastr.error("Error al actualizar el tipo de régimen");
+                    }
+                    $("#btnEditTipoRegimen").attr("disabled", false);
+                    $("#btnEditTipoRegimen").html("Actualizar Tipo Régimen");
+                },
+                error: function (data) {
+                    $("#btnEditTipoRegimen").attr("disabled", false);
+                    $("#btnEditTipoRegimen").html("Actualizar Tipo Régimen");
+                    toastr.error("Error al actualizar el tipo de régimen");
+                    console.log(data);
+                },
+            });
+        }
+    });
+
+    $(document).on("click", ".btnStatusTipoRegimen", function () {
+        let id = $(this).data("id");
+        let status = $(this).data("status");
+
+        $(".btnStatusTipoRegimen").attr("disabled", true);
+        $(".btnStatusTipoRegimen").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'
+        );
+        $.ajax({
+            url: "status_tipo_regimen",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id: id,
+                status: status,
+            },
+            success: function (response) {
+                if (response.info == 1) {
+                    load_tipo_regimen();
+                    toastr.success("Tipo de régimen actualizado correctamente");
+                } else {
+                    $(".btnStatusTipoRegimen").attr("disabled", false);
+                    $(".btnStatusTipoRegimen").html('<i class="fa fa-times"></i>');
+                    toastr.error("Error al actualizar el tipo de régimen");
+                }
+            },
+            error: function (data) {
+                $(".btnStatusTipoRegimen").attr("disabled", false);
+                $(".btnStatusTipoRegimen").html('<i class="fa fa-times"></i>');
+                toastr.error("Error al actualizar el tipo de régimen");
+                console.log(data);
+            },
+        });
+    });
+
     //TIPOS EMPRESAS
     $(document).on("click", "#btnAddTipoEmpresa", function () {
         let name = $("#tipo_empresa_add_tipoempresa").val();
@@ -702,6 +1037,92 @@ $(document).ready(function () {
         }
     });
 
+    $(document).on("click", ".btnEditTipoEmpresa", function () {
+        let id = $(this).data("id");
+        let name = $(this).data("nombre");
+
+        $("#id_edit_tipoempresa").val(id);
+        $("#tipo_empresa_edit_tipoempresa").val(name);
+        $("#modalEditTipoEmpresa").modal("show");
+    });
+
+    $(document).on("click", "#btnEditTipoEmpresa", function () {
+        let id = $("#id_edit_tipoempresa").val();
+        let name = $("#tipo_empresa_edit_tipoempresa").val();
+        
+        if (name.trim().length == 0) {
+            toastr.error("El nombre es obligatorio");
+            return false;
+        } else {
+            $("#btnEditTipoEmpresa").attr("disabled", true);
+            $("#btnEditTipoEmpresa").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
+            $.ajax({
+                url: "edit_tipo_empresa",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id: id,
+                    name: name,
+                },
+                success: function (response) {
+                    if (response.info == 1) {
+                        load_tipo_empresa();
+                        $("#tipo_empresa_edit_tipoempresa").val('');
+                        $("#modalEditTipoEmpresa").modal("hide");
+                        toastr.success("Tipo de empresa actualizado correctamente");
+                    } else {
+                        toastr.error("Error al actualizar el tipo de empresa");
+                    }
+                    $("#btnEditTipoEmpresa").attr("disabled", false);
+                    $("#btnEditTipoEmpresa").html("Actualizar Tipo Empresa");
+                },
+                error: function (data) {
+                    $("#btnEditTipoEmpresa").attr("disabled", false);
+                    $("#btnEditTipoEmpresa").html("Actualizar Tipo Empresa");
+                    toastr.error("Error al actualizar el tipo de empresa");
+                    console.log(data);
+                },
+            });
+        }
+    });
+
+    $(document).on("click", ".btnStatusTipoEmpresa", function () {
+        let id = $(this).data("id");
+        let status = $(this).data("status");
+
+        $(".btnStatusTipoEmpresa").attr("disabled", true);
+        $(".btnStatusTipoEmpresa").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'
+        );
+        $.ajax({
+            url: "status_tipo_empresa",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id: id,
+                status: status,
+            },
+            success: function (response) {
+                if (response.info == 1) {
+                    load_tipo_empresa();
+                    toastr.success("Tipo de empresa actualizado correctamente");
+                } else {
+                    $(".btnStatusTipoEmpresa").attr("disabled", false);
+                    $(".btnStatusTipoEmpresa").html('<i class="fa fa-times"></i>');
+                    toastr.error("Error al actualizar el tipo de empresa");
+                }
+            },
+            error: function (data) {
+                $(".btnStatusTipoEmpresa").attr("disabled", false);
+                $(".btnStatusTipoEmpresa").html('<i class="fa fa-times"></i>');
+                toastr.error("Error al actualizar el tipo de empresa");
+                console.log(data);
+            },
+        });
+    });
+
     //FORMA PAGO
     $(document).on("click", "#btnAddFormaPago", function () {
         let name = $("#forma_pago_add_formaspago").val();
@@ -740,6 +1161,92 @@ $(document).ready(function () {
                 },
             });
         }
+    });
+
+    $(document).on("click", ".btnEditFormaPago", function () {
+        let id = $(this).data("id");
+        let name = $(this).data("nombre");
+
+        $("#id_edit_formapago").val(id);
+        $("#forma_pago_edit_formaspago").val(name);
+        $("#modalEditFormaPago").modal("show");
+    });
+
+    $(document).on("click", "#btnEditFormaPago", function () {
+        let id = $("#id_edit_formapago").val();
+        let name = $("#forma_pago_edit_formaspago").val();
+        
+        if (name.trim().length == 0) {
+            toastr.error("El nombre es obligatorio");
+            return false;
+        } else {
+            $("#btnEditFormaPago").attr("disabled", true);
+            $("#btnEditFormaPago").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
+            $.ajax({
+                url: "edit_forma_pago",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id: id,
+                    name: name,
+                },
+                success: function (response) {
+                    if (response.info == 1) {
+                        load_formas_pago();
+                        $("#forma_pago_edit_formaspago").val('');
+                        $("#modalEditFormaPago").modal("hide");
+                        toastr.success("Forma de pago actualizada correctamente");
+                    } else {
+                        toastr.error("Error al actualizar la forma de pago");
+                    }
+                    $("#btnEditFormaPago").attr("disabled", false);
+                    $("#btnEditFormaPago").html("Actualizar Forma de Pago");
+                },
+                error: function (data) {
+                    $("#btnEditFormaPago").attr("disabled", false);
+                    $("#btnEditFormaPago").html("Actualizar Forma de Pago");
+                    toastr.error("Error al actualizar la forma de pago");
+                    console.log(data);
+                },
+            });
+        }
+    });
+
+    $(document).on("click", ".btnStatusFormaPago", function () {
+        let id = $(this).data("id");
+        let status = $(this).data("status");
+        
+        $(".btnStatusFormaPago").attr("disabled", true);
+        $(".btnStatusFormaPago").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'
+        );
+        $.ajax({
+            url: "status_forma_pago",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id: id,
+                status: status,
+            },
+            success: function (response) {
+                if (response.info == 1) {
+                    load_formas_pago();
+                    toastr.success("Forma de pago actualizada correctamente");
+                } else {
+                    $(".btnStatusFormaPago").attr("disabled", false);
+                    $(".btnStatusFormaPago").html('<i class="fa fa-times"></i>');
+                    toastr.error("Error al actualizar la forma de pago");
+                }
+            },
+            error: function (data) {
+                $(".btnStatusFormaPago").attr("disabled", false);
+                $(".btnStatusFormaPago").html('<i class="fa fa-times"></i>');
+                toastr.error("Error al actualizar la forma de pago");
+                console.log(data);
+            },
+        });
     });
 
     //CIUDADES
@@ -786,5 +1293,240 @@ $(document).ready(function () {
                 },
             });
         }
+    });
+
+    $(document).on("click", ".btnEditCiudad", function () {
+        let id = $(this).data("id");
+        let departamento = $(this).data("departamento");
+        let name = $(this).data("nombre");
+
+        $("#id_edit_ciudad").val(id);
+        $("#departamento_edit_ciudad").val(departamento).trigger("change");
+        $("#ciudad_edit_ciudad").val(name);
+        $("#modalEditCiudad").modal("show");
+    });
+
+    $(document).on("click", "#btnEditCiudad", function () {
+        let id = $("#id_edit_ciudad").val();
+        let departamento = $("#departamento_edit_ciudad").val();
+        let name = $("#ciudad_edit_ciudad").val();
+
+        if (departamento == "") {
+            toastr.error("El departamento es obligatorio");
+            return false;
+        } else if (name.trim().length == 0) {
+            toastr.error("El nombre es obligatorio");
+            return false;
+        } else {
+            $("#btnEditCiudad").attr("disabled", true);
+            $("#btnEditCiudad").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
+            $.ajax({
+                url: "edit_ciudad",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id: id,
+                    departamento: departamento,
+                    name: name,
+                },
+                success: function (response) {
+                    if (response.info == 1) {
+                        load_ciudades();
+                        $("#departamento_edit_ciudad").val('');
+                        $("#ciudad_edit_ciudad").val('');
+                        $("#modalEditCiudad").modal("hide");
+                        toastr.success("Ciudad actualizada correctamente");
+                    } else {
+                        toastr.error("Error al actualizar la ciudad");
+                    }
+                    $("#btnEditCiudad").attr("disabled", false);
+                    $("#btnEditCiudad").html("Actualizar Ciudad");
+                },
+                error: function (data) {
+                    $("#btnEditCiudad").attr("disabled", false);
+                    $("#btnEditCiudad").html("Actualizar Ciudad");
+                    toastr.error("Error al actualizar la ciudad");
+                    console.log(data);
+                },
+            });
+        }
+    });
+
+    $(document).on("click", ".btnStatusCiudad", function () {
+        let id = $(this).data("id");
+        let status = $(this).data("status");
+
+        $(".btnStatusCiudad").attr("disabled", true);
+        $(".btnStatusCiudad").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'
+        );
+        $.ajax({
+            url: "status_ciudad",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id: id,
+                status: status,
+            },
+            success: function (response) {
+                if (response.info == 1) {
+                    load_ciudades();
+                    toastr.success("Ciudad actualizada correctamente");
+                } else {
+                    $(".btnStatusCiudad").attr("disabled", false);
+                    $(".btnStatusCiudad").html('<i class="fa fa-times"></i>');
+                    toastr.error("Error al actualizar la ciudad");
+                }
+            },
+            error: function (data) {
+                $(".btnStatusCiudad").attr("disabled", false);
+                $(".btnStatusCiudad").html('<i class="fa fa-times"></i>');
+                toastr.error("Error al actualizar la ciudad");
+                console.log(data);
+            },
+        });
+    });
+
+    //CENTROS COSTOS
+    $(document).on("click", "#btnAddCentroCosto", function () {
+        let code = $("#codigo_add_centrocosto").val();
+        let name = $("#tipo_regimen_add_centrocosto").val();
+
+        if (code.trim().length == 0) {
+            toastr.error("El código es obligatorio");
+            return false;
+        } else if (name.trim().length == 0) {
+            toastr.error("El nombre es obligatorio");
+            return false;
+        } else {
+            $("#btnAddCentroCosto").attr("disabled", true);
+            $("#btnAddCentroCosto").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
+            $.ajax({
+                url: "add_centros_costos",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    code: code,
+                    name: name,
+                },
+                success: function (response) {
+                    if (response.info == 1) {
+                        load_centros_costos();
+                        $("#codigo_add_centrocosto").val('');
+                        $("#tipo_regimen_add_centrocosto").val('');
+                        toastr.success("Centro de costo agregado correctamente");
+                    } else {
+                        toastr.error("Error al agregar el centro de costo");
+                    }
+                    $("#btnAddCentroCosto").attr("disabled", false);
+                    $("#btnAddCentroCosto").html("Agregar Centro Costo");
+                },
+                error: function (data) {
+                    $("#btnAddCentroCosto").attr("disabled", false);
+                    $("#btnAddCentroCosto").html("Agregar Centro Costo");
+                    toastr.error("Error al agregar el centro de costo");
+                    console.log(data);
+                },
+            });
+        }
+    });
+
+    $(document).on("click", ".btnEditCentroCosto", function () {
+        let id = $(this).data("id");
+        let code = $(this).data("code");
+        let name = $(this).data("nombre");
+
+        $("#id_edit_centrocosto").val(id);
+        $("#codigo_edit_centrocosto").val(code);
+        $("#tipo_regimen_edit_centrocosto").val(name);
+        $("#modalEditCentroCosto").modal("show");
+    });
+
+    $(document).on("click", "#btnEditCentroCosto", function () {
+        let id = $("#id_edit_centrocosto").val();
+        let code = $("#codigo_edit_centrocosto").val();
+        let name = $("#tipo_regimen_edit_centrocosto").val();
+
+        if (code.trim().length == 0) {
+            toastr.error("El código es obligatorio");
+            return false;
+        } else if (name.trim().length == 0) {
+            toastr.error("El nombre es obligatorio");
+            return false;
+        } else {
+            $("#btnEditCentroCosto").attr("disabled", true);
+            $("#btnEditCentroCosto").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
+            $.ajax({
+                url: "edit_centros_costos",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id: id,
+                    code: code,
+                    name: name,
+                },
+                success: function (response) {
+                    if (response.info == 1) {
+                        load_centros_costos();
+                        $("#id_edit_centrocosto").val('');
+                        $("#codigo_edit_centrocosto").val('');
+                        $("#tipo_regimen_edit_centrocosto").val('');
+                        $("#modalEditCentroCosto").modal("hide");
+                        toastr.success("Centro de costo actualizado correctamente");
+                    } else {
+                        toastr.error("Error al actualizar el centro de costo");
+                    }
+                    $("#btnEditCentroCosto").attr("disabled", false);
+                    $("#btnEditCentroCosto").html("Actualizar Centro Costo");
+                },
+                error: function (data) {
+                    $("#btnEditCentroCosto").attr("disabled", false);
+                    $("#btnEditCentroCosto").html("Actualizar Centro Costo");
+                    toastr.error("Error al actualizar el centro de costo");
+                    console.log(data);
+                },
+            });
+        }
+    });
+
+    $(document).on("click", ".btnStatusCentroCosto", function () {
+        let id = $(this).data("id");
+        let status = $(this).data("status");
+
+        $(".btnStatusCentroCosto").attr("disabled", true);
+        $(".btnStatusCentroCosto").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'
+        );
+        $.ajax({
+            url: "status_centros_costos",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id: id,
+                status: status,
+            },
+            success: function (response) {
+                if (response.info == 1) {
+                    load_centros_costos();
+                    toastr.success("Centro de costo actualizado correctamente");
+                } else {
+                    $(".btnStatusCentroCosto").attr("disabled", false);
+                    $(".btnStatusCentroCosto").html('<i class="fa fa-times"></i>');
+                    toastr.error("Error al actualizar el centro de costo");
+                }
+            },
+            error: function (data) {
+                $(".btnStatusCentroCosto").attr("disabled", false);
+                $(".btnStatusCentroCosto").html('<i class="fa fa-times"></i>');
+                toastr.error("Error al actualizar el centro de costo");
+                console.log(data);
+            },
+        });
     });
 });

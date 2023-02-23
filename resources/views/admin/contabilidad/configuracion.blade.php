@@ -188,8 +188,8 @@
                 <div class="box box-down cyan">
                     <h2>Terceros</h2>
                     <ul>
-                        <li><a href="javascript:void(0);" id="btnClientes">Clientes</a></li>
                         <li><a href="javascript:void(0);" id="btnProveedores">Proveedores</a></li>
+                        <li><a href="javascript:void(0);" id="btnClientes">Clientes</a></li>
                         <li><a href="javascript:void(0);" id="btnEmpleados">Empleados</a></li>
                     </ul>
                     <img style="float:right; width: 40px;" src="https://assets.codepen.io/2301174/icon-team-builder.svg"
@@ -199,8 +199,8 @@
                 <div class="box red">
                     <h2>General</h2>
                     <ul>
-                        <li><a href="javascript:void(0);" id="btnOrganizacion">Organización</a></li>
                         <li><a href="javascript:void(0);" id="btnCentrosCostos">Centros de costos</a></li>
+                        <li><a href="javascript:void(0);" id="btnOrganizacion">Organización</a></li>
                         <li><a href="javascript:void(0);" id="btnPucCliente">PUC</a></li>
                     </ul>
                     <img style="float:right; width: 40px;" src="https://assets.codepen.io/2301174/icon-supervisor.svg"

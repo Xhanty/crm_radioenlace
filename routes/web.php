@@ -252,21 +252,38 @@ Route::middleware(['auth_user'])->group(function () {
     
     Route::post('/tipo_empresa_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'tipo_empresa_data'])->name('tipo_empresa_data');
     Route::post('/add_tipo_empresa', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_tipo_empresa'])->name('add_tipo_empresa');
+    Route::post('/edit_tipo_empresa', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_tipo_empresa'])->name('edit_tipo_empresa');
+    Route::post('/status_tipo_empresa', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'status_tipo_empresa'])->name('status_tipo_empresa');
     
     Route::post('/tipo_regimen_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'tipo_regimen_data'])->name('tipo_regimen_data');
     Route::post('/add_tipo_regimen', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_tipo_regimen'])->name('add_tipo_regimen');
+    Route::post('/edit_tipo_regimen', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_tipo_regimen'])->name('edit_tipo_regimen');
+    Route::post('/status_tipo_regimen', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'status_tipo_regimen'])->name('status_tipo_regimen');
     
     Route::post('/tipo_documento_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'tipo_documento_data'])->name('tipo_documento_data');
     Route::post('/add_tipo_documento', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_tipo_documento'])->name('add_tipo_documento');
+    Route::post('/edit_tipo_documento', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_tipo_documento'])->name('edit_tipo_documento');
+    Route::post('/status_tipo_documento', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'status_tipo_documento'])->name('status_tipo_documento');
+
+    Route::post('/centros_costos_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'centros_costos_data'])->name('centros_costos_data');
+    Route::post('/add_centros_costos', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_centros_costos'])->name('add_centros_costos');
+    Route::post('/edit_centros_costos', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_centros_costos'])->name('edit_centros_costos');
+    Route::post('/status_centros_costos', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'status_centros_costos'])->name('status_centros_costos');
     
     Route::post('/actividades_economicas_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'actividades_economicas_data'])->name('actividades_economicas_data');
     Route::post('/add_actividad_economica', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_actividad_economica'])->name('add_actividad_economica');
+    Route::post('/edit_actividad_economica', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_actividad_economica'])->name('edit_actividad_economica');
+    Route::post('/status_actividad_economica', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'status_actividad_economica'])->name('status_actividad_economica');
     
     Route::post('/ciudades_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'ciudades_data'])->name('ciudades_data');
     Route::post('/add_ciudad', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_ciudad'])->name('add_ciudad');
+    Route::post('/edit_ciudad', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_ciudad'])->name('edit_ciudad');
+    Route::post('/status_ciudad', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'status_ciudad'])->name('status_ciudad');
    
     Route::post('/formas_pago_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'formas_pago_data'])->name('formas_pago_data');
     Route::post('/add_forma_pago', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_forma_pago'])->name('add_forma_pago');
+    Route::post('/edit_forma_pago', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_forma_pago'])->name('edit_forma_pago');
+    Route::post('/status_forma_pago', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'status_forma_pago'])->name('status_forma_pago');
     
     
     Route::get('/facturacion', [App\Http\Controllers\Admin\Contabilidad\FacturacionController::class, 'index'])->name('facturacion');

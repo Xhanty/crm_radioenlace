@@ -37,8 +37,8 @@
                     <table id="tbl_ciudades" class="table border-top-0 table-bordered text-nowrap border-bottom">
                         <thead>
                             <tr>
-                                <th>Departamento</th>
-                                <th>Ciudad</th>
+                                <th style="width: 300px">Departamento</th>
+                                <th style="width: 300px">Ciudad</th>
                                 <th>Creador</th>
                                 <th>Fecha</th>
                                 <th>Status</th>
@@ -49,6 +49,40 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalEditCiudad">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h6 class="modal-title">Modificar Centro de Costo</h6><button aria-label="Close" class="btn-close"
+                    data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="id_edit_ciudad" disabled readonly>
+                <div class="row row-sm">
+                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                        <label for="">Departamento</label>
+                        <select class="form-select" id="departamento_edit_ciudad">
+                            <option value="">Seleccione una opción</option>
+                            @foreach ($departamentos as $departamento)
+                                <option value="{{ $departamento->id }}">{{ $departamento->nombre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                        <label for="">Ciudad</label>
+                        <input class="form-control" id="ciudad_edit_ciudad"
+                            placeholder="Actividad Económica" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn ripple btn-primary" id="btnEditCiudad" type="button">Actualiza Ciudad</button>
             </div>
         </div>
     </div>
