@@ -571,9 +571,9 @@ class ConfiguracionController extends Controller
     // ORGANIZACION
     public function edit_organizacion(Request $request)
     {
+        $avatar = null;
+        $anexo = null;
         if ($request->tipo == 1) {
-            $avatar = null;
-
             if ($request->hasFile('avatar')) {
                 $file = $request->file('avatar');
                 $name = time() . $file->getClientOriginalName();
@@ -597,8 +597,6 @@ class ConfiguracionController extends Controller
                 'avatar' => $avatar ? $avatar : null,
             ]);
         } else if ($request->tipo == 2) {
-            $anexo = null;
-
             if ($request->hasFile('anexo_dian')) {
                 $file = $request->file('anexo_dian');
                 $name = time() . $file->getClientOriginalName();
@@ -649,6 +647,8 @@ class ConfiguracionController extends Controller
 
         return response()->json([
             'info' => 1,
+            'avatar' => $avatar,
+            'anexo' => $anexo,
         ]);
     }
 }

@@ -13,8 +13,14 @@
             </div>
             <div class="card-body">
                 <div class="d-flex justify-content-center">
-                    <img id="img_cliente_edit" class="avatar border rounded-circle" style="width: 10pc; height: 10pc;"
-                        src="{{ asset('images/clientes/noavatar.png') }}">
+                    @php
+                        $avatar = 'noavatar.png';
+                        if ($organizacion->avatar != '') {
+                            $avatar = $organizacion->avatar;
+                        }
+                    @endphp
+                    <img id="img_organizacion" class="avatar border rounded-circle" style="width: 10pc; height: 10pc;"
+                        src="{{ asset('images/logo_organizacion/' . $avatar) }}" alt="">
                 </div>
                 <br>
                 <div class="row row-sm">
@@ -286,8 +292,19 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <br>
-                                        <div class="row row-sm">
+                                        @php
+                                            $visible = 'd-none';
+                                            if ($datos_tributarios->anexo_dian) {
+                                                $visible = '';
+                                            }
+                                        @endphp
+                                        <div class="row row-sm text-center mt-3 {{ $visible }}">
+                                            <div class="col-lg">
+                                                <a id="link_anexo_dian" href="{{ asset('images/anexos_organizacion/' . $datos_tributarios->anexo_dian) }}"
+                                                    target="_blank">Ver Anexo Dian</a>
+                                            </div>
+                                        </div>
+                                        <div class="row row-sm mt-3">
                                             <div class="col-lg">
                                                 <label for="">Anexo Dian</label>
                                                 <input class="form-control" id="anexo_dian_organizacion"

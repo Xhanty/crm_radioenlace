@@ -1666,6 +1666,10 @@ $(document).ready(function () {
                 processData: false,
                 success: function (response) {
                     if (response.info == 1) {
+                        if ($("#avatar_organizacion") != "") {
+                            $("#avatar_organizacion").val("");
+                            $("#img_organizacion").attr("src", 'images/logo_organizacion/' + response.avatar);
+                        }
                         toastr.success("Organización actualizada correctamente");
                     } else {
                         toastr.error("Error al actualizar la organización");
@@ -1722,6 +1726,11 @@ $(document).ready(function () {
                 processData: false,
                 success: function (response) {
                     if (response.info == 1) {
+                        if ($("#anexo_dian_organizacion") != "") {
+                            $("#anexo_dian_organizacion").val("");
+                            $("#link_anexo_dian").attr("href", 'images/anexos_organizacion/' + response.anexo);
+                            $("#link_anexo_dian").parent().parent().removeClass("d-none");
+                        }
                         toastr.success("Organización actualizada correctamente");
                     } else {
                         toastr.error("Error al actualizar la organización");
