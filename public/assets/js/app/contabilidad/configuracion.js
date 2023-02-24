@@ -26,8 +26,19 @@ $(document).ready(function () {
             next: "Siguiente",
             previous: "Anterior",
         },
+        select: {
+            rows: {
+                _: "%d filas seleccionadas",
+                0: "",
+                1: "1 fila seleccionada",
+            },
+        },
     };
 
+    var tbl_pucs_cliente = null;
+    var tbl_pucs_all_cliente = null;
+
+    load_pucs_cliente();
     load_pucs();
     load_ciudades();
     load_formas_pago();
@@ -99,6 +110,11 @@ $(document).ready(function () {
         $("#div_ciudades").removeClass("d-none");
     });
 
+    $("#btnPucCliente").on("click", function () {
+        $("#div_general").addClass("d-none");
+        $("#div_config_pucs").removeClass("d-none");
+    });
+
     $(document).on("click", ".back_to_menu", function () {
         $("#div_general").removeClass("d-none");
         $("#div_organizacion").addClass("d-none");
@@ -113,6 +129,7 @@ $(document).ready(function () {
         $("#div_actividades_economicas").addClass("d-none");
         $("#div_tipos_documentos").addClass("d-none");
         $("#div_ciudades").addClass("d-none");
+        $("#div_config_pucs").addClass("d-none");
     });
 
     $(".nav-link-1").click(function () {
@@ -221,7 +238,144 @@ $(document).ready(function () {
             'language': language,
             'ajax': 'pucs_data',
             'treeGrid': {
-                'left': 10,
+                'left': 14,
+                'expandIcon': '<span><i class="fa fa-plus"></i></span>',
+                'collapseIcon': '<span><i class="fa fa-minus"></i></span>',
+            }
+        });
+    }
+
+    function load_pucs_cliente() {
+        var columns = [
+            {
+                title: '',
+                target: 0,
+                className: 'treegrid-control text-center',
+                data: function (item) {
+                    if (item.children) {
+                        return '<span><i class="fa fa-plus"></i></span>';
+                    }
+                    return '';
+                }
+            },
+            {
+                title: 'Código',
+                target: 1,
+                data: function (item) {
+                    return '<a target="_BLANK" href="https://puc.com.co/' + item.code + '">' + item.code + '</a>';
+                }
+            },
+            {
+                title: 'Nombre',
+                target: 2,
+                data: function (item) {
+                    return item.nombre;
+                }
+            },
+            {
+                title: 'Status',
+                target: 3,
+                className: 'text-center',
+                data: function (item) {
+                    if (item.status == 1) {
+                        return '<span class="badge badge-success bg-success">Activo</span>';
+                    } else {
+                        return '<span class="badge badge-danger bg-danger">Inactivo</span>';
+                    }
+                }
+            },
+            {
+                title: 'Acción',
+                target: 4,
+                className: 'text-center',
+                data: function (item) {
+                    let id = item.id;
+                    let parent_id = item.parent_id;
+                    let code = item.code;
+                    let nombre = item.nombre;
+
+                    if (item.acciones == 1) {
+                        return '<button title="Agregar Auxiliar" class="btn btn-sm btn-primary btnAddChildPucCliente" data-id="' + id +
+                            '" data-parent="' + parent_id + '" data-code="' + code + '" data-nombre="' + nombre + '"><i class="fa fa-plus"></i></button>';
+                    } else if (item.auxiliar == 1) {
+                        return '<button title="Modificar" class="btn btn-sm btn-warning btnEditChildPucCliente" data-id="' + id +
+                            '" data-code="' + item.code_child + '" data-nombre="' + nombre + '"><i class="fa fa-pencil-alt"></i></button>&nbsp;' +
+                            '<button title="Eliminar" class="btn btn-sm btn-danger btnDeleteChildPucCliente" data-id="' + id +
+                            '" data-code="' + code + '"><i class="fa fa-trash"></i></button>';
+                    } else {
+                        return '';
+                    }
+                }
+            },
+        ];
+
+        var columns_all = [
+            {
+                title: '',
+                target: 0,
+                className: 'treegrid-control text-center',
+                data: function (item) {
+                    if (item.children) {
+                        return '<span><i class="fa fa-plus"></i></span>';
+                    }
+                    return '';
+                }
+            },
+            {
+                title: 'Código',
+                target: 1,
+                data: function (item) {
+                    return '<a target="_BLANK" href="https://puc.com.co/' + item.code + '">' + item.code + '</a>';
+                }
+            },
+            {
+                title: 'Nombre',
+                target: 2,
+                data: function (item) {
+                    return item.nombre;
+                }
+            },
+            {
+                title: 'Status',
+                target: 3,
+                className: 'text-center',
+                data: function (item) {
+                    if (item.status == 1) {
+                        return '<span class="badge badge-success bg-success">Activo</span>';
+                    } else {
+                        return '<span class="badge badge-danger bg-danger">Inactivo</span>';
+                    }
+                }
+            },
+        ];
+
+        tbl_pucs_cliente = $('#data_pucs_config_view').DataTable({
+            'select': {
+                'style': 'multi',
+                'selector': 'td:not(:first-child, :last-child)'
+            },
+            'columns': columns,
+            'order': [],
+            'language': language,
+            'ajax': 'pucs_clientes_data',
+            'treeGrid': {
+                'left': 14,
+                'expandIcon': '<span><i class="fa fa-plus"></i></span>',
+                'collapseIcon': '<span><i class="fa fa-minus"></i></span>',
+            }
+        });
+
+        tbl_pucs_all_cliente = $('#data_pucs_all_config_view').DataTable({
+            'select': {
+                'style': 'multi',
+                'selector': 'td:not(:first-child)'
+            },
+            'columns': columns_all,
+            'order': [],
+            'language': language,
+            'ajax': 'pucs_all_clientes_data',
+            'treeGrid': {
+                'left': 14,
                 'expandIcon': '<span><i class="fa fa-plus"></i></span>',
                 'collapseIcon': '<span><i class="fa fa-minus"></i></span>',
             }
@@ -824,7 +978,7 @@ $(document).ready(function () {
     $(document).on("click", "#btnEditTipoDocumento", function () {
         let id = $("#id_edit_tipodoc").val();
         let name = $("#tipo_documento_edit_tipodoc").val();
-        
+
         if (name.trim().length == 0) {
             toastr.error("El nombre es obligatorio");
             return false;
@@ -1091,7 +1245,7 @@ $(document).ready(function () {
     $(document).on("click", "#btnEditTipoEmpresa", function () {
         let id = $("#id_edit_tipoempresa").val();
         let name = $("#tipo_empresa_edit_tipoempresa").val();
-        
+
         if (name.trim().length == 0) {
             toastr.error("El nombre es obligatorio");
             return false;
@@ -1217,7 +1371,7 @@ $(document).ready(function () {
     $(document).on("click", "#btnEditFormaPago", function () {
         let id = $("#id_edit_formapago").val();
         let name = $("#forma_pago_edit_formaspago").val();
-        
+
         if (name.trim().length == 0) {
             toastr.error("El nombre es obligatorio");
             return false;
@@ -1259,7 +1413,7 @@ $(document).ready(function () {
     $(document).on("click", ".btnStatusFormaPago", function () {
         let id = $(this).data("id");
         let status = $(this).data("status");
-        
+
         $(".btnStatusFormaPago").attr("disabled", true);
         $(".btnStatusFormaPago").html(
             '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'
@@ -1585,7 +1739,7 @@ $(document).ready(function () {
     $("#actividades_tribu_organizacion").change(function () {
         let value = $(this).val();
 
-        if(value.length > 4){
+        if (value.length > 4) {
             toastr.error("Solo se permiten 4 actividades tributarias");
             value.pop();
             $(this).val(value).trigger('change');
@@ -1966,6 +2120,302 @@ $(document).ready(function () {
                     $("#btnModificarOrganizacion6").attr("disabled", false);
                     $("#btnModificarOrganizacion6").html("Actualizar Información");
                     toastr.error("Error al actualizar la organización");
+                    console.log(data);
+                }
+            });
+        }
+    });
+
+    // CONFIGURACIÓN PUC
+    $("#btnDeshabilitarPucConfig").on("click", function () {
+        let pucs_seleccionados = tbl_pucs_cliente.rows(".selected").data().toArray();
+
+        if (pucs_seleccionados.length == 0) {
+            toastr.error("Debe seleccionar al menos un PUC");
+            return false;
+        } else {
+            Swal.fire({
+                title: "¿Está seguro de deshabilitar los PUC seleccionados?",
+                text: "No podrá revertir esta acción",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sí, deshabilitar",
+                cancelButtonText: "Cancelar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let pucs = [];
+                    for (let i = 0; i < pucs_seleccionados.length; i++) {
+                        pucs.push(pucs_seleccionados[i].id);
+                    }
+                    $("#btnDeshabilitarPucConfig").attr("disabled", true);
+                    $("#btnDeshabilitarPucConfig").html(
+                        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Deshabilitando...'
+                    );
+                    $.ajax({
+                        url: "deshabilitar_puc_cliente",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            pucs: pucs,
+                        },
+                        success: function (response) {
+                            if (response.info == 1) {
+                                tbl_pucs_cliente.ajax.reload();
+                                toastr.success("PUC deshabilitados correctamente");
+                            } else {
+                                toastr.error("Error al deshabilitar los PUC");
+                            }
+                            $("#btnDeshabilitarPucConfig").attr("disabled", false);
+                            $("#btnDeshabilitarPucConfig").html("Deshabilitar PUC");
+                        },
+                        error: function (data) {
+                            $("#btnDeshabilitarPucConfig").attr("disabled", false);
+                            $("#btnDeshabilitarPucConfig").html("Deshabilitar PUC");
+                            toastr.error("Error al deshabilitar los PUC");
+                            console.log(data);
+                        }
+                    });
+                }
+            });
+        }
+    });
+
+    $("#btnHabilitarPucConfig").on("click", function () {
+        let pucs_seleccionados = tbl_pucs_all_cliente.rows(".selected").data().toArray();
+
+        if (pucs_seleccionados.length == 0) {
+            toastr.error("Debe seleccionar al menos un PUC");
+            return false;
+        } else {
+            Swal.fire({
+                title: "¿Está seguro de habilitar los PUC seleccionados?",
+                text: "No podrá revertir esta acción",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sí, habilitar",
+                cancelButtonText: "Cancelar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let pucs = [];
+                    for (let i = 0; i < pucs_seleccionados.length; i++) {
+                        pucs.push(pucs_seleccionados[i].id);
+                    }
+                    $("#btnHabilitarPucConfig").attr("disabled", true);
+                    $("#btnHabilitarPucConfig").html(
+                        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Habilitando...'
+                    );
+                    $.ajax({
+                        url: "habilitar_puc_cliente",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            pucs: pucs,
+                        },
+                        success: function (response) {
+                            if (response.info == 1) {
+                                tbl_pucs_all_cliente.ajax.reload();
+                                toastr.success("PUC habilitados correctamente");
+                            } else {
+                                toastr.error("Error al habilitar los PUC");
+                            }
+                            $("#btnHabilitarPucConfig").attr("disabled", false);
+                            $("#btnHabilitarPucConfig").html("Habilitar PUC");
+                        },
+                        error: function (data) {
+                            $("#btnHabilitarPucConfig").attr("disabled", false);
+                            $("#btnHabilitarPucConfig").html("Habilitar PUC");
+                            toastr.error("Error al habilitar los PUC");
+                            console.log(data);
+                        }
+                    });
+                }
+            });
+        }
+    });
+
+    $("#select_options_config_puc").on("change", function () {
+        let option = $(this).val();
+        if (option == 1) {
+            $("#div_all_config_puc").addClass("d-none");
+            $("#puc_config_puc").removeClass("d-none");
+
+            $("#btnHabilitarPucConfig").addClass("d-none");
+            $("#btnDeshabilitarPucConfig").removeClass("d-none");
+            tbl_pucs_cliente.ajax.reload();
+        } else {
+            $("#div_all_config_puc").removeClass("d-none");
+            $("#puc_config_puc").addClass("d-none");
+
+            $("#btnDeshabilitarPucConfig").addClass("d-none");
+            $("#btnHabilitarPucConfig").removeClass("d-none");
+            tbl_pucs_all_cliente.ajax.reload();
+        }
+    });
+
+    $(document).on("click", ".btnAddChildPucCliente", function () {
+        let id = $(this).data("id");
+        let code = $(this).data("code");
+        let nombre = $(this).data("nombre");
+        let parent = $(this).data("parent");
+        let tr_parent = $(this).closest("tr").attr("parent-index");
+
+        $("#id_parent_puc_cliente").val(parent);
+        $("#id_child_puc_cliente").val(id);
+        $("#puc_parent_puc_cliente").val(code + " - " + nombre);
+        $("#tr_parent_puc_cliente").val(tr_parent);
+        $("#code_parent_puc_cliente").val(code);
+        $("#modalAddChildPucCliente").modal("show");
+    });
+
+    $(document).on("click", ".btnDeleteChildPucCliente", function () {
+        let id = $(this).data("id");
+        let code = $(this).data("code");
+
+        Swal.fire({
+            title: "¿Está seguro de eliminar el auxiliar " + code + "?",
+            text: "No podrá revertir esta acción",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sí, eliminar",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "delete_child_puc_cliente",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        id: id,
+                    },
+                    success: function (response) {
+                        if (response.info == 1) {
+                            tbl_pucs_cliente.ajax.reload();
+                            toastr.success("Auxiliar eliminado correctamente");
+                        } else {
+                            toastr.error("Error al eliminar el auxiliar");
+                        }
+                    },
+                    error: function (data) {
+                        toastr.error("Error al eliminar el auxiliar");
+                        console.log(data);
+                    }
+                });
+            }
+        });
+    });
+
+    $(document).on("click", ".btnEditChildPucCliente", function () {
+        let id = $(this).data("id");
+        let code = $(this).data("code");
+        let nombre = $(this).data("nombre");
+
+        $("#id_edit_child_puc_cliente").val(id);
+        $("#code_edit_child_puc_cliente").val(code);
+        $("#nombre_edit_child_puc_cliente").val(nombre);
+        $("#modalEditChildPucCliente").modal("show");
+    });
+
+    $("#btnAddChildPucCliente").on("click", function () {
+        let id_child = $("#id_child_puc_cliente").val();
+        let id_parent = $("#id_parent_puc_cliente").val();
+        let tr_parent = $("#tr_parent_puc_cliente").val();
+
+        let code_parent = $("#code_parent_puc_cliente").val();
+        let code_child = $("#code_child_puc_cliente").val();
+
+        let nombre = $("#nombre_child_puc_cliente").val();
+
+        if (code_child < 1) {
+            toastr.error("El código no puede ser menor a 1");
+            return false;
+        } else if (nombre.trim().length == 0) {
+            toastr.error("El nombre no puede estar vacío");
+            return false;
+        } else {
+            $("#btnAddChildPucCliente").attr("disabled", true);
+            $("#btnAddChildPucCliente").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Agregando...'
+            );
+            $.ajax({
+                url: "add_child_puc_cliente",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id_child: id_child,
+                    id_parent: id_parent,
+                    code_parent: code_parent,
+                    code_child: code_child,
+                    nombre: nombre,
+                },
+                success: function (response) {
+                    if (response.info == 1) {
+                        tbl_pucs_cliente.ajax.reload();
+                        $("#code_child_puc_cliente").val("");
+                        $("#nombre_child_puc_cliente").val("");
+                        $("#modalAddChildPucCliente").modal("hide");
+                        toastr.success("Auxiliar agregado correctamente");
+                    } else {
+                        toastr.error("Error al agregar el auxiliar");
+                    }
+                    $("#btnAddChildPucCliente").attr("disabled", false);
+                    $("#btnAddChildPucCliente").html("Agregar Auxiliar");
+                },
+                error: function (data) {
+                    $("#btnAddChildPucCliente").attr("disabled", false);
+                    $("#btnAddChildPucCliente").html("Agregar Auxiliar");
+                    toastr.error("Error al agregar el auxiliar");
+                    console.log(data);
+                }
+            });
+        }
+    });
+
+    $("#btnEditChildPucCliente").on("click", function () {
+        let id = $("#id_edit_child_puc_cliente").val();
+        let code = $("#code_edit_child_puc_cliente").val();
+        let nombre = $("#nombre_edit_child_puc_cliente").val();
+
+        if (code < 1) {
+            toastr.error("El código no puede ser menor a 1");
+            return false;
+        } else if (nombre.trim().length == 0) {
+            toastr.error("El nombre no puede estar vacío");
+            return false;
+        } else {
+            $("#btnEditChildPucCliente").attr("disabled", true);
+            $("#btnEditChildPucCliente").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Editando...'
+            );
+            $.ajax({
+                url: "edit_child_puc_cliente",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id: id,
+                    code: code,
+                    nombre: nombre,
+                },
+                success: function (response) {
+                    if (response.info == 1) {
+                        tbl_pucs_cliente.ajax.reload();
+                        $("#modalEditChildPucCliente").modal("hide");
+                        toastr.success("Auxiliar editado correctamente");
+                    } else {
+                        toastr.error("Error al editar el auxiliar");
+                    }
+                    $("#btnEditChildPucCliente").attr("disabled", false);
+                    $("#btnEditChildPucCliente").html("Editar Auxiliar");
+                },
+                error: function (data) {
+                    $("#btnEditChildPucCliente").attr("disabled", false);
+                    $("#btnEditChildPucCliente").html("Editar Auxiliar");
+                    toastr.error("Error al editar el auxiliar");
                     console.log(data);
                 }
             });

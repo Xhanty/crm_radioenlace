@@ -3,7 +3,7 @@
     <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
         <!--div-->
         <div class="card">
-            <div class="card-header d-flex-header-table" style="border-radius: 4px; background: hsl(34, 97%, 64%)">
+            <div class="card-header d-flex-header-table" style="border-radius: 4px; background: hsl(212, 86%, 64%)">
                 <div class="div-1-tables-header">
                     <h3 class="card-title mt-2">Actividades Económicas</h3>
                 </div>

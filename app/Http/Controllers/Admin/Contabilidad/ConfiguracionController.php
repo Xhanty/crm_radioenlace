@@ -76,6 +76,25 @@ class ConfiguracionController extends Controller
         }
     }
 
+    // PUC CATALOGO
+    public function pucs()
+    {
+        $pucs = DB::table('pucs')
+            ->where('parent_id', null)
+            ->get();
+
+        if (
+            $pucs->count() > 0
+        ) {
+            $pucs = $pucs->toArray();
+            $pucs = $this->getGruposPucs($pucs);
+        }
+
+        return response()->json([
+            'data' => $pucs
+        ]);
+    }
+
     public function getGruposPucs($pucs)
     {
         foreach ($pucs as $key => $puc) {
@@ -124,19 +143,259 @@ class ConfiguracionController extends Controller
         return $pucs;
     }
 
-    public function pucs()
+    // PUC CLIENTE
+    public function pucs_cliente()
     {
-        $pucs = DB::table('pucs')
+        $pucs = DB::table('configuracion_puc')
+            ->where('parent_id', null)
+            ->where('status', 1)
+            ->get();
+
+        if ($pucs->count() > 0) {
+            $pucs = $pucs->toArray();
+            $pucs = $this->getGruposClientePucs($pucs);
+        }
+
+        return response()->json([
+            'data' => $pucs
+        ]);
+    }
+
+    public function pucs_all_clientes_data()
+    {
+        $pucs = DB::table('configuracion_puc')
             ->where('parent_id', null)
             ->get();
 
         if ($pucs->count() > 0) {
             $pucs = $pucs->toArray();
-            $pucs = $this->getGruposPucs($pucs);
+            $pucs = $this->getGruposClienteAllPucs($pucs);
         }
 
         return response()->json([
             'data' => $pucs
+        ]);
+    }
+
+    public function getGruposClientePucs($pucs)
+    {
+        foreach ($pucs as $key => $puc) {
+            $id = $puc->id;
+            $data = DB::select('select * from configuracion_puc where parent_id = ? AND status = 1 AND CHARACTER_LENGTH(code) = 2', [$id]);
+
+            if ($data) {
+                $pucs[$key]->children = $data;
+                $pucs[$key]->children = $this->getCuentasClientePucs($pucs[$key]->children);
+            }
+        }
+
+        return $pucs;
+    }
+
+    public function getCuentasClientePucs($pucs)
+    {
+        foreach ($pucs as $key => $puc) {
+            $id = $puc->parent_id;
+            $sub_id = $puc->code;
+
+            $data = DB::select('select * from configuracion_puc where parent_id = ? AND status = 1 AND CHARACTER_LENGTH(code) = 4 AND code LIKE "' . $sub_id . '%"', [$id]);
+
+            if ($data) {
+                $pucs[$key]->children = $data;
+                $pucs[$key]->children = $this->getSubCuentasClientePucs($pucs[$key]->children);
+            }
+        }
+
+        return $pucs;
+    }
+
+    public function getSubCuentasClientePucs($pucs)
+    {
+        foreach ($pucs as $key => $puc) {
+            $id = $puc->parent_id;
+            $sub_id = $puc->code;
+
+            $data = DB::select('select * from configuracion_puc where parent_id = ? AND status = 1 AND CHARACTER_LENGTH(code) = 6 AND code LIKE "' . $sub_id . '%"', [$id]);
+
+            if ($data) {
+                $pucs[$key]->children = $data;
+                $pucs[$key]->children = $this->getAuxiliaresClientePucs($pucs[$key]->children);
+            }
+        }
+
+        return $pucs;
+    }
+
+    public function getAuxiliaresClientePucs($pucs)
+    {
+        foreach ($pucs as $key => $puc) {
+            $id = $puc->parent_id;
+            $sub_id = $puc->code;
+
+            $data = DB::select('select * from configuracion_puc where parent_id = ? AND status = 1 AND CHARACTER_LENGTH(code) > 6 AND code LIKE "' . $sub_id . '%"', [$id]);
+            
+            if ($data) {
+                $pucs[$key]->children = $data;
+            }
+        }
+
+        return $pucs;
+    }
+
+    // TODOS LOS PUC CLIENTE
+    public function getGruposClienteAllPucs($pucs)
+    {
+        foreach ($pucs as $key => $puc) {
+            $id = $puc->id;
+            $data = DB::select('select * from configuracion_puc where parent_id = ? AND CHARACTER_LENGTH(code) = 2', [$id]);
+
+            if ($data) {
+                $pucs[$key]->children = $data;
+                $pucs[$key]->children = $this->getCuentasClienteAllPucs($pucs[$key]->children);
+            }
+        }
+
+        return $pucs;
+    }
+
+    public function getCuentasClienteAllPucs($pucs)
+    {
+        foreach ($pucs as $key => $puc) {
+            $id = $puc->parent_id;
+            $sub_id = $puc->code;
+
+            $data = DB::select('select * from configuracion_puc where parent_id = ? AND CHARACTER_LENGTH(code) = 4 AND code LIKE "' . $sub_id . '%"', [$id]);
+
+            if ($data) {
+                $pucs[$key]->children = $data;
+                $pucs[$key]->children = $this->getSubCuentasClienteAllPucs($pucs[$key]->children);
+            }
+        }
+
+        return $pucs;
+    }
+
+    public function getSubCuentasClienteAllPucs($pucs)
+    {
+        foreach ($pucs as $key => $puc) {
+            $id = $puc->parent_id;
+            $sub_id = $puc->code;
+
+            $data = DB::select('select * from configuracion_puc where parent_id = ? AND CHARACTER_LENGTH(code) = 6 AND code LIKE "' . $sub_id . '%"', [$id]);
+
+            if ($data) {
+                $pucs[$key]->children = $data;
+                $pucs[$key]->children = $this->getAuxiliaresClienteAllPucs($pucs[$key]->children);
+            }
+        }
+
+        return $pucs;
+    }
+
+    public function getAuxiliaresClienteAllPucs($pucs)
+    {
+        foreach ($pucs as $key => $puc) {
+            $id = $puc->parent_id;
+            $sub_id = $puc->code;
+
+            $data = DB::select('select * from configuracion_puc where parent_id = ? AND CHARACTER_LENGTH(code) > 6 AND code LIKE "' . $sub_id . '%"', [$id]);
+
+            if ($data) {
+                $pucs[$key]->children = $data;
+            }
+        }
+
+        return $pucs;
+    }
+
+    public function deshabilitar_puc_cliente(Request $request)
+    {
+        $pucs_id = $request->pucs;
+
+        $pucs = DB::table('configuracion_puc')
+            ->whereIn('id', $pucs_id)
+            ->update(['status' => 0]);
+
+        $children = DB::table('configuracion_puc')
+            ->whereIn('parent_id', $pucs_id)
+            ->update(['status' => 0]);
+
+        return response()->json([
+            'info' => 1,
+        ]);
+    }
+
+    public function habilitar_puc_cliente(Request $request)
+    {
+        $pucs_id = $request->pucs;
+
+        $pucs = DB::table('configuracion_puc')
+            ->whereIn('id', $pucs_id)
+            ->update(['status' => 1]);
+
+        $children = DB::table('configuracion_puc')
+            ->whereIn('parent_id', $pucs_id)
+            ->update(['status' => 1]);
+
+        return response()->json([
+            'info' => 1,
+        ]);
+    }
+
+    public function add_child_puc_cliente(Request $request)
+    {
+        $code = $request->code_parent . $request->code_child;
+        $nombre = $request->nombre;
+        $id_parent = $request->id_parent;
+        $id_child = $request->id_child;
+
+        DB::table('configuracion_puc')->insert([
+            'code' => $code,
+            'code_child' => $request->code_child,
+            'nombre' => $nombre,
+            'parent_id' => $id_parent,
+            'status' => 1,
+            'auxiliar' => 1,
+            'created_by' => auth()->user()->id,
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        return response()->json([
+            'info' => 1,
+        ]);
+
+    }
+
+    public function edit_child_puc_cliente(Request $request)
+    {
+        $id = $request->id;
+        $code = $request->code;
+        $nombre = $request->nombre;
+
+        $code_old = DB::table('configuracion_puc')->where('id', $id)->first()->code;
+        $first_letter = substr($code_old, 0, 6);
+
+        $code = $first_letter . $code;
+
+        DB::table('configuracion_puc')->where('id', $id)->update([
+            'code' => $code,
+            'code_child' => $request->code,
+            'nombre' => $nombre,
+        ]);
+
+        return response()->json([
+            'info' => 1,
+        ]);
+    }
+
+    public function delete_child_puc_cliente(Request $request)
+    {
+        $id = $request->id;
+
+        DB::table('configuracion_puc')->where('id', $id)->delete();
+
+        return response()->json([
+            'info' => 1,
         ]);
     }
 

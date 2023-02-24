@@ -2,6 +2,7 @@
 
 @section('css')
     <link href="{{ asset('assets/css/app/tables_img.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/select/1.2.6/css/select.dataTables.css"/>
 @endsection
 
 @section('content')
@@ -110,6 +111,12 @@
             }
 
             #div_ciudades {
+                -webkit-transition: 1s linear;
+                transition: 1s linear;
+                animation: 1s ease-in-out 0s 1 slideInFromTop
+            }
+
+            #div_config_pucs {
                 -webkit-transition: 1s linear;
                 transition: 1s linear;
                 animation: 1s ease-in-out 0s 1 slideInFromTop
@@ -236,6 +243,7 @@
         @include('admin.contabilidad.configuracion.organizacion')
         @include('admin.contabilidad.configuracion.formas_pago')
         @include('admin.contabilidad.configuracion.pucs')
+        @include('admin.contabilidad.configuracion.config_puc')
         @include('admin.contabilidad.configuracion.centros_costos')
         @include('admin.contabilidad.configuracion.clientes')
         @include('admin.contabilidad.configuracion.proveedores')
@@ -253,6 +261,7 @@
     <script>
         $(document).ready(function() {});
     </script>
+    <script src="//cdn.datatables.net/select/1.2.6/js/dataTables.select.js"></script>
     <script src="https://homfen.github.io/dataTables.treeGrid.js/dataTables.treeGrid.js"></script>
     <script src="{{ asset('assets/js/app/contabilidad/configuracion.js') }}"></script>
 @endsection
