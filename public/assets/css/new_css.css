@@ -136,3 +136,15 @@ td {
     user-select: none !important;
     -webkit-user-select: none !important;
 }
+
+.bg-pending {
+    background: rgb(255 193 7 / 30%) !important;
+}
+
+.bg-approved {
+    background: rgb(11 163 96 / 30%) !important;
+}
+
+.bg-rejected {
+    background: rgb(245 60 91 / 30%) !important;
+}

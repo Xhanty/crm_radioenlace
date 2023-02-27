@@ -56,7 +56,7 @@ class ProspectosEmpresasController extends Controller
 
                     $actionBtn =
 
-                        '<input type="date" style="' . $info . '" class="form-control date_action text-center" value="' . $row->fecha_evento . '" data-id="' . $row->id . '"><br>' .
+                        '<input type="text" onfocus="(this.type=' . "'date'" . ')" style="' . $info . '" class="form-control date_action text-center" value="' . $row->fecha_evento . '" data-id="' . $row->id . '"><br>' .
 
                         '<a data-id="' . $row->id . '" title="Ver" class="edit btn btn-primary btn-sm btnView"><i class="fa fa-eye"></i></a>
 
@@ -68,6 +68,15 @@ class ProspectosEmpresasController extends Controller
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
+                ->setRowClass(function ($row) {
+                    if ($row->estado == 2) {
+                        return 'bg-pending';
+                    } else if ($row->estado == 1) {
+                        return 'bg-approved';
+                    } else if ($row->estado == 0) {
+                        return 'bg-rejected';
+                    }
+                })
                 ->make(true);
         }
     }
