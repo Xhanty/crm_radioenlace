@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Admin\Contabilidad;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class FacturacionController extends Controller
+class FacturaCompraController extends Controller
 {
     public function index()
     {
@@ -16,7 +15,7 @@ class FacturacionController extends Controller
                 return redirect()->route('home');
             }
 
-            return view('admin.contabilidad.facturacion');
+            return view('admin.contabilidad.factura_compra');
         } catch (Exception $ex) {
             return view('errors.500');
         }

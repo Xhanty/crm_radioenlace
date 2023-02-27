@@ -20,7 +20,7 @@
                     </div>
                     <div class="col-lg mg-t-10 mg-lg-t-0">
                         <label for="">Centro de Costo</label>
-                        <input class="form-control" id="tipo_regimen_add_centrocosto" placeholder="Tipo Régimen"
+                        <input class="form-control" id="tipo_regimen_add_centrocosto" placeholder="Centro de Costo"
                             type="text">
                     </div>
                 </div>

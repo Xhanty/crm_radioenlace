@@ -288,7 +288,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/status_forma_pago', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'status_forma_pago'])->name('status_forma_pago');
 
     
-    Route::get('/facturacion', [App\Http\Controllers\Admin\Contabilidad\FacturacionController::class, 'index'])->name('facturacion');
+    Route::get('/factura_compra', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'index'])->name('factura_compra');
     Route::get('/config_nomina', [App\Http\Controllers\Admin\Contabilidad\NominaController::class, 'config_nomina'])->name('config_nomina');
     Route::get('/pucs_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'pucs'])->name('pucs_data');
     Route::get('/pucs_clientes_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'pucs_cliente'])->name('pucs_clientes_data');

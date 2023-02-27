@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -296,7 +296,7 @@
                                         'gestion_almacenes_inventario|' .
                                         'gestion_productos_inventario|' .
                                         'gestion_inventario|' .
-                                        'gestion_solicitudes')) 
+                                        'gestion_solicitudes'))
                             <li class="slide">
                                 <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
                                         class="side-menu__icon fe fe-package"></i><span
@@ -322,7 +322,8 @@
                                         </li>
                                     @endif
                                     @if (auth()->user()->hasPermissionTo('gestion_solicitudes'))
-                                        <li><a class="slide-item" href="{{ route('gestion_solicitudes') }}">Solicitudes Inventario</a>
+                                        <li><a class="slide-item"
+                                                href="{{ route('gestion_solicitudes') }}">Solicitudes Inventario</a>
                                         </li>
                                     @endif
                                 </ul>
@@ -485,23 +486,25 @@
                                         </li>
                                     @endif
                                     @if (auth()->user()->hasPermissionTo('gestion_orden_compra'))
-                                        <li><a class="slide-item" href="{{ route('precios_proveedores') }}">Precios Proveedores</a>
+                                        <li><a class="slide-item" href="{{ route('precios_proveedores') }}">Precios
+                                                Proveedores</a>
                                         </li>
                                     @endif
                                     @if (auth()->user()->hasPermissionTo('gestion_orden_compra'))
-                                        <li><a class="slide-item" href="{{ route('prospectos_bd') }}">Prospectos Personas</a>
+                                        <li><a class="slide-item" href="{{ route('prospectos_bd') }}">Prospectos
+                                                Personas</a>
                                         </li>
                                     @endif
                                     @if (auth()->user()->hasPermissionTo('gestion_orden_compra'))
-                                        <li><a class="slide-item" href="{{ route('prospectos_empresas_bd') }}">Prospectos Empresas</a>
+                                        <li><a class="slide-item"
+                                                href="{{ route('prospectos_empresas_bd') }}">Prospectos Empresas</a>
                                         </li>
                                     @endif
                                 </ul>
                             </li>
                         @endif
 
-                        @if (auth()->user()->hasPermissionToMultiple(
-                                    'gestion_facturacion'))
+                        @if (auth()->user()->hasPermissionToMultiple('gestion_facturacion'))
                             <li class="slide">
                                 <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
                                         class="side-menu__icon fe fe-dollar-sign"></i><span
@@ -509,11 +512,22 @@
                                         class="angle fe fe-chevron-down"></i></a>
                                 <ul class="slide-menu">
                                     @if (auth()->user()->hasPermissionTo('gestion_facturacion'))
-                                        <li><a class="slide-item" href="{{ route('configuracion_contabilidad') }}">Configuración</a>
+                                        <li><a class="slide-item"
+                                                href="{{ route('configuracion_contabilidad') }}">Configuración</a>
                                         </li>
                                     @endif
                                     @if (auth()->user()->hasPermissionTo('gestion_facturacion'))
-                                        <li><a class="slide-item" href="{{ route('facturacion') }}">Facturación</a>
+                                        <li class="sub-slide">
+                                            <a class="slide-item" data-bs-toggle="sub-slide"
+                                                href="javascript:void(0);"><span
+                                                    class="sub-side-menu__label">Facturación</span><i
+                                                    class="sub-angle fe fe-chevron-down"></i></a>
+                                            <ul class="sub-slide-menu" style="display: none;"
+                                                id="2_1_otro_asignaciones">
+                                                <li><a class="sub-side-menu__item"
+                                                        href="{{ route('factura_compra') }}">Factura Compra</a>
+                                                </li>
+                                            </ul>
                                         </li>
                                     @endif
                                     @if (auth()->user()->hasPermissionTo('gestion_config_nomina_general'))
@@ -566,7 +580,7 @@
             </aside>
         </div>
         <!-- main-sidebar -->
-        
+
         <div class="main-content app-content">
             @yield('content')
         </div>
@@ -599,7 +613,7 @@
     <script src="{{ asset('assets/plugins/ionicons/ionicons.js') }}"></script>
 
     <!--- Moment js --->
-	<script src="{{ asset('assets/plugins/moment/moment.js') }}"></script>
+    <script src="{{ asset('assets/plugins/moment/moment.js') }}"></script>
 
     <!--- Chart bundle min js --->
     <script src="{{ asset('assets/plugins/chart.js/Chart.bundle.min.js') }}"></script>
@@ -664,7 +678,7 @@
     <script src="{{ asset('assets/plugins/datatable/responsive.bootstrap5.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+
     <!--- Date Range --->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
@@ -684,7 +698,7 @@
                 icon: 'https://radioenlacesas.com/wp-content/uploads/2017/08/cropped-logoradioenlace-2.png',
                 timeout: 8000,
                 vibrate: [100, 100, 100],
-                onClick: function () {
+                onClick: function() {
                     window.focus();
                     this.close();
                 }

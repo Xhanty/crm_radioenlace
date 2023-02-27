@@ -195,9 +195,9 @@
                 <div class="box box-down cyan">
                     <h2>Terceros</h2>
                     <ul>
-                        <li><a href="javascript:void(0);" id="btnProveedores">Proveedores</a></li>
-                        <li><a href="javascript:void(0);" id="btnClientes">Clientes</a></li>
-                        <li><a href="javascript:void(0);" id="btnEmpleados">Empleados</a></li>
+                        <li><a href="javascript:void(0);" id="btnProveedoress">Opción 1</a></li>
+                        <li><a href="javascript:void(0);" id="btnClientess">Opción 2</a></li>
+                        <li><a href="javascript:void(0);" id="btnEmpleadoss">Opción 3</a></li>
                     </ul>
                     <img style="float:right; width: 40px;" src="https://assets.codepen.io/2301174/icon-team-builder.svg"
                         alt="Terceros">
@@ -245,9 +245,6 @@
         @include('admin.contabilidad.configuracion.pucs')
         @include('admin.contabilidad.configuracion.config_puc')
         @include('admin.contabilidad.configuracion.centros_costos')
-        @include('admin.contabilidad.configuracion.clientes')
-        @include('admin.contabilidad.configuracion.proveedores')
-        @include('admin.contabilidad.configuracion.empleados')
         @include('admin.contabilidad.configuracion.actividades_economicas')
         @include('admin.contabilidad.configuracion.ciudades')
         @include('admin.contabilidad.configuracion.tipos_documentos')

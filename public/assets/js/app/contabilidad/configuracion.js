@@ -65,21 +65,6 @@ $(document).ready(function () {
         $("#div_pucs").removeClass("d-none");
     });
 
-    $("#btnClientes").on("click", function () {
-        $("#div_general").addClass("d-none");
-        $("#div_clientes").removeClass("d-none");
-    });
-
-    $("#btnProveedores").on("click", function () {
-        $("#div_general").addClass("d-none");
-        $("#div_proveedores").removeClass("d-none");
-    });
-
-    $("#btnEmpleados").on("click", function () {
-        $("#div_general").addClass("d-none");
-        $("#div_empleados").removeClass("d-none");
-    });
-
     $("#btnCentrosCostos").on("click", function () {
         $("#div_general").addClass("d-none");
         $("#div_centros_costos").removeClass("d-none");
@@ -120,9 +105,6 @@ $(document).ready(function () {
         $("#div_organizacion").addClass("d-none");
         $("#div_formas_pago").addClass("d-none");
         $("#div_pucs").addClass("d-none");
-        $("#div_clientes").addClass("d-none");
-        $("#div_proveedores").addClass("d-none");
-        $("#div_empleados").addClass("d-none");
         $("#div_centros_costos").addClass("d-none");
         $("#div_tipos_empresas").addClass("d-none");
         $("#div_tipos_regimenes").addClass("d-none");
