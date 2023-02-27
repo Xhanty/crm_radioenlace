@@ -351,6 +351,7 @@ $(document).ready(function () {
 
         $("#tbl_data").DataTable({
             processing: true,
+            language: language,
             serverSide: true,
             responsive: true,
             order: [],
@@ -365,15 +366,76 @@ $(document).ready(function () {
                 { data: "celular", name: "celular" },
                 { data: "created_at", name: "created_at" },
                 {
+                    data: null,
+                    className: "text-center",
+                    render: function (data, type, row) {
+                        return '<select class="form-select select_status text-center" data-id="' + row.id + '"><option value="1" ' + (row.estado == 1 ? "selected" : "") + '>Activo</option><option value="0" ' + (row.estado == 0 ? "selected" : "") + '>Inactivo</option><option value="2" ' + (row.estado == 2 ? "selected" : "") + '>Pendiente</option></select>';
+                    },
+                },
+                {
                     data: "action",
                     name: "action",
+                    className: "text-center",
                     orderable: true,
                     searchable: true,
                 },
             ],
-            language: language,
         });
     }
+
+    $(document).on("change", ".select_status", function () {
+        let id = $(this).data("id");
+        let estado = $(this).val();
+
+        let formData = new FormData();
+        formData.append("id", id);
+        formData.append("estado", estado);
+
+        $.ajax({
+            url: "prospectos_empresas_status",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.info == 1) {
+                    toastr.success("Se ha modificado el estado del prospecto");
+                } else {
+                    toastr.error("Ha ocurrido un error al modificar el estado del prospecto");
+                }
+            },
+            error: function (data) {
+                toastr.error("Ha ocurrido un error al modificar el estado del prospecto");
+            },
+        });
+    });
+
+    $(document).on("change", ".date_action", function () {
+        let id = $(this).data("id");
+        let fecha = $(this).val();
+
+        let formData = new FormData();
+        formData.append("id", id);
+        formData.append("fecha", fecha);
+
+        $.ajax({
+            url: "prospectos_empresas_fecha",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.info == 1) {
+                    toastr.success("Se ha modificado la fecha del prospecto");
+                } else {
+                    toastr.error("Ha ocurrido un error al modificar la fecha del prospecto");
+                }
+            },
+            error: function (data) {
+                toastr.error("Ha ocurrido un error al modificar la fecha del prospecto");
+            },
+        });
+    });
 
     $("#btnSubirArchivo").click(function () {
         let file_excel = $("#file_import").val();

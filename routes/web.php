@@ -342,6 +342,8 @@ Route::middleware(['auth_user'])->group(function () {
     Route::get('/prospectos_bd_plantilla', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'download_plantilla'])->name('prospectos_bd_plantilla');
     Route::get('/prospectos_bd_excel', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'download_excel'])->name('prospectos_bd_excel');
     Route::post('/prospectos_bd_import', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'import_excel'])->name('prospectos_bd_import');
+    Route::post('/prospectos_bd_status', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'change_status'])->name('prospectos_bd_status');
+    Route::post('/prospectos_bd_fecha', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'change_fecha'])->name('prospectos_bd_fecha');
 
     // PROSPECTOS EMPRESAS
     Route::get('/prospectos_empresas_bd', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'index'])->name('prospectos_empresas_bd');
@@ -353,6 +355,8 @@ Route::middleware(['auth_user'])->group(function () {
     Route::get('/prospectos_empresas_bd_plantilla', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'download_plantilla'])->name('prospectos_empresas_bd_plantilla');
     Route::get('/prospectos_empresas_bd_excel', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'download_excel'])->name('prospectos_empresas_bd_excel');
     Route::post('/prospectos_empresas_bd_import', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'import_excel'])->name('prospectos_empresas_bd_import');
+    Route::post('/prospectos_empresas_status', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'change_status'])->name('prospectos_empresas_status');
+    Route::post('/prospectos_empresas_fecha', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'change_fecha'])->name('prospectos_empresas_fecha');
 });
 
 // RUTAS PARA EL CALENDARIO

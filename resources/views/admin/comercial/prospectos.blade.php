@@ -16,6 +16,20 @@
         </div>
         <!-- /breadcrumb -->
 
+        <style>
+            .bg-pending {
+                background: rgb(255 193 7 / 30%);
+            }
+
+            .bg-approved {
+                background: rgb(11 163 96 / 30%);
+            }
+
+            .bg-rejected {
+                background: rgb(245 60 91 / 30%);
+            }
+        </style>
+
         <!-- Row -->
         <div class="row row-sm">
             <div class="col-lg-12">
@@ -25,14 +39,16 @@
                             <h3 class="card-title mt-2">Prospectos Personas</h3>
                         </div>
                         <div class="div-2-tables-header">
-                            <a title="Exportar" class="btn btn-warning" href="{{ route('prospectos_bd_excel') }}" target="_blank">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Microsoft_Office_Excel_%282019%E2%80%93present%29.svg/826px-Microsoft_Office_Excel_%282019%E2%80%93present%29.svg.png" 
-                                alt="" width="21px">
+                            <a title="Exportar" class="btn btn-warning" href="{{ route('prospectos_bd_excel') }}"
+                                target="_blank">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Microsoft_Office_Excel_%282019%E2%80%93present%29.svg/826px-Microsoft_Office_Excel_%282019%E2%80%93present%29.svg.png"
+                                    alt="" width="21px">
                             </a>
                             &nbsp;
-                            <a title="Importar" class="btn btn-danger" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalImport">
-                                <img src="https://cdn-icons-png.flaticon.com/512/3616/3616929.png" 
-                                alt="" width="21px">
+                            <a title="Importar" class="btn btn-danger" href="javascript:void(0);" data-bs-toggle="modal"
+                                data-bs-target="#modalImport">
+                                <img src="https://cdn-icons-png.flaticon.com/512/3616/3616929.png" alt=""
+                                    width="21px">
                             </a>
                             &nbsp;
                             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAdd">
@@ -54,7 +70,8 @@
                                         <th>Email</th>
                                         <th>Celular</th>
                                         <th>Fecha<br>Creación</th>
-                                        <th>Acciones</th>
+                                        <th>Status</th>
+                                        <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -332,17 +349,20 @@
                             </div>
                             <div class="col-lg">
                                 <label for="">Empresa</label>
-                                <input class="form-control" type="text" id="empresa_view" disabled placeholder="Empresa">
+                                <input class="form-control" type="text" id="empresa_view" disabled
+                                    placeholder="Empresa">
                             </div>
                         </div>
                         <div class="row row-sm mt-3">
                             <div class="col-lg">
                                 <label for="">Nombres *</label>
-                                <input class="form-control" type="text" id="nombres_view" disabled placeholder="Nombres">
+                                <input class="form-control" type="text" id="nombres_view" disabled
+                                    placeholder="Nombres">
                             </div>
                             <div class="col-lg">
                                 <label for="">Apellidos</label>
-                                <input class="form-control" type="text" id="apellidos_view" disabled placeholder="Apellidos">
+                                <input class="form-control" type="text" id="apellidos_view" disabled
+                                    placeholder="Apellidos">
                             </div>
                         </div>
                         <div class="row row-sm mt-3">
@@ -358,11 +378,13 @@
                         <div class="row row-sm mt-3">
                             <div class="col-lg">
                                 <label for="">Celular</label>
-                                <input class="form-control" type="text" id="celular_view" disabled placeholder="Celular">
+                                <input class="form-control" type="text" id="celular_view" disabled
+                                    placeholder="Celular">
                             </div>
                             <div class="col-lg">
                                 <label for="">Tel Fijo</label>
-                                <input class="form-control" type="text" id="telfijo_view" disabled placeholder="Tel Fijo">
+                                <input class="form-control" type="text" id="telfijo_view" disabled
+                                    placeholder="Tel Fijo">
                             </div>
                         </div>
                         <div class="row row-sm mt-3">
@@ -373,27 +395,32 @@
                             </div>
                             <div class="col-lg">
                                 <label for="">Dirección</label>
-                                <input class="form-control" type="text" id="direccion_view" disabled placeholder="Dirección">
+                                <input class="form-control" type="text" id="direccion_view" disabled
+                                    placeholder="Dirección">
                             </div>
                         </div>
                         <div class="row row-sm mt-3">
                             <div class="col-lg">
                                 <label for="">Facebook</label>
-                                <input class="form-control" type="text" id="facebook_view" disabled placeholder="Facebook">
+                                <input class="form-control" type="text" id="facebook_view" disabled
+                                    placeholder="Facebook">
                             </div>
                             <div class="col-lg">
                                 <label for="">WhatsApp</label>
-                                <input class="form-control" type="text" id="whatsapp_view" disabled placeholder="WhatsApp">
+                                <input class="form-control" type="text" id="whatsapp_view" disabled
+                                    placeholder="WhatsApp">
                             </div>
                         </div>
                         <div class="row row-sm mt-3">
                             <div class="col-lg">
                                 <label for="">Instagram</label>
-                                <input class="form-control" type="text" id="instagram_view" disabled placeholder="Instagram">
+                                <input class="form-control" type="text" id="instagram_view" disabled
+                                    placeholder="Instagram">
                             </div>
                             <div class="col-lg">
                                 <label for="">Referido</label>
-                                <input class="form-control" type="text" id="referido_view" disabled placeholder="Referido">
+                                <input class="form-control" type="text" id="referido_view" disabled
+                                    placeholder="Referido">
                             </div>
                         </div>
                     </div>

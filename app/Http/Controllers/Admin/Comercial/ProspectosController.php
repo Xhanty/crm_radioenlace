@@ -49,7 +49,17 @@ class ProspectosController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<a data-id="' . $row->id . '" title="Ver" class="edit btn btn-primary btn-sm btnView"><i class="fa fa-eye"></i></a>
+                    $info = '';
+
+                    if ($row->fecha_evento) {
+                        $info = "background: rgb(245 60 91 / 30%);";
+                    }
+
+                    $actionBtn =
+
+                        '<input type="text" onfocus="(this.type=' . "'date'" . ')" style="' . $info . '" class="form-control date_action text-center" value="' . $row->fecha_evento . '" data-id="' . $row->id . '"><br>' .
+
+                        '<a data-id="' . $row->id . '" title="Ver" class="edit btn btn-primary btn-sm btnView"><i class="fa fa-eye"></i></a>
 
                     <a data-id="' . $row->id . '" title="Modificar" class="edit btn btn-warning btn-sm btnEdit"><i class="fa fa-pencil-alt"></i></a>
 
@@ -59,6 +69,15 @@ class ProspectosController extends Controller
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
+                ->setRowClass(function ($row) {
+                    if ($row->estado == 2) {
+                        return 'bg-pending';
+                    } else if ($row->estado == 1) {
+                        return 'bg-approved';
+                    } else if ($row->estado == 0) {
+                        return 'bg-rejected';
+                    }
+                })
                 ->make(true);
         }
     }
@@ -252,6 +271,60 @@ class ProspectosController extends Controller
             $file->move('images/prospectos_personas/', $name);
 
             Excel::import(new ProspectosImport, 'images/prospectos_personas/' . $name);
+
+            DB::commit();
+
+            $prospectos = [];
+
+            return response()->json([
+                'info' => 1,
+                'prospectos' => $prospectos,
+            ]);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return response()->json([
+                'info' => 0,
+                'prospectos' => [],
+                'error' => $ex->getMessage(),
+            ]);
+        }
+    }
+
+    public function change_status(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            DB::table("prospectos")->where('id', $request->id)->update([
+                'estado' => $request->estado,
+            ]);
+
+            DB::commit();
+
+            $prospectos = [];
+
+            return response()->json([
+                'info' => 1,
+                'prospectos' => $prospectos,
+            ]);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return response()->json([
+                'info' => 0,
+                'prospectos' => [],
+                'error' => $ex->getMessage(),
+            ]);
+        }
+    }
+
+    public function change_fecha(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            DB::table("prospectos")->where('id', $request->id)->update([
+                'fecha_evento' => $request->fecha,
+            ]);
 
             DB::commit();
 

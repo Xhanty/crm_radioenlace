@@ -16,6 +16,20 @@
         </div>
         <!-- /breadcrumb -->
 
+        <style>
+            .bg-pending {
+                background: rgb(255 193 7 / 30%);
+            }
+
+            .bg-approved {
+                background: rgb(11 163 96 / 30%);
+            }
+
+            .bg-rejected {
+                background: rgb(245 60 91 / 30%);
+            }
+        </style>
+
         <!-- Row -->
         <div class="row row-sm">
             <div class="col-lg-12">
@@ -54,7 +68,8 @@
                                         <th>Email</th>
                                         <th>Celular</th>
                                         <th>Fecha<br>Creación</th>
-                                        <th>Acciones</th>
+                                        <th>Status</th>
+                                        <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>

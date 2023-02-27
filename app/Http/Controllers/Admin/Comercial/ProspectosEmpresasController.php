@@ -33,7 +33,7 @@ class ProspectosEmpresasController extends Controller
     {
         if ($request->ajax()) {
             $data = DB::table("prospectos_empresas")->select('prospectos_empresas.*', 'paises.name as pais')
-            ->join('paises', 'paises.id', '=', 'prospectos_empresas.pais_id')->orderBy('id', 'desc')->get();
+                ->join('paises', 'paises.id', '=', 'prospectos_empresas.pais_id')->orderBy('id', 'desc')->get();
 
             foreach ($data as $key => $value) {
                 $data[$key]->created_at = date('d/m/Y H:i A', strtotime($value->created_at));
@@ -48,7 +48,17 @@ class ProspectosEmpresasController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<a data-id="' . $row->id . '" title="Ver" class="edit btn btn-primary btn-sm btnView"><i class="fa fa-eye"></i></a>
+                    $info = '';
+
+                    if ($row->fecha_evento) {
+                        $info = "background: rgb(245 60 91 / 30%);";
+                    }
+
+                    $actionBtn =
+
+                        '<input type="date" style="' . $info . '" class="form-control date_action text-center" value="' . $row->fecha_evento . '" data-id="' . $row->id . '"><br>' .
+
+                        '<a data-id="' . $row->id . '" title="Ver" class="edit btn btn-primary btn-sm btnView"><i class="fa fa-eye"></i></a>
 
                     <a data-id="' . $row->id . '" title="Modificar" class="edit btn btn-warning btn-sm btnEdit"><i class="fa fa-pencil-alt"></i></a>
 
@@ -253,6 +263,60 @@ class ProspectosEmpresasController extends Controller
             $file->move('images/prospectos_empresas/', $name);
 
             Excel::import(new ProspectosEmpresasImport, 'images/prospectos_empresas/' . $name);
+
+            DB::commit();
+
+            $prospectos = [];
+
+            return response()->json([
+                'info' => 1,
+                'prospectos' => $prospectos,
+            ]);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return response()->json([
+                'info' => 0,
+                'prospectos' => [],
+                'error' => $ex->getMessage(),
+            ]);
+        }
+    }
+
+    public function change_status(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            DB::table("prospectos_empresas")->where('id', $request->id)->update([
+                'estado' => $request->estado,
+            ]);
+
+            DB::commit();
+
+            $prospectos = [];
+
+            return response()->json([
+                'info' => 1,
+                'prospectos' => $prospectos,
+            ]);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return response()->json([
+                'info' => 0,
+                'prospectos' => [],
+                'error' => $ex->getMessage(),
+            ]);
+        }
+    }
+
+    public function change_fecha(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            DB::table("prospectos_empresas")->where('id', $request->id)->update([
+                'fecha_evento' => $request->fecha,
+            ]);
 
             DB::commit();
 
