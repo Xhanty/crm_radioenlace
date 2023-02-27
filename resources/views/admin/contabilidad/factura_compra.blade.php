@@ -15,7 +15,7 @@
             </div>
         </div>
         <!-- /breadcrumb -->
-        <div class="row row-sm">
+        <div class="row row-sm" id="div_general">
             <div class="col-md-12 col-xl-4">
                 <div class=" main-content-body-invoice">
                     <div class="card card-invoice">
@@ -24,7 +24,7 @@
                                 <h3 class="card-title">Facturas</h3>
                             </div>
                             <div class="div-2-tables-header" style="margin-bottom: 13px">
-                                <button class="btn btn-primary">+</button>
+                                <button class="btn btn-primary" id="btnNew">+</button>
                             </div>
                         </div>
                         <div class="p-0">
@@ -137,42 +137,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="media">
-                                    <div class="media-icon">
-                                        <i class="far fa-file-alt"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <h6><span>Invoice002299</span> <span>$16</span></h6>
-                                        <div>
-                                            <p><span>Date:</span> Oct 25</p>
-                                            <p><span>Product:</span> 435423</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-icon">
-                                        <i class="far fa-file-alt"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <h6><span>Invoice002300</span> <span>$32</span></h6>
-                                        <div>
-                                            <p><span>Date:</span> Oct 25</p>
-                                            <p><span>Product:</span> 921021</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-icon">
-                                        <i class="far fa-file-alt"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <h6><span>Invoice002300</span> <span>$18</span></h6>
-                                        <div>
-                                            <p><span>Date:</span> Oct 25</p>
-                                            <p><span>Product:</span> 921021</p>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -246,15 +210,6 @@
                                             <td class="tx-right">$1,700.00</td>
                                         </tr>
                                         <tr>
-                                            <td>Android App</td>
-                                            <td class="tx-12">Neque porro quisquam est, qui dolorem ipsum quia dolor sit
-                                                amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora
-                                                incidunt ut</td>
-                                            <td class="tx-center">3</td>
-                                            <td class="tx-right">$850.00</td>
-                                            <td class="tx-right">$2,550.00</td>
-                                        </tr>
-                                        <tr>
                                             <td class="valign-middle" colspan="2" rowspan="4">
                                                 <div class="invoice-notes">
                                                     <label class="main-content-label tx-13">Notes</label>
@@ -284,12 +239,110 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <hr class="mg-b-40">
-                            <a class="btn btn-primary btn-block" href="">Pay Now</a>
                         </div>
                     </div>
                 </div>
             </div><!-- COL-END -->
+        </div>
+
+        <div class="row row-sm d-none" id="div_form_add">
+            <div class="col-md-12 col-xl-12">
+                <div class=" main-content-body-invoice">
+                    <div class="card card-invoice">
+                        <div class="card-header ps-3 pe-3 pt-3 pb-0 d-flex-header-table">
+                            <div class="div-1-tables-header">
+                                <h3 class="card-title">Nueva factura de compra</h3>
+                            </div>
+                            <div class="div-2-tables-header" style="margin-bottom: 13px">
+                                <button class="btn btn-primary back_home">x</button>
+                            </div>
+                        </div>
+                        <div class="p-0">
+                            <div class="card-body" style="margin-top: -18px;">
+                                <div class="row row-sm">
+                                    <div class="col-lg-3">
+                                        <label for="">Tipo</label>
+                                        <select class="form-select" id="tipo_add">
+                                            <option value="">Seleccione una opción</option>
+                                            <option value="2">Nota de crédito</option>
+                                            <option value="3">Nota de débito</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label for="">Centro de costo</label>
+                                        <select class="form-select" id="centro_costo_add">
+                                            <option value="">Seleccione una opción</option>
+                                            <option value="2">RR</option>
+                                            <option value="3">AA</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label for="">Fecha elaboración</label>
+                                        <input class="form-control" id="fecha_add" placeholder="Fecha elaboración"
+                                            type="date">
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label for="">Número</label>
+                                        <input class="form-control" disabled id="numero_add" placeholder="Número"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row row-sm">
+                                    <div class="col-lg-3">
+                                        <label for="">Proveedor</label>
+                                        <select class="form-select" id="proveedor_add">
+                                            <option value="">Seleccione una opción</option>
+                                            <option value="2">RR</option>
+                                            <option value="3">AA</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <label for="">Contacto</label>
+                                        <input class="form-control" disabled id="contacto_add" placeholder="Contacto"
+                                            type="text">
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <label for="">No. Factura Proveedor</label>
+                                        <input class="form-control" id="factura1_proveedor_add" placeholder="Contacto"
+                                            type="text">
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <label for="">Consecutivo Factura Proveedor</label>
+                                        <input class="form-control" id="factura2_proveedor_add" placeholder="Consecutivo Factura Proveedor"
+                                            type="text">
+                                    </div> 
+                                </div>
+                                <br>
+                                <div class="row row-sm">
+                                    <div class="col-lg">
+                                    </div>
+                                    <div class="col-lg">
+                                        <label class="ckbox"><input id="chk_proveedor" type="checkbox"><span>Proveedor por item</span></label>
+                                    </div>
+
+                                    <div class="col-lg">
+                                        <label class="ckbox"><input id="chk_iva" type="checkbox"><span>IVA/Impoconsumo incluido</span></label>
+                                    </div>
+
+                                    <div class="col-lg">
+                                        <label class="ckbox"><input id="chk_procentaje" type="checkbox"><span>Descuento en porcentaje</span></label>
+                                    </div> 
+                                    <div class="col-lg">
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="text-center mt-5">
+                                    <button class="btn btn-primary" id="btnAddFactura">Guardar Factura</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

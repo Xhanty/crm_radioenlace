@@ -6,4 +6,14 @@ $(document).ready(function () {
     });
 
     $(".open-toggle").trigger("click");
+
+    $("#btnNew").click(function () {
+        $("#div_general").addClass("d-none");
+        $("#div_form_add").removeClass("d-none");
+    });
+
+    $(".back_home").click(function () {
+        $("#div_general").removeClass("d-none");
+        $("#div_form_add").addClass("d-none");
+    });
 });
