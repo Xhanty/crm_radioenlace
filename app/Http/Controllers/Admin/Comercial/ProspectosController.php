@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class ProspectosController extends Controller
 {
@@ -65,7 +66,9 @@ class ProspectosController extends Controller
 
                     <a data-id="' . $row->id . '" title="Eliminar" class="delete btn btn-danger btn-sm btnDelete"><i class="fa fa-trash"></i></a>
 
-                    <a data-id="' . $row->id . '" data-celular="' . $row->celular . '" title="WhatsApp" class="btn btn-success btn-sm btnWhatsapp"><i class="fab fa-whatsapp"></i></a>';
+                    <a data-id="' . $row->id . '" data-celular="' . $row->celular . '" title="WhatsApp" class="btn btn-success btn-sm btnWhatsapp"><i class="fab fa-whatsapp"></i></a>
+
+                    <a target="_BLANK" href="history_prospectos?token=' . $row->id . '&pr=1" title="Historial/Avance" class="btn btn-primary btn-sm btnHistory"><i class="fa fa-book"></i></a>';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -325,6 +328,117 @@ class ProspectosController extends Controller
             DB::table("prospectos")->where('id', $request->id)->update([
                 'fecha_evento' => $request->fecha,
             ]);
+
+            DB::commit();
+
+            $prospectos = [];
+
+            return response()->json([
+                'info' => 1,
+                'prospectos' => $prospectos,
+            ]);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return response()->json([
+                'info' => 0,
+                'prospectos' => [],
+                'error' => $ex->getMessage(),
+            ]);
+        }
+    }
+
+    public function history_prospectos(Request $request)
+    {
+        try {
+            $id = $request->get('token');
+            $pr = $request->get('pr');
+
+            if (!$id || !$pr) {
+                return view('errors.404');
+            }
+
+            if ($pr == 1) {
+                $prospecto = DB::table("prospectos")->where('id', $id)->first();
+            } else {
+                $prospecto = DB::table("prospectos_empresas")->where('id', $id)->first();
+            }
+
+            $prospecto->observaciones = DB::table("historial_prospectos")
+                ->join('empleados', 'empleados.id', '=', 'historial_prospectos.created_by')
+                ->select('historial_prospectos.*', 'empleados.nombre as creador')
+                ->where('prospecto_id', $id)
+                ->orderBy('historial_prospectos.id', 'desc')
+                ->get();
+
+            return view('admin.comercial.history_prospectos', compact('prospecto'));
+        } catch (Exception $ex) {
+            return view('errors.500');
+        }
+    }
+
+    public function add_observacion(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            DB::table("historial_prospectos")->insert([
+                'prospecto_id' => $request->id,
+                'observacion' => $request->observacion,
+                'created_by' => Auth::user()->id,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+
+            DB::commit();
+
+            $prospectos = [];
+
+            return response()->json([
+                'info' => 1,
+                'prospectos' => $prospectos,
+            ]);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return response()->json([
+                'info' => 0,
+                'prospectos' => [],
+                'error' => $ex->getMessage(),
+            ]);
+        }
+    }
+
+    public function edit_observacion(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            DB::table("historial_prospectos")->where('id', $request->id)->update([
+                'observacion' => $request->observacion,
+            ]);
+
+            DB::commit();
+
+            $prospectos = [];
+
+            return response()->json([
+                'info' => 1,
+                'prospectos' => $prospectos,
+            ]);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return response()->json([
+                'info' => 0,
+                'prospectos' => [],
+                'error' => $ex->getMessage(),
+            ]);
+        }
+    }
+
+    public function delete_observacion(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            DB::table("historial_prospectos")->where('id', $request->id)->delete();
 
             DB::commit();
 

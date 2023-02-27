@@ -48,7 +48,7 @@
                                 class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
                                 <thead>
                                     <tr>
-                                        <th>Tipo Cliente</th>
+                                        <th>Tipo</th>
                                         <th>País</th>
                                         <th>Empresa</th>
                                         <th>Nombres</th>

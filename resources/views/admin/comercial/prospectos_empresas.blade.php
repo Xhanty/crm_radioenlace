@@ -16,20 +16,6 @@
         </div>
         <!-- /breadcrumb -->
 
-        <style>
-            .bg-pending {
-                background: rgb(255 193 7 / 30%);
-            }
-
-            .bg-approved {
-                background: rgb(11 163 96 / 30%);
-            }
-
-            .bg-rejected {
-                background: rgb(245 60 91 / 30%);
-            }
-        </style>
-
         <!-- Row -->
         <div class="row row-sm">
             <div class="col-lg-12">
@@ -60,7 +46,7 @@
                                 class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
                                 <thead>
                                     <tr>
-                                        <th>Tipo Cliente</th>
+                                        <th>Tipo</th>
                                         <th>País</th>
                                         <th>Empresa</th>
                                         <th>Nombres</th>

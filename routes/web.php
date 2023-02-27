@@ -357,6 +357,11 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/prospectos_empresas_bd_import', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'import_excel'])->name('prospectos_empresas_bd_import');
     Route::post('/prospectos_empresas_status', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'change_status'])->name('prospectos_empresas_status');
     Route::post('/prospectos_empresas_fecha', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'change_fecha'])->name('prospectos_empresas_fecha');
+    
+    Route::get('/history_prospectos', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'history_prospectos'])->name('history_prospectos');
+    Route::post('/history_prospectos_add', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'add_observacion'])->name('history_prospectos_add');
+    Route::post('/history_prospectos_edit', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'edit_observacion'])->name('history_prospectos_edit');
+    Route::post('/history_prospectos_delete', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'delete_observacion'])->name('history_prospectos_delete');
 });
 
 // RUTAS PARA EL CALENDARIO

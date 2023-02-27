@@ -64,7 +64,7 @@ class ProspectosEmpresasController extends Controller
 
                     <a data-id="' . $row->id . '" title="Eliminar" class="delete btn btn-danger btn-sm btnDelete"><i class="fa fa-trash"></i></a>
 
-                    <a data-id="' . $row->id . '" data-celular="' . $row->celular . '" title="WhatsApp" class="btn btn-success btn-sm btnWhatsapp"><i class="fab fa-whatsapp"></i></a>';
+                    <a target="_BLANK" href="history_prospectos?token=' . $row->id . '&pr=2" title="Historial/Avance" class="btn btn-primary btn-sm btnHistory"><i class="fa fa-book"></i></a>';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
