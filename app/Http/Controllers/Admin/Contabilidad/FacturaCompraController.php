@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Contabilidad;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FacturaCompraController extends Controller
 {
@@ -15,7 +16,17 @@ class FacturaCompraController extends Controller
                 return redirect()->route('home');
             }
 
-            return view('admin.contabilidad.factura_compra');
+            $productos = DB::table('productos')
+                ->select('id', 'nombre', 'marca', 'modelo')
+                ->where('status', 1)
+                ->get();
+
+            $formas_pago = DB::table('formas_pago')
+                ->select('id', 'nombre')
+                ->where('status', 1)
+                ->get();
+
+            return view('admin.contabilidad.factura_compra', compact('productos', 'formas_pago'));
         } catch (Exception $ex) {
             return view('errors.500');
         }

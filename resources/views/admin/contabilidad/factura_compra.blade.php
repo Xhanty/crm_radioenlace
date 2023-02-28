@@ -257,6 +257,35 @@
                                 <button class="btn btn-primary back_home">x</button>
                             </div>
                         </div>
+                        <style>
+                            .bg-gray {
+                                background-color: #bfbfbf;
+                            }
+
+                            .pad-4 {
+                                padding: 4px !important;
+                                border: 0px !important;
+                            }
+
+                            .center-text {
+                                display: flex;
+                                border: 0 !important;
+                                justify-content: center;
+                            }
+
+                            .select2-container--open .select2-dropdown--below {
+                                width: 200px !important;
+                            }
+
+                            .font-20 {
+                                font-size: 18px;
+                            }
+
+                            .font-22 {
+                                font-size: 20px;
+                                font-weight: 500;
+                            }
+                        </style>
                         <div class="p-0">
                             <div class="card-body" style="margin-top: -18px;">
                                 <div class="row row-sm">
@@ -306,35 +335,211 @@
 
                                     <div class="col-lg-3">
                                         <label for="">No. Factura Proveedor</label>
-                                        <input class="form-control" id="factura1_proveedor_add" placeholder="Contacto"
-                                            type="text">
+                                        <input class="form-control" id="factura1_proveedor_add"
+                                            placeholder="No. Factura Proveedor" type="text">
                                     </div>
 
                                     <div class="col-lg-3">
                                         <label for="">Consecutivo Factura Proveedor</label>
-                                        <input class="form-control" id="factura2_proveedor_add" placeholder="Consecutivo Factura Proveedor"
-                                            type="text">
-                                    </div> 
+                                        <input class="form-control" id="factura2_proveedor_add"
+                                            placeholder="Consecutivo Factura Proveedor" type="text">
+                                    </div>
                                 </div>
                                 <br>
                                 <div class="row row-sm">
                                     <div class="col-lg">
                                     </div>
                                     <div class="col-lg">
-                                        <label class="ckbox"><input id="chk_proveedor" type="checkbox"><span>Proveedor por item</span></label>
+                                        <label class="ckbox"><input id="chk_proveedor" type="checkbox"><span>Proveedor
+                                                por item</span></label>
                                     </div>
 
                                     <div class="col-lg">
-                                        <label class="ckbox"><input id="chk_iva" type="checkbox"><span>IVA/Impoconsumo incluido</span></label>
+                                        <label class="ckbox"><input id="chk_iva" type="checkbox"><span>IVA/Impoconsumo
+                                                incluido</span></label>
                                     </div>
 
                                     <div class="col-lg">
-                                        <label class="ckbox"><input id="chk_procentaje" type="checkbox"><span>Descuento en porcentaje</span></label>
-                                    </div> 
+                                        <label class="ckbox"><input id="chk_procentaje" type="checkbox"><span>Descuento
+                                                en porcentaje</span></label>
+                                    </div>
                                     <div class="col-lg">
                                     </div>
                                 </div>
-                                <br>
+                                <div class="row row-sm mt-5">
+                                    <div class="table-responsive">
+                                        <table id="tbl_data_detail"
+                                            class="table border-top-0 table-bordered text-nowrap border-bottom">
+                                            <thead>
+                                                <tr class="bg-gray">
+                                                    <th class="text-center">#</th>
+                                                    <th class="text-center">Tipo</th>
+                                                    <th class="text-center">Producto</th>
+                                                    <th class="text-center">Descripción</th>
+                                                    <th class="text-center">Bodega</th>
+                                                    <th class="text-center">Cant</th>
+                                                    <th class="text-center">Valor Unitario</th>
+                                                    <th class="text-center">Descuento</th>
+                                                    <th class="text-center">Impuesto<br>Cargo</th>
+                                                    <th class="text-center">Impuesto<br>Retención</th>
+                                                    <th class="text-center">Valor Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr style="background: #f9f9f9;">
+                                                    <td class="center-text pad-4">1</td>
+                                                    <td class="pad-4">
+                                                        <select class="form-select tipo_add">
+                                                            <option value="">Seleccione una opción</option>
+                                                            <option value="1">Producto</option>
+                                                            <option value="2">Activo Fijo</option>
+                                                            <option value="3">Gasto / Cuenta contable</option>
+                                                        </select>
+                                                    </td>
+                                                    <td class="pad-4">
+                                                        <select class="form-select producto_add">
+                                                            <option value="">Seleccione una opción</option>
+                                                            @foreach ($productos as $producto)
+                                                                <option value="{{ $producto->id }}">{{ $producto->nombre }}
+                                                                    ({{ $producto->marca }} - {{ $producto->modelo }})
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td class="pad-4">
+                                                        <textarea placeholder="Descripción" class="form-control descripcion_add" style="border: 0" rows="1"></textarea>
+                                                    </td>
+                                                    <td class="pad-4">
+                                                        <input type="text" placeholder="Bodega"
+                                                            class="form-control bodega_add" style="border: 0">
+                                                    </td>
+                                                    <td class="pad-4">
+                                                        <input type="text" placeholder="Cantidad"
+                                                            class="form-control text-end cantidad_add" style="border: 0">
+                                                    </td>
+                                                    <td class="pad-4">
+                                                        <input type="text" placeholder="Valor Unitario"
+                                                            class="form-control text-end valor_add" style="border: 0">
+                                                    </td>
+                                                    <td class="pad-4">
+                                                        <input type="text" placeholder="Descuento"
+                                                            class="form-control text-end descuento_add" style="border: 0">
+                                                    </td>
+                                                    <td class="pad-4">
+                                                        <select class="form-select cargo_add">
+                                                            <option value="">Seleccione una opción</option>
+                                                            <option value="1">IVA 19%</option>
+                                                            <option value="2">Iva Serv 19%</option>
+                                                            <option value="3">IVA 16%</option>
+                                                            <option value="4">IVA 5%</option>
+                                                            <option value="5">Impoconsumo 8%</option>
+                                                        </select>
+                                                    </td>
+                                                    <td class="pad-4">
+                                                        <select class="form-select retencion_add">
+                                                            <option value="">Seleccione una opción</option>
+                                                            <option value="1">Retefuente 11%</option>
+                                                            <option value="2">Retefuente 10%</option>
+                                                            <option value="3">Retefuente 7%</option>
+                                                            <option value="4">Retefuente 6%</option>
+                                                            <option value="5">Retención 5%</option>
+                                                            <option value="6">Retefuente 4%</option>
+                                                            <option value="8">Arriendos 4%</option>
+                                                            <option value="9">Arriendos 3.5%</option>
+                                                            <option value="10">Retefuente 3.5%</option>
+                                                            <option value="11">Retefuente 2.5%</option>
+                                                            <option value="12">Retefuente 2%</option>
+                                                            <option value="13">Retefuente 1%</option>
+                                                            <option value="14">Autoretención del cree 0.4%</option>
+                                                            <option value="15">Retefuente 0.1%</option>
+                                                        </select>
+                                                    </td>
+                                                    <td class="text-center d-flex pad-4">
+                                                        <input disabled type="text" placeholder="0.00"
+                                                            class="form-control text-end total_add" style="border: 0">
+                                                        <a class="center-vertical mg-s-10" href="javascript:void(0)"
+                                                            id="new_row"><i class="fa fa-plus"></i></a>
+                                                        &nbsp;
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row row-sm mt-3">
+                                    <div class="col-lg-6 mt-3">
+                                        <h3 class="card-title">Forma de pago</h3>
+                                        <hr>
+                                        <div class="row row-sm">
+                                            <div class="col-lg-6">
+                                                <select class="form-select">
+                                                    <option value="">Seleccione una opción</option>
+                                                    @foreach ($formas_pago as $forma_pago)
+                                                        <option value="{{ $forma_pago->id }}">{{ $forma_pago->nombre }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-4 d-flex" style="justify-content: end">
+                                                <input type="text" placeholder="0.00"
+                                                    class="form-control col-8 text-end">
+                                            </div>
+                                            <div class="col-lg-2 d-flex">
+                                                <a class="center-vertical mg-s-10" href="javascript:void(0)"
+                                                            id="new_row_forma"><i class="fa fa-plus"></i></a>
+                                            </div>
+                                        </div>
+                                        <div id="list_formas_pago"></div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="row row-sm mt-2">
+                                            <div class="col-lg-12 d-flex" style="justify-content: end">
+                                                <div style="width: 100%; margin-right: 24%" class="text-end">
+                                                    <p class="font-20">Total Bruto:</p>
+                                                </div>
+                                                <div>
+                                                    <p class="font-20">0.00</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 d-flex" style="justify-content: end">
+                                                <div style="width: 100%; margin-right: 24%" class="text-end">
+                                                    <p class="font-20">Descuentos:</p>
+                                                </div>
+                                                <div>
+                                                    <p class="font-20">0.00</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 d-flex" style="justify-content: end">
+                                                <div style="width: 100%; margin-right: 24%" class="text-end">
+                                                    <p class="font-20">Subtotal:</p>
+                                                </div>
+                                                <div>
+                                                    <p class="font-20">0.00</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-lg d-flex" style="justify-content: end">
+                                        <div>
+                                            <p class="font-22">Total formas de pagos:</p>
+                                        </div>
+                                        <div style="margin-left: 10%">
+                                            <p class="font-22">0.00</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg d-flex" style="justify-content: end">
+                                        <div>
+                                            <p class="font-22">Total Neto:</p>
+                                        </div>
+                                        <div style="margin-left: 10%">
+                                            <p class="font-22">0.00</p>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="text-center mt-5">
                                     <button class="btn btn-primary" id="btnAddFactura">Guardar Factura</button>
                                 </div>
@@ -348,5 +553,14 @@
 @endsection
 
 @section('scripts')
+    <script>
+        $(document).ready(function() {
+            var productos = @json($productos);
+            var formas_pago = @json($formas_pago);
+
+            localStorage.setItem('productos', JSON.stringify(productos));
+            localStorage.setItem('formas_pago', JSON.stringify(formas_pago));
+        });
+    </script>
     <script src="{{ asset('assets/js/app/contabilidad/factura_compra.js') }}"></script>
 @endsection
