@@ -299,7 +299,7 @@
                     <div class="card card-invoice">
                         <div class="card-header ps-3 pe-3 pt-3 pb-0 d-flex-header-table">
                             <div class="div-1-tables-header">
-                                <h3 class="card-title">Nueva factura de compra</h3>
+                                <h3 class="card-title">Nuevo recibo de pago</h3>
                             </div>
                             <div class="div-2-tables-header" style="margin-bottom: 13px">
                                 <button class="btn btn-primary back_home">x</button>
@@ -486,62 +486,6 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <div class="row row-sm mt-3">
-                                    <div class="col-lg-6 mt-3">
-                                        <h3 class="card-title">Forma de pago</h3>
-                                        <hr>
-                                        <div class="row row-sm">
-                                            <div class="col-lg-6">
-                                                <select class="form-select">
-                                                    <option value="">Seleccione una opción</option>
-                                                    @foreach ($formas_pago as $forma_pago)
-                                                        <option value="{{ $forma_pago->id }}">{{ $forma_pago->nombre }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-lg-2"></div>
-                                            <div class="col-lg-3 d-flex" style="justify-content: end">
-                                                <input type="text" placeholder="0.00"
-                                                    class="form-control col-8 text-end">
-                                            </div>
-                                            <div class="col-lg-1 d-flex" style="justify-content: center">
-                                                <a class="center-vertical mg-s-10" href="javascript:void(0)"
-                                                    id="new_row_forma"><i class="fa fa-plus"></i></a>
-                                            </div>
-                                        </div>
-                                        <div id="list_formas_pago"></div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="row row-sm mt-2">
-                                            <div class="col-lg-12 d-flex" style="justify-content: end">
-                                                <div style="width: 100%; margin-right: 24%" class="text-end">
-                                                    <p class="font-20">Total Bruto:</p>
-                                                </div>
-                                                <div>
-                                                    <p class="font-20">0.00</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 d-flex" style="justify-content: end">
-                                                <div style="width: 100%; margin-right: 24%" class="text-end">
-                                                    <p class="font-20">Descuentos:</p>
-                                                </div>
-                                                <div>
-                                                    <p class="font-20">0.00</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 d-flex" style="justify-content: end">
-                                                <div style="width: 100%; margin-right: 24%" class="text-end">
-                                                    <p class="font-20">Subtotal:</p>
-                                                </div>
-                                                <div>
-                                                    <p class="font-20">0.00</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr>
                                 <div class="row">
                                     <div class="col-lg d-flex" style="justify-content: end">
                                         <div>
@@ -562,7 +506,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center mt-5">
-                                    <button class="btn btn-primary" id="btnAddFactura">Guardar Factura</button>
+                                    <button class="btn btn-primary" id="btnAddFactura">Guardar Recibo Pago</button>
                                 </div>
                             </div>
                         </div>
@@ -577,10 +521,8 @@
     <script>
         $(document).ready(function() {
             var productos = @json($productos);
-            var formas_pago = @json($formas_pago);
 
             localStorage.setItem('productos', JSON.stringify(productos));
-            localStorage.setItem('formas_pago', JSON.stringify(formas_pago));
         });
     </script>
     <script src="{{ asset('assets/js/app/contabilidad/recibo_pago.js') }}"></script>

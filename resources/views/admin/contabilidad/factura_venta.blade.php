@@ -320,8 +320,9 @@
                                         <label for="">Vendedor</label>
                                         <select class="form-select" id="centro_costo_add">
                                             <option value="">Seleccione una opción</option>
-                                            <option value="2">RR</option>
-                                            <option value="3">AA</option>
+                                            @foreach ($usuarios as $usuario)
+                                                <option value="{{ $usuario->id }}">{{ $usuario->nombre }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="col-lg-3">
@@ -341,8 +342,9 @@
                                         <label for="">Cliente</label>
                                         <select class="form-select" id="proveedor_add">
                                             <option value="">Seleccione una opción</option>
-                                            <option value="2">RR</option>
-                                            <option value="3">AA</option>
+                                            @foreach ($clientes as $cliente)
+                                                <option value="{{ $cliente->id }}">{{ $cliente->razon_social }} ({{ $cliente->nit }})</option>
+                                            @endforeach
                                         </select>
                                     </div>
 

@@ -308,18 +308,6 @@
                         <div class="p-0">
                             <div class="card-body" style="margin-top: -18px;">
                                 <div class="row row-sm">
-                                    <div class="col-lg">
-                                        <label for="">Cliente</label>
-                                        <select class="form-select" id="tipo_add">
-                                            <option value="">Seleccione una opción</option>
-                                            @foreach ($clientes as $cliente)
-                                                <option value="{{ $cliente->id }}">{{ $cliente->razon_social }} ({{ $cliente->nit }})</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row row-sm">
                                     <div class="col-lg-3">
                                         <label for="">Factura</label>
                                         <select class="form-select" id="tipo_add">
@@ -353,8 +341,9 @@
                                         <label for="">Cliente</label>
                                         <select class="form-select" id="proveedor_add">
                                             <option value="">Seleccione una opción</option>
-                                            <option value="2">RR</option>
-                                            <option value="3">AA</option>
+                                            @foreach ($clientes as $cliente)
+                                                <option value="{{ $cliente->id }}">{{ $cliente->razon_social }} ({{ $cliente->nit }})</option>
+                                            @endforeach
                                         </select>
                                     </div>
 
@@ -368,8 +357,9 @@
                                         <label for="">Vendedor</label>
                                         <select class="form-select" id="centro_costo_add">
                                             <option value="">Seleccione una opción</option>
-                                            <option value="2">RR</option>
-                                            <option value="3">AA</option>
+                                            @foreach ($usuarios as $usuario)
+                                                <option value="{{ $usuario->id }}">{{ $usuario->nombre }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>

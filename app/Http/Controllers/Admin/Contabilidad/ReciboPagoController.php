@@ -21,12 +21,7 @@ class ReciboPagoController extends Controller
             ->where('status', 1)
             ->get();
 
-            $formas_pago = DB::table('formas_pago')
-            ->select('id', 'nombre')
-            ->where('status', 1)
-            ->get();
-
-            return view('admin.contabilidad.recibo_pago', compact('productos', 'formas_pago'));
+            return view('admin.contabilidad.recibo_pago', compact('productos'));
         } catch (Exception $ex) {
             return view('errors.500');
         }

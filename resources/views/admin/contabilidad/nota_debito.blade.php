@@ -353,8 +353,9 @@
                                         <label for="">Proveedor</label>
                                         <select class="form-select" id="proveedor_add">
                                             <option value="">Seleccione una opción</option>
-                                            <option value="2">RR</option>
-                                            <option value="3">AA</option>
+                                            @foreach ($proveedores as $proveedor)
+                                                <option value="{{ $proveedor->id }}">{{ $proveedor->razon_social }} ({{ $proveedor->nit }})</option>
+                                            @endforeach
                                         </select>
                                     </div>
 
@@ -368,8 +369,9 @@
                                         <label for="">Vendedor</label>
                                         <select class="form-select" id="centro_costo_add">
                                             <option value="">Seleccione una opción</option>
-                                            <option value="2">RR</option>
-                                            <option value="3">AA</option>
+                                            @foreach ($usuarios as $usuario)
+                                                <option value="{{ $usuario->id }}">{{ $usuario->nombre }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>

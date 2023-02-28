@@ -320,8 +320,10 @@
                                         <label for="">Centro de costo</label>
                                         <select class="form-select" id="centro_costo_add">
                                             <option value="">Seleccione una opción</option>
-                                            <option value="2">RR</option>
-                                            <option value="3">AA</option>
+                                            @foreach ($centros_costos as $centro_costo)
+                                                <option value="{{ $centro_costo->id }}">({{ $centro_costo->code }}) {{ $centro_costo->nombre }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="col-lg-3">
@@ -341,8 +343,10 @@
                                         <label for="">Proveedor</label>
                                         <select class="form-select" id="proveedor_add">
                                             <option value="">Seleccione una opción</option>
-                                            <option value="2">RR</option>
-                                            <option value="3">AA</option>
+                                            @foreach ($proveedores as $proveedor)
+                                                <option value="{{ $proveedor->id }}">{{ $proveedor->razon_social }} ({{ $proveedor->nit }})
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
 

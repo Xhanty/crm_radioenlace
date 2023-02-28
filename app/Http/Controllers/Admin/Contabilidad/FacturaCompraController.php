@@ -26,7 +26,17 @@ class FacturaCompraController extends Controller
                 ->where('status', 1)
                 ->get();
 
-            return view('admin.contabilidad.factura_compra', compact('productos', 'formas_pago'));
+            $centros_costos = DB::table('centros_costo')
+                ->select('id', 'nombre', 'code')
+                ->where('status', 1)
+                ->get();
+
+            $proveedores = DB::table('proveedores')
+                ->select('id', 'razon_social', 'nit')
+                ->where('estado', 1)
+                ->get();
+
+            return view('admin.contabilidad.factura_compra', compact('productos', 'formas_pago', 'centros_costos', 'proveedores'));
         } catch (Exception $ex) {
             return view('errors.500');
         }

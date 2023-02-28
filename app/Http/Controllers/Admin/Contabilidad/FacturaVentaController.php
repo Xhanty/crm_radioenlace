@@ -26,7 +26,17 @@ class FacturaVentaController extends Controller
             ->where('status', 1)
             ->get();
 
-            return view('admin.contabilidad.factura_venta', compact('productos', 'formas_pago'));
+            $clientes = DB::table('cliente')
+            ->select('id', 'razon_social', 'nit')
+            ->where('estado', 1)
+            ->get();
+
+            $usuarios = DB::table('empleados')
+            ->select('id', 'nombre')
+            ->where('status', 1)
+            ->get();
+
+            return view('admin.contabilidad.factura_venta', compact('productos', 'formas_pago', 'clientes', 'usuarios'));
         } catch (Exception $ex) {
             return view('errors.500');
         }
