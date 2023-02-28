@@ -57,7 +57,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0);">Contabilidad</a></li>
-                        <li class="breadcrumb-item active" aria-current="page"> Facturas de compra</li>
+                        <li class="breadcrumb-item active" aria-current="page"> Nota Débito (Ventas)</li>
                     </ol>
                 </nav>
             </div>
@@ -69,7 +69,7 @@
                     <div class="card card-invoice">
                         <div class="card-header ps-3 pe-3 pt-3 pb-0 d-flex-header-table">
                             <div class="div-1-tables-header">
-                                <h3 class="card-title">Facturas Compra</h3>
+                                <h3 class="card-title">Nota Débito (Ventas)</h3>
                             </div>
                             <div class="div-2-tables-header" style="margin-bottom: 13px">
                                 <button class="btn btn-primary" id="btnNew">+</button>
@@ -299,7 +299,7 @@
                     <div class="card card-invoice">
                         <div class="card-header ps-3 pe-3 pt-3 pb-0 d-flex-header-table">
                             <div class="div-1-tables-header">
-                                <h3 class="card-title">Nueva factura de compra</h3>
+                                <h3 class="card-title">Nueva nota débito</h3>
                             </div>
                             <div class="div-2-tables-header" style="margin-bottom: 13px">
                                 <button class="btn btn-primary back_home">x</button>
@@ -308,8 +308,20 @@
                         <div class="p-0">
                             <div class="card-body" style="margin-top: -18px;">
                                 <div class="row row-sm">
+                                    <div class="col-lg">
+                                        <label for="">Clientes</label>
+                                        <select class="form-select" id="tipo_add" multiple>
+                                            <option value="">Seleccione una opción</option>
+                                            @foreach ($clientes as $cliente)
+                                                <option value="{{ $cliente->id }}">{{ $cliente->razon_social }} ({{ $cliente->nit }})</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row row-sm">
                                     <div class="col-lg-3">
-                                        <label for="">Tipo</label>
+                                        <label for="">Factura</label>
                                         <select class="form-select" id="tipo_add">
                                             <option value="">Seleccione una opción</option>
                                             <option value="2">Nota de crédito</option>
@@ -317,7 +329,7 @@
                                         </select>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label for="">Centro de costo</label>
+                                        <label for="">Tipo</label>
                                         <select class="form-select" id="centro_costo_add">
                                             <option value="">Seleccione una opción</option>
                                             <option value="2">RR</option>
@@ -337,7 +349,7 @@
                                 </div>
                                 <br>
                                 <div class="row row-sm">
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <label for="">Proveedor</label>
                                         <select class="form-select" id="proveedor_add">
                                             <option value="">Seleccione una opción</option>
@@ -346,43 +358,19 @@
                                         </select>
                                     </div>
 
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <label for="">Contacto</label>
                                         <input class="form-control" disabled id="contacto_add" placeholder="Contacto"
                                             type="text">
                                     </div>
 
-                                    <div class="col-lg-3">
-                                        <label for="">No. Factura Proveedor</label>
-                                        <input class="form-control" id="factura1_proveedor_add"
-                                            placeholder="No. Factura Proveedor" type="text">
-                                    </div>
-
-                                    <div class="col-lg-3">
-                                        <label for="">Consecutivo Factura Proveedor</label>
-                                        <input class="form-control" id="factura2_proveedor_add"
-                                            placeholder="Consecutivo Factura Proveedor" type="text">
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row row-sm">
-                                    <div class="col-lg">
-                                    </div>
-                                    <div class="col-lg">
-                                        <label class="ckbox"><input id="chk_proveedor" type="checkbox"><span>Proveedor
-                                                por item</span></label>
-                                    </div>
-
-                                    <div class="col-lg">
-                                        <label class="ckbox"><input id="chk_iva" type="checkbox"><span>IVA/Impoconsumo
-                                                incluido</span></label>
-                                    </div>
-
-                                    <div class="col-lg">
-                                        <label class="ckbox"><input id="chk_procentaje" type="checkbox"><span>Descuento
-                                                en porcentaje</span></label>
-                                    </div>
-                                    <div class="col-lg">
+                                    <div class="col-lg-4">
+                                        <label for="">Vendedor</label>
+                                        <select class="form-select" id="centro_costo_add">
+                                            <option value="">Seleccione una opción</option>
+                                            <option value="2">RR</option>
+                                            <option value="3">AA</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="row row-sm mt-5">
@@ -392,7 +380,6 @@
                                             <thead>
                                                 <tr class="bg-gray">
                                                     <th class="text-center">#</th>
-                                                    <th class="text-center">Tipo</th>
                                                     <th class="text-center">Producto</th>
                                                     <th class="text-center">Descripción</th>
                                                     <th class="text-center">Bodega</th>
@@ -407,14 +394,6 @@
                                             <tbody>
                                                 <tr style="background: #f9f9f9;">
                                                     <td class="center-text pad-4">1</td>
-                                                    <td class="pad-4">
-                                                        <select class="form-select tipo_add">
-                                                            <option value="">Seleccione una opción</option>
-                                                            <option value="1">Producto</option>
-                                                            <option value="2">Activo Fijo</option>
-                                                            <option value="3">Gasto / Cuenta contable</option>
-                                                        </select>
-                                                    </td>
                                                     <td class="pad-4">
                                                         <select class="form-select producto_add">
                                                             <option value="">Seleccione una opción</option>
@@ -562,7 +541,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center mt-5">
-                                    <button class="btn btn-primary" id="btnAddFactura">Guardar Factura</button>
+                                    <button class="btn btn-primary" id="btnAddFactura">Guardar Nota Débito</button>
                                 </div>
                             </div>
                         </div>
@@ -583,5 +562,5 @@
             localStorage.setItem('formas_pago', JSON.stringify(formas_pago));
         });
     </script>
-    <script src="{{ asset('assets/js/app/contabilidad/factura_compra.js') }}"></script>
+    <script src="{{ asset('assets/js/app/contabilidad/nota_debito.js') }}"></script>
 @endsection

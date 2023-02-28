@@ -287,8 +287,6 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/edit_forma_pago', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_forma_pago'])->name('edit_forma_pago');
     Route::post('/status_forma_pago', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'status_forma_pago'])->name('status_forma_pago');
 
-    
-    Route::get('/factura_compra', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'index'])->name('factura_compra');
     Route::get('/config_nomina', [App\Http\Controllers\Admin\Contabilidad\NominaController::class, 'config_nomina'])->name('config_nomina');
     Route::get('/pucs_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'pucs'])->name('pucs_data');
     Route::get('/pucs_clientes_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'pucs_cliente'])->name('pucs_clientes_data');
@@ -299,6 +297,21 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/edit_child_puc_cliente', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_child_puc_cliente'])->name('edit_child_puc_cliente');
     Route::post('/delete_child_puc_cliente', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'delete_child_puc_cliente'])->name('delete_child_puc_cliente');
     Route::post('/update_config_nomina', [App\Http\Controllers\Admin\Contabilidad\NominaController::class, 'update_config_nomina'])->name('update_config_nomina');
+    
+    // FACTURA COMPRA
+    Route::get('/factura_compra', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'index'])->name('factura_compra');
+
+    // FACTURA VENTA
+    Route::get('/factura_venta', [App\Http\Controllers\Admin\Contabilidad\FacturaVentaController::class, 'index'])->name('factura_venta');
+
+    // NOTA CREDITO
+    Route::get('/nota_credito', [App\Http\Controllers\Admin\Contabilidad\NotaCreditoController::class, 'index'])->name('nota_credito');
+
+    // NOTA DEBITO
+    Route::get('/nota_debito', [App\Http\Controllers\Admin\Contabilidad\NotaDebitoController::class, 'index'])->name('nota_debito');
+
+    // RECIBO PAGO
+    Route::get('/recibo_pago', [App\Http\Controllers\Admin\Contabilidad\ReciboPagoController::class, 'index'])->name('recibo_pago');
 
     // GASTOS
     Route::get('/arrendamientos', [App\Http\Controllers\Admin\Gastos\ArrendamientosController::class, 'index'])->name('arrendamientos');

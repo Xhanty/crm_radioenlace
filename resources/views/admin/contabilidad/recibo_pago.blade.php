@@ -57,7 +57,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0);">Contabilidad</a></li>
-                        <li class="breadcrumb-item active" aria-current="page"> Facturas de compra</li>
+                        <li class="breadcrumb-item active" aria-current="page"> Recibos de pago</li>
                     </ol>
                 </nav>
             </div>
@@ -69,7 +69,7 @@
                     <div class="card card-invoice">
                         <div class="card-header ps-3 pe-3 pt-3 pb-0 d-flex-header-table">
                             <div class="div-1-tables-header">
-                                <h3 class="card-title">Facturas Compra</h3>
+                                <h3 class="card-title">Recibos de pago</h3>
                             </div>
                             <div class="div-2-tables-header" style="margin-bottom: 13px">
                                 <button class="btn btn-primary" id="btnNew">+</button>
@@ -583,5 +583,5 @@
             localStorage.setItem('formas_pago', JSON.stringify(formas_pago));
         });
     </script>
-    <script src="{{ asset('assets/js/app/contabilidad/factura_compra.js') }}"></script>
+    <script src="{{ asset('assets/js/app/contabilidad/recibo_pago.js') }}"></script>
 @endsection

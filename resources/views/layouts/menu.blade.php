@@ -527,12 +527,24 @@
                                                 <li><a class="sub-side-menu__item"
                                                         href="{{ route('factura_compra') }}">Factura Compra</a>
                                                 </li>
+                                                <li><a class="sub-side-menu__item"
+                                                        href="{{ route('factura_venta') }}">Factura Venta</a>
+                                                </li>
+                                                <li><a class="sub-side-menu__item"
+                                                        href="{{ route('nota_credito') }}">Nota Crédito</a>
+                                                </li>
+                                                <li><a class="sub-side-menu__item"
+                                                        href="{{ route('nota_debito') }}">Nota Débito (Ventas)</a>
+                                                </li>
+                                                <li><a class="sub-side-menu__item"
+                                                        href="{{ route('recibo_pago') }}">Recibo Pago</a>
+                                                </li>
                                             </ul>
                                         </li>
                                     @endif
                                     @if (auth()->user()->hasPermissionTo('gestion_config_nomina_general'))
-                                        <li><a class="slide-item" href="{{ route('config_nomina') }}">Configuración
-                                                Nómina</a></li>
+                                        <!--<li><a class="slide-item" href="{{ route('config_nomina') }}">Configuración
+                                                Nómina</a></li>-->
                                     @endif
                                 </ul>
                             </li>
