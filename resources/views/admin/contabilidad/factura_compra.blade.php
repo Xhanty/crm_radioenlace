@@ -1,6 +1,58 @@
 @extends('layouts.menu')
 
 @section('content')
+    <style>
+        .bg-gray {
+            background-color: #bfbfbf;
+        }
+
+        .pad-4 {
+            padding: 4px !important;
+            border: 0px !important;
+        }
+
+        .center-text {
+            display: flex;
+            border: 0 !important;
+            justify-content: center;
+        }
+
+        .select2-container--open .select2-dropdown--below {
+            width: 200px !important;
+        }
+
+        .font-20 {
+            font-size: 18px;
+        }
+
+        .font-22 {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        #div_general {
+            -webkit-transition: 1s linear;
+            transition: 1s linear;
+            animation: 1s ease-in-out 0s 1 slideInFromTop
+        }
+
+        #div_form_add {
+            -webkit-transition: 1s linear;
+            transition: 1s linear;
+            animation: 1s ease-in-out 0s 1 slideInFromTop
+        }
+
+        @keyframes slideInFromTop {
+            0% {
+                transform: translateY(-100%);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+    </style>
+
     <div class="main-container container-fluid">
         <!-- breadcrumb -->
         <div class="breadcrumb-header justify-content-between">
@@ -21,7 +73,7 @@
                     <div class="card card-invoice">
                         <div class="card-header ps-3 pe-3 pt-3 pb-0 d-flex-header-table">
                             <div class="div-1-tables-header">
-                                <h3 class="card-title">Facturas</h3>
+                                <h3 class="card-title">Facturas Compra</h3>
                             </div>
                             <div class="div-2-tables-header" style="margin-bottom: 13px">
                                 <button class="btn btn-primary" id="btnNew">+</button>
@@ -257,35 +309,6 @@
                                 <button class="btn btn-primary back_home">x</button>
                             </div>
                         </div>
-                        <style>
-                            .bg-gray {
-                                background-color: #bfbfbf;
-                            }
-
-                            .pad-4 {
-                                padding: 4px !important;
-                                border: 0px !important;
-                            }
-
-                            .center-text {
-                                display: flex;
-                                border: 0 !important;
-                                justify-content: center;
-                            }
-
-                            .select2-container--open .select2-dropdown--below {
-                                width: 200px !important;
-                            }
-
-                            .font-20 {
-                                font-size: 18px;
-                            }
-
-                            .font-22 {
-                                font-size: 20px;
-                                font-weight: 500;
-                            }
-                        </style>
                         <div class="p-0">
                             <div class="card-body" style="margin-top: -18px;">
                                 <div class="row row-sm">
@@ -407,7 +430,7 @@
                                                         </select>
                                                     </td>
                                                     <td class="pad-4">
-                                                        <textarea placeholder="Descripción" class="form-control descripcion_add" style="border: 0" rows="1"></textarea>
+                                                        <textarea placeholder="Descripción" class="form-control descripcion_add" style="border: 0" rows="2"></textarea>
                                                     </td>
                                                     <td class="pad-4">
                                                         <input type="text" placeholder="Bodega"
@@ -476,17 +499,19 @@
                                                 <select class="form-select">
                                                     <option value="">Seleccione una opción</option>
                                                     @foreach ($formas_pago as $forma_pago)
-                                                        <option value="{{ $forma_pago->id }}">{{ $forma_pago->nombre }}</option>
+                                                        <option value="{{ $forma_pago->id }}">{{ $forma_pago->nombre }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="col-lg-4 d-flex" style="justify-content: end">
+                                            <div class="col-lg-2"></div>
+                                            <div class="col-lg-3 d-flex" style="justify-content: end">
                                                 <input type="text" placeholder="0.00"
                                                     class="form-control col-8 text-end">
                                             </div>
-                                            <div class="col-lg-2 d-flex">
+                                            <div class="col-lg-1 d-flex" style="justify-content: center">
                                                 <a class="center-vertical mg-s-10" href="javascript:void(0)"
-                                                            id="new_row_forma"><i class="fa fa-plus"></i></a>
+                                                    id="new_row_forma"><i class="fa fa-plus"></i></a>
                                             </div>
                                         </div>
                                         <div id="list_formas_pago"></div>

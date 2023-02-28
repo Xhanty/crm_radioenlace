@@ -33,11 +33,12 @@ $(document).ready(function () {
         }) +
         '</select>' +
         '</div>' +
-        '<div class="col-lg-4 d-flex" style="justify-content: end">' +
+        '<div class="col-lg-2"></div>' +
+        '<div class="col-lg-3 d-flex" style="justify-content: end">' +
         '<input type="text" placeholder="0.00"' +
         'class="form-control col-8 text-end">' +
         '</div>' +
-        '<div class="col-lg-2 d-flex">' +
+        '<div class="col-lg-1 d-flex" style="justify-content: center">' +
         '<a class="center-vertical mg-s-10 delete_row_forma" href="javascript:void(0)"><i class="fa fa-trash"></i></a>' +
         '</div>' +
         '</div > ';
@@ -69,7 +70,7 @@ $(document).ready(function () {
             '</select>' +
             '</td>' +
             '<td class="pad-4">' +
-            '<textarea placeholder="Descripción" class="form-control descripcion_add" style="border: 0" rows="1"></textarea>' +
+            '<textarea placeholder="Descripción" class="form-control descripcion_add" style="border: 0" rows="2"></textarea>' +
             '</td>' +
             '<td class="pad-4">' +
             '<input type="text" placeholder="Bodega" class="form-control bodega_add" style="border: 0">' +
