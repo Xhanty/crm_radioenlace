@@ -28,15 +28,15 @@ $(function () {
         }
     });
 
-    $(".check-act-0").on("change", function () {
+    $(".check-ter-0").on("change", function () {
         let check = $(this).prop("checked");
-        let cantidad = 1;
+        let cantidad = 9;
 
         for (let i = 1; i <= cantidad; i++) {
             if (check) {
-                $(".check-act-" + i).prop("checked", true);
+                $(".check-ter-" + i).prop("checked", true);
             } else {
-                $(".check-act-" + i).prop("checked", false);
+                $(".check-ter-" + i).prop("checked", false);
             }
         }
     });
@@ -82,7 +82,7 @@ $(function () {
 
     $(".check-sol-0").on("change", function () {
         let check = $(this).prop("checked");
-        let cantidad = 3;
+        let cantidad = 2;
 
         for (let i = 1; i <= cantidad; i++) {
             if (check) {
@@ -108,7 +108,7 @@ $(function () {
 
     $(".check-rep-0").on("change", function () {
         let check = $(this).prop("checked");
-        let cantidad = 4;
+        let cantidad = 3;
 
         for (let i = 1; i <= cantidad; i++) {
             if (check) {
@@ -121,7 +121,7 @@ $(function () {
 
     $(".check-doc-0").on("change", function () {
         let check = $(this).prop("checked");
-        let cantidad = 3;
+        let cantidad = 1;
 
         for (let i = 1; i <= cantidad; i++) {
             if (check) {
@@ -134,7 +134,7 @@ $(function () {
 
     $(".check-com-0").on("change", function () {
         let check = $(this).prop("checked");
-        let cantidad = 12;
+        let cantidad = 24;
 
         for (let i = 1; i <= cantidad; i++) {
             if (check) {
@@ -147,7 +147,7 @@ $(function () {
 
     $(".check-con-0").on("change", function () {
         let check = $(this).prop("checked");
-        let cantidad = 15;
+        let cantidad = 8;
 
         for (let i = 1; i <= cantidad; i++) {
             if (check) {
@@ -160,7 +160,7 @@ $(function () {
 
     $(".check-conf-0").on("change", function () {
         let check = $(this).prop("checked");
-        let cantidad = 3;
+        let cantidad = 2;
 
         for (let i = 1; i <= cantidad; i++) {
             if (check) {

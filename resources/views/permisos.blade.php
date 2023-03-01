@@ -99,7 +99,7 @@
                                 </a>
                                 <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_terceros"
                                     href="javascript:void(0);">
-                                    <i class="fe fe-user"></i> Terceros
+                                    <i class="fe fe-users"></i> Terceros
                                 </a>
                                 <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_vehiculos"
                                     href="javascript:void(0);">

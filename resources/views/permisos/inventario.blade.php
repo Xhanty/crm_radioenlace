@@ -121,9 +121,8 @@
                                         <div class="settings-main-icon me-4 mt-1"><i class="fa fa-trash"></i>
                                         </div>
                                         <div>
-                                            <p class="tx-20 font-weight-semibold d-flex mb-0">Borrar Existencias
-                                            </p>
-                                            <p class="tx-13 text-muted mb-0">Borrar existencias de productos</p>
+                                            <p class="tx-20 font-weight-semibold d-flex mb-0">Ver Movimientos</p>
+                                            <p class="tx-13 text-muted mb-0">Ver movimientos del inventario</p>
                                         </div>
                                     </div>
                                 </div>
@@ -131,7 +130,7 @@
                         </div>
                         <div class="card-footer p-3">
                             <label class="form-switch float-end mb-0">
-                                <input type="checkbox" value="delete_existencias_inventario" class="form-switch-input check-inv-6">
+                                <input type="checkbox" value="ver_movimientos_inventario" class="form-switch-input check-inv-6">
                                 <span class="form-switch-indicator custom-radius"></span>
                             </label>
                         </div>

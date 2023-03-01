@@ -19,54 +19,6 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="d-flex">
-                                        <div class="settings-main-icon me-4 mt-1"><i class="fa fa-th-large"></i>
-                                        </div>
-                                        <div>
-                                            <p class="tx-20 font-weight-semibold d-flex mb-0">Categorías</p>
-                                            <p class="tx-13 text-muted mb-0">Gestionar Categorías</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer p-3">
-                            <label class="form-switch float-end mb-0">
-                                <input type="checkbox" value="categorias_archivos" class="form-switch-input check-doc-1">
-                                <span class="form-switch-indicator custom-radius"></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-xl-4 col-md-12 col-sm-12 p-2">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="d-flex">
-                                        <div class="settings-main-icon me-4 mt-1"><i class="far fa-folder-open"></i>
-                                        </div>
-                                        <div>
-                                            <p class="tx-20 font-weight-semibold d-flex mb-0">Archivos</p>
-                                            <p class="tx-13 text-muted mb-0">Gestionar Archivos</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer p-3">
-                            <label class="form-switch float-end mb-0">
-                                <input type="checkbox" value="gestion_archivos" class="form-switch-input check-doc-2">
-                                <span class="form-switch-indicator custom-radius"></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-xl-4 col-md-12 col-sm-12 p-2">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="d-flex">
                                         <div class="settings-main-icon me-4 mt-1"><i class="far fa-hdd"></i>
                                         </div>
                                         <div>
@@ -79,7 +31,7 @@
                         </div>
                         <div class="card-footer p-3">
                             <label class="form-switch float-end mb-0">
-                                <input type="checkbox" value="gestion_documentos" class="form-switch-input check-doc-3">
+                                <input type="checkbox" value="gestion_documentos" class="form-switch-input check-doc-1">
                                 <span class="form-switch-indicator custom-radius"></span>
                             </label>
                         </div>
