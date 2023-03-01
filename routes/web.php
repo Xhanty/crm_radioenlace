@@ -151,15 +151,6 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/delete_producto', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'delete_producto'])->name('delete_producto');
     Route::post('/productos_edit', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'productos_edit'])->name('productos_edit');
 
-    // MOVIMIENTOS DE INVENTARIO
-    Route::get('/productos_baja', [App\Http\Controllers\Admin\MovimientoInv\ProductosController::class, 'productos_baja'])->name('productos_baja');
-    Route::get('/repuestos_reparacion', [App\Http\Controllers\Admin\MovimientoInv\RepuestosController::class, 'index'])->name('repuestos_reparacion');
-    Route::get('/productos_instalados', [App\Http\Controllers\Admin\MovimientoInv\ProductosController::class, 'productos_instalados'])->name('productos_instalados');
-    Route::get('/ventas', [App\Http\Controllers\Admin\MovimientoInv\VentasController::class, 'index'])->name('ventas');
-    Route::get('/prestamos', [App\Http\Controllers\Admin\MovimientoInv\RepuestosController::class, 'prestamos'])->name('prestamos');
-    Route::get('/alquileres', [App\Http\Controllers\Admin\MovimientoInv\AlquileresController::class, 'index'])->name('alquileres');
-    Route::get('/productos_asignados', [App\Http\Controllers\Admin\MovimientoInv\ProductosController::class, 'productos_asignados'])->name('productos_asignados');
-
     // SOLICITUDES DE INVENTARIO
     Route::get('/solicitud_inventario', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'index'])->name('solicitud_inventario');
     Route::post('/data_solicitud_inventario', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'data'])->name('data_solicitud_inventario');

@@ -323,55 +323,13 @@
                                     @endif
                                     @if (auth()->user()->hasPermissionTo('gestion_solicitudes'))
                                         <li><a class="slide-item"
-                                                href="{{ route('gestion_solicitudes') }}">Solicitudes Inventario</a>
+                                                href="{{ route('gestion_solicitudes') }}">Solicitudes</a>
                                         </li>
                                     @endif
-                                </ul>
-                            </li>
-                        @endif
-
-                        @if (auth()->user()->hasPermissionToMultiple(
-                                    'gestion_productos_baja|' .
-                                        'gestion_repuestos_reparacion|' .
-                                        'gestion_ventas|' .
-                                        'gestion_prestamos|' .
-                                        'gestion_alquileres|' .
-                                        'gestion_productos_asignados|' .
-                                        'gestion_productos_instalados'))
-                            <li class="slide">
-                                <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
-                                        class="side-menu__icon fe fe-shopping-cart"></i><span
-                                        class="side-menu__label">Movimiento Inv.</span><i
-                                        class="angle fe fe-chevron-down"></i></a>
-                                <ul class="slide-menu">
-                                    @if (auth()->user()->hasPermissionTo('gestion_productos_baja'))
-                                        <li><a class="slide-item" href="{{ route('productos_baja') }}">Productos
-                                                Baja</a>
-                                        </li>
-                                    @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_repuestos_reparacion'))
+                                    @if (auth()->user()->hasPermissionTo('gestion_solicitudes'))
                                         <li><a class="slide-item"
-                                                href="{{ route('repuestos_reparacion') }}">Repuestos
-                                                Reparación</a></li>
-                                    @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_productos_instalados'))
-                                        <li><a class="slide-item"
-                                                href="{{ route('productos_instalados') }}">Productos
-                                                Instalados</a></li>
-                                    @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_ventas'))
-                                        <li><a class="slide-item" href="{{ route('ventas') }}">Ventas</a></li>
-                                    @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_prestamos'))
-                                        <li><a class="slide-item" href="{{ route('prestamos') }}">Préstamos</a></li>
-                                    @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_alquileres'))
-                                        <li><a class="slide-item" href="{{ route('alquileres') }}">Alquileres</a>
+                                                href="{{ route('gestion_solicitudes') }}">Movimientos</a>
                                         </li>
-                                    @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_productos_asignados'))
-                                        <li><a class="slide-item" href="{{ route('productos_asignados') }}">Productos
-                                                Asignados</a></li>
                                     @endif
                                 </ul>
                             </li>
@@ -555,7 +513,7 @@
                                         'gestion_gastos_varios|' .
                                         'gestion_gastos_fijos|' .
                                         'gestion_gastos_equivalentes'))
-                            <li class="slide">
+                            <!--<li class="slide">
                                 <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
                                         class="side-menu__icon fe fe-globe"></i><span
                                         class="side-menu__label">Gastos</span><i
@@ -580,7 +538,7 @@
                                                 Equivalentes</a></li>
                                     @endif
                                 </ul>
-                            </li>
+                            </li>-->
                         @endif
                     </ul>
 
