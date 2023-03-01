@@ -7,6 +7,10 @@ $(document).ready(function () {
 
     $(".open-toggle").trigger("click");
 
+    // ALMACENES INGRESO
+    var id_almacen_salida = 0;
+    let btn_View = 0;
+
     let concat_add = '<div class="row row-sm mt-2">' +
         '<div class="col-8" >' +
         '<input class="form-control elementoadd" placeholder="Elemento" type="text">' +
@@ -53,6 +57,7 @@ $(document).ready(function () {
 
     $(document).on("click", ".btnView", function () {
         let id = $(this).attr("data-id");
+        btn_View = id;
         $("#global-loader").fadeIn("fast");
         $.ajax({
             url: "data_solicitud_inventario",
@@ -242,7 +247,7 @@ $(document).ready(function () {
             }
         });
     });
-    
+
     $(document).on("click", ".btnAceptar", function () {
         let id = $(this).attr("data-id");
         Swal.fire({
@@ -287,7 +292,13 @@ $(document).ready(function () {
         let id = $(this).attr("data-id");
         $("#id_solicitud_gestion").val(id);
         $("#modalView").modal("hide");
+        $("#modalAsignar").modal({ backdrop: "static", keyboard: false });
         $("#modalAsignar").modal("show");
+    });
+
+    $("#btnCloseAsignar").click(function () {
+        $("#modalAsignar").modal("hide");
+        $("#modalView").modal("show");
     });
 
     $("#btn_save_solicitud").click(function () {
@@ -419,6 +430,119 @@ $(document).ready(function () {
                     $("#btn_update_solicitud").attr("disabled", false);
                     $("#btn_update_solicitud").html("Modificar");
                     toastr.error("Error al actualizar la solicitud");
+                },
+            });
+        }
+    });
+
+    // OTROS
+    $(document).on("click", ".btn_AlmacenSalida", function () {
+        id_almacen_salida = $(this).data("id");
+
+        $(".btn_AlmacenSalida").parent().css("color", "#56546d");
+        $(this).parent().css("color", "#0ba360");
+    });
+
+    $("#producto_gestion").change(function () {
+        let producto = $(this).val();
+
+        if (producto != "") {
+            $.ajax({
+                url: "data_detalle_producto",
+                type: "POST",
+                data: { id: producto },
+                success: function (response) {
+                    let data = response.data;
+                    let inventario = data.inventario;
+                    if (response.info == 1) {
+
+                        $("#elemento_gestion").empty();
+                        inventario.forEach((element) => {
+                            $("#elemento_gestion").append(
+                                "<option data-cantidad='" +
+                                element.cantidad +
+                                "' value='" +
+                                element.id +
+                                "'>" +
+                                element.serial +
+                                " (Cantidad: " +
+                                element.cantidad +
+                                ")" +
+                                "</option>"
+                            );
+                        });
+
+                        $("#cantidad_gestion").attr("disabled", false);
+                        $("#cantidad_gestion").val("");
+                        $("#btnAsignarElemento").attr("disabled", false);
+                    } else {
+                        toastr.error("Error al cargar los datos");
+                    }
+                },
+                error: function (error) {
+                    toastr.error("Error al cargar los datos");
+                    console.log(error);
+                },
+            });
+        } else {
+            $("#cantidad_gestion").attr("disabled", true);
+            $("#cantidad_gestion").val("");
+            $("#elemento_gestion").empty();
+            $("#btnAsignarElemento").attr("disabled", true);
+        }
+    });
+
+    $("#btnAsignarElemento").click(function () {
+        let detalle_solicitud = $("#producto_id_asignado").val();
+        let cantidad_old = $("#elemento_gestion")
+            .find(":selected")
+            .data("cantidad");
+        let cantidad = $("#cantidad_gestion").val();
+
+        if (cantidad == "" || cantidad < 1) {
+            toastr.error("Debe ingresar una cantidad válida");
+            return false;
+        } else if (cantidad > cantidad_old) {
+            toastr.error("La cantidad no puede ser mayor a la disponible");
+            return false;
+        } else if (id_almacen_salida == 0) {
+            toastr.error("Debe seleccionar un almacén de salida");
+            return false;
+        } else {
+            $("#btnAsignarElemento").attr("disabled", true);
+            $("#btnAsignarElemento").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
+            $.ajax({
+                url: "solicitud_inventario_asignado",
+                type: "POST",
+                data: {
+                    detalle_solicitud: detalle_solicitud,
+                    almacen: id_almacen_salida,
+                    cantidad: cantidad,
+                },
+                success: function (response) {
+                    $("#btnAsignarElemento").attr("disabled", false);
+                    $("#btnAsignarElemento").html("Asignar Elemento");
+                    if (response.info == 1) {
+                        toastr.success("Elemento asignado con éxito");
+
+                        $("#cantidad_gestion").val("");
+                        $("#cantidad_gestion").attr("disabled", true);
+                        $("#elemento_gestion").empty();
+                        $("#btnAsignarElemento").attr("disabled", true);
+                        $("#producto_gestion").val("").trigger("change");
+                        $("#modalAsignar").modal("hide");
+                        $(document).find(".btnView[data-id=" + btn_View + "]").click();
+                    } else {
+                        toastr.error("Error al realizar al asignar");
+                    }
+                },
+                error: function (error) {
+                    toastr.error("Error al realizar al asignar");
+                    $("#btnAsignarElemento").attr("disabled", false);
+                    $("#btnAsignarElemento").html("Asignar Elemento");
+                    console.log(error);
                 },
             });
         }

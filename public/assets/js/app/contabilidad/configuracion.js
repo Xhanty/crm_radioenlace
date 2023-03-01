@@ -620,7 +620,7 @@ $(document).ready(function () {
                         html += '<td>' + data[i].created_at + '</td>';
                         html += '<td>' + status + '</td>';
                         html += '<td class="text-center">';
-                        html += '<button type="button" class="btn btn-sm btn-primary btnEditCiudad" title="Modificar" data-id="' + data[i].id + '" data-nombre="' + data[i].nombre + '" data-departamento="' + data[i].departamento_id + '"><i class="fa fa-edit"></i></button>&nbsp;';
+                        html += '<button type="button" class="btn btn-sm btn-primary btnEditCiudad" title="Modificar" data-id="' + data[i].id + '" data-nombre="' + data[i].nombre + '" data-departamento="' + data[i].departamento_id + '" data-codigo_postal="' + data[i].codigo_postal + '"><i class="fa fa-edit"></i></button>&nbsp;';
                         html += '<button type="button" class="btn btn-sm btn-warning btnStatusCiudad" title="Cambiar Status" data-id="' + data[i].id + '" data-status="' + data[i].status + '"><i class="fa fa-times"></i></button>';
                         html += '</td>';
                         html += '</tr>';
@@ -1431,6 +1431,7 @@ $(document).ready(function () {
     $(document).on("click", "#btnAddCiudad", function () {
         let departamento = $("#departamento_add_ciudad").val();
         let name = $("#ciudad_add_ciudad").val();
+        let codigo_postal = $("#cdpostal_add_ciudad").val();
 
         if (departamento == "") {
             toastr.error("El departamento es obligatorio");
@@ -1450,12 +1451,14 @@ $(document).ready(function () {
                 data: {
                     departamento: departamento,
                     name: name,
+                    codigo_postal: codigo_postal,
                 },
                 success: function (response) {
                     if (response.info == 1) {
                         load_ciudades();
-                        $("#departamento_add_ciudad").val('');
+                        $("#departamento_add_ciudad").val('').trigger('change');
                         $("#ciudad_add_ciudad").val('');
+                        $("#cdpostal_add_ciudad").val('');
                         toastr.success("Ciudad agregada correctamente");
                     } else {
                         toastr.error("Error al agregar la ciudad");
@@ -1477,10 +1480,12 @@ $(document).ready(function () {
         let id = $(this).data("id");
         let departamento = $(this).data("departamento");
         let name = $(this).data("nombre");
+        let codigo_postal = $(this).data("codigo_postal");
 
         $("#id_edit_ciudad").val(id);
         $("#departamento_edit_ciudad").val(departamento).trigger("change");
         $("#ciudad_edit_ciudad").val(name);
+        $("#cdpostal_edit_ciudad").val(codigo_postal);
         $("#modalEditCiudad").modal("show");
     });
 
@@ -1488,6 +1493,7 @@ $(document).ready(function () {
         let id = $("#id_edit_ciudad").val();
         let departamento = $("#departamento_edit_ciudad").val();
         let name = $("#ciudad_edit_ciudad").val();
+        let codigo_postal = $("#cdpostal_edit_ciudad").val();
 
         if (departamento == "") {
             toastr.error("El departamento es obligatorio");
@@ -1508,6 +1514,7 @@ $(document).ready(function () {
                     id: id,
                     departamento: departamento,
                     name: name,
+                    codigo_postal: codigo_postal,
                 },
                 success: function (response) {
                     if (response.info == 1) {

@@ -60,7 +60,8 @@
                                                     class="btn btn-success btn-sm btnAceptar">
                                                     <i class="fa fa-check"></i>
                                                 </a>
-                                                <a href="javascript:void(0)" title="Rechazar" data-id="{{ $solicitud->id }}"
+                                                <a href="javascript:void(0)" title="Rechazar"
+                                                    data-id="{{ $solicitud->id }}"
                                                     class="btn btn-warning btn-sm btnRechazar">
                                                     <i class="fas fa-times"></i>
                                                 </a>
@@ -158,7 +159,8 @@
                                 <select class="form-select" id="clienteview" disabled>
                                     <option value="">Seleccione un cliente</option>
                                     @foreach ($clientes as $cliente)
-                                        <option value="{{ $cliente->id }}">{{ $cliente->nombre }} ({{ $cliente->nit }})</option>
+                                        <option value="{{ $cliente->id }}">{{ $cliente->nombre }} ({{ $cliente->nit }})
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -184,18 +186,21 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
-                        <h6 class="modal-title">Asignar elemento</h6><button aria-label="Close" class="btn-close"
-                            id="btnCloseAsignar" type="button"><span aria-hidden="true">&times;</span></button>
+                        <h6 class="modal-title">Asignar elemento</h6>
+                        <button aria-label="Close" class="btn-close" id="btnCloseAsignar" type="button">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" disabled id="id_solicitud_gestion">
                         <div class="row row-sm">
                             <div class="col-lg">
-                                <label for="">Elemento</label>
-                                <select class="form-select" id="elementogestion">
-                                    <option value="">Seleccione un elemento</option>
+                                <label for="">Producto</label>
+                                <select class="form-select" id="producto_gestion">
+                                    <option value="">Seleccione una opción</option>
                                     @foreach ($productos as $producto)
-                                        <option value="{{ $producto->id }}">{{ $producto->nombre }} ({{ $producto->marca }} - {{ $producto->modelo }})</option>
+                                        <option value="{{ $producto->id }}">{{ $producto->nombre }}
+                                            ({{ $producto->marca }} - {{ $producto->modelo }})</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -203,11 +208,101 @@
                         <br>
                         <div class="row row-sm">
                             <div class="col-lg">
-                                <label for="">Cantidad</label>
-                                <input type="number" class="form-control" min="1" step="1" id="cantidadgestion" placeholder="Cantidad">
+                                <label for="">Elemento (Serial)</label>
+                                <select class="form-select" id="elemento_gestion">
+                                    <option value="">Seleccione un opción</option>
+                                </select>
                             </div>
                         </div>
                         <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Cantidad</label>
+                                <input type="number" disabled class="form-control" min="1" step="1"
+                                    id="cantidad_gestion" placeholder="Cantidad">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <!-- col -->
+                            <div class="col-lg mt-4 mt-lg-0">
+                                <label for="">Almacén de salida</label>
+                                <ul id="tree1" style="padding: 20px; box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; border-radius: 10px;">
+                                    @foreach ($almacenes as $key => $almacen)
+                                        <li><a href="javascript:void(0);">{{ $almacen->nombre }}</a>
+                                            @if (count($almacen->almacenes) > 0)
+                                                <ul>
+                                                    @foreach ($almacen->almacenes as $sub2)
+                                                        <li style="cursor: pointer">{{ $sub2->nombre }}
+                                                            &nbsp;
+                                                            <a href="javascript:void(0);" class="btn_AlmacenSalida"
+                                                                data-id="{{ $sub2->id }}" title="Seleccionar">
+                                                                <i class="fa fa-check"></i>
+                                                            </a>
+                                                            @if (count($sub2->almacenes) > 0)
+                                                                <ul>
+                                                                    @foreach ($sub2->almacenes as $sub3)
+                                                                        <li style="cursor: pointer">{{ $sub3->nombre }}
+                                                                            &nbsp;
+                                                                            <a href="javascript:void(0);"
+                                                                                class="btn_AlmacenSalida"
+                                                                                data-id="{{ $sub3->id }}"
+                                                                                title="Seleccionar">
+                                                                                <i class="fa fa-check"></i>
+                                                                            </a>
+                                                                            @if (count($sub3->almacenes) > 0)
+                                                                                <ul>
+                                                                                    @foreach ($sub3->almacenes as $sub4)
+                                                                                        <li style="cursor: pointer">
+                                                                                            {{ $sub4->nombre }}
+                                                                                            &nbsp;
+                                                                                            <a href="javascript:void(0);"
+                                                                                                class="btn_AlmacenSalida"
+                                                                                                data-id="{{ $sub4->id }}"
+                                                                                                title="Seleccionar">
+                                                                                                <i class="fa fa-check"></i>
+                                                                                            </a>
+                                                                                            @if (count($sub4->almacenes) > 0)
+                                                                                                <ul>
+                                                                                                    @foreach ($sub4->almacenes as $sub5)
+                                                                                                        <li
+                                                                                                            style="cursor: pointer">
+                                                                                                            {{ $sub5->nombre }}
+                                                                                                            &nbsp;
+                                                                                                            <a href="javascript:void(0);"
+                                                                                                                class="btn_AlmacenSalida"
+                                                                                                                data-id="{{ $sub5->id }}"
+                                                                                                                title="Seleccionar">
+                                                                                                                <i
+                                                                                                                    class="fa fa-check"></i>
+                                                                                                            </a>
+                                                                                                        </li>
+                                                                                                    @endforeach
+                                                                                                </ul>
+                                                                                            @endif
+                                                                                        </li>
+                                                                                    @endforeach
+                                                                                </ul>
+                                                                            @endif
+                                                                        </li>
+                                                                    @endforeach
+                                                                </ul>
+                                                            @endif
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <!-- /col -->
+                        </div>
+                        <br>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" disabled id="btnAsignarElemento" type="button">Asignar
+                            Elemento</button>
                     </div>
                 </div>
             </div>
@@ -229,7 +324,8 @@
                                 <select class="form-select" id="clienteedit">
                                     <option value="">Seleccione un cliente</option>
                                     @foreach ($clientes as $cliente)
-                                        <option value="{{ $cliente->id }}">{{ $cliente->nombre }} ({{ $cliente->nit }})</option>
+                                        <option value="{{ $cliente->id }}">{{ $cliente->nombre }} ({{ $cliente->nit }})
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -274,4 +370,5 @@
 
 @section('scripts')
     <script src="{{ asset('assets/js/app/inventario/solicitud_inventario.js') }}"></script>
+    <script src="{{ asset('assets/plugins/treeview/treeview.js') }}"></script>
 @endsection

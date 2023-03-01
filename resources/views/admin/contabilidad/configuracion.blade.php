@@ -193,7 +193,7 @@
         <div class="row row-sm" id="div_general">
             <div class="row1-container">
                 <div class="box box-down cyan">
-                    <h2>Terceros</h2>
+                    <h2>Otros</h2>
                     <ul>
                         <li><a href="javascript:void(0);" id="btnProveedoress">Opción 1</a></li>
                         <li><a href="javascript:void(0);" id="btnClientess">Opción 2</a></li>

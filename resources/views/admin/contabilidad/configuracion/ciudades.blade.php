@@ -27,6 +27,11 @@
                         <label for="">Ciudad</label>
                         <input class="form-control" id="ciudad_add_ciudad" placeholder="Ciudad" type="text">
                     </div>
+
+                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                        <label for="">Código Postal (Opcional)</label>
+                        <input class="form-control" id="cdpostal_add_ciudad" placeholder="Código Postal (Opcional)" type="text">
+                    </div>
                 </div>
                 <br>
                 <div class="text-center">
@@ -79,10 +84,15 @@
                         <input class="form-control" id="ciudad_edit_ciudad"
                             placeholder="Actividad Económica" type="text">
                     </div>
+
+                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                        <label for="">Código Postal (Opcional)</label>
+                        <input class="form-control" id="cdpostal_edit_ciudad" placeholder="Código Postal (Opcional)" type="text">
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn ripple btn-primary" id="btnEditCiudad" type="button">Actualiza Ciudad</button>
+                <button class="btn ripple btn-primary" id="btnEditCiudad" type="button">Actualizar Ciudad</button>
             </div>
         </div>
     </div>

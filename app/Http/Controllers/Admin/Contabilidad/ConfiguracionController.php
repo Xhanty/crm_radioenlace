@@ -664,6 +664,7 @@ class ConfiguracionController extends Controller
         DB::table('ciudades')->insert([
             'nombre' => $request->name,
             'departamento_id' => $request->departamento,
+            'codigo_postal' => $request->codigo_postal ? $request->codigo_postal : null,
             'created_by' => auth()->user()->id,
             'created_at' => date('Y-m-d H:i:s')
         ]);
@@ -679,6 +680,7 @@ class ConfiguracionController extends Controller
         DB::table('ciudades')->where('id', $request->id)->update([
             'nombre' => $request->name,
             'departamento_id' => $request->departamento,
+            'codigo_postal' => $request->codigo_postal ? $request->codigo_postal : null,
         ]);
 
         return response()->json([

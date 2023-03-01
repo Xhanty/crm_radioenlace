@@ -165,12 +165,13 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/data_solicitud_inventario', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'data'])->name('data_solicitud_inventario');
     Route::post('/solicitud_inventario_add', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'solicitud_add'])->name('solicitud_inventario_add');
     Route::post('/solicitud_inventario_update', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'solicitud_edit'])->name('solicitud_inventario_update');
-
+    
     // GESTIÓN SOLICITUDES DE INVENTARIO
     Route::get('/gestion_solicitudes', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'gestion'])->name('gestion_solicitudes');
     Route::post('/delete_solicitud_inventario', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'delete'])->name('delete_solicitud_inventario');
     Route::post('/rechazar_solicitud_inventario', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'rechazar'])->name('rechazar_solicitud_inventario');
     Route::post('/aceptar_solicitud_inventario', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'aceptar'])->name('aceptar_solicitud_inventario');
+    Route::post('/solicitud_inventario_asignado', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'asignar_producto'])->name('solicitud_inventario_asignado');
 
     // PROYECTOS
     Route::get('/categorias_proyectos', [App\Http\Controllers\Admin\Proyectos\CategoriasController::class, 'index'])->name('categorias_proyectos');

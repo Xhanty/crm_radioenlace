@@ -34,7 +34,7 @@ class SolicitudInventarioController extends Controller
             $gestionados = DB::table('solicitud_inventario as si')
                 ->join('solicitud_inventario_detalle as sid', 'sid.solicitud_id', '=', 'si.id')
                 ->join('cliente as c', 'c.id', '=', 'si.cliente_id')
-                ->select('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social as cliente', 'si.estado', 'si.codigo','c.nit', DB::raw('count(sid.id) as elementos'))
+                ->select('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social as cliente', 'si.estado', 'si.codigo', 'c.nit', DB::raw('count(sid.id) as elementos'))
                 ->where('si.solicitante_id', auth()->user()->id)
                 ->where('si.estado', '!=', 0)
                 ->groupBy('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social', 'si.estado', 'si.codigo', 'c.nit')
@@ -196,11 +196,36 @@ class SolicitudInventarioController extends Controller
                 ->where('status', 1)
                 ->get();
 
-            return view('admin.inventario.gestion_solicitudes', compact('clientes', 'pendientes', 'gestionados', 'productos'));
+            $almacenes = DB::table('almacenes')->whereNull("parent_id")->get();
+
+            if ($almacenes->count() > 0) {
+                $almacenes = $almacenes->toArray();
+                $almacenes = $this->getAlmacenes($almacenes);
+            } else {
+                $almacenes = [];
+            }
+
+            return view('admin.inventario.gestion_solicitudes', compact('clientes', 'pendientes', 'gestionados', 'productos', 'almacenes'));
         } catch (Exception $ex) {
             return view('errors.500');
             return $ex;
         }
+    }
+
+    public function getAlmacenes($almacenes)
+    {
+        foreach ($almacenes as $key => $almacen) {
+            $almacenes[$key]->almacenes = DB::table('almacenes')->where('parent_id', $almacen->id)->get();
+
+            if ($almacenes[$key]->almacenes->count() > 0) {
+                $almacenes[$key]->almacenes = $almacenes[$key]->almacenes->toArray();
+                $almacenes[$key]->almacenes = $this->getAlmacenes($almacenes[$key]->almacenes);
+            } else {
+                $almacenes[$key]->almacenes = [];
+            }
+        }
+
+        return $almacenes;
     }
 
     public function delete(Request $request)
@@ -298,6 +323,71 @@ class SolicitudInventarioController extends Controller
             return response()->json([
                 'info' => 0,
                 'message' => 'Error al rechazar la solicitud de inventario',
+            ]);
+        }
+    }
+
+    public function asignar_producto(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            /*$tipo = $request->tipo;
+            $almacen_id = $request->almacen_id;
+            $producto_id = $request->producto_id;
+            $cliente = $request->cliente;
+            $empleado = $request->empleado;
+            $serial = $request->serial;
+            $cantidad = $request->cantidad;
+            $observaciones = $request->observaciones;
+            $status = 1;
+
+            $cantidad_old = DB::table('inventario')->where("id", $serial)->first();
+
+            if ($cantidad_old->cantidad == $cantidad) {
+                $status = 0;
+            }
+
+            DB::table('inventario')->where("id", $serial)->update([
+                'cantidad' => $cantidad_old->cantidad - $cantidad,
+                'status' => $status,
+            ]);
+
+            DB::table('salida_inventario')->insert([
+                'tipo' => $tipo,
+                'producto_id' => $producto_id,
+                'inventario_id' => $serial,
+                'cantidad' => $cantidad,
+                'user_id' => $empleado ? $empleado : null,
+                'cliente_id' => $cliente ? $cliente : null,
+                'observaciones' => $observaciones ? $observaciones : null,
+                'status' => 0,
+                'created_by' => auth()->user()->id,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+
+            DB::table('movimientos_inventario')->insert([
+                'tipo' => $tipo + 1,
+                'inventario_id' => $serial,
+                'almacen_id' => $almacen_id,
+                'cantidad' => $cantidad,
+                'empleado_id' => $empleado ? $empleado : null,
+                'cliente_id' => $cliente ? $cliente : null,
+                'observaciones' => $observaciones ? $observaciones : null,
+                'created_by' => auth()->user()->id,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);*/
+
+            DB::commit();
+            return response()->json([
+                'info' => 1,
+                'message' => 'Producto asignado correctamente',
+            ]);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return $ex;
+            return response()->json([
+                'info' => 0,
+                'message' => 'Error al asignar el producto',
             ]);
         }
     }
