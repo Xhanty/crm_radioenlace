@@ -57,7 +57,6 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/asignaciones_avances_delete', [App\Http\Controllers\Admin\AsignacionesController::class, 'asignaciones_avances_delete'])->name('asignaciones_avances_delete');
     Route::post('/asignaciones_avances_add', [App\Http\Controllers\Admin\AsignacionesController::class, 'asignaciones_avances_add'])->name('asignaciones_avances_add');
     Route::get('/gestionar_asignaciones', [App\Http\Controllers\Admin\AsignacionesController::class, 'gestionar_asignaciones'])->name('gestionar_asignaciones');
-    Route::get('/actividades_diarias', [App\Http\Controllers\Admin\AsignacionesController::class, 'actividades_diarias'])->name('actividades_diarias');
     Route::post('/asignacion_add', [App\Http\Controllers\Admin\AsignacionesController::class, 'asignacion_add'])->name('asignacion_add');
     Route::post('/asignacion_edit', [App\Http\Controllers\Admin\AsignacionesController::class, 'asignacion_edit'])->name('asignacion_edit');
     Route::post('/change_asignacion', [App\Http\Controllers\Admin\AsignacionesController::class, 'change_asignacion'])->name('change_asignacion');
@@ -174,13 +173,6 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/proyectos_add', [App\Http\Controllers\Admin\Proyectos\ProyectosController::class, 'proyectos_add'])->name('proyectos_add');
     Route::post('/proyectos_edit', [App\Http\Controllers\Admin\Proyectos\ProyectosController::class, 'proyectos_edit'])->name('proyectos_edit');
     Route::post('/change_visto_bueno_proyecto', [App\Http\Controllers\Admin\Proyectos\ProyectosController::class, 'visto_bueno'])->name('change_visto_bueno_proyecto');
-
-    // SEGUIMIENTO DE CLIENTES
-    Route::get('/categorias_seguimientos', [App\Http\Controllers\Admin\SeguimientoCliente\CategoriasController::class, 'index'])->name('categorias_seguimientos');
-    Route::post('/categorias_seguimientos_add', [App\Http\Controllers\Admin\SeguimientoCliente\CategoriasController::class, 'add'])->name('categorias_seguimientos_add');
-    Route::post('/categorias_seguimientos_delete', [App\Http\Controllers\Admin\SeguimientoCliente\CategoriasController::class, 'delete'])->name('categorias_seguimientos_delete');
-    Route::get('/seguimientos_clientes', [App\Http\Controllers\Admin\SeguimientoCliente\SeguimientoController::class, 'index'])->name('seguimientos_clientes');
-    Route::get('/tarjetas_seguimientos', [App\Http\Controllers\Admin\SeguimientoCliente\TarjetasController::class, 'index'])->name('tarjetas_seguimientos');
 
     // REPARACIONES
     Route::get('/reparaciones', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'index'])->name('reparaciones');
@@ -304,12 +296,6 @@ Route::middleware(['auth_user'])->group(function () {
 
     // RECIBO PAGO
     Route::get('/recibo_pago', [App\Http\Controllers\Admin\Contabilidad\ReciboPagoController::class, 'index'])->name('recibo_pago');
-
-    // GASTOS
-    Route::get('/arrendamientos', [App\Http\Controllers\Admin\Gastos\ArrendamientosController::class, 'index'])->name('arrendamientos');
-    Route::get('/gastos_varios', [App\Http\Controllers\Admin\Gastos\GastosController::class, 'gastos_varios'])->name('gastos_varios');
-    Route::get('/gastos_fijos', [App\Http\Controllers\Admin\Gastos\GastosController::class, 'gastos_fijos'])->name('gastos_fijos');
-    Route::get('/gastos_equivalentes', [App\Http\Controllers\Admin\Gastos\GastosController::class, 'gastos_equivalentes'])->name('gastos_equivalentes');
 
     // CALENDARIO
     Route::get('/calendario', [App\Http\Controllers\CalendarController::class, 'index'])->name('calendario');

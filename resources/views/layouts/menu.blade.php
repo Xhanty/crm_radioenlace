@@ -230,12 +230,6 @@
                             </ul>
                         </li>
 
-                        <!--<li class="slide">
-                            <a class="side-menu__item" href="{{ route('actividades_diarias') }}"><i
-                                    class="side-menu__icon fe fe-user"></i><span class="side-menu__label">Actividades
-                                    Diarias</span></a>
-                        </li>-->
-
                         <li class="slide">
                             <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
                                     class="side-menu__icon fe fe-credit-card"></i><span
@@ -358,27 +352,6 @@
                                     @if (auth()->user()->hasPermissionTo('gestion_proyectos'))
                                         <li><a class="slide-item" href="{{ route('proyectos') }}">Proyectos</a></li>
                                     @endif
-                                </ul>
-                            </li>
-                        @endif
-
-                        @if (auth()->user()->hasPermissionToMultiple('gestion_categorias_seguimientos|' . 'gestion_seguimientos'))
-                            <li class="slide">
-                                <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
-                                        class="side-menu__icon fe fe-bar-chart"></i><span
-                                        class="side-menu__label">Seguimiento Clientes</span><i
-                                        class="angle fe fe-chevron-down"></i></a>
-                                <ul class="slide-menu">
-                                    @if (auth()->user()->hasPermissionTo('gestion_categorias_seguimientos'))
-                                        <li><a class="slide-item"
-                                                href="{{ route('categorias_seguimientos') }}">Categorías</a></li>
-                                    @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_seguimientos'))
-                                        <li><a class="slide-item"
-                                                href="{{ route('seguimientos_clientes') }}">Seguimientos</a></li>
-                                    @endif
-                                    <!--<li><a class="slide-item" href="{{ route('tarjetas_seguimientos') }}">Mis
-                                        Tarjetas</a></li>-->
                                 </ul>
                             </li>
                         @endif
@@ -506,39 +479,6 @@
                                     @endif
                                 </ul>
                             </li>
-                        @endif
-
-                        @if (auth()->user()->hasPermissionToMultiple(
-                                    'gestion_arrendamientos|' .
-                                        'gestion_gastos_varios|' .
-                                        'gestion_gastos_fijos|' .
-                                        'gestion_gastos_equivalentes'))
-                            <!--<li class="slide">
-                                <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
-                                        class="side-menu__icon fe fe-globe"></i><span
-                                        class="side-menu__label">Gastos</span><i
-                                        class="angle fe fe-chevron-down"></i></a>
-                                <ul class="slide-menu">
-                                    @if (auth()->user()->hasPermissionTo('gestion_arrendamientos'))
-                                        <li><a class="slide-item"
-                                                href="{{ route('arrendamientos') }}">Arrendamientos</a>
-                                        </li>
-                                    @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_gastos_varios'))
-                                        <li><a class="slide-item" href="{{ route('gastos_varios') }}">Gastos
-                                                Varios</a>
-                                        </li>
-                                    @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_gastos_fijos'))
-                                        <li><a class="slide-item" href="{{ route('gastos_fijos') }}">Gastos Fijos</a>
-                                        </li>
-                                    @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_gastos_equivalentes'))
-                                        <li><a class="slide-item" href="{{ route('gastos_equivalentes') }}">Gastos
-                                                Equivalentes</a></li>
-                                    @endif
-                                </ul>
-                            </li>-->
                         @endif
                     </ul>
 

@@ -79,15 +79,6 @@ class AsignacionesController extends Controller
         }
     }
 
-    public function actividades_diarias()
-    {
-        try {
-            return view('admin.actividades_diarias');
-        } catch (Exception $ex) {
-            return view('errors.500');
-        }
-    }
-
     public function gestionar_asignaciones()
     {
         try {
