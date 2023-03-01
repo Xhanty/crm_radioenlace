@@ -192,6 +192,22 @@
                                     class="side-menu__label">Inicio</span></a>
                         </li>
 
+                        @if (auth()->user()->hasPermissionTo('solicitud_elementos'))
+                            <li class="slide">
+                                <a class="side-menu__item" href="{{ route('solicitud_inventario') }}"><i
+                                        class="side-menu__icon fe fe-sliders"></i><span
+                                        class="side-menu__label">Solicitudes Inventario</span></a>
+                            </li>
+                        @endif
+
+                        @if (auth()->user()->hasPermissionTo('gestion_documentos'))
+                            <li class="slide">
+                                <a class="side-menu__item" href="{{ route('documentos') }}"><i
+                                        class="side-menu__icon fe fe-folder"></i><span
+                                        class="side-menu__label">Documentos</span></a>
+                            </li>
+                        @endif
+
                         <li class="slide" id="menu_otro_asignaciones">
                             <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
                                     class="side-menu__icon fe fe-check"></i><span
@@ -261,27 +277,25 @@
                             </li>
                         @endif
 
-                        @if (auth()->user()->hasPermissionTo('ver_clientes'))
+                        @if (auth()->user()->hasPermissionToMultiple('ver_clientes|' . 'ver_empleados|' . 'ver_proveedores'))
                             <li class="slide">
-                                <a class="side-menu__item" href="{{ route('clientes') }}"><i
-                                        class="side-menu__icon fe fe-user"></i><span
-                                        class="side-menu__label">Clientes</span></a>
-                            </li>
-                        @endif
-
-                        @if (auth()->user()->hasPermissionTo('ver_empleados'))
-                            <li class="slide">
-                                <a class="side-menu__item" href="{{ route('empleados') }}"><i
+                                <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
                                         class="side-menu__icon fe fe-users"></i><span
-                                        class="side-menu__label">Empleados</span></a>
-                            </li>
-                        @endif
-
-                        @if (auth()->user()->hasPermissionTo('ver_proveedores'))
-                            <li class="slide">
-                                <a class="side-menu__item" href="{{ route('proveedores') }}"><i
-                                        class="side-menu__icon fe fe-briefcase"></i><span
-                                        class="side-menu__label">Proveedores</span></a>
+                                        class="side-menu__label">Terceros</span><i
+                                        class="angle fe fe-chevron-down"></i></a>
+                                <ul class="slide-menu">
+                                    @if (auth()->user()->hasPermissionTo('ver_clientes'))
+                                        <li><a class="slide-item" href="{{ route('clientes') }}">Clientes</a>
+                                        </li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('ver_empleados'))
+                                        <li><a class="slide-item" href="{{ route('empleados') }}">Empleados</a></li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('ver_proveedores'))
+                                        <li><a class="slide-item" href="{{ route('proveedores') }}">Proveedores</a>
+                                        </li>
+                                    @endif
+                                </ul>
                             </li>
                         @endif
 
@@ -329,14 +343,6 @@
                             </li>
                         @endif
 
-                        @if (auth()->user()->hasPermissionTo('solicitud_elementos'))
-                            <li class="slide">
-                                <a class="side-menu__item" href="{{ route('solicitud_inventario') }}"><i
-                                        class="side-menu__icon fe fe-sliders"></i><span
-                                        class="side-menu__label">Solicitudes Inventario</span></a>
-                            </li>
-                        @endif
-
                         @if (auth()->user()->hasPermissionToMultiple('gesion_categorias_proyectos|' . 'gestion_proyectos'))
                             <li class="slide">
                                 <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
@@ -356,26 +362,24 @@
                             </li>
                         @endif
 
-                        <li class="slide">
-                            <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
-                                    class="side-menu__icon fe fe-layers"></i><span
-                                    class="side-menu__label">Reparaciones</span><i
-                                    class="angle fe fe-chevron-down"></i></a>
-                            <ul class="slide-menu">
-                                @if (auth()->user()->hasPermissionTo('gestion_reparaciones'))
-                                    <li><a class="slide-item" href="{{ route('reparaciones') }}">Reparaciones</a>
-                                    </li>
-                                @endif
-                                <li><a class="slide-item" href="{{ route('mis_reparaciones') }}">Reparaciones
-                                        Asignadas</a></li>
-                            </ul>
-                        </li>
-
-                        @if (auth()->user()->hasPermissionTo('gestion_documentos'))
+                        @if (auth()->user()->hasPermissionToMultiple('mis_reparaciones|' . 'gestion_reparaciones'))
                             <li class="slide">
-                                <a class="side-menu__item" href="{{ route('documentos') }}"><i
-                                        class="side-menu__icon fe fe-folder"></i><span
-                                        class="side-menu__label">Documentos</span></a>
+                                <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
+                                        class="side-menu__icon fe fe-layers"></i><span
+                                        class="side-menu__label">Reparaciones</span><i
+                                        class="angle fe fe-chevron-down"></i></a>
+                                <ul class="slide-menu">
+                                    @if (auth()->user()->hasPermissionTo('mis_reparaciones'))
+                                        <li><a class="slide-item" href="{{ route('mis_reparaciones') }}">Reparaciones
+                                                Asignadas</a>
+                                        </li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('gestion_reparaciones'))
+                                        <li><a class="slide-item" href="{{ route('reparaciones') }}">Gestionar
+                                                Reparaciones</a>
+                                        </li>
+                                    @endif
+                                </ul>
                             </li>
                         @endif
 
