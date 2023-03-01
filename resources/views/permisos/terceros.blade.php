@@ -1,4 +1,4 @@
-<div id="actividades_div" class="col-lg-8 col-xl-10 div-list-ocult">
+<div id="terceros_div" class="col-lg-8 col-xl-10 div-list-ocult">
     <div class="col-12">
         <div class="card custom-card">
             <div class="card-header d-flex" style="border-bottom: 1px #e7e7e7 solid; margin-bottom: 8px">

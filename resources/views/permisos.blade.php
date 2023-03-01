@@ -61,61 +61,17 @@
                     <div class="main-content-left main-content-left-mail card-body pt-0 ">
                         <div class="main-settings-menu">
                             <nav class="nav main-nav-column">
-                                <a class="nav-link thumb active mb-1 select_div" id="btn_asignaciones"
+                                <a class="nav-link active border-top-0 thumb mb-1 select_div" id="btn_documentos"
                                     href="javascript:void(0);">
-                                    <i class="fe fe-check"></i> Asignaciones
-                                </a>
-                                <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_actividades"
-                                    href="javascript:void(0);">
-                                    <i class="fe fe-user"></i> Actividades Diarias
-                                </a>
-                                <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_puntos"
-                                    href="javascript:void(0);">
-                                    <i class="fe fe-credit-card"></i> Puntos
-                                </a>
-                                <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_vehiculos"
-                                    href="javascript:void(0);">
-                                    <i class="fe fe-truck"></i> Vehículos
-                                </a>
-                                <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_clientes"
-                                    href="javascript:void(0);">
-                                    <i class="fe fe-user"></i> Clientes
-                                </a>
-                                <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_empleados"
-                                    href="javascript:void(0);">
-                                    <i class="fe fe-users"></i> Empleados
-                                </a>
-                                <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_proveedores"
-                                    href="javascript:void(0);">
-                                    <i class="fe fe-briefcase"></i> Proveedores
-                                </a>
-                                <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_inventario"
-                                    href="javascript:void(0);">
-                                    <i class="fe fe-package"></i> Inventario
-                                </a>
-                                <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_movimientos"
-                                    href="javascript:void(0);">
-                                    <i class="fe fe-shopping-cart"></i> Movimientos Inventario
+                                    <i class="fe fe-folder"></i> Documentos
                                 </a>
                                 <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_solicitudes"
                                     href="javascript:void(0);">
                                     <i class="fe fe-sliders"></i> Solicitudes Inventario
                                 </a>
-                                <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_proyectos"
+                                <a class="nav-link thumb mb-1 select_div" id="btn_asignaciones"
                                     href="javascript:void(0);">
-                                    <i class="fe fe-shield"></i> Proyectos
-                                </a>
-                                <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_seguimientos"
-                                    href="javascript:void(0);">
-                                    <i class="fe fe-bar-chart"></i> Seguimientos Clientes
-                                </a>
-                                <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_reparaciones"
-                                    href="javascript:void(0);">
-                                    <i class="fe fe-layers"></i> Reparaciones
-                                </a>
-                                <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_documentos"
-                                    href="javascript:void(0);">
-                                    <i class="fe fe-folder"></i> Documentos
+                                    <i class="fe fe-check"></i> Asignaciones
                                 </a>
                                 <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_comercial"
                                     href="javascript:void(0);">
@@ -125,36 +81,50 @@
                                     href="javascript:void(0);">
                                     <i class="fe fe-dollar-sign"></i> Contabilidad
                                 </a>
-                                <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_gastos"
+                                <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_inventario"
                                     href="javascript:void(0);">
-                                    <i class="fe fe-globe"></i> Gastos
+                                    <i class="fe fe-package"></i> Inventario
+                                </a>
+                                <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_proyectos"
+                                    href="javascript:void(0);">
+                                    <i class="fe fe-shield"></i> Proyectos
+                                </a>
+                                <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_puntos"
+                                    href="javascript:void(0);">
+                                    <i class="fe fe-credit-card"></i> Puntos
+                                </a>
+                                <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_reparaciones"
+                                    href="javascript:void(0);">
+                                    <i class="fe fe-layers"></i> Reparaciones
+                                </a>
+                                <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_terceros"
+                                    href="javascript:void(0);">
+                                    <i class="fe fe-user"></i> Terceros
+                                </a>
+                                <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_vehiculos"
+                                    href="javascript:void(0);">
+                                    <i class="fe fe-truck"></i> Vehículos
                                 </a>
                                 <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_config"
                                     href="javascript:void(0);">
                                     <i class="fe fe-settings"></i> Configuración
-                                </a>
+                                </a>                                                                
                             </nav>
                         </div>
                     </div>
                 </div>
             </div>
             @include('permisos.asignaciones')
-            @include('permisos.actividades')
+            @include('permisos.terceros')
             @include('permisos.puntos')
             @include('permisos.vehiculos')
-            @include('permisos.clientes')
-            @include('permisos.empleados')
-            @include('permisos.proveedores')
             @include('permisos.inventario')
-            @include('permisos.movimientos')
             @include('permisos.solicitudes')
             @include('permisos.proyectos')
-            @include('permisos.seguimientos')
             @include('permisos.reparaciones')
             @include('permisos.documentos')
             @include('permisos.comercial')
             @include('permisos.contabilidad')
-            @include('permisos.gastos')
             @include('permisos.configuracion')
         </div>
 

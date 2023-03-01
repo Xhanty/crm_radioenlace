@@ -67,45 +67,6 @@ $(function () {
         }
     });
 
-    $(".check-clie-0").on("change", function () {
-        let check = $(this).prop("checked");
-        let cantidad = 5;
-
-        for (let i = 1; i <= cantidad; i++) {
-            if (check) {
-                $(".check-clie-" + i).prop("checked", true);
-            } else {
-                $(".check-clie-" + i).prop("checked", false);
-            }
-        }
-    });
-
-    $(".check-emp-0").on("change", function () {
-        let check = $(this).prop("checked");
-        let cantidad = 7;
-
-        for (let i = 1; i <= cantidad; i++) {
-            if (check) {
-                $(".check-emp-" + i).prop("checked", true);
-            } else {
-                $(".check-emp-" + i).prop("checked", false);
-            }
-        }
-    });
-
-    $(".check-prov-0").on("change", function () {
-        let check = $(this).prop("checked");
-        let cantidad = 4;
-
-        for (let i = 1; i <= cantidad; i++) {
-            if (check) {
-                $(".check-prov-" + i).prop("checked", true);
-            } else {
-                $(".check-prov-" + i).prop("checked", false);
-            }
-        }
-    });
-
     $(".check-inv-0").on("change", function () {
         let check = $(this).prop("checked");
         let cantidad = 6;
@@ -115,19 +76,6 @@ $(function () {
                 $(".check-inv-" + i).prop("checked", true);
             } else {
                 $(".check-inv-" + i).prop("checked", false);
-            }
-        }
-    });
-
-    $(".check-mov-0").on("change", function () {
-        let check = $(this).prop("checked");
-        let cantidad = 7;
-
-        for (let i = 1; i <= cantidad; i++) {
-            if (check) {
-                $(".check-mov-" + i).prop("checked", true);
-            } else {
-                $(".check-mov-" + i).prop("checked", false);
             }
         }
     });
@@ -154,19 +102,6 @@ $(function () {
                 $(".check-pro-" + i).prop("checked", true);
             } else {
                 $(".check-pro-" + i).prop("checked", false);
-            }
-        }
-    });
-
-    $(".check-seg-0").on("change", function () {
-        let check = $(this).prop("checked");
-        let cantidad = 4;
-
-        for (let i = 1; i <= cantidad; i++) {
-            if (check) {
-                $(".check-seg-" + i).prop("checked", true);
-            } else {
-                $(".check-seg-" + i).prop("checked", false);
             }
         }
     });
@@ -223,19 +158,6 @@ $(function () {
         }
     });
 
-    $(".check-gas-0").on("change", function () {
-        let check = $(this).prop("checked");
-        let cantidad = 4;
-
-        for (let i = 1; i <= cantidad; i++) {
-            if (check) {
-                $(".check-gas-" + i).prop("checked", true);
-            } else {
-                $(".check-gas-" + i).prop("checked", false);
-            }
-        }
-    });
-
     $(".check-conf-0").on("change", function () {
         let check = $(this).prop("checked");
         let cantidad = 3;
@@ -257,10 +179,10 @@ $(function () {
         $(this).addClass("active");
     });
 
-    $("#btn_actividades").on("click", function () {
+    $("#btn_terceros").on("click", function () {
         $(".select_div").removeClass("active");
         $(".div-list-ocult").hide();
-        $("#actividades_div").show();
+        $("#terceros_div").show();
         $(this).addClass("active");
     });
 
@@ -278,38 +200,10 @@ $(function () {
         $(this).addClass("active");
     });
 
-    $("#btn_clientes").on("click", function () {
-        $(".select_div").removeClass("active");
-        $(".div-list-ocult").hide();
-        $("#clientes_div").show();
-        $(this).addClass("active");
-    });
-
-    $("#btn_empleados").on("click", function () {
-        $(".select_div").removeClass("active");
-        $(".div-list-ocult").hide();
-        $("#empleados_div").show();
-        $(this).addClass("active");
-    });
-
-    $("#btn_proveedores").on("click", function () {
-        $(".select_div").removeClass("active");
-        $(".div-list-ocult").hide();
-        $("#proveedores_div").show();
-        $(this).addClass("active");
-    });
-
     $("#btn_inventario").on("click", function () {
         $(".select_div").removeClass("active");
         $(".div-list-ocult").hide();
         $("#inventario_div").show();
-        $(this).addClass("active");
-    });
-
-    $("#btn_movimientos").on("click", function () {
-        $(".select_div").removeClass("active");
-        $(".div-list-ocult").hide();
-        $("#movimientos_div").show();
         $(this).addClass("active");
     });
 
@@ -324,13 +218,6 @@ $(function () {
         $(".select_div").removeClass("active");
         $(".div-list-ocult").hide();
         $("#proyectos_div").show();
-        $(this).addClass("active");
-    });
-
-    $("#btn_seguimientos").on("click", function () {
-        $(".select_div").removeClass("active");
-        $(".div-list-ocult").hide();
-        $("#seguimientos_div").show();
         $(this).addClass("active");
     });
 
@@ -362,13 +249,6 @@ $(function () {
         $(this).addClass("active");
     });
 
-    $("#btn_gastos").on("click", function () {
-        $(".select_div").removeClass("active");
-        $(".div-list-ocult").hide();
-        $("#gastos_div").show();
-        $(this).addClass("active");
-    });
-
     $("#btn_config").on("click", function () {
         $(".select_div").removeClass("active");
         $(".div-list-ocult").hide();
@@ -377,5 +257,5 @@ $(function () {
     });
 
     $(".div-list-ocult").hide();
-    $("#asignaciones_div").show();
+    $("#documentos_div").show();
 });
