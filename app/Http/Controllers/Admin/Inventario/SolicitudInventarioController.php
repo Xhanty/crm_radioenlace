@@ -18,26 +18,26 @@ class SolicitudInventarioController extends Controller
             }
 
             $clientes = DB::table('cliente')
-                ->select('id', 'razon_social as nombre')
+                ->select('id', 'razon_social as nombre', 'nit')
                 ->where('estado', 1)
                 ->get();
 
             $pendientes = DB::table('solicitud_inventario as si')
                 ->join('solicitud_inventario_detalle as sid', 'sid.solicitud_id', '=', 'si.id')
                 ->join('cliente as c', 'c.id', '=', 'si.cliente_id')
-                ->select('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social as cliente', 'si.estado', 'si.codigo', DB::raw('count(sid.id) as elementos'))
+                ->select('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social as cliente', 'si.estado', 'si.codigo', 'c.nit', DB::raw('count(sid.id) as elementos'))
                 ->where('si.estado', 0)
                 ->where('si.solicitante_id', auth()->user()->id)
-                ->groupBy('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social', 'si.estado', 'si.codigo')
+                ->groupBy('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social', 'si.estado', 'si.codigo', 'c.nit')
                 ->get();
 
             $gestionados = DB::table('solicitud_inventario as si')
                 ->join('solicitud_inventario_detalle as sid', 'sid.solicitud_id', '=', 'si.id')
                 ->join('cliente as c', 'c.id', '=', 'si.cliente_id')
-                ->select('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social as cliente', 'si.estado', 'si.codigo', DB::raw('count(sid.id) as elementos'))
+                ->select('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social as cliente', 'si.estado', 'si.codigo','c.nit', DB::raw('count(sid.id) as elementos'))
                 ->where('si.solicitante_id', auth()->user()->id)
                 ->where('si.estado', '!=', 0)
-                ->groupBy('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social', 'si.estado', 'si.codigo')
+                ->groupBy('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social', 'si.estado', 'si.codigo', 'c.nit')
                 ->get();
 
             return view('admin.inventario.solicitud_inventario', compact('clientes', 'pendientes', 'gestionados'));
@@ -169,7 +169,7 @@ class SolicitudInventarioController extends Controller
             }
 
             $clientes = DB::table('cliente')
-                ->select('id', 'razon_social as nombre')
+                ->select('id', 'razon_social as nombre', 'nit')
                 ->where('estado', 1)
                 ->get();
 
@@ -177,22 +177,22 @@ class SolicitudInventarioController extends Controller
                 ->join('solicitud_inventario_detalle as sid', 'sid.solicitud_id', '=', 'si.id')
                 ->join('empleados as e', 'e.id', '=', 'si.solicitante_id')
                 ->join('cliente as c', 'c.id', '=', 'si.cliente_id')
-                ->select('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social as cliente', 'si.estado', 'e.nombre as empleado', 'si.codigo', DB::raw('count(sid.id) as elementos'))
+                ->select('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social as cliente', 'si.estado', 'e.nombre as empleado', 'si.codigo', 'c.nit', DB::raw('count(sid.id) as elementos'))
                 ->where('si.estado', 0)
-                ->groupBy('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social', 'si.estado', 'si.codigo', 'e.nombre')
+                ->groupBy('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social', 'si.estado', 'si.codigo', 'e.nombre', 'c.nit')
                 ->get();
 
             $gestionados = DB::table('solicitud_inventario as si')
                 ->join('solicitud_inventario_detalle as sid', 'sid.solicitud_id', '=', 'si.id')
                 ->join('empleados as e', 'e.id', '=', 'si.solicitante_id')
                 ->join('cliente as c', 'c.id', '=', 'si.cliente_id')
-                ->select('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social as cliente', 'si.estado', 'e.nombre as empleado', 'si.codigo', DB::raw('count(sid.id) as elementos'))
+                ->select('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social as cliente', 'si.estado', 'e.nombre as empleado', 'si.codigo', 'c.nit', DB::raw('count(sid.id) as elementos'))
                 ->where('si.estado', '!=', 0)
-                ->groupBy('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social', 'si.estado', 'si.codigo', 'e.nombre')
+                ->groupBy('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social', 'si.estado', 'si.codigo', 'e.nombre', 'c.nit')
                 ->get();
 
             $productos = DB::table('productos')
-                ->select('id', 'nombre')
+                ->select('id', 'nombre', 'marca', 'modelo')
                 ->where('status', 1)
                 ->get();
 

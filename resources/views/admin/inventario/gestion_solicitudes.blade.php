@@ -35,7 +35,7 @@
                                         <th>Cliente</th>
                                         <th>Descripción</th>
                                         <th>Elementos</th>
-                                        <th>Acciones</th>
+                                        <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -44,10 +44,10 @@
                                             <td>{{ $solicitud->codigo }}</td>
                                             <td>{{ $solicitud->empleado }}</td>
                                             <td>{{ date('d-m-Y h:i A', strtotime($solicitud->created_at)) }}</td>
-                                            <td>{{ $solicitud->cliente }}</td>
+                                            <td>{{ $solicitud->cliente }} ({{ $solicitud->nit }})</td>
                                             <td>{{ $solicitud->descripcion }}</td>
                                             <td>{{ $solicitud->elementos }}</td>
-                                            <td>
+                                            <td class="text-center">
                                                 <a href="javascript:void(0)" title="Ver" data-id="{{ $solicitud->id }}"
                                                     class="btn btn-primary btn-sm btnView">
                                                     <i class="fa fa-eye"></i>
@@ -102,7 +102,7 @@
                                         <th>Descripción</th>
                                         <th>Elementos</th>
                                         <th>Estatus</th>
-                                        <th>Acciones</th>
+                                        <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -111,17 +111,17 @@
                                             <td>{{ $solicitud->codigo }}</td>
                                             <td>{{ $solicitud->empleado }}</td>
                                             <td>{{ date('d-m-Y h:i A', strtotime($solicitud->created_at)) }}</td>
-                                            <td>{{ $solicitud->cliente }}</td>
+                                            <td>{{ $solicitud->cliente }} ({{ $solicitud->nit }})</td>
                                             <td>{{ $solicitud->descripcion }}</td>
                                             <td>{{ $solicitud->elementos }}</td>
                                             <td>
                                                 @if ($solicitud->estado == 1)
-                                                    <span class="badge bg-success side-badge">Aceptado</span>
+                                                    <span class="badge bg-success side-badge bg-success">Aceptado</span>
                                                 @elseif($solicitud->estado == 2)
-                                                    <span class="badge bg-danger side-badge">Rechazado</span>
+                                                    <span class="badge bg-danger side-badge bg-danger">Rechazado</span>
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="text-center">
                                                 <a href="javascript:void(0)" title="Ver" data-id="{{ $solicitud->id }}"
                                                     class="btn btn-primary btn-sm btnView">
                                                     <i class="fa fa-eye"></i>
@@ -158,7 +158,7 @@
                                 <select class="form-select" id="clienteview" disabled>
                                     <option value="">Seleccione un cliente</option>
                                     @foreach ($clientes as $cliente)
-                                        <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
+                                        <option value="{{ $cliente->id }}">{{ $cliente->nombre }} ({{ $cliente->nit }})</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -185,7 +185,7 @@
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
                         <h6 class="modal-title">Asignar elemento</h6><button aria-label="Close" class="btn-close"
-                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                            id="btnCloseAsignar" type="button"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" disabled id="id_solicitud_gestion">
@@ -195,7 +195,7 @@
                                 <select class="form-select" id="elementogestion">
                                     <option value="">Seleccione un elemento</option>
                                     @foreach ($productos as $producto)
-                                        <option value="{{ $producto->id }}">{{ $producto->nombre }}</option>
+                                        <option value="{{ $producto->id }}">{{ $producto->nombre }} ({{ $producto->marca }} - {{ $producto->modelo }})</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -229,7 +229,7 @@
                                 <select class="form-select" id="clienteedit">
                                     <option value="">Seleccione un cliente</option>
                                     @foreach ($clientes as $cliente)
-                                        <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
+                                        <option value="{{ $cliente->id }}">{{ $cliente->nombre }} ({{ $cliente->nit }})</option>
                                     @endforeach
                                 </select>
                             </div>
