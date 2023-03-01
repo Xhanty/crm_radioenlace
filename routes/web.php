@@ -179,12 +179,6 @@ Route::middleware(['auth_user'])->group(function () {
     Route::get('/mis_reparaciones', [App\Http\Controllers\Admin\Reparaciones\MisReparacionesController::class, 'index'])->name('mis_reparaciones');
 
     // DOCUMENTOS
-    Route::get('/categorias_archivos', [App\Http\Controllers\Admin\Documentos\CategoriasController::class, 'index'])->name('categorias_archivos');
-    Route::post('/categorias_archivos_create', [App\Http\Controllers\Admin\Documentos\CategoriasController::class, 'add'])->name('categorias_archivos_create');
-    Route::post('/categorias_archivos_delete', [App\Http\Controllers\Admin\Documentos\CategoriasController::class, 'delete'])->name('categorias_archivos_delete');
-    Route::get('/archivos', [App\Http\Controllers\Admin\Documentos\ArchivosController::class, 'index'])->name('archivos');
-    Route::post('/archivos_delete', [App\Http\Controllers\Admin\Documentos\ArchivosController::class, 'archivos_delete'])->name('archivos_delete');
-    Route::post('/archivos_add', [App\Http\Controllers\Admin\Documentos\ArchivosController::class, 'archivos_add'])->name('archivos_add');
     Route::get('/documentos', [App\Http\Controllers\Admin\Documentos\DocumentosController::class, 'index'])->name('documentos');
 
     // COMERCIAL

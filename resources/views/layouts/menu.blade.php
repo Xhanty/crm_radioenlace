@@ -371,28 +371,11 @@
                             </ul>
                         </li>
 
-                        @if (auth()->user()->hasPermissionToMultiple('categorias_archivos|' . 'gestion_archivos|' . 'gestion_documentos'))
+                        @if (auth()->user()->hasPermissionTo('gestion_documentos'))
                             <li class="slide">
-                                <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
+                                <a class="side-menu__item" href="{{ route('documentos') }}"><i
                                         class="side-menu__icon fe fe-folder"></i><span
-                                        class="side-menu__label">Documentos</span><i
-                                        class="angle fe fe-chevron-down"></i></a>
-                                <ul class="slide-menu">
-                                    @if (auth()->user()->hasPermissionTo('categorias_archivos'))
-                                        <li><a class="slide-item"
-                                                href="{{ route('categorias_archivos') }}">Categorías
-                                                Documentos</a></li>
-                                    @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_archivos'))
-                                        <li><a class="slide-item" href="{{ route('archivos') }}">Gestionar
-                                                Archivos</a>
-                                        </li>
-                                    @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_documentos'))
-                                        <li><a class="slide-item" href="{{ route('documentos') }}">Documentos</a>
-                                        </li>
-                                    @endif
-                                </ul>
+                                        class="side-menu__label">Documentos</span></a>
                             </li>
                         @endif
 
