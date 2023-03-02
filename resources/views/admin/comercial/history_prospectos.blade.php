@@ -21,8 +21,9 @@
             <div class="col-lg-12">
                 <div class="card custom-card">
                     <div style="text-align: right">
-                        <i data-bs-toggle="modal" data-bs-target="#modalAdd" class="fa fa-plus-circle"
+                        <i title="Agregar Observación" data-bs-toggle="modal" data-bs-target="#modalAdd" class="fa fa-plus-circle"
                             style="font-size: 30px; color: #0d6efd; cursor: pointer; margin: 10px;"></i>
+                        <i id="btnCloseVista" title="Cerrar" class="fa fa-times-circle" style="font-size: 30px; color: #0d6efd; cursor: pointer; margin-right: 10px;"></i>
                     </div>
                     <div class="card-body">
                         <div class="vtimeline">

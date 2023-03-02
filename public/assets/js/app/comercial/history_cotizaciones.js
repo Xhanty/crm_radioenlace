@@ -124,4 +124,8 @@ $(document).ready(function () {
             });
         }
     });
+
+    $("#btnCloseVista").click(function () {
+        window.close();
+    });
 });
