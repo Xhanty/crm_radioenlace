@@ -17,9 +17,9 @@ class ProspectosEmpresasController extends Controller
     public function index()
     {
         try {
-            /*if (!auth()->user()->hasPermissionTo('gestionar_prospectos_empresas')) {
+            if (!auth()->user()->hasPermissionTo('ver_prospectos_empresas')) {
                 return redirect()->route('home');
-            }*/
+            }
             $paises = DB::table("paises")->get();
 
             return view('admin.comercial.prospectos_empresas', compact('paises'));

@@ -12,6 +12,10 @@ class ConfiguracionController extends Controller
     public function index()
     {
         try {
+            if (!auth()->user()->hasPermissionTo('contabilidad_config_administrativa') || !auth()->user()->hasPermissionTo('contabilidad_config_general')) {
+                return redirect()->route('home');
+            }
+
             $organizacion = DB::table('organizacion')->where('id', 1)->first();
 
             if (!$organizacion) {

@@ -30,7 +30,7 @@ $(function () {
 
     $(".check-ter-0").on("change", function () {
         let check = $(this).prop("checked");
-        let cantidad = 9;
+        let cantidad = 12;
 
         for (let i = 1; i <= cantidad; i++) {
             if (check) {

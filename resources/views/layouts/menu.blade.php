@@ -246,7 +246,13 @@
                             </ul>
                         </li>
 
-                        @if (auth()->user()->hasPermissionToMultiple('gestion_orden_compra|' . 'gestionar_cotizaciones|' . 'gestionar_remisiones'))
+                        @if (auth()->user()->hasPermissionToMultiple(
+                                    'gestion_orden_compra|' .
+                                        'gestionar_cotizaciones|' .
+                                        'gestionar_remisiones|' .
+                                        'gestionar_precios_proveedores|' .
+                                        'ver_prospectos_personas|' .
+                                        'ver_prospectos_empresas'))
                             <li class="slide">
                                 <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
                                         class="side-menu__icon fe fe-file-text"></i><span
@@ -266,17 +272,17 @@
                                         <li><a class="slide-item" href="{{ route('remisiones') }}">Remisiones</a>
                                         </li>
                                     @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_orden_compra'))
+                                    @if (auth()->user()->hasPermissionTo('gestionar_precios_proveedores'))
                                         <li><a class="slide-item" href="{{ route('precios_proveedores') }}">Precios
                                                 Proveedores</a>
                                         </li>
                                     @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_orden_compra'))
+                                    @if (auth()->user()->hasPermissionTo('ver_prospectos_personas'))
                                         <li><a class="slide-item" href="{{ route('prospectos_bd') }}">Prospectos
                                                 Personas</a>
                                         </li>
                                     @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_orden_compra'))
+                                    @if (auth()->user()->hasPermissionTo('ver_prospectos_empresas'))
                                         <li><a class="slide-item"
                                                 href="{{ route('prospectos_empresas_bd') }}">Prospectos Empresas</a>
                                         </li>
@@ -285,19 +291,30 @@
                             </li>
                         @endif
 
-                        @if (auth()->user()->hasPermissionToMultiple('gestion_facturacion'))
+                        @if (auth()->user()->hasPermissionToMultiple(
+                                    'contabilidad_config_administrativa|' .
+                                        'contabilidad_config_general|' .
+                                        'contabilidad_config_catalogos|' .
+                                        'contabilidad_config_otros|' .
+                                        'contabilidad_factura_compra|' .
+                                        'contabilidad_factura_venta|' .
+                                        'contabilidad_nota_credito|' .
+                                        'contabilidad_nota_debito|' .
+                                        'contabilidad_recibo_pago'))
                             <li class="slide">
                                 <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
                                         class="side-menu__icon fe fe-dollar-sign"></i><span
                                         class="side-menu__label">Contabilidad</span><i
                                         class="angle fe fe-chevron-down"></i></a>
                                 <ul class="slide-menu">
-                                    @if (auth()->user()->hasPermissionTo('gestion_facturacion'))
+                                    @if (auth()->user()->hasPermissionToMultiple(
+                                                'contabilidad_config_administrativa|contabilidad_config_general|contabilidad_config_catalogos|contabilidad_config_otros'))
                                         <li><a class="slide-item"
                                                 href="{{ route('configuracion_contabilidad') }}">Configuración</a>
                                         </li>
                                     @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_facturacion'))
+                                    @if (auth()->user()->hasPermissionToMultiple(
+                                                'contabilidad_factura_compra|contabilidad_factura_venta|contabilidad_nota_credito|contabilidad_nota_debito|contabilidad_recibo_pago'))
                                         <li class="sub-slide">
                                             <a class="slide-item" data-bs-toggle="sub-slide"
                                                 href="javascript:void(0);"><span
@@ -305,28 +322,35 @@
                                                     class="sub-angle fe fe-chevron-down"></i></a>
                                             <ul class="sub-slide-menu" style="display: none;"
                                                 id="2_1_otro_asignaciones">
-                                                <li><a class="sub-side-menu__item"
-                                                        href="{{ route('factura_compra') }}">Factura Compra</a>
-                                                </li>
-                                                <li><a class="sub-side-menu__item"
-                                                        href="{{ route('factura_venta') }}">Factura Venta</a>
-                                                </li>
-                                                <li><a class="sub-side-menu__item"
-                                                        href="{{ route('nota_credito') }}">Nota Crédito</a>
-                                                </li>
-                                                <li><a class="sub-side-menu__item"
-                                                        href="{{ route('nota_debito') }}">Nota Débito (Ventas)</a>
-                                                </li>
-                                                <li><a class="sub-side-menu__item"
-                                                        href="{{ route('recibo_pago') }}">Recibo Pago</a>
-                                                </li>
+                                                @if (auth()->user()->hasPermissionTo('contabilidad_factura_compra'))
+                                                    <li><a class="sub-side-menu__item"
+                                                            href="{{ route('factura_compra') }}">Factura Compra</a>
+                                                    </li>
+                                                @endif
+                                                @if (auth()->user()->hasPermissionTo('contabilidad_factura_venta'))
+                                                    <li><a class="sub-side-menu__item"
+                                                            href="{{ route('factura_venta') }}">Factura Venta</a>
+                                                    </li>
+                                                @endif
+                                                @if (auth()->user()->hasPermissionTo('contabilidad_nota_credito'))
+                                                    <li><a class="sub-side-menu__item"
+                                                            href="{{ route('nota_credito') }}">Nota Crédito</a>
+                                                    </li>
+                                                @endif
+                                                @if (auth()->user()->hasPermissionTo('contabilidad_nota_debito'))
+                                                    <li><a class="sub-side-menu__item"
+                                                            href="{{ route('nota_debito') }}">Nota Débito (Ventas)</a>
+                                                    </li>
+                                                @endif
+                                                @if (auth()->user()->hasPermissionTo('contabilidad_recibo_pago'))
+                                                    <li><a class="sub-side-menu__item"
+                                                            href="{{ route('recibo_pago') }}">Recibo Pago</a>
+                                                    </li>
+                                                @endif
                                             </ul>
                                         </li>
                                     @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_config_nomina_general'))
-                                        <!--<li><a class="slide-item" href="{{ route('config_nomina') }}">Configuración
-                                                Nómina</a></li>-->
-                                    @endif
+                                    <!--<li><a class="slide-item" href="{{ route('config_nomina') }}">Configuración Nómina</a></li>-->
                                 </ul>
                             </li>
                         @endif
@@ -336,7 +360,8 @@
                                         'gestion_almacenes_inventario|' .
                                         'gestion_productos_inventario|' .
                                         'gestion_inventario|' .
-                                        'gestion_solicitudes'))
+                                        'gestion_solicitudes|' .
+                                        'ver_movimientos_inventario'))
                             <li class="slide">
                                 <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
                                         class="side-menu__icon fe fe-package"></i><span
@@ -366,7 +391,7 @@
                                                 href="{{ route('gestion_solicitudes') }}">Solicitudes</a>
                                         </li>
                                     @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_solicitudes'))
+                                    @if (auth()->user()->hasPermissionTo('ver_movimientos_inventario'))
                                         <li><a class="slide-item"
                                                 href="{{ route('gestion_solicitudes') }}">Movimientos</a>
                                         </li>
@@ -408,14 +433,14 @@
                             </ul>
                         </li>
 
-                        @if (auth()->user()->hasPermissionToMultiple('mis_reparaciones|' . 'gestion_reparaciones'))
+                        @if (auth()->user()->hasPermissionToMultiple('ver_reparaciones_asignadas|' . 'gestion_reparaciones'))
                             <li class="slide">
                                 <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
                                         class="side-menu__icon fe fe-layers"></i><span
                                         class="side-menu__label">Reparaciones</span><i
                                         class="angle fe fe-chevron-down"></i></a>
                                 <ul class="slide-menu">
-                                    @if (auth()->user()->hasPermissionTo('mis_reparaciones'))
+                                    @if (auth()->user()->hasPermissionTo('ver_reparaciones_asignadas'))
                                         <li><a class="slide-item" href="{{ route('mis_reparaciones') }}">Reparaciones
                                                 Asignadas</a>
                                         </li>
@@ -451,15 +476,17 @@
                             </li>
                         @endif
 
-                        @if (auth()->user()->hasPermissionTo('ver_vehiculos'))
+                        @if (auth()->user()->hasPermissionToMultiple('ver_vehiculos|' . 'enviar_checklist_vehiculos'))
                             <li class="slide">
                                 <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
                                         class="side-menu__icon fe fe-truck"></i><span
                                         class="side-menu__label">Vehículos</span><i
                                         class="angle fe fe-chevron-down"></i></a>
                                 <ul class="slide-menu">
-                                    <li><a class="slide-item" href="{{ route('vehiculos') }}">Vehículos</a></li>
-                                    @if (auth()->user()->hasPermissionTo('gestion_checklist_vehiculos'))
+                                    @if (auth()->user()->hasPermissionTo('ver_vehiculos'))
+                                        <li><a class="slide-item" href="{{ route('vehiculos') }}">Vehículos</a></li>
+                                    @endif
+                                    @if (auth()->user()->hasPermissionTo('enviar_checklist_vehiculos'))
                                         <li><a class="slide-item" href="{{ route('checklist_email') }}">Enviar
                                                 Checklist
                                                 Email</a></li>

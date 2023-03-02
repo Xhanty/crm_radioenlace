@@ -18,9 +18,9 @@ class ProspectosController extends Controller
     public function index()
     {
         try {
-            /*if (!auth()->user()->hasPermissionTo('gestionar_prospectos')) {
+            if (!auth()->user()->hasPermissionTo('ver_prospectos_personas')) {
                 return redirect()->route('home');
-            }*/
+            }
 
             $paises = DB::table("paises")->get();
 

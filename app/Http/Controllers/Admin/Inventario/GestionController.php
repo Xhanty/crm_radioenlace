@@ -16,9 +16,9 @@ class GestionController extends Controller
         try {
             $this->names_almacenes = [];
 
-            /*if (!auth()->user()->hasPermissionTo('gestion_categorias_inventario')) {
+            if (!auth()->user()->hasPermissionTo('gestion_inventario')) {
                 return redirect()->route('home');
-            }*/
+            }
 
             $id = $request->get('token');
 

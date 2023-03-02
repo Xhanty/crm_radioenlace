@@ -12,7 +12,7 @@ class FacturaCompraController extends Controller
     public function index()
     {
         try {
-            if (!auth()->user()->hasPermissionTo('gestion_facturacion')) {
+            if (!auth()->user()->hasPermissionTo('contabilidad_factura_compra')) {
                 return redirect()->route('home');
             }
 

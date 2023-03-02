@@ -538,7 +538,7 @@
                         </div>
                         <div class="card-footer p-3">
                             <label class="form-switch float-end mb-0">
-                                <input type="checkbox" value="gestionar_prospectos_empresas"
+                                <input type="checkbox" value="ver_prospectos_empresas"
                                     class="form-switch-input check-com-21">
                                 <span class="form-switch-indicator custom-radius"></span>
                             </label>

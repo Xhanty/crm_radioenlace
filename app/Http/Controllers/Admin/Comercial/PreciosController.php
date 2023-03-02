@@ -16,9 +16,9 @@ class PreciosController extends Controller
     public function index()
     {
         try {
-            /*if (!auth()->user()->hasPermissionTo('gestionar_precios_proveedores')) {
+            if (!auth()->user()->hasPermissionTo('gestionar_precios_proveedores')) {
                 return redirect()->route('home');
-            }*/
+            }
 
             $pendientes = DB::table('precio_proveedores')
                 ->select('precio_proveedores.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion')

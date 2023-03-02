@@ -402,9 +402,9 @@ class CotizacionController extends Controller
     public function history(Request $request)
     {
         try {
-            /*if (!auth()->user()->hasPermissionTo('gestionar_cotizaciones')) {
+            if (!auth()->user()->hasPermissionTo('gestionar_cotizaciones')) {
                 return redirect()->route('home');
-            }*/
+            }
 
             $id = $request->get('token');
 
