@@ -12,11 +12,11 @@
 
         <!-- Input Edit Admin -->
         <input type="hidden" disabled readonly id="edit_cliente_admin"
-            value="{{ auth()->user()->hasPermissionTo('edit_clientes') }}">
+            value="{{ auth()->user()->hasPermissionTo('gestionar_clientes') }}">
 
         <!-- Input Anexos Admin -->
         <input type="hidden" disabled readonly id="anexos_cliente_admin"
-            value="{{ auth()->user()->hasPermissionTo('anexos_clientes') }}">
+            value="{{ auth()->user()->hasPermissionTo('gestionar_clientes') }}">
 
         <!-- breadcrumb -->
         <div class="breadcrumb-header justify-content-between">
@@ -39,7 +39,7 @@
                         <div class="div-1-tables-header">
                             <h3 class="card-title mt-2">Lista de Clientes</h3>
                         </div>
-                        @if (auth()->user()->hasPermissionTo('add_clientes'))
+                        @if (auth()->user()->hasPermissionTo('gestionar_clientes'))
                             <div class="div-2-tables-header">
                                 <button class="btn btn-primary" id="btnNewCliente">Registrar Cliente</button>
                             </div>
@@ -185,7 +185,7 @@
                                 <input class="form-control" id="avataredit" type="file" accept="image/*">
                             </div>
                         </div>
-                        @if (auth()->user()->hasPermissionTo('edit_clientes'))
+                        @if (auth()->user()->hasPermissionTo('gestionar_clientes'))
                             <br>
                             <div class="text-center">
                                 <button class="btn ripple btn-primary" id="btnModificarCliente1" type="button">Modificar
@@ -280,7 +280,7 @@
                                                             placeholder="Indicativo Teléfono" type="text">
                                                     </div>
                                                 </div>
-                                                @if (auth()->user()->hasPermissionTo('edit_clientes'))
+                                                @if (auth()->user()->hasPermissionTo('gestionar_clientes'))
                                                     <br>
 
                                                     <div class="text-center">
@@ -331,7 +331,7 @@
                                                             placeholder="Extensión" type="text">
                                                     </div>
                                                 </div>
-                                                @if (auth()->user()->hasPermissionTo('edit_clientes'))
+                                                @if (auth()->user()->hasPermissionTo('gestionar_clientes'))
                                                     <br>
 
                                                     <div class="text-center">

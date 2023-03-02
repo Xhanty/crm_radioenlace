@@ -8,7 +8,7 @@
     <div class="main-container container-fluid">
         <!-- Input Edit Admin -->
         <input type="hidden" disabled readonly id="edit_empleados_admin"
-            value="{{ auth()->user()->hasPermissionTo('edit_empleados') }}">
+            value="{{ auth()->user()->hasPermissionTo('gestionar_empleados') }}">
 
         <!-- Input Clave Admin -->
         <input type="hidden" disabled readonly id="clave_empleados_admin"
@@ -35,7 +35,7 @@
                         <div class="div-1-tables-header">
                             <h3 class="card-title mt-2">Lista de Empleados</h3>
                         </div>
-                        @if (auth()->user()->hasPermissionTo('add_empleados'))
+                        @if (auth()->user()->hasPermissionTo('gestionar_empleados'))
                             <div class="div-2-tables-header">
                                 <button class="btn btn-primary" id="addNewEmpleado">Registrar Empleado</button>
                             </div>
@@ -210,7 +210,7 @@
                             </div>
                         </div>
                         <br>
-                        @if (auth()->user()->hasPermissionTo('edit_empleados'))
+                        @if (auth()->user()->hasPermissionTo('gestionar_empleados'))
                             <div class="text-center">
                                 <button class="btn ripple btn-primary" id="btnModificarEmpleado1"
                                     type="button">Modificar
@@ -230,14 +230,14 @@
                                                     <a class="nav-link nav-link-1 active" href="javascript:void(0)">Otra
                                                         Información</a>
                                                 </li>
-                                                @if (auth()->user()->hasPermissionTo('nomina_empleados'))
+                                                @if (auth()->user()->hasPermissionTo('gestionar_empleados'))
                                                     <li class="nav-item">
                                                         <a class="nav-link nav-link-2"
                                                             href="javascript:void(0)">Configurar
                                                             Nomina</a>
                                                     </li>
                                                 @endif
-                                                @if (auth()->user()->hasPermissionTo('novedades_empleados'))
+                                                @if (auth()->user()->hasPermissionTo('gestionar_empleados'))
                                                     <li class="nav-item">
                                                         <a class="nav-link nav-link-3" href="javascript:void(0)">Reportar
                                                             Novedad</a>
@@ -247,7 +247,7 @@
                                                             Horas Trabajadas</a>
                                                     </li>
                                                 @endif
-                                                @if (auth()->user()->hasPermissionTo('anexos_empleados'))
+                                                @if (auth()->user()->hasPermissionTo('gestionar_empleados'))
                                                     <li class="nav-item">
                                                         <a class="nav-link nav-link-5" id="three-tab"
                                                             href="javascript:void(0)">Anexos</a>
@@ -317,7 +317,7 @@
                                                     </div>
                                                 </div>
                                                 <br>
-                                                @if (auth()->user()->hasPermissionTo('edit_empleados'))
+                                                @if (auth()->user()->hasPermissionTo('gestionar_empleados'))
                                                     <div class="text-center">
                                                         <button class="btn ripple btn-primary" id="btnModificarEmpleado2"
                                                             type="button">Modificar Otra Información</button>
@@ -478,7 +478,7 @@
                                             </div>
 
                                             <div class="tab-pane fade show p-3" id="five_detail">
-                                                @if (auth()->user()->hasPermissionTo('anexos_empleados'))
+                                                @if (auth()->user()->hasPermissionTo('gestionar_empleados'))
                                                     <div class="d-flex justify-content-end">
                                                         <button class="btn ripple btn-primary"
                                                             data-bs-target="#modalAddAnexo" data-bs-toggle="modal"

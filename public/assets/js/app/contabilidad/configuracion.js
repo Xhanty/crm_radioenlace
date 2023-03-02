@@ -244,7 +244,11 @@ $(document).ready(function () {
                 title: 'Código',
                 target: 1,
                 data: function (item) {
-                    return '<a target="_BLANK" href="https://puc.com.co/' + item.code + '">' + item.code + '</a>';
+                    if (item.auxiliar == 1) { 
+                        return item.code;
+                    } else {
+                        return '<a target="_BLANK" href="https://puc.com.co/' + item.code + '">' + item.code + '</a>';
+                    }
                 }
             },
             {
@@ -2263,6 +2267,7 @@ $(document).ready(function () {
     $(document).on("click", ".btnDeleteChildPucCliente", function () {
         let id = $(this).data("id");
         let code = $(this).data("code");
+        let context = $(this);
 
         Swal.fire({
             title: "¿Está seguro de eliminar el auxiliar " + code + "?",
@@ -2284,7 +2289,7 @@ $(document).ready(function () {
                     },
                     success: function (response) {
                         if (response.info == 1) {
-                            tbl_pucs_cliente.ajax.reload();
+                            context.closest("tr").remove();
                             toastr.success("Auxiliar eliminado correctamente");
                         } else {
                             toastr.error("Error al eliminar el auxiliar");
@@ -2345,6 +2350,7 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response.info == 1) {
                         tbl_pucs_cliente.ajax.reload();
+
                         $("#code_child_puc_cliente").val("");
                         $("#nombre_child_puc_cliente").val("");
                         $("#modalAddChildPucCliente").modal("hide");
@@ -2392,7 +2398,11 @@ $(document).ready(function () {
                 },
                 success: function (response) {
                     if (response.info == 1) {
-                        tbl_pucs_cliente.ajax.reload();
+                        let code_final = response.code;
+                        let tr = $(document).find(".btnEditChildPucCliente[data-id='" + id + "']").closest("tr");
+
+                        tr.find("td:eq(1)").html(code_final);
+                        tr.find("td:eq(2)").html(nombre);
                         $("#modalEditChildPucCliente").modal("hide");
                         toastr.success("Auxiliar editado correctamente");
                     } else {

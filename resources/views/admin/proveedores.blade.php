@@ -4,11 +4,11 @@
     <div class="main-container container-fluid">
         <!-- Input Edit Admin -->
         <input type="hidden" disabled readonly id="edit_proveedor_admin"
-            value="{{ auth()->user()->hasPermissionTo('edit_proveedores') }}">
+            value="{{ auth()->user()->hasPermissionTo('gestionar_proveedores') }}">
 
         <!-- Input Anexos Admin -->
         <input type="hidden" disabled readonly id="anexos_proveedor_admin"
-            value="{{ auth()->user()->hasPermissionTo('anexos_proveedores') }}">
+            value="{{ auth()->user()->hasPermissionTo('gestionar_proveedores') }}">
 
         <!-- breadcrumb -->
         <div class="breadcrumb-header justify-content-between">
@@ -31,7 +31,7 @@
                         <div class="div-1-tables-header">
                             <h3 class="card-title mt-2">Lista de Proveedores</h3>
                         </div>
-                        @if (auth()->user()->hasPermissionTo('add_proveedores'))
+                        @if (auth()->user()->hasPermissionTo('gestionar_proveedores'))
                             <div class="div-2-tables-header">
                                 <button class="btn btn-primary" id="btnNewProveedor">Registrar Proveedor</button>
                             </div>
@@ -73,7 +73,7 @@
                                                 <button data-id="{{ $item->id }}"
                                                     class="btn btn-primary btn-sm btnEditar" title="Ver o Editar"><i
                                                         class="fa fa-pencil-alt"></i></button>
-                                                @if (auth()->user()->hasPermissionTo('edit_proveedores'))
+                                                @if (auth()->user()->hasPermissionTo('gestionar_proveedores'))
                                                     <button data-id="{{ $item->id }}"
                                                         class="btn btn-danger btn-sm btnEliminar" title="Eliminar"><i
                                                             class="fa fa-trash"></i></button>
@@ -289,7 +289,7 @@
                                 <input class="form-control" id="avataredit" type="file" accept="image/*">
                             </div>
                         </div>
-                        @if (auth()->user()->hasPermissionTo('edit_proveedores'))
+                        @if (auth()->user()->hasPermissionTo('gestionar_proveedores'))
                             <br>
                             <div class="text-center">
                                 <button class="btn ripple btn-primary" id="btnEditProveedor" type="button">Modificar
@@ -297,7 +297,7 @@
                             </div>
                         @endif
 
-                        @if (auth()->user()->hasPermissionTo('anexos_proveedores'))
+                        @if (auth()->user()->hasPermissionTo('gestionar_proveedores'))
                             <br>
                             <div class="d-flex justify-content-end">
                                 <button class="btn ripple btn-primary" data-bs-target="#modalAdd" data-bs-toggle="modal"

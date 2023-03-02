@@ -389,6 +389,7 @@ class ConfiguracionController extends Controller
 
         return response()->json([
             'info' => 1,
+            'code' => $code,
         ]);
     }
 
