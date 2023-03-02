@@ -16,6 +16,12 @@ class ProspectosEmpresasImport implements ToCollection, WithStartRow
     {
         DB::beginTransaction();
         foreach ($rows as $row) {
+            $valid_cel = DB::table('prospectos_empresas')->where('celular', $row[6])->first();
+
+            if ($valid_cel) {
+                continue;
+            }
+
             DB::table('prospectos_empresas')->insert([
                 'tipo_cliente' => 0,
                 'pais_id' => $row[0],
