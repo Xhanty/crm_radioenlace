@@ -209,8 +209,9 @@ $(document).ready(function () {
             return false;
         } else {
             $("#btnGuardar").prop("disabled", true);
-            $("#global-loader").fadeIn("slow");
-            $("#modalAdd").modal("hide");
+            $("#btnGuardar").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
 
             let formData = new FormData();
             formData.append("tipo_cliente", tipo_cliente);
@@ -241,19 +242,19 @@ $(document).ready(function () {
                         init_table();
                         $("#modalAdd input").val("");
                         $("#modalAdd select").val("").trigger("change");
-                        $("#global-loader").fadeOut("slow");
                         $("#btnGuardar").prop("disabled", false);
+                        $("#btnGuardar").html("Guardar");
                         toastr.success("Se ha registrado el prospecto");
 
                     } else {
-                        $("#global-loader").fadeOut("slow");
                         $("#btnGuardar").prop("disabled", false);
-                        toastr.error("Ha ocurrido un error al registrar el prospecto");
+                        $("#btnGuardar").html("Guardar");
+                        toastr.error(response.mensaje);
                     }
                 },
                 error: function (data) {
-                    $("#global-loader").fadeOut("slow");
                     $("#btnGuardar").prop("disabled", false);
+                    $("#btnGuardar").html("Guardar");
                     toastr.error("Ha ocurrido un error al registrar el prospecto");
                 },
             });

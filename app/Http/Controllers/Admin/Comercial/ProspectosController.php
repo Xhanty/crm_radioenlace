@@ -110,6 +110,17 @@ class ProspectosController extends Controller
             $file = $request->file('file');
             $name = null;
 
+            $valid_cel = DB::table("prospectos")->where('celular', $request->celular)->first();
+
+            if ($valid_cel) {
+                DB::rollBack();
+                return response()->json([
+                    'info' => 0,
+                    'prospectos' => [],
+                    'mensaje' => 'El número de celular ya se encuentra registrado',
+                ]);
+            }
+
             if ($file) {
                 $name = time() . $file->getClientOriginalName();
                 $file->move('images/prospectos_personas/', $name);
