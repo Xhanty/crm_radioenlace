@@ -353,6 +353,15 @@ class ConfiguracionController extends Controller
         $id_parent = $request->id_parent;
         $id_child = $request->id_child;
 
+        $valid_code = DB::table('configuracion_puc')->where('code', $code)->first();
+
+        if ($valid_code) {
+            return response()->json([
+                'info' => 0,
+                'mensaje' => 'El código ya existe',
+            ]);
+        }
+
         DB::table('configuracion_puc')->insert([
             'code' => $code,
             'code_child' => $request->code_child,

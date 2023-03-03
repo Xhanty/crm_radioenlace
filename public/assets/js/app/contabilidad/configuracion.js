@@ -2356,7 +2356,7 @@ $(document).ready(function () {
                         $("#modalAddChildPucCliente").modal("hide");
                         toastr.success("Auxiliar agregado correctamente");
                     } else {
-                        toastr.error("Error al agregar el auxiliar");
+                        toastr.error(response.mensaje);
                     }
                     $("#btnAddChildPucCliente").attr("disabled", false);
                     $("#btnAddChildPucCliente").html("Agregar Auxiliar");
