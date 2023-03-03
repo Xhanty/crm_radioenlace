@@ -2,6 +2,7 @@
 
 use Alexusmai\LaravelFileManager\Services\ConfigService\DefaultConfigRepository;
 use Alexusmai\LaravelFileManager\Services\ACLService\ConfigACLRepository;
+use App\Http\UsersACLRepository;
 
 return [
 
@@ -17,7 +18,7 @@ return [
      *
      * Default - ConfigACLRepository (see rules in - aclRules)
      */
-    'aclRepository'     => ConfigACLRepository::class,
+    'aclRepository'     => UsersACLRepository::class,
 
     //********* Default configuration for DefaultConfigRepository **************
 
@@ -110,7 +111,7 @@ return [
      *
      * default - false(OFF)
      */
-    'acl'               => false,
+    'acl'               => true,
 
     /**
      * Hide files and folders from file-manager if user doesn't have access
@@ -126,7 +127,7 @@ return [
      *
      * whitelist - Deny anything(access - 0 - deny), that not allowed by the ACL rules list
      */
-    'aclStrategy'       => 'blacklist',
+    'aclStrategy'       => 'whitelist',
 
     /**
      * ACL Rules cache
