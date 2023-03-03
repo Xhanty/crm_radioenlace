@@ -72,6 +72,7 @@ $(document).ready(function () {
                     let elementos = data.elementos;
                     var URLactual = window.location.pathname;
 
+                    $("#tiposalida_selectview").val(solicitud.tipo).trigger("change");
                     $("#clienteview").val(solicitud.cliente_id).trigger("change");
                     $("#descripcionview").val(solicitud.descripcion);
 
@@ -80,10 +81,24 @@ $(document).ready(function () {
                         var action = "";
                         var col = "col-4";
 
-                        if (URLactual == "/gestion_solicitudes") {
-                            action = '<div class="col-1 center-vertical">' + '<a title="Asignar" class="btnAsignarIndividual" data-id="' + elemento.id + '" href="javascript:void(0)">' + '<i class="fa fa-check"></i>' + '</a>' + '</div>';
+                        if (URLactual == "/gestion_solicitudes" && elemento.status == 0) {
+                            action = '<div class="col-1 center-vertical">' + '<a title="Asignar" class="btnAsignarIndividual" data-elemento="' + elemento.elemento + '" data-cantidad="' + elemento.cantidad + '" data-id="' + elemento.id + '" href="javascript:void(0)">' + '<i class="fa fa-check"></i>' + '</a>' + '</div>';
+                            col = "col-3";
+                        } else if (URLactual == "/solicitud_inventario" && elemento.status == 0) {
+                            action = '<div class="col-1"><span class="badge bg-success side-badge bg-warning" style="margin-top: 8px; margin-left: -8px;">Pendiente</span></div>';
                             col = "col-3";
                         }
+
+                        if (elemento.status == 1) {
+                            action = '<div class="col-1"><span class="badge bg-success side-badge bg-success" style="margin-top: 8px; margin-left: -8px;">Asignado</span></div>';
+                            col = "col-3";
+                        }
+
+                        if (elemento.status == 2) {
+                            action = '<div class="col-1"><span class="badge bg-danger side-badge bg-danger" style="margin-top: 8px; margin-left: -8px;">Rechazado</span></div>';
+                            col = "col-3";
+                        }
+
                         concat_view += '<div class="row row-sm mt-2">' +
                             '<div class="col-8" >' +
                             '<input class="form-control" title="Elemento" placeholder="Elemento" type="text" value="' + elemento.elemento + '" readonly>' +
@@ -127,6 +142,7 @@ $(document).ready(function () {
                     let val = 1;
 
                     $("#solicitudid").val(solicitud.id);
+                    $("#tiposalida_selectedit").val(solicitud.tipo).trigger("change");
                     $("#clienteedit").val(solicitud.cliente_id).trigger("change");
                     $("#descripcionedit").val(solicitud.descripcion);
 
@@ -196,7 +212,7 @@ $(document).ready(function () {
                                 location.reload();
                             }, 1000);
                         } else {
-                            toastr.error("Error al eliminar la solicitud");
+                            toastr.error(data.mensaje);
                         }
                     },
                     error: function (data) {
@@ -236,7 +252,7 @@ $(document).ready(function () {
                                 location.reload();
                             }, 1000);
                         } else {
-                            toastr.error("Error al rechazar la solicitud");
+                            toastr.error(data.mensaje);
                         }
                     },
                     error: function (data) {
@@ -248,49 +264,15 @@ $(document).ready(function () {
         });
     });
 
-    $(document).on("click", ".btnAceptar", function () {
-        let id = $(this).attr("data-id");
-        Swal.fire({
-            title: "¿Está seguro?",
-            text: "¡No podrás revertir esto!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "¡Sí, aceptar!",
-            cancelButtonText: "Cancelar",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $("#global-loader").fadeIn("fast");
-                $.ajax({
-                    url: "aceptar_solicitud_inventario",
-                    type: "POST",
-                    data: {
-                        id: id,
-                    },
-                    success: function (data) {
-                        $("#global-loader").fadeOut("fast");
-                        if (data.info == 1) {
-                            toastr.success("Solicitud aceptada");
-                            setTimeout(function () {
-                                location.reload();
-                            }, 1000);
-                        } else {
-                            toastr.error(data.message);
-                        }
-                    },
-                    error: function (data) {
-                        $("#global-loader").fadeOut("fast");
-                        toastr.error("Error al aceptar la solicitud");
-                    },
-                });
-            }
-        });
-    });
-
     $(document).on("click", ".btnAsignarIndividual", function () {
         let id = $(this).attr("data-id");
+        let elemento = $(this).attr("data-elemento");
+        let cantidad = $(this).attr("data-cantidad");
+
         $("#id_solicitud_gestion").val(id);
+        $("#elemento_solicitud_gestion").val(elemento);
+        $("#cantidad_solicitud_gestion").val(cantidad);
+
         $("#modalView").modal("hide");
         $("#modalAsignar").modal({ backdrop: "static", keyboard: false });
         $("#modalAsignar").modal("show");
@@ -302,6 +284,7 @@ $(document).ready(function () {
     });
 
     $("#btn_save_solicitud").click(function () {
+        let tipo = $("#tiposalida_selectadd").val();
         let cliente = $("#clienteadd").val();
         let descripcion = $("#descripcionadd").val();
         let elementos = [];
@@ -323,7 +306,11 @@ $(document).ready(function () {
                 cantidad.push($(this).val());
             }
         });
-        if (cliente == "" || cliente == null) {
+
+        if (tipo == "") {
+            toastr.error("Seleccione un motivo");
+            return;
+        } else if (cliente == "" || cliente == null) {
             toastr.error("Seleccione un cliente");
             return;
         } else if (descripcion == "" || descripcion == null) {
@@ -341,6 +328,7 @@ $(document).ready(function () {
                 url: "solicitud_inventario_add",
                 type: "POST",
                 data: {
+                    tipo: tipo,
                     cliente: cliente,
                     descripcion: descripcion,
                     elementos: elementos,
@@ -369,6 +357,7 @@ $(document).ready(function () {
 
     $("#btn_update_solicitud").click(function () {
         let id = $("#solicitudid").val();
+        let tipo = $("#tiposalida_selectedit").val();
         let cliente = $("#clienteedit").val();
         let descripcion = $("#descripcionedit").val();
         let elementos = [];
@@ -390,7 +379,11 @@ $(document).ready(function () {
                 cantidad.push($(this).val());
             }
         });
-        if (cliente == "" || cliente == null) {
+
+        if (tipo == "") {
+            toastr.error("Seleccione un motivo");
+            return;
+        } else if (cliente == "" || cliente == null) {
             toastr.error("Seleccione un cliente");
             return;
         } else if (descripcion == "" || descripcion == null) {
@@ -409,6 +402,7 @@ $(document).ready(function () {
                 type: "POST",
                 data: {
                     id: id,
+                    tipo: tipo,
                     cliente: cliente,
                     descripcion: descripcion,
                     elementos: elementos,
@@ -493,17 +487,25 @@ $(document).ready(function () {
     });
 
     $("#btnAsignarElemento").click(function () {
-        let detalle_solicitud = $("#producto_id_asignado").val();
+        let solicitud = $("#id_solicitud_gestion").val();
+        let producto = $("#elemento_gestion").val();
+        let cantidad_max = $("#cantidad_solicitud_gestion").val();
         let cantidad_old = $("#elemento_gestion")
             .find(":selected")
             .data("cantidad");
         let cantidad = $("#cantidad_gestion").val();
 
-        if (cantidad == "" || cantidad < 1) {
+        if (producto == "") {
+            toastr.error("Debe seleccionar un serial (elemento)");
+            return false;
+        } else if (cantidad == "" || cantidad < 1) {
             toastr.error("Debe ingresar una cantidad válida");
             return false;
         } else if (cantidad > cantidad_old) {
             toastr.error("La cantidad no puede ser mayor a la disponible");
+            return false;
+        } else if (cantidad != cantidad_max) {
+            toastr.error("La cantidad debe ser igual a la solicitada");
             return false;
         } else if (id_almacen_salida == 0) {
             toastr.error("Debe seleccionar un almacén de salida");
@@ -517,15 +519,16 @@ $(document).ready(function () {
                 url: "solicitud_inventario_asignado",
                 type: "POST",
                 data: {
-                    detalle_solicitud: detalle_solicitud,
-                    almacen: id_almacen_salida,
+                    solicitud: solicitud,
+                    producto: producto,
                     cantidad: cantidad,
+                    almacen: id_almacen_salida,
                 },
                 success: function (response) {
                     $("#btnAsignarElemento").attr("disabled", false);
                     $("#btnAsignarElemento").html("Asignar Elemento");
                     if (response.info == 1) {
-                        toastr.success("Elemento asignado con éxito");
+
 
                         $("#cantidad_gestion").val("");
                         $("#cantidad_gestion").attr("disabled", true);
@@ -533,7 +536,16 @@ $(document).ready(function () {
                         $("#btnAsignarElemento").attr("disabled", true);
                         $("#producto_gestion").val("").trigger("change");
                         $("#modalAsignar").modal("hide");
-                        $(document).find(".btnView[data-id=" + btn_View + "]").click();
+
+                        if (response.reload == 1) {
+                            toastr.success("Todos los elementos han sido asignados");
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000);
+                        } else {
+                            toastr.success("Elemento asignado con éxito");
+                            $(document).find(".btnView[data-id=" + btn_View + "]").click();
+                        }
                     } else {
                         toastr.error("Error al realizar al asignar");
                     }

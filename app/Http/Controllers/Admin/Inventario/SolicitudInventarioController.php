@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Inventario;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -55,7 +56,7 @@ class SolicitudInventarioController extends Controller
                 ->first();
 
             $elementos = DB::table('solicitud_inventario_detalle')
-                ->select('id', 'elemento', 'cantidad')
+                ->select('id', 'elemento', 'cantidad', 'status')
                 ->where('solicitud_id', $request->id)
                 ->get();
 
@@ -85,6 +86,7 @@ class SolicitudInventarioController extends Controller
             $solicitud = DB::table('solicitud_inventario')
                 ->insertGetId([
                     'codigo' => 'SOL-' . Str::upper(Str::random(5)),
+                    'tipo' => $request->tipo,
                     'solicitante_id' => auth()->user()->id,
                     'cliente_id' => $cliente,
                     'descripcion' => $descripcion,
@@ -129,6 +131,7 @@ class SolicitudInventarioController extends Controller
                 ->where('id', $id)
                 ->update([
                     'cliente_id' => $cliente,
+                    'tipo' => $request->tipo,
                     'descripcion' => $descripcion,
                 ]);
 
@@ -233,6 +236,17 @@ class SolicitudInventarioController extends Controller
         try {
             DB::beginTransaction();
             $id = $request->id;
+            $count = DB::table('solicitud_inventario_detalle')
+                ->where('solicitud_id', $id)
+                ->where('status', 1)
+                ->count();
+
+            if($count > 0){
+                return response()->json([
+                    'info' => 0,
+                    'mensaje' => 'No se puede eliminar la solicitud de inventario porque ya tiene elementos gestionados',
+                ]);
+            }
 
             DB::table('solicitud_inventario')
                 ->where('id', $id)
@@ -263,53 +277,34 @@ class SolicitudInventarioController extends Controller
             DB::beginTransaction();
             $id = $request->id;
 
+            $count = DB::table('solicitud_inventario_detalle')
+            ->where('solicitud_id', $id)
+            ->where('status', 1)
+                ->count();
+
+            if ($count > 0) {
+                return response()->json([
+                    'info' => 0,
+                    'mensaje' => 'No se puede rechazar la solicitud de inventario porque ya tiene elementos gestionados',
+                ]);
+            }
+
             DB::table('solicitud_inventario')
                 ->where('id', $id)
                 ->update([
                     'estado' => 2,
                 ]);
 
-            DB::commit();
-            return response()->json([
-                'info' => 1,
-                'message' => 'Solicitud de inventario rechazada correctamente',
-            ]);
-        } catch (Exception $ex) {
-            DB::rollBack();
-            return $ex;
-            return response()->json([
-                'info' => 0,
-                'message' => 'Error al rechazar la solicitud de inventario',
-            ]);
-        }
-    }
-
-    public function aceptar(Request $request)
-    {
-        try {
-            DB::beginTransaction();
-            $id = $request->id;
-
-            $count_all = DB::table('solicitud_inventario_detalle')
+            $elementos = DB::table('solicitud_inventario_detalle')
                 ->where('solicitud_id', $id)
-                ->count();
+                ->get();
 
-            $count_aceptados = DB::table('solicitud_inventario_detalle')
-                ->where('solicitud_id', $id)
-                ->where('status', 1)
-                ->count();
-
-            if ($count_all == $count_aceptados) {
-                DB::table('solicitud_inventario')
-                    ->where('id', $id)
+            foreach ($elementos as $elemento) {
+                DB::table('solicitud_inventario_detalle')
+                    ->where('id', $elemento->id)
                     ->update([
-                        'estado' => 1,
+                        'status' => 2,
                     ]);
-            } else {
-                return response()->json([
-                    'info' => 0,
-                    'message' => 'Debe gestionar todos los elementos antes de aceptar la solicitud',
-                ]);
             }
 
             DB::commit();
@@ -331,18 +326,55 @@ class SolicitudInventarioController extends Controller
     {
         try {
             DB::beginTransaction();
-            /*$tipo = $request->tipo;
-            $almacen_id = $request->almacen_id;
-            $producto_id = $request->producto_id;
-            $cliente = $request->cliente;
-            $empleado = $request->empleado;
-            $serial = $request->serial;
+            $id_solicitud = $request->solicitud;
+
+            $detalle_solicitud = DB::table('solicitud_inventario_detalle')
+                ->where('id', $id_solicitud)
+                ->first();
+
+            $solicitud = DB::table('solicitud_inventario')
+                ->where('id', $detalle_solicitud->solicitud_id)
+                ->first();
+
+            $count_all = DB::table('solicitud_inventario_detalle')
+                ->where('solicitud_id', $detalle_solicitud->solicitud_id)
+                ->count();
+
+            $reload = 0;
+
+            DB::table('solicitud_inventario_detalle')->where("id", $id_solicitud)->update([
+                "status" => 1,
+            ]);
+
+            $count_asignados = DB::table('solicitud_inventario_detalle')
+            ->where('solicitud_id', $detalle_solicitud->solicitud_id)
+                ->where('status', 1)
+                ->count();
+
+            if ($count_all == $count_asignados) {
+                DB::table('solicitud_inventario')->where("id", $detalle_solicitud->solicitud_id)->update([
+                    "estado" => 1,
+                ]);
+
+                $reload = 1;
+            }
+
+            // DESCONTAR DEL INVENTARIO
+
+            $tipo = $solicitud->tipo;
+            $almacen_id = $request->almacen;
+            
+            $cliente = $solicitud->cliente_id;
+            $empleado = $request->solicitante_id;
+            
+            $serial = $request->producto;
             $cantidad = $request->cantidad;
-            $observaciones = $request->observaciones;
+            $observaciones = 'Producto asignado a la solicitud de inventario con código: ' . $solicitud->codigo;
             $status = 1;
-
+            
             $cantidad_old = DB::table('inventario')->where("id", $serial)->first();
-
+            $producto_id = $cantidad_old->producto_id;
+            
             if ($cantidad_old->cantidad == $cantidad) {
                 $status = 0;
             }
@@ -375,12 +407,13 @@ class SolicitudInventarioController extends Controller
                 'observaciones' => $observaciones ? $observaciones : null,
                 'created_by' => auth()->user()->id,
                 'created_at' => date('Y-m-d H:i:s'),
-            ]);*/
+            ]);
 
             DB::commit();
             return response()->json([
                 'info' => 1,
                 'message' => 'Producto asignado correctamente',
+                'reload' => $reload,
             ]);
         } catch (Exception $ex) {
             DB::rollBack();

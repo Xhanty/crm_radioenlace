@@ -160,7 +160,6 @@ Route::middleware(['auth_user'])->group(function () {
     Route::get('/gestion_solicitudes', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'gestion'])->name('gestion_solicitudes');
     Route::post('/delete_solicitud_inventario', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'delete'])->name('delete_solicitud_inventario');
     Route::post('/rechazar_solicitud_inventario', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'rechazar'])->name('rechazar_solicitud_inventario');
-    Route::post('/aceptar_solicitud_inventario', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'aceptar'])->name('aceptar_solicitud_inventario');
     Route::post('/solicitud_inventario_asignado', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'asignar_producto'])->name('solicitud_inventario_asignado');
 
     // PROYECTOS

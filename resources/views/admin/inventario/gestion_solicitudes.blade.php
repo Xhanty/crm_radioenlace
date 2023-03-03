@@ -49,16 +49,12 @@
                                             <td>{{ $solicitud->elementos }}</td>
                                             <td class="text-center">
                                                 <a href="javascript:void(0)" title="Ver" data-id="{{ $solicitud->id }}"
-                                                    class="btn btn-primary btn-sm btnView">
+                                                    class="btn btn-success btn-sm btnView">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
                                                 <a href="javascript:void(0)" title="Editar" data-id="{{ $solicitud->id }}"
                                                     class="btn btn-primary btn-sm btnEditar">
                                                     <i class="fa fa-pencil-alt"></i>
-                                                </a>
-                                                <a href="javascript:void(0)" title="Aceptar" data-id="{{ $solicitud->id }}"
-                                                    class="btn btn-success btn-sm btnAceptar">
-                                                    <i class="fa fa-check"></i>
                                                 </a>
                                                 <a href="javascript:void(0)" title="Rechazar"
                                                     data-id="{{ $solicitud->id }}"
@@ -154,7 +150,17 @@
                     </div>
                     <div class="modal-body">
                         <div class="row row-sm">
-                            <div class="col-lg">
+                            <div class="col-4">
+                                <label for="">Motivo</label>
+                                <select id="tiposalida_selectview" disabled class="form-select">
+                                    <option value="*">Seleccione una opción</option>
+                                    <option value="1">Alquiler</option>
+                                    <option value="3">Préstamo</option>
+                                    <option value="4">Instalación</option>
+                                    <option value="5">Venta</option>
+                                </select>
+                            </div>
+                            <div class="col-8">
                                 <label for="">Cliente</label>
                                 <select class="form-select" id="clienteview" disabled>
                                     <option value="">Seleccione un cliente</option>
@@ -195,6 +201,17 @@
                         <input type="hidden" disabled id="id_solicitud_gestion">
                         <div class="row row-sm">
                             <div class="col-lg">
+                                <label for="">Elemento (Solicitado)</label>
+                                <input type="text" disabled class="form-control" id="elemento_solicitud_gestion" placeholder="Elemento">
+                            </div>
+                            <div class="col-lg">
+                                <label for="">Cantidad (Solicitada)</label>
+                                <input type="number" disabled class="form-control" id="cantidad_solicitud_gestion" placeholder="Cantidad">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row row-sm">
+                            <div class="col-lg">
                                 <label for="">Producto</label>
                                 <select class="form-select" id="producto_gestion">
                                     <option value="">Seleccione una opción</option>
@@ -208,14 +225,11 @@
                         <br>
                         <div class="row row-sm">
                             <div class="col-lg">
-                                <label for="">Elemento (Serial)</label>
+                                <label for="">Serial (Elemento)</label>
                                 <select class="form-select" id="elemento_gestion">
                                     <option value="">Seleccione un opción</option>
                                 </select>
                             </div>
-                        </div>
-                        <br>
-                        <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Cantidad</label>
                                 <input type="number" disabled class="form-control" min="1" step="1"
@@ -319,7 +333,17 @@
                     <div class="modal-body">
                         <input type="hidden" disabled readonly id="solicitudid">
                         <div class="row row-sm">
-                            <div class="col-lg">
+                            <div class="col-4">
+                                <label for="">Motivo</label>
+                                <select id="tiposalida_selectedit" class="form-select">
+                                    <option value="*">Seleccione una opción</option>
+                                    <option value="1">Alquiler</option>
+                                    <option value="3">Préstamo</option>
+                                    <option value="4">Instalación</option>
+                                    <option value="5">Venta</option>
+                                </select>
+                            </div>
+                            <div class="col-8">
                                 <label for="">Cliente</label>
                                 <select class="form-select" id="clienteedit">
                                     <option value="">Seleccione un cliente</option>

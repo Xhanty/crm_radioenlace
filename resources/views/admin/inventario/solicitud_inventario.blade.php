@@ -133,7 +133,17 @@
                     </div>
                     <div class="modal-body">
                         <div class="row row-sm">
-                            <div class="col-lg">
+                            <div class="col-4">
+                                <label for="">Motivo</label>
+                                <select id="tiposalida_selectadd" class="form-select">
+                                    <option value="*">Seleccione una opción</option>
+                                    <option value="1">Alquiler</option>
+                                    <option value="3">Préstamo</option>
+                                    <option value="4">Instalación</option>
+                                    <option value="5">Venta</option>
+                                </select>
+                            </div>
+                            <div class="col-8">
                                 <label for="">Cliente</label>
                                 <select class="form-select" id="clienteadd">
                                     <option value="">Seleccione un cliente</option>
@@ -189,7 +199,17 @@
                     </div>
                     <div class="modal-body">
                         <div class="row row-sm">
-                            <div class="col-lg">
+                            <div class="col-4">
+                                <label for="">Motivo</label>
+                                <select id="tiposalida_selectview" disabled class="form-select">
+                                    <option value="*">Seleccione una opción</option>
+                                    <option value="1">Alquiler</option>
+                                    <option value="3">Préstamo</option>
+                                    <option value="4">Instalación</option>
+                                    <option value="5">Venta</option>
+                                </select>
+                            </div>
+                            <div class="col-8">
                                 <label for="">Cliente</label>
                                 <select class="form-select" id="clienteview" disabled>
                                     <option value="">Seleccione un cliente</option>
@@ -227,7 +247,17 @@
                     <div class="modal-body">
                         <input type="hidden" disabled readonly id="solicitudid">
                         <div class="row row-sm">
-                            <div class="col-lg">
+                            <div class="col-4">
+                                <label for="">Motivo</label>
+                                <select id="tiposalida_selectedit" class="form-select">
+                                    <option value="*">Seleccione una opción</option>
+                                    <option value="1">Alquiler</option>
+                                    <option value="3">Préstamo</option>
+                                    <option value="4">Instalación</option>
+                                    <option value="5">Venta</option>
+                                </select>
+                            </div>
+                            <div class="col-8">
                                 <label for="">Cliente</label>
                                 <select class="form-select" id="clienteedit">
                                     <option value="">Seleccione un cliente</option>
