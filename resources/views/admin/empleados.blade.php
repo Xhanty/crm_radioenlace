@@ -12,7 +12,7 @@
 
         <!-- Input Clave Admin -->
         <input type="hidden" disabled readonly id="clave_empleados_admin"
-            value="{{ auth()->user()->hasPermissionTo('clave_empleados') }}">
+            value="{{ auth()->user()->hasPermissionTo('gestionar_empleados') }}">
 
         <!-- breadcrumb -->
         <div class="breadcrumb-header justify-content-between">
