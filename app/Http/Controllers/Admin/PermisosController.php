@@ -17,7 +17,7 @@ class PermisosController extends Controller
                 return redirect()->route('home');
             }
 
-            $empleados = DB::table("empleados")->where("status", 1)->get();
+            $empleados = DB::table("empleados")->where("status", 1)->orderBy("nombre", "asc")->get();
             return view('permisos', compact('empleados'));
         } catch (Exception $ex) {
             return view('errors.500');
