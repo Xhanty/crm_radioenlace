@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-03-2023 a las 22:52:12
+-- Tiempo de generación: 07-03-2023 a las 22:50:38
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.1.12
 
@@ -4937,7 +4937,8 @@ CREATE TABLE `cotizaciones` (
 INSERT INTO `cotizaciones` (`id`, `code`, `cliente_id`, `descripcion`, `incluye`, `validez`, `duracion`, `forma_pago`, `tiempo_entrega`, `descuento`, `garantia`, `envio`, `status`, `aprobado`, `fecha_revision`, `created_by`, `created_at`) VALUES
 (1, 1, 13, 'Se realizara la instalación en planta', '2 cables y una fuente', '7 días', NULL, 'Crédito', NULL, NULL, '6 meses', 'rrrr', 1, 0, '2023-02-13', 1, '2023-01-30 10:46:07'),
 (3, 2, 14, 'Respetados señores, Gracias por contar con nosotros, por medio de la presente me permito realizar la siguiente cotización, consistente en la Venta un sistema poc. La tecnología PoC, permite llevar a cabo la comunicación de grupos o flotas usando las redes basadas en la web convencional, ampliando la red de cobertura y ofreciendo una mayor flexibilidad Tecnología PoC, permite llevar a cabo la comunicación de grupos o flotas usando las redes basadas en la web convencional, ampliando la red de cobertura y ofreciendo una mayor flexibilidad El sistema Poc se conecta a una plataforma o consola donde podrá administrar toda la operación mediante el aplicativo con el que podrá realizar todo el control de operación el cual necesita ser combinada con una conexión a un servidor Poc que va integrada a cada radio Poc que a su vez tienen que tener una conexión de red mediante una sim', 'Todos los gastos asociados al buen funcionamiento de los equipos alquilados', '2 días', NULL, 'Contado', NULL, NULL, '12 meses', 'Incluido', 0, 0, NULL, 1, '2023-02-13 08:44:04'),
-(4, 3, 11, 'Respetados señores, Gracias por contar con nosotros, por medio de la presente me permito realizar la siguiente cotización, consistente en la Venta un sistema poc. La tecnología PoC, permite llevar a cabo la comunicación de grupos o flotas usando las redes basadas en la web convencional, ampliando la red de cobertura y ofreciendo una mayor flexibilidad Tecnología PoC, permite llevar a cabo la comunicación de grupos o flotas usando las redes basadas en la web convencional, ampliando la red de cobertura y ofreciendo una mayor flexibilidad El sistema Poc se conecta a una plataforma o consola donde podrá administrar toda la operación mediante el aplicativo con el que podrá realizar todo el control de operación el cual necesita ser combinada con una conexión a un servidor Poc que va integrada a cada radio Poc que a su vez tienen que tener una conexión de red mediante una sim', 'asdasd', 'asdasd', NULL, 'asdsad', NULL, NULL, NULL, NULL, 1, 0, '2023-02-23', 1, '2023-02-13 11:10:38');
+(4, 3, 11, 'Respetados señores, Gracias por contar con nosotros, por medio de la presente me permito realizar la siguiente cotización, consistente en la Venta un sistema poc. La tecnología PoC, permite llevar a cabo la comunicación de grupos o flotas usando las redes basadas en la web convencional, ampliando la red de cobertura y ofreciendo una mayor flexibilidad Tecnología PoC, permite llevar a cabo la comunicación de grupos o flotas usando las redes basadas en la web convencional, ampliando la red de cobertura y ofreciendo una mayor flexibilidad El sistema Poc se conecta a una plataforma o consola donde podrá administrar toda la operación mediante el aplicativo con el que podrá realizar todo el control de operación el cual necesita ser combinada con una conexión a un servidor Poc que va integrada a cada radio Poc que a su vez tienen que tener una conexión de red mediante una sim', 'asdasd', 'asdasd', NULL, 'asdsad', NULL, NULL, NULL, NULL, 1, 0, '2023-02-23', 1, '2023-02-13 11:10:38'),
+(8, 4, 11, NULL, NULL, 'asd', 'asd', 'asd', 'asd', NULL, NULL, NULL, 0, 0, NULL, 1, '2023-03-07 16:34:03');
 
 -- --------------------------------------------------------
 
@@ -5158,6 +5159,7 @@ CREATE TABLE `detalle_cotizaciones` (
   `iva` varchar(255) DEFAULT '0',
   `retencion` varchar(255) DEFAULT '0',
   `tipo_pago` int(1) NOT NULL DEFAULT 0,
+  `img_grande` int(1) NOT NULL DEFAULT 0,
   `descripcion` text DEFAULT NULL,
   `created_by` int(11) NOT NULL,
   `created_at` datetime NOT NULL
@@ -5167,11 +5169,12 @@ CREATE TABLE `detalle_cotizaciones` (
 -- Volcado de datos para la tabla `detalle_cotizaciones`
 --
 
-INSERT INTO `detalle_cotizaciones` (`id`, `producto_id`, `cotizacion_id`, `tipo_divisa`, `cantidad`, `tipo_transaccion`, `precio`, `iva`, `retencion`, `tipo_pago`, `descripcion`, `created_by`, `created_at`) VALUES
-(25, 1, 1, 1, 1, 1, '10000', '0', '0', 1, NULL, 1, '2023-02-13 10:44:04'),
-(63, 2, 3, 2, 2, 2, '15000', '19', '0', 0, 'Alquiler mensual de una repetidora digital Motorola con todos sus accesorios necesarios para su optimo funcionamiento, incluye Repetidora digital Motorola – Licencias IP Site connect – GPS mejorado - paneles solares - Antena 4 dipolos Andrew Americana.', 1, '2023-02-15 12:43:00'),
-(64, 3, 3, 2, 2, 1, '2000', '0', '10', 0, 'Alquiler mensual de una repetidora digital Motorola con todos sus accesorios necesarios para su optimo funcionamiento, incluye Repetidora digital Motorola – Licencias IP Site connect – GPS mejorado - paneles solares - Antena 4 dipolos Andrew Americana.', 1, '2023-02-15 12:43:00'),
-(65, 2, 4, 1, 2, 2, '232333', '16', '10', 1, NULL, 1, '2023-02-15 12:43:10');
+INSERT INTO `detalle_cotizaciones` (`id`, `producto_id`, `cotizacion_id`, `tipo_divisa`, `cantidad`, `tipo_transaccion`, `precio`, `iva`, `retencion`, `tipo_pago`, `img_grande`, `descripcion`, `created_by`, `created_at`) VALUES
+(25, 1, 1, 1, 1, 1, '10000', '0', '0', 1, 0, NULL, 1, '2023-02-13 10:44:04'),
+(65, 2, 4, 1, 2, 2, '232333', '16', '10', 1, 0, NULL, 1, '2023-02-15 12:43:10'),
+(74, 1, 8, 1, 23, 1, '232323', '2', '0', 1, 1, 'asdasd', 1, '2023-03-07 16:34:03'),
+(75, 2, 3, 2, 2, 2, '15000', '19', '0', 0, 0, 'Alquiler mensual de una repetidora digital Motorola con todos sus accesorios necesarios para su optimo funcionamiento, incluye Repetidora digital Motorola – Licencias IP Site connect – GPS mejorado - paneles solares - Antena 4 dipolos Andrew Americana.', 1, '2023-03-07 16:44:46'),
+(76, 3, 3, 2, 2, 1, '2000', '0', '10', 0, 1, 'Alquiler mensual de una repetidora digital Motorola con todos sus accesorios necesarios para su optimo funcionamiento, incluye Repetidora digital Motorola – Licencias IP Site connect – GPS mejorado - paneles solares - Antena 4 dipolos Andrew Americana.', 1, '2023-03-07 16:44:46');
 
 -- --------------------------------------------------------
 
@@ -9139,8 +9142,7 @@ INSERT INTO `tipos_regimenes` (`id`, `code`, `nombre`, `status`, `created_by`, `
 (2, '002', 'Responsable de IVA', 1, 1, '2023-02-22 18:06:22'),
 (3, '003', 'No Responsable de IVA', 1, 1, '2023-02-22 18:06:22'),
 (4, '004', 'Empresa del Estado', 1, 1, '2023-02-22 18:06:22'),
-(5, '099', 'Régimen simple ded tributación', 1, 1, '2023-02-22 18:06:22'),
-(6, '1111', '1111', 0, 1, '2023-02-22 22:10:52');
+(5, '099', 'Régimen simple ded tributación', 1, 1, '2023-02-22 18:06:22');
 
 -- --------------------------------------------------------
 
@@ -9721,7 +9723,7 @@ ALTER TABLE `contador`
 -- AUTO_INCREMENT de la tabla `cotizaciones`
 --
 ALTER TABLE `cotizaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `datos_facturacion`
@@ -9751,7 +9753,7 @@ ALTER TABLE `departamentos`
 -- AUTO_INCREMENT de la tabla `detalle_cotizaciones`
 --
 ALTER TABLE `detalle_cotizaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_ordenes`
