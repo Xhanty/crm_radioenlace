@@ -126,6 +126,7 @@ class CotizacionController extends Controller
             $ivas = $request->ivas;
             $retenciones = $request->retenciones;
             $tipo_pago = $request->tipo_pago;
+            $img_grandes = $request->img_grande; 
             $descripciones = $request->descripciones;
 
             $code = DB::table('cotizaciones')->max('code') + 1;
@@ -159,6 +160,7 @@ class CotizacionController extends Controller
                             'iva' => $ivas[$key] ? $ivas[$key] : 0,
                             'retencion' => $retenciones[$key] ? $retenciones[$key] : 0,
                             'tipo_pago' => $tipo_pago[$key],
+                            'img_grande' => $img_grandes[$key] ? $img_grandes[$key] : 0,
                             'descripcion' => $descripciones[$key] ? $descripciones[$key] : null,
                             'created_by' => auth()->user()->id,
                             'created_at' => date('Y-m-d H:i:s'),
@@ -202,6 +204,7 @@ class CotizacionController extends Controller
             $ivas = $request->ivas;
             $retenciones = $request->retenciones;
             $tipo_pago = $request->tipo_pago;
+            $img_grandes = $request->img_grande; 
             $descripciones = $request->descripciones;
 
             DB::table("cotizaciones")->where('id', $cotizacion)->update([
@@ -231,6 +234,7 @@ class CotizacionController extends Controller
                         'iva' => $ivas[$key] ? $ivas[$key] : 0,
                         'retencion' => $retenciones[$key] ? $retenciones[$key] : 0,
                         'tipo_pago' => $tipo_pago[$key],
+                        'img_grande' => $img_grandes[$key] ? $img_grandes[$key] : 0,
                         'descripcion' => $descripciones[$key] ? $descripciones[$key] : null,
                         'created_by' => auth()->user()->id,
                         'created_at' => date('Y-m-d H:i:s'),

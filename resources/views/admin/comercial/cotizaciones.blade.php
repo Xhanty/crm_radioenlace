@@ -178,7 +178,7 @@
 
         <!-- Modal Add -->
         <div class="modal  fade" id="modalAdd">
-            <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
                         <h6 class="modal-title">Crear Cotización</h6>
@@ -305,8 +305,10 @@
                                                     </div>
                                                     <input type="checkbox" class="mt-3 tipo_pago_add" data-value="0">
                                                     Pago Único
-                                                    <input type="checkbox" style="margin-left: 92px;"
+                                                    <input type="checkbox" style="margin-left: 100px;"
                                                         class="mt-3 tipo_pago_add" data-value="1"> Pago Mensual
+                                                    <input type="checkbox" style="margin-left: 100px;"
+                                                        class="mt-3 imagen_grande_add" data-value="1"> Imagen Grande
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="d-flex">
@@ -329,7 +331,7 @@
                                                                 </select>
                                                             </div>
                                                             <textarea title="Descripción" class="form-control mt-3 descripcion_add" placeholder="Descripción" rows="3"
-                                                                style="height: 80px; resize: none"></textarea>
+                                                                style="height: 100px; resize: none"></textarea>
                                                         </div>
                                                         <div class="d-flex">
                                                             <a class="center-vertical mg-s-10" href="javascript:void(0)"
@@ -366,7 +368,7 @@
 
         <!-- Modal View -->
         <div class="modal  fade" id="modalView">
-            <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
                         <h6 class="modal-title">Ver Cotización</h6>
@@ -489,7 +491,7 @@
 
         <!-- Modal Edit -->
         <div class="modal  fade" id="modalEdit">
-            <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
                         <h6 class="modal-title">Modificar Cotización</h6>

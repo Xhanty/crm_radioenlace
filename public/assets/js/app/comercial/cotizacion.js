@@ -37,7 +37,8 @@ $(document).ready(function () {
         'placeholder="Retención (%)">' +
         "</div>" +
         '<input type="checkbox" class="mt-3 tipo_pago_add" data-value="0"> Pago Único' +
-        '<input type="checkbox" style="margin-left: 92px;" class="mt-3 tipo_pago_add" data-value="1"> Pago Mensual' +
+        '<input type="checkbox" style="margin-left: 100px;" class="mt-3 tipo_pago_add" data-value="1"> Pago Mensual' +
+        '<input type="checkbox" style="margin-left: 100px;" class="mt-3 imagen_grande_add" data-value="1"> Imagen Grande' +
         "</div>" +
         '<div class="col-6">' +
         '<div class="d-flex">' +
@@ -59,7 +60,7 @@ $(document).ready(function () {
         "</select>" +
         "</div>" +
         '<textarea title="Descripción" class="form-control mt-3 descripcion_add" placeholder="Descripción" rows="3"' +
-        'style="height: 80px; resize: none"></textarea>' +
+        'style="height: 100px; resize: none"></textarea>' +
         "</div>" +
         '<div class="d-flex">' +
         '<a class="center-vertical mg-s-10 delete_row_producto" href="javascript:void(0)">' +
@@ -99,7 +100,8 @@ $(document).ready(function () {
         'placeholder="Retención (%)">' +
         "</div>" +
         '<input type="checkbox" class="mt-3 tipo_pago_edit" data-value="0"> Pago Único' +
-        '<input type="checkbox" style="margin-left: 92px;" class="mt-3 tipo_pago_edit" data-value="1"> Pago Mensual' +
+        '<input type="checkbox" style="margin-left: 100px;" class="mt-3 tipo_pago_edit" data-value="1"> Pago Mensual' +
+        '<input type="checkbox" style="margin-left: 100px;" class="mt-3 imagen_grande_edit" data-value="1"> Imagen Grande' +
         "</div>" +
         '<div class="col-6">' +
         '<div class="d-flex">' +
@@ -121,7 +123,7 @@ $(document).ready(function () {
         "</select>" +
         "</div>" +
         '<textarea title="Descripción" class="form-control mt-3 descripcion_edit" placeholder="Descripción" rows="3"' +
-        'style="height: 80px; resize: none"></textarea>' +
+        'style="height: 100px; resize: none"></textarea>' +
         "</div>" +
         '<div class="d-flex">' +
         '<a class="center-vertical mg-s-10 delete_edit_row_producto" href="javascript:void(0)">' +
@@ -295,6 +297,7 @@ $(document).ready(function () {
         let ivas = [];
         let retenciones = [];
         let tipo_pago = [];
+        let img_grande = [];
         let descripciones = [];
 
         $(".producto_add").each(function () {
@@ -369,6 +372,14 @@ $(document).ready(function () {
             count_2++;
         });
 
+        $(".imagen_grande_add").each(function () {
+            if ($(this).is(":checked")) {
+                img_grande.push(1);
+            } else {
+                img_grande.push(0);
+            }
+        });
+
         $(".descripcion_add").each(function () {
             descripciones.push($(this).val());
         });
@@ -406,6 +417,7 @@ $(document).ready(function () {
                     retenciones: retenciones,
                     descripciones: descripciones,
                     tipo_pago: tipo_pago,
+                    img_grande: img_grande,
                     garantia: garantia,
                     envio: envio,
                 },
@@ -456,6 +468,7 @@ $(document).ready(function () {
         let ivas = [];
         let retenciones = [];
         let tipo_pago = [];
+        let img_grande = [];
         let descripciones = [];
 
         $(".producto_edit").each(function () {
@@ -530,6 +543,14 @@ $(document).ready(function () {
             count_2++;
         });
 
+        $(".imagen_grande_edit").each(function () {
+            if($(this).is(":checked")){
+                img_grande.push(1);
+            }else{
+                img_grande.push(0);
+            }
+        });
+
         $(".descripcion_edit").each(function () {
             descripciones.push($(this).val());
         });
@@ -568,6 +589,7 @@ $(document).ready(function () {
                     retenciones: retenciones,
                     descripciones: descripciones,
                     tipo_pago: tipo_pago,
+                    img_grande: img_grande,
                     garantia: garantia,
                     envio: envio,
                 },
@@ -621,11 +643,16 @@ $(document).ready(function () {
                         for (let i = 0; i < productos.length; i++) {
                             let check1 = "";
                             let check2 = "";
+                            let check3 = "";
 
                             if (productos[i].tipo_pago == 0) {
                                 check1 = "checked";
                             } else if (productos[i].tipo_pago == 1) {
                                 check2 = "checked";
+                            }
+
+                            if (productos[i].img_grande == 1) {
+                                check3 = "checked";
                             }
 
                             let tipo = productos[i].tipo_transaccion;
@@ -662,7 +689,8 @@ $(document).ready(function () {
                                                 placeholder="Retención (%)">
                                             </div>
                                             <input type="checkbox" disabled class="mt-3" ${check1} data-value="0"> Pago Único
-                                            <input type="checkbox" disabled style="margin-left: 92px;" ${check2} class="mt-3" data-value="1"> Pago Mensual
+                                            <input type="checkbox" disabled style="margin-left: 100px;" ${check2} class="mt-3" data-value="1"> Pago Mensual
+                                            <input type="checkbox" disabled style="margin-left: 100px;" ${check3} class="mt-3" data-value="1"> Imagen Grande
                                         </div>
                                         <div class="col-6">
                                             <div class="d-flex">
@@ -675,7 +703,7 @@ $(document).ready(function () {
                                                             <option value="1">${tipo}</option>
                                                         </select>
                                                     </div>
-                                                    <textarea title="Descripción" disabled class="form-control mt-3" placeholder="Descripción" rows="3" style="height: 80px; resize: none">${productos[i].descripcion ? productos[i].descripcion : ''}</textarea>
+                                                    <textarea title="Descripción" disabled class="form-control mt-3" placeholder="Descripción" rows="3" style="height: 100px; resize: none">${productos[i].descripcion ? productos[i].descripcion : ''}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -734,11 +762,16 @@ $(document).ready(function () {
                         for (let i = 0; i < productos_data.length; i++) {
                             let check1 = "";
                             let check2 = "";
+                            let check3 = "";
 
                             if (productos_data[i].tipo_pago == 0) {
                                 check1 = "checked";
                             } else if (productos_data[i].tipo_pago == 1) {
                                 check2 = "checked";
+                            }
+
+                            if (productos_data[i].img_grande == 1) {
+                                check3 = "checked";
                             }
 
                             let button = '<div class="d-flex">' +
@@ -784,7 +817,8 @@ $(document).ready(function () {
                                                 placeholder="Retención (%)">
                                             </div>
                                             <input type="checkbox" class="mt-3 tipo_pago_edit" ${check1} data-value="0"> Pago Único
-                                            <input type="checkbox" style="margin-left: 92px;" ${check2} class="mt-3 tipo_pago_edit" data-value="1"> Pago Mensual
+                                            <input type="checkbox" style="margin-left: 100px;" ${check2} class="mt-3 tipo_pago_edit" data-value="1"> Pago Mensual
+                                            <input type="checkbox" style="margin-left: 100px;" ${check3} class="mt-3 imagen_grande_edit" data-value="1"> Imagen Grande
                                         </div>
                                         <div class="col-6">
                                             <div class="d-flex">
@@ -803,7 +837,7 @@ $(document).ready(function () {
                                                             <option value="4">Visita Tecnica</option>
                                                         </select>
                                                     </div>
-                                                    <textarea title="Descripción" class="form-control mt-3 descripcion_edit" placeholder="Descripción" rows="3" style="height: 80px; resize: none">${productos_data[i].descripcion ? productos_data[i].descripcion : ''}</textarea>
+                                                    <textarea title="Descripción" class="form-control mt-3 descripcion_edit" placeholder="Descripción" rows="3" style="height: 100px; resize: none">${productos_data[i].descripcion ? productos_data[i].descripcion : ''}</textarea>
                                                 </div>
                                                 ${button}
                                             </div>
