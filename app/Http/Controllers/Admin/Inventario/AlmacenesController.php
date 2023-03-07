@@ -157,4 +157,32 @@ class AlmacenesController extends Controller
 
         return $almacenes;
     }
+
+    public function get_inventario(Request $request)
+    {
+        try {
+            $almacen = $request->id;
+
+            $productos = DB::table('movimientos_inventario')
+                ->select(
+                    'inventario.id',
+                    'productos.nombre',
+                    'productos.marca',
+                    'productos.modelo',
+                    'inventario.codigo_interno',
+                    'movimientos_inventario.cantidad',
+                    'inventario.serial',
+                    'inventario.status'
+                )
+                ->join('inventario', 'inventario.id', '=', 'movimientos_inventario.inventario_id')
+                ->join('productos', 'productos.id', '=', 'inventario.producto_id')
+                ->where('movimientos_inventario.almacen_id', $almacen)
+                ->get();
+
+            return response()->json(['info' => 1, 'products' => $productos]);
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+            return response()->json(['info' => 0, 'error' => 'Error al actualizar el inventario.']);
+        }
+    }
 }

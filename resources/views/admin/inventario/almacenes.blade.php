@@ -42,6 +42,11 @@
                                     @foreach ($almacenes as $key => $almacen)
                                         <li><a href="javascript:void(0);">{{ $almacen->nombre }}</a>
                                             &nbsp;
+                                            <a href="javascript:void(0);" class="btn_ViewProducts"
+                                                data-nombre="{{ $almacen->nombre }}" data-id="{{ $almacen->id }}"
+                                                title="Ver Productos">
+                                                <i class="fe fe-package"></i>
+                                            </a>
                                             <a href="javascript:void(0);" class="btn_AddNivel" data-id="{{ $almacen->id }}"
                                                 title="Agregar">
                                                 <i class="fa fa-plus"></i>
@@ -61,6 +66,11 @@
                                                     @foreach ($almacen->almacenes as $sub2)
                                                         <li style="cursor: pointer">{{ $sub2->nombre }}
                                                             &nbsp;
+                                                            <a href="javascript:void(0);" class="btn_ViewProducts"
+                                                                data-nombre="{{ $sub2->nombre }}"
+                                                                data-id="{{ $sub2->id }}" title="Ver Productos">
+                                                                <i class="fe fe-package"></i>
+                                                            </a>
                                                             <a href="javascript:void(0);" class="btn_AddNivel"
                                                                 data-id="{{ $sub2->id }}" title="Agregar">
                                                                 <i class="fa fa-plus"></i>
@@ -80,6 +90,13 @@
                                                                     @foreach ($sub2->almacenes as $sub3)
                                                                         <li style="cursor: pointer">{{ $sub3->nombre }}
                                                                             &nbsp;
+                                                                            <a href="javascript:void(0);"
+                                                                                class="btn_ViewProducts"
+                                                                                data-nombre="{{ $sub3->nombre }}"
+                                                                                data-id="{{ $sub3->id }}"
+                                                                                title="Ver Productos">
+                                                                                <i class="fe fe-package"></i>
+                                                                            </a>
                                                                             <a href="javascript:void(0);"
                                                                                 class="btn_AddNivel"
                                                                                 data-id="{{ $sub3->id }}"
@@ -104,6 +121,14 @@
                                                                                         <li style="cursor: pointer">
                                                                                             {{ $sub4->nombre }}
                                                                                             &nbsp;
+                                                                                            <a href="javascript:void(0);"
+                                                                                                data-nombre="{{ $sub4->nombre }}"
+                                                                                                class="btn_ViewProducts"
+                                                                                                data-id="{{ $sub4->id }}"
+                                                                                                title="Ver Productos">
+                                                                                                <i
+                                                                                                    class="fe fe-package"></i>
+                                                                                            </a>
                                                                                             <a href="javascript:void(0);"
                                                                                                 class="btn_AddNivel"
                                                                                                 data-id="{{ $sub4->id }}"
@@ -132,6 +157,14 @@
                                                                                                             style="cursor: pointer">
                                                                                                             {{ $sub5->nombre }}
                                                                                                             &nbsp;
+                                                                                                            <a href="javascript:void(0);"
+                                                                                                                data-nombre="{{ $sub5->nombre }}"
+                                                                                                                class="btn_ViewProducts"
+                                                                                                                data-id="{{ $sub5->id }}"
+                                                                                                                title="Ver Productos">
+                                                                                                                <i
+                                                                                                                    class="fe fe-package"></i>
+                                                                                                            </a>
                                                                                                             <a href="javascript:void(0);"
                                                                                                                 class="btn_AddNivel"
                                                                                                                 data-id="{{ $sub5->id }}"
@@ -244,6 +277,47 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn ripple btn-primary" id="btnModificarAlmacen" type="button">Modificar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal View -->
+        <div class="modal  fade" id="modalViewProduct">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Ver Productos</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" disabled readonly id="id_almacen_view">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Almacén</label>
+                                <input class="form-control" id="almacenview" readonly placeholder="Almacén"
+                                    type="text">
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="table-responsive">
+                            <table class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t"
+                                id="tbl_seriales_view">
+                                <thead>
+                                    <tr>
+                                        <th class="border-bottom-0">Código<br>Interno</th>
+                                        <th class="border-bottom-0">Producto</th>
+                                        <th class="border-bottom-0">Serial</th>
+                                        <th class="border-bottom-0">Disponible</th>
+                                        <th class="border-bottom-0">Status</th>
+                                        <th class="border-bottom-0 text-center">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
