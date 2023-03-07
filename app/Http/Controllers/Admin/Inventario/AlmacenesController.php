@@ -172,10 +172,16 @@ class AlmacenesController extends Controller
                     'inventario.codigo_interno',
                     'movimientos_inventario.cantidad',
                     'inventario.serial',
-                    'inventario.status'
+                    'inventario.status',
+                    'movimientos_inventario.created_at'
                 )
                 ->join('inventario', 'inventario.id', '=', 'movimientos_inventario.inventario_id')
                 ->join('productos', 'productos.id', '=', 'inventario.producto_id')
+                ->whereIn('movimientos_inventario.id', function ($query) {
+                    $query->selectRaw('MAX(id)')
+                        ->from('movimientos_inventario')
+                        ->groupBy('inventario_id');
+                })
                 ->where('movimientos_inventario.almacen_id', $almacen)
                 ->get();
 
