@@ -216,6 +216,20 @@
             @endphp
 
             @for ($i = 0; $i < count($productos); $i++)
+
+            @if($cotizacion->id == 25)
+                @if($i == 0)
+                    <tr style="background: #eee">
+                        <td colspan="7" style="text-align: center; padding-top: 2%;"><b>Productos en calidad de alquiler</b></td>
+                    </tr>
+                @endif
+
+                @if($i == 3)
+                    <tr style="background: #eee">
+                        <td colspan="7" style="text-align: center; padding-top: 2%;"><b>Productos en calidad de venta</b></td>
+                    </tr>
+                @endif
+            @endif
                 @php
                     if ($productos[$i]->tipo_pago == 1) {
                         $total = $productos[$i]->cantidad * $productos[$i]->precio;

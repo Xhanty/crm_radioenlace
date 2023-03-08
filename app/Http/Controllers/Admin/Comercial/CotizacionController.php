@@ -309,7 +309,6 @@ class CotizacionController extends Controller
             ->select('detalle_cotizaciones.*', 'productos.nombre as producto', 'productos.imagen', 'productos.modelo')
             ->join('productos', 'productos.id', 'detalle_cotizaciones.producto_id')
             ->where('detalle_cotizaciones.cotizacion_id', $id)
-            ->orderByRaw('detalle_cotizaciones.precio * 1 DESC')
             ->get();
 
         $creador = DB::table('empleados')->where('id', $cotizacion->created_by)->first();
