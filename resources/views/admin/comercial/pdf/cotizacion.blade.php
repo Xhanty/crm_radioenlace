@@ -166,7 +166,11 @@
 
                 <tr class="details">
                     <td colspan="7" style="font-size: 15px; text-align: justify;">
-                        {{ $cotizacion->descripcion }}
+                        @php
+                            $texto = $cotizacion->descripcion;
+                            $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
+                            echo $texto_nuevo;
+                        @endphp
                     </td>
                 </tr>
             @endif
@@ -181,7 +185,11 @@
 
                 <tr class="details">
                     <td colspan="7" style="font-size: 15px; text-align: justify;">
-                        {{ $cotizacion->incluye }}
+                        @php
+                            $texto = $cotizacion->incluye;
+                            $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
+                            echo $texto_nuevo;
+                        @endphp
                     </td>
                 </tr>
             @endif
@@ -242,7 +250,11 @@
                         <tr class="item">
                             <td colspan="7">
                                 <p style="font-size: 14px; margin-top: 0px; text-align: justify">
-                                    {{ $productos[$i]->descripcion }}
+                                    @php
+                                        $texto = $productos[$i]->descripcion;
+                                        $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
+                                        echo $texto_nuevo;
+                                    @endphp
                                 </p>
                             </td>
                         </tr>
@@ -274,7 +286,11 @@
                         <tr class="item">
                             <td colspan="7">
                                 <p style="font-size: 14px; margin-top: 0px; text-align: justify">
-                                    {{ $productos[$i]->descripcion }}
+                                    @php
+                                        $texto = $productos[$i]->descripcion;
+                                        $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
+                                        echo $texto_nuevo;
+                                    @endphp
                                 </p>
                             </td>
                         </tr>
@@ -298,7 +314,11 @@
                         <tr class="item">
                             <td colspan="7">
                                 <p style="font-size: 14px; margin-top: 0px; text-align: justify">
-                                    {{ $productos[$i]->descripcion }}
+                                    @php
+                                        $texto = $productos[$i]->descripcion;
+                                        $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
+                                        echo $texto_nuevo;
+                                    @endphp
                                 </p>
                             </td>
                         </tr>
@@ -330,7 +350,11 @@
                         <tr class="item">
                             <td colspan="7">
                                 <p style="font-size: 14px; margin-top: 0px; text-align: justify">
-                                    {{ $productos[$i]->descripcion }}
+                                    @php
+                                        $texto = $productos[$i]->descripcion;
+                                        $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
+                                        echo $texto_nuevo;
+                                    @endphp
                                 </p>
                             </td>
                         </tr>
@@ -388,11 +412,19 @@
 
                 <tr class="details">
                     <td colspan="3" style="font-size: 15px;">
-                        {{ $cotizacion->duracion }}
+                        @php
+                            $texto = $cotizacion->duracion;
+                            $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
+                            echo $texto_nuevo;
+                        @endphp
                     </td>
 
                     <td colspan="4" style="font-size: 15px;">
-                        {{ $cotizacion->tiempo_entrega }}
+                        @php
+                            $texto = $cotizacion->tiempo_entrega;
+                            $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
+                            echo $texto_nuevo;
+                        @endphp
                     </td>
                 </tr>
             @endif
@@ -410,11 +442,19 @@
 
                 <tr class="details">
                     <td colspan="3" style="font-size: 15px">
-                        {{ $cotizacion->validez }}
+                        @php
+                            $texto = $cotizacion->validez;
+                            $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
+                            echo $texto_nuevo;
+                        @endphp
                     </td>
 
                     <td colspan="4" style="font-size: 15px">
-                        {{ $cotizacion->forma_pago }}
+                        @php
+                            $texto = $cotizacion->forma_pago;
+                            $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
+                            echo $texto_nuevo;
+                        @endphp
                     </td>
                 </tr>
             @endif
@@ -435,7 +475,11 @@
                 </td>
 
                 <td colspan="5" style="font-size: 15px">
-                    {{ $cotizacion->garantia }}
+                    @php
+                        $texto = $cotizacion->garantia;
+                        $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
+                        echo $texto_nuevo;
+                    @endphp
                 </td>
             </tr>
 
@@ -448,7 +492,11 @@
 
                 <tr class="details">
                     <td colspan="7" style="font-size: 15px;">
-                        {{ $cotizacion->envio }}
+                        @php
+                            $texto = $cotizacion->envio;
+                            $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
+                            echo $texto_nuevo;
+                        @endphp
                     </td>
                 </tr>
             @endif

@@ -123,7 +123,8 @@
                     <table>
                         <tr>
                             <td class="title">
-                                <img src="https://radioenlacesas.com/wp-content/uploads/2017/08/cropped-logoradioenlace-2.png" style="width:100%; max-width:80px;">
+                                <img src="https://radioenlacesas.com/wp-content/uploads/2017/08/cropped-logoradioenlace-2.png"
+                                    style="width:100%; max-width:80px;">
                             </td>
 
                             <td>
@@ -156,18 +157,22 @@
             </tr>
 
             @if ($orden->descripcion)
-            <tr class="heading">
-                <td colspan="7">
-                    Descripción
-                </td>
-            </tr>
+                <tr class="heading">
+                    <td colspan="7">
+                        Descripción
+                    </td>
+                </tr>
 
 
-            <tr class="details">
-                <td colspan="7" style="font-size: 15px; text-align: justify;">
-                    {{ $orden->descripcion }}
-                </td>
-            </tr>
+                <tr class="details">
+                    <td colspan="7" style="font-size: 15px; text-align: justify;">
+                        @php
+                            $texto = $orden->descripcion;
+                            $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
+                            echo $texto_nuevo;
+                        @endphp
+                    </td>
+                </tr>
             @endif
 
             <tr class="heading">
@@ -181,140 +186,162 @@
             </tr>
 
             @php
-            $subtotal = 0;
-            $total_todo = 0;
-            $iva = 0;
-            $retencion = 0;
+                $subtotal = 0;
+                $total_todo = 0;
+                $iva = 0;
+                $retencion = 0;
             @endphp
 
-            @for ($i = 0; $i < count($productos); $i++) @php //$total=$productos[$i]->cantidad * $productos[$i]->precio;
-                $total = $productos[$i]->precio * $productos[$i]->cantidad;
-                $total2 = $productos[$i]->precio * $productos[$i]->cantidad;
-                $total = $total + ($total * $productos[$i]->iva / 100);
-                $total = $total - ($total2 * $productos[$i]->retencion / 100);
-                $subtotal += $total2;
-                $total_todo += $total;
-
-                $iva += $total2 * ($productos[$i]->iva / 100);
-                $retencion += $total2 * ($productos[$i]->retencion / 100);
-
-                if ($productos[$i]->imagen == null || $productos[$i]->imagen == '') {
-                $productos[$i]->imagen = 'noimagen.png';
-                }
+            @for ($i = 0; $i < count($productos); $i++)
+                @php//$total=$productos[$i]->cantidad * $productos[$i]->precio;
+                    $total = $productos[$i]->precio * $productos[$i]->cantidad;
+                    $total2 = $productos[$i]->precio * $productos[$i]->cantidad;
+                    $total = $total + ($total * $productos[$i]->iva) / 100;
+                    $total = $total - ($total2 * $productos[$i]->retencion) / 100;
+                    $subtotal += $total2;
+                    $total_todo += $total;
+                    
+                    $iva += $total2 * ($productos[$i]->iva / 100);
+                    $retencion += $total2 * ($productos[$i]->retencion / 100);
+                    
+                    if ($productos[$i]->imagen == null || $productos[$i]->imagen == '') {
+                        $productos[$i]->imagen = 'noimagen.png';
+                    }
                 @endphp
                 @if ($i == count($productos) - 1)
-                <tr>
-                    <td style="text-align: center; padding-top: 2%;">
-                        <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}" style="width:100%; max-width:100px; max-height: 120px">
-                    </td>
-                    <td style="text-align: center; padding-top: 3%;">
-                        <b>{{ $productos[$i]->producto }}</b><br>
-                        <b>{{ $productos[$i]->modelo }}</b>
-                    </td>
-                    <td style="text-align: center; padding-top: 3%">{{ $productos[$i]->cantidad }}</td>
-                    <td style="padding-top: 3%; text-align: center;">{{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
-                    <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
-                    <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>
-                    <td class="text-align-right" style="padding-top: 3%">{{ number_format($total, 0, ',', '.') }}
-                    </td>
-                </tr>
-                <tr class="item">
-                    <td colspan="7">
-                        <p style="font-size: 14px; margin-top: 0px; text-align: justify">
-                            {{ $productos[$i]->descripcion }}
-                        </p>
-                    </td>
-                </tr>
-                @else
-                <tr>
-                    <td style="text-align: center; padding-top: 2%;">
-                        <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}" style="width:100%; max-width:100px; max-height: 120px">
-                    </td>
-                    <td style="text-align: center; padding-top: 3%;">
-                        <b>{{ $productos[$i]->producto }}</b> <br>
-                        <b>{{ $productos[$i]->modelo }}</b>
-                    </td>
-                    <td style="text-align: center; padding-top: 3%;">{{ $productos[$i]->cantidad }}</td>
-                    <td style="padding-top: 3%; text-align: center;">
-                        {{ number_format($productos[$i]->precio, 0, ',', '.') }}
-                    </td>
-                    <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
-                    <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>
-                    <td class="text-align-right" style="padding-top: 3%">{{ number_format($total, 0, ',', '.') }}
-                    </td>
-                </tr>
-                <tr class="item">
-                    <td colspan="7">
-                        <p style="font-size: 14px; margin-top: 0px; text-align: justify">
-                            {{ $productos[$i]->descripcion }}
-                        </p>
-                    </td>
-                </tr>
-                @endif
-                @endfor
-
-                <tr class="total">
-                    <td colspan="7" class="text-align-right">
-                        Subtotal: {{ number_format($subtotal, 0, ',', '.') }}<br />
-                        Iva: {{ number_format($iva, 0, ',', '.') }}<br />
-                        Retención: {{ number_format($retencion, 0, ',', '.') }}<br />
-                        <b>Total: {{ number_format($total_todo, 0, ',', '.') }}</b>
-                    </td>
-                </tr>
-
-                <br>
-
-                <table cellpadding="0" width="500px" style="border-collapse: collapse; font-size: 14.4px; bottom: 80; position: fixed;">
                     <tr>
-                        <td style="margin: 0.1px; padding: 0px;">
-                            <table cellpadding="0" style="border-collapse: collapse; font-size: 18px;">
-                                <tr>
-                                    <td valign="top">
-                                        <img src="https://radioenlacesas.com/wp-content/uploads/2017/08/cropped-logoradioenlace-2.png" width="120" style="display: block;">
-                                    </td>
-                                    <td valign="top" style="border-left: 1px solid rgb(176, 70, 70); margin: 0.1px; padding: 0px 0px 0px 12px; color: rgb(124, 124, 124);">
-                                        <table cellpadding="0" style="border-collapse: collapse;">
-                                            <tr>
-                                                <td style="margin: 0.1px; padding: 0px 0px 8px; color: #DD3932; font-size: 18px; margin-top: 5px">
-                                                    {{ $creador->nombre }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="margin: 0.9px; padding: 0px;">
-                                                    <table cellpadding="0" style="border-collapse: collapse;">
-                                                        <tr style="cursor: pointer;">
-                                                            <td style="margin: 0.1px; padding: 0px 5px 0px 0px; color: rgb(124, 124, 124);;">
-                                                                {{ $creador->cargo }} <br>
-                                                                Email: {{ $creador->email }}
-                                                            </td>
-                                                            <td style="margin: 0.1px; padding: 0px; color: rgb(124, 124, 124);">
-                                                            </td>
-                                                        </tr>
-                                                        <tr style="cursor: pointer;">
-                                                            <td style="margin: 0.1px; padding: 0px 5px 0px 0px; color: rgb(124, 124, 124);;">
-                                                                Dirección: Medellín, Colombia
-                                                            </td>
-                                                            <td style="margin: 0.1px; padding: 0px; color: rgb(124, 124, 124);">
-                                                            </td>
-                                                        </tr>
-                                                        <tr style="cursor: pointer; text-align: left;">
-                                                            <td style="margin: 0.1px; padding: 0px 5px 0px 0px; color: rgb(124, 124, 124);;">
-                                                                Celular: {{ $creador->telefono_celular }}
-                                                            </td>
-                                                            <td style="margin: 0.1px; padding: 0px; color: rgb(124, 124, 124);; text-align: left;">
-
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
+                        <td style="text-align: center; padding-top: 2%;">
+                            <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
+                                style="width:100%; max-width:100px; max-height: 120px">
+                        </td>
+                        <td style="text-align: center; padding-top: 3%;">
+                            <b>{{ $productos[$i]->producto }}</b><br>
+                            <b>{{ $productos[$i]->modelo }}</b>
+                        </td>
+                        <td style="text-align: center; padding-top: 3%">{{ $productos[$i]->cantidad }}</td>
+                        <td style="padding-top: 3%; text-align: center;">
+                            {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
+                        <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
+                        <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>
+                        <td class="text-align-right" style="padding-top: 3%">{{ number_format($total, 0, ',', '.') }}
                         </td>
                     </tr>
-                </table>
+                    <tr class="item">
+                        <td colspan="7">
+                            <p style="font-size: 14px; margin-top: 0px; text-align: justify">
+                                @php
+                                    $texto = $productos[$i]->descripcion;
+                                    $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
+                                    echo $texto_nuevo;
+                                @endphp
+                            </p>
+                        </td>
+                    </tr>
+                @else
+                    <tr>
+                        <td style="text-align: center; padding-top: 2%;">
+                            <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
+                                style="width:100%; max-width:100px; max-height: 120px">
+                        </td>
+                        <td style="text-align: center; padding-top: 3%;">
+                            <b>{{ $productos[$i]->producto }}</b> <br>
+                            <b>{{ $productos[$i]->modelo }}</b>
+                        </td>
+                        <td style="text-align: center; padding-top: 3%;">{{ $productos[$i]->cantidad }}</td>
+                        <td style="padding-top: 3%; text-align: center;">
+                            {{ number_format($productos[$i]->precio, 0, ',', '.') }}
+                        </td>
+                        <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
+                        <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>
+                        <td class="text-align-right" style="padding-top: 3%">{{ number_format($total, 0, ',', '.') }}
+                        </td>
+                    </tr>
+                    <tr class="item">
+                        <td colspan="7">
+                            <p style="font-size: 14px; margin-top: 0px; text-align: justify">
+                                @php
+                                    $texto = $productos[$i]->descripcion;
+                                    $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
+                                    echo $texto_nuevo;
+                                @endphp
+                            </p>
+                        </td>
+                    </tr>
+                @endif
+            @endfor
+
+            <tr class="total">
+                <td colspan="7" class="text-align-right">
+                    Subtotal: {{ number_format($subtotal, 0, ',', '.') }}<br />
+                    Iva: {{ number_format($iva, 0, ',', '.') }}<br />
+                    Retención: {{ number_format($retencion, 0, ',', '.') }}<br />
+                    <b>Total: {{ number_format($total_todo, 0, ',', '.') }}</b>
+                </td>
+            </tr>
+
+            <br>
+
+            <table cellpadding="0" width="500px"
+                style="border-collapse: collapse; font-size: 14.4px; bottom: 80; position: fixed;">
+                <tr>
+                    <td style="margin: 0.1px; padding: 0px;">
+                        <table cellpadding="0" style="border-collapse: collapse; font-size: 18px;">
+                            <tr>
+                                <td valign="top">
+                                    <img src="https://radioenlacesas.com/wp-content/uploads/2017/08/cropped-logoradioenlace-2.png"
+                                        width="120" style="display: block;">
+                                </td>
+                                <td valign="top"
+                                    style="border-left: 1px solid rgb(176, 70, 70); margin: 0.1px; padding: 0px 0px 0px 12px; color: rgb(124, 124, 124);">
+                                    <table cellpadding="0" style="border-collapse: collapse;">
+                                        <tr>
+                                            <td
+                                                style="margin: 0.1px; padding: 0px 0px 8px; color: #DD3932; font-size: 18px; margin-top: 5px">
+                                                {{ $creador->nombre }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="margin: 0.9px; padding: 0px;">
+                                                <table cellpadding="0" style="border-collapse: collapse;">
+                                                    <tr style="cursor: pointer;">
+                                                        <td
+                                                            style="margin: 0.1px; padding: 0px 5px 0px 0px; color: rgb(124, 124, 124);;">
+                                                            {{ $creador->cargo }} <br>
+                                                            Email: {{ $creador->email }}
+                                                        </td>
+                                                        <td
+                                                            style="margin: 0.1px; padding: 0px; color: rgb(124, 124, 124);">
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="cursor: pointer;">
+                                                        <td
+                                                            style="margin: 0.1px; padding: 0px 5px 0px 0px; color: rgb(124, 124, 124);;">
+                                                            Dirección: Medellín, Colombia
+                                                        </td>
+                                                        <td
+                                                            style="margin: 0.1px; padding: 0px; color: rgb(124, 124, 124);">
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="cursor: pointer; text-align: left;">
+                                                        <td
+                                                            style="margin: 0.1px; padding: 0px 5px 0px 0px; color: rgb(124, 124, 124);;">
+                                                            Celular: {{ $creador->telefono_celular }}
+                                                        </td>
+                                                        <td
+                                                            style="margin: 0.1px; padding: 0px; color: rgb(124, 124, 124);; text-align: left;">
+
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
         </table>
     </div>
 </body>

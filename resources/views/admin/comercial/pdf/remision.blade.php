@@ -166,7 +166,11 @@
 
                 <tr class="details">
                     <td colspan="3" style="font-size: 15px; text-align: justify;">
-                        {{ $remision->asunto }}
+                        @php
+                            $texto = $remision->asunto;
+                            $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
+                            echo $texto_nuevo;
+                        @endphp
                     </td>
                 </tr>
             @endif
@@ -181,7 +185,11 @@
 
                 <tr class="details">
                     <td colspan="3" style="font-size: 15px; text-align: justify;">
-                        {{ $remision->observacion }}
+                        @php
+                            $texto = $remision->observacion;
+                            $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
+                            echo $texto_nuevo;
+                        @endphp
                     </td>
                 </tr>
             @endif
@@ -208,7 +216,11 @@
                     <tr class="item">
                         <td colspan="3">
                             <p style="font-size: 14px; margin-top: 0px; text-align: justify">
-                                {{ $productos[$i]->descripcion }}
+                                @php
+                                    $texto = $productos[$i]->descripcion;
+                                    $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
+                                    echo $texto_nuevo;
+                                @endphp
                             </p>
                         </td>
                     </tr>
@@ -227,7 +239,11 @@
                     <tr class="item">
                         <td colspan="3">
                             <p style="font-size: 14px; margin-top: 0px; text-align: justify">
-                                {{ $productos[$i]->descripcion }}
+                                @php
+                                    $texto = $productos[$i]->descripcion;
+                                    $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
+                                    echo $texto_nuevo;
+                                @endphp
                             </p>
                         </td>
                     </tr>
