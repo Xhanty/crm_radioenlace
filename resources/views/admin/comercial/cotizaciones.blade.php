@@ -338,6 +338,10 @@
                                                                 id="new_row_producto">
                                                                 <i class="fa fa-plus"></i>
                                                             </a>
+                                                            <a class="center-vertical mg-s-10" title="Agregar Título" href="javascript:void(0)"
+                                                                id="new_row_titulo">
+                                                                <i class="fa fa-font"></i>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>

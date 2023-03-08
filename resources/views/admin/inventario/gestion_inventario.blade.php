@@ -32,6 +32,20 @@
                         <div class="div-1-tables-header">
                             <h3 class="card-title mt-2">Lista de Productos</h3>
                         </div>
+                        <div class="div-2-tables-header">
+                            <div class="col-lg-6 mg-t-20 mg-lg-t-0">
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="Código Interno o Serial" type="text">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary" id="btnSearchSerial" type="button">
+                                            <span class="input-group-btn">
+                                                <i class="fa fa-search" style="display: inline-block !important"></i>
+                                            </span>
+                                        </button>
+                                    </span>
+                                </div><!-- input-group -->
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -126,7 +140,7 @@
         </div>
 
         @include('admin.inventario.modals.visualizar')
-        
+
 
         @include('admin.inventario.modals.ingreso.compra')
         @include('admin.inventario.modals.ingreso.reingreso')

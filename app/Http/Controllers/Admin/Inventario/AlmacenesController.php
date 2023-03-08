@@ -169,6 +169,7 @@ class AlmacenesController extends Controller
                     'productos.nombre',
                     'productos.marca',
                     'productos.modelo',
+                    'productos.imagen',
                     'inventario.codigo_interno',
                     'movimientos_inventario.cantidad',
                     'inventario.serial',

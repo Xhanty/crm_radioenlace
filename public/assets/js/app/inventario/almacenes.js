@@ -217,6 +217,7 @@ $(document).ready(function () {
                         }
 
                         let tr = `<tr>
+                            <td class="text-center" style="width: 80px"><img src="${url_general}images/productos/${element.imagen}" alt="" width="80px"></td>
                             <td>${element.codigo_interno ? element.codigo_interno : ""}</td>
                             <td>${element.nombre} (${element.marca} - ${element.modelo})</td>
                             <td>${element.serial}</td>

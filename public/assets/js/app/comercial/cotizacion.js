@@ -71,6 +71,34 @@ $(document).ready(function () {
         "</div>" +
         "</div>";
 
+    let concat_title_add =
+        '<div class="row row-sm mt-3 border-top-color">' +
+        '<div class="col-11">' +
+        '<input type="text" class="form-control title_add" placeholder="Titulo">' +
+        "</div>" +
+        '<div class="col-1" style="justify-content: center; display: flex;">' +
+        '<div class="d-flex">' +
+        '<a class="center-vertical delete_row_producto" href="javascript:void(0)">' +
+        '<i class="fa fa-trash"></i>' +
+        "</a>" +
+        "</div>" +
+        "</div>" +
+        "</div>";
+
+    let concat_title_edit =
+        '<div class="row row-sm mt-3 border-top-color">' +
+        '<div class="col-11">' +
+        '<input type="text" class="form-control title_edit" placeholder="Titulo">' +
+        "</div>" +
+        '<div class="col-1" style="justify-content: center; display: flex;">' +
+        '<div class="d-flex">' +
+        '<a class="center-vertical delete_row_producto" href="javascript:void(0)">' +
+        '<i class="fa fa-trash"></i>' +
+        "</a>" +
+        "</div>" +
+        "</div>" +
+        "</div>";
+
     let concat_edit =
         '<div class="row row-sm mt-3 border-top-color">' +
         '<div class="col-6">' +
@@ -156,6 +184,10 @@ $(document).ready(function () {
         });
     });
 
+    $("#new_row_titulo").click(function () {
+        $("#div_list_productos").append(concat_title_add);
+    });
+
     $(document).on("click", "#new_edit_row_producto", function () {
         $("#div_list_productos_edit").append(concat_edit);
 
@@ -166,6 +198,10 @@ $(document).ready(function () {
                 searchInputPlaceholder: "Buscar",
             });
         });
+    });
+
+    $(document).on("click", "#new_edit_row_titulo", function () {
+        $("#div_list_productos_edit").append(concat_title_edit);
     });
 
     $(document).on("click", ".delete_row_producto", function () {
@@ -299,6 +335,7 @@ $(document).ready(function () {
         let tipo_pago = [];
         let img_grande = [];
         let descripciones = [];
+        let titulos = [];
 
         $(".producto_add").each(function () {
             if (
@@ -382,6 +419,10 @@ $(document).ready(function () {
 
         $(".descripcion_add").each(function () {
             descripciones.push($(this).val());
+        });
+
+        $(".title_add").each(function () {
+            titulos.push($(this).val());
         });
 
         if (valid_products > 0) {
@@ -470,6 +511,7 @@ $(document).ready(function () {
         let tipo_pago = [];
         let img_grande = [];
         let descripciones = [];
+        let titulos = [];
 
         $(".producto_edit").each(function () {
             if (
@@ -553,6 +595,10 @@ $(document).ready(function () {
 
         $(".descripcion_edit").each(function () {
             descripciones.push($(this).val());
+        });
+
+        $(".title_edit").each(function () {
+            titulos.push($(this).val());
         });
 
         if (valid_products > 0) {
@@ -777,6 +823,10 @@ $(document).ready(function () {
                             let button = '<div class="d-flex">' +
                                 '<a class="center-vertical mg-s-10" href="javascript:void(0)" id="new_edit_row_producto">' +
                                 '<i class="fa fa-plus"></i>' +
+                                '</a>' +
+                                '<a class="center-vertical mg-s-10" title="Agregar Título" href="javascript:void(0)"' +
+                                    'id="new_edit_row_titulo">' +
+                                    '<i class="fa fa-font"></i>' +
                                 '</a>' +
                                 '</div>';
                             let spacing = "";

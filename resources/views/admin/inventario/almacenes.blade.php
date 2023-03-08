@@ -306,6 +306,7 @@
                                 id="tbl_seriales_view">
                                 <thead>
                                     <tr>
+                                        <th class="border-bottom-0" style="width: 80px"></th>
                                         <th class="border-bottom-0">Código<br>Interno</th>
                                         <th class="border-bottom-0">Producto</th>
                                         <th class="border-bottom-0">Serial</th>
