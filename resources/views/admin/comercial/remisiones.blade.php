@@ -38,9 +38,10 @@
                                         <th>Cliente</th>
                                         <th>Asunto</th>
                                         <th>Fecha</th>
-                                        <th>Cant. Productos</th>
+                                        <th>Cant.<br>Productos</th>
+                                        <th>Firma</th>
                                         <th>Creado Por</th>
-                                        <th>Acciones</th>
+                                        <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -51,11 +52,23 @@
                                             <td>{{ $value->asunto }}</td>
                                             <td>{{ date('d-m-Y H:i A', strtotime($value->created_at)) }}</td>
                                             <td>{{ $value->cantidad_productos }}</td>
-                                            <td>{{ $value->creador }}</td>
                                             <td>
-                                                <a title="Ver" href="javascript:void(0);" data-id="{{ $value->id }}"
+                                                @if ($value->firma_recibed)
+                                                    <span class="badge badge-success bg-success">Firmado</span>
+                                                @else
+                                                    <span class="badge badge-danger bg-danger">No Firmado</span>
+                                                @endif
+                                            </td>
+                                            <td>{{ $value->creador }}</td>
+                                            <td class="text-center">
+                                                <!--<a title="Ver" href="javascript:void(0);" data-id="{{ $value->id }}"
                                                     class="btn btn-primary btn-sm btnView">
                                                     <i class="fas fa-eye"></i>
+                                                </a>-->
+                                                <a title="Ver o Imprimir" target="_BLANK"
+                                                    href="{{ route('remisiones_print') }}?token={{ $value->id }}"
+                                                    class="btn btn-primary btn-sm btnPrint">
+                                                    <i class="fa fa-eye"></i>
                                                 </a>
                                                 <a title="Modificar" href="javascript:void(0);"
                                                     data-id="{{ $value->id }}" class="btn btn-warning btn-sm btnEdit">
@@ -66,14 +79,13 @@
                                                     class="btn btn-success btn-sm btnCompletar">
                                                     <i class="fa fa-check"></i>
                                                 </a>
+                                                <a title="Firma" href="javascript:void(0);"
+                                                    data-id="{{ $value->id }}" class="btn btn-primary btn-sm btnFirma">
+                                                    <i class="fas fa-eye-dropper"></i>
+                                                </a>
                                                 <a title="Eliminar" href="javascript:void(0);"
                                                     data-id="{{ $value->id }}" class="btn btn-danger btn-sm btnDelete">
                                                     <i class="fas fa-trash"></i>
-                                                </a>
-                                                <a title="Imprimir" target="_BLANK"
-                                                    href="{{ route('remisiones_print') }}?token={{ $value->id }}"
-                                                    class="btn btn-warning btn-sm btnPrint">
-                                                    <i class="fa fa-print"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -105,9 +117,10 @@
                                         <th>Cliente</th>
                                         <th>Asunto</th>
                                         <th>Fecha</th>
-                                        <th>Cant. Productos</th>
+                                        <th>Cant.<br>Productos</th>
+                                        <th>Firma</th>
                                         <th>Creado Por</th>
-                                        <th>Acciones</th>
+                                        <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -118,11 +131,23 @@
                                             <td>{{ $value->asunto }}</td>
                                             <td>{{ date('d-m-Y H:i A', strtotime($value->created_at)) }}</td>
                                             <td>{{ $value->cantidad_productos }}</td>
-                                            <td>{{ $value->creador }}</td>
                                             <td>
-                                                <a title="Ver" href="javascript:void(0);" data-id="{{ $value->id }}"
+                                                @if ($value->firma_recibed)
+                                                    <span class="badge badge-success bg-success">Firmado</span>
+                                                @else
+                                                    <span class="badge badge-danger bg-danger">No Firmado</span>
+                                                @endif
+                                            </td>
+                                            <td>{{ $value->creador }}</td>
+                                            <td class="text-center">
+                                                <!--<a title="Ver" href="javascript:void(0);" data-id="{{ $value->id }}"
                                                     class="btn btn-primary btn-sm btnView">
                                                     <i class="fas fa-eye"></i>
+                                                </a>-->
+                                                <a title="Ver o Imprimir" target="_BLANK"
+                                                    href="{{ route('remisiones_print') }}?token={{ $value->id }}"
+                                                    class="btn btn-primary btn-sm btnPrint">
+                                                    <i class="fa fa-eye"></i>
                                                 </a>
                                                 <a title="Modificar" href="javascript:void(0);"
                                                     data-id="{{ $value->id }}" class="btn btn-warning btn-sm btnEdit">
@@ -132,14 +157,13 @@
                                                     data-id="{{ $value->id }}" class="btn btn-success btn-sm btnEmail">
                                                     <i class="fa fa-envelope"></i>
                                                 </a>
+                                                <a title="Firma" href="javascript:void(0);"
+                                                    data-id="{{ $value->id }}" class="btn btn-primary btn-sm btnFirma">
+                                                    <i class="fas fa-eye-dropper"></i>
+                                                </a>
                                                 <a title="Eliminar" href="javascript:void(0);"
                                                     data-id="{{ $value->id }}" class="btn btn-danger btn-sm btnDelete">
                                                     <i class="fas fa-trash"></i>
-                                                </a>
-                                                <a title="Imprimir" target="_BLANK"
-                                                    href="{{ route('remisiones_print') }}?token={{ $value->id }}"
-                                                    class="btn btn-warning btn-sm btnPrint">
-                                                    <i class="fa fa-print"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -345,6 +369,36 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal Firma -->
+        <div class="modal  fade" id="modalFirma">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Firmar Remisión</h6>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" disabled readonly id="id_remision_firma">
+                        <div class="d-flex" style="justify-content: center">
+                            <canvas id='thecanvas' width='465' height='220' style='touch-action:none;border:1px solid #cccccc;'></canvas>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col d-flex" style="justify-content: center">
+                                <button class="btn ripple btn-warning" id="btnLimpiar">Limpiar</button>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="text-center">
+                            <button class="btn ripple btn-primary" id="btn_save_frima" type="button">Firmar Cotización</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -357,4 +411,5 @@
         });
     </script>
     <script src="{{ asset('assets/js/app/comercial/remision.js') }}"></script>
+    <script src="{{ asset('assets/js/app/comercial/firma.js') }}"></script>
 @endsection

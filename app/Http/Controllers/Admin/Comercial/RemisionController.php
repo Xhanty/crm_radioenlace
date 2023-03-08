@@ -26,6 +26,7 @@ class RemisionController extends Controller
                     'remisiones.code',
                     'remisiones.asunto',
                     'remisiones.created_at',
+                    'remisiones.firma_recibed',
                     'cliente.razon_social',
                     'cliente.nit',
                     'empleados.nombre as creador',
@@ -36,7 +37,7 @@ class RemisionController extends Controller
                 ->leftJoin('detelle_remisiones', 'detelle_remisiones.remision_id', '=', 'remisiones.id')
                 ->where('remisiones.status', 0)
                 ->orderBy('remisiones.id', 'desc')
-                ->groupBy('remisiones.id', 'remisiones.code', 'remisiones.asunto', 'remisiones.created_at', 'cliente.razon_social', 'cliente.nit', 'empleados.nombre')
+                ->groupBy('remisiones.id', 'remisiones.firma_recibed', 'remisiones.code', 'remisiones.asunto', 'remisiones.created_at', 'cliente.razon_social', 'cliente.nit', 'empleados.nombre')
                 ->get();
 
             $remisiones_aprobadas = DB::table('remisiones')
@@ -44,6 +45,7 @@ class RemisionController extends Controller
                     'remisiones.id',
                     'remisiones.code',
                     'remisiones.asunto',
+                    'remisiones.firma_recibed',
                     'remisiones.created_at',
                     'cliente.razon_social',
                     'cliente.nit',
@@ -55,7 +57,7 @@ class RemisionController extends Controller
                 ->leftJoin('detelle_remisiones', 'detelle_remisiones.remision_id', '=', 'remisiones.id')
                 ->where('remisiones.status', 1)
                 ->orderBy('remisiones.id', 'desc')
-                ->groupBy('remisiones.id', 'remisiones.code', 'remisiones.asunto', 'remisiones.created_at', 'cliente.razon_social', 'cliente.nit', 'empleados.nombre')
+                ->groupBy('remisiones.id', 'remisiones.firma_recibed', 'remisiones.code', 'remisiones.asunto', 'remisiones.created_at', 'cliente.razon_social', 'cliente.nit', 'empleados.nombre')
                 ->get();
 
             $clientes = DB::table('cliente')

@@ -217,6 +217,13 @@ $(document).ready(function () {
         });
     });
 
+    $(document).on("click", ".btnFirma", function () {
+        let id = $(this).data("id");
+
+        $("#id_remision_firma").val(id);
+        $("#modalFirma").modal("show");
+    });
+
     $(document).on("click", ".btnEdit", function () {
         let id = $(this).data("id");
 
