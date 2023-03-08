@@ -72,8 +72,18 @@ $(document).ready(function () {
         "</div>";
 
     let concat_title_add =
-        '<div class="row row-sm mt-3 border-top-color">' +
-        '<div class="col-11">' +
+        '<div class="row row-sm mt-3 border-top-color" style="margin-bottom: 20px">' +
+        '<div class="col-1" style="justify-content: center; display: flex;">' +
+        '<div class="d-flex">' +
+        '<a class="center-vertical subir_div" href="javascript:void(0)">' +
+        '<i class="fa fa-caret-up"></i>' +
+        "</a>&nbsp;&nbsp;" +
+        '<a class="center-vertical bajar_div" href="javascript:void(0)">' +
+        '<i class="fa fa-caret-down"></i>' +
+        "</a>" +
+        "</div>" +
+        "</div>" +
+        '<div class="col-10">' +
         '<input type="text" class="form-control title_add" placeholder="Titulo">' +
         "</div>" +
         '<div class="col-1" style="justify-content: center; display: flex;">' +
@@ -86,8 +96,18 @@ $(document).ready(function () {
         "</div>";
 
     let concat_title_edit =
-        '<div class="row row-sm mt-3 border-top-color">' +
-        '<div class="col-11">' +
+        '<div class="row row-sm mt-3 border-top-color" style="margin-bottom: 20px">' +
+        '<div class="col-1" style="justify-content: center; display: flex;">' +
+        '<div class="d-flex">' +
+        '<a class="center-vertical subir_div" href="javascript:void(0)">' +
+        '<i class="fa fa-caret-up"></i>' +
+        "</a>&nbsp;&nbsp;" +
+        '<a class="center-vertical bajar_div" href="javascript:void(0)">' +
+        '<i class="fa fa-caret-down"></i>' +
+        "</a>" +
+        "</div>" +
+        "</div>" +
+        '<div class="col-10">' +
         '<input type="text" class="form-control title_edit" placeholder="Titulo">' +
         "</div>" +
         '<div class="col-1" style="justify-content: center; display: flex;">' +
@@ -198,6 +218,24 @@ $(document).ready(function () {
                 searchInputPlaceholder: "Buscar",
             });
         });
+    });
+
+    $(document).on("click", ".subir_div", function () {
+        let row = $(this).closest(".row");
+        let row_prev = row.prev();
+
+        if (row_prev.length > 0) {
+            row.insertBefore(row_prev);
+        }
+    });
+
+    $(document).on("click", ".bajar_div", function () {
+        let row = $(this).closest(".row");
+        let row_next = row.next();
+
+        if (row_next.length > 0) {
+            row.insertAfter(row_next);
+        }
     });
 
     $(document).on("click", "#new_edit_row_titulo", function () {
@@ -321,6 +359,7 @@ $(document).ready(function () {
         let envio = $("#envio_add").val();
         let valid_products = 0;
         let valid_cantidad = 0;
+        let valid_title = 0;
         let count_1 = 0;
         let count_2 = 0;
 
@@ -422,6 +461,9 @@ $(document).ready(function () {
         });
 
         $(".title_add").each(function () {
+            if ($(this).val().trim().length == 0) {
+                valid_title++;
+            }
             titulos.push($(this).val());
         });
 
@@ -433,6 +475,9 @@ $(document).ready(function () {
             return false;
         } else if (count_1 != count_2) {
             toastr.error("Debe seleccionar el tipo de pago de cada producto");
+            return false;
+        } else if (valid_title > 0) {
+            toastr.error("Debe ingresar el titulo");
             return false;
         } else {
             $("#modalAdd").modal("hide");
@@ -461,6 +506,7 @@ $(document).ready(function () {
                     img_grande: img_grande,
                     garantia: garantia,
                     envio: envio,
+                    titulos: titulos,
                 },
                 success: function (response) {
                     if (response.info == 1) {
@@ -497,6 +543,7 @@ $(document).ready(function () {
         let envio = $("#envio_edit").val();
         let valid_products = 0;
         let valid_cantidad = 0;
+        let valid_title = 0;
         let count_1 = 0;
         let count_2 = 0;
 
@@ -598,6 +645,9 @@ $(document).ready(function () {
         });
 
         $(".title_edit").each(function () {
+            if ($(this).val().trim().length == 0) {
+                valid_title++;
+            }
             titulos.push($(this).val());
         });
 
@@ -609,6 +659,9 @@ $(document).ready(function () {
             return false;
         } else if (count_1 != count_2) {
             toastr.error("Debe seleccionar el tipo de pago de cada producto");
+            return false;
+        } else if (valid_title > 0) {
+            toastr.error("Debe ingresar el titulo");
             return false;
         } else {
             $("#modalEdit").modal("hide");
@@ -638,6 +691,7 @@ $(document).ready(function () {
                     img_grande: img_grande,
                     garantia: garantia,
                     envio: envio,
+                    titulos: titulos,
                 },
                 success: function (response) {
                     if (response.info == 1) {
