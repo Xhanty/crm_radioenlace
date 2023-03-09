@@ -297,7 +297,7 @@ $(function () {
                                         "</td><td>" +
                                         anexo.creador +
                                         "</td><td>" +
-                                        '<a target="_BLANK" href="https://formrad.com/radio_enlace/documentos_clientes/' +
+                                        '<a target="_BLANK" href="https://crm.formrad.com/images/proveedores/anexos/' +
                                         anexo.documento +
                                         '"><i class="fa fa-download"></i>&nbsp;Descargar</a><br>' +
                                         '<a class="btn_delete_archivo" data-id="' +
@@ -412,7 +412,7 @@ $(function () {
                                 "</td><td>" +
                                 anexo.creador +
                                 "</td><td>" +
-                                '<a target="_BLANK" href="https://formrad.com/radio_enlace/documentos_clientes/' +
+                                '<a target="_BLANK" href="https://crm.formrad.com/images/proveedores/anexos/' +
                                 anexo.documento +
                                 '"><i class="fa fa-download"></i>&nbsp;Descargar</a>' + data_delete +
                                 "</td></tr>"
@@ -496,7 +496,7 @@ $(function () {
                                 "</td><td>" +
                                 anexo.creador +
                                 "</td><td>" +
-                                '<a target="_BLANK" href="https://formrad.com/radio_enlace/documentos_clientes/' +
+                                '<a target="_BLANK" href="https://crm.formrad.com/images/proveedores/anexos/' +
                                 anexo.documento +
                                 '"><i class="fa fa-download"></i>&nbsp;Descargar</a><br>' +
                                 '<a class="btn_delete_archivo" data-id="' +
