@@ -53,9 +53,9 @@
                                             <td>{{ date('d-m-Y g:i A', strtotime($cotizacion->created_at)) }}</td>
                                             <td>{{ $cotizacion->productos }}</td>
                                             <td class="text-center">
-                                                <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}"
+                                                <!--<a href="javascript:void(0);" data-id="{{ $cotizacion->id }}"
                                                     title="Ver Detalles" class="btn btn-primary btn-sm btnView"><i
-                                                        class="fa fa-eye"></i></a>
+                                                        class="fa fa-eye"></i></a>-->
                                                 <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}"
                                                     title="Modificar" class="btn btn-warning btn-sm btnEdit"><i
                                                         class="fa fa-edit"></i></a>
@@ -67,7 +67,7 @@
                                                         class="fa fa-trash"></i></a>
                                                 <a target="_BLANK"
                                                     href="{{ route('cotizaciones_print') }}?token={{ $cotizacion->id }}"
-                                                    title="Imprimir" class="btn btn-warning btn-sm btnPrint"><i
+                                                    title="Ver o Imprimir" class="btn btn-primary btn-sm btnPrint"><i
                                                         class="fa fa-print"></i></a>
                                             </td>
                                         </tr>
@@ -149,23 +149,23 @@
                                                     placeholder="Fecha Revisión" onfocus="(this.type='date')"
                                                     class="form-control mb-2 date_revision text-center"
                                                     value="{{ $cotizacion->fecha_revision }}">
-                                                <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}"
+                                                <!--<a href="javascript:void(0);" data-id="{{ $cotizacion->id }}"
                                                     title="Ver Detalles" class="btn btn-primary btn-sm btnView"><i
-                                                        class="fa fa-eye"></i></a>
+                                                        class="fa fa-eye"></i></a>-->
                                                 <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}"
-                                                    title="Modificar" class="btn btn-danger btn-sm btnEdit"><i
+                                                    title="Modificar" class="btn btn-warning btn-sm btnEdit"><i
                                                         class="fa fa-edit"></i></a>
                                                 <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}"
                                                     title="Enviar por correo" class="btn btn-success btn-sm btnEmail"><i
                                                         class="fa fa-envelope"></i></a>
                                                 <a target="_BLANK"
                                                     href="{{ route('cotizaciones_print') }}?token={{ $cotizacion->id }}"
-                                                    title="Imprimir" class="btn btn-warning btn-sm btnPrint"><i
+                                                    title="Ver o Imprimir" class="btn btn-primary btn-sm btnPrint"><i
                                                         class="fa fa-print"></i></a>
                                                 <a target="_BLANK"
                                                     href="{{ route('history_cotizaciones') }}?token={{ $cotizacion->id }}"
                                                     title="Observaciones/Avances"
-                                                    class="btn btn-primary btn-sm btnHistory"><i
+                                                    class="btn btn-success btn-sm btnHistory"><i
                                                         class="fa fa-book"></i></a>
                                             </td>
                                         </tr>
@@ -284,7 +284,7 @@
                                                 <div class="col-8">
                                                     <label for="">Productos</label>
                                                 </div>
-                                                <div class="col-4">
+                                                <div class="col-4 d-flex" style="justify-content: end">
                                                     <div class="d-flex">
                                                         <a class="center-vertical mg-s-10" href="javascript:void(0)"
                                                             id="new_row_producto">
@@ -546,7 +546,23 @@
                                 <div id="div_productos_edit" class="d-none">
                                     <div class="row row-sm">
                                         <div class="col-lg">
-                                            <label for="">Productos</label>
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <label for="">Productos</label>
+                                                </div>
+                                                <div class="col-4 d-flex" style="justify-content: end">
+                                                    <div class="d-flex">
+                                                        <a class="center-vertical mg-s-10" href="javascript:void(0)"
+                                                            id="new_edit_row_producto">
+                                                            <i class="fa fa-plus"></i>
+                                                        </a>
+                                                        <a class="center-vertical mg-s-10" title="Agregar Título"
+                                                            href="javascript:void(0)" id="new_edit_row_titulo">
+                                                            <i class="fa fa-font"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div id="div_list_productos_edit"></div>
                                         </div>
                                     </div>

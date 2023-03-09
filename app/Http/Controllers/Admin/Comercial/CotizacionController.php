@@ -46,6 +46,7 @@ class CotizacionController extends Controller
                 ->join('cliente', 'cotizaciones.cliente_id', '=', 'cliente.id')
                 ->join('empleados', 'cotizaciones.created_by', '=', 'empleados.id')
                 ->where('cotizaciones.status', 0)
+                ->whereNull('detalle_cotizaciones.titulo')
                 ->orderBy('cotizaciones.id', 'desc')
                 ->groupBy('cotizaciones.id', 'cotizaciones.code', 'cotizaciones.created_at', 'cotizaciones.descripcion', 'cotizaciones.status', 'cotizaciones.fecha_revision', 'cliente.razon_social', 'empleados.nombre')
                 ->get();
@@ -67,6 +68,7 @@ class CotizacionController extends Controller
                 ->join('cliente', 'cotizaciones.cliente_id', '=', 'cliente.id')
                 ->join('empleados', 'cotizaciones.created_by', '=', 'empleados.id')
                 ->where('cotizaciones.status', 1)
+                ->whereNull('detalle_cotizaciones.titulo')
                 ->orderBy('cotizaciones.id', 'desc')
                 ->groupBy('cotizaciones.id', 'cotizaciones.code', 'cotizaciones.created_at', 'cotizaciones.descripcion', 'cotizaciones.status', 'cotizaciones.fecha_revision', 'cotizaciones.aprobado', 'cliente.razon_social', 'empleados.nombre')
                 ->get();
@@ -87,7 +89,7 @@ class CotizacionController extends Controller
 
             $cotizacion->detalle = DB::table('detalle_cotizaciones')
                 ->select('detalle_cotizaciones.*', 'productos.nombre as producto')
-                ->join('productos', 'productos.id', 'detalle_cotizaciones.producto_id')
+                ->leftJoin('productos', 'productos.id', 'detalle_cotizaciones.producto_id')
                 ->where('detalle_cotizaciones.cotizacion_id', $request->id)
                 ->get();
 
@@ -126,8 +128,14 @@ class CotizacionController extends Controller
             $ivas = $request->ivas;
             $retenciones = $request->retenciones;
             $tipo_pago = $request->tipo_pago;
-            $img_grandes = $request->img_grande; 
+            $img_grandes = $request->img_grande;
             $descripciones = $request->descripciones;
+
+            // TITULOS
+            $titulos = $request->titulos;
+
+            //ORDEN
+            $order = $request->order;
 
             $code = DB::table('cotizaciones')->max('code') + 1;
 
@@ -147,24 +155,47 @@ class CotizacionController extends Controller
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
 
+            $key_productos = 0;
+            $key_titulos = 0;
+
             if ($cotizacion_id) {
-                if ($productos) {
-                    foreach ($productos as $key => $producto) {
-                        DB::table("detalle_cotizaciones")->insert([
-                            'producto_id' => $producto,
-                            'cotizacion_id' => $cotizacion_id,
-                            'tipo_divisa' => $divisas[$key],
-                            'cantidad' => $cantidades[$key],
-                            'tipo_transaccion' => $tipos[$key],
-                            'precio' => $precios[$key],
-                            'iva' => $ivas[$key] ? $ivas[$key] : 0,
-                            'retencion' => $retenciones[$key] ? $retenciones[$key] : 0,
-                            'tipo_pago' => $tipo_pago[$key],
-                            'img_grande' => $img_grandes[$key] ? $img_grandes[$key] : 0,
-                            'descripcion' => $descripciones[$key] ? $descripciones[$key] : null,
-                            'created_by' => auth()->user()->id,
-                            'created_at' => date('Y-m-d H:i:s'),
-                        ]);
+                if ($order) {
+                    foreach ($order as $key => $value) {
+                        if ($value == 0) {
+                            DB::table("detalle_cotizaciones")->insert([
+                                'producto_id' => $productos[$key_productos],
+                                'cotizacion_id' => $cotizacion_id,
+                                'tipo_divisa' => $divisas[$key_productos],
+                                'cantidad' => $cantidades[$key_productos],
+                                'tipo_transaccion' => $tipos[$key_productos],
+                                'precio' => $precios[$key_productos],
+                                'iva' => $ivas[$key_productos] ? $ivas[$key_productos] : 0,
+                                'retencion' => $retenciones[$key_productos] ? $retenciones[$key_productos] : 0,
+                                'tipo_pago' => $tipo_pago[$key_productos],
+                                'img_grande' => $img_grandes[$key_productos] ? $img_grandes[$key_productos] : 0,
+                                'descripcion' => $descripciones[$key_productos] ? $descripciones[$key_productos] : null,
+                                'created_by' => auth()->user()->id,
+                                'created_at' => date('Y-m-d H:i:s'),
+                            ]);
+                            $key_productos++;
+                        } else if ($value == 1) {
+                            DB::table("detalle_cotizaciones")->insert([
+                                'titulo' => $titulos[$key_titulos],
+                                'cotizacion_id' => $cotizacion_id,
+                                'tipo_divisa' => null,
+                                'cantidad' => null,
+                                'tipo_transaccion' => null,
+                                'precio' => null,
+                                'iva' => 0,
+                                'retencion' => 0,
+                                'tipo_pago' => 0,
+                                'img_grande' => 0,
+                                'descripcion' => null,
+                                'created_by' => auth()->user()->id,
+                                'created_at' => date('Y-m-d H:i:s'),
+                            ]);
+                            $key_titulos++;
+                        }
                     }
                 }
             }
@@ -204,8 +235,14 @@ class CotizacionController extends Controller
             $ivas = $request->ivas;
             $retenciones = $request->retenciones;
             $tipo_pago = $request->tipo_pago;
-            $img_grandes = $request->img_grande; 
+            $img_grandes = $request->img_grande;
             $descripciones = $request->descripciones;
+
+            // TITULOS
+            $titulos = $request->titulos;
+
+            //ORDEN
+            $order = $request->order;
 
             DB::table("cotizaciones")->where('id', $cotizacion)->update([
                 'cliente_id' => $cliente,
@@ -223,22 +260,47 @@ class CotizacionController extends Controller
             DB::table("detalle_cotizaciones")->where('cotizacion_id', $cotizacion)->delete();
 
             if ($productos) {
-                foreach ($productos as $key => $producto) {
-                    DB::table("detalle_cotizaciones")->insert([
-                        'producto_id' => $producto,
-                        'cotizacion_id' => $cotizacion,
-                        'tipo_divisa' => $divisas[$key],
-                        'cantidad' => $cantidades[$key],
-                        'tipo_transaccion' => $tipos[$key],
-                        'precio' => $precios[$key],
-                        'iva' => $ivas[$key] ? $ivas[$key] : 0,
-                        'retencion' => $retenciones[$key] ? $retenciones[$key] : 0,
-                        'tipo_pago' => $tipo_pago[$key],
-                        'img_grande' => $img_grandes[$key] ? $img_grandes[$key] : 0,
-                        'descripcion' => $descripciones[$key] ? $descripciones[$key] : null,
-                        'created_by' => auth()->user()->id,
-                        'created_at' => date('Y-m-d H:i:s'),
-                    ]);
+                $key_productos = 0;
+                $key_titulos = 0;
+
+                if ($order) {
+                    foreach ($order as $key => $value) {
+                        if ($value == 0) {
+                            DB::table("detalle_cotizaciones")->insert([
+                                'producto_id' => $productos[$key_productos],
+                                'cotizacion_id' => $cotizacion,
+                                'tipo_divisa' => $divisas[$key_productos],
+                                'cantidad' => $cantidades[$key_productos],
+                                'tipo_transaccion' => $tipos[$key_productos],
+                                'precio' => $precios[$key_productos],
+                                'iva' => $ivas[$key_productos] ? $ivas[$key_productos] : 0,
+                                'retencion' => $retenciones[$key_productos] ? $retenciones[$key_productos] : 0,
+                                'tipo_pago' => $tipo_pago[$key_productos],
+                                'img_grande' => $img_grandes[$key_productos] ? $img_grandes[$key_productos] : 0,
+                                'descripcion' => $descripciones[$key_productos] ? $descripciones[$key_productos] : null,
+                                'created_by' => auth()->user()->id,
+                                'created_at' => date('Y-m-d H:i:s'),
+                            ]);
+                            $key_productos++;
+                        } else if ($value == 1) {
+                            DB::table("detalle_cotizaciones")->insert([
+                                'titulo' => $titulos[$key_titulos],
+                                'cotizacion_id' => $cotizacion,
+                                'tipo_divisa' => null,
+                                'cantidad' => null,
+                                'tipo_transaccion' => null,
+                                'precio' => null,
+                                'iva' => 0,
+                                'retencion' => 0,
+                                'tipo_pago' => 0,
+                                'img_grande' => 0,
+                                'descripcion' => null,
+                                'created_by' => auth()->user()->id,
+                                'created_at' => date('Y-m-d H:i:s'),
+                            ]);
+                            $key_titulos++;
+                        }
+                    }
                 }
             }
 
@@ -307,7 +369,7 @@ class CotizacionController extends Controller
 
         $productos = DB::table('detalle_cotizaciones')
             ->select('detalle_cotizaciones.*', 'productos.nombre as producto', 'productos.imagen', 'productos.modelo')
-            ->join('productos', 'productos.id', 'detalle_cotizaciones.producto_id')
+            ->leftJoin('productos', 'productos.id', 'detalle_cotizaciones.producto_id')
             ->where('detalle_cotizaciones.cotizacion_id', $id)
             ->get();
 

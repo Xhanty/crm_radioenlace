@@ -216,174 +216,169 @@
             @endphp
 
             @for ($i = 0; $i < count($productos); $i++)
-
-            @if($cotizacion->id == 25)
-                @if($i == 0)
+                @if ($productos[$i]->titulo)
                     <tr style="background: #eee">
-                        <td colspan="7" style="text-align: center; padding-top: 2%;"><b>Productos en calidad de alquiler</b></td>
+                        <td colspan="7" style="text-align: center; padding-top: 2%;">
+                            <b>{{ $productos[$i]->titulo }}</b>
+                        </td>
                     </tr>
-                @endif
-
-                @if($i == 3)
-                    <tr style="background: #eee">
-                        <td colspan="7" style="text-align: center; padding-top: 2%;"><b>Productos en calidad de venta</b></td>
-                    </tr>
-                @endif
-            @endif
-                @php
-                    if ($productos[$i]->tipo_pago == 1) {
-                        $total = $productos[$i]->cantidad * $productos[$i]->precio;
-                        $subtotal_mensual += $productos[$i]->cantidad * $productos[$i]->precio;
-                        $incluye_mensual++;
-                    } else {
-                        $total = $productos[$i]->cantidad * $productos[$i]->precio;
-                        $subtotal += $productos[$i]->cantidad * $productos[$i]->precio;
-                        $incluye_anual++;
-                    }
-                    
-                    if ($productos[$i]->imagen == null || $productos[$i]->imagen == '') {
-                        $productos[$i]->imagen = 'noimagen.png';
-                    }
-                @endphp
-                @if ($i == count($productos) - 1)
-                    @if ($productos[$i]->img_grande == 1)
-                        <tr>
-                            <td style="text-align: center; padding-top: 2%;" colspan="2">
-                                <b>{{ $productos[$i]->producto }}</b> <br>
-                                <b>{{ $productos[$i]->modelo }}</b>
-                            </td>
-                            <td style="text-align: center; padding-top: 3%;">{{ $productos[$i]->cantidad }}</td>
-                            <td class="text-align-right" style="padding-top: 3%">
-                                {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
-                            <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
-                            <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>
-                            <td class="text-align-right" style="padding-top: 3%">
-                                {{ number_format($total, 0, ',', '.') }}
-                            </td>
-                        </tr>
-                        <tr class="item">
-                            <td colspan="7">
-                                <p style="font-size: 14px; margin-top: 0px; text-align: justify">
-                                    @php
-                                        $texto = $productos[$i]->descripcion;
-                                        $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                                        echo $texto_nuevo;
-                                    @endphp
-                                </p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center; padding-top: 2%;" colspan="7">
-                                <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
-                                    style="width:100%; max-height: 288px">
-                            </td>
-                        </tr>
-                    @else
-                        <tr>
-                            <td style="text-align: center; padding-top: 2%;">
-                                <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
-                                    style="width:100%; max-width:105px; max-height: 120px">
-                            </td>
-                            <td style="text-align: center; padding-top: 3%;">
-                                <b>{{ $productos[$i]->producto }}</b><br>
-                                <b>{{ $productos[$i]->modelo }}</b>
-                            </td>
-                            <td style="text-align: center; padding-top: 3%">{{ $productos[$i]->cantidad }}</td>
-                            <td class="text-align-right" style="padding-top: 3%">
-                                {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
-                            <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
-                            <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>
-                            <td class="text-align-right" style="padding-top: 3%">
-                                {{ number_format($total, 0, ',', '.') }}
-                            </td>
-                        </tr>
-                        <tr class="item">
-                            <td colspan="7">
-                                <p style="font-size: 14px; margin-top: 0px; text-align: justify">
-                                    @php
-                                        $texto = $productos[$i]->descripcion;
-                                        $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                                        echo $texto_nuevo;
-                                    @endphp
-                                </p>
-                            </td>
-                        </tr>
-                    @endif
                 @else
-                    @if ($productos[$i]->img_grande == 1)
-                        <tr>
-                            <td style="text-align: center; padding-top: 2%;" colspan="2">
-                                <b>{{ $productos[$i]->producto }}</b> <br>
-                                <b>{{ $productos[$i]->modelo }}</b>
-                            </td>
-                            <td style="text-align: center; padding-top: 3%;">{{ $productos[$i]->cantidad }}</td>
-                            <td class="text-align-right" style="padding-top: 3%">
-                                {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
-                            <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
-                            <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>
-                            <td class="text-align-right" style="padding-top: 3%">
-                                {{ number_format($total, 0, ',', '.') }}
-                            </td>
-                        </tr>
-                        <tr class="item">
-                            <td colspan="7">
-                                <p style="font-size: 14px; margin-top: 0px; text-align: justify">
-                                    @php
-                                        $texto = $productos[$i]->descripcion;
-                                        $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                                        echo $texto_nuevo;
-                                    @endphp
-                                </p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center; padding-top: 2%;" colspan="7">
-                                <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
-                                    style="width:100%; max-height: 288px">
-                            </td>
-                        </tr>
+                    @php
+                        if ($productos[$i]->tipo_pago == 1) {
+                            $total = $productos[$i]->cantidad * $productos[$i]->precio;
+                            $subtotal_mensual += $productos[$i]->cantidad * $productos[$i]->precio;
+                            $incluye_mensual++;
+                        } else {
+                            $total = $productos[$i]->cantidad * $productos[$i]->precio;
+                            $subtotal += $productos[$i]->cantidad * $productos[$i]->precio;
+                            $incluye_anual++;
+                        }
+                        
+                        if ($productos[$i]->imagen == null || $productos[$i]->imagen == '') {
+                            $productos[$i]->imagen = 'noimagen.png';
+                        }
+                    @endphp
+                    @if ($i == count($productos) - 1)
+                        @if ($productos[$i]->img_grande == 1)
+                            <tr>
+                                <td style="text-align: center; padding-top: 2%;" colspan="2">
+                                    <b>{{ $productos[$i]->producto }}</b> <br>
+                                    <b>{{ $productos[$i]->modelo }}</b>
+                                </td>
+                                <td style="text-align: center; padding-top: 3%;">{{ $productos[$i]->cantidad }}</td>
+                                <td class="text-align-right" style="padding-top: 3%">
+                                    {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
+                                <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
+                                <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>
+                                <td class="text-align-right" style="padding-top: 3%">
+                                    {{ number_format($total, 0, ',', '.') }}
+                                </td>
+                            </tr>
+                            <tr class="item">
+                                <td colspan="7">
+                                    <p style="font-size: 14px; margin-top: 0px; text-align: justify">
+                                        @php
+                                            $texto = $productos[$i]->descripcion;
+                                            $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
+                                            echo $texto_nuevo;
+                                        @endphp
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center; padding-top: 2%;" colspan="7">
+                                    <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
+                                        style="width:100%; max-height: 288px">
+                                </td>
+                            </tr>
+                        @else
+                            <tr>
+                                <td style="text-align: center; padding-top: 2%;">
+                                    <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
+                                        style="width:100%; max-width:105px; max-height: 120px">
+                                </td>
+                                <td style="text-align: center; padding-top: 3%;">
+                                    <b>{{ $productos[$i]->producto }}</b><br>
+                                    <b>{{ $productos[$i]->modelo }}</b>
+                                </td>
+                                <td style="text-align: center; padding-top: 3%">{{ $productos[$i]->cantidad }}</td>
+                                <td class="text-align-right" style="padding-top: 3%">
+                                    {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
+                                <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
+                                <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>
+                                <td class="text-align-right" style="padding-top: 3%">
+                                    {{ number_format($total, 0, ',', '.') }}
+                                </td>
+                            </tr>
+                            <tr class="item">
+                                <td colspan="7">
+                                    <p style="font-size: 14px; margin-top: 0px; text-align: justify">
+                                        @php
+                                            $texto = $productos[$i]->descripcion;
+                                            $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
+                                            echo $texto_nuevo;
+                                        @endphp
+                                    </p>
+                                </td>
+                            </tr>
+                        @endif
                     @else
-                        <tr>
-                            <td style="text-align: center; padding-top: 2%;">
-                                <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
-                                    style="width:100%; max-width:105px; max-height: 120px">
-                            </td>
-                            <td style="text-align: center; padding-top: 3%;">
-                                <b>{{ $productos[$i]->producto }}</b> <br>
-                                <b>{{ $productos[$i]->modelo }}</b>
-                            </td>
-                            <td style="text-align: center; padding-top: 3%;">{{ $productos[$i]->cantidad }}</td>
-                            <td class="text-align-right" style="padding-top: 3%">
-                                {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
-                            <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
-                            <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>
-                            <td class="text-align-right" style="padding-top: 3%">
-                                {{ number_format($total, 0, ',', '.') }}
-                            </td>
-                        </tr>
-                        <tr class="item">
-                            <td colspan="7">
-                                <p style="font-size: 14px; margin-top: 0px; text-align: justify">
-                                    @php
-                                        $texto = $productos[$i]->descripcion;
-                                        $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                                        echo $texto_nuevo;
-                                    @endphp
-                                </p>
-                            </td>
-                        </tr>
+                        @if ($productos[$i]->img_grande == 1)
+                            <tr>
+                                <td style="text-align: center; padding-top: 2%;" colspan="2">
+                                    <b>{{ $productos[$i]->producto }}</b> <br>
+                                    <b>{{ $productos[$i]->modelo }}</b>
+                                </td>
+                                <td style="text-align: center; padding-top: 3%;">{{ $productos[$i]->cantidad }}</td>
+                                <td class="text-align-right" style="padding-top: 3%">
+                                    {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
+                                <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
+                                <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>
+                                <td class="text-align-right" style="padding-top: 3%">
+                                    {{ number_format($total, 0, ',', '.') }}
+                                </td>
+                            </tr>
+                            <tr class="item">
+                                <td colspan="7">
+                                    <p style="font-size: 14px; margin-top: 0px; text-align: justify">
+                                        @php
+                                            $texto = $productos[$i]->descripcion;
+                                            $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
+                                            echo $texto_nuevo;
+                                        @endphp
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center; padding-top: 2%;" colspan="7">
+                                    <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
+                                        style="width:100%; max-height: 288px">
+                                </td>
+                            </tr>
+                        @else
+                            <tr>
+                                <td style="text-align: center; padding-top: 2%;">
+                                    <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
+                                        style="width:100%; max-width:105px; max-height: 120px">
+                                </td>
+                                <td style="text-align: center; padding-top: 3%;">
+                                    <b>{{ $productos[$i]->producto }}</b> <br>
+                                    <b>{{ $productos[$i]->modelo }}</b>
+                                </td>
+                                <td style="text-align: center; padding-top: 3%;">{{ $productos[$i]->cantidad }}</td>
+                                <td class="text-align-right" style="padding-top: 3%">
+                                    {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
+                                <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
+                                <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>
+                                <td class="text-align-right" style="padding-top: 3%">
+                                    {{ number_format($total, 0, ',', '.') }}
+                                </td>
+                            </tr>
+                            <tr class="item">
+                                <td colspan="7">
+                                    <p style="font-size: 14px; margin-top: 0px; text-align: justify">
+                                        @php
+                                            $texto = $productos[$i]->descripcion;
+                                            $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
+                                            echo $texto_nuevo;
+                                        @endphp
+                                    </p>
+                                </td>
+                            </tr>
+                        @endif
                     @endif
-                @endif
 
-                @php
-                    if ($productos[$i]->tipo_pago == 1) {
-                        $iva_mensual += $total * ($productos[$i]->iva / 100);
-                        $retencion_mensual += $total * ($productos[$i]->retencion / 100);
-                    } else {
-                        $iva += $total * ($productos[$i]->iva / 100);
-                        $retencion += $total * ($productos[$i]->retencion / 100);
-                    }
-                @endphp
+                    @php
+                        if ($productos[$i]->tipo_pago == 1) {
+                            $iva_mensual += $total * ($productos[$i]->iva / 100);
+                            $retencion_mensual += $total * ($productos[$i]->retencion / 100);
+                        } else {
+                            $iva += $total * ($productos[$i]->iva / 100);
+                            $retencion += $total * ($productos[$i]->retencion / 100);
+                        }
+                    @endphp
+
+                @endif
             @endfor
 
             <tr class="total">

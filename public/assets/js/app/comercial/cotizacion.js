@@ -9,7 +9,7 @@ $(document).ready(function () {
     var productos = JSON.parse(localStorage.getItem("productos"));
 
     let concat =
-        '<div class="row row-sm mt-3 border-top-color">' +
+        '<div data-order="0" class="row row-sm mt-3 border-top-color">' +
         '<div class="col-1" style="justify-content: center; display: flex;">' +
         '<div class="d-flex">' +
         '<a class="center-vertical subir_div" href="javascript:void(0)">' +
@@ -82,7 +82,7 @@ $(document).ready(function () {
         "</div>";
 
     let concat_title_add =
-        '<div class="row row-sm mt-3 border-top-color" style="margin-bottom: 20px">' +
+        '<div data-order="1" class="row row-sm mt-3 border-top-color" style="margin-bottom: 20px">' +
         '<div class="col-1" style="justify-content: center; display: flex;">' +
         '<div class="d-flex">' +
         '<a class="center-vertical subir_div" href="javascript:void(0)">' +
@@ -106,7 +106,7 @@ $(document).ready(function () {
         "</div>";
 
     let concat_title_edit =
-        '<div class="row row-sm mt-3 border-top-color" style="margin-bottom: 20px">' +
+        '<div data-order="1" class="row row-sm mt-3 border-top-color" style="margin-bottom: 20px">' +
         '<div class="col-1" style="justify-content: center; display: flex;">' +
         '<div class="d-flex">' +
         '<a class="center-vertical subir_div" href="javascript:void(0)">' +
@@ -130,8 +130,18 @@ $(document).ready(function () {
         "</div>";
 
     let concat_edit =
-        '<div class="row row-sm mt-3 border-top-color">' +
-        '<div class="col-6">' +
+        '<div data-order="0" class="row row-sm mt-3 border-top-color">' +
+        '<div class="col-1" style="justify-content: center; display: flex;">' +
+        '<div class="d-flex">' +
+        '<a class="center-vertical subir_div" href="javascript:void(0)">' +
+        '<i class="fa fa-caret-up"></i>' +
+        '</a>&nbsp;&nbsp;' +
+        '<a class="center-vertical bajar_div" href="javascript:void(0)">' +
+        '<i class="fa fa-caret-down"></i>' +
+        '</a>' +
+        '</div>' +
+        '</div>' +
+        '<div class="col-5">' +
         '<select title="Producto" class="form-select producto_edit">' +
         '<option value="">Seleccione un producto</option>' +
         productos.map((producto) => {
@@ -158,8 +168,8 @@ $(document).ready(function () {
         'placeholder="Retención (%)">' +
         "</div>" +
         '<input type="checkbox" class="mt-3 tipo_pago_edit" data-value="0"> Pago Único' +
-        '<input type="checkbox" style="margin-left: 100px;" class="mt-3 tipo_pago_edit" data-value="1"> Pago Mensual' +
-        '<input type="checkbox" style="margin-left: 100px;" class="mt-3 imagen_grande_edit" data-value="1"> Imagen Grande' +
+        '<input type="checkbox" style="margin-left: 50px;" class="mt-3 tipo_pago_edit" data-value="1"> Pago Mensual' +
+        '<input type="checkbox" style="margin-left: 50px;" class="mt-3 imagen_grande_edit" data-value="1"> Imagen Grande' +
         "</div>" +
         '<div class="col-6">' +
         '<div class="d-flex">' +
@@ -385,6 +395,7 @@ $(document).ready(function () {
         let img_grande = [];
         let descripciones = [];
         let titulos = [];
+        let order = [];
 
         $(".producto_add").each(function () {
             if (
@@ -477,7 +488,16 @@ $(document).ready(function () {
             titulos.push($(this).val());
         });
 
-        if (valid_products > 0) {
+        $("#div_list_productos div").each(function () {
+            if ($(this).data("order") != undefined) {
+                order.push($(this).data("order"));
+            }
+        });
+
+        if (order.length == 0) {
+            toastr.error("Debe ingresar al menos un producto");
+            return false;
+        } else if (valid_products > 0) {
             toastr.error("Debe ingresar todos los datos de los productos");
             return false;
         } else if (valid_cantidad > 0) {
@@ -517,6 +537,7 @@ $(document).ready(function () {
                     garantia: garantia,
                     envio: envio,
                     titulos: titulos,
+                    order: order,
                 },
                 success: function (response) {
                     if (response.info == 1) {
@@ -569,6 +590,7 @@ $(document).ready(function () {
         let img_grande = [];
         let descripciones = [];
         let titulos = [];
+        let order = [];
 
         $(".producto_edit").each(function () {
             if (
@@ -661,7 +683,17 @@ $(document).ready(function () {
             titulos.push($(this).val());
         });
 
-        if (valid_products > 0) {
+        $("#div_list_productos_edit div").each(function () {
+            if ($(this).data("order") != undefined) {
+                order.push($(this).data("order"));
+            }
+        });
+
+
+        if (order.length == 0) {
+            toastr.error("Debe ingresar al menos un producto");
+            return false;
+        } else if (valid_products > 0) {
             toastr.error("Debe ingresar todos los datos de los productos");
             return false;
         } else if (valid_cantidad > 0) {
@@ -702,6 +734,7 @@ $(document).ready(function () {
                     garantia: garantia,
                     envio: envio,
                     titulos: titulos,
+                    order: order,
                 },
                 success: function (response) {
                     if (response.info == 1) {
@@ -884,18 +917,10 @@ $(document).ready(function () {
                                 check3 = "checked";
                             }
 
-                            let button = '<div class="d-flex">' +
-                                '<a class="center-vertical mg-s-10" href="javascript:void(0)" id="new_edit_row_producto">' +
-                                '<i class="fa fa-plus"></i>' +
-                                '</a>' +
-                                '<a class="center-vertical mg-s-10" title="Agregar Título" href="javascript:void(0)"' +
-                                'id="new_edit_row_titulo">' +
-                                '<i class="fa fa-font"></i>' +
-                                '</a>' +
-                                '</div>';
+                            let button = '';
                             let spacing = "";
 
-                            if (i > 0) {
+                            if (i >= 0) {
                                 spacing = "mt-3";
                                 button = '<div class="d-flex">' +
                                     '<a class="center-vertical mg-s-10 delete_edit_row_producto" href="javascript:void(0)">' +
@@ -904,21 +929,55 @@ $(document).ready(function () {
                                     '</div>';
                             }
 
-                            html += `<div class="row row-sm ${spacing} border-top-color">
-                                        <div class="col-6">
+                            if (productos_data[i].titulo) {
+                                html += '<div data-order="1" class="row row-sm mt-3 border-top-color" style="margin-bottom: 20px">' +
+                                    '<div class="col-1" style="justify-content: center; display: flex;">' +
+                                    '<div class="d-flex">' +
+                                    '<a class="center-vertical subir_div" href="javascript:void(0)">' +
+                                    '<i class="fa fa-caret-up"></i>' +
+                                    "</a>&nbsp;&nbsp;" +
+                                    '<a class="center-vertical bajar_div" href="javascript:void(0)">' +
+                                    '<i class="fa fa-caret-down"></i>' +
+                                    "</a>" +
+                                    "</div>" +
+                                    "</div>" +
+                                    '<div class="col-10">' +
+                                    '<input type="text" class="form-control title_edit" value="' + productos_data[i].titulo + '" placeholder="Titulo">' +
+                                    "</div>" +
+                                    '<div class="col-1" style="justify-content: center; display: flex;">' +
+                                    '<div class="d-flex">' +
+                                    '<a class="center-vertical delete_row_producto" href="javascript:void(0)">' +
+                                    '<i class="fa fa-trash"></i>' +
+                                    "</a>" +
+                                    "</div>" +
+                                    "</div>" +
+                                    "</div>";
+                            } else {
+                                html += `<div data-order="0" class="row row-sm ${spacing} border-top-color">
+                                        <div class="col-1" style="justify-content: center; display: flex;">
+                                        <div class="d-flex">
+                                        <a class="center-vertical subir_div" href="javascript:void(0)">
+                                        <i class="fa fa-caret-up"></i>
+                                        </a>&nbsp;&nbsp;
+                                        <a class="center-vertical bajar_div" href="javascript:void(0)">
+                                        <i class="fa fa-caret-down"></i>
+                                        </a>
+                                        </div>
+                                        </div>
+                                        <div class="col-5">
                                             <select data-value="${productos_data[i].producto_id}" title="Producto" class="form-select producto_edit">
                                             <option value="">Seleccione un producto</option>` +
-                                productos.map((producto) => {
-                                    return (
-                                        '<option value="' +
-                                        producto.id +
-                                        '">' +
-                                        producto.nombre +
-                                        ' (' + producto.marca + ' - ' + producto.modelo + ')' +
-                                        "</option>"
-                                    );
-                                }) +
-                                `</select>
+                                    productos.map((producto) => {
+                                        return (
+                                            '<option value="' +
+                                            producto.id +
+                                            '">' +
+                                            producto.nombre +
+                                            ' (' + producto.marca + ' - ' + producto.modelo + ')' +
+                                            "</option>"
+                                        );
+                                    }) +
+                                    `</select>
                                 <div class="d-flex">
                                             <input title="Cantidad" class="form-control mt-3 cantidad_edit" value="${productos_data[i].cantidad}" type="number" min="1"
                                                 step="1" placeholder="Cantidad">
@@ -931,8 +990,8 @@ $(document).ready(function () {
                                                 placeholder="Retención (%)">
                                             </div>
                                             <input type="checkbox" class="mt-3 tipo_pago_edit" ${check1} data-value="0"> Pago Único
-                                            <input type="checkbox" style="margin-left: 100px;" ${check2} class="mt-3 tipo_pago_edit" data-value="1"> Pago Mensual
-                                            <input type="checkbox" style="margin-left: 100px;" ${check3} class="mt-3 imagen_grande_edit" data-value="1"> Imagen Grande
+                                            <input type="checkbox" style="margin-left: 50px;" ${check2} class="mt-3 tipo_pago_edit" data-value="1"> Pago Mensual
+                                            <input type="checkbox" style="margin-left: 50px;" ${check3} class="mt-3 imagen_grande_edit" data-value="1"> Imagen Grande
                                         </div>
                                         <div class="col-6">
                                             <div class="d-flex">
@@ -957,6 +1016,7 @@ $(document).ready(function () {
                                             </div>
                                         </div>
                                     </div>`;
+                            }
                         }
                         $("#div_list_productos_edit").html(html);
 
