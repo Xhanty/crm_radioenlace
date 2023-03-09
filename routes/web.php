@@ -123,12 +123,14 @@ Route::middleware(['auth_user'])->group(function () {
 
     // PROVEEDORES
     Route::get('/proveedores', [App\Http\Controllers\Admin\ProveedoresController::class, 'index'])->name('proveedores');
+    Route::get('/history_proveedores', [App\Http\Controllers\Admin\ProveedoresController::class, 'history'])->name('history_proveedores');
     Route::post('/proveedores_add', [App\Http\Controllers\Admin\ProveedoresController::class, 'proveedores_add'])->name('proveedores_add');
     Route::post('/proveedores_edit', [App\Http\Controllers\Admin\ProveedoresController::class, 'proveedores_edit'])->name('proveedores_edit');
     Route::post('/proveedores_delete', [App\Http\Controllers\Admin\ProveedoresController::class, 'proveedores_delete'])->name('proveedores_delete');
     Route::post('/proveedores_data', [App\Http\Controllers\Admin\ProveedoresController::class, 'proveedores_data'])->name('proveedores_data');
     Route::post('/proveedores_anexos_add', [App\Http\Controllers\Admin\ProveedoresController::class, 'proveedores_anexos_add'])->name('proveedores_anexos_add');
     Route::post('/proveedores_anexos_delete', [App\Http\Controllers\Admin\ProveedoresController::class, 'proveedores_anexos_delete'])->name('proveedores_anexos_delete');
+    Route::post('/proveedores_status', [App\Http\Controllers\Admin\ProveedoresController::class, 'proveedores_status'])->name('proveedores_status');
 
     // INVENTARIO
     Route::get('/almacenes', [App\Http\Controllers\Admin\Inventario\AlmacenesController::class, 'index'])->name('almacenes');

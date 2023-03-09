@@ -23,6 +23,39 @@ class ProveedoresController extends Controller
         }
     }
 
+    public function history(Request $request)
+    {
+        try {
+            if (!auth()->user()->hasPermissionTo('ver_proveedores')) {
+                return redirect()->route('home');
+            }
+
+            $id = $request->get('token');
+
+            if (!$id || $id < 1) {
+                return view('errors.404');
+            }
+
+            $proveedores = DB::table('proveedores')->where('id', $id)->first();
+
+            if (!$proveedores) {
+                return view('errors.404');
+            }
+
+            $proveedores->observaciones = DB::table('observaciones_proveedores')
+            ->select('observaciones_proveedores.*', 'empleados.nombre as creador')
+            ->join('empleados', 'empleados.id', 'observaciones_proveedores.created_by')
+            ->where('proveedor_id', $id)
+            ->orderBy('id', 'desc')
+            ->get();
+
+            return view('admin.history_proveedores', compact('proveedores'));
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+            return view('errors.500');
+        }
+    }
+
     public function proveedores_add(Request $request)
     {
         try {
@@ -83,10 +116,10 @@ class ProveedoresController extends Controller
             DB::beginTransaction();
             $data = DB::table("proveedores")->where("id", $request->id)->first();
             $anexos = DB::table("anexos_proveedores")
-            ->select("anexos_proveedores.*", "empleados.nombre as creador")
-            ->join("empleados", "empleados.id", "anexos_proveedores.created_by")
-            ->where("id_cliente", $request->id)
-            ->get();
+                ->select("anexos_proveedores.*", "empleados.nombre as creador")
+                ->join("empleados", "empleados.id", "anexos_proveedores.created_by")
+                ->where("id_cliente", $request->id)
+                ->get();
             DB::commit();
             return response()->json(["info" => 1, "data" => $data, "anexos" => $anexos]);
         } catch (Exception $ex) {
@@ -154,10 +187,10 @@ class ProveedoresController extends Controller
             DB::commit();
 
             $anexos = DB::table("anexos_proveedores")
-            ->select("anexos_proveedores.*", "empleados.nombre as creador")
-            ->join("empleados", "empleados.id", "anexos_proveedores.created_by")
-            ->where("id_cliente", $request->id)
-            ->get();
+                ->select("anexos_proveedores.*", "empleados.nombre as creador")
+                ->join("empleados", "empleados.id", "anexos_proveedores.created_by")
+                ->where("id_cliente", $request->id)
+                ->get();
 
             return response()->json(["info" => 1, "anexos" => $anexos]);
         } catch (Exception $ex) {
@@ -179,15 +212,40 @@ class ProveedoresController extends Controller
             DB::commit();
 
             $anexos = DB::table("anexos_proveedores")
-            ->select("anexos_proveedores.*", "empleados.nombre as creador")
-            ->join("empleados", "empleados.id", "anexos_proveedores.created_by")
-            ->where("id_cliente", $request->id_proveedor)
-            ->get();
+                ->select("anexos_proveedores.*", "empleados.nombre as creador")
+                ->join("empleados", "empleados.id", "anexos_proveedores.created_by")
+                ->where("id_cliente", $request->id_proveedor)
+                ->get();
             return response()->json(["info" => 1, "anexos" => $anexos]);
         } catch (Exception $ex) {
             DB::rollBack();
             return $ex;
             return response()->json(["info" => 0, "anexos" => []]);
+        }
+    }
+
+    public function proveedores_status(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            DB::table("proveedores")->where("id", $request->id)->update([
+                "estado" => $request->status,
+            ]);
+
+            DB::table("observaciones_proveedores")->insert([
+                'proveedor_id' => $request->id,
+                "observacion" => $request->observacion,
+                "created_by" => auth()->user()->id,
+                "created_at" => date("Y-m-d H:i:s")
+            ]);
+
+            DB::commit();
+            return response()->json(["info" => 1]);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return $ex;
+            return response()->json(["info" => 0]);
         }
     }
 }

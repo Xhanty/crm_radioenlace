@@ -119,8 +119,8 @@
                                             } elseif ($aprobado == 2) {
                                                 $color = 'rgb(245 60 91 / 30%);';
                                             }
-
-                                            if($cotizacion->fecha_revision) {
+                                            
+                                            if ($cotizacion->fecha_revision) {
                                                 $color_fecha = 'rgb(245 60 91 / 30%);';
                                             }
                                         @endphp
@@ -145,8 +145,9 @@
                                             </td>
                                             <td class="text-center">
                                                 <input type="text" data-id="{{ $cotizacion->id }}"
-                                                    title="Fecha Revisión" style="background: {{ $color_fecha }}" placeholder="Fecha Revisión"
-                                                    onfocus="(this.type='date')" class="form-control mb-2 date_revision text-center"
+                                                    title="Fecha Revisión" style="background: {{ $color_fecha }}"
+                                                    placeholder="Fecha Revisión" onfocus="(this.type='date')"
+                                                    class="form-control mb-2 date_revision text-center"
                                                     value="{{ $cotizacion->fecha_revision }}">
                                                 <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}"
                                                     title="Ver Detalles" class="btn btn-primary btn-sm btnView"><i
@@ -161,8 +162,10 @@
                                                     href="{{ route('cotizaciones_print') }}?token={{ $cotizacion->id }}"
                                                     title="Imprimir" class="btn btn-warning btn-sm btnPrint"><i
                                                         class="fa fa-print"></i></a>
-                                                <a target="_BLANK" href="{{ route('history_cotizaciones') }}?token={{ $cotizacion->id }}"
-                                                    title="Observaciones/Avances" class="btn btn-primary btn-sm btnHistory"><i
+                                                <a target="_BLANK"
+                                                    href="{{ route('history_cotizaciones') }}?token={{ $cotizacion->id }}"
+                                                    title="Observaciones/Avances"
+                                                    class="btn btn-primary btn-sm btnHistory"><i
                                                         class="fa fa-book"></i></a>
                                             </td>
                                         </tr>
@@ -277,72 +280,20 @@
                                 <div id="div_productos" class="d-none">
                                     <div class="row row-sm">
                                         <div class="col-lg">
-                                            <label for="">Productos</label>
-                                            <div class="row row-sm border-top-color">
-                                                <div class="col-6">
-                                                    <select title="Producto" class="form-select producto_add">
-                                                        <option value="">Seleccione un producto</option>
-                                                        @foreach ($productos as $producto)
-                                                            <option value="{{ $producto->id }}">
-                                                                {{ $producto->nombre }} ({{ $producto->marca }} -
-                                                                {{ $producto->modelo }})</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <div class="d-flex">
-                                                        <input title="Cantidad" class="form-control mt-3 cantidad_add"
-                                                            type="number" min="1" step="1"
-                                                            placeholder="Cantidad">
-                                                        <input title="Precio" class="form-control mt-3 precio_add"
-                                                            style="margin-left: 20px;" type="text"
-                                                            placeholder="Precio">
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <input title="Iva" type="text" placeholder="Iva (%)"
-                                                            class="mt-3 form-control iva_add">
-                                                        <input title="Retención" type="text"
-                                                            placeholder="Retención (%)" style="margin-left: 20px;"
-                                                            class="mt-3 form-control retencion_add">
-                                                    </div>
-                                                    <input type="checkbox" class="mt-3 tipo_pago_add" data-value="0">
-                                                    Pago Único
-                                                    <input type="checkbox" style="margin-left: 100px;"
-                                                        class="mt-3 tipo_pago_add" data-value="1"> Pago Mensual
-                                                    <input type="checkbox" style="margin-left: 100px;"
-                                                        class="mt-3 imagen_grande_add" data-value="1"> Imagen Grande
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <label for="">Productos</label>
                                                 </div>
-                                                <div class="col-6">
+                                                <div class="col-4">
                                                     <div class="d-flex">
-                                                        <div class="col-lg">
-                                                            <select title="Tipo Divisa" class="form-select divisa_add">
-                                                                <option value="">Seleccione un tipo de divisa
-                                                                </option>
-                                                                <option value="1">COP</option>
-                                                                <option value="2">USD</option>
-                                                            </select>
-                                                            <div class="mt-3">
-                                                                <select title="Tipo Transacción"
-                                                                    class="form-select mt-2 tipo_add">
-                                                                    <option value="">Seleccione un tipo
-                                                                    </option>
-                                                                    <option value="1">Alquiler</option>
-                                                                    <option value="2">Transporte</option>
-                                                                    <option value="3">Venta</option>
-                                                                    <option value="4">Visita Tecnica</option>
-                                                                </select>
-                                                            </div>
-                                                            <textarea title="Descripción" class="form-control mt-3 descripcion_add" placeholder="Descripción" rows="3"
-                                                                style="height: 100px; resize: none"></textarea>
-                                                        </div>
-                                                        <div class="d-flex">
-                                                            <a class="center-vertical mg-s-10" href="javascript:void(0)"
-                                                                id="new_row_producto">
-                                                                <i class="fa fa-plus"></i>
-                                                            </a>
-                                                            <a class="center-vertical mg-s-10" title="Agregar Título" href="javascript:void(0)"
-                                                                id="new_row_titulo">
-                                                                <i class="fa fa-font"></i>
-                                                            </a>
-                                                        </div>
+                                                        <a class="center-vertical mg-s-10" href="javascript:void(0)"
+                                                            id="new_row_producto">
+                                                            <i class="fa fa-plus"></i>
+                                                        </a>
+                                                        <a class="center-vertical mg-s-10" title="Agregar Título"
+                                                            href="javascript:void(0)" id="new_row_titulo">
+                                                            <i class="fa fa-font"></i>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>

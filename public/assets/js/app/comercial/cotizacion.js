@@ -10,7 +10,17 @@ $(document).ready(function () {
 
     let concat =
         '<div class="row row-sm mt-3 border-top-color">' +
-        '<div class="col-6">' +
+        '<div class="col-1" style="justify-content: center; display: flex;">' +
+        '<div class="d-flex">' +
+        '<a class="center-vertical subir_div" href="javascript:void(0)">' +
+        '<i class="fa fa-caret-up"></i>' +
+        '</a>&nbsp;&nbsp;' +
+        '<a class="center-vertical bajar_div" href="javascript:void(0)">' +
+        '<i class="fa fa-caret-down"></i>' +
+        '</a>' +
+        '</div>' +
+        '</div>' +
+        '<div class="col-5">' +
         '<select title="Producto" class="form-select producto_add">' +
         '<option value="">Seleccione un producto</option>' +
         productos.map((producto) => {
@@ -37,8 +47,8 @@ $(document).ready(function () {
         'placeholder="Retención (%)">' +
         "</div>" +
         '<input type="checkbox" class="mt-3 tipo_pago_add" data-value="0"> Pago Único' +
-        '<input type="checkbox" style="margin-left: 100px;" class="mt-3 tipo_pago_add" data-value="1"> Pago Mensual' +
-        '<input type="checkbox" style="margin-left: 100px;" class="mt-3 imagen_grande_add" data-value="1"> Imagen Grande' +
+        '<input type="checkbox" style="margin-left: 50px;" class="mt-3 tipo_pago_add" data-value="1"> Pago Mensual' +
+        '<input type="checkbox" style="margin-left: 50px;" class="mt-3 imagen_grande_add" data-value="1"> Imagen Grande' +
         "</div>" +
         '<div class="col-6">' +
         '<div class="d-flex">' +
@@ -633,9 +643,9 @@ $(document).ready(function () {
         });
 
         $(".imagen_grande_edit").each(function () {
-            if($(this).is(":checked")){
+            if ($(this).is(":checked")) {
                 img_grande.push(1);
-            }else{
+            } else {
                 img_grande.push(0);
             }
         });
@@ -879,8 +889,8 @@ $(document).ready(function () {
                                 '<i class="fa fa-plus"></i>' +
                                 '</a>' +
                                 '<a class="center-vertical mg-s-10" title="Agregar Título" href="javascript:void(0)"' +
-                                    'id="new_edit_row_titulo">' +
-                                    '<i class="fa fa-font"></i>' +
+                                'id="new_edit_row_titulo">' +
+                                '<i class="fa fa-font"></i>' +
                                 '</a>' +
                                 '</div>';
                             let spacing = "";

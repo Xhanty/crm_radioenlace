@@ -48,7 +48,7 @@
                                         <th>Celular</th>
                                         <th>E-Mail</th>
                                         <th>Status</th>
-                                        <th>Acciones</th>
+                                        <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -69,11 +69,18 @@
                                                     <span class="badge bg-danger side-badge">Inactivo</span>
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="text-center">
                                                 <button data-id="{{ $item->id }}"
                                                     class="btn btn-primary btn-sm btnEditar" title="Ver o Editar"><i
                                                         class="fa fa-pencil-alt"></i></button>
+                                                <a href="{{ route('history_proveedores') }}?token={{ $item->id }}" target="_blank"
+                                                        class="btn btn-success btn-sm" title="Ver Observaciones">
+                                                        <i class="fa fa-book"></i>
+                                                </a>
                                                 @if (auth()->user()->hasPermissionTo('gestionar_proveedores'))
+                                                    <button data-id="{{ $item->id }}" data-status="{{ $item->estado }}"
+                                                        class="btn btn-warning btn-sm btnStatus" title="Cambiar Estado"><i
+                                                            class="fas fa-times"></i></button>
                                                     <button data-id="{{ $item->id }}"
                                                         class="btn btn-danger btn-sm btnEliminar" title="Eliminar"><i
                                                             class="fa fa-trash"></i></button>
@@ -362,6 +369,32 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn ripple btn-primary" id="btnAgregarAnexo" type="button">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Add -->
+        <div class="modal  fade" id="modalStatus">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Cambiar Status Proveedor</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" disabled readonly id="id_proveedor_status">
+                        <input type="hidden" disabled readonly id="new_status_proveedor">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Observaciones</label>
+                                <textarea class="form-control" placeholder="Observaciones" rows="3" id="descripcion_status"
+                                    style="height: 100px; resize: none"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" id="btnModificarStatus" type="button">Modificar Status</button>
                     </div>
                 </div>
             </div>

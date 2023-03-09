@@ -188,6 +188,61 @@ $(function () {
         });
     });
 
+    $(document).on("click", ".btnStatus", function () {
+        let id = $(this).data("id");
+        let status = $(this).data("status");
+
+        if (status == 1) {
+            status = 0;
+        } else {
+            status = 1;
+        }
+
+        $("#id_proveedor_status").val(id);
+        $("#new_status_proveedor").val(status);
+        $("#modalStatus").modal("show");
+    });
+
+    $("#btnModificarStatus").click(function () {
+        let id = $("#id_proveedor_status").val();
+        let status = $("#new_status_proveedor").val();
+        let observacion = $("#descripcion_status").val();
+
+        if(observacion.trim().length == 0) {
+            toastr.error("Debe ingresar una observación");
+            return false;
+        } else {
+            $("#btnModificarStatus").attr("disabled", true);
+            $("#btnModificarStatus").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
+            $.ajax({
+                url: "proveedores_status",
+                type: "POST",
+                data: { id: id, status: status, observacion: observacion },
+                dataType: "json",
+                success: function (response) {
+                    if (response.info == 1) {
+                        toastr.success("Proveedor modificado correctamente");
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 1000);
+                    } else {
+                        toastr.error("Error al modificar el proveedor");
+                        $("#btnModificarStatus").attr("disabled", false);
+                        $("#btnModificarStatus").html("Modificar Status");
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                    toastr.error("Error al modificar el proveedor");
+                    $("#btnModificarStatus").attr("disabled", false);
+                    $("#btnModificarStatus").html("Modificar Status");
+                },
+            });
+        }        
+    });
+
     $(document).on("click", ".btn_delete_archivo", function () {
         let id = $(this).data("id");
         let id_proveedor = $(this).data("id_proveedor");
