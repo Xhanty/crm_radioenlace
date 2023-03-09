@@ -328,12 +328,12 @@
                                     </div>
                                     <div class="col-lg-3">
                                         <label for="">Fecha elaboración</label>
-                                        <input class="form-control" id="fecha_add" placeholder="Fecha elaboración"
+                                        <input class="form-control" value="{{ date('Y-m-d') }}" id="fecha_add" placeholder="Fecha elaboración"
                                             type="date">
                                     </div>
                                     <div class="col-lg-3">
                                         <label for="">Número</label>
-                                        <input class="form-control" disabled id="numero_add" placeholder="Número"
+                                        <input class="form-control text-center" value="01" disabled id="numero_add" placeholder="Número"
                                             type="text">
                                     </div>
                                 </div>
@@ -358,13 +358,13 @@
 
                                     <div class="col-lg-3">
                                         <label for="">No. Factura Proveedor</label>
-                                        <input class="form-control" id="factura1_proveedor_add"
+                                        <input class="form-control text-center" value="FC" id="factura1_proveedor_add"
                                             placeholder="No. Factura Proveedor" type="text">
                                     </div>
 
                                     <div class="col-lg-3">
                                         <label for="">Consecutivo Factura Proveedor</label>
-                                        <input class="form-control" id="factura2_proveedor_add"
+                                        <input class="form-control text-center" id="factura2_proveedor_add"
                                             placeholder="Consecutivo Factura Proveedor" type="text">
                                     </div>
                                 </div>
@@ -437,15 +437,15 @@
                                                             class="form-control bodega_add" style="border: 0">
                                                     </td>
                                                     <td class="pad-4">
-                                                        <input type="text" placeholder="Cantidad"
+                                                        <input type="number" placeholder="Cantidad"
                                                             class="form-control text-end cantidad_add" style="border: 0">
                                                     </td>
                                                     <td class="pad-4">
                                                         <input type="text" placeholder="Valor Unitario"
-                                                            class="form-control text-end valor_add" style="border: 0">
+                                                            class="form-control text-end valor_add input_dinner" style="border: 0">
                                                     </td>
                                                     <td class="pad-4">
-                                                        <input type="text" placeholder="Descuento"
+                                                        <input type="number" placeholder="Descuento"
                                                             class="form-control text-end descuento_add" style="border: 0">
                                                     </td>
                                                     <td class="pad-4">

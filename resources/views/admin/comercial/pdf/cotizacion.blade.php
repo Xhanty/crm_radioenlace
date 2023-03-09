@@ -12,10 +12,10 @@
         }
 
         .invoice-box {
-            max-width: 800px;
+            max-width: 900px;
             height: 969px;
-            margin: auto;
-            padding: 0px;
+            margin-right: auto;
+            padding-right: 0px;
             box-shadow: 0 0 10px rgba(0, 0, 0, .15);
             font-size: 16px;
             font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
@@ -116,10 +116,14 @@
 </head>
 
 <body>
+    @php
+        $colspan = 7;
+    @endphp
+
     <div class="invoice-box">
         <table>
             <tr class="top">
-                <td colspan="7">
+                <td colspan="{{ $colspan }}">
                     <table>
                         <tr>
                             <td class="title">
@@ -138,7 +142,7 @@
             </tr>
 
             <tr class="information">
-                <td colspan="7">
+                <td colspan="{{ $colspan }}">
                     <table>
                         <tr>
                             <td>
@@ -158,14 +162,14 @@
 
             @if ($cotizacion->descripcion)
                 <tr class="heading">
-                    <td colspan="7">
+                    <td colspan="{{ $colspan }}">
                         Descripción
                     </td>
                 </tr>
 
 
                 <tr class="details">
-                    <td colspan="7" style="font-size: 15px; text-align: justify;">
+                    <td colspan="{{ $colspan }}" style="font-size: 15px; text-align: justify;">
                         @php
                             $texto = $cotizacion->descripcion;
                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
@@ -177,14 +181,14 @@
 
             @if ($cotizacion->incluye)
                 <tr class="heading">
-                    <td colspan="7">
+                    <td colspan="{{ $colspan }}">
                         Incluye
                     </td>
                 </tr>
 
 
                 <tr class="details">
-                    <td colspan="7" style="font-size: 15px; text-align: justify;">
+                    <td colspan="{{ $colspan }}" style="font-size: 15px; text-align: justify;">
                         @php
                             $texto = $cotizacion->incluye;
                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
@@ -200,7 +204,7 @@
                 <td style="text-align: center;">Cant.</td>
                 <td class="text-align-right">Precio U.</td>
                 <td class="text-align-right">Iva(%)</td>
-                <td class="text-align-right">Retención(%)</td>
+                <!--<td class="text-align-right">Ret.(%)</td>-->
                 <td class="text-align-right">Subtotal</td>
             </tr>
 
@@ -218,7 +222,7 @@
             @for ($i = 0; $i < count($productos); $i++)
                 @if ($productos[$i]->titulo)
                     <tr style="background: #eee">
-                        <td colspan="7" style="text-align: center; padding-top: 2%;">
+                        <td colspan="{{ $colspan }}" style="text-align: center; padding-top: 2%;">
                             <b>{{ $productos[$i]->titulo }}</b>
                         </td>
                     </tr>
@@ -249,13 +253,13 @@
                                 <td class="text-align-right" style="padding-top: 3%">
                                     {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
                                 <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
-                                <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>
+                                <!--<td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>-->
                                 <td class="text-align-right" style="padding-top: 3%">
                                     {{ number_format($total, 0, ',', '.') }}
                                 </td>
                             </tr>
                             <tr class="item">
-                                <td colspan="7">
+                                <td colspan="{{ $colspan }}">
                                     <p style="font-size: 14px; margin-top: 0px; text-align: justify">
                                         @php
                                             $texto = $productos[$i]->descripcion;
@@ -266,7 +270,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="text-align: center; padding-top: 2%;" colspan="7">
+                                <td style="text-align: center; padding-top: 2%;" colspan="{{ $colspan }}">
                                     <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
                                         style="width:100%; max-height: 288px">
                                 </td>
@@ -285,13 +289,13 @@
                                 <td class="text-align-right" style="padding-top: 3%">
                                     {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
                                 <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
-                                <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>
+                                <!--<td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>-->
                                 <td class="text-align-right" style="padding-top: 3%">
                                     {{ number_format($total, 0, ',', '.') }}
                                 </td>
                             </tr>
                             <tr class="item">
-                                <td colspan="7">
+                                <td colspan="{{ $colspan }}">
                                     <p style="font-size: 14px; margin-top: 0px; text-align: justify">
                                         @php
                                             $texto = $productos[$i]->descripcion;
@@ -313,13 +317,13 @@
                                 <td class="text-align-right" style="padding-top: 3%">
                                     {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
                                 <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
-                                <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>
+                                <!--<td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>-->
                                 <td class="text-align-right" style="padding-top: 3%">
                                     {{ number_format($total, 0, ',', '.') }}
                                 </td>
                             </tr>
                             <tr class="item">
-                                <td colspan="7">
+                                <td colspan="{{ $colspan }}">
                                     <p style="font-size: 14px; margin-top: 0px; text-align: justify">
                                         @php
                                             $texto = $productos[$i]->descripcion;
@@ -330,7 +334,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="text-align: center; padding-top: 2%;" colspan="7">
+                                <td style="text-align: center; padding-top: 2%;" colspan="{{ $colspan }}">
                                     <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
                                         style="width:100%; max-height: 288px">
                                 </td>
@@ -349,13 +353,13 @@
                                 <td class="text-align-right" style="padding-top: 3%">
                                     {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
                                 <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
-                                <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>
+                                <!--<td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>-->
                                 <td class="text-align-right" style="padding-top: 3%">
                                     {{ number_format($total, 0, ',', '.') }}
                                 </td>
                             </tr>
                             <tr class="item">
-                                <td colspan="7">
+                                <td colspan="{{ $colspan }}">
                                     <p style="font-size: 14px; margin-top: 0px; text-align: justify">
                                         @php
                                             $texto = $productos[$i]->descripcion;
@@ -383,7 +387,7 @@
 
             <tr class="total">
                 @if ($incluye_mensual > 0)
-                    <td @if ($incluye_anual == 0) colspan="7" @else colspan="3" @endif class="text-align-left">
+                    <td @if ($incluye_anual == 0) colspan="{{ $colspan }}" @else colspan="3" @endif class="text-align-left">
                         <b>Pago Mensual</b><br />
                         Subtotal: {{ number_format($subtotal_mensual, 0, ',', '.') }}<br />
                         Iva: {{ number_format($iva_mensual, 0, ',', '.') }}<br />
@@ -394,7 +398,7 @@
                 @endif
 
                 @if ($incluye_anual > 0)
-                    <td @if ($incluye_mensual > 0) colspan="4" @else colspan="7" @endif class="text-align-right">
+                    <td @if ($incluye_mensual > 0) colspan="4" @else colspan="{{ $colspan }}" @endif class="text-align-right">
                         @if ($incluye_mensual > 0)
                             <b>Pago Único</b><br />
                         @endif
@@ -494,13 +498,13 @@
 
             @if ($cotizacion->envio)
                 <tr class="heading">
-                    <td colspan="7">
+                    <td colspan="{{ $colspan }}">
                         Envío
                     </td>
                 </tr>
 
                 <tr class="details">
-                    <td colspan="7" style="font-size: 15px;">
+                    <td colspan="{{ $colspan }}" style="font-size: 15px;">
                         @php
                             $texto = $cotizacion->envio;
                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);

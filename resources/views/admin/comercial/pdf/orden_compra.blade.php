@@ -193,7 +193,7 @@
             @endphp
 
             @for ($i = 0; $i < count($productos); $i++)
-                @php//$total=$productos[$i]->cantidad * $productos[$i]->precio;
+                @php //$total=$productos[$i]->cantidad * $productos[$i]->precio;
                     $total = $productos[$i]->precio * $productos[$i]->cantidad;
                     $total2 = $productos[$i]->precio * $productos[$i]->cantidad;
                     $total = $total + ($total * $productos[$i]->iva) / 100;

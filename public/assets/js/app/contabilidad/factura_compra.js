@@ -76,13 +76,13 @@ $(document).ready(function () {
             '<input type="text" placeholder="Bodega" class="form-control bodega_add" style="border: 0">' +
             '</td>' +
             '<td class="pad-4">' +
-            '<input type="text" placeholder="Cantidad" class="form-control text-end cantidad_add" style="border: 0">' +
+            '<input type="number" placeholder="Cantidad" class="form-control text-end cantidad_add" style="border: 0">' +
             '</td>' +
             '<td class="pad-4">' +
-            '<input type="text" placeholder="Valor Unitario" class="form-control text-end valor_add" style="border: 0">' +
+            '<input type="number" placeholder="Valor Unitario" class="form-control text-end valor_add input_dinner" style="border: 0">' +
             '</td>' +
             '<td class="pad-4">' +
-            '<input type="text" placeholder="Descuento" class="form-control text-end descuento_add" style="border: 0">' +
+            '<input type="number" placeholder="Descuento" class="form-control text-end descuento_add" style="border: 0">' +
             '</td>' +
             '<td class="pad-4">' +
             '<select class="form-select cargo_add">' +
@@ -168,5 +168,61 @@ $(document).ready(function () {
     $(".back_home").click(function () {
         $("#div_general").removeClass("d-none");
         $("#div_form_add").addClass("d-none");
+    });
+
+    $("#proveedor_add").change(function () {
+        var id = $(this).val();
+
+        if (id != "") {
+            $.ajax({
+                url: "info_proveedor",
+                type: "POST",
+                data: {
+                    id: id,
+                },
+                dataType: "json",
+                success: function (response) {
+                    if (response.info == 1) {
+                        let data = response.data;
+                        $("#contacto_add").val(data.contacto);
+                    } else {
+                        toastr.error("Error al cargar los datos del proveedor");
+                        $("#contacto_add").val("");
+                    }
+                },
+                error: function (data) {
+                    toastr.error("Error al cargar los datos del proveedor");
+                    $("#contacto_add").val("");
+                },
+            });
+        } else {
+            toastr.error("Debe seleccionar un proveedor");
+            $("#contacto_add").val("");
+        }
+    });
+
+    $(document).on("keyup", ".input_dinner", function () {
+        // Obtener el valor ingresado por el usuario
+        var inputVal = $(this).val();
+
+        // Remover cualquier caracter que no sea número, punto decimal o coma
+        inputVal = inputVal.replace(/[^\d.,]/g, '');
+
+        // Reemplazar la coma por punto y el punto por coma
+        inputVal = inputVal.replace(',', '#').replace('.', ',').replace('#', '.');
+
+        // Separar los decimales y los miles
+        var parts = inputVal.split(',');
+        var intPart = parts[0];
+        var decimalPart = parts.length > 1 ? ',' + parts[1] : '';
+
+        // Formatear la parte entera con separador de miles
+        intPart = intPart.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+        // Combinar la parte entera y decimal formateados
+        var formattedVal = intPart + decimalPart;
+
+        // Actualizar el valor en el campo de entrada
+        $(this).val(formattedVal);
     });
 });

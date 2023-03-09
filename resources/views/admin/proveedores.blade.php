@@ -117,8 +117,8 @@
                                 <input class="form-control" id="nit_add" placeholder="NIT" type="text">
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
-                                <label for="">Código Verificación</label>
-                                <input class="form-control" id="codigo_add" placeholder="Código Verificación"
+                                <label for="">Dígito Verificación</label>
+                                <input class="form-control" id="codigo_add" placeholder="Dígito Verificación"
                                     type="text">
                             </div>
                         </div>
@@ -224,8 +224,8 @@
                                 <input class="form-control" id="nit_edit" placeholder="NIT" type="text">
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
-                                <label for="">Código Verificación</label>
-                                <input class="form-control" id="codigo_edit" placeholder="Código Verificación"
+                                <label for="">Dígito Verificación</label>
+                                <input class="form-control" id="codigo_edit" placeholder="Dígito Verificación"
                                     type="text">
                             </div>
                         </div>

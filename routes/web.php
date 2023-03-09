@@ -124,6 +124,7 @@ Route::middleware(['auth_user'])->group(function () {
     // PROVEEDORES
     Route::get('/proveedores', [App\Http\Controllers\Admin\ProveedoresController::class, 'index'])->name('proveedores');
     Route::get('/history_proveedores', [App\Http\Controllers\Admin\ProveedoresController::class, 'history'])->name('history_proveedores');
+    Route::post('/info_proveedor', [App\Http\Controllers\Admin\ProveedoresController::class, 'info_proveedor'])->name('info_proveedor');
     Route::post('/proveedores_add', [App\Http\Controllers\Admin\ProveedoresController::class, 'proveedores_add'])->name('proveedores_add');
     Route::post('/proveedores_edit', [App\Http\Controllers\Admin\ProveedoresController::class, 'proveedores_edit'])->name('proveedores_edit');
     Route::post('/proveedores_delete', [App\Http\Controllers\Admin\ProveedoresController::class, 'proveedores_delete'])->name('proveedores_delete');

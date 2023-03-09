@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-03-2023 a las 22:50:38
+-- Tiempo de generación: 09-03-2023 a las 22:04:58
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.1.12
 
@@ -4935,10 +4935,8 @@ CREATE TABLE `cotizaciones` (
 --
 
 INSERT INTO `cotizaciones` (`id`, `code`, `cliente_id`, `descripcion`, `incluye`, `validez`, `duracion`, `forma_pago`, `tiempo_entrega`, `descuento`, `garantia`, `envio`, `status`, `aprobado`, `fecha_revision`, `created_by`, `created_at`) VALUES
-(1, 1, 13, 'Se realizara la instalación en planta', '2 cables y una fuente', '7 días', NULL, 'Crédito', NULL, NULL, '6 meses', 'rrrr', 1, 0, '2023-02-13', 1, '2023-01-30 10:46:07'),
-(3, 2, 14, 'Respetados señores, Gracias por contar con nosotros, por medio de la presente me permito realizar la siguiente cotización, consistente en la Venta un sistema poc. La tecnología PoC, permite llevar a cabo la comunicación de grupos o flotas usando las redes basadas en la web convencional, ampliando la red de cobertura y ofreciendo una mayor flexibilidad Tecnología PoC, permite llevar a cabo la comunicación de grupos o flotas usando las redes basadas en la web convencional, ampliando la red de cobertura y ofreciendo una mayor flexibilidad El sistema Poc se conecta a una plataforma o consola donde podrá administrar toda la operación mediante el aplicativo con el que podrá realizar todo el control de operación el cual necesita ser combinada con una conexión a un servidor Poc que va integrada a cada radio Poc que a su vez tienen que tener una conexión de red mediante una sim', 'Todos los gastos asociados al buen funcionamiento de los equipos alquilados', '2 días', NULL, 'Contado', NULL, NULL, '12 meses', 'Incluido', 0, 0, NULL, 1, '2023-02-13 08:44:04'),
-(4, 3, 11, 'Respetados señores, Gracias por contar con nosotros, por medio de la presente me permito realizar la siguiente cotización, consistente en la Venta un sistema poc. La tecnología PoC, permite llevar a cabo la comunicación de grupos o flotas usando las redes basadas en la web convencional, ampliando la red de cobertura y ofreciendo una mayor flexibilidad Tecnología PoC, permite llevar a cabo la comunicación de grupos o flotas usando las redes basadas en la web convencional, ampliando la red de cobertura y ofreciendo una mayor flexibilidad El sistema Poc se conecta a una plataforma o consola donde podrá administrar toda la operación mediante el aplicativo con el que podrá realizar todo el control de operación el cual necesita ser combinada con una conexión a un servidor Poc que va integrada a cada radio Poc que a su vez tienen que tener una conexión de red mediante una sim', 'asdasd', 'asdasd', NULL, 'asdsad', NULL, NULL, NULL, NULL, 1, 0, '2023-02-23', 1, '2023-02-13 11:10:38'),
-(8, 4, 11, NULL, NULL, 'asd', 'asd', 'asd', 'asd', NULL, NULL, NULL, 0, 0, NULL, 1, '2023-03-07 16:34:03');
+(30, 1, 11, NULL, NULL, '8 días', NULL, 'Crédito', NULL, NULL, NULL, NULL, 0, 0, NULL, 1, '2023-03-09 11:53:11'),
+(31, 2, 11, NULL, NULL, '8 días', NULL, 'Crédito', NULL, NULL, NULL, NULL, 1, 0, NULL, 1, '2023-03-09 12:15:13');
 
 -- --------------------------------------------------------
 
@@ -5150,12 +5148,13 @@ INSERT INTO `departamentos` (`id`, `pais_id`, `nombre`, `status`, `created_by`, 
 
 CREATE TABLE `detalle_cotizaciones` (
   `id` int(11) NOT NULL,
-  `producto_id` int(11) NOT NULL,
-  `cotizacion_id` int(11) NOT NULL,
-  `tipo_divisa` int(1) NOT NULL,
-  `cantidad` int(11) NOT NULL,
-  `tipo_transaccion` int(1) NOT NULL,
-  `precio` varchar(255) NOT NULL,
+  `titulo` text DEFAULT NULL,
+  `producto_id` int(11) DEFAULT NULL,
+  `cotizacion_id` int(11) DEFAULT NULL,
+  `tipo_divisa` int(1) DEFAULT NULL,
+  `cantidad` int(11) DEFAULT NULL,
+  `tipo_transaccion` int(1) DEFAULT NULL,
+  `precio` varchar(255) DEFAULT NULL,
   `iva` varchar(255) DEFAULT '0',
   `retencion` varchar(255) DEFAULT '0',
   `tipo_pago` int(1) NOT NULL DEFAULT 0,
@@ -5169,12 +5168,13 @@ CREATE TABLE `detalle_cotizaciones` (
 -- Volcado de datos para la tabla `detalle_cotizaciones`
 --
 
-INSERT INTO `detalle_cotizaciones` (`id`, `producto_id`, `cotizacion_id`, `tipo_divisa`, `cantidad`, `tipo_transaccion`, `precio`, `iva`, `retencion`, `tipo_pago`, `img_grande`, `descripcion`, `created_by`, `created_at`) VALUES
-(25, 1, 1, 1, 1, 1, '10000', '0', '0', 1, 0, NULL, 1, '2023-02-13 10:44:04'),
-(65, 2, 4, 1, 2, 2, '232333', '16', '10', 1, 0, NULL, 1, '2023-02-15 12:43:10'),
-(74, 1, 8, 1, 23, 1, '232323', '2', '0', 1, 1, 'asdasd', 1, '2023-03-07 16:34:03'),
-(75, 2, 3, 2, 2, 2, '15000', '19', '0', 0, 0, 'Alquiler mensual de una repetidora digital Motorola con todos sus accesorios necesarios para su optimo funcionamiento, incluye Repetidora digital Motorola – Licencias IP Site connect – GPS mejorado - paneles solares - Antena 4 dipolos Andrew Americana.', 1, '2023-03-07 16:44:46'),
-(76, 3, 3, 2, 2, 1, '2000', '0', '10', 0, 1, 'Alquiler mensual de una repetidora digital Motorola con todos sus accesorios necesarios para su optimo funcionamiento, incluye Repetidora digital Motorola – Licencias IP Site connect – GPS mejorado - paneles solares - Antena 4 dipolos Andrew Americana.', 1, '2023-03-07 16:44:46');
+INSERT INTO `detalle_cotizaciones` (`id`, `titulo`, `producto_id`, `cotizacion_id`, `tipo_divisa`, `cantidad`, `tipo_transaccion`, `precio`, `iva`, `retencion`, `tipo_pago`, `img_grande`, `descripcion`, `created_by`, `created_at`) VALUES
+(141, 'Venta', NULL, 31, NULL, NULL, NULL, NULL, '0', '0', 0, 0, NULL, 1, '2023-03-09 12:15:13'),
+(142, NULL, 3, 31, 1, 4, 3, '40000', '19', '0', 0, 0, NULL, 1, '2023-03-09 12:15:13'),
+(143, 'Venta', NULL, 30, NULL, NULL, NULL, NULL, '0', '0', 0, 0, NULL, 1, '2023-03-09 12:24:57'),
+(144, NULL, 1, 30, 1, 5, 1, '50000', '19', '0', 1, 0, NULL, 1, '2023-03-09 12:24:57'),
+(145, 'Alquiler', NULL, 30, NULL, NULL, NULL, NULL, '0', '0', 0, 0, NULL, 1, '2023-03-09 12:24:57'),
+(146, NULL, 3, 30, 1, 4, 3, '40000', '19', '0', 0, 0, NULL, 1, '2023-03-09 12:24:57');
 
 -- --------------------------------------------------------
 
@@ -5520,6 +5520,29 @@ CREATE TABLE `novedades_nomina` (
   `motivo` text DEFAULT NULL,
   `dias` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `observaciones_proveedores`
+--
+
+CREATE TABLE `observaciones_proveedores` (
+  `id` int(11) NOT NULL,
+  `proveedor_id` int(11) NOT NULL,
+  `observacion` text NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `observaciones_proveedores`
+--
+
+INSERT INTO `observaciones_proveedores` (`id`, `proveedor_id`, `observacion`, `created_by`, `created_at`) VALUES
+(4, 4, 'Se activa', 1, '2023-03-09 09:04:06'),
+(5, 4, 'Se inactiva', 1, '2023-03-09 09:04:17'),
+(6, 4, 'Se reactiva', 1, '2023-03-09 09:33:59');
 
 -- --------------------------------------------------------
 
@@ -9422,6 +9445,12 @@ ALTER TABLE `novedades_nomina`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `observaciones_proveedores`
+--
+ALTER TABLE `observaciones_proveedores`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `ordenes_compra`
 --
 ALTER TABLE `ordenes_compra`
@@ -9723,7 +9752,7 @@ ALTER TABLE `contador`
 -- AUTO_INCREMENT de la tabla `cotizaciones`
 --
 ALTER TABLE `cotizaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT de la tabla `datos_facturacion`
@@ -9753,7 +9782,7 @@ ALTER TABLE `departamentos`
 -- AUTO_INCREMENT de la tabla `detalle_cotizaciones`
 --
 ALTER TABLE `detalle_cotizaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_ordenes`
@@ -9820,6 +9849,12 @@ ALTER TABLE `nomina`
 --
 ALTER TABLE `novedades_nomina`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT de la tabla `observaciones_proveedores`
+--
+ALTER TABLE `observaciones_proveedores`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `ordenes_compra`

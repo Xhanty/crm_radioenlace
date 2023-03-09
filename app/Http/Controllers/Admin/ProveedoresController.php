@@ -43,11 +43,11 @@ class ProveedoresController extends Controller
             }
 
             $proveedores->observaciones = DB::table('observaciones_proveedores')
-            ->select('observaciones_proveedores.*', 'empleados.nombre as creador')
-            ->join('empleados', 'empleados.id', 'observaciones_proveedores.created_by')
-            ->where('proveedor_id', $id)
-            ->orderBy('id', 'desc')
-            ->get();
+                ->select('observaciones_proveedores.*', 'empleados.nombre as creador')
+                ->join('empleados', 'empleados.id', 'observaciones_proveedores.created_by')
+                ->where('proveedor_id', $id)
+                ->orderBy('id', 'desc')
+                ->get();
 
             return view('admin.history_proveedores', compact('proveedores'));
         } catch (Exception $ex) {
@@ -246,6 +246,20 @@ class ProveedoresController extends Controller
             DB::rollBack();
             return $ex;
             return response()->json(["info" => 0]);
+        }
+    }
+
+    public function info_proveedor(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $data = DB::table("proveedores")->where("id", $request->id)->first();
+            DB::commit();
+            return response()->json(["info" => 1, "data" => $data]);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return $ex;
+            return response()->json(["info" => 0, "data" => []]);
         }
     }
 }
