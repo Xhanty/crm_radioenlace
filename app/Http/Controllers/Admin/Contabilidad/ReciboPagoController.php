@@ -16,12 +16,17 @@ class ReciboPagoController extends Controller
                 return redirect()->route('home');
             }
 
-            $productos = DB::table('productos')
-            ->select('id', 'nombre', 'marca', 'modelo')
-            ->where('status', 1)
-            ->get();
+            $centros_costos = DB::table('centros_costo')
+                ->select('id', 'nombre', 'code')
+                ->where('status', 1)
+                ->get();
 
-            return view('admin.contabilidad.recibo_pago', compact('productos'));
+            $proveedores = DB::table('proveedores')
+                ->select('id', 'razon_social', 'nit')
+                ->where('estado', 1)
+                ->get();
+
+            return view('admin.contabilidad.recibo_pago', compact('centros_costos', 'proveedores'));
         } catch (Exception $ex) {
             return view('errors.500');
         }
