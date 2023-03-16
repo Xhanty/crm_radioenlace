@@ -64,6 +64,8 @@ class ProveedoresController extends Controller
             if ($anexo = $request->file('archivo')) {
                 $archivo = rand() . rand() . '.' . $anexo->getClientOriginalExtension();
                 $anexo->move('images/proveedores', $archivo);
+            } else {
+                $archivo = "noavatar.png";
             }
 
             DB::table("proveedores")->insert([
@@ -137,24 +139,38 @@ class ProveedoresController extends Controller
             if ($anexo = $request->file('archivo')) {
                 $archivo = rand() . rand() . '.' . $anexo->getClientOriginalExtension();
                 $anexo->move('images/proveedores', $archivo);
-            }
 
-            DB::table("proveedores")->where("id", $request->id)->update([
-                "nit" => $request->nit,
-                "codigo_verificacion" => $request->codigo ? $request->codigo : 0,
-                "razon_social" => $request->razon_social ? $request->razon_social : "",
-                "direccion" => $request->direccion ? $request->direccion : "",
-                "telefono_fijo" => $request->telefono ? $request->telefono : "",
-                "celular" => $request->celular ? $request->celular : "",
-                "contacto" => $request->contacto ? $request->contacto : "",
-                "email" => $request->email ? $request->email : "",
-                "email_comercial" => $request->email_comercial  ? $request->email_comercial : "",
-                "tipo_regimen" => $request->tipo_regimen ? $request->tipo_regimen : "",
-                "ciudad" => $request->ciudad ? $request->ciudad : "",
-                "observaciones" => $request->observaciones ? $request->observaciones : "",
-                "avatar" => $archivo,
-                "estado" => 1,
-            ]);
+                DB::table("proveedores")->where("id", $request->id)->update([
+                    "nit" => $request->nit,
+                    "codigo_verificacion" => $request->codigo ? $request->codigo : 0,
+                    "razon_social" => $request->razon_social ? $request->razon_social : "",
+                    "direccion" => $request->direccion ? $request->direccion : "",
+                    "telefono_fijo" => $request->telefono ? $request->telefono : "",
+                    "celular" => $request->celular ? $request->celular : "",
+                    "contacto" => $request->contacto ? $request->contacto : "",
+                    "email" => $request->email ? $request->email : "",
+                    "email_comercial" => $request->email_comercial  ? $request->email_comercial : "",
+                    "tipo_regimen" => $request->tipo_regimen ? $request->tipo_regimen : "",
+                    "ciudad" => $request->ciudad ? $request->ciudad : "",
+                    "observaciones" => $request->observaciones ? $request->observaciones : "",
+                    "avatar" => $archivo,
+                ]);
+            } else {
+                DB::table("proveedores")->where("id", $request->id)->update([
+                    "nit" => $request->nit,
+                    "codigo_verificacion" => $request->codigo ? $request->codigo : 0,
+                    "razon_social" => $request->razon_social ? $request->razon_social : "",
+                    "direccion" => $request->direccion ? $request->direccion : "",
+                    "telefono_fijo" => $request->telefono ? $request->telefono : "",
+                    "celular" => $request->celular ? $request->celular : "",
+                    "contacto" => $request->contacto ? $request->contacto : "",
+                    "email" => $request->email ? $request->email : "",
+                    "email_comercial" => $request->email_comercial  ? $request->email_comercial : "",
+                    "tipo_regimen" => $request->tipo_regimen ? $request->tipo_regimen : "",
+                    "ciudad" => $request->ciudad ? $request->ciudad : "",
+                    "observaciones" => $request->observaciones ? $request->observaciones : "",
+                ]);
+            }
 
             DB::commit();
             return response()->json(["info" => 1]);

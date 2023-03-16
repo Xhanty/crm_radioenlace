@@ -54,8 +54,8 @@
                                 <tbody>
                                     @foreach ($proveedores as $item)
                                         <tr>
-                                            <td><img src="{{ asset('images/proveedores/' . $item->avatar) }}" alt="img"
-                                                    class="avatar avatar-md brround"></td>
+                                            <td class="d-flex" style="justify-content: center;"><img src="{{ asset('images/proveedores/' . $item->avatar) }}" alt="img"
+                                                    class="avatar avatar-lg brround"></td>
                                             <td>{{ $item->razon_social }}</td>
                                             <td>{{ $item->contacto }}</td>
                                             <td>{{ $item->celular }}</td>
@@ -113,8 +113,8 @@
                     <div class="card-body" style="margin-top: -18px;">
                         <div class="row row-sm">
                             <div class="col-lg">
-                                <label for="">NIT</label>
-                                <input class="form-control" id="nit_add" placeholder="NIT" type="text">
+                                <label for="">Documento</label>
+                                <input class="form-control" id="nit_add" placeholder="Documento" type="text">
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="">Dígito Verificación</label>
@@ -220,8 +220,8 @@
                         <input type="hidden" readonly disabled id="id_proveedor_edit">
                         <div class="row row-sm">
                             <div class="col-lg">
-                                <label for="">NIT</label>
-                                <input class="form-control" id="nit_edit" placeholder="NIT" type="text">
+                                <label for="">Documento</label>
+                                <input class="form-control" id="nit_edit" placeholder="Documento" type="text">
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="">Dígito Verificación</label>

@@ -71,6 +71,8 @@ class EmpleadosController extends Controller
                 $archivo = 'avatar_' . time() . "." . $file->getClientOriginalExtension();
                 $path = 'images/empleados/' . $archivo;
                 file_put_contents($path, file_get_contents($file));
+            } else {
+                $archivo = "noavatar.png";
             }
 
             $empleado = DB::table('empleados')->insertGetId([

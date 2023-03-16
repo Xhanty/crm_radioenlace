@@ -59,6 +59,8 @@ class ClientesController extends Controller
             if ($anexo = $request->file('archivo')) {
                 $archivo = rand() . rand() . '.' . $anexo->getClientOriginalExtension();
                 $anexo->move('images/clientes', $archivo);
+            } else {
+                $archivo = "noavatar.png";
             }
 
             $cliente = DB::table("cliente")->insertGetId([
@@ -127,25 +129,43 @@ class ClientesController extends Controller
                 if ($anexo = $request->file('archivo')) {
                     $archivo = rand() . rand() . '.' . $anexo->getClientOriginalExtension();
                     $anexo->move('images/clientes', $archivo);
+
+                    DB::table("cliente")->where("id", $cliente)->update([
+                        "tipo" => $request->tipo_cliente ? $request->tipo_cliente : 0,
+                        "ciudad" => $request->ciudad ? $request->ciudad : "",
+                        "tipo_identificacion" => $request->tipo_documento ? $request->tipo_documento : 0,
+                        "nit" => $request->documento ? $request->documento : "",
+                        "razon_social" => $request->razon_social ? $request->razon_social : "",
+                        "direccion" => $request->direccion ? $request->direccion : "",
+                        "telefono_fijo" => $request->telefono ? $request->telefono : "",
+                        "celular" => $request->celular ? $request->celular : "",
+                        "contacto" => $request->contacto ? $request->contacto : "",
+                        "email" => $request->email ? $request->email : "",
+                        "tipo_regimen" => $request->tipo_regimen ? $request->tipo_regimen : "",
+                        "codigo_sucursal" => $request->codigo ? $request->codigo : "",
+                        "indicativo_telefono" => $request->indicativo ? $request->indicativo : "",
+                        "extencion" => $request->extension ? $request->extension : "",
+                        "avatar" => $archivo,
+                    ]);
+                } else {
+                    DB::table("cliente")->where("id", $cliente)->update([
+                        "tipo" => $request->tipo_cliente ? $request->tipo_cliente : 0,
+                        "ciudad" => $request->ciudad ? $request->ciudad : "",
+                        "tipo_identificacion" => $request->tipo_documento ? $request->tipo_documento : 0,
+                        "nit" => $request->documento ? $request->documento : "",
+                        "razon_social" => $request->razon_social ? $request->razon_social : "",
+                        "direccion" => $request->direccion ? $request->direccion : "",
+                        "telefono_fijo" => $request->telefono ? $request->telefono : "",
+                        "celular" => $request->celular ? $request->celular : "",
+                        "contacto" => $request->contacto ? $request->contacto : "",
+                        "email" => $request->email ? $request->email : "",
+                        "tipo_regimen" => $request->tipo_regimen ? $request->tipo_regimen : "",
+                        "codigo_sucursal" => $request->codigo ? $request->codigo : "",
+                        "indicativo_telefono" => $request->indicativo ? $request->indicativo : "",
+                        "extencion" => $request->extension ? $request->extension : "",
+                    ]);
                 }
 
-                DB::table("cliente")->where("id", $cliente)->update([
-                    "tipo" => $request->tipo_cliente ? $request->tipo_cliente : 0,
-                    "ciudad" => $request->ciudad ? $request->ciudad : "",
-                    "tipo_identificacion" => $request->tipo_documento ? $request->tipo_documento : 0,
-                    "nit" => $request->documento ? $request->documento : "",
-                    "razon_social" => $request->razon_social ? $request->razon_social : "",
-                    "direccion" => $request->direccion ? $request->direccion : "",
-                    "telefono_fijo" => $request->telefono ? $request->telefono : "",
-                    "celular" => $request->celular ? $request->celular : "",
-                    "contacto" => $request->contacto ? $request->contacto : "",
-                    "email" => $request->email ? $request->email : "",
-                    "tipo_regimen" => $request->tipo_regimen ? $request->tipo_regimen : "",
-                    "codigo_sucursal" => $request->codigo ? $request->codigo : "",
-                    "indicativo_telefono" => $request->indicativo ? $request->indicativo : "",
-                    "extencion" => $request->extension ? $request->extension : "",
-                    "avatar" => $archivo,
-                ]);
             } else if ($tipo == 2) {
                 $valid_data = DB::table('datos_facturacion')->where("id_cliente", $cliente)->first();
 
