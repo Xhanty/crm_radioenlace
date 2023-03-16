@@ -173,18 +173,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="media">
-                                    <div class="media-icon">
-                                        <i class="far fa-file-alt"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <h6><span>Invoice002300</span> <span>$25</span></h6>
-                                        <div>
-                                            <p><span>Date:</span> Oct 25</p>
-                                            <p><span>Product:</span> 921021</p>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -195,98 +183,61 @@
                     <div class="card card-invoice">
                         <div class="card-body">
                             <div class="invoice-header">
-                                <h1 class="invoice-title">Invoice</h1>
-                                <div class="billed-from">
-                                    <h6>BootstrapDash, Inc.</h6>
-                                    <p>201 Something St., Something Town, YT 242, Country 6546<br>
-                                        Tel No: 324 445-4544<br>
-                                        Email: youremail@companyname.com</p>
-                                </div><!-- billed-from -->
+                                <h1 class="invoice-title">Recibo Pago / Egreso</h1>
                             </div><!-- invoice-header -->
                             <div class="row mg-t-20">
                                 <div class="col-md">
-                                    <label class="tx-gray-600">Billed To</label>
+                                    <label class="tx-gray-600">Pagado a</label>
                                     <div class="billed-to">
-                                        <h6>Juan Dela Cruz</h6>
-                                        <p>4033 Patterson Road, Staten Island, NY 10301<br>
-                                            Tel No: 324 445-4544<br>
-                                            Email: youremail@companyname.com</p>
+                                        <h6>Andres Caceres</h6>
+                                        <p>1.015.478.894<br>
+                                            Medellín, Colombia</p>
                                     </div>
                                 </div>
                                 <div class="col-md">
-                                    <label class="tx-gray-600">Invoice Information</label>
-                                    <p class="invoice-info-row"><span>Invoice No</span> <span>GHT-673-00</span></p>
-                                    <p class="invoice-info-row"><span>Project ID</span> <span>32334300</span></p>
-                                    <p class="invoice-info-row"><span>Issue Date:</span> <span>November 21, 2017</span></p>
-                                    <p class="invoice-info-row"><span>Due Date:</span> <span>November 30, 2017</span></p>
+                                    <label class="tx-gray-600">Información</label>
+                                    <p class="invoice-info-row"><span>Recibo No.</span> <span>01</span></p>
+                                    <p class="invoice-info-row"><span>Operación</span> <span>Anticipo</span></p>
+                                    <p class="invoice-info-row"><span>Fecha</span> <span>10/03/2023</span></p>
                                 </div>
                             </div>
                             <div class="table-responsive mg-t-40">
                                 <table class="table table-invoice border text-md-nowrap mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="wd-20p">Type</th>
-                                            <th class="wd-40p">Description</th>
-                                            <th class="tx-center">QNTY</th>
-                                            <th class="tx-right">Unit Price</th>
-                                            <th class="tx-right">Amount</th>
+                                            <th class="wd-20p">Factura</th>
+                                            <th class="tx-center">Concepto</th>
+                                            <th class="tx-right">Valor</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>Website Design</td>
-                                            <td class="tx-12">Sed ut perspiciatis unde omnis iste natus error sit
-                                                voluptatem accusantium doloremque laudantium, totam rem aperiam...</td>
-                                            <td class="tx-center">2</td>
-                                            <td class="tx-right">$150.00</td>
-                                            <td class="tx-right">$300.00</td>
+                                            <td>Anticipo</td>
+                                            <td class="tx-center">RP-1-15 10/03/2023</td>
+                                            <td class="tx-right">1.112.121</td>
                                         </tr>
                                         <tr>
-                                            <td>Firefox Plugin</td>
-                                            <td class="tx-12">At vero eos et accusamus et iusto odio dignissimos ducimus
-                                                qui blanditiis praesentium voluptatum deleniti atque...</td>
-                                            <td class="tx-center">1</td>
-                                            <td class="tx-right">$1,200.00</td>
-                                            <td class="tx-right">$1,200.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>iPhone App</td>
-                                            <td class="tx-12">Et harum quidem rerum facilis est et expedita distinctio
+                                            <td class="tx-right tx-uppercase tx-bold tx-inverse" colspan="2">Total COP</td>
+                                            <td class="tx-right" colspan="1">
+                                                <h4 class="tx-primary tx-bold">1.112.121</h4>
                                             </td>
-                                            <td class="tx-center">2</td>
-                                            <td class="tx-right">$850.00</td>
-                                            <td class="tx-right">$1,700.00</td>
                                         </tr>
                                         <tr>
-                                            <td class="valign-middle" colspan="2" rowspan="4">
+                                            <td class="valign-middle" colspan="3">
                                                 <div class="invoice-notes">
-                                                    <label class="main-content-label tx-13">Notes</label>
+                                                    <label class="main-content-label tx-13">Observaciones</label>
                                                     <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem
                                                         accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
                                                         quae ab illo inventore veritatis et quasi architecto beatae vitae
                                                         dicta sunt explicabo.</p>
                                                 </div><!-- invoice-notes -->
                                             </td>
-                                            <td class="tx-right">Sub-Total</td>
-                                            <td class="tx-right" colspan="2">$5,750.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="tx-right">Tax (5%)</td>
-                                            <td class="tx-right" colspan="2">$287.50</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="tx-right">Discount</td>
-                                            <td class="tx-right" colspan="2">-$50.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="tx-right tx-uppercase tx-bold tx-inverse">Total Due</td>
-                                            <td class="tx-right" colspan="2">
-                                                <h4 class="tx-primary tx-bold">$5,987.50</h4>
-                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
+                            <hr class="mg-b-40">
+                            <a class="btn btn-primary btn-block" href="">Generar PDF</a>
                         </div>
                     </div>
                 </div>
@@ -306,83 +257,70 @@
                             </div>
                         </div>
                         <div class="p-0">
-                            <div class="card-body" style="margin-top: -18px;">
-                                <div class="row row-sm">
-                                    <div class="col-lg-3">
-                                        <label for="">Tipo</label>
-                                        <select class="form-select" id="tipo_add">
-                                            <option value="">Seleccione una opción</option>
-                                            <option value="2">Nota de crédito</option>
-                                            <option value="3">Nota de débito</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <label for="">Centro de costo</label>
-                                        <select class="form-select" id="centro_costo_add">
-                                            <option value="">Seleccione una opción</option>
-                                            <option value="2">RR</option>
-                                            <option value="3">AA</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <label for="">Fecha elaboración</label>
-                                        <input class="form-control" id="fecha_add" placeholder="Fecha elaboración"
-                                            type="date">
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <label for="">Número</label>
-                                        <input class="form-control" disabled id="numero_add" placeholder="Número"
-                                            type="text">
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row row-sm">
-                                    <div class="col-lg-3">
-                                        <label for="">Proveedor</label>
-                                        <select class="form-select" id="proveedor_add">
-                                            <option value="">Seleccione una opción</option>
-                                            <option value="2">RR</option>
-                                            <option value="3">AA</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-lg-3">
-                                        <label for="">Contacto</label>
-                                        <input class="form-control" disabled id="contacto_add" placeholder="Contacto"
-                                            type="text">
-                                    </div>
-
-                                    <div class="col-lg-3">
-                                        <label for="">No. Factura Proveedor</label>
-                                        <input class="form-control" id="factura1_proveedor_add"
-                                            placeholder="No. Factura Proveedor" type="text">
-                                    </div>
-
-                                    <div class="col-lg-3">
-                                        <label for="">Consecutivo Factura Proveedor</label>
-                                        <input class="form-control" id="factura2_proveedor_add"
-                                            placeholder="Consecutivo Factura Proveedor" type="text">
-                                    </div>
-                                </div>
-                                <br>
+                            <div class="card-body">
                                 <div class="row row-sm">
                                     <div class="col-lg">
-                                    </div>
-                                    <div class="col-lg">
-                                        <label class="ckbox"><input id="chk_proveedor" type="checkbox"><span>Proveedor
-                                                por item</span></label>
+                                        <div class="col-lg-11">
+                                            <label for="">Tipo</label>
+                                            <select class="form-select" id="tipo_add">
+                                                <option value="">Seleccione una opción</option>
+                                                <option value="1">RP-1-Recibo de pago / Egreso</option>
+                                            </select>
+                                        </div>
+                                        <br>
+                                        <div class="col-lg-11">
+                                            <label for="">Proveedor</label>
+                                            <select class="form-select" id="proveedor_add">
+                                                <option value="">Seleccione una opción</option>
+                                                @foreach ($proveedores as $proveedor)
+                                                    <option value="{{ $proveedor->id }}">{{ $proveedor->razon_social }}
+                                                        ({{ $proveedor->nit }})
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <br>
+                                        <!-- Anticipo quita la tabla, de resto lista las deudas -->
+                                        <div class="col-lg-11">
+                                            <label for="">Realizar un</label>
+                                            <select class="form-select" id="proveedor_add">
+                                                <option value="">Seleccione una opción</option>
+                                                <option value="1">Abono a deudad</option>
+                                                <option value="2">Anticipo</option>
+                                                <option value="3">Avanzado (Impuestos, descuentos y ajustes)</option>
+                                            </select>
+                                        </div>
+                                        <br>
+                                        <div class="col-lg-11">
+                                            <label for="">De donde sale el dinero</label>
+                                            <select class="form-select" id="proveedor_add">
+                                                <option value="">Seleccione una opción</option>
+                                                <option value="1">Efectivo</option>
+                                                <option value="2">Pago tranferencia</option>
+                                                <option value="3">Pago por cuenta bancaria</option>
+                                                <option value="4">Honorarios</option>
+                                                <option value="5">Salarios por pagar</option>
+                                            </select>
+                                        </div>
                                     </div>
 
                                     <div class="col-lg">
-                                        <label class="ckbox"><input id="chk_iva" type="checkbox"><span>IVA/Impoconsumo
-                                                incluido</span></label>
-                                    </div>
-
-                                    <div class="col-lg">
-                                        <label class="ckbox"><input id="chk_procentaje" type="checkbox"><span>Descuento
-                                                en porcentaje</span></label>
-                                    </div>
-                                    <div class="col-lg">
+                                        <div class="col-lg-11">
+                                            <label for="">Fecha elaboración</label>
+                                            <input class="form-control" value="{{ date('Y-m-d') }}" id="fecha_add"
+                                                placeholder="Fecha elaboración" type="date">
+                                        </div>
+                                        <br>
+                                        <div class="col-lg-11">
+                                            <label for="">Centro de costo</label>
+                                            <select class="form-select" id="centro_costo_add">
+                                                <option value="">Seleccione una opción</option>
+                                                @foreach ($centros_costos as $centro_costo)
+                                                    <option value="{{ $centro_costo->id }}">({{ $centro_costo->code }})
+                                                        {{ $centro_costo->nombre }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row row-sm mt-5">
@@ -391,118 +329,29 @@
                                             class="table border-top-0 table-bordered text-nowrap border-bottom">
                                             <thead>
                                                 <tr class="bg-gray">
-                                                    <th class="text-center">#</th>
-                                                    <th class="text-center">Tipo</th>
-                                                    <th class="text-center">Producto</th>
-                                                    <th class="text-center">Descripción</th>
-                                                    <th class="text-center">Bodega</th>
-                                                    <th class="text-center">Cant</th>
-                                                    <th class="text-center">Valor Unitario</th>
-                                                    <th class="text-center">Descuento</th>
-                                                    <th class="text-center">Impuesto<br>Cargo</th>
-                                                    <th class="text-center">Impuesto<br>Retención</th>
-                                                    <th class="text-center">Valor Total</th>
+                                                    <th class="text-center"><input type="checkbox"></th>
+                                                    <th class="text-center">Vencimiento</th>
+                                                    <th class="text-center">Cuota</th>
+                                                    <th class="text-center">Saldo</th>
+                                                    <th class="text-center"></th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr style="background: #f9f9f9;">
-                                                    <td class="center-text pad-4">1</td>
-                                                    <td class="pad-4">
-                                                        <select class="form-select tipo_add">
-                                                            <option value="">Seleccione una opción</option>
-                                                            <option value="1">Producto</option>
-                                                            <option value="2">Activo Fijo</option>
-                                                            <option value="3">Gasto / Cuenta contable</option>
-                                                        </select>
-                                                    </td>
-                                                    <td class="pad-4">
-                                                        <select class="form-select producto_add">
-                                                            <option value="">Seleccione una opción</option>
-                                                            @foreach ($productos as $producto)
-                                                                <option value="{{ $producto->id }}">{{ $producto->nombre }}
-                                                                    ({{ $producto->marca }} - {{ $producto->modelo }})
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </td>
-                                                    <td class="pad-4">
-                                                        <textarea placeholder="Descripción" class="form-control descripcion_add" style="border: 0" rows="2"></textarea>
-                                                    </td>
-                                                    <td class="pad-4">
-                                                        <input type="text" placeholder="Bodega"
-                                                            class="form-control bodega_add" style="border: 0">
-                                                    </td>
-                                                    <td class="pad-4">
-                                                        <input type="text" placeholder="Cantidad"
-                                                            class="form-control text-end cantidad_add" style="border: 0">
-                                                    </td>
-                                                    <td class="pad-4">
-                                                        <input type="text" placeholder="Valor Unitario"
-                                                            class="form-control text-end valor_add" style="border: 0">
-                                                    </td>
-                                                    <td class="pad-4">
-                                                        <input type="text" placeholder="Descuento"
-                                                            class="form-control text-end descuento_add" style="border: 0">
-                                                    </td>
-                                                    <td class="pad-4">
-                                                        <select class="form-select cargo_add">
-                                                            <option value="">Seleccione una opción</option>
-                                                            <option value="1">IVA 19%</option>
-                                                            <option value="2">Iva Serv 19%</option>
-                                                            <option value="3">IVA 16%</option>
-                                                            <option value="4">IVA 5%</option>
-                                                            <option value="5">Impoconsumo 8%</option>
-                                                        </select>
-                                                    </td>
-                                                    <td class="pad-4">
-                                                        <select class="form-select retencion_add">
-                                                            <option value="">Seleccione una opción</option>
-                                                            <option value="1">Retefuente 11%</option>
-                                                            <option value="2">Retefuente 10%</option>
-                                                            <option value="3">Retefuente 7%</option>
-                                                            <option value="4">Retefuente 6%</option>
-                                                            <option value="5">Retención 5%</option>
-                                                            <option value="6">Retefuente 4%</option>
-                                                            <option value="8">Arriendos 4%</option>
-                                                            <option value="9">Arriendos 3.5%</option>
-                                                            <option value="10">Retefuente 3.5%</option>
-                                                            <option value="11">Retefuente 2.5%</option>
-                                                            <option value="12">Retefuente 2%</option>
-                                                            <option value="13">Retefuente 1%</option>
-                                                            <option value="14">Autoretención del cree 0.4%</option>
-                                                            <option value="15">Retefuente 0.1%</option>
-                                                        </select>
-                                                    </td>
-                                                    <td class="text-center d-flex pad-4">
-                                                        <input disabled type="text" placeholder="0.00"
-                                                            class="form-control text-end total_add" style="border: 0">
-                                                        <a class="center-vertical mg-s-10" href="javascript:void(0)"
-                                                            id="new_row"><i class="fa fa-plus"></i></a>
-                                                        &nbsp;
-                                                    </td>
-                                                </tr>
-                                            </tbody>
+                                            <tbody></tbody>
                                         </table>
                                     </div>
                                 </div>
                                 <hr>
-                                <div class="row">
-                                    <div class="col-lg d-flex" style="justify-content: end">
-                                        <div>
-                                            <p class="font-22">Total formas de pagos:</p>
-                                        </div>
-                                        <div style="margin-left: 10%">
-                                            <p class="font-22">0.00</p>
-                                        </div>
+                                <div class="row row-sm">
+                                    <div class="col-lg">
+                                        <label for="">Observaciones</label>
+                                        <textarea class="form-control" placeholder="Observaciones" rows="3" id="observaciones_add"
+                                            style="height: 90px; resize: none"></textarea>
                                     </div>
-
-                                    <div class="col-lg d-flex" style="justify-content: end">
-                                        <div>
-                                            <p class="font-22">Total Neto:</p>
-                                        </div>
-                                        <div style="margin-left: 10%">
-                                            <p class="font-22">0.00</p>
-                                        </div>
+                                </div>
+                                <br>
+                                <div class="row-sm">
+                                    <div class="col-lg">
+                                        <input type="file" id="file_add" multiple class="form-control">
                                     </div>
                                 </div>
                                 <div class="text-center mt-5">
@@ -520,9 +369,7 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-            var productos = @json($productos);
 
-            localStorage.setItem('productos', JSON.stringify(productos));
         });
     </script>
     <script src="{{ asset('assets/js/app/contabilidad/recibo_pago.js') }}"></script>
