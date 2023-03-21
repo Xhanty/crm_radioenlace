@@ -224,18 +224,22 @@
                         </div>
                         <br>
                         <div class="row row-sm">
-                            <div class="col-lg">
+                            <div class="col-8">
                                 <label for="">Serial (Elemento)</label>
-                                <select class="form-select" id="elemento_gestion">
+                                <select class="form-select elemento_gestion">
                                     <option value="">Seleccione un opción</option>
                                 </select>
                             </div>
-                            <div class="col-lg">
+                            <div class="col-3">
                                 <label for="">Cantidad</label>
-                                <input type="number" disabled class="form-control" min="1" step="1"
-                                    id="cantidad_gestion" placeholder="Cantidad">
+                                <input type="number" class="form-control cantidad_gestion" min="1" step="1" placeholder="Cantidad">
+                            </div>
+                            <div class="col-1 d-flex" style="margin-top: 30px">
+                                <a class="center-vertical mg-s-10" href="javascript:void(0)" id="new_row_serial"><i
+                                        class="fa fa-plus"></i></a>
                             </div>
                         </div>
+                        <div id="div_list_seriales"></div>
                         <br>
                         <div class="row">
                             <!-- col -->

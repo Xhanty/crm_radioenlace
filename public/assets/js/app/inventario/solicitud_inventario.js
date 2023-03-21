@@ -39,8 +39,34 @@ $(document).ready(function () {
         '</div>' +
         '</div > ';
 
+    let concat_serial = '<div class="row row-sm mt-2">' +
+        '<div class="col-8">' +
+        '<select class="form-select elemento_gestion">' +
+        '<option value="">Seleccione un opción</option>' +
+        '</select>' +
+        '</div>' +
+        '<div class="col-3">' +
+        '<input type="number" class="form-control cantidad_gestion" min="1" step="1" placeholder="Cantidad">' +
+        '</div>' +
+        '<div class="col-1 d-flex">' +
+        '<a class="center-vertical mg-s-10 btn_delete_row_add" href="javascript:void(0)"><i class="fa fa-trash"></i></a>' +
+        '</div>' +
+        '</div>';
+
     $("#new_row_elemento").click(function () {
         $("#div_list_elementos").append(concat_add);
+    });
+
+    $("#new_row_serial").click(function () {
+        $("#div_list_seriales").append(concat_serial);
+
+        $(".form-select").each(function () {
+            $(this).select2({
+                dropdownParent: $(this).parent(),
+                placeholder: "Seleccione una opción",
+                searchInputPlaceholder: "Buscar",
+            });
+        });
     });
 
     $("#new_row_elemento_edit").click(function () {
@@ -450,17 +476,17 @@ $(document).ready(function () {
                     let inventario = data.inventario;
                     if (response.info == 1) {
 
-                        $("#elemento_gestion").empty();
+                        $(".elemento_gestion").empty();
                         inventario.forEach((element) => {
                             if (element.cantidad > 0) {
-                                $("#elemento_gestion").append(
+                                $(".elemento_gestion").append(
                                     "<option data-cantidad='" +
                                     element.cantidad +
                                     "' value='" +
                                     element.id +
                                     "'>" +
                                     element.serial +
-                                    " (Cantidad: " +
+                                    " (Disponible: " +
                                     element.cantidad +
                                     ")" +
                                     "</option>"
@@ -468,8 +494,6 @@ $(document).ready(function () {
                             }
                         });
 
-                        $("#cantidad_gestion").attr("disabled", false);
-                        $("#cantidad_gestion").val("");
                         $("#btnAsignarElemento").attr("disabled", false);
                     } else {
                         toastr.error("Error al cargar los datos");
@@ -481,9 +505,7 @@ $(document).ready(function () {
                 },
             });
         } else {
-            $("#cantidad_gestion").attr("disabled", true);
-            $("#cantidad_gestion").val("");
-            $("#elemento_gestion").empty();
+            $(".elemento_gestion").empty();
             $("#btnAsignarElemento").attr("disabled", true);
         }
     });
@@ -532,8 +554,6 @@ $(document).ready(function () {
                     if (response.info == 1) {
 
 
-                        $("#cantidad_gestion").val("");
-                        $("#cantidad_gestion").attr("disabled", true);
                         $("#elemento_gestion").empty();
                         $("#btnAsignarElemento").attr("disabled", true);
                         $("#producto_gestion").val("").trigger("change");
