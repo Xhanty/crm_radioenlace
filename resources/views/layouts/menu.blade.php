@@ -318,18 +318,35 @@
                                         <li class="sub-slide">
                                             <a class="slide-item" data-bs-toggle="sub-slide"
                                                 href="javascript:void(0);"><span
-                                                    class="sub-side-menu__label">Facturación</span><i
+                                                    class="sub-side-menu__label">Compras</span><i
                                                     class="sub-angle fe fe-chevron-down"></i></a>
                                             <ul class="sub-slide-menu" style="display: none;"
                                                 id="2_1_otro_asignaciones">
                                                 @if (auth()->user()->hasPermissionTo('contabilidad_factura_compra'))
                                                     <li><a class="sub-side-menu__item"
-                                                            href="{{ route('factura_compra') }}">Factura Compra</a>
+                                                            href="{{ route('factura_compra') }}">Facturación</a>
                                                     </li>
                                                 @endif
+                                                <li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
+                                                        Crédito</a>
+                                                </li>
+                                                <li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
+                                                        Débito</a>
+                                                </li>
+                                                <li><a class="sub-side-menu__item" href="javascript:void(0);">Documento Equivalente</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="sub-slide">
+                                            <a class="slide-item" data-bs-toggle="sub-slide"
+                                                href="javascript:void(0);"><span
+                                                    class="sub-side-menu__label">Ventas</span><i
+                                                    class="sub-angle fe fe-chevron-down"></i></a>
+                                            <ul class="sub-slide-menu" style="display: none;"
+                                                id="2_1_otro_asignaciones">
                                                 @if (auth()->user()->hasPermissionTo('contabilidad_factura_venta'))
                                                     <li><a class="sub-side-menu__item"
-                                                            href="{{ route('factura_venta') }}">Factura Venta</a>
+                                                            href="{{ route('factura_venta') }}">Facturación</a>
                                                     </li>
                                                 @endif
                                                 @if (auth()->user()->hasPermissionTo('contabilidad_nota_credito'))
@@ -339,12 +356,12 @@
                                                 @endif
                                                 @if (auth()->user()->hasPermissionTo('contabilidad_nota_debito'))
                                                     <li><a class="sub-side-menu__item"
-                                                            href="{{ route('nota_debito') }}">Nota Débito (Ventas)</a>
+                                                            href="{{ route('nota_debito') }}">Nota Débito</a>
                                                     </li>
                                                 @endif
                                                 @if (auth()->user()->hasPermissionTo('contabilidad_recibo_pago'))
                                                     <li><a class="sub-side-menu__item"
-                                                            href="{{ route('recibo_pago') }}">Recibo Pago</a>
+                                                            href="{{ route('recibo_pago') }}">Recibo Caja / Egreso</a>
                                                     </li>
                                                 @endif
                                             </ul>
