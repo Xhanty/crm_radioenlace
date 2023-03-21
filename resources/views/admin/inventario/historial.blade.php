@@ -11,7 +11,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0);">Historial</a></li>
                         <li class="breadcrumb-item active" aria-current="page"> {{ $inventario->producto }} -
-                            {{ $inventario->modelo }}</li>
+                            {{ $inventario->modelo }} | (Serial: {{ $inventario->serial }} - Código Interno: {{ $inventario->codigo_interno }})</li>
                     </ol>
                 </nav>
             </div>

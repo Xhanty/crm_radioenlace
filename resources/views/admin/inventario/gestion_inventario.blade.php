@@ -35,7 +35,7 @@
                         <div class="div-2-tables-header">
                             <div class="col-lg-6 mg-t-20 mg-lg-t-0">
                                 <div class="input-group">
-                                    <input class="form-control" placeholder="Código Interno o Serial" type="text">
+                                    <input class="form-control text-center" id="serial_search" placeholder="Serial o Código Interno" type="text">
                                     <span class="input-group-btn">
                                         <button class="btn btn-primary" id="btnSearchSerial" type="button">
                                             <span class="input-group-btn">

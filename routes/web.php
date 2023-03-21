@@ -153,6 +153,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/baja_producto', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'baja_producto'])->name('baja_producto');
     Route::post('/delete_producto', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'delete_producto'])->name('delete_producto');
     Route::post('/productos_edit', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'productos_edit'])->name('productos_edit');
+    Route::post('/search_serial_inventario', [App\Http\Controllers\Admin\Inventario\InventarioController::class, 'search_serial_inventario'])->name('search_serial_inventario');
 
     // SOLICITUDES DE INVENTARIO
     Route::get('/solicitud_inventario', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'index'])->name('solicitud_inventario');

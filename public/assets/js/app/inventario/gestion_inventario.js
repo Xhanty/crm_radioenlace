@@ -851,7 +851,7 @@ $(document).ready(function () {
             return false;
         } else {
             $("#btnAsignadoProducto").attr("disabled", true);
-            $("#btnAsignadoProducto").html(     
+            $("#btnAsignadoProducto").html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
             );
             $.ajax({
@@ -1185,6 +1185,43 @@ $(document).ready(function () {
             $("#serial_compra").parent().addClass("d-none");
         } else {
             $("#serial_compra").parent().removeClass("d-none");
+        }
+    });
+
+    $("#btnSearchSerial").click(function () {
+        let serial = $("#serial_search").val();
+
+        if (serial.trim().length <= 3) {
+            toastr.error("Debe ingresar un serial o código interno valido");
+            return false;
+        } else {
+            $("#btnSearchSerial").attr("disabled", true);
+            $("#btnSearchSerial").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'
+            );
+            $.ajax({
+                url: "search_serial_inventario",
+                type: "POST",
+                data: {
+                    serial: serial,
+                },
+                success: function (response) {
+                    $("#btnSearchSerial").attr("disabled", false);
+                    $("#btnSearchSerial").html('<span class="input-group-btn"><i class="fa fa-search" style="display: inline-block !important"></i></span>');
+                    if (response.info == 1) {
+                        let token = response.token;
+                        window.open("historial_serial?token=" + token, "_blank");
+                    } else {
+                        toastr.error(response.msg);
+                    }
+                },
+                error: function (error) {
+                    toastr.error("Error al realizar la busqueda");
+                    $("#btnSearchSerial").attr("disabled", false);
+                    $("#btnSearchSerial").html('<span class="input-group-btn"><i class="fa fa-search" style="display: inline-block !important"></i></span>');
+                    console.log(error);
+                },
+            });
         }
     });
 });

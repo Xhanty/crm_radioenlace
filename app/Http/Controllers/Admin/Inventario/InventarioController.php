@@ -250,4 +250,20 @@ class InventarioController extends Controller
 
         return $almacenes;
     }
+
+    public function search_serial_inventario(Request $request)
+    {
+        try {
+            $serial = $request->serial;
+            $inventario = DB::table('inventario')->where('serial', $serial)->orWhere('codigo_interno', $serial)->first();
+
+            if ($inventario) {
+                return response()->json(['info' => 1, 'token' => $inventario->id]);
+            } else {
+                return response()->json(['info' => 0, 'msg' => 'Serial o Código Interno no encontrado.']);
+            }
+        } catch (Exception $ex) {
+            return response()->json(['info' => 0, 'error' => 'Error al buscar el serial.']);
+        }
+    }
 }
