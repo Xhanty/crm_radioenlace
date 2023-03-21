@@ -452,18 +452,20 @@ $(document).ready(function () {
 
                         $("#elemento_gestion").empty();
                         inventario.forEach((element) => {
-                            $("#elemento_gestion").append(
-                                "<option data-cantidad='" +
-                                element.cantidad +
-                                "' value='" +
-                                element.id +
-                                "'>" +
-                                element.serial +
-                                " (Cantidad: " +
-                                element.cantidad +
-                                ")" +
-                                "</option>"
-                            );
+                            if (element.cantidad > 0) {
+                                $("#elemento_gestion").append(
+                                    "<option data-cantidad='" +
+                                    element.cantidad +
+                                    "' value='" +
+                                    element.id +
+                                    "'>" +
+                                    element.serial +
+                                    " (Cantidad: " +
+                                    element.cantidad +
+                                    ")" +
+                                    "</option>"
+                                );
+                            }
                         });
 
                         $("#cantidad_gestion").attr("disabled", false);
@@ -495,7 +497,7 @@ $(document).ready(function () {
             .data("cantidad");
         let cantidad = $("#cantidad_gestion").val();
 
-        if (producto == "") {
+        if (producto == "" || producto == null) {
             toastr.error("Debe seleccionar un serial (elemento)");
             return false;
         } else if (cantidad == "" || cantidad < 1) {
