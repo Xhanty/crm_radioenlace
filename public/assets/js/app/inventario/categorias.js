@@ -142,15 +142,23 @@ $(document).ready(function () {
                     let concat = "";
 
                     $("#subcategoriaedit_uno").val(data[0].nombre);
+                    $("#subcategoriaedit_uno").attr("data-valor", data[0].id);
 
                     for (let i = 1; i < data.length; i++) {
+                        var delete_row = "";
+                        if (data[i].productos <= 0) {
+                            var delete_row = '<a class="center-vertical mg-s-10 btn_delete_row" href="javascript:void(0)"><i class="fa fa-trash"></i></a>';
+                        } else {
+                            var delete_row = '<a class="center-vertical mg-s-10" style="color: red;" title="No se puede eliminar" href="javascript:void(0)"><i class="fa fa-times"></i></a>';
+                        }
+
                         concat +=
                             '<div class="row row-sm mt-2">' +
                             '<div class="col-lg" style="display: flex">' +
-                            '<input class="form-control" disabled placeholder="SubCategoría" type="text" value="' +
+                            '<input data-valor="' + data[i].id + '" class="form-control subcategoriaedit" placeholder="SubCategoría" type="text" value="' +
                             data[i].nombre +
                             '">' +
-                            '<!--<a class="center-vertical mg-s-10 btn_delete_row" href="javascript:void(0)"><i class="fa fa-trash"></i></a>-->' +
+                            delete_row +
                             "</div>" +
                             "</div>";
                     }
@@ -214,17 +222,25 @@ $(document).ready(function () {
         let id = $("#id_categoria_edit").val();
         let nombre = $("#categoriaedit").val();
         let subcategorias = [];
+        let valid = false;
 
         $(".subcategoriaedit").each(function () {
-            subcategorias.push($(this).val());
+            let valor = $(this).attr("data-valor");
+            let nombre = $(this).val();
+
+            if(valor == undefined) valor = 0;
+            else valor = parseInt(valor);
+
+            if (nombre.trim().length < 1) valid = true;
+
+            subcategorias.push({ id: valor, nombre: nombre });
         });
 
-        if (nombre == "") {
-            toastr.error("El campo nombre es obligatorio");
-        } else if (subcategorias.includes("")) {
+        if (nombre.trim().length < 1) {
+            toastr.error("El nombre de la categoría no puede estar vacío");
+        } else if (valid) {
             toastr.error("No puedes dejar campos vacíos");
         } else {
-
             $("#btnModificarCategoria").attr("disabled", true);
             $("#btnModificarCategoria").html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'

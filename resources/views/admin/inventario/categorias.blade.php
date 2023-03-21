@@ -128,7 +128,7 @@
                         <div class="row row-sm">
                             <label for="">SubCategorías</label>
                             <div class="col-lg" style="display: flex">
-                                <input class="form-control" id="subcategoriaedit_uno" disabled placeholder="SubCategoría"
+                                <input class="form-control subcategoriaedit" data-valor="0" id="subcategoriaedit_uno" placeholder="SubCategoría"
                                     type="text">
                                 <a class="center-vertical mg-s-10" href="javascript:void(0)"
                                                 id="edit_row_subcategoria"><i class="fa fa-plus"></i></a>

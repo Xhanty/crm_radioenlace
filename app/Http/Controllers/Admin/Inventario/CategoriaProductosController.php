@@ -81,6 +81,11 @@ class CategoriaProductosController extends Controller
         try {
             $id = $request->id;
             $subcategorias = DB::table('subcategorias_productos')->where('categoria', $id)->get();
+
+            foreach ($subcategorias as $key => $value) {
+                $total_productos = DB::table('productos')->where('sub_categoria', $value->id)->count();
+                $subcategorias[$key]->productos = $total_productos;
+            }
             return response()->json(['info' => 1, 'data' => $subcategorias]);
         } catch (Exception $ex) {
             return response()->json(['info' => 0, 'error' => 'Error al obtener las subcategorías.']);
@@ -99,13 +104,34 @@ class CategoriaProductosController extends Controller
             ]);
 
             if ($subcategorias) {
-                foreach ($subcategorias as $subcategoria) {
-                    DB::table('subcategorias_productos')->insert([
-                        'nombre' => $subcategoria,
-                        'categoria' => $id,
-                        'created_by' => session('user'),
-                        'fecha' => date('Y-m-d')
-                    ]);
+                $old = DB::table('subcategorias_productos')->where('categoria', $id)->get();
+                $ids = [];
+
+                foreach ($old as $key => $value) {
+                    $ids[] = $value->id;
+                }
+
+                foreach ($subcategorias as $key => $value) {
+                    if (isset($value['id'])) {
+                        $ids = array_diff($ids, [$value['id']]);
+                    }
+                }
+
+                DB::table('subcategorias_productos')->whereIn('id', $ids)->delete();
+
+                foreach ($subcategorias as $key => $value) {
+                    if ($value['id'] > 0) {
+                        DB::table('subcategorias_productos')->where('id', $value['id'])->update([
+                            'nombre' => $value['nombre']
+                        ]);
+                    } else {
+                        DB::table('subcategorias_productos')->insert([
+                            'nombre' => $value['nombre'],
+                            'categoria' => $id,
+                            'created_by' => session('user'),
+                            'fecha' => date('Y-m-d')
+                        ]);
+                    }
                 }
             }
 
