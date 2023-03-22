@@ -154,7 +154,7 @@ class InventarioController extends Controller
                 ->get();
 
             foreach ($data as $key => $value) {
-                $value->cantidad = DB::table('inventario')->where('producto_id', $value->id)->sum('cantidad');
+                $value->cantidad = DB::table('inventario')->where("status", 1)->where('producto_id', $value->id)->sum('cantidad');
             }
             return Datatables::of($data)
                 ->addIndexColumn()

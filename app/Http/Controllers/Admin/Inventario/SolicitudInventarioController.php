@@ -366,49 +366,52 @@ class SolicitudInventarioController extends Controller
             
             $cliente = $solicitud->cliente_id;
             $empleado = $request->solicitante_id;
-            
-            $serial = $request->producto;
-            $cantidad = $request->cantidad;
+
             $observaciones = 'Producto asignado a la solicitud de inventario con código: ' . $solicitud->codigo;
-            $status = 1;
-            
-            $cantidad_old = DB::table('inventario')->where("id", $serial)->first();
-            $producto_id = $cantidad_old->producto_id;
-            
-            if ($cantidad_old->cantidad == $cantidad) {
-                $status = 0;
+
+            $seriales = $request->data;
+
+            foreach ($seriales as $key => $element) {
+                $status = 1;
+
+                $cantidad_old = DB::table('inventario')->where("id", $element["serial"])->first();
+                $producto_id = $cantidad_old->producto_id;
+
+                if ($cantidad_old->cantidad == $element["cantidad"]) {
+                    $status = 0;
+                }
+
+                DB::table('inventario')->where("id", $element["serial"])->update([
+                    'cantidad' => $cantidad_old->cantidad - $element["cantidad"],
+                    'status' => $status,
+                ]);
+
+                DB::table('salida_inventario')->insert([
+                    'tipo' => $tipo,
+                    'producto_id' => $producto_id,
+                    'inventario_id' => $element["serial"],
+                    'cantidad' => $element["cantidad"],
+                    'user_id' => $empleado ? $empleado : null,
+                    'cliente_id' => $cliente ? $cliente : null,
+                    'observaciones' => $observaciones ? $observaciones : null,
+                    'status' => 0,
+                    'created_by' => auth()->user()->id,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+
+                DB::table('movimientos_inventario')->insert([
+                    'tipo' => $tipo + 1,
+                    'inventario_id' => $element["serial"],
+                    'almacen_id' => $almacen_id,
+                    'cantidad' => $element["cantidad"],
+                    'empleado_id' => $empleado ? $empleado : null,
+                    'cliente_id' => $cliente ? $cliente : null,
+                    'observaciones' => $observaciones ? $observaciones : null,
+                    'created_by' => auth()->user()->id,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
             }
-
-            DB::table('inventario')->where("id", $serial)->update([
-                'cantidad' => $cantidad_old->cantidad - $cantidad,
-                'status' => $status,
-            ]);
-
-            DB::table('salida_inventario')->insert([
-                'tipo' => $tipo,
-                'producto_id' => $producto_id,
-                'inventario_id' => $serial,
-                'cantidad' => $cantidad,
-                'user_id' => $empleado ? $empleado : null,
-                'cliente_id' => $cliente ? $cliente : null,
-                'observaciones' => $observaciones ? $observaciones : null,
-                'status' => 0,
-                'created_by' => auth()->user()->id,
-                'created_at' => date('Y-m-d H:i:s'),
-            ]);
-
-            DB::table('movimientos_inventario')->insert([
-                'tipo' => $tipo + 1,
-                'inventario_id' => $serial,
-                'almacen_id' => $almacen_id,
-                'cantidad' => $cantidad,
-                'empleado_id' => $empleado ? $empleado : null,
-                'cliente_id' => $cliente ? $cliente : null,
-                'observaciones' => $observaciones ? $observaciones : null,
-                'created_by' => auth()->user()->id,
-                'created_at' => date('Y-m-d H:i:s'),
-            ]);
-
+            
             DB::commit();
             return response()->json([
                 'info' => 1,

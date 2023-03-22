@@ -10,6 +10,7 @@ $(document).ready(function () {
     // ALMACENES INGRESO
     var id_almacen_salida = 0;
     let btn_View = 0;
+    let data_seriales_gestion = [];
 
     let concat_add = '<div class="row row-sm mt-2">' +
         '<div class="col-8" >' +
@@ -37,20 +38,6 @@ $(document).ready(function () {
         '<i class="fa fa-trash"></i>' +
         '</a>' +
         '</div>' +
-        '</div > ';
-
-    let concat_serial = '<div class="row row-sm mt-2">' +
-        '<div class="col-8">' +
-        '<select class="form-select elemento_gestion">' +
-        '<option value="">Seleccione un opción</option>' +
-        '</select>' +
-        '</div>' +
-        '<div class="col-3">' +
-        '<input type="number" class="form-control cantidad_gestion" min="1" step="1" placeholder="Cantidad">' +
-        '</div>' +
-        '<div class="col-1 d-flex">' +
-        '<a class="center-vertical mg-s-10 btn_delete_row_add" href="javascript:void(0)"><i class="fa fa-trash"></i></a>' +
-        '</div>' +
         '</div>';
 
     $("#new_row_elemento").click(function () {
@@ -58,7 +45,26 @@ $(document).ready(function () {
     });
 
     $("#new_row_serial").click(function () {
-        $("#div_list_seriales").append(concat_serial);
+        let datos = "";
+
+        data_seriales_gestion.forEach((element) => {
+            datos += '<option data-cantidad="' + element.cantidad + '" value="' + element.id + '">' + element.serial + ' (Disponible: ' + element.cantidad + ')' + '</option>';
+        }) +
+
+            $("#div_list_seriales").append('<div class="row row-sm mt-2">' +
+                '<div class="col-8">' +
+                '<select class="form-select elemento_gestion">' +
+                '<option value="">Seleccione un opción</option>' +
+                datos +
+                '</select>' +
+                '</div>' +
+                '<div class="col-3">' +
+                '<input type="number" class="form-control cantidad_gestion" min="1" step="1" placeholder="Cantidad">' +
+                '</div>' +
+                '<div class="col-1 d-flex">' +
+                '<a class="center-vertical mg-s-10 btn_delete_row_add" href="javascript:void(0)"><i class="fa fa-trash"></i></a>' +
+                '</div>' +
+                '</div>');
 
         $(".form-select").each(function () {
             $(this).select2({
@@ -491,6 +497,12 @@ $(document).ready(function () {
                                     ")" +
                                     "</option>"
                                 );
+
+                                data_seriales_gestion.push({
+                                    id: element.id,
+                                    serial: element.serial,
+                                    cantidad: element.cantidad,
+                                });
                             }
                         });
 
@@ -512,24 +524,61 @@ $(document).ready(function () {
 
     $("#btnAsignarElemento").click(function () {
         let solicitud = $("#id_solicitud_gestion").val();
-        let producto = $("#elemento_gestion").val();
-        let cantidad_max = $("#cantidad_solicitud_gestion").val();
-        let cantidad_old = $("#elemento_gestion")
-            .find(":selected")
-            .data("cantidad");
-        let cantidad = $("#cantidad_gestion").val();
+        let producto = $("#producto_gestion").val();
+        let data = [];
+        let valid = false;
+        let valid_2 = false;
+        let max_cantidad = $("#cantidad_solicitud_gestion").val();
+        let cantidad_all = 0;
+
+        $(".elemento_gestion").each(function () {
+            let serial = $(this).val();
+            let disponible = $(this).find("option:selected").data("cantidad");
+            let cantidad = $(this)
+                .parent()
+                .parent()
+                .find(".cantidad_gestion")
+                .val();
+
+            if (serial != "" && serial != null && cantidad > 0) {
+                if (cantidad > disponible) {
+                    valid = true;
+                }
+
+                data.push({
+                    serial: serial,
+                    cantidad: parseInt(cantidad),
+                });
+                cantidad_all += parseInt(cantidad);
+            } else {
+                valid = true;
+            }
+        });
+
+        data_seriales_gestion.forEach((element) => {
+            let count = 0;
+            data.forEach((element_2) => {
+                if (element.id == element_2.serial) {
+                    count++;
+                }
+            });
+
+            if (count > 1) {
+                valid_2 = true;
+            }
+        });
 
         if (producto == "" || producto == null) {
-            toastr.error("Debe seleccionar un serial (elemento)");
+            toastr.error("Debe seleccionar un producto");
             return false;
-        } else if (cantidad == "" || cantidad < 1) {
-            toastr.error("Debe ingresar una cantidad válida");
+        } else if (valid) {
+            toastr.error("Verifique los elementos y cantidades");
             return false;
-        } else if (cantidad > cantidad_old) {
-            toastr.error("La cantidad no puede ser mayor a la disponible");
+        } else if (valid_2) {
+            toastr.error("No puede asignar el mismo elemento más de una vez");
             return false;
-        } else if (cantidad != cantidad_max) {
-            toastr.error("La cantidad debe ser igual a la solicitada");
+        } else if (cantidad_all != max_cantidad) {
+            toastr.error("Las cantidades asignadas no coincide con la cantidad de la solicitud");
             return false;
         } else if (id_almacen_salida == 0) {
             toastr.error("Debe seleccionar un almacén de salida");
@@ -545,7 +594,7 @@ $(document).ready(function () {
                 data: {
                     solicitud: solicitud,
                     producto: producto,
-                    cantidad: cantidad,
+                    data: data,
                     almacen: id_almacen_salida,
                 },
                 success: function (response) {
