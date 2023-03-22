@@ -105,7 +105,7 @@ class EmpleadosController extends Controller
                 "licencia_conduccion_moto" => "",
                 "vencimiento_licencia_moto" => date("Y-m-d", strtotime(date("Y-m-d") . "+ 5 year")),
                 "puntos" => 0,
-                "clave" => Hash::make($request->codigo),
+                "password" => Hash::make($request->codigo),
                 "periodo_vacaciones" => "",
             ]);
 
