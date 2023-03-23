@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class FacturaCompraController extends Controller
 {
@@ -21,9 +24,10 @@ class FacturaCompraController extends Controller
                 ->where('status', 1)
                 ->get();
 
-            $formas_pago = DB::table('formas_pago')
-                ->select('id', 'nombre')
+            $formas_pago = DB::table('configuracion_puc')
+                ->select('id', 'code', 'nombre')
                 ->where('status', 1)
+                ->whereRaw('LENGTH(code) = 8')
                 ->get();
 
             $centros_costos = DB::table('centros_costo')
@@ -36,9 +40,35 @@ class FacturaCompraController extends Controller
                 ->where('estado', 1)
                 ->get();
 
-            return view('admin.contabilidad.factura_compra', compact('productos', 'formas_pago', 'centros_costos', 'proveedores'));
+            $cuentas_gastos = DB::table('configuracion_puc')
+                ->select('id', 'code', 'nombre')
+                ->where('status', 1)
+                ->whereRaw('LENGTH(code) = 8')
+                ->get();
+
+            return view('admin.contabilidad.factura_compra', compact('productos', 'formas_pago', 'centros_costos', 'proveedores', 'cuentas_gastos'));
         } catch (Exception $ex) {
             return view('errors.500');
         }
+    }
+
+    public function pdf(Request $request) {
+        $id = $request->get('token');
+
+        if (!$id || $id < 1) {
+            return view('errors.404');
+        }
+
+        $factura = [];
+
+        /*if (!$factura) {
+            return view('errors.404');
+        }*/
+
+        //$pdf = PDF::loadView('admin.contabilidad.pdf.factura_compra', compact('factura'));
+
+        //return $pdf->stream('Factura Compra.pdf');
+
+        return view('admin.contabilidad.pdf.factura_compra', compact('factura'));
     }
 }

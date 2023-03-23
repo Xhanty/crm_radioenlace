@@ -161,18 +161,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="media">
-                                    <div class="media-icon">
-                                        <i class="far fa-file-alt"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <h6><span>Invoice002300</span> <span>$18</span></h6>
-                                        <div>
-                                            <p><span>Date:</span> Oct 25</p>
-                                            <p><span>Product:</span> 921021</p>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -236,8 +224,8 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <hr class="mg-b-40">
-                            <a class="btn btn-primary btn-block" href="">Generar PDF</a>
+                            <hr>
+                            <a class="btn btn-primary btn-block" href="javascript:void(0);">Generar PDF</a>
                         </div>
                     </div>
                 </div>

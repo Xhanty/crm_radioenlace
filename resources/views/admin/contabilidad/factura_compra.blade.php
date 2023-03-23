@@ -69,7 +69,7 @@
                     <div class="card card-invoice">
                         <div class="card-header ps-3 pe-3 pt-3 pb-0 d-flex-header-table">
                             <div class="div-1-tables-header">
-                                <h3 class="card-title">Facturas Compra</h3>
+                                <h3 class="card-title">FACTURAS DE COMPRA</h3>
                             </div>
                             <div class="div-2-tables-header" style="margin-bottom: 13px">
                                 <button class="btn btn-primary" id="btnNew">+</button>
@@ -77,63 +77,15 @@
                         </div>
                         <div class="p-0">
                             <div class="main-invoice-list" id="mainInvoiceList">
-                                <div class="media">
-                                    <div class="media-icon">
-                                        <i class="far fa-file-alt"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <h6><span>Invoice002300</span> <span>$25</span></h6>
-                                        <div>
-                                            <p><span>Date:</span> Oct 25</p>
-                                            <p><span>Product:</span> 921021</p>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="media selected">
                                     <div class="media-icon">
                                         <i class="far fa-file-alt"></i>
                                     </div>
                                     <div class="media-body">
-                                        <h6><span>Invoice002299</span> <span>$16</span></h6>
+                                        <h6><span>Factura No.1743</span> <span>500,498.00</span></h6>
                                         <div>
-                                            <p><span>Date:</span> Oct 25</p>
-                                            <p><span>Product:</span> 435423</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-icon">
-                                        <i class="far fa-file-alt"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <h6><span>Invoice002300</span> <span>$32</span></h6>
-                                        <div>
-                                            <p><span>Date:</span> Oct 25</p>
-                                            <p><span>Product:</span> 921021</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-icon">
-                                        <i class="far fa-file-alt"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <h6><span>Invoice002300</span> <span>$18</span></h6>
-                                        <div>
-                                            <p><span>Date:</span> Oct 25</p>
-                                            <p><span>Product:</span> 921021</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-icon">
-                                        <i class="far fa-file-alt"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <h6><span>Invoice002300</span> <span>$25</span></h6>
-                                        <div>
-                                            <p><span>Date:</span> Oct 25</p>
-                                            <p><span>Product:</span> 921021</p>
+                                            <p><span>Fecha:</span> 21/03/2023</p>
+                                            <p>EDATEL TIGO</p>
                                         </div>
                                     </div>
                                 </div>
@@ -179,6 +131,42 @@
                                     </div>
                                     <div class="media-body">
                                         <h6><span>Invoice002300</span> <span>$25</span></h6>
+                                        <div>
+                                            <p><span>Date:</span> Oct 25</p>
+                                            <p><span>Product:</span> 921021</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="media-icon">
+                                        <i class="far fa-file-alt"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <h6><span>Invoice002299</span> <span>$16</span></h6>
+                                        <div>
+                                            <p><span>Date:</span> Oct 25</p>
+                                            <p><span>Product:</span> 435423</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="media-icon">
+                                        <i class="far fa-file-alt"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <h6><span>Invoice002300</span> <span>$32</span></h6>
+                                        <div>
+                                            <p><span>Date:</span> Oct 25</p>
+                                            <p><span>Product:</span> 921021</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="media-icon">
+                                        <i class="far fa-file-alt"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <h6><span>Invoice002300</span> <span>$18</span></h6>
                                         <div>
                                             <p><span>Date:</span> Oct 25</p>
                                             <p><span>Product:</span> 921021</p>
@@ -195,98 +183,77 @@
                     <div class="card card-invoice">
                         <div class="card-body">
                             <div class="invoice-header">
-                                <h1 class="invoice-title">Invoice</h1>
+                                <h1 class="invoice-title">FACTURA COMPRA</h1>
                                 <div class="billed-from">
-                                    <h6>BootstrapDash, Inc.</h6>
-                                    <p>201 Something St., Something Town, YT 242, Country 6546<br>
-                                        Tel No: 324 445-4544<br>
-                                        Email: youremail@companyname.com</p>
+                                    <h6>RADIO ENLACE S.A.S.</h6>
+                                    <p>Nit 830.504.313-5<br>
+                                        Tel: (604) 4448280<br>
+                                        Medellín - Colombia</p>
                                 </div><!-- billed-from -->
                             </div><!-- invoice-header -->
                             <div class="row mg-t-20">
                                 <div class="col-md">
-                                    <label class="tx-gray-600">Billed To</label>
+                                    <label class="tx-gray-600">Facturado a</label>
                                     <div class="billed-to">
-                                        <h6>Juan Dela Cruz</h6>
-                                        <p>4033 Patterson Road, Staten Island, NY 10301<br>
-                                            Tel No: 324 445-4544<br>
-                                            Email: youremail@companyname.com</p>
+                                        <h6>EDATEL TIGO</h6>
+                                        <p>Nit 890.905.065-2<br>
+                                            Tel: (034) 3846500<br>
+                                            Medellín - Colombia</p>
                                     </div>
                                 </div>
                                 <div class="col-md">
-                                    <label class="tx-gray-600">Invoice Information</label>
-                                    <p class="invoice-info-row"><span>Invoice No</span> <span>GHT-673-00</span></p>
-                                    <p class="invoice-info-row"><span>Project ID</span> <span>32334300</span></p>
-                                    <p class="invoice-info-row"><span>Issue Date:</span> <span>November 21, 2017</span></p>
-                                    <p class="invoice-info-row"><span>Due Date:</span> <span>November 30, 2017</span></p>
+                                    <label class="tx-gray-600">Información de la factura</label>
+                                    <p class="invoice-info-row"><span>Factura No.</span> <span>1743</span></p>
+                                    <p class="invoice-info-row"><span>Fecha Compra</span> <span>21/03/2023</span></p>
+                                    <p class="invoice-info-row"><span>Fecha Vencimiento</span> <span>20/04/2023</span></p>
                                 </div>
                             </div>
                             <div class="table-responsive mg-t-40">
                                 <table class="table table-invoice border text-md-nowrap mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="wd-20p">Type</th>
-                                            <th class="wd-40p">Description</th>
-                                            <th class="tx-center">QNTY</th>
-                                            <th class="tx-right">Unit Price</th>
-                                            <th class="tx-right">Amount</th>
+                                            <th class="wd-20p">Ítem</th>
+                                            <th class="wd-40p">Descripción</th>
+                                            <th class="tx-center">Cantidad</th>
+                                            <th class="tx-right">Vr. Bruto</th>
+                                            <th class="tx-right">Impto. Cargo</th>
+                                            <th class="tx-right">Impto. Rete.</th>
+                                            <th class="tx-right">Vr. Total</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>Website Design</td>
-                                            <td class="tx-12">Sed ut perspiciatis unde omnis iste natus error sit
-                                                voluptatem accusantium doloremque laudantium, totam rem aperiam...</td>
-                                            <td class="tx-center">2</td>
-                                            <td class="tx-right">$150.00</td>
-                                            <td class="tx-right">$300.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Firefox Plugin</td>
-                                            <td class="tx-12">At vero eos et accusamus et iusto odio dignissimos ducimus
-                                                qui blanditiis praesentium voluptatum deleniti atque...</td>
+                                            <td>1</td>
+                                            <td class="tx-12">Servicios públicos - Teléfono</td>
                                             <td class="tx-center">1</td>
-                                            <td class="tx-right">$1,200.00</td>
-                                            <td class="tx-right">$1,200.00</td>
+                                            <td class="tx-right">500,498.00</td>
+                                            <td class="tx-right">0%</td>
+                                            <td class="tx-right">0%</td>
+                                            <td class="tx-right">500,498.00</td>
                                         </tr>
                                         <tr>
-                                            <td>iPhone App</td>
-                                            <td class="tx-12">Et harum quidem rerum facilis est et expedita distinctio
-                                            </td>
-                                            <td class="tx-center">2</td>
-                                            <td class="tx-right">$850.00</td>
-                                            <td class="tx-right">$1,700.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="valign-middle" colspan="2" rowspan="4">
+                                            <td class="valign-middle" colspan="3" rowspan="4">
                                                 <div class="invoice-notes">
-                                                    <label class="main-content-label tx-13">Notes</label>
-                                                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                                                        accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-                                                        quae ab illo inventore veritatis et quasi architecto beatae vitae
-                                                        dicta sunt explicabo.</p>
+                                                    <label class="main-content-label tx-13">Observaciones</label>
+                                                    <p>Este es un documento soporte en adquisiciones efectuadas a no obligar a facturar. Autorización de facturación N° con vigencia hasta . Con el prefijo - Y númeración desde hasta .</p>
                                                 </div><!-- invoice-notes -->
                                             </td>
-                                            <td class="tx-right">Sub-Total</td>
-                                            <td class="tx-right" colspan="2">$5,750.00</td>
                                         </tr>
                                         <tr>
-                                            <td class="tx-right">Tax (5%)</td>
-                                            <td class="tx-right" colspan="2">$287.50</td>
+                                            <td class="tx-right">Total Bruto</td>
+                                            <td class="tx-right" colspan="3">500,498.00</td>
                                         </tr>
                                         <tr>
-                                            <td class="tx-right">Discount</td>
-                                            <td class="tx-right" colspan="2">-$50.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="tx-right tx-uppercase tx-bold tx-inverse">Total Due</td>
-                                            <td class="tx-right" colspan="2">
-                                                <h4 class="tx-primary tx-bold">$5,987.50</h4>
+                                            <td class="tx-right tx-uppercase tx-bold tx-inverse">Total a Pagar</td>
+                                            <td class="tx-right" colspan="3">
+                                                <h4 class="tx-primary tx-bold">500,498.00</h4>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
+                            <hr>
+                            <a class="btn btn-primary btn-block" target="_blank" href="{{ route('pdf_factura_compra') }}?token=1">Generar PDF</a>
                         </div>
                     </div>
                 </div>
@@ -312,8 +279,8 @@
                                         <label for="">Tipo</label>
                                         <select class="form-select" id="tipo_add">
                                             <option value="">Seleccione una opción</option>
-                                            <option value="2">Nota de crédito</option>
-                                            <option value="3">Nota de débito</option>
+                                            <option value="1">FC-2-FCE</option>
+                                            <option value="2">FC-5-FCD</option>
                                         </select>
                                     </div>
                                     <div class="col-lg-3">
@@ -422,11 +389,6 @@
                                                     <td class="pad-4">
                                                         <select class="form-select producto_add">
                                                             <option value="">Seleccione una opción</option>
-                                                            @foreach ($productos as $producto)
-                                                                <option value="{{ $producto->id }}">{{ $producto->nombre }}
-                                                                    ({{ $producto->marca }} - {{ $producto->modelo }})
-                                                                </option>
-                                                            @endforeach
                                                         </select>
                                                     </td>
                                                     <td class="pad-4">
@@ -437,16 +399,16 @@
                                                             class="form-control bodega_add" style="border: 0">
                                                     </td>
                                                     <td class="pad-4">
-                                                        <input type="number" placeholder="Cantidad"
-                                                            class="form-control text-end cantidad_add" style="border: 0">
+                                                        <input type="number" placeholder="Cantidad" step="1"
+                                                            class="form-control text-end cantidad_add" value="1" style="border: 0">
                                                     </td>
                                                     <td class="pad-4">
-                                                        <input type="text" placeholder="Valor Unitario"
+                                                        <input type="text" placeholder="Valor Unitario" value="0.00"
                                                             class="form-control text-end valor_add input_dinner" style="border: 0">
                                                     </td>
                                                     <td class="pad-4">
-                                                        <input type="number" placeholder="Descuento"
-                                                            class="form-control text-end descuento_add" style="border: 0">
+                                                        <input type="text" placeholder="Descuento" value="0.00"
+                                                            class="form-control text-end descuento_add input_dinner" style="border: 0">
                                                     </td>
                                                     <td class="pad-4">
                                                         <select class="form-select cargo_add">
@@ -499,7 +461,7 @@
                                                 <select class="form-select">
                                                     <option value="">Seleccione una opción</option>
                                                     @foreach ($formas_pago as $forma_pago)
-                                                        <option value="{{ $forma_pago->id }}">{{ $forma_pago->nombre }}
+                                                        <option value="{{ $forma_pago->id }}">{{ $forma_pago->code }} | {{ $forma_pago->nombre }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -582,9 +544,11 @@
         $(document).ready(function() {
             var productos = @json($productos);
             var formas_pago = @json($formas_pago);
+            var cuentas_gastos = @json($cuentas_gastos);
 
             localStorage.setItem('productos', JSON.stringify(productos));
             localStorage.setItem('formas_pago', JSON.stringify(formas_pago));
+            localStorage.setItem('cuentas_gastos', JSON.stringify(cuentas_gastos));
         });
     </script>
     <script src="{{ asset('assets/js/app/contabilidad/factura_compra.js') }}"></script>

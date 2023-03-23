@@ -15,6 +15,7 @@ $(document).ready(function () {
 
     var productos = JSON.parse(localStorage.getItem("productos"));
     var formas_pago = JSON.parse(localStorage.getItem("formas_pago"));
+    var cuentas_gastos = JSON.parse(localStorage.getItem("cuentas_gastos"));
 
     $(".open-toggle").trigger("click");
 
@@ -27,6 +28,8 @@ $(document).ready(function () {
                 '<option value="' +
                 item.id +
                 '">' +
+                item.code +
+                " | " +
                 item.nombre +
                 "</option>"
             );
@@ -58,15 +61,6 @@ $(document).ready(function () {
             '<td class="pad-4">' +
             '<select class="form-select producto_add">' +
             '<option value="">Seleccione una opción</option>' +
-            productos.map((item) => {
-                return (
-                    '<option value="' +
-                    item.id +
-                    '">' +
-                    item.nombre + " (" + item.marca + "-" + item.modelo + ")" +
-                    "</option>"
-                );
-            }) +
             '</select>' +
             '</td>' +
             '<td class="pad-4">' +
@@ -76,13 +70,13 @@ $(document).ready(function () {
             '<input type="text" placeholder="Bodega" class="form-control bodega_add" style="border: 0">' +
             '</td>' +
             '<td class="pad-4">' +
-            '<input type="number" placeholder="Cantidad" class="form-control text-end cantidad_add" style="border: 0">' +
+            '<input type="number" step="1" value="1" placeholder="Cantidad" class="form-control text-end cantidad_add" style="border: 0">' +
             '</td>' +
             '<td class="pad-4">' +
-            '<input type="number" placeholder="Valor Unitario" class="form-control text-end valor_add input_dinner" style="border: 0">' +
+            '<input type="text" value="0.00" placeholder="Valor Unitario" class="form-control text-end valor_add input_dinner" style="border: 0">' +
             '</td>' +
             '<td class="pad-4">' +
-            '<input type="number" placeholder="Descuento" class="form-control text-end descuento_add" style="border: 0">' +
+            '<input type="text" value="0.00" placeholder="Descuento" class="form-control text-end descuento_add input_dinner" style="border: 0">' +
             '</td>' +
             '<td class="pad-4">' +
             '<select class="form-select cargo_add">' +
@@ -202,27 +196,44 @@ $(document).ready(function () {
     });
 
     $(document).on("keyup", ".input_dinner", function () {
-        // Obtener el valor ingresado por el usuario
-        var inputVal = $(this).val();
+        let v = $(this).val().replace(/\D+/g, '');
+        if (v.length > 14) v = v.slice(0, 14);
+        $(this).val(
+            v.replace(/(\d)(\d\d)$/, "$1,$2")
+                .replace(/(^\d{1,3}|\d{3})(?=(?:\d{3})+(?:,|$))/g, '$1.'));
+    });
 
-        // Remover cualquier caracter que no sea número, punto decimal o coma
-        inputVal = inputVal.replace(/[^\d.,]/g, '');
+    $(document).on("change", ".tipo_add", function () {
+        var value = $(this).val();
 
-        // Reemplazar la coma por punto y el punto por coma
-        inputVal = inputVal.replace(',', '#').replace('.', ',').replace('#', '.');
-
-        // Separar los decimales y los miles
-        var parts = inputVal.split(',');
-        var intPart = parts[0];
-        var decimalPart = parts.length > 1 ? ',' + parts[1] : '';
-
-        // Formatear la parte entera con separador de miles
-        intPart = intPart.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-        // Combinar la parte entera y decimal formateados
-        var formattedVal = intPart + decimalPart;
-
-        // Actualizar el valor en el campo de entrada
-        $(this).val(formattedVal);
+        if (value == 1) {
+            $(this).parent().parent().find(".producto_add").empty();
+            $(this).parent().parent().find(".producto_add").append(
+                productos.map((item) => {
+                    return (
+                        '<option value="' +
+                        item.id +
+                        '">' +
+                        item.nombre + " (" + item.marca + "-" + item.modelo + ")" +
+                        "</option>"
+                    );
+                })
+            );
+        } else {
+            $(this).parent().parent().find(".producto_add").empty();
+            $(this).parent().parent().find(".producto_add").append(
+                cuentas_gastos.map((item) => {
+                    return (
+                        '<option value="' +
+                        item.id +
+                        '">' +
+                        item.code +
+                        ' | ' +
+                        item.nombre +
+                        "</option>"
+                    );
+                })
+            );
+        }
     });
 });
