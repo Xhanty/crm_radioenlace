@@ -46,13 +46,23 @@ class FacturaCompraController extends Controller
                 ->whereRaw('LENGTH(code) = 8')
                 ->get();
 
-            return view('admin.contabilidad.factura_compra', compact('productos', 'formas_pago', 'centros_costos', 'proveedores', 'cuentas_gastos'));
+            $facturas = DB::table('factura_compra')
+                ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion')
+                ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
+                ->where('factura_compra.status', 1)
+                ->whereMonth('factura_compra.fecha_elaboracion', '=', date('m'))
+                ->whereYear('factura_compra.fecha_elaboracion', '=', date('Y'))
+                ->orderBy('factura_compra.id', 'desc')
+                ->get();
+
+            return view('admin.contabilidad.factura_compra', compact('productos', 'formas_pago', 'centros_costos', 'proveedores', 'cuentas_gastos', 'facturas'));
         } catch (Exception $ex) {
             return view('errors.500');
         }
     }
 
-    public function pdf(Request $request) {
+    public function pdf(Request $request)
+    {
         $id = $request->get('token');
 
         if (!$id || $id < 1) {
@@ -70,5 +80,44 @@ class FacturaCompraController extends Controller
         //return $pdf->stream('Factura Compra.pdf');
 
         return view('admin.contabilidad.pdf.factura_compra', compact('factura'));
+    }
+
+    public function info(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $factura = DB::table('factura_compra')
+                ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion', 'proveedores.ciudad', 'proveedores.telefono_fijo')
+                ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
+                ->where('factura_compra.id', $id)
+                ->first();
+
+            if (!$factura) {
+                return response()->json(['info' => 0]);
+            }
+
+            $factura->productos = DB::table('detalle_factura_compra')
+                ->where('detalle_factura_compra.factura_id', $id)
+                ->get();
+
+            foreach ($factura->productos as $key => $producto) {
+                if ($producto->producto) {
+                    $producto->detalle = DB::table('productos')
+                        ->select('nombre', 'marca', 'modelo')
+                        ->where('id', $producto->producto)
+                        ->first();
+                } else {
+                    $producto->detalle = DB::table('configuracion_puc')
+                        ->select('code', 'nombre')
+                        ->where('id', $producto->cuenta)
+                        ->first();
+                }
+            }
+
+            return response()->json(['info' => 1, 'factura' => $factura]);
+        } catch (Exception $ex) {
+            return $ex;
+            return response()->json(['info' => 0]);
+        }
     }
 }

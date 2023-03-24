@@ -242,6 +242,13 @@ $(function () {
         $(this).addClass("active");
     });
 
+    $("#btn_vendedores").on("click", function () {
+        $(".select_div").removeClass("active");
+        $(".div-list-ocult").hide();
+        $("#vendedores_div").show();
+        $(this).addClass("active");
+    });
+
     $("#btn_contabilidad").on("click", function () {
         $(".select_div").removeClass("active");
         $(".div-list-ocult").hide();

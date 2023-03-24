@@ -53,11 +53,12 @@
                         </div>
                         <div class="tm_shape_bg tm_accent_bg_10 tm_border tm_accent_border_20"></div>
                     </div>
-                    <div class="tm_invoice_info tm_mb30 tm_align_center">
-                        <div class="tm_invoice_info_left tm_mb20_md">
+                    <div class="tm_invoice_info tm_mb22 tm_align_center">
+                        <div class="tm_invoice_info_left tm_mb20_md" style="margin-top: 2px">
                             <p class="tm_mb0">
-                                <b class="tm_primary_color">Factura No. </b>1743<br>
-                                <b class="tm_primary_color">Fecha Compra: </b>21/03/2023
+                                <b class="tm_primary_color ">Factura No. </b>1743<br>
+                                <b class="tm_primary_color">Fecha Compra: </b>21/03/2023<br>
+                                <b class="tm_primary_color">Fecha Vencimiento: </b>20/04/2023
                             </p>
                         </div>
                         <div class="tm_invoice_info_right">

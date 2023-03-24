@@ -77,6 +77,10 @@
                                     href="javascript:void(0);">
                                     <i class="fe fe-file-text"></i> Comercial
                                 </a>
+                                <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_vendedores"
+                                    href="javascript:void(0);">
+                                    <i class="fe fe-shopping-cart"></i> Vendedores
+                                </a>
                                 <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_contabilidad"
                                     href="javascript:void(0);">
                                     <i class="fe fe-dollar-sign"></i> Contabilidad
@@ -126,6 +130,7 @@
             @include('permisos.comercial')
             @include('permisos.contabilidad')
             @include('permisos.configuracion')
+            @include('permisos.vendedores')
         </div>
 
         <!-- Modal Seleccionar Empleado -->

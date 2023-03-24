@@ -236,4 +236,145 @@ $(document).ready(function () {
             );
         }
     });
+
+    $(document).on("click", ".factura_btn", function () {
+        let id = $(this).data("id");
+        $("#content_loader").removeClass("d-none");
+        $("#content_factura").addClass("d-none");
+
+        $(".factura_btn").removeClass("selected");
+        $(this).addClass("selected");
+
+        $.ajax({
+            url: "info_factura_compra",
+            type: "POST",
+            data: {
+                id: id,
+            },
+            dataType: "json",
+            success: function (response) {
+                if (response.info == 1) {
+                    let factura = response.factura;
+                    let productos = factura.productos;
+
+                    var fecha_compra = new Date(factura.fecha_elaboracion);
+                    var fecha_vencimiento = new Date(factura.fecha_vencimiento);
+                    $("#proveedor_view").html(factura.razon_social);
+                    $("#nit_view").html(factura.nit + '-' + factura.codigo_verificacion + "<br>" + factura.telefono_fijo + "<br>" + factura.ciudad + ' - Colombia');
+
+                    $("#num_fact_view").html(factura.numero);
+                    $("#compra_view").html(fecha_compra.getDate() + "/" + (fecha_compra.getMonth() + 1) + "/" + fecha_compra.getFullYear());
+                    $("#vencimiento_view").html(fecha_vencimiento.getDate() + "/" + (fecha_vencimiento.getMonth() + 1) + "/" + fecha_vencimiento.getFullYear());
+                    $("#pagar_view").html(factura.valor_total);
+                    $(".btn-primary").attr("href", "pdf_factura_compra?token=" + factura.id);
+
+                    if (productos) {
+                        $("#productos_view").empty();
+                        let count = 1;
+                        let subtotal = 0;
+                        let total = 0;
+                        productos.forEach((item) => {
+                            subtotal += parseInt(item.valor_unitario);
+                            total += parseInt(item.valor_total);
+                            let detalle = item.detalle;
+                            if (item.impuesto_cargo == null) {
+                                item.impuesto_cargo = 0;
+                            }
+
+                            if (item.impuesto_retencion == null) {
+                                item.impuesto_retencion = 0;
+                            }
+
+                            item.valor_unitario = parseInt(item.valor_unitario).toLocaleString('en-US', { minimumFractionDigits: 2 });
+                            item.valor_total = parseInt(item.valor_total).toLocaleString('en-US', { minimumFractionDigits: 2 });
+
+                            if (item.producto) {
+                                $("#productos_view").append(
+                                    '<tr>' +
+                                    '<td>' + count + '</td>' +
+                                    '<td class="tx-13">' +
+                                    detalle.nombre + " (" + detalle.marca + " - " + detalle.modelo + ")" +
+                                    '</td>' +
+                                    '<td class="text-center">' +
+                                    parseInt(item.cantidad) +
+                                    '</td>' +
+                                    '<td class="text-center">' +
+                                    item.valor_unitario +
+                                    '</td>' +
+                                    '<td class="text-center">' +
+                                    item.impuesto_cargo + '%' +
+                                    '</td>' +
+                                    '<td class="text-center">' +
+                                    item.impuesto_retencion + '%' +
+                                    '</td>' +
+                                    '<td class="text-right">' +
+                                    item.valor_total +
+                                    '</td>' +
+                                    '</tr>'
+                                );
+                            } else {
+                                $("#productos_view").append(
+                                    '<tr>' +
+                                    '<td>' + count + '</td>' +
+                                    '<td class="tx-13">' +
+                                    detalle.code + " | " + detalle.nombre +
+                                    '</td>' +
+                                    '<td class="text-center">' +
+                                    parseInt(item.cantidad) +
+                                    '</td>' +
+                                    '<td class="text-center">' +
+                                    item.valor_unitario +
+                                    '</td>' +
+                                    '<td class="text-center">' +
+                                    item.impuesto_cargo + '%' +
+                                    '</td>' +
+                                    '<td class="text-center">' +
+                                    item.impuesto_retencion + '%' +
+                                    '</td>' +
+                                    '<td class="text-right">' +
+                                    item.valor_total +
+                                    '</td>' +
+                                    '</tr>'
+                                );
+                            }
+                            count++;
+                        });
+
+                        $("#productos_view").append(
+                            '<tr>' +
+                            '<td class="valign-middle" colspan="3" rowspan="4">' +
+                            '<div class="invoice-notes">' +
+                            '<label class="main-content-label tx-13">Observaciones</label>' +
+                            '<p>Este es un documento soporte en adquisiciones efectuadas a no ' +
+                            'obligar a facturar. Autorización de facturación N° con vigencia hasta .' +
+                            'Con el prefijo - Y númeración desde hasta .</p>' +
+                            '</div>' +
+                            '</td>' +
+                            '</tr>'
+                        );
+
+                        $("#productos_view").append(
+                            '<tr>' +
+                            '<td class="tx-right">Total Bruto</td>' +
+                            '<td class="tx-right" colspan="3">' + subtotal.toLocaleString('en-US', { minimumFractionDigits: 2 }) + '</td>' +
+                            '</tr>' +
+                            '<tr>' +
+                            '<td class="tx-right tx-uppercase tx-bold tx-inverse">Total a Pagar</td>' +
+                            '<td class="tx-right" colspan="3">' +
+                            '<h4 class="tx-primary tx-bold" id="pagar_view">' + total.toLocaleString('en-US', { minimumFractionDigits: 2 }) + '</h4>' +
+                            '</td>' +
+                            '</tr>'
+                        );
+                    }
+                    $("#content_loader").addClass("d-none");
+                    $("#content_factura").removeClass("d-none");
+                } else {
+                    toastr.error("Error al cargar los datos de la factura");
+                }
+            },
+            error: function (data) {
+                toastr.error("Error al cargar los datos de la factura");
+            },
+        });
+    });
 });

@@ -283,6 +283,7 @@ Route::middleware(['auth_user'])->group(function () {
     // FACTURA COMPRA
     Route::get('/factura_compra', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'index'])->name('factura_compra');
     Route::get('/pdf_factura_compra', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'pdf'])->name('pdf_factura_compra');
+    Route::post('/info_factura_compra', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'info'])->name('info_factura_compra');
 
     // FACTURA VENTA
     Route::get('/factura_venta', [App\Http\Controllers\Admin\Contabilidad\FacturaVentaController::class, 'index'])->name('factura_venta');

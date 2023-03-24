@@ -2224,6 +2224,7 @@ hr {
     .tm_invoice.tm_style2.tm_type1 .tm_logo {
         top: -8px;
         margin-bottom: 15px;
+        margin-left: 18px;
     }
 
     .tm_invoice.tm_style2 .tm_invoice_info_in {
@@ -2247,7 +2248,7 @@ hr {
     }
 
     .tm_invoice.tm_style2 .tm_logo img {
-        max-height: 50px;
+        max-height: 96px;
     }
 
     .tm_curve_35 {
@@ -2710,10 +2711,16 @@ hr {
         -webkit-box-direction: initial;
         -ms-flex-direction: initial;
         flex-direction: initial;
+        margin-top: -20px !important;
+        margin-bottom: 0px !important;
     }
 
     .tm_invoice.tm_style2 .tm_invoice_info>.tm_invoice_info_left {
         width: 30%;
+    }
+
+    .tm_invoice.tm_style2 .tm_invoice_info>.tm_invoice_info_left>.tm_mb0 {
+        margin-top: 20px;
     }
 
     .tm_invoice.tm_style2 .tm_invoice_info>.tm_invoice_info_right {
@@ -2773,6 +2780,7 @@ hr {
     .tm_invoice.tm_style2.tm_type1 .tm_logo {
         top: initial;
         margin-bottom: initial;
+        margin-left: 40px;
     }
 
     .tm_invoice.tm_style2 .tm_invoice_info_in {
@@ -2780,7 +2788,7 @@ hr {
     }
 
     .tm_invoice.tm_style2 .tm_logo img {
-        max-height: 60px;
+        max-height: 96px;
     }
 
     .tm_curve_35 {

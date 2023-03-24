@@ -77,102 +77,43 @@
                         </div>
                         <div class="p-0">
                             <div class="main-invoice-list" id="mainInvoiceList">
-                                <div class="media selected">
-                                    <div class="media-icon">
-                                        <i class="far fa-file-alt"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <h6><span>Factura No.1743</span> <span>500,498.00</span></h6>
-                                        <div>
-                                            <p><span>Fecha:</span> 21/03/2023</p>
-                                            <p>EDATEL TIGO</p>
+                                @foreach ($facturas as $key => $factura)
+                                    @if ($key == 0)
+                                        <div class="media factura_btn" data-id="{{ $factura->id }}">
+                                            <div class="media-icon">
+                                                <i class="far fa-file-alt"></i>
+                                            </div>
+                                            <div class="media-body">
+                                                <h6><span>Factura No.{{ $factura->numero }}</span>
+                                                    <span>{{ $factura->valor_total }}</span>
+                                                </h6>
+                                                <div>
+                                                    <p><span>Fecha:</span>
+                                                        {{ date('d/m/Y', strtotime($factura->fecha_elaboracion)) }}</p>
+                                                    <p>{{ $factura->razon_social }} (NIT:
+                                                        {{ $factura->nit }}-{{ $factura->codigo_verificacion }})</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-icon">
-                                        <i class="far fa-file-alt"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <h6><span>Invoice002299</span> <span>$16</span></h6>
-                                        <div>
-                                            <p><span>Date:</span> Oct 25</p>
-                                            <p><span>Product:</span> 435423</p>
+                                    @else
+                                        <div class="media factura_btn" data-id="{{ $factura->id }}">
+                                            <div class="media-icon">
+                                                <i class="far fa-file-alt"></i>
+                                            </div>
+                                            <div class="media-body">
+                                                <h6><span>Factura No.{{ $factura->numero }}</span>
+                                                    <span>{{ $factura->valor_total }}</span>
+                                                </h6>
+                                                <div>
+                                                    <p><span>Fecha:</span>
+                                                        {{ date('d/m/Y', strtotime($factura->fecha_elaboracion)) }}</p>
+                                                    <p>{{ $factura->razon_social }} (NIT:
+                                                        {{ $factura->nit }}-{{ $factura->codigo_verificacion }})</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-icon">
-                                        <i class="far fa-file-alt"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <h6><span>Invoice002300</span> <span>$32</span></h6>
-                                        <div>
-                                            <p><span>Date:</span> Oct 25</p>
-                                            <p><span>Product:</span> 921021</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-icon">
-                                        <i class="far fa-file-alt"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <h6><span>Invoice002300</span> <span>$18</span></h6>
-                                        <div>
-                                            <p><span>Date:</span> Oct 25</p>
-                                            <p><span>Product:</span> 921021</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-icon">
-                                        <i class="far fa-file-alt"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <h6><span>Invoice002300</span> <span>$25</span></h6>
-                                        <div>
-                                            <p><span>Date:</span> Oct 25</p>
-                                            <p><span>Product:</span> 921021</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-icon">
-                                        <i class="far fa-file-alt"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <h6><span>Invoice002299</span> <span>$16</span></h6>
-                                        <div>
-                                            <p><span>Date:</span> Oct 25</p>
-                                            <p><span>Product:</span> 435423</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-icon">
-                                        <i class="far fa-file-alt"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <h6><span>Invoice002300</span> <span>$32</span></h6>
-                                        <div>
-                                            <p><span>Date:</span> Oct 25</p>
-                                            <p><span>Product:</span> 921021</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-icon">
-                                        <i class="far fa-file-alt"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <h6><span>Invoice002300</span> <span>$18</span></h6>
-                                        <div>
-                                            <p><span>Date:</span> Oct 25</p>
-                                            <p><span>Product:</span> 921021</p>
-                                        </div>
-                                    </div>
-                                </div>
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -191,69 +132,55 @@
                                         Medellín - Colombia</p>
                                 </div><!-- billed-from -->
                             </div><!-- invoice-header -->
-                            <div class="row mg-t-20">
-                                <div class="col-md">
-                                    <label class="tx-gray-600">Facturado a</label>
-                                    <div class="billed-to">
-                                        <h6>EDATEL TIGO</h6>
-                                        <p>Nit 890.905.065-2<br>
-                                            Tel: (034) 3846500<br>
-                                            Medellín - Colombia</p>
+                            <div id="content_factura" class="d-none">
+                                <div class="row mg-t-20">
+                                    <div class="col-md">
+                                        <label class="tx-gray-600">Facturado a</label>
+                                        <div class="billed-to">
+                                            <h6 id="proveedor_view">EDATEL TIGO</h6>
+                                            <p id="nit_view">Nit 890.905.065-2<br>
+                                                Tel: (034) 3846500<br>
+                                                Medellín - Colombia</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                        <label class="tx-gray-600">Información de la factura</label>
+                                        <p class="invoice-info-row"><span>Factura No.</span> <span
+                                                id="num_fact_view">1743</span></p>
+                                        <p class="invoice-info-row"><span>Fecha Compra</span> <span
+                                                id="compra_view">21/03/2023</span></p>
+                                        <p class="invoice-info-row"><span>Fecha Vencimiento</span> <span
+                                                id="vencimiento_view">20/04/2023</span>
+                                        </p>
                                     </div>
                                 </div>
-                                <div class="col-md">
-                                    <label class="tx-gray-600">Información de la factura</label>
-                                    <p class="invoice-info-row"><span>Factura No.</span> <span>1743</span></p>
-                                    <p class="invoice-info-row"><span>Fecha Compra</span> <span>21/03/2023</span></p>
-                                    <p class="invoice-info-row"><span>Fecha Vencimiento</span> <span>20/04/2023</span></p>
+                                <div class="table-responsive mg-t-40">
+                                    <table class="table table-invoice border text-md-nowrap mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="wd-20p">Ítem</th>
+                                                <th class="wd-40p">Descripción</th>
+                                                <th class="tx-center">Cantidad</th>
+                                                <th class="tx-center">Vr. Bruto</th>
+                                                <th class="tx-center">Impto. Cargo</th>
+                                                <th class="tx-center">Impto. Rete.</th>
+                                                <th class="tx-right">Vr. Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="productos_view"></tbody>
+                                    </table>
+                                </div>
+                                <hr>
+                                <a class="btn btn-primary btn-block" target="_blank"
+                                    href="{{ route('pdf_factura_compra') }}?token=1">Generar PDF</a>
+                            </div>
+                            <div id="content_loader" class="d-none">
+                                <div class="text-center">
+                                    <div class="spinner-border" role="status" style="color: #3858f9">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="table-responsive mg-t-40">
-                                <table class="table table-invoice border text-md-nowrap mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th class="wd-20p">Ítem</th>
-                                            <th class="wd-40p">Descripción</th>
-                                            <th class="tx-center">Cantidad</th>
-                                            <th class="tx-right">Vr. Bruto</th>
-                                            <th class="tx-right">Impto. Cargo</th>
-                                            <th class="tx-right">Impto. Rete.</th>
-                                            <th class="tx-right">Vr. Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td class="tx-12">Servicios públicos - Teléfono</td>
-                                            <td class="tx-center">1</td>
-                                            <td class="tx-right">500,498.00</td>
-                                            <td class="tx-right">0%</td>
-                                            <td class="tx-right">0%</td>
-                                            <td class="tx-right">500,498.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="valign-middle" colspan="3" rowspan="4">
-                                                <div class="invoice-notes">
-                                                    <label class="main-content-label tx-13">Observaciones</label>
-                                                    <p>Este es un documento soporte en adquisiciones efectuadas a no obligar a facturar. Autorización de facturación N° con vigencia hasta . Con el prefijo - Y númeración desde hasta .</p>
-                                                </div><!-- invoice-notes -->
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="tx-right">Total Bruto</td>
-                                            <td class="tx-right" colspan="3">500,498.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="tx-right tx-uppercase tx-bold tx-inverse">Total a Pagar</td>
-                                            <td class="tx-right" colspan="3">
-                                                <h4 class="tx-primary tx-bold">500,498.00</h4>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <hr>
-                            <a class="btn btn-primary btn-block" target="_blank" href="{{ route('pdf_factura_compra') }}?token=1">Generar PDF</a>
                         </div>
                     </div>
                 </div>
@@ -288,20 +215,21 @@
                                         <select class="form-select" id="centro_costo_add">
                                             <option value="">Seleccione una opción</option>
                                             @foreach ($centros_costos as $centro_costo)
-                                                <option value="{{ $centro_costo->id }}">({{ $centro_costo->code }}) {{ $centro_costo->nombre }}
+                                                <option value="{{ $centro_costo->id }}">({{ $centro_costo->code }})
+                                                    {{ $centro_costo->nombre }}
                                                 </option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="col-lg-3">
                                         <label for="">Fecha elaboración</label>
-                                        <input class="form-control" value="{{ date('Y-m-d') }}" id="fecha_add" placeholder="Fecha elaboración"
-                                            type="date">
+                                        <input class="form-control" value="{{ date('Y-m-d') }}" id="fecha_add"
+                                            placeholder="Fecha elaboración" type="date">
                                     </div>
                                     <div class="col-lg-3">
                                         <label for="">Número</label>
-                                        <input class="form-control text-center" value="01" disabled id="numero_add" placeholder="Número"
-                                            type="text">
+                                        <input class="form-control text-center" value="01" disabled id="numero_add"
+                                            placeholder="Número" type="text">
                                     </div>
                                 </div>
                                 <br>
@@ -311,7 +239,8 @@
                                         <select class="form-select" id="proveedor_add">
                                             <option value="">Seleccione una opción</option>
                                             @foreach ($proveedores as $proveedor)
-                                                <option value="{{ $proveedor->id }}">{{ $proveedor->razon_social }} ({{ $proveedor->nit }})
+                                                <option value="{{ $proveedor->id }}">{{ $proveedor->razon_social }}
+                                                    ({{ $proveedor->nit }})
                                                 </option>
                                             @endforeach
                                         </select>
@@ -325,8 +254,9 @@
 
                                     <div class="col-lg-3">
                                         <label for="">No. Factura Proveedor</label>
-                                        <input class="form-control text-center" value="FC" id="factura1_proveedor_add"
-                                            placeholder="No. Factura Proveedor" type="text">
+                                        <input class="form-control text-center" value="FC"
+                                            id="factura1_proveedor_add" placeholder="No. Factura Proveedor"
+                                            type="text">
                                     </div>
 
                                     <div class="col-lg-3">
@@ -400,15 +330,18 @@
                                                     </td>
                                                     <td class="pad-4">
                                                         <input type="number" placeholder="Cantidad" step="1"
-                                                            class="form-control text-end cantidad_add" value="1" style="border: 0">
+                                                            class="form-control text-end cantidad_add" value="1"
+                                                            style="border: 0">
                                                     </td>
                                                     <td class="pad-4">
                                                         <input type="text" placeholder="Valor Unitario" value="0.00"
-                                                            class="form-control text-end valor_add input_dinner" style="border: 0">
+                                                            class="form-control text-end valor_add input_dinner"
+                                                            style="border: 0">
                                                     </td>
                                                     <td class="pad-4">
                                                         <input type="text" placeholder="Descuento" value="0.00"
-                                                            class="form-control text-end descuento_add input_dinner" style="border: 0">
+                                                            class="form-control text-end descuento_add input_dinner"
+                                                            style="border: 0">
                                                     </td>
                                                     <td class="pad-4">
                                                         <select class="form-select cargo_add">
@@ -461,7 +394,8 @@
                                                 <select class="form-select">
                                                     <option value="">Seleccione una opción</option>
                                                     @foreach ($formas_pago as $forma_pago)
-                                                        <option value="{{ $forma_pago->id }}">{{ $forma_pago->code }} | {{ $forma_pago->nombre }}
+                                                        <option value="{{ $forma_pago->id }}">{{ $forma_pago->code }} |
+                                                            {{ $forma_pago->nombre }}
                                                         </option>
                                                     @endforeach
                                                 </select>
