@@ -22,7 +22,7 @@
                                         </div>
                                     </div>
                                     <br>
-                                    <select class="form-select" multiple id="">
+                                    <select class="form-select" multiple id="select_usuarios_cotizaciones">
                                         @foreach ($empleados as $empleado)
                                             @if ($empleado->id == auth()->user()->id)
                                                 <option value="{{ $empleado->id }}" selected>{{ $empleado->nombre }}</option>
@@ -33,13 +33,6 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card-footer p-3">
-                            <label class="form-switch float-end mb-0">
-                                <input type="checkbox" value="gestion_vehiculos"
-                                    class="form-switch-input check-vendedores-1">
-                                <span class="form-switch-indicator custom-radius"></span>
-                            </label>
                         </div>
                     </div>
                 </div>

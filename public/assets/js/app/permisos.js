@@ -69,6 +69,33 @@ $(function () {
         }, 1);
     });
 
+    $("#select_usuarios_cotizaciones").on("change", function() {
+        let empleados = $(this).val();
+
+        $.ajax({
+            url: "permisos_user_update",
+            type: "POST",
+            data: {
+                type: 'cotizaciones',
+                empleado: empleadoGeneral,
+                empleados: empleados,
+            },
+            dataType: "json",
+            success: function (response) {
+                if (response.info == 1) {
+                    toastr.success("Permisos actualizados correctamente");
+                } else {
+                    toastr.error(
+                        "Ocurrió un error al actualizar los permisos"
+                    );
+                }
+            },
+            error: function (error) {
+                toastr.error("Ocurrió un error al actualizar los permisos");
+            },
+        });
+    });
+
     function checksPermisos() {
         permisosCheck = [];
 

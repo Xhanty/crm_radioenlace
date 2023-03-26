@@ -48,17 +48,25 @@ class PermisosController extends Controller
             DB::beginTransaction();
             $permisos = $request->permisos;
             $empleado = $request->empleado;
+            $type = $request->type;
             $admin = auth()->user()->id;
 
-            DB::table("permisos_new")->where("empleado", $empleado)->delete();
-
-            foreach ($permisos as $permiso) {
-                DB::table("permisos_new")->insert([
-                    "empleado" => $empleado,
-                    "modulo" => $permiso,
-                    "administrador" => $admin,
-                    "fecha" => date("Y-m-d H:i:s")
+            if ($type && $type == 'cotizaciones') {
+                DB::table("permisos_new")->where("modulo", 'gestionar_cotizaciones')->where("empleado", $empleado)->update([
+                    'cotizaciones' => $request->empleados
                 ]);
+                
+            } else {
+                DB::table("permisos_new")->where("empleado", $empleado)->delete();
+
+                foreach ($permisos as $permiso) {
+                    DB::table("permisos_new")->insert([
+                        "empleado" => $empleado,
+                        "modulo" => $permiso,
+                        "administrador" => $admin,
+                        "fecha" => date("Y-m-d H:i:s")
+                    ]);
+                }
             }
 
             DB::commit();

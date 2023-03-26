@@ -20,6 +20,20 @@ class CotizacionController extends Controller
                 return redirect()->route('home');
             }
 
+            $usuarios_cotizaciones = [];
+
+            $permiso_ver = DB::table("permisos_new")
+            ->select("cotizaciones")
+            ->where("empleado", auth()->user()->id)
+            ->where("modulo", "gestionar_cotizaciones")
+            ->first();
+
+            foreach(json_decode($permiso_ver->cotizaciones) as $usuario) {
+                array_push($usuarios_cotizaciones, $usuario);
+            }
+
+            array_push($usuarios_cotizaciones, auth()->user()->id);
+
             $clientes = DB::table('cliente')
                 ->select('id', 'razon_social')
                 ->where('estado', 1)
@@ -46,6 +60,7 @@ class CotizacionController extends Controller
                 ->join('cliente', 'cotizaciones.cliente_id', '=', 'cliente.id')
                 ->join('empleados', 'cotizaciones.created_by', '=', 'empleados.id')
                 ->where('cotizaciones.status', 0)
+                ->whereIn('cotizaciones.created_by', $usuarios_cotizaciones)
                 ->whereNull('detalle_cotizaciones.titulo')
                 ->orderBy('cotizaciones.id', 'desc')
                 ->groupBy('cotizaciones.id', 'cotizaciones.code', 'cotizaciones.created_at', 'cotizaciones.descripcion', 'cotizaciones.status', 'cotizaciones.fecha_revision', 'cliente.razon_social', 'empleados.nombre')
@@ -69,6 +84,7 @@ class CotizacionController extends Controller
                 ->join('empleados', 'cotizaciones.created_by', '=', 'empleados.id')
                 ->where('cotizaciones.status', 1)
                 ->whereNull('detalle_cotizaciones.titulo')
+                ->whereIn('cotizaciones.created_by', $usuarios_cotizaciones)
                 ->orderBy('cotizaciones.id', 'desc')
                 ->groupBy('cotizaciones.id', 'cotizaciones.code', 'cotizaciones.created_at', 'cotizaciones.descripcion', 'cotizaciones.status', 'cotizaciones.fecha_revision', 'cotizaciones.aprobado', 'cliente.razon_social', 'empleados.nombre')
                 ->get();
