@@ -24,11 +24,7 @@
                                     <br>
                                     <select class="form-select" multiple id="select_usuarios_cotizaciones">
                                         @foreach ($empleados as $empleado)
-                                            @if ($empleado->id == auth()->user()->id)
-                                                <option value="{{ $empleado->id }}" selected>{{ $empleado->nombre }}</option>
-                                            @else
-                                                <option value="{{ $empleado->id }}">{{ $empleado->nombre }}</option>
-                                            @endif
+                                            <option value="{{ $empleado->id }}">{{ $empleado->nombre }}</option>
                                         @endforeach
                                     </select>
                                 </div>

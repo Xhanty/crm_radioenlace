@@ -28,9 +28,12 @@ class CotizacionController extends Controller
             ->where("modulo", "gestionar_cotizaciones")
             ->first();
 
-            foreach(json_decode($permiso_ver->cotizaciones) as $usuario) {
-                array_push($usuarios_cotizaciones, $usuario);
+            if($permiso_ver && $permiso_ver->cotizaciones) {
+                foreach (json_decode($permiso_ver->cotizaciones) as $usuario) {
+                    array_push($usuarios_cotizaciones, $usuario);
+                }
             }
+            
 
             array_push($usuarios_cotizaciones, auth()->user()->id);
 
