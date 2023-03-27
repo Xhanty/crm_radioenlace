@@ -377,4 +377,26 @@ $(document).ready(function () {
             },
         });
     });
+
+    $(document).on("change", ".cantidad_add", function() {
+        let cantidad = $(this).val();
+        let valor = $(this).parent().parent().find(".valor_add").val();
+        valor = valor.split(',');
+        valor = valor[0];
+        valor = valor.replaceAll('.', '');
+        valor = parseInt(valor);
+
+        $(this).parent().parent().find(".total_add").val((cantidad * valor).toLocaleString('en-US', { minimumFractionDigits: 2 }));
+    });
+
+    $(document).on("change", ".valor_add", function() {
+        let valor = $(this).val();
+        let cantidad = $(this).parent().parent().find(".cantidad_add").val();
+        valor = valor.split(',');
+        valor = valor[0];
+        valor = valor.replaceAll('.', '');
+        valor = parseInt(valor);
+
+        $(this).parent().parent().find(".total_add").val((cantidad * valor).toLocaleString('en-US', { minimumFractionDigits: 2 }));
+    });
 });
