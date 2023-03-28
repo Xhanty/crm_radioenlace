@@ -21,7 +21,7 @@ $(document).ready(function () {
 
     var contact_forma_pago = '<div class="row row-sm mt-2">' +
         '<div class="col-lg-6" >' +
-        '<select class="form-select">' +
+        '<select class="form-select formas_pago_add">' +
         '<option value="">Seleccione una opción</option>' +
         formas_pago.map((item) => {
             return (
@@ -70,7 +70,7 @@ $(document).ready(function () {
             '<input type="text" placeholder="Bodega" class="form-control bodega_add" style="border: 0">' +
             '</td>' +
             '<td class="pad-4">' +
-            '<input type="number" step="1" value="1" placeholder="Cantidad" class="form-control text-end cantidad_add" style="border: 0">' +
+            '<input type="number" step="1" value="1" min="1" placeholder="Cantidad" class="form-control text-end cantidad_add" style="border: 0">' +
             '</td>' +
             '<td class="pad-4">' +
             '<input type="text" value="0.00" placeholder="Valor Unitario" class="form-control text-end valor_add input_dinner" style="border: 0">' +
@@ -81,34 +81,34 @@ $(document).ready(function () {
             '<td class="pad-4">' +
             '<select class="form-select cargo_add">' +
             '<option value="">Seleccione una opción</option>' +
-            '<option value="1">IVA 19%</option>' +
-            '<option value="2">Iva Serv 19%</option>' +
-            '<option value="3">IVA 16%</option>' +
-            '<option value="4">IVA 5%</option>' +
-            '<option value="5">Impoconsumo 8%</option>' +
+            '<option data-impuesto="19" value="1">IVA 19%</option>' +
+            '<option data-impuesto="19" value="2">Iva Serv 19%</option>' +
+            '<option data-impuesto="16" value="3">IVA 16%</option>' +
+            '<option data-impuesto="5" value="4">IVA 5%</option>' +
+            '<option data-impuesto="8" value="5">Impoconsumo 8%</option>' +
             '</select>' +
             '</td>' +
             '<td class="pad-4">' +
             '<select class="form-select retencion_add">' +
             '<option value="">Seleccione una opción</option>' +
-            '<option value="1">Retefuente 11%</option>' +
-            '<option value="2">Retefuente 10%</option>' +
-            '<option value="3">Retefuente 7%</option>' +
-            '<option value="4">Retefuente 6%</option>' +
-            '<option value="5">Retención 5%</option>' +
-            '<option value="6">Retefuente 4%</option>' +
-            '<option value="8">Arriendos 4%</option>' +
-            '<option value="9">Arriendos 3.5%</option>' +
-            '<option value="10">Retefuente 3.5%</option>' +
-            '<option value="11">Retefuente 2.5%</option>' +
-            '<option value="12">Retefuente 2%</option>' +
-            '<option value="13">Retefuente 1%</option>' +
-            '<option value="14">Autoretención del cree 0.4%</option>' +
-            '<option value="15">Retefuente 0.1%</option>' +
+            '<option data-impuesto="11" value="1">Retefuente 11%</option>' +
+            '<option data-impuesto="10" value="2">Retefuente 10%</option>' +
+            '<option data-impuesto="7" value="3">Retefuente 7%</option>' +
+            '<option data-impuesto="6" value="4">Retefuente 6%</option>' +
+            '<option data-impuesto="5" value="5">Retención 5%</option>' +
+            '<option data-impuesto="4" value="6">Retefuente 4%</option>' +
+            '<option data-impuesto="4" value="8">Arriendos 4%</option>' +
+            '<option data-impuesto="3.5" value="9">Arriendos 3.5%</option>' +
+            '<option data-impuesto="3.5" value="10">Retefuente 3.5%</option>' +
+            '<option data-impuesto="2.5" value="11">Retefuente 2.5%</option>' +
+            '<option data-impuesto="2" value="12">Retefuente 2%</option>' +
+            '<option data-impuesto="1" value="13">Retefuente 1%</option>' +
+            '<option data-impuesto="0.4" value="14">Autoretención del cree 0.4%</option>' +
+            '<option data-impuesto="0.1" value="15">Retefuente 0.1%</option>' +
             '</select>' +
             '</td>' +
             '<td class="text-center d-flex pad-4">' +
-            '<input disabled type="text" placeholder="0.00" class="form-control text-end total_add" style="border: 0">' +
+            '<input disabled type="text" placeholder="0.00" class="form-control text-end total_add input_dinner" style="border: 0">' +
             '<a class="center-vertical mg-s-10 delete_row" href="javascript:void(0)"><i class="fa fa-trash"></i></a>&nbsp;' +
             '</td>' +
             '</tr>'
@@ -378,25 +378,275 @@ $(document).ready(function () {
         });
     });
 
-    $(document).on("change", ".cantidad_add", function() {
+    $(document).on("change", ".cantidad_add", function () {
         let cantidad = $(this).val();
+        let descuento = $(this).parent().parent().find(".descuento_add").val();
         let valor = $(this).parent().parent().find(".valor_add").val();
+        let impuesto_cargo = $(this).parent().parent().find(".cargo_add :selected").data("impuesto") ?? 0;
+        let impuesto_retencion = $(this).parent().parent().find(".retencion_add :selected").data("impuesto") ?? 0;
+
         valor = valor.split(',');
         valor = valor[0];
         valor = valor.replaceAll('.', '');
         valor = parseInt(valor);
 
-        $(this).parent().parent().find(".total_add").val((cantidad * valor).toLocaleString('en-US', { minimumFractionDigits: 2 }));
+        descuento = descuento.split(',');
+        descuento = descuento[0];
+        descuento = descuento.replaceAll('.', '');
+        descuento = parseInt(descuento);
+
+        let total = (cantidad * valor) - descuento;
+
+        total = total + (total * impuesto_cargo / 100);
+        total = total + (total * impuesto_retencion / 100);
+
+        $(this).parent().parent().find(".total_add").val(total + "00").trigger("keyup");
+
+        totales();
     });
 
-    $(document).on("change", ".valor_add", function() {
+    $(document).on("change", ".valor_add", function () {
         let valor = $(this).val();
+        let descuento = $(this).parent().parent().find(".descuento_add").val();
         let cantidad = $(this).parent().parent().find(".cantidad_add").val();
+        let impuesto_cargo = $(this).parent().parent().find(".cargo_add :selected").data("impuesto") ?? 0;
+        let impuesto_retencion = $(this).parent().parent().find(".retencion_add :selected").data("impuesto") ?? 0;
+
         valor = valor.split(',');
         valor = valor[0];
         valor = valor.replaceAll('.', '');
         valor = parseInt(valor);
 
-        $(this).parent().parent().find(".total_add").val((cantidad * valor).toLocaleString('en-US', { minimumFractionDigits: 2 }));
+        descuento = descuento.split(',');
+        descuento = descuento[0];
+        descuento = descuento.replaceAll('.', '');
+        descuento = parseInt(descuento);
+
+        let total = (cantidad * valor) - descuento;
+
+        total = total + (total * impuesto_cargo / 100);
+        total = total + (total * impuesto_retencion / 100);
+
+        $(this).parent().parent().find(".total_add").val(total + "00").trigger("keyup");
+
+        totales();
+    });
+
+    $(document).on("change", ".descuento_add", function () {
+        let descuento = $(this).val();
+        let valor = $(this).parent().parent().find(".valor_add").val();
+        let cantidad = $(this).parent().parent().find(".cantidad_add").val();
+        let impuesto_cargo = $(this).parent().parent().find(".cargo_add :selected").data("impuesto") ?? 0;
+        let impuesto_retencion = $(this).parent().parent().find(".retencion_add :selected").data("impuesto") ?? 0;
+
+        valor = valor.split(',');
+        valor = valor[0];
+        valor = valor.replaceAll('.', '');
+        valor = parseInt(valor);
+
+        descuento = descuento.split(',');
+        descuento = descuento[0];
+        descuento = descuento.replaceAll('.', '');
+        descuento = parseInt(descuento);
+
+        let total = (cantidad * valor) - descuento;
+
+        total = total + (total * impuesto_cargo / 100);
+        total = total + (total * impuesto_retencion / 100);
+
+        $(this).parent().parent().find(".total_add").val(total + "00").trigger("keyup");
+
+        totales();
+    });
+
+    $(document).on("change", ".cargo_add", function () {
+        let impuesto_cargo = $(this).find(":selected").data("impuesto") ?? 0;
+        let impuesto_retencion = $(this).parent().parent().find(".retencion_add :selected").data("impuesto") ?? 0;
+        let valor = $(this).parent().parent().find(".valor_add").val();
+        let cantidad = $(this).parent().parent().find(".cantidad_add").val();
+        let descuento = $(this).parent().parent().find(".descuento_add").val();
+
+        valor = valor.split(',');
+        valor = valor[0];
+        valor = valor.replaceAll('.', '');
+        valor = parseInt(valor);
+
+        descuento = descuento.split(',');
+        descuento = descuento[0];
+        descuento = descuento.replaceAll('.', '');
+        descuento = parseInt(descuento);
+
+        let total = (cantidad * valor) - descuento;
+
+        total = total + (total * impuesto_cargo / 100);
+        total = total + (total * impuesto_retencion / 100);
+
+        $(this).parent().parent().find(".total_add").val(total + "00").trigger("keyup");
+
+        totales();
+    });
+
+    $(document).on("change", ".retencion_add", function () {
+        let impuesto_cargo = $(this).parent().parent().find(".cargo_add :selected").data("impuesto") ?? 0;
+        let impuesto_retencion = $(this).find(":selected").data("impuesto") ?? 0;
+        let valor = $(this).parent().parent().find(".valor_add").val();
+        let cantidad = $(this).parent().parent().find(".cantidad_add").val();
+        let descuento = $(this).parent().parent().find(".descuento_add").val();
+
+        valor = valor.split(',');
+        valor = valor[0];
+        valor = valor.replaceAll('.', '');
+        valor = parseInt(valor);
+
+        descuento = descuento.split(',');
+        descuento = descuento[0];
+        descuento = descuento.replaceAll('.', '');
+        descuento = parseInt(descuento);
+
+        let total = (cantidad * valor) - descuento;
+
+        total = total + (total * impuesto_cargo / 100);
+        total = total + (total * impuesto_retencion / 100);
+
+        $(this).parent().parent().find(".total_add").val(total + "00").trigger("keyup");
+
+        totales();
+    });
+
+    function totales() {
+        let subtotal = 0;
+        let descuento = 0;
+        let total = 0;
+
+        $(".total_add").each(function () {
+            let valor = $(this).val();
+            valor = valor.split(',');
+            valor = valor[0];
+            valor = valor.replaceAll('.', '');
+            valor = parseInt(valor);
+            total += valor;
+        });
+
+        $(".descuento_add").each(function () {
+            let valor = $(this).val();
+            valor = valor.split(',');
+            valor = valor[0];
+            valor = valor.replaceAll('.', '');
+            valor = parseInt(valor);
+            descuento += valor;
+        });
+
+        $(".cantidad_add").each(function () {
+            let cantidad = $(this).val();
+            let valor_unitario = $(this).parent().parent().find(".valor_add").val();
+
+            valor_unitario = valor_unitario.split(',');
+            valor_unitario = valor_unitario[0];
+            valor_unitario = valor_unitario.replaceAll('.', '');
+            valor_unitario = parseInt(valor_unitario);
+
+            subtotal += (cantidad * valor_unitario);
+        });
+
+        $("#total_subtotal_add").html((subtotal).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+        $("#total_descuentos_add").html((descuento).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+        $("#total_neto_add").html((total).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+        $(".formas_pago_add").trigger("change");
+
+    }
+
+    $(document).on("change", ".formas_pago_add", function () {
+        let count = 0;
+        let total = $("#total_neto_add").html();
+
+        total = total.split(',');
+        total = total[0];
+        total = total.replaceAll('.', '');
+        total = parseInt(total);
+
+        $(".formas_pago_add").each(function () {
+            count++;
+        });
+
+        if (count == 1) {
+            $(".forma_pago_input_add").val((total).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+            $("#total_formas_pago_add").html((total).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+        }
+    });
+
+    $(document).on("click", "#btnAddFactura", function () {
+        let tipo = $("#tipo_add").val();
+        let centro = $("#centro_costo_add").val();
+        let fecha = $("#fecha_add").val();
+        let proveedor = $("#proveedor_add").val();
+        let factura_proveedor = $("#factura1_proveedor_add").val();
+        let consecutivo_proveedor = $("#factura2_proveedor_add").val();
+        let total = $("#total_neto_add").html();
+        let valid = false;
+
+        let productos = [];
+
+        $(".producto_add").each(function () {
+            let producto = $(this).val();
+            let tipo = $(this).parent().parent().find(".tipo_add").val();
+            let descripcion = $(this).parent().parent().find(".descripcion_add").val();
+            let bodega = $(this).parent().parent().find(".bodega_add").val();
+            let cantidad = $(this).parent().parent().find(".cantidad_add").val();
+            let valor_unitario = $(this).parent().parent().find(".valor_add").val();
+            let descuento = $(this).parent().parent().find(".descuento_add").val();
+            let impuesto_cargo = $(this).parent().parent().find(".cargo_add").val();
+            let impuesto_retencion = $(this).parent().parent().find(".retencion_add").val();
+            let total = $(this).parent().parent().find(".total_add").val();
+
+            if (!producto || !tipo) {
+                valid = true;
+            }
+
+            if(cantidad < 1) {
+                valid = true;
+            }
+
+            productos.push({
+                producto: producto,
+                tipo: tipo,
+                descripcion: descripcion,
+                bodega: bodega,
+                cantidad: cantidad,
+                valor_unitario: valor_unitario,
+                descuento: descuento,
+                impuesto_cargo: impuesto_cargo,
+                impuesto_retencion: impuesto_retencion,
+                total: total
+            });
+        });
+
+        if (!tipo) {
+            toastr.error('Debe seleccionar un tipo de factura');
+            return false;
+        } else if (!centro) {
+            toastr.error('Debe seleccionar un centro de costo');
+            return false;
+        } else if (!proveedor) {
+            toastr.error('Debe seleccionar un proveedor');
+            return false;
+        } else if (factura_proveedor.trim().length < 1) {
+            toastr.error('Debe ingresar el número de factura del proveedor');
+            return false;
+        } else if (consecutivo_proveedor.trim().length < 1) {
+            toastr.error('Debe ingresar el consecutivo de la factura');
+            return false;
+        } else if (total == "0.00" || total == "0" || total == "0,00" || total == "NaN") {
+            toastr.error('Debe ingresar al menos un producto');
+            return false;
+        } else if (valid) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Debe llenar todos los campos de los productos',
+            });
+            return false;
+        } else {
+
+        }
     });
 });

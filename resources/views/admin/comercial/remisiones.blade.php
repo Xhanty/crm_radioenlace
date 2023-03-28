@@ -62,9 +62,9 @@
                                             <td>{{ $value->creador }}</td>
                                             <td class="text-center">
                                                 <!--<a title="Ver" href="javascript:void(0);" data-id="{{ $value->id }}"
-                                                    class="btn btn-primary btn-sm btnView">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>-->
+                                                        class="btn btn-primary btn-sm btnView">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>-->
                                                 <a title="Ver o Imprimir" target="_BLANK"
                                                     href="{{ route('remisiones_print') }}?token={{ $value->id }}"
                                                     class="btn btn-primary btn-sm btnPrint">
@@ -78,10 +78,6 @@
                                                     data-id="{{ $value->id }}"
                                                     class="btn btn-success btn-sm btnCompletar">
                                                     <i class="fa fa-check"></i>
-                                                </a>
-                                                <a title="Firma" href="javascript:void(0);"
-                                                    data-id="{{ $value->id }}" class="btn btn-primary btn-sm btnFirma">
-                                                    <i class="fas fa-eye-dropper"></i>
                                                 </a>
                                                 <a title="Eliminar" href="javascript:void(0);"
                                                     data-id="{{ $value->id }}" class="btn btn-danger btn-sm btnDelete">
@@ -141,9 +137,9 @@
                                             <td>{{ $value->creador }}</td>
                                             <td class="text-center">
                                                 <!--<a title="Ver" href="javascript:void(0);" data-id="{{ $value->id }}"
-                                                    class="btn btn-primary btn-sm btnView">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>-->
+                                                        class="btn btn-primary btn-sm btnView">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>-->
                                                 <a title="Ver o Imprimir" target="_BLANK"
                                                     href="{{ route('remisiones_print') }}?token={{ $value->id }}"
                                                     class="btn btn-primary btn-sm btnPrint">
@@ -157,8 +153,8 @@
                                                     data-id="{{ $value->id }}" class="btn btn-success btn-sm btnEmail">
                                                     <i class="fa fa-envelope"></i>
                                                 </a>
-                                                <a title="Firma" href="javascript:void(0);"
-                                                    data-id="{{ $value->id }}" class="btn btn-primary btn-sm btnFirma">
+                                                <a title="Firma" href="javascript:void(0);" data-id="{{ $value->id }}"
+                                                    class="btn btn-primary btn-sm btnFirma">
                                                     <i class="fas fa-eye-dropper"></i>
                                                 </a>
                                                 <a title="Eliminar" href="javascript:void(0);"
@@ -382,7 +378,8 @@
                     <div class="modal-body">
                         <input type="hidden" disabled readonly id="id_remision_firma">
                         <div class="d-flex" style="justify-content: center">
-                            <canvas id='thecanvas' width='465' height='220' style='touch-action:none;border:1px solid #cccccc;'></canvas>
+                            <canvas id='thecanvas' width='465' height='220'
+                                style='touch-action:none;border:1px solid #cccccc;'></canvas>
                         </div>
                         <br>
                         <div class="row">
@@ -392,8 +389,16 @@
                         </div>
                         <br>
                         <br>
+                        <div class="row">
+                            <div class="col-lg d-flex" style="justify-content: center">
+                                <label class="ckbox"><input type="checkbox"><span>Acepto <b>términos y condiciones</b> para el tratamiento de datos</span></label>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
                         <div class="text-center">
-                            <button class="btn ripple btn-primary" id="btn_save_frima" type="button">Firmar Cotización</button>
+                            <button class="btn ripple btn-primary" id="btn_save_frima" type="button">Firmar
+                                Remisión</button>
                         </div>
                     </div>
                 </div>

@@ -251,7 +251,17 @@
             @endfor
 
             <br>
-
+        
+            <div style="width: 100%; position: absolute; margin-top: 55px;">
+                <div style="width: 300px">
+                    <hr>
+                    <p style="font-size: 16px; margin-top: 0px;">
+                        <b>Teléfono: </b><br>
+                        <b>Nombre: </b><br>
+                        <b>C.C: <br></b>
+                    </p>
+                </div>
+            </div>
             <table cellpadding="0" width="500px"
                 style="border-collapse: collapse; font-size: 14.4px; bottom: 77; position: fixed;">
                 <tr>

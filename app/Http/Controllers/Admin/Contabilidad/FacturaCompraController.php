@@ -19,6 +19,13 @@ class FacturaCompraController extends Controller
                 return redirect()->route('home');
             }
 
+            $last_factura = DB::table('factura_compra')
+                ->select('numero')
+                ->orderBy('id', 'desc')
+                ->first();
+
+            $num_factura = $last_factura->numero + 1;
+
             $productos = DB::table('productos')
                 ->select('id', 'nombre', 'marca', 'modelo')
                 ->where('status', 1)
@@ -55,7 +62,7 @@ class FacturaCompraController extends Controller
                 ->orderBy('factura_compra.id', 'desc')
                 ->get();
 
-            return view('admin.contabilidad.factura_compra', compact('productos', 'formas_pago', 'centros_costos', 'proveedores', 'cuentas_gastos', 'facturas'));
+            return view('admin.contabilidad.factura_compra', compact('productos', 'formas_pago', 'centros_costos', 'proveedores', 'cuentas_gastos', 'facturas', 'num_factura'));
         } catch (Exception $ex) {
             return view('errors.500');
         }

@@ -24,9 +24,20 @@ class UsersACLRepository implements ACLRepository
      */
     public function getRules(): array
     {
-        if (Auth::id() === 6 || Auth::id() === 43) {
+        if (Auth::id() === 6 || Auth::id() === 43 || Auth::id() === 32) {
             return [
                 ['disk' => 'public', 'path' => '*', 'access' => 2],
+            ];
+        }
+
+        if (Auth::id() === 9) {
+            return [
+                ['disk' => 'public', 'path' => '/', 'access' => 1], // main folder - read
+                ['disk' => 'public', 'path' => '', 'access' => 1], // only read
+                ['disk' => 'public', 'path' => Auth::user()->nombre, 'access' => 1], // only read
+                ['disk' => 'public', 'path' => Auth::user()->nombre . '/*', 'access' => 2], // read and write
+                ['disk' => 'public', 'path' => 'Vehículos', 'access' => 1], // main folder - read
+                ['disk' => 'public', 'path' => 'Vehículos/*', 'access' => 2], // read and write
             ];
         }
 
