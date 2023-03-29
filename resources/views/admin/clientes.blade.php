@@ -342,7 +342,7 @@
                                             </div>
 
                                             <div class="tab-pane fade show p-3" id="three_detail">
-                                                @if (auth()->user()->hasPermissionTo('anexos_clientes'))
+                                                @if (auth()->user()->hasPermissionTo('gestionar_clientes'))
                                                     <div class="d-flex justify-content-end">
                                                         <button class="btn ripple btn-primary" data-bs-target="#modalAdd"
                                                             data-bs-toggle="modal" data-bs-effect="effect-scale"

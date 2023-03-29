@@ -80,7 +80,13 @@ class RemisionController extends Controller
     {
         try {
             DB::beginTransaction();
-            $code = DB::table('remisiones')->max('code') + 1;
+            $code = DB::table('remisiones')->select('code')->orderBy('id', 'desc')->first();
+
+            if (isset($code)) {
+                $code = $code->code + 1;
+            } else {
+                $code = 1;
+            }
 
             $remision = DB::table('remisiones')
                 ->insertGetId([
