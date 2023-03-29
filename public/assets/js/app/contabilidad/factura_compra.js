@@ -361,7 +361,7 @@ $(document).ready(function () {
                             '<tr>' +
                             '<td class="tx-right tx-uppercase tx-bold tx-inverse">Total a Pagar</td>' +
                             '<td class="tx-right" colspan="3">' +
-                            '<h4 class="tx-primary tx-bold" id="pagar_view">' + total.toLocaleString('en-US', { minimumFractionDigits: 2 }) + '</h4>' +
+                            '<h4 class="tx-primary tx-bold" id="pagar_view">' + total + '</h4>' +
                             '</td>' +
                             '</tr>'
                         );
@@ -397,8 +397,8 @@ $(document).ready(function () {
 
         let total = (cantidad * valor) - descuento;
 
-        total = total + (total * impuesto_cargo / 100);
-        total = total + (total * impuesto_retencion / 100);
+        total = total + (total * (impuesto_cargo / 100));
+        total = parseInt(total - (total * (impuesto_retencion / 100)));
 
         $(this).parent().parent().find(".total_add").val(total + "00").trigger("keyup");
 
@@ -424,8 +424,8 @@ $(document).ready(function () {
 
         let total = (cantidad * valor) - descuento;
 
-        total = total + (total * impuesto_cargo / 100);
-        total = total + (total * impuesto_retencion / 100);
+        total = total + (total * (impuesto_cargo / 100));
+        total = parseInt(total - (total * (impuesto_retencion / 100)));
 
         $(this).parent().parent().find(".total_add").val(total + "00").trigger("keyup");
 
@@ -451,8 +451,8 @@ $(document).ready(function () {
 
         let total = (cantidad * valor) - descuento;
 
-        total = total + (total * impuesto_cargo / 100);
-        total = total + (total * impuesto_retencion / 100);
+        total = total + (total * (impuesto_cargo / 100));
+        total = parseInt(total - (total * (impuesto_retencion / 100)));
 
         $(this).parent().parent().find(".total_add").val(total + "00").trigger("keyup");
 
@@ -478,8 +478,8 @@ $(document).ready(function () {
 
         let total = (cantidad * valor) - descuento;
 
-        total = total + (total * impuesto_cargo / 100);
-        total = total + (total * impuesto_retencion / 100);
+        total = total + (total * (impuesto_cargo / 100));
+        total = parseInt(total - (total * (impuesto_retencion / 100)));
 
         $(this).parent().parent().find(".total_add").val(total + "00").trigger("keyup");
 
@@ -488,7 +488,7 @@ $(document).ready(function () {
 
     $(document).on("change", ".retencion_add", function () {
         let impuesto_cargo = $(this).parent().parent().find(".cargo_add :selected").data("impuesto") ?? 0;
-        let impuesto_retencion = $(this).find(":selected").data("impuesto") ?? 0;
+        let impuesto_retencion = $(this).val() ?? 0;
         let valor = $(this).parent().parent().find(".valor_add").val();
         let cantidad = $(this).parent().parent().find(".cantidad_add").val();
         let descuento = $(this).parent().parent().find(".descuento_add").val();
@@ -505,8 +505,12 @@ $(document).ready(function () {
 
         let total = (cantidad * valor) - descuento;
 
-        total = total + (total * impuesto_cargo / 100);
-        total = total + (total * impuesto_retencion / 100);
+        total = total + (total * (impuesto_cargo / 100));
+        total = parseInt(total - (total * (impuesto_retencion / 100)));
+
+        //console.log(total);
+        //console.log(impuesto_retencion);
+        //console.log(cantidad);
 
         $(this).parent().parent().find(".total_add").val(total + "00").trigger("keyup");
 
@@ -594,8 +598,8 @@ $(document).ready(function () {
             let cantidad = $(this).parent().parent().find(".cantidad_add").val();
             let valor_unitario = $(this).parent().parent().find(".valor_add").val();
             let descuento = $(this).parent().parent().find(".descuento_add").val();
-            let impuesto_cargo = $(this).parent().parent().find(".cargo_add").val();
-            let impuesto_retencion = $(this).parent().parent().find(".retencion_add").val();
+            let impuesto_cargo = $(this).parent().parent().find(".cargo_add :selected").data("impuesto") ?? 0;
+            let impuesto_retencion = $(this).parent().parent().find(".retencion_add :selected").data("impuesto") ?? 0;
             let total = $(this).parent().parent().find(".total_add").val();
 
             if (!producto || !tipo) {
@@ -607,8 +611,8 @@ $(document).ready(function () {
             }
 
             productos.push({
-                producto: producto,
                 tipo: tipo,
+                producto: producto,
                 descripcion: descripcion,
                 bodega: bodega,
                 cantidad: cantidad,
@@ -639,14 +643,43 @@ $(document).ready(function () {
             toastr.error('Debe ingresar al menos un producto');
             return false;
         } else if (valid) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Debe llenar todos los campos de los productos',
-            });
+            toastr.error('Debe ingresar todos los datos de los productos');
             return false;
         } else {
+            $("#btnAddFactura").attr("disabled", true);
+            $("#btnAddFactura").html('<i class="fa fa-spinner fa-spin"></i> Guardando...');
 
+            $.ajax({
+                url: "add_factura_compra",
+                type: "POST",
+                data: {
+                    tipo: tipo,
+                    centro: centro,
+                    fecha: fecha,
+                    proveedor: proveedor,
+                    factura_proveedor: factura_proveedor,
+                    consecutivo_proveedor: consecutivo_proveedor,
+                    total: total,
+                    productos: productos
+                },
+                success: function (response) {
+                    if(response.info == 1) {
+                        toastr.success('Factura guardada con éxito');
+                        setTimeout(function () {
+                            location.reload();
+                        }, 1000);
+                    } else {
+                        toastr.error('Ha ocurrido un error');
+                        $("#btnAddFactura").attr("disabled", false);
+                        $("#btnAddFactura").html('Guardar Factura');
+                    }
+                },
+                error: function (error) {
+                    toastr.error('Ha ocurrido un error');
+                    $("#btnAddFactura").attr("disabled", false);
+                    $("#btnAddFactura").html('Guardar Factura');
+                }
+            });
         }
     });
 });

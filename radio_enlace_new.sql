@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-03-2023 a las 22:04:58
+-- Tiempo de generación: 29-03-2023 a las 22:43:45
 -- Versión del servidor: 10.4.27-MariaDB
--- Versión de PHP: 8.1.12
+-- Versión de PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -922,6 +922,13 @@ CREATE TABLE `asignaciones` (
   `codigo` varchar(100) DEFAULT NULL,
   `revision` int(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `asignaciones`
+--
+
+INSERT INTO `asignaciones` (`id`, `id_empleado`, `id_cliente`, `descripcion`, `asignacion`, `fecha`, `fecha_culminacion`, `status`, `created_by`, `fecha_completada`, `visto_bueno`, `devuelta`, `codigo`, `revision`) VALUES
+(887, 1, 11, 'Ver la asdjaskdjnf', 'Revisar la casa', '2023-03-22 10:41:00', '2023-03-23 10:42:00', 0, 1, NULL, 0, 0, 'RE1663935591', 0);
 
 -- --------------------------------------------------------
 
@@ -4881,7 +4888,7 @@ INSERT INTO `configuracion_puc` (`id`, `code`, `code_child`, `nombre`, `parent_i
 (3217, 94, NULL, 'Responsabilidades contingentes por contra (DB)', 9, 0, 0, 0, 1, '2023-02-21 09:48:12'),
 (3218, 95, NULL, 'Acreedoras fiscales por contra (DB)', 9, 0, 0, 0, 1, '2023-02-21 09:48:12'),
 (3219, 96, NULL, 'Acreedoras de control por contra (DB)', 9, 0, 0, 0, 1, '2023-02-21 09:48:13'),
-(3240, 11050512, 12, 'aaa', 1, 1, 0, 1, 1, '2023-03-03 12:04:41');
+(3240, 11050512, 12, 'Servicios públicos - Teléfono', 1, 1, 0, 1, 1, '2023-03-03 12:04:41');
 
 -- --------------------------------------------------------
 
@@ -4936,7 +4943,8 @@ CREATE TABLE `cotizaciones` (
 
 INSERT INTO `cotizaciones` (`id`, `code`, `cliente_id`, `descripcion`, `incluye`, `validez`, `duracion`, `forma_pago`, `tiempo_entrega`, `descuento`, `garantia`, `envio`, `status`, `aprobado`, `fecha_revision`, `created_by`, `created_at`) VALUES
 (30, 1, 11, NULL, NULL, '8 días', NULL, 'Crédito', NULL, NULL, NULL, NULL, 0, 0, NULL, 1, '2023-03-09 11:53:11'),
-(31, 2, 11, NULL, NULL, '8 días', NULL, 'Crédito', NULL, NULL, NULL, NULL, 1, 0, NULL, 1, '2023-03-09 12:15:13');
+(31, 2, 11, NULL, NULL, '8 días', NULL, 'Crédito', NULL, NULL, NULL, NULL, 1, 0, NULL, 1, '2023-03-09 12:15:13'),
+(32, 3, 11, 'asd', 'asd', 'asd', 'asd', 'asd', 'asd', NULL, NULL, NULL, 0, 0, NULL, 6, '2023-03-27 09:43:33');
 
 -- --------------------------------------------------------
 
@@ -5174,7 +5182,39 @@ INSERT INTO `detalle_cotizaciones` (`id`, `titulo`, `producto_id`, `cotizacion_i
 (143, 'Venta', NULL, 30, NULL, NULL, NULL, NULL, '0', '0', 0, 0, NULL, 1, '2023-03-09 12:24:57'),
 (144, NULL, 1, 30, 1, 5, 1, '50000', '19', '0', 1, 0, NULL, 1, '2023-03-09 12:24:57'),
 (145, 'Alquiler', NULL, 30, NULL, NULL, NULL, NULL, '0', '0', 0, 0, NULL, 1, '2023-03-09 12:24:57'),
-(146, NULL, 3, 30, 1, 4, 3, '40000', '19', '0', 0, 0, NULL, 1, '2023-03-09 12:24:57');
+(146, NULL, 3, 30, 1, 4, 3, '40000', '19', '0', 0, 0, NULL, 1, '2023-03-09 12:24:57'),
+(147, NULL, 1, 32, 1, 1, 1, '111', '1', '1', 1, 0, 'asdasd', 6, '2023-03-27 09:43:33');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detalle_factura_compra`
+--
+
+CREATE TABLE `detalle_factura_compra` (
+  `id` int(11) NOT NULL,
+  `factura_id` int(11) NOT NULL,
+  `tipo` int(11) NOT NULL,
+  `producto` int(11) DEFAULT NULL,
+  `cuenta` int(11) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `bodega` varchar(255) DEFAULT NULL,
+  `cantidad` varchar(255) NOT NULL,
+  `valor_unitario` varchar(255) NOT NULL,
+  `descuento` varchar(255) NOT NULL,
+  `impuesto_cargo` varchar(11) DEFAULT NULL,
+  `impuesto_retencion` varchar(11) DEFAULT NULL,
+  `valor_total` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `detalle_factura_compra`
+--
+
+INSERT INTO `detalle_factura_compra` (`id`, `factura_id`, `tipo`, `producto`, `cuenta`, `description`, `bodega`, `cantidad`, `valor_unitario`, `descuento`, `impuesto_cargo`, `impuesto_retencion`, `valor_total`) VALUES
+(1, 1, 1, 3, NULL, NULL, NULL, '1', '155.000,00', '0', '19', NULL, '155.000,00'),
+(2, 2, 1, NULL, 3240, NULL, NULL, '1', '500.498,00', '0', '19', NULL, '500.498,00'),
+(3, 4, 1, 1, NULL, NULL, NULL, '1', '50.000,00', '0', '1', NULL, '59.500,00');
 
 -- --------------------------------------------------------
 
@@ -5293,7 +5333,7 @@ CREATE TABLE `empleados` (
 
 INSERT INTO `empleados` (`id`, `codigo_empleado`, `nombre`, `cargo`, `password`, `rol`, `email`, `telefono_fijo`, `telefono_celular`, `direccion`, `fecha_ingreso`, `fecha_retiro`, `avatar`, `fecha_nacimiento`, `eps`, `caja_compensacion`, `arl`, `fondo_pension`, `periodo_vacaciones`, `observaciones`, `prestamo`, `periodo_dotacion`, `numero_licencia_conduccion`, `vencimiento_licencia_conduccion`, `multas_transito_pendiente`, `implementos_seguridad`, `riesgos_profesionales`, `culminacion_contrato`, `status`, `licencia_conduccion_moto`, `vencimiento_licencia_moto`, `puntos`) VALUES
 (1, '1001437547', 'Santiago Smith', 'Desarrollador', '$2y$10$oQC8r3bJ5L/dgQLJ1KblBehbGg1Qm/Khh9IB4Lz6HyAISliJ2K0eq', 7, 'smith@gmail.com', '6164046', '3164693321', '', '2022-02-08', '0000-00-00', '61c999645d93b18961967f7329a66a1f.png', '2022-02-02', 'Sura', 'Sura', 'Sura', 'Sura', '01/2019 a 04/2019', 'sin observaciones', 0, '01/2019 a 05/2019', '16136136136', '0000-00-00', 0, '20834302', 5, '0000-00-00', 1, '', '', 0),
-(6, '98518213', 'Oscar Sanchez', 'Tecnico', '$2y$10$ijBbJ/Yq8gC.fOtVHUTkhOzZDgB4hrtXyfgioElUgMLv8VDefN17O', 9, 'gcomercial@radioenlacesas.com', '1654654', '3116307079', 'Calle 47 # 34 - 52 Interior 202\r\nBarrio Buenos Aires', '2022-02-02', '0000-00-00', '90aa9b94eb827928359be427685ed8a7.png', '1966-09-07', 'Sura', 'Comfama', 'Sura', 'Protección', '135135', '135135', 0, '01/2019 a 05/2019', '16136136136', '2022-02-08', 0, '135135', 3, '0000-00-00', 1, '', '', 0),
+(6, '98518213', 'Oscar Sanchez', 'Tecnico', '$2y$10$oQC8r3bJ5L/dgQLJ1KblBehbGg1Qm/Khh9IB4Lz6HyAISliJ2K0eq', 9, 'gcomercial@radioenlacesas.com', '1654654', '3116307079', 'Calle 47 # 34 - 52 Interior 202\r\nBarrio Buenos Aires', '2022-02-02', '0000-00-00', '90aa9b94eb827928359be427685ed8a7.png', '1966-09-07', 'Sura', 'Comfama', 'Sura', 'Protección', '135135', '135135', 0, '01/2019 a 05/2019', '16136136136', '2022-02-08', 0, '135135', 3, '0000-00-00', 1, '', '', 0),
 (8, '43552929', 'Mónica Patricia Sánchez Durán', 'Directora Administrativa', '$2y$10$oQC8r3bJ5L/dgQLJ1KblBehbGg1Qm/Khh9IB4Lz6HyAISliJ2K0eq', 9, 'direcciong@radioenlacesas.com', '4448280', '3113112209', '', '2004-09-24', '0000-00-00', '46a75035b7febeb615e0f07cde62db8c.png', '1970-05-02', 'Sura', 'Comfama', 'Sura', 'Colpensiones', '12/03/2010 al 22/03/2010\r\n03/05/2011 al 23/05/2011\r\n04/02/2012 al 20/02/2012', 'Cuida a Gaby', 1, '12/03/2010 al 22/03/2010 03/05/2011 al 23/05/2011 04/02/2012 al 20/02/2012', '43552929', '2022-02-25', 1, '12/03/2010 al 22/03/2010 03/05/2011 al 23/05/2011 04/02/2012 al 20/02/2012', 3, '0000-00-00', 1, '', '', 0),
 (9, '1036610363', 'Sirley Tatiana Murillo Gómez', 'Coordinadora Gestión Humana', '$2y$10$oQC8r3bJ5L/dgQLJ1KblBehbGg1Qm/Khh9IB4Lz6HyAISliJ2K0eq', 9, 'recursoshumanos@radioenlacesas.com', '3884353', '3148783053', 'Carrera 69 calle 38 b sur 104 villa maría torre 5 apt 419 ', '2020-10-07', '0000-00-00', '359ee9e30ef2fa0cb98f46dc0e2b9b03.png', '1987-09-24', 'Salud Total', 'Comfama', 'Sura', 'Protección', 'Primer periodo: 7-10-2020 al  6-10-2021\r\nSegundo periodo: 7-10-2021 al 6-10-2022\r\n\r\n', '', 0, ' 11-03-2021 ', '', '0000-00-00', 0, '2-06-2021 / 16-07-2021 ', 3, '0000-00-00', 1, '', '', 0),
 (10, '1020450624', 'Deisy Johana  Villada Vélez ', 'Asistente de Gerencia', '$2y$10$oQC8r3bJ5L/dgQLJ1KblBehbGg1Qm/Khh9IB4Lz6HyAISliJ2K0eq', 9, 'asistente_direccion@radioenlacesas.com', '3053259400', '3137742487', 'Carrera 44 # 26 71', '2016-01-05', '2022-05-04', '503cffcd735b1b4f5ba672355ef185bc.png', '1992-08-29', 'Nueva EPS', 'Comfama', 'Sura', 'Porvenir', 'Primer periodo: 05/01/2016 - 04/01/2017 / Segundo periodo: 05/01/2017 - 04/01/2018 \r\nTercer periodo: 05/01/2018 - 04/01/2019  /  Cuarto periodo: 05/01/2019 - 04/01/2020 \r\nQuinto periodo: 05/01/2020 - 04/01/2021  /  Sexto periodo: 05/01/2021 - 04/01/2022\r\n', '', 1, '11-03-2021', 'LC02004704423', '2031-04-07', 0, '22-06-2021', 5, '0000-00-00', 1, '', '', 0),
@@ -5326,6 +5366,38 @@ INSERT INTO `empleados` (`id`, `codigo_empleado`, `nombre`, `cargo`, `password`,
 (39, '52959060', 'Andrea Bolivar Suarez', 'Auxiliar contable', '$2y$10$oQC8r3bJ5L/dgQLJ1KblBehbGg1Qm/Khh9IB4Lz6HyAISliJ2K0eq', 9, 'andreabolivar2507@gmail.com', '3156487594', '3214966549', 'Calle 54 # 86 A 60', '2022-06-23', '0000-00-00', '0e127ea5d07b263ef1d6d2248e960a30.png', '1983-07-25', 'Sura', 'Comfama', 'Sura', 'Porvenir', '', '', 0, '', '', '0000-00-00', 0, '', 3, '0000-00-00', 1, '', '', 0),
 (40, '1035391890', 'Juan David Sossa Tamayo', 'Conductor de grúa ', '$2y$10$oQC8r3bJ5L/dgQLJ1KblBehbGg1Qm/Khh9IB4Lz6HyAISliJ2K0eq', 9, 'juan-st97@hotmail.com', '8631828', '3137350494', 'Cisneros', '2022-07-27', '0000-00-00', '36fb3c6480fe30f160224214b9d8e77b.png', '1997-05-09', 'Nueva EPS', 'Comfama', 'Sura', 'Porvenir', '', '', 0, '', 'LCO7000173026', '2023-09-23', 1, '', 5, '0000-00-00', 1, '', '', 0),
 (41, '1020466435', 'Daniel Esteban Alzate Zapata', 'Conductor de grúa ', '$2y$10$oQC8r3bJ5L/dgQLJ1KblBehbGg1Qm/Khh9IB4Lz6HyAISliJ2K0eq', 9, 'leinad9903@gmail.com', '3207539313', '3112590677', 'Cisneros', '2022-09-19', '0000-00-00', '05bc50a59944bfb855270fe2993d139a.png', '1995-03-01', 'Savia salud', 'Comfama', 'Sura', 'Protección', '', '', 0, '', 'LCO6001816536', '2024-10-09', 0, '', 5, '0000-00-00', 1, '', '', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `factura_compra`
+--
+
+CREATE TABLE `factura_compra` (
+  `id` int(11) NOT NULL,
+  `token` text DEFAULT NULL,
+  `numero` int(11) NOT NULL,
+  `tipo` int(11) NOT NULL,
+  `centro_costo` int(11) NOT NULL,
+  `fecha_elaboracion` date NOT NULL,
+  `fecha_vencimiento` date DEFAULT NULL,
+  `proveedor_id` int(11) NOT NULL,
+  `factura_proveedor` varchar(255) NOT NULL,
+  `num_factura_proveedor` int(11) NOT NULL,
+  `valor_total` varchar(255) NOT NULL,
+  `status` int(1) NOT NULL DEFAULT 1,
+  `created_at` datetime NOT NULL,
+  `created_by` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `factura_compra`
+--
+
+INSERT INTO `factura_compra` (`id`, `token`, `numero`, `tipo`, `centro_costo`, `fecha_elaboracion`, `fecha_vencimiento`, `proveedor_id`, `factura_proveedor`, `num_factura_proveedor`, `valor_total`, `status`, `created_at`, `created_by`) VALUES
+(1, NULL, 1, 1, 1, '2023-03-23', '2023-04-22', 11, 'FC', 2342, '155,000.00', 1, '2023-03-24 16:40:45', 1),
+(2, NULL, 2, 1, 1, '2023-03-24', '2023-04-23', 9, 'FD', 2344, '500,498.00', 1, '2023-03-24 16:40:45', 1),
+(4, NULL, 3, 1, 2, '2023-03-28', '2023-04-27', 4, 'FC', 1, '59.500,00', 1, '2023-03-29 12:38:45', 1);
 
 -- --------------------------------------------------------
 
@@ -5422,9 +5494,9 @@ CREATE TABLE `inventario` (
 INSERT INTO `inventario` (`id`, `producto_id`, `codigo_interno`, `serial`, `cantidad`, `status`, `created_by`, `created_at`) VALUES
 (9, 1, NULL, '655656', 1, 0, 1, '2023-01-26 09:00:33'),
 (10, 1, NULL, '4444', 1, 1, 1, '2023-01-27 07:47:51'),
-(11, 1, NULL, '213', 1, 1, 1, '2023-01-31 08:37:09'),
+(11, 1, NULL, '213', 0, 0, 1, '2023-01-31 08:37:09'),
 (12, 1, 'asdd', '1233', 0, 0, 1, '2023-01-31 08:42:49'),
-(13, 1, '211', '231331', 9, 1, 1, '2023-02-17 14:30:12'),
+(13, 1, '211', '231331', 8, 1, 1, '2023-02-17 14:30:12'),
 (14, 2, '12', '1233', 5, 1, 1, '2023-03-01 10:01:12');
 
 -- --------------------------------------------------------
@@ -5472,7 +5544,9 @@ INSERT INTO `movimientos_inventario` (`id`, `tipo`, `inventario_id`, `almacen_id
 (23, 5, 14, 282, 3, NULL, 17, NULL, NULL, NULL, 'Producto asignado a solicitud de inventario con códigoSOL-KAMTN', 1, '2023-03-03 15:56:47'),
 (24, 5, 13, 282, 1, NULL, 17, NULL, NULL, NULL, 'Producto asignado a solicitud de inventario con códigoSOL-KAMTN', 1, '2023-03-03 15:57:05'),
 (25, 5, 14, 282, 4, NULL, 17, NULL, NULL, NULL, 'Producto asignado a solicitud de inventario con códigoSOL-KAMTN', 1, '2023-03-03 15:57:18'),
-(26, 2, 13, 283, 1, NULL, 28, NULL, NULL, NULL, 'Producto asignado a la solicitud de inventario con código: SOL-QQULM', 1, '2023-03-03 16:06:13');
+(26, 2, 13, 283, 1, NULL, 28, NULL, NULL, NULL, 'Producto asignado a la solicitud de inventario con código: SOL-QQULM', 1, '2023-03-03 16:06:13'),
+(27, 2, 13, 282, 1, NULL, 28, NULL, NULL, NULL, 'Producto asignado a la solicitud de inventario con código: SOL-QQULM', 1, '2023-03-22 08:34:01'),
+(28, 2, 11, 282, 1, NULL, 28, NULL, NULL, NULL, 'Producto asignado a la solicitud de inventario con código: SOL-QQULM', 1, '2023-03-22 08:34:01');
 
 -- --------------------------------------------------------
 
@@ -5875,94 +5949,118 @@ CREATE TABLE `permisos_new` (
   `empleado` int(11) NOT NULL,
   `modulo` varchar(255) NOT NULL,
   `administrador` int(11) NOT NULL,
-  `fecha` datetime NOT NULL
+  `fecha` datetime NOT NULL,
+  `cotizaciones` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `permisos_new`
 --
 
-INSERT INTO `permisos_new` (`id`, `empleado`, `modulo`, `administrador`, `fecha`) VALUES
-(955, 6, 'ver_asignaciones', 1, '2023-01-10 10:58:26'),
-(956, 6, 'ver_asignaciones_proyectos', 1, '2023-01-10 10:58:26'),
-(957, 6, 'ver_actividades', 1, '2023-01-10 10:58:26'),
-(958, 6, 'ver_puntos', 1, '2023-01-10 10:58:26'),
-(8749, 1, 'ver_asignaciones', 1, '2023-03-02 11:53:27'),
-(8750, 1, 'gestion_asignacion', 1, '2023-03-02 11:53:27'),
-(8751, 1, 'gestion_puntos', 1, '2023-03-02 11:53:27'),
-(8752, 1, 'ver_asignaciones_proyectos', 1, '2023-03-02 11:53:27'),
-(8753, 1, 'gestion_asignaciones_proyectos', 1, '2023-03-02 11:53:27'),
-(8754, 1, 'gestion_puntos_proyectos', 1, '2023-03-02 11:53:27'),
-(8755, 1, 'ver_clientes', 1, '2023-03-02 11:53:27'),
-(8756, 1, 'gestionar_clientes', 1, '2023-03-02 11:53:27'),
-(8757, 1, 'inactivar_clientes', 1, '2023-03-02 11:53:27'),
-(8758, 1, 'eliminar_clientes', 1, '2023-03-02 11:53:27'),
-(8759, 1, 'ver_proveedores', 1, '2023-03-02 11:53:27'),
-(8760, 1, 'gestionar_proveedores', 1, '2023-03-02 11:53:27'),
-(8761, 1, 'inactivar_proveedores', 1, '2023-03-02 11:53:27'),
-(8762, 1, 'eliminar_proveedores', 1, '2023-03-02 11:53:27'),
-(8763, 1, 'ver_empleados', 1, '2023-03-02 11:53:27'),
-(8764, 1, 'gestionar_empleados', 1, '2023-03-02 11:53:27'),
-(8765, 1, 'inactivar_empleados', 1, '2023-03-02 11:53:27'),
-(8766, 1, 'eliminar_empleados', 1, '2023-03-02 11:53:27'),
-(8767, 1, 'ver_puntos', 1, '2023-03-02 11:53:27'),
-(8768, 1, 'gestionar_puntos', 1, '2023-03-02 11:53:27'),
-(8769, 1, 'ver_vehiculos', 1, '2023-03-02 11:53:27'),
-(8770, 1, 'gestion_vehiculos', 1, '2023-03-02 11:53:27'),
-(8771, 1, 'enviar_checklist_vehiculos', 1, '2023-03-02 11:53:27'),
-(8772, 1, 'gestion_checklist_vehiculos', 1, '2023-03-02 11:53:27'),
-(8773, 1, 'gestion_salud_vehiculos', 1, '2023-03-02 11:53:27'),
-(8774, 1, 'gestion_categorias_inventario', 1, '2023-03-02 11:53:27'),
-(8775, 1, 'gestion_almacenes_inventario', 1, '2023-03-02 11:53:27'),
-(8776, 1, 'gestion_productos_inventario', 1, '2023-03-02 11:53:27'),
-(8777, 1, 'gestion_inventario', 1, '2023-03-02 11:53:27'),
-(8778, 1, 'ver_movimientos_inventario', 1, '2023-03-02 11:53:27'),
-(8779, 1, 'solicitud_elementos', 1, '2023-03-02 11:53:27'),
-(8780, 1, 'gestion_solicitudes', 1, '2023-03-02 11:53:27'),
-(8781, 1, 'gesion_categorias_proyectos', 1, '2023-03-02 11:53:27'),
-(8782, 1, 'gestion_proyectos', 1, '2023-03-02 11:53:27'),
-(8783, 1, 'gestion_actas_proyectos', 1, '2023-03-02 11:53:27'),
-(8784, 1, 'firma_cliente_proyectos', 1, '2023-03-02 11:53:27'),
-(8785, 1, 'visto_bueno_proyectos', 1, '2023-03-02 11:53:27'),
-(8786, 1, 'ver_reparaciones_asignadas', 1, '2023-03-02 11:53:27'),
-(8787, 1, 'gestion_reparaciones', 1, '2023-03-02 11:53:27'),
-(8788, 1, 'generar_informes_reparaciones', 1, '2023-03-02 11:53:27'),
-(8789, 1, 'gestion_documentos', 1, '2023-03-02 11:53:27'),
-(8790, 1, 'gestion_orden_compra', 1, '2023-03-02 11:53:27'),
-(8791, 1, 'completar_orden_compra', 1, '2023-03-02 11:53:27'),
-(8792, 1, 'enviar_orden_compra', 1, '2023-03-02 11:53:27'),
-(8793, 1, 'eliminar_orden_compra', 1, '2023-03-02 11:53:27'),
-(8794, 1, 'gestionar_cotizaciones', 1, '2023-03-02 11:53:27'),
-(8795, 1, 'completar_cotizaciones', 1, '2023-03-02 11:53:27'),
-(8796, 1, 'enviar_cotizaciones', 1, '2023-03-02 11:53:27'),
-(8797, 1, 'eliminar_cotizaciones', 1, '2023-03-02 11:53:27'),
-(8798, 1, 'gestionar_remisiones', 1, '2023-03-02 11:53:27'),
-(8799, 1, 'completar_remisiones', 1, '2023-03-02 11:53:27'),
-(8800, 1, 'enviar_remisiones', 1, '2023-03-02 11:53:27'),
-(8801, 1, 'eliminar_remisiones', 1, '2023-03-02 11:53:27'),
-(8802, 1, 'gestionar_precios_proveedores', 1, '2023-03-02 11:53:27'),
-(8803, 1, 'completar_precios_proveedores', 1, '2023-03-02 11:53:27'),
-(8804, 1, 'enviar_precios_proveedores', 1, '2023-03-02 11:53:27'),
-(8805, 1, 'eliminar_precios_proveedores', 1, '2023-03-02 11:53:27'),
-(8806, 1, 'ver_prospectos_personas', 1, '2023-03-02 11:53:27'),
-(8807, 1, 'gestionar_prospectos_personas', 1, '2023-03-02 11:53:27'),
-(8808, 1, 'importar_prospectos_personas', 1, '2023-03-02 11:53:27'),
-(8809, 1, 'exportar_prospectos_personas', 1, '2023-03-02 11:53:27'),
-(8810, 1, 'ver_prospectos_empresas', 1, '2023-03-02 11:53:27'),
-(8811, 1, 'gestionar_prospectos_empresas', 1, '2023-03-02 11:53:27'),
-(8812, 1, 'importar_prospectos_empresas', 1, '2023-03-02 11:53:27'),
-(8813, 1, 'exportar_prospectos_empresas', 1, '2023-03-02 11:53:27'),
-(8814, 1, 'contabilidad_config_administrativa', 1, '2023-03-02 11:53:27'),
-(8815, 1, 'contabilidad_config_general', 1, '2023-03-02 11:53:27'),
-(8816, 1, 'contabilidad_config_catalogos', 1, '2023-03-02 11:53:27'),
-(8817, 1, 'contabilidad_config_otros', 1, '2023-03-02 11:53:27'),
-(8818, 1, 'contabilidad_factura_compra', 1, '2023-03-02 11:53:27'),
-(8819, 1, 'contabilidad_factura_venta', 1, '2023-03-02 11:53:27'),
-(8820, 1, 'contabilidad_nota_credito', 1, '2023-03-02 11:53:27'),
-(8821, 1, 'contabilidad_nota_debito', 1, '2023-03-02 11:53:27'),
-(8822, 1, 'contabilidad_recibo_pago', 1, '2023-03-02 11:53:27'),
-(8823, 1, 'permisos_usuarios', 1, '2023-03-02 11:53:27'),
-(8824, 1, 'categorias_calendario', 1, '2023-03-02 11:53:27');
+INSERT INTO `permisos_new` (`id`, `empleado`, `modulo`, `administrador`, `fecha`, `cotizaciones`) VALUES
+(8749, 1, 'ver_asignaciones', 1, '2023-03-02 11:53:27', NULL),
+(8750, 1, 'gestion_asignacion', 1, '2023-03-02 11:53:27', NULL),
+(8751, 1, 'gestion_puntos', 1, '2023-03-02 11:53:27', NULL),
+(8752, 1, 'ver_asignaciones_proyectos', 1, '2023-03-02 11:53:27', NULL),
+(8753, 1, 'gestion_asignaciones_proyectos', 1, '2023-03-02 11:53:27', NULL),
+(8754, 1, 'gestion_puntos_proyectos', 1, '2023-03-02 11:53:27', NULL),
+(8755, 1, 'ver_clientes', 1, '2023-03-02 11:53:27', NULL),
+(8756, 1, 'gestionar_clientes', 1, '2023-03-02 11:53:27', NULL),
+(8757, 1, 'inactivar_clientes', 1, '2023-03-02 11:53:27', NULL),
+(8758, 1, 'eliminar_clientes', 1, '2023-03-02 11:53:27', NULL),
+(8759, 1, 'ver_proveedores', 1, '2023-03-02 11:53:27', NULL),
+(8760, 1, 'gestionar_proveedores', 1, '2023-03-02 11:53:27', NULL),
+(8761, 1, 'inactivar_proveedores', 1, '2023-03-02 11:53:27', NULL),
+(8762, 1, 'eliminar_proveedores', 1, '2023-03-02 11:53:27', NULL),
+(8763, 1, 'ver_empleados', 1, '2023-03-02 11:53:27', NULL),
+(8764, 1, 'gestionar_empleados', 1, '2023-03-02 11:53:27', NULL),
+(8765, 1, 'inactivar_empleados', 1, '2023-03-02 11:53:27', NULL),
+(8766, 1, 'eliminar_empleados', 1, '2023-03-02 11:53:27', NULL),
+(8767, 1, 'ver_puntos', 1, '2023-03-02 11:53:27', NULL),
+(8768, 1, 'gestionar_puntos', 1, '2023-03-02 11:53:27', NULL),
+(8769, 1, 'ver_vehiculos', 1, '2023-03-02 11:53:27', NULL),
+(8770, 1, 'gestion_vehiculos', 1, '2023-03-02 11:53:27', NULL),
+(8771, 1, 'enviar_checklist_vehiculos', 1, '2023-03-02 11:53:27', NULL),
+(8772, 1, 'gestion_checklist_vehiculos', 1, '2023-03-02 11:53:27', NULL),
+(8773, 1, 'gestion_salud_vehiculos', 1, '2023-03-02 11:53:27', NULL),
+(8774, 1, 'gestion_categorias_inventario', 1, '2023-03-02 11:53:27', NULL),
+(8775, 1, 'gestion_almacenes_inventario', 1, '2023-03-02 11:53:27', NULL),
+(8776, 1, 'gestion_productos_inventario', 1, '2023-03-02 11:53:27', NULL),
+(8777, 1, 'gestion_inventario', 1, '2023-03-02 11:53:27', NULL),
+(8778, 1, 'ver_movimientos_inventario', 1, '2023-03-02 11:53:27', NULL),
+(8779, 1, 'solicitud_elementos', 1, '2023-03-02 11:53:27', NULL),
+(8780, 1, 'gestion_solicitudes', 1, '2023-03-02 11:53:27', NULL),
+(8781, 1, 'gesion_categorias_proyectos', 1, '2023-03-02 11:53:27', NULL),
+(8782, 1, 'gestion_proyectos', 1, '2023-03-02 11:53:27', NULL),
+(8783, 1, 'gestion_actas_proyectos', 1, '2023-03-02 11:53:27', NULL),
+(8784, 1, 'firma_cliente_proyectos', 1, '2023-03-02 11:53:27', NULL),
+(8785, 1, 'visto_bueno_proyectos', 1, '2023-03-02 11:53:27', NULL),
+(8786, 1, 'ver_reparaciones_asignadas', 1, '2023-03-02 11:53:27', NULL),
+(8787, 1, 'gestion_reparaciones', 1, '2023-03-02 11:53:27', NULL),
+(8788, 1, 'generar_informes_reparaciones', 1, '2023-03-02 11:53:27', NULL),
+(8789, 1, 'gestion_documentos', 1, '2023-03-02 11:53:27', NULL),
+(8790, 1, 'gestion_orden_compra', 1, '2023-03-02 11:53:27', NULL),
+(8791, 1, 'completar_orden_compra', 1, '2023-03-02 11:53:27', NULL),
+(8792, 1, 'enviar_orden_compra', 1, '2023-03-02 11:53:27', NULL),
+(8793, 1, 'eliminar_orden_compra', 1, '2023-03-02 11:53:27', NULL),
+(8794, 1, 'gestionar_cotizaciones', 1, '2023-03-02 11:53:27', '[\"6\",\"1\"]'),
+(8795, 1, 'completar_cotizaciones', 1, '2023-03-02 11:53:27', NULL),
+(8796, 1, 'enviar_cotizaciones', 1, '2023-03-02 11:53:27', NULL),
+(8797, 1, 'eliminar_cotizaciones', 1, '2023-03-02 11:53:27', NULL),
+(8798, 1, 'gestionar_remisiones', 1, '2023-03-02 11:53:27', NULL),
+(8799, 1, 'completar_remisiones', 1, '2023-03-02 11:53:27', NULL),
+(8800, 1, 'enviar_remisiones', 1, '2023-03-02 11:53:27', NULL),
+(8801, 1, 'eliminar_remisiones', 1, '2023-03-02 11:53:27', NULL),
+(8802, 1, 'gestionar_precios_proveedores', 1, '2023-03-02 11:53:27', NULL),
+(8803, 1, 'completar_precios_proveedores', 1, '2023-03-02 11:53:27', NULL),
+(8804, 1, 'enviar_precios_proveedores', 1, '2023-03-02 11:53:27', NULL),
+(8805, 1, 'eliminar_precios_proveedores', 1, '2023-03-02 11:53:27', NULL),
+(8806, 1, 'ver_prospectos_personas', 1, '2023-03-02 11:53:27', NULL),
+(8807, 1, 'gestionar_prospectos_personas', 1, '2023-03-02 11:53:27', NULL),
+(8808, 1, 'importar_prospectos_personas', 1, '2023-03-02 11:53:27', NULL),
+(8809, 1, 'exportar_prospectos_personas', 1, '2023-03-02 11:53:27', NULL),
+(8810, 1, 'ver_prospectos_empresas', 1, '2023-03-02 11:53:27', NULL),
+(8811, 1, 'gestionar_prospectos_empresas', 1, '2023-03-02 11:53:27', NULL),
+(8812, 1, 'importar_prospectos_empresas', 1, '2023-03-02 11:53:27', NULL),
+(8813, 1, 'exportar_prospectos_empresas', 1, '2023-03-02 11:53:27', NULL),
+(8814, 1, 'contabilidad_config_administrativa', 1, '2023-03-02 11:53:27', NULL),
+(8815, 1, 'contabilidad_config_general', 1, '2023-03-02 11:53:27', NULL),
+(8816, 1, 'contabilidad_config_catalogos', 1, '2023-03-02 11:53:27', NULL),
+(8817, 1, 'contabilidad_config_otros', 1, '2023-03-02 11:53:27', NULL),
+(8818, 1, 'contabilidad_factura_compra', 1, '2023-03-02 11:53:27', NULL),
+(8819, 1, 'contabilidad_factura_venta', 1, '2023-03-02 11:53:27', NULL),
+(8820, 1, 'contabilidad_nota_credito', 1, '2023-03-02 11:53:27', NULL),
+(8821, 1, 'contabilidad_nota_debito', 1, '2023-03-02 11:53:27', NULL),
+(8822, 1, 'contabilidad_recibo_pago', 1, '2023-03-02 11:53:27', NULL),
+(8823, 1, 'permisos_usuarios', 1, '2023-03-02 11:53:27', NULL),
+(8824, 1, 'categorias_calendario', 1, '2023-03-02 11:53:27', NULL),
+(8825, 6, 'ver_asignaciones', 1, '2023-03-27 09:42:57', NULL),
+(8826, 6, 'ver_asignaciones_proyectos', 1, '2023-03-27 09:42:57', NULL),
+(8827, 6, 'ver_puntos', 1, '2023-03-27 09:42:57', NULL),
+(8828, 6, 'gestion_orden_compra', 1, '2023-03-27 09:42:57', NULL),
+(8829, 6, 'completar_orden_compra', 1, '2023-03-27 09:42:57', NULL),
+(8830, 6, 'enviar_orden_compra', 1, '2023-03-27 09:42:57', NULL),
+(8831, 6, 'eliminar_orden_compra', 1, '2023-03-27 09:42:57', NULL),
+(8832, 6, 'gestionar_cotizaciones', 1, '2023-03-27 09:42:57', NULL),
+(8833, 6, 'completar_cotizaciones', 1, '2023-03-27 09:42:57', NULL),
+(8834, 6, 'enviar_cotizaciones', 1, '2023-03-27 09:42:57', NULL),
+(8835, 6, 'eliminar_cotizaciones', 1, '2023-03-27 09:42:57', NULL),
+(8836, 6, 'gestionar_remisiones', 1, '2023-03-27 09:42:57', NULL),
+(8837, 6, 'completar_remisiones', 1, '2023-03-27 09:42:57', NULL),
+(8838, 6, 'enviar_remisiones', 1, '2023-03-27 09:42:57', NULL),
+(8839, 6, 'eliminar_remisiones', 1, '2023-03-27 09:42:57', NULL),
+(8840, 6, 'gestionar_precios_proveedores', 1, '2023-03-27 09:42:57', NULL),
+(8841, 6, 'completar_precios_proveedores', 1, '2023-03-27 09:42:57', NULL),
+(8842, 6, 'enviar_precios_proveedores', 1, '2023-03-27 09:42:57', NULL),
+(8843, 6, 'eliminar_precios_proveedores', 1, '2023-03-27 09:42:57', NULL),
+(8844, 6, 'ver_prospectos_personas', 1, '2023-03-27 09:42:57', NULL),
+(8845, 6, 'gestionar_prospectos_personas', 1, '2023-03-27 09:42:57', NULL),
+(8846, 6, 'importar_prospectos_personas', 1, '2023-03-27 09:42:57', NULL),
+(8847, 6, 'exportar_prospectos_personas', 1, '2023-03-27 09:42:57', NULL),
+(8848, 6, 'ver_prospectos_empresas', 1, '2023-03-27 09:42:57', NULL),
+(8849, 6, 'gestionar_prospectos_empresas', 1, '2023-03-27 09:42:57', NULL),
+(8850, 6, 'importar_prospectos_empresas', 1, '2023-03-27 09:42:57', NULL),
+(8851, 6, 'exportar_prospectos_empresas', 1, '2023-03-27 09:42:57', NULL);
 
 -- --------------------------------------------------------
 
@@ -6128,8 +6226,8 @@ INSERT INTO `proveedores` (`id`, `nit`, `razon_social`, `direccion`, `telefono_f
 (6, '901192317', 'Syscom Colombia S.A.S', 'Cra. 90A No. 64C 38 Álamos Norte', '(601) 7443650', '3147209764', 'William Cárdenas', 'luis@syscomcolombia.com', '', '8d07ce149e754e0c0d7c96075b8db3e2.png', 0, '', 1, '', '', '123456'),
 (7, '890941103', 'Equielect S.A.S', 'Carrera 72 No. 30-53', '(604) 4443133', '', '', 'equielect@equielect.com.co', '', '7c101e2faed734ec911ce2ffe4290d22.png', 7, '', 1, '', '', '123456'),
 (8, '830079015', 'Meltec Comunicaciones S.A', 'CL 130A # 58A 29', '(601) 4111899 ', '3143956689', 'Alejandro Arango', 'cartera@meltec.com.co', '', 'e817c1d6da72e09bdb041b3379421e39.png', 1, '', 1, '', '', '123456'),
-(9, '800170775', 'Transmicosta S.A.S', 'CL 75 58 48', '(605) 3689050', '3157187962', 'Cecilia Danies', 'gerencia@transmicosta.com', '', '138ea9cb785d4a19b9e5d64eaffaf185.png', 1, '', 1, '', '', '123456'),
-(11, '900245554', 'Amarillo LTDA', 'Calle 8C N° 87B - 40 oficina 223', '(601)7460018 EXT 03', '(601) 7460018', 'Gloria Díaz', ' admon.amarilloltda@gmail.com', '', '9ad2a29267149e68f27582cefb4c0172.png', 5, '', 1, '', '', '123456'),
+(9, '800170775', 'Transmicosta S.A.S', 'CL 75 58 48', '(605) 3689050', '3157187962', 'Cecilia Danies', 'gerencia@transmicosta.com', '', '138ea9cb785d4a19b9e5d64eaffaf185.png', 1, '', 1, 'Bogotá', '', '123456'),
+(11, '900245554', 'Amarillo LTDA', 'Calle 8C N° 87B - 40 oficina 223', '(601)7460018 EXT 03', '(601) 7460018', 'Gloria Díaz', ' admon.amarilloltda@gmail.com', '', '9ad2a29267149e68f27582cefb4c0172.png', 5, '', 1, 'Medellín', '', '123456'),
 (12, '890913902', 'Antioqueña de Automotores y Repuestos S.A.S  ANDAR', 'CARRERA 77 N° 28 - 13 BELEN', '(604) 4440800', '3213139234', 'Leonardo Vásquez', 'leonardo.velasquez@andar.com.co', '', '0638eaa95b618e76d814eac90f0974f6.png', 6, '', 1, '', '', '123456'),
 (13, '98490197', 'Baterías JV', 'Diagonal 44 31 41', '', '3155182035', 'Marcela', 'ventasbateriasjv@gmail.com', '', '7b552d80ddb53403e0536b78794e6915.png', 1, '', 1, '', '', '123456'),
 (14, '900413864', 'Calza Soluciones ', 'Carrera 67 A N°51-79', '(604) 4488584', '3175163310', 'Melissa', 'comercial@radioenlacesas.com', '', '829763b900cba9a5063863f49f896808.png', 4, '', 1, '', '', '123456'),
@@ -8908,7 +9006,9 @@ INSERT INTO `salida_inventario` (`id`, `tipo`, `producto_id`, `inventario_id`, `
 (21, 4, 2, 14, 3, NULL, 17, 'Producto asignado a solicitud de inventario con códigoSOL-KAMTN', 0, 1, '2023-03-03 15:56:47'),
 (22, 4, 1, 13, 1, NULL, 17, 'Producto asignado a solicitud de inventario con códigoSOL-KAMTN', 0, 1, '2023-03-03 15:57:05'),
 (23, 4, 2, 14, 4, NULL, 17, 'Producto asignado a solicitud de inventario con códigoSOL-KAMTN', 0, 1, '2023-03-03 15:57:18'),
-(24, 1, 1, 13, 1, NULL, 28, 'Producto asignado a la solicitud de inventario con código: SOL-QQULM', 0, 1, '2023-03-03 16:06:13');
+(24, 1, 1, 13, 1, NULL, 28, 'Producto asignado a la solicitud de inventario con código: SOL-QQULM', 0, 1, '2023-03-03 16:06:13'),
+(25, 1, 1, 13, 1, NULL, 28, 'Producto asignado a la solicitud de inventario con código: SOL-QQULM', 0, 1, '2023-03-22 08:34:01'),
+(26, 1, 1, 11, 1, NULL, 28, 'Producto asignado a la solicitud de inventario con código: SOL-QQULM', 0, 1, '2023-03-22 08:34:01');
 
 -- --------------------------------------------------------
 
@@ -8960,7 +9060,8 @@ CREATE TABLE `solicitud_inventario` (
 
 INSERT INTO `solicitud_inventario` (`id`, `codigo`, `tipo`, `solicitante_id`, `aprobador_id`, `cliente_id`, `descripcion`, `estado`, `created_at`) VALUES
 (7, 'SOL-KAMTN', 4, 1, NULL, 17, 'Mirar el cliente', 1, '2023-02-03 15:07:31'),
-(8, 'SOL-QQULM', 1, 1, NULL, 28, 'asdasds', 0, '2023-03-01 07:39:31');
+(8, 'SOL-QQULM', 1, 1, NULL, 28, 'asdasds', 1, '2023-03-01 07:39:31'),
+(10, 'SOL-YMPKS', 1, 1, NULL, 16, 'ppp', 0, '2023-03-22 08:38:39');
 
 -- --------------------------------------------------------
 
@@ -8986,7 +9087,9 @@ INSERT INTO `solicitud_inventario_detalle` (`id`, `solicitud_id`, `elemento`, `c
 (25, 7, 'Cables 3B', '1', 1, '2023-03-03 14:35:57'),
 (26, 7, 'Tornillos', '4', 1, '2023-03-03 14:35:57'),
 (28, 8, 'asdasdsad', '1', 1, '2023-03-03 14:36:41'),
-(29, 8, 'dddd', '2', 0, '2023-03-03 14:36:41');
+(29, 8, 'dddd', '2', 1, '2023-03-03 14:36:41'),
+(30, 10, 'ppp', '3', 0, '2023-03-22 08:38:39'),
+(31, 10, 'lll', '2', 0, '2023-03-22 08:38:39');
 
 -- --------------------------------------------------------
 
@@ -9054,10 +9157,11 @@ CREATE TABLE `subcategorias_productos` (
 --
 
 INSERT INTO `subcategorias_productos` (`id`, `nombre`, `categoria`, `created_by`, `fecha`) VALUES
-(9, 'PORTATILES', 87, 1, '2023-01-12'),
-(10, 'BASES', 87, 1, '2023-01-12'),
-(13, 'REPETIDORAS', 88, 1, '2023-01-12'),
-(14, 'OTROS', 87, 1, '2023-01-12');
+(9, 'PORTATILESSa', 87, 1, '2023-01-12'),
+(13, 'REPETIDORASAsss', 88, 1, '2023-01-12'),
+(14, 'OTROSss', 87, 1, '2023-01-12'),
+(15, 'ddddd', 87, 1, '2023-03-21'),
+(16, 'sdd', 88, 1, '2023-03-21');
 
 -- --------------------------------------------------------
 
@@ -9375,6 +9479,12 @@ ALTER TABLE `detalle_cotizaciones`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `detalle_factura_compra`
+--
+ALTER TABLE `detalle_factura_compra`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `detalle_ordenes`
 --
 ALTER TABLE `detalle_ordenes`
@@ -9396,6 +9506,12 @@ ALTER TABLE `detelle_remisiones`
 -- Indices de la tabla `empleados`
 --
 ALTER TABLE `empleados`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `factura_compra`
+--
+ALTER TABLE `factura_compra`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -9674,7 +9790,7 @@ ALTER TABLE `anexos_viaticos`
 -- AUTO_INCREMENT de la tabla `asignaciones`
 --
 ALTER TABLE `asignaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=886;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=888;
 
 --
 -- AUTO_INCREMENT de la tabla `avances_asignaciones`
@@ -9752,7 +9868,7 @@ ALTER TABLE `contador`
 -- AUTO_INCREMENT de la tabla `cotizaciones`
 --
 ALTER TABLE `cotizaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT de la tabla `datos_facturacion`
@@ -9782,7 +9898,13 @@ ALTER TABLE `departamentos`
 -- AUTO_INCREMENT de la tabla `detalle_cotizaciones`
 --
 ALTER TABLE `detalle_cotizaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
+
+--
+-- AUTO_INCREMENT de la tabla `detalle_factura_compra`
+--
+ALTER TABLE `detalle_factura_compra`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_ordenes`
@@ -9807,6 +9929,12 @@ ALTER TABLE `detelle_remisiones`
 --
 ALTER TABLE `empleados`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+
+--
+-- AUTO_INCREMENT de la tabla `factura_compra`
+--
+ALTER TABLE `factura_compra`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `formas_pago`
@@ -9836,7 +9964,7 @@ ALTER TABLE `inventario`
 -- AUTO_INCREMENT de la tabla `movimientos_inventario`
 --
 ALTER TABLE `movimientos_inventario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de la tabla `nomina`
@@ -9878,7 +10006,7 @@ ALTER TABLE `paises`
 -- AUTO_INCREMENT de la tabla `permisos_new`
 --
 ALTER TABLE `permisos_new`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8825;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8852;
 
 --
 -- AUTO_INCREMENT de la tabla `precio_proveedores`
@@ -9950,7 +10078,7 @@ ALTER TABLE `revisor_fiscal`
 -- AUTO_INCREMENT de la tabla `salida_inventario`
 --
 ALTER TABLE `salida_inventario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `salud`
@@ -9962,13 +10090,13 @@ ALTER TABLE `salud`
 -- AUTO_INCREMENT de la tabla `solicitud_inventario`
 --
 ALTER TABLE `solicitud_inventario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `solicitud_inventario_detalle`
 --
 ALTER TABLE `solicitud_inventario_detalle`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT de la tabla `statuses`
@@ -9986,13 +10114,13 @@ ALTER TABLE `status_proyecto`
 -- AUTO_INCREMENT de la tabla `subcategorias_productos`
 --
 ALTER TABLE `subcategorias_productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `task_projects`
 --
 ALTER TABLE `task_projects`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT de la tabla `tipos_documentos`

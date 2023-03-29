@@ -68,6 +68,75 @@ class FacturaCompraController extends Controller
         }
     }
 
+    public function add(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $tipo = $request->tipo;
+            $centro = $request->centro;
+            $fecha = $request->fecha;
+            $proveedor = $request->proveedor;
+            $factura_proveedor = $request->factura_proveedor;
+            $consecutivo_proveedor = $request->consecutivo_proveedor;
+            $total = $request->total;
+            $productos = $request->productos;
+
+            $factura = DB::table('factura_compra')
+                ->select('numero')
+                ->orderBy('id', 'desc')
+                ->first();
+
+            $num_factura = $factura->numero + 1;
+
+            $id = DB::table("factura_compra")->insertGetId([
+                'numero' => $num_factura,
+                'tipo' => $tipo,
+                'centro_costo' => $centro,
+                'fecha_elaboracion' => $fecha,
+                'fecha_vencimiento' => date('Y-m-d', strtotime($fecha . ' + 30 days')),
+                'proveedor_id' => $proveedor,
+                'factura_proveedor' => $factura_proveedor,
+                'num_factura_proveedor' => $consecutivo_proveedor,
+                'valor_total' => $total,
+                'created_at' => date('Y-m-d H:i:s'),
+                'created_by' => auth()->user()->id,
+            ]);
+
+            if (!$id) {
+                DB::rollBack();
+                return response()->json(['info' => 0, 'error' => 'Error al crear la factura de compra']);
+            }
+
+            foreach ($productos as $producto) {
+                $detalle = DB::table("detalle_factura_compra")->insert([
+                    'factura_id' => $id,
+                    'tipo' => $producto['tipo'],
+                    'producto' => $producto['producto'] ?? null,
+                    //'cuenta' => $producto['cuenta'] ?? null,
+                    'description' => $producto['descripcion'],
+                    'bodega' => $producto['bodega'],
+                    'cantidad' => $producto['cantidad'],
+                    'valor_unitario' => $producto['valor_unitario'],
+                    'descuento' => $producto['descuento'],
+                    'impuesto_cargo' => $producto['impuesto_cargo'],
+                    'impuesto_retencion' => $producto['impuesto_retencion'],
+                    'valor_total' => $producto['total'],
+                ]);
+
+                if (!$detalle) {
+                    DB::rollBack();
+                    return response()->json(['info' => 0, 'error' => 'Error al crear el detalle de la factura de compra']);
+                }
+            }
+
+            DB::commit();
+            return response()->json(['info' => 1, 'mensaje' => 'Factura de compra creada correctamente']);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return response()->json(['info' => 0, 'error' => $ex->getMessage()]);
+        }
+    }
+
     public function pdf(Request $request)
     {
         $id = $request->get('token');
