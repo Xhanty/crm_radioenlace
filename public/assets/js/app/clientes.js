@@ -4,6 +4,10 @@ $(document).ready(function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     });
+    
+    var protocol = window.location.protocol;
+    var host = window.location.host;
+    var url_general = protocol + "//" + host + "/";
 
     $("#div_content_cliente_edit").hide();
     $("#div_content_cliente_add").hide();
@@ -350,7 +354,7 @@ $(document).ready(function () {
                                     "</td><td>" +
                                     anexo.creador +
                                     "</td><td>" +
-                                    '<a target="_BLANK" href="https://formrad.com/radio_enlace/documentos_clientes/' +
+                                    '<a target="_BLANK" href="' + url_general + "images/clientes/" +
                                     anexo.documento +
                                     '"><i class="fa fa-download"></i>&nbsp;Descargar</a><br>' +
                                     '<a class="btn_delete_archivo" data-id="' +
@@ -533,7 +537,7 @@ $(document).ready(function () {
                             "</td><td>" +
                             anexo.creador +
                             "</td><td>" +
-                            '<a target="_BLANK" href="https://formrad.com/radio_enlace/documentos_clientes/' +
+                            '<a target="_BLANK" href="' + url_general + "images/clientes/" +
                             anexo.documento +
                             '"><i class="fa fa-download"></i>&nbsp;Descargar</a><br>' +
                             '<a class="btn_delete_archivo" data-id="' +

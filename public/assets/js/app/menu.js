@@ -484,7 +484,7 @@ $(function () {
                                 "</td><td>" +
                                 anexo.creador +
                                 "</td><td>" +
-                                '<a target="_BLANK" href="https://formrad.com/radio_enlace/documentos_clientes/' +
+                                '<a target="_BLANK" href="' + url_general + "images/clientes/" +
                                 anexo.documento +
                                 '"><i class="fa fa-download"></i>&nbsp;Descargar</a>' +
                                 data_delete +
@@ -830,7 +830,7 @@ $(function () {
                                 "</td><td>" +
                                 anexo.creador +
                                 "</td><td>" +
-                                '<a target="_BLANK" href="https://formrad.com/radio_enlace/documentos/' +
+                                '<a target="_BLANK" href="' + url_general + "images/empleados/" +
                                 anexo.documento +
                                 '"><i class="fa fa-download"></i>&nbsp;Descargar</a><br>' +
                                 '<a class="btn_delete_archivo" data-id="' +
