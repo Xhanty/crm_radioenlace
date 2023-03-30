@@ -383,4 +383,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('facturas',  [App\Http\Controllers\Admin\Siigo\FacturasController::class, 'get_facturas'])->name('facturas');
+
+    //REPORTES
+    Route::get('reporte_compras',  [App\Http\Controllers\Admin\Reportes\ComprasController::class, 'index'])->name('reporte_compras');
+    Route::get('reporte_ventas',  [App\Http\Controllers\Admin\Reportes\VentasController::class, 'index'])->name('reporte_ventas');
 });

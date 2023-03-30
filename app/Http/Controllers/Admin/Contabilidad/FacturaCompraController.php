@@ -24,7 +24,12 @@ class FacturaCompraController extends Controller
                 ->orderBy('id', 'desc')
                 ->first();
 
-            $num_factura = $last_factura->numero + 1;
+
+            if (!$last_factura) {
+                $num_factura = 1;
+            } else {
+                $num_factura = $last_factura->numero + 1;
+            }
 
             $productos = DB::table('productos')
                 ->select('id', 'nombre', 'marca', 'modelo')
@@ -64,6 +69,7 @@ class FacturaCompraController extends Controller
 
             return view('admin.contabilidad.factura_compra', compact('productos', 'formas_pago', 'centros_costos', 'proveedores', 'cuentas_gastos', 'facturas', 'num_factura'));
         } catch (Exception $ex) {
+            //return $ex->getMessage();
             return view('errors.500');
         }
     }
@@ -86,7 +92,11 @@ class FacturaCompraController extends Controller
                 ->orderBy('id', 'desc')
                 ->first();
 
-            $num_factura = $factura->numero + 1;
+            if (!$factura) {
+                $num_factura = 1;
+            } else {
+                $num_factura = $factura->numero + 1;
+            }
 
             $id = DB::table("factura_compra")->insertGetId([
                 'numero' => $num_factura,
@@ -155,14 +165,25 @@ class FacturaCompraController extends Controller
             return view('errors.404');
         }
 
-        $detalle = DB::table('detalle_factura_compra')
-            ->select('detalle_factura_compra.*', 'productos.nombre as producto', 'configuracion_puc.nombre as cuenta')
-            ->join('productos', 'productos.id', '=', 'detalle_factura_compra.producto')
-            ->join('configuracion_puc', 'configuracion_puc.id', '=', 'detalle_factura_compra.cuenta')
+        $factura->productos = DB::table('detalle_factura_compra')
             ->where('detalle_factura_compra.factura_id', $id)
             ->get();
 
-        return view('admin.contabilidad.pdf.factura_compra', compact('factura', 'detalle'));
+        foreach ($factura->productos as $key => $producto) {
+            if ($producto->producto) {
+                $producto->detalle = DB::table('productos')
+                    ->select('nombre', 'marca', 'modelo')
+                    ->where('id', $producto->producto)
+                    ->first();
+            } else {
+                $producto->detalle = DB::table('configuracion_puc')
+                    ->select('code', 'nombre')
+                    ->where('id', $producto->cuenta)
+                    ->first();
+            }
+        }
+
+        return view('admin.contabilidad.pdf.factura_compra', compact('factura'));
     }
 
     public function info(Request $request)
