@@ -145,17 +145,24 @@ class FacturaCompraController extends Controller
             return view('errors.404');
         }
 
-        $factura = [];
+        $factura = DB::table('factura_compra')
+            ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion', 'proveedores.ciudad', 'proveedores.telefono_fijo', 'proveedores.direccion')
+            ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
+            ->where('factura_compra.id', $id)
+            ->first();
 
-        /*if (!$factura) {
+        if (!$factura) {
             return view('errors.404');
-        }*/
+        }
 
-        //$pdf = PDF::loadView('admin.contabilidad.pdf.factura_compra', compact('factura'));
+        $detalle = DB::table('detalle_factura_compra')
+            ->select('detalle_factura_compra.*', 'productos.nombre as producto', 'configuracion_puc.nombre as cuenta')
+            ->join('productos', 'productos.id', '=', 'detalle_factura_compra.producto')
+            ->join('configuracion_puc', 'configuracion_puc.id', '=', 'detalle_factura_compra.cuenta')
+            ->where('detalle_factura_compra.factura_id', $id)
+            ->get();
 
-        //return $pdf->stream('Factura Compra.pdf');
-
-        return view('admin.contabilidad.pdf.factura_compra', compact('factura'));
+        return view('admin.contabilidad.pdf.factura_compra', compact('factura', 'detalle'));
     }
 
     public function info(Request $request)

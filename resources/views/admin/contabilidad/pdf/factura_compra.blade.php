@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('pdf/style.css') }}">
-    <title>Factura Compra No. 1735</title>
+    <title>Factura Compra No. {{ $factura->numero }}</title>
 </head>
 
 <body>
@@ -56,9 +56,9 @@
                     <div class="tm_invoice_info tm_mb22 tm_align_center">
                         <div class="tm_invoice_info_left tm_mb20_md" style="margin-top: 2px">
                             <p class="tm_mb0">
-                                <b class="tm_primary_color ">Factura No. </b>1743<br>
-                                <b class="tm_primary_color">Fecha Compra: </b>21/03/2023<br>
-                                <b class="tm_primary_color">Fecha Vencimiento: </b>20/04/2023
+                                <b class="tm_primary_color ">Factura No. </b>{{ $factura->numero }}<br>
+                                <b class="tm_primary_color">Fecha Compra: </b>{{ date('d/m/Y', strtotime($factura->fecha_elaboracion)) }}<br>
+                                <b class="tm_primary_color">Fecha Vencimiento: </b>{{ date('d/m/Y', strtotime($factura->fecha_vencimiento)) }}
                             </p>
                         </div>
                         <div class="tm_invoice_info_right">
@@ -66,8 +66,8 @@
                                 class="tm_border tm_accent_border_20 tm_radius_0 tm_accent_bg_10 tm_curve_35 tm_text_center">
                                 <div>
                                     <b class="tm_accent_color tm_f26 tm_medium tm_body_lineheight">Total:
-                                        $500,498.00</b>
-                                </div>
+                                        {{ $factura->valor_total }}</b>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -82,19 +82,18 @@
                                     <tbody>
                                         <tr>
                                             <td class="tm_width_6 tm_border_top_0">
-                                                <b class="tm_primary_color tm_medium">Proveedor: </b>EDATEL TIDO
+                                                <b class="tm_primary_color tm_medium">Proveedor: </b>{{ $factura->razon_social }}
                                             </td>
                                             <td class="tm_width_6 tm_border_top_0 tm_border_left tm_accent_border_20">
-                                                <b class="tm_primary_color tm_medium">Nit: </b>8904.905.065-2
+                                                <b class="tm_primary_color tm_medium">Nit: </b>{{ $factura->nit }}-{{ $factura->codigo_verificacion}}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="tm_width_6 tm_accent_border_20">
-                                                <b class="tm_primary_color tm_medium">Teléfono: </b>(034) 3846500
+                                                <b class="tm_primary_color tm_medium">Teléfono: </b>{{ $factura->telefono_fijo }}
                                             </td>
                                             <td class="tm_width_6 tm_border_left tm_accent_border_20">
-                                                <b class="tm_primary_color tm_medium">Dirección: </b>Av. Palacé 41 41,
-                                                Medellín - Colombia
+                                                <b class="tm_primary_color tm_medium">Dirección: </b>{{ $factura->direccion }}, {{ $factura->ciudad }} - Colombia
                                             </td>
                                         </tr>
                                     </tbody>
@@ -164,7 +163,7 @@
                                             </td>
                                             <td
                                                 class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_medium">
-                                                500,498.00</td>
+                                                {{ $factura->valor_total }}</td>
                                         </tr>
                                         <!--<tr>
                                             <td class="tm_width_3 tm_danger_color tm_border_none tm_pt0">Descuento (0%)
@@ -192,7 +191,7 @@
                                                 Total a Pagar</td>
                                             <td
                                                 class="tm_width_3 tm_bold tm_f16 tm_border_top_0 tm_accent_color tm_text_right tm_accent_bg_10">
-                                                500,498.00
+                                                {{ $factura->valor_total }}
                                             </td>
                                         </tr>
                                     </tbody>

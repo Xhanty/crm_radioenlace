@@ -272,21 +272,10 @@ $(document).ready(function () {
                         $("#productos_view").empty();
                         let count = 1;
                         let subtotal = 0;
-                        let total = 0;
+                        let total = factura.valor_total;
                         productos.forEach((item) => {
                             subtotal += parseInt(item.valor_unitario);
-                            total += parseInt(item.valor_total);
                             let detalle = item.detalle;
-                            if (item.impuesto_cargo == null) {
-                                item.impuesto_cargo = 0;
-                            }
-
-                            if (item.impuesto_retencion == null) {
-                                item.impuesto_retencion = 0;
-                            }
-
-                            item.valor_unitario = parseInt(item.valor_unitario).toLocaleString('en-US', { minimumFractionDigits: 2 });
-                            item.valor_total = parseInt(item.valor_total).toLocaleString('en-US', { minimumFractionDigits: 2 });
 
                             if (item.producto) {
                                 $("#productos_view").append(
@@ -298,16 +287,7 @@ $(document).ready(function () {
                                     '<td class="text-center">' +
                                     parseInt(item.cantidad) +
                                     '</td>' +
-                                    '<td class="text-center">' +
-                                    item.valor_unitario +
-                                    '</td>' +
-                                    '<td class="text-center">' +
-                                    item.impuesto_cargo + '%' +
-                                    '</td>' +
-                                    '<td class="text-center">' +
-                                    item.impuesto_retencion + '%' +
-                                    '</td>' +
-                                    '<td class="text-right">' +
+                                    '<td style="text-align: right;">' +
                                     item.valor_total +
                                     '</td>' +
                                     '</tr>'
@@ -322,16 +302,7 @@ $(document).ready(function () {
                                     '<td class="text-center">' +
                                     parseInt(item.cantidad) +
                                     '</td>' +
-                                    '<td class="text-center">' +
-                                    item.valor_unitario +
-                                    '</td>' +
-                                    '<td class="text-center">' +
-                                    item.impuesto_cargo + '%' +
-                                    '</td>' +
-                                    '<td class="text-center">' +
-                                    item.impuesto_retencion + '%' +
-                                    '</td>' +
-                                    '<td class="text-right">' +
+                                    '<td style="text-align: right;">' +
                                     item.valor_total +
                                     '</td>' +
                                     '</tr>'
@@ -342,7 +313,7 @@ $(document).ready(function () {
 
                         $("#productos_view").append(
                             '<tr>' +
-                            '<td class="valign-middle" colspan="3" rowspan="4">' +
+                            '<td class="valign-middle" colspan="2" rowspan="2">' +
                             '<div class="invoice-notes">' +
                             '<label class="main-content-label tx-13">Observaciones</label>' +
                             '<p>Este es un documento soporte en adquisiciones efectuadas a no ' +
@@ -355,12 +326,8 @@ $(document).ready(function () {
 
                         $("#productos_view").append(
                             '<tr>' +
-                            '<td class="tx-right">Total Bruto</td>' +
-                            '<td class="tx-right" colspan="3">' + subtotal.toLocaleString('en-US', { minimumFractionDigits: 2 }) + '</td>' +
-                            '</tr>' +
-                            '<tr>' +
                             '<td class="tx-right tx-uppercase tx-bold tx-inverse">Total a Pagar</td>' +
-                            '<td class="tx-right" colspan="3">' +
+                            '<td class="tx-right" colspan="2">' +
                             '<h4 class="tx-primary tx-bold" id="pagar_view">' + total + '</h4>' +
                             '</td>' +
                             '</tr>'

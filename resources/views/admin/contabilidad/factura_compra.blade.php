@@ -161,10 +161,7 @@
                                                 <th class="wd-20p">Ítem</th>
                                                 <th class="wd-40p">Descripción</th>
                                                 <th class="tx-center">Cantidad</th>
-                                                <th class="tx-center">Vr. Bruto</th>
-                                                <th class="tx-center">Impto. Cargo</th>
-                                                <th class="tx-center">Impto. Rete.</th>
-                                                <th class="tx-right">Vr. Total</th>
+                                                <th class="tx-right">Valor Total</th>
                                             </tr>
                                         </thead>
                                         <tbody id="productos_view"></tbody>
