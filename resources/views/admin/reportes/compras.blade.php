@@ -21,7 +21,7 @@
                 <div class="card">
                     <div class="card-body iconfont text-start">
                         <div class="d-flex justify-content-between">
-                            <h4 class="card-title mb-3">Facturas</h4>
+                            <h4 class="card-title mb-3">Cantidad Facturas</h4>
                             <i class="mdi mdi-dots-Vertical"></i>
                         </div>
                         <div class="d-flex mb-0">
@@ -93,6 +93,21 @@
         </div>
 
         <div class="row row-sm">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="main-content-label mg-b-5">
+                            Ventas - Compras
+                        </div>
+                        <p class="mg-b-20">Comparación entre ventas y compras.</p>
+                        <div id="index" class="ht-300"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- row closed -->
+
+        <div class="row row-sm">
             <div class="col-md-12 col-lg-12 col-xl-6 col-sm-12">
                 <div class="card">
                     <div class="card-header">
@@ -115,7 +130,7 @@
                                 </div>
                                 <div class="ms-auto my-auto">
                                     <div class="d-flex">
-                                        <span class="me-4 my-auto">35,502</span>
+                                        <span class="me-4 my-auto">35.502,00</span>
                                     </div>
                                 </div>
                             </div>
@@ -130,7 +145,7 @@
                                 </div>
                                 <div class="ms-auto my-auto">
                                     <div class="d-flex">
-                                        <span class="me-4 my-auto">12,563</span>
+                                        <span class="me-4 my-auto">12.563,00</span>
                                     </div>
                                 </div>
                             </div>
@@ -145,7 +160,7 @@
                                 </div>
                                 <div class="ms-auto my-auto">
                                     <div class="d-flex">
-                                        <span class="me-4 mt-1">25,364</span>
+                                        <span class="me-4 mt-1">25.364,00</span>
                                     </div>
                                 </div>
                             </div>
@@ -175,7 +190,7 @@
                                 </div>
                                 <div class="ms-auto my-auto">
                                     <div class="d-flex">
-                                        <span class="me-4 my-auto">35,502</span>
+                                        <span class="me-4 my-auto">35.502,00</span>
                                     </div>
                                 </div>
                             </div>
@@ -190,7 +205,7 @@
                                 </div>
                                 <div class="ms-auto my-auto">
                                     <div class="d-flex">
-                                        <span class="me-4 my-auto">12,563</span>
+                                        <span class="me-4 my-auto">12.563,00</span>
                                     </div>
                                 </div>
                             </div>
@@ -205,7 +220,7 @@
                                 </div>
                                 <div class="ms-auto my-auto">
                                     <div class="d-flex">
-                                        <span class="me-4 mt-1">25,364</span>
+                                        <span class="me-4 mt-1">25.364,00</span>
                                     </div>
                                 </div>
                             </div>
@@ -229,6 +244,7 @@
                                 class="table table-hover table-bordered mb-0 text-md-nowrap text-lg-nowrap text-xl-nowrap table-striped ">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th>Factura</th>
                                         <th>Proveedor</th>
                                         <th>Valor</th>
@@ -238,29 +254,31 @@
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        <td>1</td>
                                         <td>
                                             <div class="project-contain">
                                                 <h6 class="mb-1 tx-13"><a target="_blank"
-                                                        href="{{ route('pdf_factura_compra') }}?token=5">Angular
-                                                        Project</a></h6>
-                                            </div>
-                                        </td>
-                                        <td>Web Design</td>
-                                        <td>01 Jan 2020</td>
-                                        <td>15 March 2020</td>
-                                        <td><span class="badge bg-primary-gradient">Sin Pago</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="project-contain">
-                                                <h6 class="mb-1 tx-13"><a target="_blank"
-                                                        href="{{ route('pdf_factura_compra') }}?token=5">PHP Project</a>
+                                                        href="{{ route('pdf_factura_compra') }}?token=5">Factura No. 01</a>
                                                 </h6>
                                             </div>
                                         </td>
-                                        <td>Web Development</td>
-                                        <td>03 March 2020</td>
-                                        <td>15 Jun 2020</td>
+                                        <td>Syscom Colombia S.A.S</td>
+                                        <td>500.498,00</td>
+                                        <td>31/03/2023</td>
+                                        <td><span class="badge bg-primary-gradient">Sin Pago</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>
+                                            <div class="project-contain">
+                                                <h6 class="mb-1 tx-13"><a target="_blank"
+                                                        href="{{ route('pdf_factura_compra') }}?token=5">Factura No. 02</a>
+                                                </h6>
+                                            </div>
+                                        </td>
+                                        <td>Radiotrans Colombia S.A.S</td>
+                                        <td>223.500,00</td>
+                                        <td>30/03/2023</td>
                                         <td><span class="badge bg-success-gradient">Con Pago</span></td>
                                     </tr>
                                 </tbody>
@@ -274,5 +292,140 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('assets/plugins/echart/echart.js') }}"></script>
+    <script>
+        $(function(e) {
+            'use strict'
+            /*----BarChartEchart----*/
+            var echartBar = echarts.init(document.getElementById('index'), {
+                color: ['#285cf7', '#7987a1'],
+                categoryAxis: {
+                    axisLine: {
+                        lineStyle: {
+                            color: '#888180'
+                        }
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: ['rgba(171, 167, 167,0.2)']
+                        }
+                    }
+                },
+                grid: {
+                    x: 40,
+                    y: 20,
+                    x2: 40,
+                    y2: 20
+                },
+                valueAxis: {
+                    axisLine: {
+                        lineStyle: {
+                            color: '#888180'
+                        }
+                    },
+                    splitArea: {
+                        show: true,
+                        areaStyle: {
+                            color: ['rgba(255,255,255,0.1)']
+                        }
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: ['rgba(171, 167, 167,0.2)']
+                        }
+                    }
+                },
+            });
+            echartBar.setOption({
+                tooltip: {
+                    trigger: 'axis',
+                    position: ['35%', '32%'],
+                },
+                legend: {
+                    data: ['New Account', 'Expansion Account']
+                },
+                toolbox: {
+                    show: false
+                },
+                calculable: false,
+                xAxis: [{
+                    type: 'category',
+                    data: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
+                        'Septiembre',
+                        'Octubre', 'Noviembre', 'Diciembre'
+                    ],
+                    axisLine: {
+                        lineStyle: {
+                            color: 'rgba(171, 167, 167,0.2)'
+                        }
+                    },
+                    axisLabel: {
+                        fontSize: 10,
+                        color: '#5f6d7a'
+                    }
+                }],
+                yAxis: [{
+                    type: 'value',
+                    splitLine: {
+                        lineStyle: {
+                            color: 'rgba(171, 167, 167,0.2)'
+                        }
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: 'rgba(171, 167, 167,0.2)'
+                        }
+                    },
+                    axisLabel: {
+                        fontSize: 10,
+                        color: '#5f6d7a'
+                    }
+                }],
+                series: [{
+                    name: 'View Price',
+                    type: 'bar',
+                    data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+                    markPoint: {
+                        data: [{
+                            type: 'max',
+                            name: ''
+                        }, {
+                            type: 'min',
+                            name: ''
+                        }]
+                    },
+                    markLine: {
+                        data: [{
+                            type: 'average',
+                            name: ''
+                        }]
+                    }
+                }, {
+                    name: ' Purchased Price',
+                    type: 'bar',
+                    data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
+                    markPoint: {
+                        data: [{
+                            name: 'Purchased Price',
+                            value: 182.2,
+                            xAxis: 7,
+                            yAxis: 183,
+                        }, {
+                            name: 'Purchased Price',
+                            value: 2.3,
+                            xAxis: 11,
+                            yAxis: 3
+                        }]
+                    },
+                    markLine: {
+                        data: [{
+                            type: 'average',
+                            name: ''
+                        }]
+                    }
+                }]
+            });
+        });
+    </script>
     <script src="{{ asset('assets/js/app/reportes/compras.js') }}"></script>
 @endsection
