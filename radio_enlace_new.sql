@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-03-2023 a las 22:43:45
+-- Tiempo de generación: 31-03-2023 a las 14:29:33
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -5213,8 +5213,10 @@ CREATE TABLE `detalle_factura_compra` (
 
 INSERT INTO `detalle_factura_compra` (`id`, `factura_id`, `tipo`, `producto`, `cuenta`, `description`, `bodega`, `cantidad`, `valor_unitario`, `descuento`, `impuesto_cargo`, `impuesto_retencion`, `valor_total`) VALUES
 (1, 1, 1, 3, NULL, NULL, NULL, '1', '155.000,00', '0', '19', NULL, '155.000,00'),
-(2, 2, 1, NULL, 3240, NULL, NULL, '1', '500.498,00', '0', '19', NULL, '500.498,00'),
-(3, 4, 1, 1, NULL, NULL, NULL, '1', '50.000,00', '0', '1', NULL, '59.500,00');
+(2, 2, 2, NULL, 3240, NULL, NULL, '1', '500.498,00', '0', '19', NULL, '500.498,00'),
+(3, 4, 1, 1, NULL, NULL, NULL, '1', '50.000,00', '0', '1', NULL, '59.500,00'),
+(4, 5, 1, 1, NULL, NULL, NULL, '1', '45.000,00', '0.00', '0', '0', '45.000,00'),
+(5, 5, 1, 2, NULL, NULL, NULL, '3', '50.000,00', '0.00', '19', '0', '178.500,00');
 
 -- --------------------------------------------------------
 
@@ -5284,7 +5286,12 @@ CREATE TABLE `detelle_remisiones` (
 INSERT INTO `detelle_remisiones` (`id`, `remision_id`, `producto_id`, `cantidad`, `descripcion`) VALUES
 (9, 3, 2, 2, NULL),
 (10, 14, 1, 2, NULL),
-(11, 14, 3, 3, NULL);
+(11, 14, 3, 3, NULL),
+(12, 16, 1, 1, NULL),
+(13, 17, 1, 1, NULL),
+(14, 18, 1, 12, NULL),
+(15, 19, 1, 1, NULL),
+(16, 20, 1, 11, NULL);
 
 -- --------------------------------------------------------
 
@@ -5395,9 +5402,10 @@ CREATE TABLE `factura_compra` (
 --
 
 INSERT INTO `factura_compra` (`id`, `token`, `numero`, `tipo`, `centro_costo`, `fecha_elaboracion`, `fecha_vencimiento`, `proveedor_id`, `factura_proveedor`, `num_factura_proveedor`, `valor_total`, `status`, `created_at`, `created_by`) VALUES
-(1, NULL, 1, 1, 1, '2023-03-23', '2023-04-22', 11, 'FC', 2342, '155,000.00', 1, '2023-03-24 16:40:45', 1),
-(2, NULL, 2, 1, 1, '2023-03-24', '2023-04-23', 9, 'FD', 2344, '500,498.00', 1, '2023-03-24 16:40:45', 1),
-(4, NULL, 3, 1, 2, '2023-03-28', '2023-04-27', 4, 'FC', 1, '59.500,00', 1, '2023-03-29 12:38:45', 1);
+(1, NULL, 1, 1, 1, '2023-03-23', '2023-04-22', 11, 'FC', 2342, '155.000,00', 1, '2023-03-24 16:40:45', 1),
+(2, NULL, 2, 1, 1, '2023-03-24', '2023-04-23', 9, 'FD', 2344, '500.498,00', 1, '2023-03-24 16:40:45', 1),
+(4, NULL, 3, 1, 2, '2023-03-28', '2023-04-27', 4, 'FC', 1, '59.500,00', 1, '2023-03-29 12:38:45', 1),
+(5, NULL, 4, 1, 2, '2023-03-31', '2023-04-30', 5, 'FC', 4, '223.500,00', 1, '2023-03-30 08:54:40', 1);
 
 -- --------------------------------------------------------
 
@@ -8925,7 +8933,13 @@ INSERT INTO `remisiones` (`id`, `code`, `cliente_id`, `asunto`, `observacion`, `
 (3, '1', 44, 'VVV', NULL, NULL, NULL, NULL, NULL, 1, 1, '2023-02-17 16:19:07'),
 (7, '4', 17, 'dddd', NULL, NULL, NULL, NULL, NULL, 0, 1, '2023-02-17 16:23:02'),
 (13, '5', 11, 'D', NULL, NULL, NULL, NULL, NULL, 1, 1, '2023-02-17 16:34:11'),
-(14, '6', 11, 'Salida de radios porgramados', 'Por medio de la presente se hace entrega de dos radios programados', NULL, NULL, NULL, NULL, 0, 1, '2023-02-17 16:34:31');
+(14, '6', 11, 'Salida de radios porgramados', 'Por medio de la presente se hace entrega de dos radios programados', NULL, NULL, NULL, NULL, 0, 1, '2023-02-17 16:34:31'),
+(16, '7', 11, 'asd', 'asd', NULL, NULL, NULL, NULL, 0, 1, '2023-03-29 16:21:40'),
+(17, '8', 11, 'asd', NULL, NULL, NULL, NULL, NULL, 0, 1, '2023-03-29 16:21:48'),
+(18, '9', 14, 'asd', NULL, NULL, NULL, NULL, NULL, 0, 1, '2023-03-29 16:22:15'),
+(19, '10', 13, 'asd', NULL, NULL, NULL, NULL, NULL, 0, 1, '2023-03-29 16:22:22'),
+(20, '10', 16, 'asd', '21', NULL, NULL, NULL, NULL, 0, 1, '2023-03-29 16:22:30'),
+(21, '11', 15, '123', 'asd', NULL, NULL, NULL, NULL, 0, 1, '2023-03-29 16:26:24');
 
 -- --------------------------------------------------------
 
@@ -9904,7 +9918,7 @@ ALTER TABLE `detalle_cotizaciones`
 -- AUTO_INCREMENT de la tabla `detalle_factura_compra`
 --
 ALTER TABLE `detalle_factura_compra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_ordenes`
@@ -9922,7 +9936,7 @@ ALTER TABLE `detalle_precios`
 -- AUTO_INCREMENT de la tabla `detelle_remisiones`
 --
 ALTER TABLE `detelle_remisiones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `empleados`
@@ -9934,7 +9948,7 @@ ALTER TABLE `empleados`
 -- AUTO_INCREMENT de la tabla `factura_compra`
 --
 ALTER TABLE `factura_compra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `formas_pago`
@@ -10060,7 +10074,7 @@ ALTER TABLE `puntos`
 -- AUTO_INCREMENT de la tabla `remisiones`
 --
 ALTER TABLE `remisiones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `representante_legal`
