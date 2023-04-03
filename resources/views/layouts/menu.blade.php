@@ -479,24 +479,35 @@
                                         class="side-menu__label">Reportes</span><i
                                         class="angle fe fe-chevron-down"></i></a>
                                 <ul class="slide-menu">
-                                    @if (auth()->user()->hasPermissionToMultiple(
-                                                'contabilidad_factura_compra|contabilidad_factura_venta|contabilidad_nota_credito|contabilidad_nota_debito|contabilidad_recibo_pago'))
-                                        <li class="sub-slide">
-                                            <a class="slide-item" data-bs-toggle="sub-slide"
-                                                href="javascript:void(0);"><span
-                                                    class="sub-side-menu__label">Contabilidad</span><i
-                                                    class="sub-angle fe fe-chevron-down"></i></a>
-                                            <ul class="sub-slide-menu" style="display: none;"
-                                                id="2_1_otro_asignaciones">
-                                                <li><a class="sub-side-menu__item"
-                                                        href="{{ route('reporte_compras') }}">Compras</a>
-                                                </li>
-                                                <li><a class="sub-side-menu__item"
-                                                        href="{{ route('reporte_ventas') }}">Ventas</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    @endif
+                                    <li class="sub-slide">
+                                        <a class="slide-item" data-bs-toggle="sub-slide"
+                                            href="javascript:void(0);"><span
+                                                class="sub-side-menu__label">Contabilidad</span><i
+                                                class="sub-angle fe fe-chevron-down"></i></a>
+                                        <ul class="sub-slide-menu" style="display: none;" id="2_1_otro_asignaciones">
+                                            <li><a class="sub-side-menu__item"
+                                                    href="{{ route('reporte_compras') }}">Compras</a>
+                                            </li>
+                                            <li><a class="sub-side-menu__item"
+                                                    href="{{ route('reporte_ventas') }}">Ventas</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="sub-slide">
+                                        <a class="slide-item" data-bs-toggle="sub-slide"
+                                            href="javascript:void(0);"><span
+                                                class="sub-side-menu__label">Retenciones</span><i
+                                                class="sub-angle fe fe-chevron-down"></i></a>
+                                        <ul class="sub-slide-menu" style="display: none;" id="2_1_otro_asignaciones">
+                                            <li><a class="sub-side-menu__item"
+                                                    href="{{ route('reporte_compras') }}">Clientes</a>
+                                            </li>
+                                            <li><a class="sub-side-menu__item"
+                                                    href="{{ route('reporte_ventas') }}">Proveedores</a>
+                                            </li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </li>
                         @endif

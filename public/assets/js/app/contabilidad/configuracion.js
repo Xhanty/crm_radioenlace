@@ -2420,4 +2420,21 @@ $(document).ready(function () {
             });
         }
     });
+
+    $("#param_cuenta_select").on("change", function () {
+        let valor = $(this).val();
+        $("#param_cuenta_val").val(valor);
+
+        if (valor == 1) {
+            $("#param_cuenta_text").html("Cuentas contables (Comprobante de egreso)");
+        } else if (valor == 2) {
+            $("#param_cuenta_text").html("Cuentas contables (Factura de compra)");
+        } else if (valor == 3) {
+            $("#param_cuenta_text").html("Cuentas contables (Factura de venta)");
+        } else if (valor == 4) {
+            $("#param_cuenta_text").html("Cuentas contables (Nómina)");
+        } else if (valor == 5) {
+            $("#param_cuenta_text").html("Cuentas contables (Recibo de caja)");
+        }
+    });
 });

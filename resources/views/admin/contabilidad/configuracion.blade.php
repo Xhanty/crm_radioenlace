@@ -2,7 +2,176 @@
 
 @section('css')
     <link href="{{ asset('assets/css/app/tables_img.css') }}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/select/1.2.6/css/select.dataTables.css"/>
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/select/1.2.6/css/select.dataTables.css" />
+    <style>
+        .box a {
+            font-size: 16px;
+            color: hsl(229, 6%, 66%);
+            text-decoration: none;
+        }
+
+        .box h2 {
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: hsl(229, 31%, 21%);
+        }
+
+        .box {
+            border-radius: 5px;
+            background-color: white;
+            box-shadow: 0px 30px 40px -20px hsl(229, 6%, 66%);
+            padding: 30px;
+            margin: 20px;
+            -webkit-transition: 1s linear;
+            transition: 1s linear;
+            animation: 1s ease-in-out 0s 1 slideInFromTop;
+        }
+
+        #div_organizacion {
+            -webkit-transition: 1s linear;
+            transition: 1s linear;
+            animation: 1s ease-in-out 0s 1 slideInFromTop
+        }
+
+        #div_formas_pago {
+            -webkit-transition: 1s linear;
+            transition: 1s linear;
+            animation: 1s ease-in-out 0s 1 slideInFromTop
+        }
+
+        #div_pucs {
+            -webkit-transition: 1s linear;
+            transition: 1s linear;
+            animation: 1s ease-in-out 0s 1 slideInFromTop
+        }
+
+        #div_clientes {
+            -webkit-transition: 1s linear;
+            transition: 1s linear;
+            animation: 1s ease-in-out 0s 1 slideInFromTop
+        }
+
+        #div_proveedores {
+            -webkit-transition: 1s linear;
+            transition: 1s linear;
+            animation: 1s ease-in-out 0s 1 slideInFromTop
+        }
+
+        #div_empleados {
+            -webkit-transition: 1s linear;
+            transition: 1s linear;
+            animation: 1s ease-in-out 0s 1 slideInFromTop
+        }
+
+        #div_centros_costos {
+            -webkit-transition: 1s linear;
+            transition: 1s linear;
+            animation: 1s ease-in-out 0s 1 slideInFromTop
+        }
+
+        #div_tipos_empresas {
+            -webkit-transition: 1s linear;
+            transition: 1s linear;
+            animation: 1s ease-in-out 0s 1 slideInFromTop
+        }
+
+        #div_tipos_regimenes {
+            -webkit-transition: 1s linear;
+            transition: 1s linear;
+            animation: 1s ease-in-out 0s 1 slideInFromTop
+        }
+
+        #div_actividades_economicas {
+            -webkit-transition: 1s linear;
+            transition: 1s linear;
+            animation: 1s ease-in-out 0s 1 slideInFromTop
+        }
+
+        #div_tipos_documentos {
+            -webkit-transition: 1s linear;
+            transition: 1s linear;
+            animation: 1s ease-in-out 0s 1 slideInFromTop
+        }
+
+        #div_ciudades {
+            -webkit-transition: 1s linear;
+            transition: 1s linear;
+            animation: 1s ease-in-out 0s 1 slideInFromTop
+        }
+
+        #div_config_pucs {
+            -webkit-transition: 1s linear;
+            transition: 1s linear;
+            animation: 1s ease-in-out 0s 1 slideInFromTop
+        }
+
+        @keyframes slideInFromTop {
+            0% {
+                transform: translateY(-100%);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .box:hover {
+            box-shadow: 0px 30px 40px -20px hsl(229, 31%, 21%);
+        }
+
+        @media (max-width: 450px) {
+            .box {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 950px) and (min-width: 450px) {
+            .box {
+                text-align: center;
+                height: 180px;
+            }
+        }
+
+        .cyan {
+            border-top: 3px solid hsl(180, 62%, 55%);
+        }
+
+        .red {
+            border-top: 3px solid hsl(0, 78%, 62%);
+        }
+
+        .blue {
+            border-top: 3px solid hsl(212, 86%, 64%);
+        }
+
+        .orange {
+            border-top: 3px solid hsl(34, 97%, 64%);
+        }
+
+        @media (min-width: 950px) {
+            .row1-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .row2-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .box-down {
+                position: relative;
+                top: 150px;
+            }
+
+            .box {
+                width: 20%;
+
+            }
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -20,184 +189,16 @@
             </div>
         </div>
         <!-- /breadcrumb -->
-        <style>
-            .box a {
-                font-size: 16px;
-                color: hsl(229, 6%, 66%);
-                text-decoration: none;
-            }
-
-            .box h2 {
-                font-size: 1.45rem;
-                font-weight: 700;
-                color: hsl(229, 31%, 21%);
-            }
-
-            .box {
-                border-radius: 5px;
-                background-color: white;
-                box-shadow: 0px 30px 40px -20px hsl(229, 6%, 66%);
-                padding: 30px;
-                margin: 20px;
-                -webkit-transition: 1s linear;
-                transition: 1s linear;
-                animation: 1s ease-in-out 0s 1 slideInFromTop;
-            }
-
-            #div_organizacion {
-                -webkit-transition: 1s linear;
-                transition: 1s linear;
-                animation: 1s ease-in-out 0s 1 slideInFromTop
-            }
-
-            #div_formas_pago {
-                -webkit-transition: 1s linear;
-                transition: 1s linear;
-                animation: 1s ease-in-out 0s 1 slideInFromTop
-            }
-
-            #div_pucs {
-                -webkit-transition: 1s linear;
-                transition: 1s linear;
-                animation: 1s ease-in-out 0s 1 slideInFromTop
-            }
-
-            #div_clientes {
-                -webkit-transition: 1s linear;
-                transition: 1s linear;
-                animation: 1s ease-in-out 0s 1 slideInFromTop
-            }
-
-            #div_proveedores {
-                -webkit-transition: 1s linear;
-                transition: 1s linear;
-                animation: 1s ease-in-out 0s 1 slideInFromTop
-            }
-
-            #div_empleados {
-                -webkit-transition: 1s linear;
-                transition: 1s linear;
-                animation: 1s ease-in-out 0s 1 slideInFromTop
-            }
-
-            #div_centros_costos {
-                -webkit-transition: 1s linear;
-                transition: 1s linear;
-                animation: 1s ease-in-out 0s 1 slideInFromTop
-            }
-
-            #div_tipos_empresas {
-                -webkit-transition: 1s linear;
-                transition: 1s linear;
-                animation: 1s ease-in-out 0s 1 slideInFromTop
-            }
-
-            #div_tipos_regimenes {
-                -webkit-transition: 1s linear;
-                transition: 1s linear;
-                animation: 1s ease-in-out 0s 1 slideInFromTop
-            }
-
-            #div_actividades_economicas {
-                -webkit-transition: 1s linear;
-                transition: 1s linear;
-                animation: 1s ease-in-out 0s 1 slideInFromTop
-            }
-
-            #div_tipos_documentos {
-                -webkit-transition: 1s linear;
-                transition: 1s linear;
-                animation: 1s ease-in-out 0s 1 slideInFromTop
-            }
-
-            #div_ciudades {
-                -webkit-transition: 1s linear;
-                transition: 1s linear;
-                animation: 1s ease-in-out 0s 1 slideInFromTop
-            }
-
-            #div_config_pucs {
-                -webkit-transition: 1s linear;
-                transition: 1s linear;
-                animation: 1s ease-in-out 0s 1 slideInFromTop
-            }
-
-            @keyframes slideInFromTop {
-                0% {
-                    transform: translateY(-100%);
-                }
-
-                100% {
-                    transform: translateY(0);
-                }
-            }
-
-            .box:hover {
-                box-shadow: 0px 30px 40px -20px hsl(229, 31%, 21%);
-            }
-
-            @media (max-width: 450px) {
-                .box {
-                    height: 200px;
-                }
-            }
-
-            @media (max-width: 950px) and (min-width: 450px) {
-                .box {
-                    text-align: center;
-                    height: 180px;
-                }
-            }
-
-            .cyan {
-                border-top: 3px solid hsl(180, 62%, 55%);
-            }
-
-            .red {
-                border-top: 3px solid hsl(0, 78%, 62%);
-            }
-
-            .blue {
-                border-top: 3px solid hsl(212, 86%, 64%);
-            }
-
-            .orange {
-                border-top: 3px solid hsl(34, 97%, 64%);
-            }
-
-            @media (min-width: 950px) {
-                .row1-container {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                }
-
-                .row2-container {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                }
-
-                .box-down {
-                    position: relative;
-                    top: 150px;
-                }
-
-                .box {
-                    width: 20%;
-
-                }
-            }
-        </style>
 
         <div class="row row-sm" id="div_general">
             <div class="row1-container">
                 <div class="box box-down cyan">
-                    <h2>Otros</h2>
+                    <h2>Parametrización</h2>
                     <ul>
-                        <li><a href="javascript:void(0);" id="btnProveedoress">Opción 1</a></li>
-                        <li><a href="javascript:void(0);" id="btnClientess">Opción 2</a></li>
-                        <li><a href="javascript:void(0);" id="btnEmpleadoss">Opción 3</a></li>
+                        <li><a href="javascript:void(0);" data-bs-target="#modalCuentas" data-bs-toggle="modal"
+                                data-bs-effect="effect-scale">Cuentas Contables</a></li>
+                        <li><a href="javascript:void(0);" id="btnClientess">Opción 1</a></li>
+                        <li><a href="javascript:void(0);" id="btnEmpleadoss">Opción 2</a></li>
                     </ul>
                     <img style="float:right; width: 40px;" src="https://assets.codepen.io/2301174/icon-team-builder.svg"
                         alt="Terceros">
@@ -250,7 +251,36 @@
         @include('admin.contabilidad.configuracion.tipos_documentos')
         @include('admin.contabilidad.configuracion.tipos_empresas')
         @include('admin.contabilidad.configuracion.tipos_regimenes')
+        @include('admin.contabilidad.configuracion.parametrizacion.cuentas_contables')
 
+        <!-- Modal Seleccionar Parametrización -->
+        <div class="modal  fade" id="modalCuentas">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Parametrización de cuentas contables</h6>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Documento</label>
+                                <select class="form-select" id="param_cuenta_select">
+                                    <option value="">Seleccione un empleado</option>
+                                    <option value="1">Comprobante de egreso</option>
+                                    <option value="2">Factura de compra</option>
+                                    <option value="3">Factura de venta</option>
+                                    <option value="4">Nómina</option>
+                                    <option value="5">Recibos de caja</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
