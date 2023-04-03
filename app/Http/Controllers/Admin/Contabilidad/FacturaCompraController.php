@@ -62,7 +62,7 @@ class FacturaCompraController extends Controller
                 ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion')
                 ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
                 ->where('factura_compra.status', 1)
-                ->whereMonth('factura_compra.fecha_elaboracion', '=', date('m'))
+                //->whereMonth('factura_compra.fecha_elaboracion', '=', date('m'))
                 ->whereYear('factura_compra.fecha_elaboracion', '=', date('Y'))
                 ->orderBy('factura_compra.id', 'desc')
                 ->get();

@@ -41,6 +41,16 @@ class UsersACLRepository implements ACLRepository
             ];
         }
 
+        if (Auth::id() === 38) {
+            return [
+                ['disk' => 'public', 'path' => '/', 'access' => 1], // main folder - read
+                ['disk' => 'public', 'path' => '', 'access' => 1], // only read
+                ['disk' => 'public', 'path' => 'Sirley Tatiana Murillo Gómez', 'access' => 1], // only read
+                ['disk' => 'public', 'path' => 'Sirley Tatiana Murillo Gómez/SG-SST', 'access' => 1], // only read
+                ['disk' => 'public', 'path' => 'Sirley Tatiana Murillo Gómez/SG-SST/*', 'access' => 2], // only read
+            ];
+        }
+
         return [
             ['disk' => 'public', 'path' => '/', 'access' => 1], // main folder - read
             ['disk' => 'public', 'path' => '', 'access' => 1], // only read

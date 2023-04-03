@@ -17,7 +17,17 @@ class ComprasController extends Controller
                 return redirect()->route('home');
             }*/
 
-            return view('admin.reportes.compras');
+            $empleados = DB::table('empleados')
+                ->select('id', 'nombre')
+                ->where('status', '1')
+                ->get();
+
+            $proveedores = DB::table('proveedores')
+                ->select('id', 'razon_social', 'nit')
+                ->where('estado', '1')
+                ->get();
+
+            return view('admin.reportes.compras', compact('empleados', 'proveedores'));
         } catch (Exception $ex) {
             return view('errors.500');
         }
