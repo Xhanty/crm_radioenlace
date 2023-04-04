@@ -67,6 +67,7 @@ class CotizacionController extends Controller
                 ->whereNull('detalle_cotizaciones.titulo')
                 ->orderBy('cotizaciones.id', 'desc')
                 ->groupBy('cotizaciones.id', 'cotizaciones.code', 'cotizaciones.created_at', 'cotizaciones.descripcion', 'cotizaciones.status', 'cotizaciones.fecha_revision', 'cliente.razon_social', 'empleados.nombre')
+                ->orderBy('cotizaciones.id', 'desc')
                 ->get();
 
             $cotizaciones_aprobadas = DB::table('cotizaciones')
@@ -90,6 +91,7 @@ class CotizacionController extends Controller
                 ->whereIn('cotizaciones.created_by', $usuarios_cotizaciones)
                 ->orderBy('cotizaciones.id', 'desc')
                 ->groupBy('cotizaciones.id', 'cotizaciones.code', 'cotizaciones.created_at', 'cotizaciones.descripcion', 'cotizaciones.status', 'cotizaciones.fecha_revision', 'cotizaciones.aprobado', 'cliente.razon_social', 'empleados.nombre')
+                ->orderBy('cotizaciones.id', 'desc')
                 ->get();
 
             return view('admin.comercial.cotizaciones', compact('clientes', 'productos', 'cotizaciones_pendientes', 'cotizaciones_aprobadas'));

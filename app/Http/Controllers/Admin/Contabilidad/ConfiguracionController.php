@@ -933,4 +933,83 @@ class ConfiguracionController extends Controller
             'anexo' => $anexo,
         ]);
     }
+
+    // PARAMETRIZACION
+
+    public function get_cuentas_parametrizacion(Request $request)
+    {
+        $regimen = $request->regimen;
+        $documento = $request->documento;
+        $tipo_parametrizacion = $request->tipo_parametrizacion;
+
+        $cuentas = DB::table('parametrizacion_documentos')
+            ->select('parametrizacion_documentos.*', 'configuracion_puc.code', 'configuracion_puc.nombre', 'empleados.nombre as creador')
+            ->where('tipo_regimen', $regimen)
+            ->where('documento', $documento)
+            ->where('tipo_parametrizacion', $tipo_parametrizacion)
+            ->join('configuracion_puc', 'parametrizacion_documentos.cuenta', '=', 'configuracion_puc.id')
+            ->join('empleados', 'parametrizacion_documentos.created_by', '=', 'empleados.id')
+            ->orderBy('parametrizacion_documentos.id', 'desc')
+            ->get();
+
+        return response()->json([
+            'info' => 1,
+            'cuentas' => $cuentas,
+        ]);
+    }
+
+    public function add_cuenta_parametrizacion(Request $request)
+    {
+        try {
+            $documento = $request->documento;
+            $tipo_parametrizacion = $request->tipo_parametrizacion;
+            $tipo_regimen = $request->tipo_regimen;
+            $cuenta = $request->cuenta;
+            $naturaleza = $request->naturaleza;
+            $status = 1;
+            $created_by = auth()->user()->id;
+            $created_at = date('Y-m-d');
+
+            DB::table('parametrizacion_documentos')->insert([
+                'documento' => $documento,
+                'tipo_parametrizacion' => $tipo_parametrizacion,
+                'tipo_regimen' => $tipo_regimen,
+                'cuenta' => $cuenta,
+                'naturaleza' => $naturaleza,
+                'status' => $status,
+                'created_by' => $created_by,
+                'created_at' => $created_at,
+            ]);
+
+            return response()->json([
+                'info' => 1,
+            ]);
+        } catch (Exception $ex) {
+            echo $ex;
+            return response()->json([
+                'info' => 0,
+            ]);
+        }
+    }
+
+    public function update_status_cuenta_parametrizacion(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $status = $request->status;
+
+            DB::table('parametrizacion_documentos')->where('id', $id)->update([
+                'status' => $status,
+            ]);
+
+            return response()->json([
+                'info' => 1,
+            ]);
+        } catch (Exception $ex) {
+            echo $ex;
+            return response()->json([
+                'info' => 0,
+            ]);
+        }
+    }
 }

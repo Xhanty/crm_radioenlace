@@ -280,6 +280,10 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/delete_child_puc_cliente', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'delete_child_puc_cliente'])->name('delete_child_puc_cliente');
     Route::post('/update_config_nomina', [App\Http\Controllers\Admin\Contabilidad\NominaController::class, 'update_config_nomina'])->name('update_config_nomina');
     
+    Route::post('/add_cuenta_parametrizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_cuenta_parametrizacion'])->name('add_cuenta_parametrizacion');
+    Route::post('/get_cuentas_parametrizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'get_cuentas_parametrizacion'])->name('get_cuentas_parametrizacion');
+    Route::post('/update_status_cuenta_parametrizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'update_status_cuenta_parametrizacion'])->name('update_status_cuenta_parametrizacion');
+    
     // FACTURA COMPRA
     Route::get('/factura_compra', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'index'])->name('factura_compra');
     Route::get('/pdf_factura_compra', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'pdf'])->name('pdf_factura_compra');

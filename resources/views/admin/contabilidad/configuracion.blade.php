@@ -282,6 +282,12 @@
             </div>
         </div>
 
+        <style>
+            .select2-container--default .select2-results__option[aria-disabled=true] {
+                display: none;
+            }
+        </style>
+
         <!-- Modal Seleccionar Tipo Cuenta -->
         <div class="modal  fade" id="modalTipoCuentas">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -297,9 +303,10 @@
                                 <label for="">Tipo de parametrización</label>
                                 <select class="form-select" id="param_tipo_cuenta_select">
                                     <option value="">Seleccione un opción</option>
-                                    <option value="1">Producto</option>
-                                    <option value="2">Servicio</option>
-                                    <option value="3">Activo</option>
+                                    <option disabled data-factura="[2,3]" value="1">Producto</option>
+                                    <option disabled data-factura="[2,3]" value="2">Servicio</option>
+                                    <option disabled data-factura="[2,3]" value="3">Activo</option>
+                                    <option disabled data-factura="[2]" value="4">Gasto</option>
                                 </select>
                             </div>
                         </div>

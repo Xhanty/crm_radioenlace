@@ -115,6 +115,27 @@ $(document).ready(function () {
         $("#div_param_cuentas").addClass("d-none");
     });
 
+    $(document).on("click", ".back_to_menu_param_doc", function () {
+        $("#div_general").removeClass("d-none");
+        $("#div_param_cuentas").addClass("d-none");
+
+        $("#regimen_param_cuenta").val("").trigger("change");
+
+        $("#tbl_cuentas_param tbody").empty();
+
+        if ($.fn.DataTable.isDataTable("#tbl_cuentas_param")) {
+            $("#tbl_cuentas_param").DataTable().destroy();
+        }
+
+        $("#tbl_cuentas_param tbody").empty();
+
+        $("#tbl_cuentas_param").DataTable({
+            "responsive": true,
+            "language": language,
+            "order": [],
+        });
+    });
+
     $(".nav-link-1").click(function () {
         $(this).addClass("active");
         $(".nav-link-2").removeClass("active");
@@ -2422,22 +2443,103 @@ $(document).ready(function () {
         }
     });
 
+    function load_parametrizacion_documentos(documento, tipo_parametrizacion, regimen) {
+        $.ajax({
+            url: "get_cuentas_parametrizacion",
+            type: "POST",
+            dataType: "json",
+            data: {
+                documento: documento,
+                tipo_parametrizacion: tipo_parametrizacion,
+                regimen: regimen,
+            },
+            success: function (response) {
+                if (response.info == 1) {
+                    let cuentas = response.cuentas;
+                    let html = "";
+                    $("#tbl_cuentas_param tbody").empty();
+
+                    if ($.fn.DataTable.isDataTable("#tbl_cuentas_param")) {
+                        $("#tbl_cuentas_param").DataTable().destroy();
+                    }
+
+                    $.each(cuentas, function (key, value) {
+                        let naturaleza = value.naturaleza == 1 ? "Débito" : "Crédito";
+                        let status = value.status == 1 ? "<span class='badge badge-success bg-success'>Activo</span>" : "<span class='badge badge-danger bg-danger'>Inactivo</span>";
+
+                        html += "<tr>";
+                        html += "<td>" + value.code + " | " + value.nombre + "</td>";
+                        html += "<td>" + naturaleza + "</td>";
+                        html += "<td>" + value.created_at + "</td>";
+                        html += "<td>" + value.creador + "</td>";
+                        html += "<td>" + status + "</td>";
+                        html += "<td>";
+                        html += '<button type="button" data-id="' + value.id + '" data-status="' + value.status + '" title="Cambiar Status" class="btn btn-warning btn-sm btnStatusParamCuenta" data-id="' + value.id + '"><i class="fas fa-times"></i></button>';
+                        html += "</td>";
+                        html += "</tr>";
+                    });
+
+                    $("#tbl_cuentas_param tbody").html(html);
+                    $("#tbl_cuentas_param").DataTable({
+                        "responsive": true,
+                        "language": language,
+                        "order": [],
+                    });
+                } else {
+                    toastr.error("Error al obtener las cuentas");
+                }
+            },
+            error: function (data) {
+                toastr.error("Error al obtener las cuentas");
+                console.log(data);
+            }
+        });
+    }
+
+    $("#regimen_param_cuenta").on("change", function () {
+        let regimen = $(this).val();
+        let documento = $("#param_cuenta_val").val();
+        let tipo_parametrizacion = $("#tipo_param_cuenta_val").val();
+
+        if (regimen > 0) {
+            load_parametrizacion_documentos(documento, tipo_parametrizacion, regimen);
+        }
+    });
+
     $("#param_cuenta_select").on("change", function () {
         let valor = $(this).val();
-        $("#param_cuenta_val").val(valor);
 
-        if (valor == 1) {
-            $("#param_cuenta_text").html("Documento (Comprobante de egreso");
-        } else if (valor == 2) {
-            $("#param_cuenta_text").html("Documento (Factura de compra");
-        } else if (valor == 3) {
-            $("#param_cuenta_text").html("Documento (Factura de venta");
+        if (valor > 0) {
+            if (valor == 1) {
+                $("#param_cuenta_text").html("Documento (Comprobante de egreso");
+            } else if (valor == 2) {
+                $("#param_cuenta_text").html("Documento (Factura de compra");
+            } else if (valor == 3) {
+                $("#param_cuenta_text").html("Documento (Factura de venta");
+            } else if (valor == 4) {
+                $("#param_cuenta_text").html("Documento (Nómina");
+            } else if (valor == 5) {
+                $("#param_cuenta_text").html("Documento (Recibo de caja");
+            }
+
+            $("#param_tipo_cuenta_select").select2('destroy');
+            $("#param_tipo_cuenta_select option").prop("disabled", true);
+
+            $(".form-select").each(function () {
+                $(this).select2({
+                    dropdownParent: $(this).parent(),
+                    placeholder: "Seleccione una opción",
+                    searchInputPlaceholder: "Buscar",
+                });
+            });
+
+            $("#param_tipo_cuenta_select option[data-factura*='" + valor + "']").prop("disabled", false);
+            $("#param_tipo_cuenta_select").val("").trigger("change");
+
+            $("#param_cuenta_val").val(valor);
             $("#modalCuentas").modal("hide");
             $("#modalTipoCuentas").modal("show");
-        } else if (valor == 4) {
-            $("#param_cuenta_text").html("Documento (Nómina");
-        } else if (valor == 5) {
-            $("#param_cuenta_text").html("Documento (Recibo de caja");
+            $("#param_cuenta_select").val("").trigger("change");
         }
     });
 
@@ -2445,8 +2547,9 @@ $(document).ready(function () {
         let text = $(this).find("option:selected").text();
         let valor = $(this).val();
 
-        if(valor > 0) {
+        if (valor > 0) {
             $("#param_cuenta_text").append(" - " + text + ")");
+            $("#tipo_param_cuenta_val").val(valor);
 
             $("#div_general").addClass("d-none");
             $("#div_param_cuentas").removeClass("d-none");
@@ -2454,5 +2557,108 @@ $(document).ready(function () {
             $("#param_tipo_cuenta_select").val("").trigger("change");
             $("#modalTipoCuentas").modal("hide");
         }
+    });
+
+    $("#btnAddCuentaParam").on("click", function () {
+        let documento = $("#param_cuenta_val").val();
+        let tipo_parametrizacion = $("#tipo_param_cuenta_val").val();
+        let tipo_regimen = $("#regimen_param_cuenta").val();
+        let cuenta = $("#cuenta_param_cuenta").val();
+        let naturaleza = $("#naturaleza_param_cuenta").val();
+
+        if (tipo_regimen <= 0) {
+            toastr.error("Debe seleccionar un régimen");
+            return false;
+        } else if (cuenta <= 0) {
+            toastr.error("Debe seleccionar una cuenta");
+            return false;
+        } else if (naturaleza <= 0) {
+            toastr.error("Debe seleccionar una naturaleza");
+            return false;
+        } else {
+            $("#btnAddCuentaParam").attr("disabled", true);
+            $("#btnAddCuentaParam").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Agregando...'
+            );
+            $.ajax({
+                url: "add_cuenta_parametrizacion",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    documento: documento,
+                    tipo_parametrizacion: tipo_parametrizacion,
+                    tipo_regimen: tipo_regimen,
+                    cuenta: cuenta,
+                    naturaleza: naturaleza,
+                },
+                success: function (response) {
+                    if (response.info == 1) {
+                        load_parametrizacion_documentos(documento, tipo_parametrizacion, tipo_regimen);
+                        toastr.success("Parametrización agregada correctamente");
+                        $("#cuenta_param_cuenta").val("").trigger("change");
+                        $("#naturaleza_param_cuenta").val("").trigger("change");
+                    } else {
+                        toastr.error("Error al parametrizar el documento");
+                    }
+                    $("#btnAddCuentaParam").attr("disabled", false);
+                    $("#btnAddCuentaParam").html("Agregar Cuenta");
+                },
+                error: function (data) {
+                    $("#btnAddCuentaParam").attr("disabled", false);
+                    $("#btnAddCuentaParam").html("Agregar Cuenta");
+                    toastr.error("Error al parametrizar la cuenta");
+                    console.log(data);
+                }
+            });
+        }
+    });
+
+    $(document).on("click", ".btnStatusParamCuenta", function () {
+        let id = $(this).data("id");
+        let status = $(this).data("status");
+        let documento = $("#param_cuenta_val").val();
+        let tipo_parametrizacion = $("#tipo_param_cuenta_val").val();
+        let tipo_regimen = $("#regimen_param_cuenta").val();
+
+        if (status == 1) {
+            status = 0;
+        } else {
+            status = 1;
+        }
+
+        Swal.fire({
+            title: "¿Está seguro?",
+            text: "Está a punto de cambiar el status de la cuenta",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, cambiar",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "update_status_cuenta_parametrizacion",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        id: id,
+                        status: status,
+                    },
+                    success: function (response) {
+                        if (response.info == 1) {
+                            load_parametrizacion_documentos(documento, tipo_parametrizacion, tipo_regimen);
+                            toastr.success("Status cambiado correctamente");
+                        } else {
+                            toastr.error("Error al cambiar el status de la cuenta");
+                        }
+                    },
+                    error: function (data) {
+                        toastr.error("Error al cambiar el status de la cuenta");
+                        console.log(data);
+                    }
+                });
+            }
+        });
     });
 });

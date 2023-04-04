@@ -27,6 +27,7 @@ class OrdenCompraController extends Controller
                 ->join('detalle_ordenes', 'ordenes_compra.id', '=', 'detalle_ordenes.orden_id')
                 ->where('ordenes_compra.status', 0)
                 ->groupBy('ordenes_compra.id', 'ordenes_compra.code', 'ordenes_compra.descripcion', 'ordenes_compra.created_at', 'cliente.razon_social', 'empleados.nombre')
+                ->orderBy('ordenes_compra.id', 'desc')
                 ->get();
 
             $ordenes_completadas = DB::table('ordenes_compra')
@@ -36,6 +37,7 @@ class OrdenCompraController extends Controller
                 ->join('detalle_ordenes', 'ordenes_compra.id', '=', 'detalle_ordenes.orden_id')
                 ->where('ordenes_compra.status', 1)
                 ->groupBy('ordenes_compra.id', 'ordenes_compra.code', 'ordenes_compra.aprobado', 'ordenes_compra.descripcion', 'ordenes_compra.created_at', 'cliente.razon_social', 'empleados.nombre')
+                ->orderBy('ordenes_compra.id', 'desc')
                 ->get();
 
             $clientes = DB::table('cliente')
