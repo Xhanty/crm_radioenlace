@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-03-2023 a las 14:29:33
+-- Tiempo de generación: 04-04-2023 a las 23:16:57
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -5949,6 +5949,35 @@ INSERT INTO `paises` (`id`, `code`, `name`, `phonecode`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `parametrizacion_documentos`
+--
+
+CREATE TABLE `parametrizacion_documentos` (
+  `id` int(11) NOT NULL,
+  `documento` int(11) NOT NULL COMMENT '1=Comprobante de egreso;\r\n2=Factura de compra;\r\n3=Factura de venta;\r\n4=Nómina;\r\n5=Recibos de caja;',
+  `tipo_parametrizacion` int(11) DEFAULT NULL,
+  `tipo_regimen` int(11) NOT NULL,
+  `cuenta` int(11) NOT NULL,
+  `naturaleza` int(1) NOT NULL COMMENT '1=Débito;\r\n2=Crédito;',
+  `status` int(1) NOT NULL DEFAULT 1,
+  `created_by` int(11) NOT NULL,
+  `created_at` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `parametrizacion_documentos`
+--
+
+INSERT INTO `parametrizacion_documentos` (`id`, `documento`, `tipo_parametrizacion`, `tipo_regimen`, `cuenta`, `naturaleza`, `status`, `created_by`, `created_at`) VALUES
+(1, 3, 1, 1, 3240, 1, 1, 1, '2023-04-04'),
+(2, 3, 1, 1, 3240, 2, 1, 1, '2023-04-04'),
+(3, 3, 1, 1, 3240, 1, 1, 1, '2023-04-04'),
+(4, 3, 2, 1, 3240, 1, 1, 1, '2023-04-04'),
+(5, 3, 2, 2, 3240, 1, 1, 1, '2023-04-04');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `permisos_new`
 --
 
@@ -9599,6 +9628,12 @@ ALTER TABLE `paises`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `parametrizacion_documentos`
+--
+ALTER TABLE `parametrizacion_documentos`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `permisos_new`
 --
 ALTER TABLE `permisos_new`
@@ -10017,6 +10052,12 @@ ALTER TABLE `paises`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=247;
 
 --
+-- AUTO_INCREMENT de la tabla `parametrizacion_documentos`
+--
+ALTER TABLE `parametrizacion_documentos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT de la tabla `permisos_new`
 --
 ALTER TABLE `permisos_new`
@@ -10038,7 +10079,7 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `prospectos`
 --
 ALTER TABLE `prospectos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5805;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5806;
 
 --
 -- AUTO_INCREMENT de la tabla `prospectos_empresas`
