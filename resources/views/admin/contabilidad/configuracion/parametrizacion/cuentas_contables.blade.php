@@ -5,7 +5,7 @@
         <div class="card">
             <div class="card-header d-flex-header-table" style="border-radius: 4px; background: hsl(0, 78%, 62%)">
                 <div class="div-1-tables-header">
-                    <h3 class="card-title mt-2" id="param_cuenta_text">Cuentas contables de</h3>
+                    <h3 class="card-title mt-2" id="param_cuenta_text">Cuentas contables</h3>
                 </div>
                 <div class="div-2-tables-header">
                     <button class="btn btn-primary back_to_menu">&times;</button>
@@ -16,13 +16,17 @@
                 <div class="row row-sm">
                     <div class="col-lg mg-t-10 mg-lg-t-0">
                         <label for="">Cuenta Contable</label>
-                        <select class="form-select" id="param_cuenta_select">
+                        <select class="form-select" id="cuenta_select">
                             <option value="">Seleccione un empleado</option>
+                            @foreach ($cuentas_contables as $cuenta)
+                                <option value="{{ $cuenta->id }}">{{ $cuenta->code }} | {{ $cuenta->nombre }}
+                                </option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-lg mg-t-10 mg-lg-t-0">
                         <label for="">Naturaleza</label>
-                        <select class="form-select" id="param_cuenta_select">
+                        <select class="form-select" id="naturaleza_select">
                             <option value="">Seleccione un empleado</option>
                             <option value="1">Débito</option>
                             <option value="2">Crédito</option>
@@ -31,18 +35,17 @@
                 </div>
                 <br>
                 <div class="text-center">
-                    <button class="btn ripple btn-primary" id="btnAddCentroCosto" type="button">Agregar Centro de
-                        Costo</button>
+                    <button class="btn ripple btn-primary" id="btnAddCuentaParam" type="button">Agregar Cuenta</button>
                 </div>
                 <br>
                 <div class="table-responsive">
-                    <table id="tbl_centros_costos"
+                    <table id="tbl_cuentas_param"
                         class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
                         <thead>
                             <tr>
                                 <th>Código</th>
-                                <th style="width: 500px">Nombre</th>
-                                <th>Creador</th>
+                                <th>Nombre</th>
+                                <th>Naturaleza</th>
                                 <th>Fecha</th>
                                 <th>Status</th>
                                 <th class="text-center">Acciones</th>

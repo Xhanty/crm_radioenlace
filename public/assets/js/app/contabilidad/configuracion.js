@@ -112,6 +112,7 @@ $(document).ready(function () {
         $("#div_tipos_documentos").addClass("d-none");
         $("#div_ciudades").addClass("d-none");
         $("#div_config_pucs").addClass("d-none");
+        $("#div_param_cuentas").addClass("d-none");
     });
 
     $(".nav-link-1").click(function () {
@@ -244,7 +245,7 @@ $(document).ready(function () {
                 title: 'Código',
                 target: 1,
                 data: function (item) {
-                    if (item.auxiliar == 1) { 
+                    if (item.auxiliar == 1) {
                         return item.code;
                     } else {
                         return '<a target="_BLANK" href="https://puc.com.co/' + item.code + '">' + item.code + '</a>';
@@ -2426,15 +2427,32 @@ $(document).ready(function () {
         $("#param_cuenta_val").val(valor);
 
         if (valor == 1) {
-            $("#param_cuenta_text").html("Cuentas contables (Comprobante de egreso)");
+            $("#param_cuenta_text").html("Documento (Comprobante de egreso");
         } else if (valor == 2) {
-            $("#param_cuenta_text").html("Cuentas contables (Factura de compra)");
+            $("#param_cuenta_text").html("Documento (Factura de compra");
         } else if (valor == 3) {
-            $("#param_cuenta_text").html("Cuentas contables (Factura de venta)");
+            $("#param_cuenta_text").html("Documento (Factura de venta");
+            $("#modalCuentas").modal("hide");
+            $("#modalTipoCuentas").modal("show");
         } else if (valor == 4) {
-            $("#param_cuenta_text").html("Cuentas contables (Nómina)");
+            $("#param_cuenta_text").html("Documento (Nómina");
         } else if (valor == 5) {
-            $("#param_cuenta_text").html("Cuentas contables (Recibo de caja)");
+            $("#param_cuenta_text").html("Documento (Recibo de caja");
+        }
+    });
+
+    $("#param_tipo_cuenta_select").on("change", function () {
+        let text = $(this).find("option:selected").text();
+        let valor = $(this).val();
+
+        if(valor > 0) {
+            $("#param_cuenta_text").append(" - " + text + ")");
+
+            $("#div_general").addClass("d-none");
+            $("#div_param_cuentas").removeClass("d-none");
+            $("#param_cuenta_select").val("").trigger("change");
+            $("#param_tipo_cuenta_select").val("").trigger("change");
+            $("#modalTipoCuentas").modal("hide");
         }
     });
 });

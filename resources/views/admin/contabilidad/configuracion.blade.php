@@ -196,7 +196,7 @@
                     <h2>Parametrización</h2>
                     <ul>
                         <li><a href="javascript:void(0);" data-bs-target="#modalCuentas" data-bs-toggle="modal"
-                                data-bs-effect="effect-scale">Cuentas Contables</a></li>
+                                data-bs-effect="effect-scale">Documentos</a></li>
                         <li><a href="javascript:void(0);" id="btnClientess">Opción 1</a></li>
                         <li><a href="javascript:void(0);" id="btnEmpleadoss">Opción 2</a></li>
                     </ul>
@@ -258,7 +258,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
-                        <h6 class="modal-title">Parametrización de cuentas contables</h6>
+                        <h6 class="modal-title">Parametrización de documentos</h6>
                         <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span
                                 aria-hidden="true">&times;</span></button>
                     </div>
@@ -267,12 +267,39 @@
                             <div class="col-lg">
                                 <label for="">Documento</label>
                                 <select class="form-select" id="param_cuenta_select">
-                                    <option value="">Seleccione un empleado</option>
+                                    <option value="">Seleccione un opción</option>
                                     <option value="1">Comprobante de egreso</option>
                                     <option value="2">Factura de compra</option>
                                     <option value="3">Factura de venta</option>
                                     <option value="4">Nómina</option>
                                     <option value="5">Recibos de caja</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Seleccionar Tipo Cuenta -->
+        <div class="modal  fade" id="modalTipoCuentas">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Parametrización de documentos</h6>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Tipo de parametrización</label>
+                                <select class="form-select" id="param_tipo_cuenta_select">
+                                    <option value="">Seleccione un opción</option>
+                                    <option value="1">Producto</option>
+                                    <option value="2">Servicio</option>
+                                    <option value="3">Activo</option>
                                 </select>
                             </div>
                         </div>

@@ -61,6 +61,13 @@ class ConfiguracionController extends Controller
                 ->join('departamentos', 'departamentos.id', '=', 'ciudades.departamento_id')
                 ->where("ciudades.status", 1)
                 ->get();
+
+            $cuentas_contables = DB::table('configuracion_puc')
+                ->select('id', 'code', 'nombre')
+                ->where('status', 1)
+                ->whereRaw('LENGTH(code) = 8')
+                ->get();
+
             return view('admin.contabilidad.configuracion', compact(
                 'departamentos',
                 'tipos_empresas',
@@ -72,7 +79,8 @@ class ConfiguracionController extends Controller
                 'datos_tributarios',
                 'representantes',
                 'contador',
-                'revisor_fiscal'
+                'revisor_fiscal',
+                'cuentas_contables'
             ));
         } catch (Exception $ex) {
             return $ex->getMessage();
@@ -237,7 +245,7 @@ class ConfiguracionController extends Controller
             $sub_id = $puc->code;
 
             $data = DB::select('select * from configuracion_puc where parent_id = ? AND status = 1 AND CHARACTER_LENGTH(code) > 6 AND code LIKE "' . $sub_id . '%"', [$id]);
-            
+
             if ($data) {
                 $pucs[$key]->children = $data;
             }
@@ -376,7 +384,6 @@ class ConfiguracionController extends Controller
         return response()->json([
             'info' => 1,
         ]);
-
     }
 
     public function edit_child_puc_cliente(Request $request)
