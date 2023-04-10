@@ -142,4 +142,35 @@ $(document).ready(function () {
         $("#div_general").removeClass("d-none");
         $("#div_form_add").addClass("d-none");
     });
+
+    $("#cliente_add").change(function () {
+        var id = $(this).val();
+
+        if (id != "") {
+            $.ajax({
+                url: "info_cliente",
+                type: "POST",
+                data: {
+                    id: id,
+                },
+                dataType: "json",
+                success: function (response) {
+                    if (response.info == 1) {
+                        let data = response.data;
+                        $("#contacto_add").val(data.contacto);
+                    } else {
+                        toastr.error("Error al cargar los datos del cliente");
+                        $("#contacto_add").val("");
+                    }
+                },
+                error: function (data) {
+                    toastr.error("Error al cargar los datos del cliente");
+                    $("#contacto_add").val("");
+                },
+            });
+        } else {
+            toastr.error("Debe seleccionar un cliente");
+            $("#contacto_add").val("");
+        }
+    });
 });

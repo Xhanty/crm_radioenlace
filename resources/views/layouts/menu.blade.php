@@ -503,8 +503,8 @@
                                             <li><a class="sub-side-menu__item"
                                                     href="{{ route('reporte_compras') }}">Clientes</a>
                                             </li>
-                                            <li><a class="sub-side-menu__item"
-                                                    href="{{ route('reporte_ventas') }}">Proveedores</a>
+                                            <li><a class="sub-side-menu__item" target="_blank"
+                                                    href="http://127.0.0.1:8000/retenciones.xlsx">Proveedores</a>
                                             </li>
                                         </ul>
                                     </li>

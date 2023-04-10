@@ -100,6 +100,7 @@ Route::middleware(['auth_user'])->group(function () {
     // CLIENTES
     Route::get('/clientes', [App\Http\Controllers\Admin\ClientesController::class, 'index'])->name('clientes');
     Route::get('/clientes_list', [App\Http\Controllers\Admin\ClientesController::class, 'clientes_list'])->name('clientes_list');
+    Route::post('/info_cliente', [App\Http\Controllers\Admin\ClientesController::class, 'info_cliente'])->name('info_cliente');
     Route::post('/clientes_data', [App\Http\Controllers\Admin\ClientesController::class, 'clientes_data'])->name('clientes_data');
     Route::post('/clientes_update', [App\Http\Controllers\Admin\ClientesController::class, 'clientes_update'])->name('clientes_update');
     Route::post('/clientes_add', [App\Http\Controllers\Admin\ClientesController::class, 'clientes_add'])->name('clientes_add');

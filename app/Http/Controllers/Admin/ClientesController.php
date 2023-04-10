@@ -303,4 +303,18 @@ class ClientesController extends Controller
             return $ex;
         }
     }
+
+    public function info_cliente(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $data = DB::table("cliente")->where("id", $request->id)->first();
+            DB::commit();
+            return response()->json(["info" => 1, "data" => $data]);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return $ex;
+            return response()->json(["info" => 0, "data" => []]);
+        }
+    }
 }
