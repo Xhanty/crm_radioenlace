@@ -293,6 +293,9 @@ Route::middleware(['auth_user'])->group(function () {
 
     // FACTURA VENTA
     Route::get('/factura_venta', [App\Http\Controllers\Admin\Contabilidad\FacturaVentaController::class, 'index'])->name('factura_venta');
+    Route::get('/pdf_factura_venta', [App\Http\Controllers\Admin\Contabilidad\FacturaVentaController::class, 'pdf'])->name('pdf_factura_venta');
+    Route::post('/info_factura_venta', [App\Http\Controllers\Admin\Contabilidad\FacturaVentaController::class, 'info'])->name('info_factura_venta');
+    Route::post('/add_factura_venta', [App\Http\Controllers\Admin\Contabilidad\FacturaVentaController::class, 'add'])->name('add_factura_venta');
 
     // NOTA CREDITO
     Route::get('/nota_credito', [App\Http\Controllers\Admin\Contabilidad\NotaCreditoController::class, 'index'])->name('nota_credito');

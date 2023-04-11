@@ -400,7 +400,7 @@
                                             <div class="col-lg-2"></div>
                                             <div class="col-lg-3 d-flex" style="justify-content: end">
                                                 <input type="text" placeholder="0.00"
-                                                    class="form-control col-8 text-end forma_pago_input_add">
+                                                    class="form-control col-8 text-end input_dinner forma_pago_input_add">
                                             </div>
                                             <div class="col-lg-1 d-flex" style="justify-content: center">
                                                 <a class="center-vertical mg-s-10" href="javascript:void(0)"

@@ -149,9 +149,6 @@
                                                 id="num_fact_view">1743</span></p>
                                         <p class="invoice-info-row"><span>Fecha Compra</span> <span
                                                 id="compra_view">21/03/2023</span></p>
-                                        <p class="invoice-info-row"><span>Fecha Vencimiento</span> <span
-                                                id="vencimiento_view">20/04/2023</span>
-                                        </p>
                                     </div>
                                 </div>
                                 <div class="table-responsive mg-t-40">
@@ -208,17 +205,16 @@
                                     </div>
                                     <div class="col-lg-3">
                                         <label for="">Número</label>
-                                        <input class="form-control" value="{{ $num_factura }}" disabled id="numero_add"
-                                            placeholder="Número" type="text">
+                                        <input class="form-control" value="{{ $num_factura }}" disabled placeholder="Número" type="text">
                                     </div>
                                     <div class="col-lg-3">
                                         <label for="">Fecha elaboración</label>
-                                        <input class="form-control" id="fecha_add" placeholder="Fecha elaboración"
+                                        <input class="form-control" value="{{ date('Y-m-d') }}" id="fecha_add" placeholder="Fecha elaboración"
                                             type="date">
                                     </div>
                                     <div class="col-lg-3">
                                         <label for="">Vendedor</label>
-                                        <select class="form-select" id="centro_costo_add">
+                                        <select class="form-select" id="vendedor_add">
                                             <option value="">Seleccione una opción</option>
                                             @foreach ($usuarios as $usuario)
                                                 @if ($usuario->id == auth()->user()->id)
@@ -290,16 +286,16 @@
                                                             class="form-control bodega_add" style="border: 0">
                                                     </td>
                                                     <td class="pad-4">
-                                                        <input type="text" placeholder="Cantidad"
+                                                        <input type="number" placeholder="Cantidad" step="1" min="1" value="1"
                                                             class="form-control text-end cantidad_add" style="border: 0">
                                                     </td>
                                                     <td class="pad-4">
-                                                        <input type="text" placeholder="Valor Unitario"
-                                                            class="form-control text-end valor_add" style="border: 0">
+                                                        <input type="text" placeholder="Valor Unitario" value="0.00"
+                                                            class="form-control text-end valor_add input_dinner" style="border: 0">
                                                     </td>
                                                     <td class="pad-4">
-                                                        <input type="text" placeholder="Descuento"
-                                                            class="form-control text-end descuento_add" style="border: 0">
+                                                        <input type="text" placeholder="Descuento" value="0.00"
+                                                            class="form-control text-end descuento_add input_dinner" style="border: 0">
                                                     </td>
                                                     <td class="pad-4">
                                                         <select class="form-select cargo_add">
@@ -313,7 +309,7 @@
                                                     </td>
                                                     <td class="text-center d-flex pad-4">
                                                         <input disabled type="text" placeholder="0.00"
-                                                            class="form-control text-end total_add" style="border: 0">
+                                                            class="form-control text-end total_add input_dinner" style="border: 0">
                                                         <a class="center-vertical mg-s-10" href="javascript:void(0)"
                                                             id="new_row"><i class="fa fa-plus"></i></a>
                                                         &nbsp;
@@ -330,10 +326,11 @@
                                         <hr>
                                         <div class="row row-sm">
                                             <div class="col-lg-6">
-                                                <select class="form-select">
+                                                <select class="form-select formas_pago_add">
                                                     <option value="">Seleccione una opción</option>
                                                     @foreach ($formas_pago as $forma_pago)
-                                                        <option value="{{ $forma_pago->id }}">{{ $forma_pago->nombre }}
+                                                        <option value="{{ $forma_pago->id }}">{{ $forma_pago->code }} |
+                                                            {{ $forma_pago->nombre }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -341,7 +338,7 @@
                                             <div class="col-lg-2"></div>
                                             <div class="col-lg-3 d-flex" style="justify-content: end">
                                                 <input type="text" placeholder="0.00"
-                                                    class="form-control col-8 text-end">
+                                                    class="form-control col-8 text-end input_dinner forma_pago_input_add">
                                             </div>
                                             <div class="col-lg-1 d-flex" style="justify-content: center">
                                                 <a class="center-vertical mg-s-10" href="javascript:void(0)"
@@ -354,10 +351,10 @@
                                         <div class="row row-sm mt-2">
                                             <div class="col-lg-12 d-flex" style="justify-content: end">
                                                 <div style="width: 100%; margin-right: 24%" class="text-end">
-                                                    <p class="font-20">Total Bruto:</p>
+                                                    <p class="font-20">Subtotal:</p>
                                                 </div>
                                                 <div>
-                                                    <p class="font-20">0.00</p>
+                                                    <p class="font-20" id="total_subtotal_add">0.00</p>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 d-flex" style="justify-content: end">
@@ -365,15 +362,7 @@
                                                     <p class="font-20">Descuentos:</p>
                                                 </div>
                                                 <div>
-                                                    <p class="font-20">0.00</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 d-flex" style="justify-content: end">
-                                                <div style="width: 100%; margin-right: 24%" class="text-end">
-                                                    <p class="font-20">Subtotal:</p>
-                                                </div>
-                                                <div>
-                                                    <p class="font-20">0.00</p>
+                                                    <p class="font-20" id="total_descuentos_add">0.00</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -386,7 +375,7 @@
                                             <p class="font-22">Total formas de pagos:</p>
                                         </div>
                                         <div style="margin-left: 10%">
-                                            <p class="font-22">0.00</p>
+                                            <p class="font-22" id="total_formas_pago_add">0.00</p>
                                         </div>
                                     </div>
 
@@ -395,7 +384,7 @@
                                             <p class="font-22">Total Neto:</p>
                                         </div>
                                         <div style="margin-left: 10%">
-                                            <p class="font-22">0.00</p>
+                                            <p class="font-22" id="total_neto_add">0.00</p>
                                         </div>
                                     </div>
                                 </div>
