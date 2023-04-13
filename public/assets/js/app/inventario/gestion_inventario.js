@@ -207,7 +207,7 @@ $(document).ready(function () {
                 $.ajax({
                     url: "data_detalle_producto",
                     type: "POST",
-                    data: { id: producto_id },
+                    data: { id: producto_id, opcion: opcion },
                     success: function (response) {
                         $("#global-loader").fadeOut("slow");
                         let data = response.data;
@@ -228,36 +228,58 @@ $(document).ready(function () {
 
                             inventario.forEach((element) => {
                                 let salidas = element.salidas;
-                                salidas.forEach((element2) => {
-                                    let tipo = "";
-                                    if (element2.tipo == 1) {
-                                        tipo = " (Alquilado)";
-                                    } else if (element2.tipo == 2) {
-                                        tipo = " (Asignado)";
-                                    } else if (element2.tipo == 3) {
-                                        tipo = " (Préstamo)";
-                                    } else if (element2.tipo == 4) {
-                                        tipo = " (Instalación)";
-                                    } else if (element2.tipo == 5) {
-                                        tipo = " (Venta)";
-                                    } else if (element2.tipo == 6) {
-                                        tipo = " (Dado de baja)";
-                                    }
+
+                                if (element.salidas) {
+                                    salidas.forEach((element2) => {
+                                        let tipo = "";
+                                        if (element2.tipo == 1) {
+                                            tipo = " (Alquilado)";
+                                        } else if (element2.tipo == 2) {
+                                            tipo = " (Asignado)";
+                                        } else if (element2.tipo == 3) {
+                                            tipo = " (Préstamo)";
+                                        } else if (element2.tipo == 4) {
+                                            tipo = " (Instalación)";
+                                        } else if (element2.tipo == 5) {
+                                            tipo = " (Venta)";
+                                        } else if (element2.tipo == 6) {
+                                            tipo = " (Dado de baja)";
+                                        }
+
+                                        $("#producto_reingreso").append(
+                                            "<option data-cantidad='" +
+                                            element2.cantidad +
+                                            "' value='" +
+                                            element2.id +
+                                            "'>" +
+                                            element.serial +
+                                            " | (Cantidad: " +
+                                            element2.cantidad +
+                                            ") - " +
+                                            tipo +
+                                            "</option>"
+                                        );
+                                    });
+                                }
+
+                                if (element.cantidad > 0) {
+                                    let tipo = " (Disponible)";
 
                                     $("#producto_reingreso").append(
                                         "<option data-cantidad='" +
-                                        element2.cantidad +
+                                        element.cantidad +
                                         "' value='" +
-                                        element2.id +
+                                        element.id +
                                         "'>" +
                                         element.serial +
                                         " | (Cantidad: " +
-                                        element2.cantidad +
+                                        element.cantidad +
                                         ") - " +
                                         tipo +
                                         "</option>"
                                     );
-                                });
+                                }
+
                             });
                             $("#modalReingreso").modal("show");
                         } else {
