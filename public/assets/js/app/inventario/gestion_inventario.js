@@ -17,6 +17,29 @@ $(document).ready(function () {
     // ALMACENES SALIDA
     var id_almacen_salida = 0;
 
+    var language = {
+        searchPlaceholder: "Buscar...",
+        sSearch: "",
+        decimal: "",
+        emptyTable: "No hay información",
+        info: "Mostrando _START_ a _END_ de _TOTAL_ Resultados",
+        infoEmpty: "Mostrando 0 to 0 de 0 Resultados",
+        infoFiltered: "(Filtrado de _MAX_ total resultados)",
+        infoPostFix: "",
+        thousands: ",",
+        lengthMenu: "Mostrar _MENU_ Resultados",
+        loadingRecords: "Cargando...",
+        processing: "Procesando...",
+        search: "Buscar:",
+        zeroRecords: "Sin resultados encontrados",
+        paginate: {
+            first: "Primero",
+            last: "Ultimo",
+            next: "Siguiente",
+            previous: "Anterior",
+        },
+    };
+
     // VISUALIZAR
     $(document).on("click", ".btn_View", function () {
         let id = $(this).data("id");
@@ -40,6 +63,10 @@ $(document).ready(function () {
                     );
 
                     $("#tbl_seriales_view tbody").html("");
+
+                    if($.fn.DataTable.isDataTable("#tbl_seriales_view")){
+                        $("#tbl_seriales_view").DataTable().destroy();
+                    }
 
                     inventario.forEach((element) => {
                         let estado = "";
@@ -67,6 +94,12 @@ $(document).ready(function () {
                             </td>
                             </tr>`;
                         $("#tbl_seriales_view tbody").append(tr);
+                    });
+
+                    $("#tbl_seriales_view").DataTable({
+                        responsive: true,
+                        language: language,
+                        order: [],
                     });
 
                     $("#modalVisualizar").modal("show");
