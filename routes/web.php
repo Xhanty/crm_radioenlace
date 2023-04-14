@@ -328,6 +328,8 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/data_detalle_producto', [App\Http\Controllers\Admin\Inventario\GestionController::class, 'data'])->name('data_detalle_producto');
     Route::post('/ingreso_inventario', [App\Http\Controllers\Admin\Inventario\GestionController::class, 'ingreso_inventario'])->name('ingreso_inventario');
     Route::post('/reingreso_inventario', [App\Http\Controllers\Admin\Inventario\GestionController::class, 'reingreso_inventario'])->name('reingreso_inventario');
+    Route::post('/get_serial', [App\Http\Controllers\Admin\Inventario\GestionController::class, 'get_serial'])->name('get_serial');
+    Route::post('/modificar_serial', [App\Http\Controllers\Admin\Inventario\GestionController::class, 'modificar_serial'])->name('modificar_serial');
     Route::post('/get_inventario', [App\Http\Controllers\Admin\Inventario\GestionController::class, 'get_inventario'])->name('get_inventario');
     Route::post('/salidas_inventario', [App\Http\Controllers\Admin\Inventario\GestionController::class, 'salidas_inventario'])->name('salidas_inventario');
     Route::post('/eliminar_serial', [App\Http\Controllers\Admin\Inventario\GestionController::class, 'eliminar_serial'])->name('eliminar_serial');

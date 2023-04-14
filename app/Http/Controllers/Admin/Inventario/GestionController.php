@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Svg\Tag\Rect;
 
 class GestionController extends Controller
 {
@@ -203,7 +204,7 @@ class GestionController extends Controller
             $movimiento = 0;
 
             $data_old = DB::table('salida_inventario')->where("id", $serial)->first();
-            if($data_old && $data_old != null) {
+            if ($data_old && $data_old != null) {
                 $data_inventario = DB::table('inventario')->where("id", $data_old->inventario_id)->first();
 
                 $status = 0;
@@ -215,8 +216,6 @@ class GestionController extends Controller
                 if ($count_salida == 0) {
                     $status = 1;
                 }
-
-
             } else {
                 $data_inventario = DB::table('inventario')->where("id", $serial)->first();
                 $movimiento = 1;
@@ -329,6 +328,56 @@ class GestionController extends Controller
 
             return response()->json(['info' => 1, 'data' => $producto]);
         } catch (Exception $ex) {
+            return $ex->getMessage();
+            return response()->json(['info' => 0, 'error' => 'Error al actualizar el inventario.']);
+        }
+    }
+
+    public function get_serial(Request $request)
+    {
+        try {
+            $data = DB::table('movimientos_inventario')
+                ->select('inventario.*', 'movimientos_inventario.id as id_movimiento', 'movimientos_inventario.proveedor_id', 'movimientos_inventario.precio_venta', 'movimientos_inventario.precio_compra', 'movimientos_inventario.observaciones')
+                ->where('inventario.id', $request->id)
+                ->join('inventario', 'inventario.id', '=', 'movimientos_inventario.inventario_id')
+                ->first();
+
+            return response()->json(['info' => 1, 'data' => $data]);
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+            return response()->json(['info' => 0, 'error' => 'Error al actualizar el inventario.']);
+        }
+    }
+
+    public function modificar_serial(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $inventario_id = $request->id;
+            $movimiento_id = $request->movimiento_id;
+            $proveedor = $request->proveedor;
+            $codigo_interno = $request->codigo_interno;
+            $serial = $request->serial;
+            $precio_venta = $request->precio_venta;
+            $precio_compra = $request->precio_compra;
+            $observaciones = $request->observaciones;
+
+            DB::table('inventario')->where("id", $inventario_id)->update([
+                'serial' => $serial,
+                'codigo_interno' => $codigo_interno,
+            ]);
+
+            DB::table('movimientos_inventario')->where("id", $movimiento_id)->update([
+                'proveedor_id' => $proveedor,
+                'precio_venta' => $precio_venta,
+                'precio_compra' => $precio_compra,
+                'observaciones' => $observaciones,
+            ]);
+            DB::commit();
+            return response()->json(['info' => 1, 'data' => 'Serial actualizado.']);
+        } catch (Exception $ex) {
+            
+            DB::rollBack();
             return $ex->getMessage();
             return response()->json(['info' => 0, 'error' => 'Error al actualizar el inventario.']);
         }

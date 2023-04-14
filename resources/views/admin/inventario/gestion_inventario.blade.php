@@ -140,6 +140,7 @@
         </div>
 
         @include('admin.inventario.modals.visualizar')
+        @include('admin.inventario.modals.modificar_serial')
 
 
         @include('admin.inventario.modals.ingreso.compra')

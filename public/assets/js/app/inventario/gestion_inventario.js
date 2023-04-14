@@ -62,11 +62,11 @@ $(document).ready(function () {
                         url_general + "images/productos/" + data.imagen
                     );
 
-                    $("#tbl_seriales_view tbody").html("");
-
-                    if($.fn.DataTable.isDataTable("#tbl_seriales_view")){
+                    if ($.fn.DataTable.isDataTable("#tbl_seriales_view")) {
                         $("#tbl_seriales_view").DataTable().destroy();
                     }
+
+                    $("#tbl_seriales_view tbody").empty();
 
                     inventario.forEach((element) => {
                         let estado = "";
@@ -89,6 +89,8 @@ $(document).ready(function () {
                             "historial_serial?token=" +
                             element.id
                             }" target="_blank" class="btn btn-success btn-sm" title="Ver Historial"><i class="fa fa-book"></i></a>
+                            <a data-id="${element.id}"
+                            class="btn btn-warning btn-sm btn_EditarSerial" title="Modificar"><i class="fa fa-pencil-alt"></i></a>
                             <a data-id="${element.id
                             }" class="btn btn-danger btn-sm btn_EliminarSerial" title="Eliminar"><i class="fa fa-trash"></i></a>
                             </td>
@@ -167,6 +169,99 @@ $(document).ready(function () {
                 $("#modalVisualizar").modal("show");
             }
         });
+    });
+
+    // MODIFICAR SERIAL
+    $(document).on("click", ".btn_EditarSerial", function () {
+        let id = $(this).data("id");
+
+        $("#modalVisualizar").modal("hide");
+        $("#global-loader").fadeIn("slow");
+        $.ajax({
+            url: "get_serial",
+            type: "POST",
+            data: { id: id },
+            success: function (response) {
+                $("#global-loader").fadeOut("fast");
+                let data = response.data;
+                if (response.info == 1) {
+                    $("#producto_id_modificar").val(id);
+                    $("#movimiento_producto_id_modificar").val(data.id_movimiento);
+                    $("#serial_prodc_modif").val(data.serial);
+
+                    $("#proveedor_prodc_modif").val(data.proveedor_id).trigger("change");
+                    $("#codigo_interno_prodc_modif").val(data.codigo_interno);
+                    $("#precioventa_prodc_modif").val(data.precio_venta);
+                    $("#preciocompra_prodc_modif").val(data.precio_compra);
+                    $("#observacion_prodc_modif").val(data.observaciones);
+
+                    $("#modalModificarProducto").modal("show");
+                } else {
+                    toastr.error("El serial no ha sido encontrado.");
+                    $("#modalVisualizar").modal("show");
+                }
+            },
+            error: function (error) {
+                $("#global-loader").fadeOut("fast");
+                $("#modalVisualizar").modal("show");
+                toastr.error("El serial no ha sido encontrado.");
+            },
+        });
+    });
+
+    $("#btnModificarSerialProducto").click(function () {
+        let id = $("#producto_id_modificar").val();
+        let movimiento_id = $("#movimiento_producto_id_modificar").val();
+        let proveedor = $("#proveedor_prodc_modif").val();
+        let codigo_interno = $("#codigo_interno_prodc_modif").val();
+        let serial = $("#serial_prodc_modif").val();
+        let precio_venta = $("#precioventa_prodc_modif").val();
+        let precio_compra = $("#preciocompra_prodc_modif").val();
+        let observaciones = $("#observacion_prodc_modif").val();
+
+        if (codigo_interno.trim().length < 1) {
+            toastr.error("El código interno es obligatorio.");
+            return false;
+        } else if (serial.trim().length < 1) {
+            toastr.error("El serial es obligatorio.");
+            return false;
+        } else {
+            $("#btnModificarSerialProducto").attr("disabled", true);
+            $("#btnModificarSerialProducto").html(
+                '<i class="fa fa-spinner fa-spin"></i> Procesando...'
+            );
+
+            $.ajax({
+                url: "modificar_serial",
+                type: "POST",
+                data: {
+                    id: id,
+                    movimiento_id: movimiento_id,
+                    serial: serial,
+                    proveedor: proveedor,
+                    codigo_interno: codigo_interno,
+                    precio_venta: precio_venta,
+                    precio_compra: precio_compra,
+                    observaciones: observaciones,
+                },
+                success: function (response) {
+                    $("#btnModificarSerialProducto").attr("disabled", false);
+                    $("#btnModificarSerialProducto").html("Modificar");
+
+                    if (response.info == 1) {
+                        toastr.success("El serial ha sido modificado.");
+                        $("#modalModificarProducto").modal("hide");
+                    } else {
+                        toastr.error("El serial no ha sido modificado.");
+                    }
+                },
+                error: function (error) {
+                    $("#btnModificarSerialProducto").attr("disabled", false);
+                    $("#btnModificarSerialProducto").html("Modificar");
+                    toastr.error("El serial no ha sido modificado.");
+                },
+            });
+        }
     });
 
     // INGRESO
