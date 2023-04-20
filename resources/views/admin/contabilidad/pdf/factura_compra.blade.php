@@ -58,7 +58,7 @@
                     <div class="tm_invoice_info tm_mb22 tm_align_center">
                         <div class="tm_invoice_info_left tm_mb20_md" style="margin-top: 2px">
                             <p class="tm_mb0">
-                                <b class="tm_primary_color ">Factura No. </b>{{ $factura->numero }}<br>
+                                <b class="tm_primary_color ">Factura Compra Electrónica: </b>{{ $factura->numero }}<br>
                                 <b class="tm_primary_color">Fecha Compra:
                                 </b>{{ date('d/m/Y', strtotime($factura->fecha_elaboracion)) }}<br>
                                 <b class="tm_primary_color">Fecha Vencimiento:
@@ -75,10 +75,7 @@
                             </div>
                         </div>
                     </div>
-                    <h2 class="tm_f16 tm_section_heading tm_accent_border_20 tm_mb0"><span
-                            class="tm_accent_bg_10 tm_radius_0 tm_curve_35 tm_border tm_accent_border_20 tm_border_bottom_0 tm_accent_color">
-                            <span>Facturado a</span>
-                        </span></h2>
+                    <h2 class="tm_f16 tm_section_heading tm_accent_border_20 tm_mb0"></h2>
                     <div class="tm_table tm_style1 tm_mb30">
                         <div class="tm_border  tm_accent_border_20 tm_border_top_0">
                             <div class="tm_table_responsive">
@@ -199,39 +196,73 @@
                                 <p class="tm_mb2"><b class="tm_primary_color">Valor en Letras:</b></p>
                                 <p class="tm_m0" id="valor_txt">Cargando...</p>
                                 <br>
-                                <!--<p class="tm_mb2"><b class="tm_primary_color">Condiciones de Pago:</b></p>
-                                <p class="tm_m0">Otras cuentas por pagar - Cuota No. 001 vence el 20/04/2023</p>-->
+                                <p class="tm_mb2"><b class="tm_primary_color">Forma de Pago:</b></p>
+                                <p class="tm_m0">Otras cuentas por pagar - Cuota No. 001 vence el 20/05/2023</p>
                             </div>
                             <div class="tm_right_footer">
                                 <table class="tm_mb15 tm_m0_md">
                                     <tbody>
                                         <tr>
-                                            <td class="tm_width_3 tm_primary_color tm_border_none tm_medium">Subtotal
+                                            <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">Total Bruto
                                             </td>
                                             <td
-                                                class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_medium">
-                                                {{ $factura->valor_total }}</td>
+                                                class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
+                                                {{ $factura->total_bruto }}</td>
                                         </tr>
-                                        <!--<tr>
-                                            <td class="tm_width_3 tm_danger_color tm_border_none tm_pt0">Descuento (0%)
-                                            </td>
-                                            <td class="tm_width_3 tm_danger_color tm_text_right tm_border_none tm_pt0">
-                                                -0.00</td>
-                                        </tr>-->
-                                        <!--<tr>
-                                            <td class="tm_width_3 tm_primary_color tm_border_none tm_medium">Iva
+                                        <tr>
+                                            <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">Descuento
                                             </td>
                                             <td
-                                                class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_medium">
-                                                0.00</td>
-                                        </tr>-->
-                                        <!--<tr>
-                                            <td class="tm_width_3 tm_primary_color tm_border_none tm_medium">Retefuente
+                                                class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
+                                                {{ $factura->descuentos }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">Subtotal
                                             </td>
                                             <td
-                                                class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_medium">
-                                                0.00</td>
-                                        </tr>-->
+                                                class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
+                                                {{ $factura->subtotal }}</td>
+                                        </tr>
+                                        @php
+                                            $impuestos_1 = $factura->impuestos_1 == 'null' ? [] : $factura->impuestos_1;
+                                            $impuestos_2 = $factura->impuestos_2 == 'null' ? [] : $factura->impuestos_2;
+                                            
+                                            if ($impuestos_1) {
+                                                if (json_decode($impuestos_1)) {
+                                                    $impuestos = json_decode($impuestos_1);
+                                                    foreach ($impuestos as $impuesto) {
+                                                        $valor_impuesto = number_format(intval($impuesto[1]), 2, ',', '.');
+                                                        echo '<tr>
+                                                            <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">' .
+                                                            $impuesto[0] .
+                                                            '</td>
+                                                            <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">' .
+                                                            $valor_impuesto .
+                                                            '</td>
+                                                        </tr>';
+                                                    }
+                                                }
+                                            }
+                                            
+                                            if ($impuestos_2) {
+                                                if (json_decode($impuestos_2)) {
+                                                    $impuestos = json_decode($impuestos_2);
+                                                    foreach ($impuestos as $impuesto) {
+                                                        $valor_impuesto = number_format(intval($impuesto[1]), 2, ',', '.');
+                                                        echo '<tr>
+                                                            <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">' .
+                                                            $impuesto[0] .
+                                                            '</td>
+                                                            <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">' .
+                                                            $valor_impuesto .
+                                                            '</td>
+                                                        </tr>';
+                                                    }
+                                                }
+                                            }
+                                        @endphp
+
+
                                         <tr class="tm_accent_border_20 tm_border">
                                             <td
                                                 class="tm_width_3 tm_bold tm_f16 tm_border_top_0 tm_accent_color tm_accent_bg_10">
@@ -245,15 +276,6 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="tm_invoice_footer tm_type1">
-                            <div class="tm_left_footer"></div>
-                            <div class="tm_right_footer">
-                                <div class="tm_sign tm_text_center">
-                                    <img src="https://invoma.vercel.app/assets/img/sign.svg" alt="Sign">
-                                    <p class="tm_m0 tm_ternary_color">Oscar Sánchez</p>
-                                    <p class="tm_m0 tm_f16 tm_primary_color">Gerente Comercial</p>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="tm_bottom_invoice tm_accent_border_20">

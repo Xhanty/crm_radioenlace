@@ -161,6 +161,8 @@
                                                 <th class="wd-20p">Ítem</th>
                                                 <th class="wd-40p">Descripción</th>
                                                 <th class="tx-center">Cantidad</th>
+                                                <th class="tx-center">Impuesto<br>Cargo</th>
+                                                <th class="tx-center">Impuesto<br>Rete.</th>
                                                 <th class="tx-right">Valor Total</th>
                                             </tr>
                                         </thead>
@@ -336,7 +338,7 @@
                                                             style="border: 0">
                                                     </td>
                                                     <td class="pad-4">
-                                                        <input type="text" placeholder="Descuento" value="0.00"
+                                                        <input type="text" min="0" max="100" placeholder="Descuento" value="0.00"
                                                             class="form-control text-end descuento_add input_dinner"
                                                             style="border: 0">
                                                     </td>
@@ -412,26 +414,36 @@
                                     <div class="col-lg-6">
                                         <div class="row row-sm mt-2">
                                             <div class="col-lg-12 d-flex" style="justify-content: end">
-                                                <div style="width: 100%; margin-right: 24%" class="text-end">
-                                                    <p class="font-20">Subtotal:</p>
+                                                <div class="text-end col-6">
+                                                    <p class="font-20">Total Bruto:</p>
                                                 </div>
-                                                <div>
-                                                    <p class="font-20" id="total_subtotal_add">0.00</p>
+                                                <div class="text-end col-4">
+                                                    <p class="font-20" id="total_bruto_add">0.00</p>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 d-flex" style="justify-content: end">
-                                                <div style="width: 100%; margin-right: 24%" class="text-end">
+                                                <div class="text-end col-6">
                                                     <p class="font-20">Descuentos:</p>
                                                 </div>
-                                                <div>
+                                                <div class="text-end col-4">
                                                     <p class="font-20" id="total_descuentos_add">0.00</p>
                                                 </div>
                                             </div>
+                                            <div class="col-lg-12 d-flex" style="justify-content: end">
+                                                <div class="text-end col-6">
+                                                    <p class="font-20">Subtotal:</p>
+                                                </div>
+                                                <div class="text-end col-4">
+                                                    <p class="font-20" id="total_subtotal_add">0.00</p>
+                                                </div>
+                                            </div>
+                                            <div id="impuestos_1_add" style="padding: 0px;"></div>
+                                            <div id="impuestos_2_add" style="padding: 0px;"></div>
                                         </div>
                                     </div>
                                 </div>
                                 <hr>
-                                <div class="row">
+                                <div class="row" style="padding-right: 15px">
                                     <div class="col-lg d-flex" style="justify-content: end">
                                         <div>
                                             <p class="font-22">Total formas de pagos:</p>

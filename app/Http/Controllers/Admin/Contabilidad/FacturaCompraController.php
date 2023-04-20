@@ -87,6 +87,12 @@ class FacturaCompraController extends Controller
             $total = $request->total;
             $productos = $request->productos;
 
+            $total_bruto = $request->total_bruto;
+            $descuentos = $request->descuentos;
+            $subtotal = $request->subtotal;
+            $impuestos_1 = $request->impuestos_1;
+            $impuestos_2 = $request->impuestos_2;
+
             $factura = DB::table('factura_compra')
                 ->select('numero')
                 ->orderBy('id', 'desc')
@@ -107,6 +113,11 @@ class FacturaCompraController extends Controller
                 'proveedor_id' => $proveedor,
                 'factura_proveedor' => $factura_proveedor,
                 'num_factura_proveedor' => $consecutivo_proveedor,
+                'total_bruto' => $total_bruto,
+                'descuentos' => $descuentos,
+                'subtotal' => $subtotal,
+                'impuestos_1' => json_encode($impuestos_1),
+                'impuestos_2' => json_encode($impuestos_2),
                 'valor_total' => $total,
                 'created_at' => date('Y-m-d H:i:s'),
                 'created_by' => auth()->user()->id,
@@ -118,20 +129,37 @@ class FacturaCompraController extends Controller
             }
 
             foreach ($productos as $producto) {
-                $detalle = DB::table("detalle_factura_compra")->insert([
-                    'factura_id' => $id,
-                    'tipo' => $producto['tipo'],
-                    'producto' => $producto['producto'] ?? null,
-                    //'cuenta' => $producto['cuenta'] ?? null,
-                    'description' => $producto['descripcion'],
-                    'bodega' => $producto['bodega'],
-                    'cantidad' => $producto['cantidad'],
-                    'valor_unitario' => $producto['valor_unitario'],
-                    'descuento' => $producto['descuento'],
-                    'impuesto_cargo' => $producto['impuesto_cargo'],
-                    'impuesto_retencion' => $producto['impuesto_retencion'],
-                    'valor_total' => $producto['total'],
-                ]);
+                if ($producto['tipo'] == 1) {
+                    $detalle = DB::table("detalle_factura_compra")->insert([
+                        'factura_id' => $id,
+                        'tipo' => $producto['tipo'],
+                        'producto' => $producto['producto'] ?? null,
+                        'cuenta' => null,
+                        'description' => $producto['descripcion'],
+                        'bodega' => $producto['bodega'],
+                        'cantidad' => $producto['cantidad'],
+                        'valor_unitario' => $producto['valor_unitario'],
+                        'descuento' => $producto['descuento'],
+                        'impuesto_cargo' => $producto['impuesto_cargo'],
+                        'impuesto_retencion' => $producto['impuesto_retencion'],
+                        'valor_total' => $producto['total'],
+                    ]);
+                } else {
+                    $detalle = DB::table("detalle_factura_compra")->insert([
+                        'factura_id' => $id,
+                        'tipo' => $producto['tipo'],
+                        'producto' => null,
+                        'cuenta' => $producto['producto'] ?? null,
+                        'description' => $producto['descripcion'],
+                        'bodega' => $producto['bodega'],
+                        'cantidad' => $producto['cantidad'],
+                        'valor_unitario' => $producto['valor_unitario'],
+                        'descuento' => $producto['descuento'],
+                        'impuesto_cargo' => $producto['impuesto_cargo'],
+                        'impuesto_retencion' => $producto['impuesto_retencion'],
+                        'valor_total' => $producto['total'],
+                    ]);
+                }
 
                 if (!$detalle) {
                     DB::rollBack();
