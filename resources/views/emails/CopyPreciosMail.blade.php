@@ -33,7 +33,7 @@
                                                     <br><br>
                                                     <a href="#" style="text-decoration:none" target="_blank">
                                                         <img alt="" border="0"
-                                                            src="https://radioenlacesas.com/wp-content/uploads/2017/08/cropped-logoradioenlace-2.png"
+                                                            src="http://radioenlacesas.com/wp-content/uploads/2017/08/cropped-logoradioenlace-2.png"
                                                             style="width:40%;max-width:600px;height:auto;display:block;color: #f9f9f9;">
                                                     </a>
                                                     <br>
