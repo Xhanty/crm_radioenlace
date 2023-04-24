@@ -85,7 +85,9 @@ class FacturaCompraController extends Controller
             $factura_proveedor = $request->factura_proveedor;
             $consecutivo_proveedor = $request->consecutivo_proveedor;
             $total = $request->total;
-            $productos = $request->productos;
+            $productos = json_decode($request->productos, true);
+            $observaciones = $request->observaciones;
+            $adjunto = null;
 
             $total_bruto = $request->total_bruto;
             $descuentos = $request->descuentos;
@@ -104,6 +106,13 @@ class FacturaCompraController extends Controller
                 $num_factura = $factura->numero + 1;
             }
 
+            if ($request->hasFile('factura')) {
+                $file = $request->file('factura');
+                $name = time() . $file->getClientOriginalName();
+                $file->move('images/contabilidad/facturas_compra/', $name);
+                $adjunto = $name;
+            }
+
             $id = DB::table("factura_compra")->insertGetId([
                 'numero' => $num_factura,
                 'tipo' => $tipo,
@@ -116,9 +125,11 @@ class FacturaCompraController extends Controller
                 'total_bruto' => $total_bruto,
                 'descuentos' => $descuentos,
                 'subtotal' => $subtotal,
-                'impuestos_1' => json_encode($impuestos_1),
-                'impuestos_2' => json_encode($impuestos_2),
+                'impuestos_1' => $impuestos_1,
+                'impuestos_2' => $impuestos_2,
                 'valor_total' => $total,
+                'observaciones' => $observaciones ?? null,
+                'adjunto_pdf' => $adjunto ?? null,
                 'created_at' => date('Y-m-d H:i:s'),
                 'created_by' => auth()->user()->id,
             ]);

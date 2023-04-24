@@ -196,8 +196,10 @@
                                 <p class="tm_mb2"><b class="tm_primary_color">Valor en Letras:</b></p>
                                 <p class="tm_m0" id="valor_txt">Cargando...</p>
                                 <br>
-                                <p class="tm_mb2"><b class="tm_primary_color">Forma de Pago:</b></p>
-                                <p class="tm_m0">Otras cuentas por pagar - Cuota No. 001 vence el 20/05/2023</p>
+                                <!--<p class="tm_mb2"><b class="tm_primary_color">Forma de Pago:</b></p>
+                                <p class="tm_m0">Otras cuentas por pagar - Cuota No. 001 vence el 20/05/2023</p>-->
+                                <p class="tm_mb2"><b class="tm_primary_color">Observaciones:</b></p>
+                                <p class="tm_m0">{{ $factura->observaciones }}</p>
                             </div>
                             <div class="tm_right_footer">
                                 <table class="tm_mb15 tm_m0_md">

@@ -368,10 +368,17 @@ $(document).ready(function () {
                             }
                         }
 
+                        if (!factura.observaciones) {
+                            factura.observaciones = '';
+                        }
 
                         $("#productos_view").append(
                             '<tr>' +
                             '<td class="valign-middle" colspan="3" rowspan="' + rowspan + '">' +
+                            '<div class="invoice-notes">' +
+                            '<label class="main-content-label tx-13">Observaciones</label>' +
+                            '<p>' + factura.observaciones + '</p>' +
+                            '</div>' +
                             '</td>' +
                             '<td class="tx-right" style="font-weight: 700; color: #7987a1;">Total Bruto</td>' +
                             '<td class="tx-right" colspan="2">' + total_bruto + '</td>' +
@@ -781,6 +788,7 @@ $(document).ready(function () {
         let descuentos = $("#total_descuentos_add").html();
         let subtotal = $("#total_subtotal_add").html();
         let total = $("#total_neto_add").html();
+        let observaciones = $("#observaciones_add").val();
         let valid = false;
 
         let productos = [];
@@ -844,24 +852,30 @@ $(document).ready(function () {
             $("#btnAddFactura").attr("disabled", true);
             $("#btnAddFactura").html('<i class="fa fa-spinner fa-spin"></i> Guardando...');
 
+            let formData = new FormData();
+            formData.append("tipo", tipo);
+            formData.append("centro", centro);
+            formData.append("fecha", fecha);
+            formData.append("proveedor", proveedor);
+            formData.append("factura_proveedor", factura_proveedor);
+            formData.append("consecutivo_proveedor", consecutivo_proveedor);
+            formData.append("productos", JSON.stringify(productos));
+            formData.append("total_bruto", total_bruto);
+            formData.append("descuentos", descuentos);
+            formData.append("subtotal", subtotal);
+            formData.append("impuestos_1", JSON.stringify(impuestos_1_general));
+            formData.append("impuestos_2", JSON.stringify(impuestos_2_general));
+            formData.append("total", total);
+            formData.append("observaciones", observaciones);
+            formData.append("factura", $("#factura_add")[0].files[0]);
+
             $.ajax({
                 url: "add_factura_compra",
                 type: "POST",
-                data: {
-                    tipo: tipo,
-                    centro: centro,
-                    fecha: fecha,
-                    proveedor: proveedor,
-                    factura_proveedor: factura_proveedor,
-                    consecutivo_proveedor: consecutivo_proveedor,
-                    productos: productos,
-                    total_bruto: total_bruto,
-                    descuentos: descuentos,
-                    subtotal: subtotal,
-                    impuestos_1: impuestos_1_general,
-                    impuestos_2: impuestos_2_general,
-                    total: total,
-                },
+                data: formData,
+                dataType: "JSON",
+                contentType: false,
+                processData: false,
                 success: function (response) {
                     if (response.info == 1) {
                         toastr.success('Factura guardada con éxito');

@@ -176,7 +176,7 @@
                             <div id="content_loader" class="d-none">
                                 <div class="text-center">
                                     <div class="spinner-border" role="status" style="color: #3858f9">
-                                        <span class="sr-only">Loading...</span>
+                                        <span class="sr-only">Cargando...</span>
                                     </div>
                                 </div>
                             </div>
@@ -227,8 +227,8 @@
                                     </div>
                                     <div class="col-lg-3">
                                         <label for="">Número</label>
-                                        <input class="form-control text-center" value="{{ $num_factura }}" disabled id="numero_add"
-                                            placeholder="Número" type="text">
+                                        <input class="form-control text-center" value="{{ $num_factura }}" disabled
+                                            id="numero_add" placeholder="Número" type="text">
                                     </div>
                                 </div>
                                 <br>
@@ -328,9 +328,9 @@
                                                             class="form-control bodega_add" style="border: 0">
                                                     </td>
                                                     <td class="pad-4">
-                                                        <input type="number" placeholder="Cantidad" step="1" min="1"
-                                                            class="form-control text-end cantidad_add" value="1"
-                                                            style="border: 0">
+                                                        <input type="number" placeholder="Cantidad" step="1"
+                                                            min="1" class="form-control text-end cantidad_add"
+                                                            value="1" style="border: 0">
                                                     </td>
                                                     <td class="pad-4">
                                                         <input type="text" placeholder="Valor Unitario" value="0.00"
@@ -338,7 +338,8 @@
                                                             style="border: 0">
                                                     </td>
                                                     <td class="pad-4">
-                                                        <input type="text" min="0" max="100" placeholder="Descuento" value="0.00"
+                                                        <input type="text" min="0" max="100"
+                                                            placeholder="Descuento" value="0.00"
                                                             class="form-control text-end descuento_add input_dinner"
                                                             style="border: 0">
                                                     </td>
@@ -346,34 +347,49 @@
                                                         <select class="form-select cargo_add">
                                                             <option value="">Seleccione una opción</option>
                                                             <option data-impuesto="19" value="1">IVA 19%</option>
-                                                            <option data-impuesto="19" value="2">Iva Serv 19%</option>
+                                                            <option data-impuesto="19" value="2">Iva Serv 19%
+                                                            </option>
                                                             <option data-impuesto="16" value="3">IVA 16%</option>
                                                             <option data-impuesto="5" value="4">IVA 5%</option>
-                                                            <option data-impuesto="8" value="5">Impoconsumo 8%</option>
+                                                            <option data-impuesto="8" value="5">Impoconsumo 8%
+                                                            </option>
                                                         </select>
                                                     </td>
                                                     <td class="pad-4">
                                                         <select class="form-select retencion_add">
                                                             <option value="">Seleccione una opción</option>
-                                                            <option data-impuesto="11" value="1">Retefuente 11%</option>
-                                                            <option data-impuesto="10" value="2">Retefuente 10%</option>
-                                                            <option data-impuesto="7" value="3">Retefuente 7%</option>
-                                                            <option data-impuesto="6" value="4">Retefuente 6%</option>
+                                                            <option data-impuesto="11" value="1">Retefuente 11%
+                                                            </option>
+                                                            <option data-impuesto="10" value="2">Retefuente 10%
+                                                            </option>
+                                                            <option data-impuesto="7" value="3">Retefuente 7%
+                                                            </option>
+                                                            <option data-impuesto="6" value="4">Retefuente 6%
+                                                            </option>
                                                             <option data-impuesto="5" value="5">Retención 5%</option>
-                                                            <option data-impuesto="4" value="6">Retefuente 4%</option>
+                                                            <option data-impuesto="4" value="6">Retefuente 4%
+                                                            </option>
                                                             <option data-impuesto="4" value="8">Arriendos 4%</option>
-                                                            <option data-impuesto="3.5" value="9">Arriendos 3.5%</option>
-                                                            <option data-impuesto="3.5" value="10">Retefuente 3.5%</option>
-                                                            <option data-impuesto="2.5" value="11">Retefuente 2.5%</option>
-                                                            <option data-impuesto="2" value="12">Retefuente 2%</option>
-                                                            <option data-impuesto="1" value="13">Retefuente 1%</option>
-                                                            <option data-impuesto="0.4" value="14">Autoretención del cree 0.4%</option>
-                                                            <option data-impuesto="0.1" value="15">Retefuente 0.1%</option>
+                                                            <option data-impuesto="3.5" value="9">Arriendos 3.5%
+                                                            </option>
+                                                            <option data-impuesto="3.5" value="10">Retefuente 3.5%
+                                                            </option>
+                                                            <option data-impuesto="2.5" value="11">Retefuente 2.5%
+                                                            </option>
+                                                            <option data-impuesto="2" value="12">Retefuente 2%
+                                                            </option>
+                                                            <option data-impuesto="1" value="13">Retefuente 1%
+                                                            </option>
+                                                            <option data-impuesto="0.4" value="14">Autoretención del
+                                                                cree 0.4%</option>
+                                                            <option data-impuesto="0.1" value="15">Retefuente 0.1%
+                                                            </option>
                                                         </select>
                                                     </td>
                                                     <td class="text-center d-flex pad-4">
                                                         <input disabled type="text" placeholder="0.00"
-                                                            class="form-control text-end total_add input_dinner" style="border: 0">
+                                                            class="form-control text-end total_add input_dinner"
+                                                            style="border: 0">
                                                         <a class="center-vertical mg-s-10" href="javascript:void(0)"
                                                             id="new_row"><i class="fa fa-plus"></i></a>
                                                         &nbsp;
@@ -460,6 +476,20 @@
                                         <div style="margin-left: 10%">
                                             <p class="font-22" id="total_neto_add">0.00</p>
                                         </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row row-sm">
+                                    <div class="col-lg">
+                                        <label for="">Observaciones</label>
+                                        <textarea class="form-control" id="observaciones_add" placeholder="Observaciones" rows="3"
+                                            style="resize: none"></textarea>
+                                    </div>
+
+                                    <div class="col-lg mt-4">
+                                        <label for="">Adjunto</label>
+                                        <input class="form-control" accept="application/pdf" id="factura_add"
+                                            placeholder="Contacto" type="file">
                                     </div>
                                 </div>
                                 <div class="text-center mt-5">
