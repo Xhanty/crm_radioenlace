@@ -76,12 +76,12 @@ class ComprasController extends Controller
                 })
                 ->get();
 
-            return json_encode([
+            return response()->json([
                 "info" => 1,
                 "data" => $facturas
             ]);
         } catch (Exception $ex) {
-            return json_encode([
+            return response()->json([
                 "info" => 0,
                 "message" => $ex->getMessage()
             ]);

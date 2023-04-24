@@ -62,7 +62,7 @@
                         </div>
                         <div class="d-flex mb-0">
                             <div class="">
-                                <h4 class="mb-1 font-weight-bold">{{ count($facturas) }}</span></h4>
+                                <h4 class="mb-1 font-weight-bold" id="count_facturas">{{ count($facturas) }}</span></h4>
                             </div>
                             <div class="card-chart bg-pink-transparent brround ms-auto mt-0">
                                 <i class="typcn typcn-chart-line-outline text-pink tx-24"></i>
@@ -238,7 +238,7 @@
                                         <th>Estado</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tbl_facturas_all">
                                     @foreach ($facturas as $key => $factura)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
@@ -286,8 +286,9 @@
                     <div class="modal-body">
                         <div class="row row-sm">
                             <div class="col-lg">
-                                <label for=""># Factura</label>
-                                <input type="number" placeholder="# Factura" class="form-control" id="factura_select">
+                                <label for="">Número Factura</label>
+                                <input type="number" placeholder="Número Factura" class="form-control"
+                                    id="factura_select">
                             </div>
                         </div>
                         <br>
@@ -341,6 +342,7 @@
     <script src="{{ asset('assets/js/app/reportes/compras.js') }}"></script>
     <script>
         $(document).ready(function() {
+            clear();
             let facturas = @json($facturas);
 
             let impuestos_1 = [];
@@ -384,8 +386,6 @@
 
             proveedores = [...dataArr];
             empleados = [...dataArr2];
-
-            limpiarContenido();
 
             proveedores.forEach(element => {
                 let total = 0;
@@ -538,7 +538,11 @@
                 }
             });
 
-            function limpiarContenido() {
+            function clear() {
+                $("#cargos_facturas").html('');
+                $("#retenciones_facturas").html('');
+                $("#totales_facturas").html('');
+
                 $("#div_proveedores_factura").html('');
                 $("#div_empleados_factura").html('');
                 $("#tbl_impuesto_cargo").html('');
