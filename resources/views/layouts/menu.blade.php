@@ -252,6 +252,7 @@
                                         'gestionar_remisiones|' .
                                         'gestionar_precios_proveedores|' .
                                         'ver_prospectos_personas|' .
+                                        'ver_remisiones|' .
                                         'ver_prospectos_empresas'))
                             <li class="slide">
                                 <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
@@ -268,7 +269,8 @@
                                         <li><a class="slide-item" href="{{ route('cotizaciones') }}">Cotizaciones</a>
                                         </li>
                                     @endif
-                                    @if (auth()->user()->hasPermissionTo('gestionar_remisiones'))
+                                    @if (auth()->user()->hasPermissionTo('gestionar_remisiones') ||
+                                            auth()->user()->hasPermissionTo('ver_remisiones'))
                                         <li><a class="slide-item" href="{{ route('remisiones') }}">Remisiones</a>
                                         </li>
                                     @endif

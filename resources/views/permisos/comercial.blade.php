@@ -224,8 +224,8 @@
                                         <div class="settings-main-icon me-4 mt-1"><i class="fa fa-laptop"></i>
                                         </div>
                                         <div>
-                                            <p class="tx-20 font-weight-semibold d-flex mb-0">Remisiones</p>
-                                            <p class="tx-13 text-muted mb-0">Gestionar Remisiones</p>
+                                            <p class="tx-20 font-weight-semibold d-flex mb-0">Ver Remisiones</p>
+                                            <p class="tx-13 text-muted mb-0">Ver Remisiones</p>
                                         </div>
                                     </div>
                                 </div>
@@ -233,8 +233,8 @@
                         </div>
                         <div class="card-footer p-3">
                             <label class="form-switch float-end mb-0">
-                                <input type="checkbox" value="gestionar_remisiones"
-                                    class="form-switch-input check-com-9">
+                                <input type="checkbox" value="ver_remisiones"
+                                    class="form-switch-input check-com-10">
                                 <span class="form-switch-indicator custom-radius"></span>
                             </label>
                         </div>
@@ -249,8 +249,8 @@
                                         <div class="settings-main-icon me-4 mt-1"><i class="fa fa-laptop"></i>
                                         </div>
                                         <div>
-                                            <p class="tx-20 font-weight-semibold d-flex mb-0">Completar Remisión</p>
-                                            <p class="tx-13 text-muted mb-0">Completar Remisiones</p>
+                                            <p class="tx-20 font-weight-semibold d-flex mb-0">Remisiones</p>
+                                            <p class="tx-13 text-muted mb-0">Gestionar Remisiones</p>
                                         </div>
                                     </div>
                                 </div>
@@ -258,8 +258,8 @@
                         </div>
                         <div class="card-footer p-3">
                             <label class="form-switch float-end mb-0">
-                                <input type="checkbox" value="completar_remisiones"
-                                    class="form-switch-input check-com-10">
+                                <input type="checkbox" value="gestionar_remisiones"
+                                    class="form-switch-input check-com-9">
                                 <span class="form-switch-indicator custom-radius"></span>
                             </label>
                         </div>

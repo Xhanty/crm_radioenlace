@@ -17,7 +17,9 @@ class RemisionController extends Controller
     {
         try {
             if (!auth()->user()->hasPermissionTo('gestionar_remisiones')) {
-                return redirect()->route('home');
+                if (!auth()->user()->hasPermissionTo('ver_remisiones')) {
+                    return redirect()->route('home');
+                }
             }
 
             $remisiones_pendientes = DB::table('remisiones')
@@ -290,20 +292,20 @@ class RemisionController extends Controller
             $emails = $request->emails;
 
             $remision = DB::table('remisiones')
-            ->select('remisiones.*', 'cliente.razon_social', 'cliente.nit', 'cliente.ciudad', 'cliente.codigo_verificacion')
-            ->join('cliente', 'cliente.id', 'remisiones.cliente_id')
-            ->where('remisiones.id', $remision_id)
-            ->first();
+                ->select('remisiones.*', 'cliente.razon_social', 'cliente.nit', 'cliente.ciudad', 'cliente.codigo_verificacion')
+                ->join('cliente', 'cliente.id', 'remisiones.cliente_id')
+                ->where('remisiones.id', $remision_id)
+                ->first();
 
             if (!$remision) {
                 return response()->json(['info' => 0, 'error' => 'Error al enviar la remisión']);
             }
 
             $productos = DB::table('detelle_remisiones')
-            ->select('detelle_remisiones.*', 'productos.nombre as producto', 'productos.imagen', 'productos.modelo')
-            ->join('productos', 'productos.id', 'detelle_remisiones.producto_id')
-            ->where('detelle_remisiones.remision_id', $remision_id)
-            ->get();
+                ->select('detelle_remisiones.*', 'productos.nombre as producto', 'productos.imagen', 'productos.modelo')
+                ->join('productos', 'productos.id', 'detelle_remisiones.producto_id')
+                ->where('detelle_remisiones.remision_id', $remision_id)
+                ->get();
 
             $creador = DB::table('empleados')->where('id', $remision->created_by)->first();
 

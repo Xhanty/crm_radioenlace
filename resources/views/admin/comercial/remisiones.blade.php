@@ -25,8 +25,10 @@
                             <h3 class="card-title mt-2">Remisiones Pendientes</h3>
                         </div>
                         <div class="div-2-tables-header">
-                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAdd"><i
-                                    class="fas fa-plus"></i> Crear Remisión</button>
+                            @if (auth()->user()->hasPermissionTo('gestionar_remisiones'))
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAdd"><i
+                                        class="fas fa-plus"></i> Crear Remisión</button>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body">
@@ -62,27 +64,31 @@
                                             <td>{{ $value->creador }}</td>
                                             <td class="text-center">
                                                 <!--<a title="Ver" href="javascript:void(0);" data-id="{{ $value->id }}"
-                                                        class="btn btn-primary btn-sm btnView">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>-->
+                                                                        class="btn btn-primary btn-sm btnView">
+                                                                        <i class="fas fa-eye"></i>
+                                                                    </a>-->
                                                 <a title="Ver o Imprimir" target="_BLANK"
                                                     href="{{ route('remisiones_print') }}?token={{ $value->id }}"
                                                     class="btn btn-primary btn-sm btnPrint">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
-                                                <a title="Modificar" href="javascript:void(0);"
-                                                    data-id="{{ $value->id }}" class="btn btn-warning btn-sm btnEdit">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <a title="Completar" href="javascript:void(0);"
-                                                    data-id="{{ $value->id }}"
-                                                    class="btn btn-success btn-sm btnCompletar">
-                                                    <i class="fa fa-check"></i>
-                                                </a>
-                                                <a title="Eliminar" href="javascript:void(0);"
-                                                    data-id="{{ $value->id }}" class="btn btn-danger btn-sm btnDelete">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
+                                                @if (auth()->user()->hasPermissionTo('gestionar_remisiones'))
+                                                    <a title="Modificar" href="javascript:void(0);"
+                                                        data-id="{{ $value->id }}"
+                                                        class="btn btn-warning btn-sm btnEdit">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <a title="Completar" href="javascript:void(0);"
+                                                        data-id="{{ $value->id }}"
+                                                        class="btn btn-success btn-sm btnCompletar">
+                                                        <i class="fa fa-check"></i>
+                                                    </a>
+                                                    <a title="Eliminar" href="javascript:void(0);"
+                                                        data-id="{{ $value->id }}"
+                                                        class="btn btn-danger btn-sm btnDelete">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -137,30 +143,36 @@
                                             <td>{{ $value->creador }}</td>
                                             <td class="text-center">
                                                 <!--<a title="Ver" href="javascript:void(0);" data-id="{{ $value->id }}"
-                                                        class="btn btn-primary btn-sm btnView">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>-->
+                                                                        class="btn btn-primary btn-sm btnView">
+                                                                        <i class="fas fa-eye"></i>
+                                                                    </a>-->
                                                 <a title="Ver o Imprimir" target="_BLANK"
                                                     href="{{ route('remisiones_print') }}?token={{ $value->id }}"
                                                     class="btn btn-primary btn-sm btnPrint">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
-                                                <a title="Modificar" href="javascript:void(0);"
-                                                    data-id="{{ $value->id }}" class="btn btn-warning btn-sm btnEdit">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <a title="Enviar por correo" href="javascript:void(0);"
-                                                    data-id="{{ $value->id }}" class="btn btn-success btn-sm btnEmail">
-                                                    <i class="fa fa-envelope"></i>
-                                                </a>
-                                                <a title="Firma" href="javascript:void(0);" data-id="{{ $value->id }}"
-                                                    class="btn btn-primary btn-sm btnFirma">
-                                                    <i class="fas fa-eye-dropper"></i>
-                                                </a>
-                                                <a title="Eliminar" href="javascript:void(0);"
-                                                    data-id="{{ $value->id }}" class="btn btn-danger btn-sm btnDelete">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
+                                                @if (auth()->user()->hasPermissionTo('gestionar_remisiones'))
+                                                    <a title="Modificar" href="javascript:void(0);"
+                                                        data-id="{{ $value->id }}"
+                                                        class="btn btn-warning btn-sm btnEdit">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <a title="Enviar por correo" href="javascript:void(0);"
+                                                        data-id="{{ $value->id }}"
+                                                        class="btn btn-success btn-sm btnEmail">
+                                                        <i class="fa fa-envelope"></i>
+                                                    </a>
+                                                    <a title="Firma" href="javascript:void(0);"
+                                                        data-id="{{ $value->id }}"
+                                                        class="btn btn-primary btn-sm btnFirma">
+                                                        <i class="fas fa-eye-dropper"></i>
+                                                    </a>
+                                                    <a title="Eliminar" href="javascript:void(0);"
+                                                        data-id="{{ $value->id }}"
+                                                        class="btn btn-danger btn-sm btnDelete">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -391,7 +403,8 @@
                         <br>
                         <div class="row">
                             <div class="col-lg d-flex" style="justify-content: center">
-                                <label class="ckbox"><input type="checkbox"><span>Acepto <b>términos y condiciones</b> para el tratamiento de datos</span></label>
+                                <label class="ckbox"><input type="checkbox"><span>Acepto <b>términos y condiciones</b>
+                                        para el tratamiento de datos</span></label>
                             </div>
                         </div>
                         <br>
