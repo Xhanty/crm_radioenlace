@@ -62,8 +62,7 @@
                         </div>
                         <div class="d-flex mb-0">
                             <div class="">
-                                <h4 class="mb-1 font-weight-bold">5.274</span>
-                                </h4>
+                                <h4 class="mb-1 font-weight-bold">{{ count($facturas) }}</span></h4>
                             </div>
                             <div class="card-chart bg-pink-transparent brround ms-auto mt-0">
                                 <i class="typcn typcn-chart-line-outline text-pink tx-24"></i>
@@ -81,9 +80,10 @@
                         </div>
                         <div class="d-flex mb-0">
                             <div class="">
-                                <h4 class="mb-1   font-weight-bold">400.600,00</h4>
+                                <h4 class="mb-1 font-weight-bold" id="cargos_facturas">400.600,00</h4>
                             </div>
-                            <div class="card-chart bg-teal-transparent brround ms-auto mt-0">
+                            <div class="card-chart bg-teal-transparent brround ms-auto mt-0 btn_cargos"
+                                style="cursor: pointer;" title="Ver Detalle">
                                 <i class="typcn typcn-chart-bar-outline text-teal tx-20"></i>
                             </div>
                         </div>
@@ -99,9 +99,10 @@
                         </div>
                         <div class="d-flex mb-0">
                             <div class="">
-                                <h4 class="mb-1 font-weight-bold">302.450,00</h4>
+                                <h4 class="mb-1 font-weight-bold" id="retenciones_facturas">302.450,00</h4>
                             </div>
-                            <div class="card-chart bg-purple-transparent brround ms-auto mt-0">
+                            <div class="card-chart bg-purple-transparent brround ms-auto mt-0 btn_retenciones"
+                                style="cursor: pointer;" title="Ver Detalle">
                                 <i class="typcn typcn-time  text-purple tx-24"></i>
                             </div>
                         </div>
@@ -117,26 +118,12 @@
                         </div>
                         <div class="d-flex mb-0">
                             <div class="">
-                                <h4 class="mb-1 font-weight-bold">48.000.000,00</h4>
+                                <h4 class="mb-1 font-weight-bold" id="totales_facturas">48.000.000,00</h4>
                             </div>
                             <div class="card-chart bg-purple-transparent brround ms-auto mt-0">
                                 <i class="typcn typcn-time  text-purple tx-24"></i>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row row-sm">
-            <div class="col-lg-12 col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="main-content-label mg-b-5">
-                            Ventas - Compras
-                        </div>
-                        <p class="mg-b-20">Comparación entre ventas y compras.</p>
-                        <div id="index" class="ht-300"></div>
                     </div>
                 </div>
             </div>
@@ -154,53 +141,7 @@
                         <p class="tx-12 tx-gray-500 mb-0">Proveedores con más compras realizadas.</p>
                     </div><!-- card-header -->
                     <div class="card-body p-0">
-                        <div class="browser-stats">
-                            <div class="d-flex align-items-center item  border-bottom">
-                                <div class="d-flex">
-                                    <img src="{{ asset('images/empleados/noavatar.png') }}" alt="img"
-                                        class="ht-30 wd-30 me-2">
-                                    <div class="">
-                                        <h6 class="">Chrome</h6>
-                                        <span class="sub-text">Mozilla Foundation, Inc.</span>
-                                    </div>
-                                </div>
-                                <div class="ms-auto my-auto">
-                                    <div class="d-flex">
-                                        <span class="me-4 my-auto">35.502,00</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center item  border-bottom">
-                                <div class="d-flex">
-                                    <img src="{{ asset('images/empleados/noavatar.png') }}" alt="img"
-                                        class="ht-30 wd-30 me-2">
-                                    <div class="">
-                                        <h6 class="">Opera</h6>
-                                        <span class="sub-text">Mozilla Foundation, Inc.</span>
-                                    </div>
-                                </div>
-                                <div class="ms-auto my-auto">
-                                    <div class="d-flex">
-                                        <span class="me-4 my-auto">12.563,00</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center item  border-bottom">
-                                <div class="d-flex">
-                                    <img src="{{ asset('images/empleados/noavatar.png') }}" alt="img"
-                                        class="ht-30 wd-30 me-2">
-                                    <div class="">
-                                        <h6 class="">Edge</h6>
-                                        <span class="sub-text">Mozilla Foundation, Inc.</span>
-                                    </div>
-                                </div>
-                                <div class="ms-auto my-auto">
-                                    <div class="d-flex">
-                                        <span class="me-4 mt-1">25.364,00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="browser-stats" id="div_proveedores_factura"></div>
                     </div>
                 </div><!-- card -->
             </div>
@@ -208,61 +149,69 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
-                            <h4 class="card-title pt-2">Vendedores</h4>
+                            <h4 class="card-title pt-2">Empleados</h4>
                             <i class="mdi mdi-dots-Vertical"></i>
                         </div>
-                        <p class="tx-12 tx-gray-500 mb-0">Vendedores con más compras realizadas.</p>
+                        <p class="tx-12 tx-gray-500 mb-0">Empleados con más compras realizadas.</p>
                     </div><!-- card-header -->
                     <div class="card-body p-0">
-                        <div class="browser-stats">
-                            <div class="d-flex align-items-center item  border-bottom">
-                                <div class="d-flex">
-                                    <img src="{{ asset('images/empleados/noavatar.png') }}" alt="img"
-                                        class="ht-30 wd-30 me-2">
-                                    <div class="">
-                                        <h6 class="">Chrome</h6>
-                                        <span class="sub-text">Mozilla Foundation, Inc.</span>
-                                    </div>
-                                </div>
-                                <div class="ms-auto my-auto">
-                                    <div class="d-flex">
-                                        <span class="me-4 my-auto">35.502,00</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center item  border-bottom">
-                                <div class="d-flex">
-                                    <img src="{{ asset('images/empleados/noavatar.png') }}" alt="img"
-                                        class="ht-30 wd-30 me-2">
-                                    <div class="">
-                                        <h6 class="">Opera</h6>
-                                        <span class="sub-text">Mozilla Foundation, Inc.</span>
-                                    </div>
-                                </div>
-                                <div class="ms-auto my-auto">
-                                    <div class="d-flex">
-                                        <span class="me-4 my-auto">12.563,00</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center item  border-bottom">
-                                <div class="d-flex">
-                                    <img src="{{ asset('images/empleados/noavatar.png') }}" alt="img"
-                                        class="ht-30 wd-30 me-2">
-                                    <div class="">
-                                        <h6 class="">Edge</h6>
-                                        <span class="sub-text">Mozilla Foundation, Inc.</span>
-                                    </div>
-                                </div>
-                                <div class="ms-auto my-auto">
-                                    <div class="d-flex">
-                                        <span class="me-4 mt-1">25.364,00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="browser-stats" id="div_empleados_factura"></div>
                     </div>
                 </div><!-- card -->
+            </div>
+        </div>
+
+        <div class="row row-sm d-none" id="div_impuestos_cargo">
+            <div class="col-md-12 col-xl-12">
+                <div class="card overflow-hidden review-project">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="card-title mg-b-10">Cargos (IVA)</h4>
+                            <i class="mdi mdi-dots-horizontal text-gray"></i>
+                        </div>
+                        <p class="tx-12 text-muted mb-3">Listado Impuesto a Cargo.</p>
+                        <div class="table-responsive mb-0">
+                            <table
+                                class="table table-hover table-bordered mb-0 text-md-nowrap text-lg-nowrap text-xl-nowrap table-striped ">
+                                <thead>
+                                    <tr>
+                                        <th>Impuesto</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbl_impuesto_cargo">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row row-sm d-none" id="div_impuestos_retenciones">
+            <div class="col-md-12 col-xl-12">
+                <div class="card overflow-hidden review-project">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="card-title mg-b-10">Retenciones</h4>
+                            <i class="mdi mdi-dots-horizontal text-gray"></i>
+                        </div>
+                        <p class="tx-12 text-muted mb-3">Listado Impuesto a Retención.</p>
+                        <div class="table-responsive mb-0">
+                            <table
+                                class="table table-hover table-bordered mb-0 text-md-nowrap text-lg-nowrap text-xl-nowrap table-striped ">
+                                <thead>
+                                    <tr>
+                                        <th>Impuesto</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbl_impuesto_retencion">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -283,40 +232,40 @@
                                         <th></th>
                                         <th>Factura</th>
                                         <th>Proveedor</th>
+                                        <th>Fecha Compra</th>
+                                        <th>Fecha Vencimiento</th>
                                         <th>Valor</th>
-                                        <th>Fecha</th>
                                         <th>Estado</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>
-                                            <div class="project-contain">
-                                                <h6 class="mb-1 tx-13"><a target="_blank"
-                                                        href="{{ route('pdf_factura_compra') }}?token=5">Factura No. 01</a>
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td>Syscom Colombia S.A.S</td>
-                                        <td>500.498,00</td>
-                                        <td>31/03/2023</td>
-                                        <td><span class="badge bg-primary-gradient">Sin Pago</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>
-                                            <div class="project-contain">
-                                                <h6 class="mb-1 tx-13"><a target="_blank"
-                                                        href="{{ route('pdf_factura_compra') }}?token=5">Factura No. 02</a>
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td>Radiotrans Colombia S.A.S</td>
-                                        <td>223.500,00</td>
-                                        <td>30/03/2023</td>
-                                        <td><span class="badge bg-success-gradient">Con Pago</span></td>
-                                    </tr>
+                                    @foreach ($facturas as $key => $factura)
+                                        <tr>
+                                            <td>{{ $key + 1 }}</td>
+                                            <td>
+                                                <div class="project-contain">
+                                                    <h6 class="mb-1 tx-13"><a target="_blank"
+                                                            href="{{ route('pdf_factura_compra') }}?token={{ $factura->id }}">Factura
+                                                            No.
+                                                            {{ $factura->numero }}</a>
+                                                    </h6>
+                                                </div>
+                                            </td>
+                                            <td>{{ $factura->razon_social }}
+                                                ({{ $factura->nit }}-{{ $factura->codigo_verificacion }})
+                                            </td>
+                                            <td>{{ date('d/m/Y', strtotime($factura->fecha_elaboracion)) }}</td>
+                                            <td>{{ date('d/m/Y', strtotime($factura->fecha_vencimiento)) }}</td>
+                                            <td>{{ $factura->valor_total }}</td>
+                                            @if ($factura->status == 2)
+                                                <td><span class="badge bg-success-gradient">Con Pago</span></td>
+                                            @elseif($factura->status == 0)
+                                                <td><span class="badge bg-warning-gradient">Reversado</span></td>
+                                            @else
+                                                <td><span class="badge bg-danger-gradient">Sin Pago</span></td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -325,7 +274,7 @@
             </div>
         </div>
 
-        <!-- Modal Filtrs -->
+        <!-- Modal Filtros -->
         <div class="modal  fade" id="modalSelect">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content modal-content-demo">
@@ -337,11 +286,20 @@
                     <div class="modal-body">
                         <div class="row row-sm">
                             <div class="col-lg">
+                                <label for=""># Factura</label>
+                                <input type="number" placeholder="# Factura" class="form-control" id="factura_select">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
                                 <label for="">Proveedor</label>
-                                <select class="form-select" id="empleado_select">
+                                <select class="form-select" id="proveedor_select">
                                     <option value="">Seleccione un proveedor</option>
                                     @foreach ($proveedores as $proveedor)
-                                        <option value="{{ $proveedor->id }}">{{ $proveedor->razon_social }} - {{ $proveedor->nit }}</option>
+                                        <option value="{{ $proveedor->id }}">{{ $proveedor->razon_social }}
+                                            ({{ $proveedor->nit }})
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -380,140 +338,212 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('assets/plugins/echart/echart.js') }}"></script>
+    <script src="{{ asset('assets/js/app/reportes/compras.js') }}"></script>
     <script>
-        $(function(e) {
-            'use strict'
-            /*----BarChartEchart----*/
-            var echartBar = echarts.init(document.getElementById('index'), {
-                color: ['#285cf7', '#7987a1'],
-                categoryAxis: {
-                    axisLine: {
-                        lineStyle: {
-                            color: '#888180'
-                        }
-                    },
-                    splitLine: {
-                        lineStyle: {
-                            color: ['rgba(171, 167, 167,0.2)']
-                        }
-                    }
-                },
-                grid: {
-                    x: 40,
-                    y: 20,
-                    x2: 40,
-                    y2: 20
-                },
-                valueAxis: {
-                    axisLine: {
-                        lineStyle: {
-                            color: '#888180'
-                        }
-                    },
-                    splitArea: {
-                        show: true,
-                        areaStyle: {
-                            color: ['rgba(255,255,255,0.1)']
-                        }
-                    },
-                    splitLine: {
-                        lineStyle: {
-                            color: ['rgba(171, 167, 167,0.2)']
-                        }
-                    }
-                },
+        $(document).ready(function() {
+            let facturas = @json($facturas);
+
+            let impuestos_1 = [];
+            let cargos = 0;
+
+            let impuestos_2 = [];
+            let retenciones = 0;
+
+            let proveedores = [];
+
+            let empleados = [];
+
+            let totales = 0;
+
+            facturas.forEach(factura => {
+                let total = factura.valor_total;
+                let impuesto_1 = JSON.parse(factura.impuestos_1);
+                let impuesto_2 = JSON.parse(factura.impuestos_2);
+
+                if (impuesto_1) {
+                    impuestos_1.push(impuesto_1[0]);
+                }
+
+                if (impuesto_2) {
+                    impuestos_2.push(impuesto_2[0]);
+                }
+
+                total = total.split(',');
+                total = total[0];
+
+                total = parseInt(total.replaceAll('.', ''));
+                totales += total;
+
+                proveedores.push(factura.razon_social + ' (' + factura.nit + '-' + factura
+                    .codigo_verificacion + ')');
+                empleados.push(factura.empleado);
             });
-            echartBar.setOption({
-                tooltip: {
-                    trigger: 'axis',
-                    position: ['35%', '32%'],
-                },
-                legend: {
-                    data: ['New Account', 'Expansion Account']
-                },
-                toolbox: {
-                    show: false
-                },
-                calculable: false,
-                xAxis: [{
-                    type: 'category',
-                    data: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
-                        'Septiembre',
-                        'Octubre', 'Noviembre', 'Diciembre'
-                    ],
-                    axisLine: {
-                        lineStyle: {
-                            color: 'rgba(171, 167, 167,0.2)'
-                        }
-                    },
-                    axisLabel: {
-                        fontSize: 10,
-                        color: '#5f6d7a'
+
+            const dataArr = new Set(proveedores);
+            const dataArr2 = new Set(empleados);
+
+            proveedores = [...dataArr];
+            empleados = [...dataArr2];
+
+            limpiarContenido();
+
+            proveedores.forEach(element => {
+                let total = 0;
+
+                facturas.forEach(factura => {
+                    if (factura.razon_social + ' (' + factura.nit + '-' + factura
+                        .codigo_verificacion +
+                        ')' == element) {
+                        let total_factura = factura.valor_total;
+
+                        total_factura = total_factura.split(',');
+                        total_factura = total_factura[0];
+
+                        total_factura = parseInt(total_factura.replaceAll('.', ''));
+                        total += total_factura;
                     }
-                }],
-                yAxis: [{
-                    type: 'value',
-                    splitLine: {
-                        lineStyle: {
-                            color: 'rgba(171, 167, 167,0.2)'
-                        }
-                    },
-                    axisLine: {
-                        lineStyle: {
-                            color: 'rgba(171, 167, 167,0.2)'
-                        }
-                    },
-                    axisLabel: {
-                        fontSize: 10,
-                        color: '#5f6d7a'
-                    }
-                }],
-                series: [{
-                    name: 'View Price',
-                    type: 'bar',
-                    data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
-                    markPoint: {
-                        data: [{
-                            type: 'max',
-                            name: ''
-                        }, {
-                            type: 'min',
-                            name: ''
-                        }]
-                    },
-                    markLine: {
-                        data: [{
-                            type: 'average',
-                            name: ''
-                        }]
-                    }
-                }, {
-                    name: ' Purchased Price',
-                    type: 'bar',
-                    data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
-                    markPoint: {
-                        data: [{
-                            name: 'Purchased Price',
-                            value: 182.2,
-                            xAxis: 7,
-                            yAxis: 183,
-                        }, {
-                            name: 'Purchased Price',
-                            value: 2.3,
-                            xAxis: 11,
-                            yAxis: 3
-                        }]
-                    },
-                    markLine: {
-                        data: [{
-                            type: 'average',
-                            name: ''
-                        }]
-                    }
-                }]
+                });
+
+                $("#div_proveedores_factura").append(
+                    '<div class="d-flex align-items-center item  border-bottom">' +
+                    '<div class="d-flex">' +
+                    '<img src="{{ asset('images/empleados/noavatar.png') }}" alt="img"' +
+                    'class="ht-30 wd-30 me-2">' +
+                    '<div class="" style="margin-top: 8px">' +
+                    '<h6 class="">' + element + '</h6>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="ms-auto my-auto">' +
+                    '<div class="d-flex">' +
+                    '<span class="me-4 my-auto">' + total.toLocaleString('es-ES', {
+                        minimumFractionDigits: 2
+                    }) + '</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>');
             });
+
+            empleados.forEach(element => {
+                let total = 0;
+
+                facturas.forEach(factura => {
+                    if (factura.empleado == element) {
+                        let total_factura = factura.valor_total;
+
+                        total_factura = total_factura.split(',');
+                        total_factura = total_factura[0];
+
+                        total_factura = parseInt(total_factura.replaceAll('.', ''));
+                        total += total_factura;
+                    }
+                });
+
+                $("#div_empleados_factura").append(
+                    '<div class="d-flex align-items-center item  border-bottom">' +
+                    '<div class="d-flex">' +
+                    '<img src="{{ asset('images/empleados/noavatar.png') }}" alt="img"' +
+                    'class="ht-30 wd-30 me-2">' +
+                    '<div class="" style="margin-top: 8px">' +
+                    '<h6 class="">' + element + '</h6>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="ms-auto my-auto">' +
+                    '<div class="d-flex">' +
+                    '<span class="me-4 my-auto">' + total.toLocaleString('es-ES', {
+                        minimumFractionDigits: 2
+                    }) + '</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>');
+            });
+
+            const cargos_array = {};
+
+            impuestos_1.forEach(impuesto => {
+                let valor_1 = parseInt(impuesto[1]);
+                cargos += valor_1;
+
+                let nombre = impuesto[0];
+                let valor = parseInt(impuesto[1]);
+                if (cargos_array[nombre]) {
+                    cargos_array[nombre] += valor;
+                } else {
+                    cargos_array[nombre] = valor;
+                }
+            });
+
+            const retenciones_array = {};
+
+            impuestos_2.forEach(impuesto => {
+                let valor_1 = parseInt(impuesto[1]);
+                retenciones += valor_1;
+
+                let nombre = impuesto[0];
+                let valor = parseInt(impuesto[1]);
+                if (retenciones_array[nombre]) {
+                    retenciones_array[nombre] += valor;
+                } else {
+                    retenciones_array[nombre] = valor;
+                }
+            });
+
+            for (const [key, value] of Object.entries(cargos_array)) {
+                $("#tbl_impuesto_cargo").append(
+                    '<tr>' +
+                    '<td>' + key + '</td>' +
+                    '<td>' + value.toLocaleString('es-ES', {
+                        minimumFractionDigits: 2
+                    }) + '</td>' +
+                    '</tr>'
+                );
+            }
+
+            for (const [key, value] of Object.entries(retenciones_array)) {
+                $("#tbl_impuesto_retencion").append(
+                    '<tr>' +
+                    '<td>' + key + '</td>' +
+                    '<td>' + value.toLocaleString('es-ES', {
+                        minimumFractionDigits: 2
+                    }) + '</td>' +
+                    '</tr>'
+                );
+            }
+
+            $('#totales_facturas').html(totales.toLocaleString('es-ES', {
+                minimumFractionDigits: 2
+            }));
+
+            $('#cargos_facturas').html(cargos.toLocaleString('es-ES', {
+                minimumFractionDigits: 2
+            }));
+
+            $('#retenciones_facturas').html(retenciones.toLocaleString('es-ES', {
+                minimumFractionDigits: 2
+            }));
+
+            // DIVS
+            $(".btn_cargos").click(function() {
+                if ($("#div_impuestos_cargo").hasClass("d-none")) {
+                    $("#div_impuestos_cargo").removeClass("d-none");
+                } else {
+                    $("#div_impuestos_cargo").addClass("d-none");
+                }
+            });
+
+            $(".btn_retenciones").click(function() {
+                if ($("#div_impuestos_retenciones").hasClass("d-none")) {
+                    $("#div_impuestos_retenciones").removeClass("d-none");
+                } else {
+                    $("#div_impuestos_retenciones").addClass("d-none");
+                }
+            });
+
+            function limpiarContenido() {
+                $("#div_proveedores_factura").html('');
+                $("#div_empleados_factura").html('');
+                $("#tbl_impuesto_cargo").html('');
+                $("#tbl_impuesto_retencion").html('');
+            }
         });
     </script>
-    <script src="{{ asset('assets/js/app/reportes/compras.js') }}"></script>
 @endsection
