@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-04-2023 a las 23:16:57
+-- Tiempo de generación: 25-04-2023 a las 00:15:43
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -5212,11 +5212,36 @@ CREATE TABLE `detalle_factura_compra` (
 --
 
 INSERT INTO `detalle_factura_compra` (`id`, `factura_id`, `tipo`, `producto`, `cuenta`, `description`, `bodega`, `cantidad`, `valor_unitario`, `descuento`, `impuesto_cargo`, `impuesto_retencion`, `valor_total`) VALUES
-(1, 1, 1, 3, NULL, NULL, NULL, '1', '155.000,00', '0', '19', NULL, '155.000,00'),
-(2, 2, 2, NULL, 3240, NULL, NULL, '1', '500.498,00', '0', '19', NULL, '500.498,00'),
-(3, 4, 1, 1, NULL, NULL, NULL, '1', '50.000,00', '0', '1', NULL, '59.500,00'),
-(4, 5, 1, 1, NULL, NULL, NULL, '1', '45.000,00', '0.00', '0', '0', '45.000,00'),
-(5, 5, 1, 2, NULL, NULL, NULL, '3', '50.000,00', '0.00', '19', '0', '178.500,00');
+(20, 15, 1, 1, NULL, NULL, NULL, '5', '500.000,00', '2', '19', '2.5', '2.854.250,00'),
+(21, 16, 1, 1, NULL, NULL, NULL, '3', '560.000,00', '0.00', '19', '5', '1.915.200,00'),
+(22, 20, 1, 1, NULL, '', '', '1', '200.000,00', '0.00', '19', '10', '218.000,00'),
+(23, 21, 1, 1, NULL, '', '', '1', '2.000,00', '0.00', '19', '11', '2.160,00');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detalle_factura_venta`
+--
+
+CREATE TABLE `detalle_factura_venta` (
+  `id` int(11) NOT NULL,
+  `factura_id` int(11) NOT NULL,
+  `producto` int(11) DEFAULT NULL,
+  `cuenta` int(11) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `bodega` varchar(255) DEFAULT NULL,
+  `cantidad` varchar(255) NOT NULL,
+  `valor_unitario` varchar(255) NOT NULL,
+  `descuento` varchar(255) DEFAULT NULL,
+  `valor_total` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `detalle_factura_venta`
+--
+
+INSERT INTO `detalle_factura_venta` (`id`, `factura_id`, `producto`, `cuenta`, `description`, `bodega`, `cantidad`, `valor_unitario`, `descuento`, `valor_total`) VALUES
+(1, 1, 2, NULL, NULL, NULL, '1', '45.000,00', '0.00', '45.000,00');
 
 -- --------------------------------------------------------
 
@@ -5391,7 +5416,14 @@ CREATE TABLE `factura_compra` (
   `proveedor_id` int(11) NOT NULL,
   `factura_proveedor` varchar(255) NOT NULL,
   `num_factura_proveedor` int(11) NOT NULL,
+  `total_bruto` varchar(255) DEFAULT NULL,
+  `descuentos` varchar(255) DEFAULT NULL,
+  `subtotal` varchar(255) DEFAULT NULL,
+  `impuestos_1` text DEFAULT NULL,
+  `impuestos_2` text DEFAULT NULL,
   `valor_total` varchar(255) NOT NULL,
+  `observaciones` text DEFAULT NULL,
+  `adjunto_pdf` text DEFAULT NULL,
   `status` int(1) NOT NULL DEFAULT 1,
   `created_at` datetime NOT NULL,
   `created_by` int(11) NOT NULL
@@ -5401,11 +5433,37 @@ CREATE TABLE `factura_compra` (
 -- Volcado de datos para la tabla `factura_compra`
 --
 
-INSERT INTO `factura_compra` (`id`, `token`, `numero`, `tipo`, `centro_costo`, `fecha_elaboracion`, `fecha_vencimiento`, `proveedor_id`, `factura_proveedor`, `num_factura_proveedor`, `valor_total`, `status`, `created_at`, `created_by`) VALUES
-(1, NULL, 1, 1, 1, '2023-03-23', '2023-04-22', 11, 'FC', 2342, '155.000,00', 1, '2023-03-24 16:40:45', 1),
-(2, NULL, 2, 1, 1, '2023-03-24', '2023-04-23', 9, 'FD', 2344, '500.498,00', 1, '2023-03-24 16:40:45', 1),
-(4, NULL, 3, 1, 2, '2023-03-28', '2023-04-27', 4, 'FC', 1, '59.500,00', 1, '2023-03-29 12:38:45', 1),
-(5, NULL, 4, 1, 2, '2023-03-31', '2023-04-30', 5, 'FC', 4, '223.500,00', 1, '2023-03-30 08:54:40', 1);
+INSERT INTO `factura_compra` (`id`, `token`, `numero`, `tipo`, `centro_costo`, `fecha_elaboracion`, `fecha_vencimiento`, `proveedor_id`, `factura_proveedor`, `num_factura_proveedor`, `total_bruto`, `descuentos`, `subtotal`, `impuestos_1`, `impuestos_2`, `valor_total`, `observaciones`, `adjunto_pdf`, `status`, `created_at`, `created_by`) VALUES
+(15, NULL, 1, 1, 2, '2023-04-24', '2023-05-24', 4, 'FC', 1111, '2.500.000,00', '50.000,00', '2.450.000,00', '[[\"IVA 19%\",\"475000\"]]', '[[\"Retefuente 2.5%\",\"62500\"]]', '2.854.250,00', NULL, NULL, 1, '2023-04-24 11:01:17', 1),
+(16, NULL, 2, 1, 2, '2023-04-24', '2023-05-24', 8, 'FC', 2222, '1.680.000,00', '0,00', '1.680.000,00', '[[\"Iva Serv 19%\",\"319200\"]]', '[[\"Retenci\\u00f3n 5%\",\"84000\"]]', '1.915.200,00', NULL, NULL, 1, '2023-04-24 11:02:19', 1),
+(21, NULL, 3, 1, 2, '2023-04-24', '2023-05-24', 4, 'FC', 22000, '2000,00', '0,00', '2000,00', '[[\"Iva Serv 19%\\n                                                            \",380]]', '[[\"Retefuente 11%\\n                                                            \",220]]', '2160,00', '000000', '16823740655202837704.pdf', 1, '2023-04-24 17:07:45', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `factura_venta`
+--
+
+CREATE TABLE `factura_venta` (
+  `id` int(11) NOT NULL,
+  `token` text DEFAULT NULL,
+  `numero` int(11) NOT NULL,
+  `tipo` int(11) NOT NULL,
+  `fecha_elaboracion` date NOT NULL,
+  `cliente_id` int(11) NOT NULL,
+  `vendedor_id` int(11) NOT NULL,
+  `valor_total` varchar(255) NOT NULL,
+  `status` int(1) NOT NULL DEFAULT 1,
+  `created_at` datetime NOT NULL,
+  `created_by` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `factura_venta`
+--
+
+INSERT INTO `factura_venta` (`id`, `token`, `numero`, `tipo`, `fecha_elaboracion`, `cliente_id`, `vendedor_id`, `valor_total`, `status`, `created_at`, `created_by`) VALUES
+(1, NULL, 1, 1, '2023-04-11', 13, 1, '45.000,00', 1, '2023-04-11 16:28:43', 1);
 
 -- --------------------------------------------------------
 
@@ -5500,12 +5558,8 @@ CREATE TABLE `inventario` (
 --
 
 INSERT INTO `inventario` (`id`, `producto_id`, `codigo_interno`, `serial`, `cantidad`, `status`, `created_by`, `created_at`) VALUES
-(9, 1, NULL, '655656', 1, 0, 1, '2023-01-26 09:00:33'),
-(10, 1, NULL, '4444', 1, 1, 1, '2023-01-27 07:47:51'),
-(11, 1, NULL, '213', 0, 0, 1, '2023-01-31 08:37:09'),
-(12, 1, 'asdd', '1233', 0, 0, 1, '2023-01-31 08:42:49'),
-(13, 1, '211', '231331', 8, 1, 1, '2023-02-17 14:30:12'),
-(14, 2, '12', '1233', 5, 1, 1, '2023-03-01 10:01:12');
+(15, 1, '051051', '051051', 1, 1, 1, '2023-04-13 14:30:02'),
+(16, 1, '0444444', '05050', 1, 1, 1, '2023-04-13 14:30:32');
 
 -- --------------------------------------------------------
 
@@ -5534,27 +5588,12 @@ CREATE TABLE `movimientos_inventario` (
 --
 
 INSERT INTO `movimientos_inventario` (`id`, `tipo`, `inventario_id`, `almacen_id`, `cantidad`, `empleado_id`, `cliente_id`, `proveedor_id`, `precio_venta`, `precio_compra`, `observaciones`, `created_by`, `created_at`) VALUES
-(8, 0, 9, 280, 1, NULL, NULL, 4, '3333', '66353535', NULL, 1, '2023-01-26 09:00:33'),
-(9, 4, 9, 281, 1, NULL, 25, NULL, NULL, NULL, NULL, 1, '2023-01-26 09:00:52'),
-(10, 0, 9, 282, 1, NULL, NULL, 7, NULL, NULL, NULL, 1, '2023-01-26 09:44:30'),
-(11, 0, 10, 284, 1, NULL, NULL, 20, '3333', NULL, NULL, 1, '2023-01-27 07:47:51'),
-(12, 0, 11, 283, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2023-01-31 08:37:09'),
-(13, 0, 12, 282, 1, NULL, NULL, NULL, 'sd', NULL, NULL, 1, '2023-01-31 08:42:49'),
-(14, 2, 12, 286, 1, NULL, 73, NULL, NULL, NULL, NULL, 1, '2023-02-02 14:57:58'),
-(15, 1, 12, 283, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2023-02-02 14:58:26'),
-(16, 2, 12, 284, 1, NULL, 73, NULL, NULL, NULL, NULL, 1, '2023-02-02 15:01:56'),
-(17, 1, 12, 282, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2023-02-02 15:02:38'),
-(18, 3, 12, 283, 1, 6, NULL, NULL, NULL, NULL, NULL, 1, '2023-02-02 15:03:08'),
-(19, 1, 12, 283, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2023-02-02 15:04:25'),
-(20, 0, 13, 282, 11, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2023-02-17 14:30:12'),
-(21, 0, 14, 282, 12, NULL, NULL, 4, NULL, NULL, NULL, 1, '2023-03-01 10:01:12'),
-(22, 2, 12, 282, 1, NULL, 17, NULL, NULL, NULL, NULL, 1, '2023-03-01 10:10:57'),
-(23, 5, 14, 282, 3, NULL, 17, NULL, NULL, NULL, 'Producto asignado a solicitud de inventario con códigoSOL-KAMTN', 1, '2023-03-03 15:56:47'),
-(24, 5, 13, 282, 1, NULL, 17, NULL, NULL, NULL, 'Producto asignado a solicitud de inventario con códigoSOL-KAMTN', 1, '2023-03-03 15:57:05'),
-(25, 5, 14, 282, 4, NULL, 17, NULL, NULL, NULL, 'Producto asignado a solicitud de inventario con códigoSOL-KAMTN', 1, '2023-03-03 15:57:18'),
-(26, 2, 13, 283, 1, NULL, 28, NULL, NULL, NULL, 'Producto asignado a la solicitud de inventario con código: SOL-QQULM', 1, '2023-03-03 16:06:13'),
-(27, 2, 13, 282, 1, NULL, 28, NULL, NULL, NULL, 'Producto asignado a la solicitud de inventario con código: SOL-QQULM', 1, '2023-03-22 08:34:01'),
-(28, 2, 11, 282, 1, NULL, 28, NULL, NULL, NULL, 'Producto asignado a la solicitud de inventario con código: SOL-QQULM', 1, '2023-03-22 08:34:01');
+(57, 0, 15, 283, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2023-04-13 14:30:02'),
+(58, 0, 16, 283, 1, NULL, NULL, NULL, '12000', NULL, NULL, 1, '2023-04-13 14:30:32'),
+(59, 1, 16, 286, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2023-04-13 14:30:53'),
+(60, 3, 16, 282, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, '2023-04-13 14:33:11'),
+(61, 5, 16, 284, 1, NULL, 67, NULL, NULL, NULL, NULL, 1, '2023-04-13 14:33:38'),
+(62, 1, 16, 283, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2023-04-13 14:33:58');
 
 -- --------------------------------------------------------
 
@@ -5973,7 +6012,9 @@ INSERT INTO `parametrizacion_documentos` (`id`, `documento`, `tipo_parametrizaci
 (2, 3, 1, 1, 3240, 2, 1, 1, '2023-04-04'),
 (3, 3, 1, 1, 3240, 1, 1, 1, '2023-04-04'),
 (4, 3, 2, 1, 3240, 1, 1, 1, '2023-04-04'),
-(5, 3, 2, 2, 3240, 1, 1, 1, '2023-04-04');
+(5, 3, 2, 2, 3240, 1, 1, 1, '2023-04-04'),
+(6, 2, 1, 1, 3240, 1, 1, 1, '2023-04-20'),
+(7, 2, 1, 1, 3240, 2, 0, 1, '2023-04-20');
 
 -- --------------------------------------------------------
 
@@ -5995,82 +6036,6 @@ CREATE TABLE `permisos_new` (
 --
 
 INSERT INTO `permisos_new` (`id`, `empleado`, `modulo`, `administrador`, `fecha`, `cotizaciones`) VALUES
-(8749, 1, 'ver_asignaciones', 1, '2023-03-02 11:53:27', NULL),
-(8750, 1, 'gestion_asignacion', 1, '2023-03-02 11:53:27', NULL),
-(8751, 1, 'gestion_puntos', 1, '2023-03-02 11:53:27', NULL),
-(8752, 1, 'ver_asignaciones_proyectos', 1, '2023-03-02 11:53:27', NULL),
-(8753, 1, 'gestion_asignaciones_proyectos', 1, '2023-03-02 11:53:27', NULL),
-(8754, 1, 'gestion_puntos_proyectos', 1, '2023-03-02 11:53:27', NULL),
-(8755, 1, 'ver_clientes', 1, '2023-03-02 11:53:27', NULL),
-(8756, 1, 'gestionar_clientes', 1, '2023-03-02 11:53:27', NULL),
-(8757, 1, 'inactivar_clientes', 1, '2023-03-02 11:53:27', NULL),
-(8758, 1, 'eliminar_clientes', 1, '2023-03-02 11:53:27', NULL),
-(8759, 1, 'ver_proveedores', 1, '2023-03-02 11:53:27', NULL),
-(8760, 1, 'gestionar_proveedores', 1, '2023-03-02 11:53:27', NULL),
-(8761, 1, 'inactivar_proveedores', 1, '2023-03-02 11:53:27', NULL),
-(8762, 1, 'eliminar_proveedores', 1, '2023-03-02 11:53:27', NULL),
-(8763, 1, 'ver_empleados', 1, '2023-03-02 11:53:27', NULL),
-(8764, 1, 'gestionar_empleados', 1, '2023-03-02 11:53:27', NULL),
-(8765, 1, 'inactivar_empleados', 1, '2023-03-02 11:53:27', NULL),
-(8766, 1, 'eliminar_empleados', 1, '2023-03-02 11:53:27', NULL),
-(8767, 1, 'ver_puntos', 1, '2023-03-02 11:53:27', NULL),
-(8768, 1, 'gestionar_puntos', 1, '2023-03-02 11:53:27', NULL),
-(8769, 1, 'ver_vehiculos', 1, '2023-03-02 11:53:27', NULL),
-(8770, 1, 'gestion_vehiculos', 1, '2023-03-02 11:53:27', NULL),
-(8771, 1, 'enviar_checklist_vehiculos', 1, '2023-03-02 11:53:27', NULL),
-(8772, 1, 'gestion_checklist_vehiculos', 1, '2023-03-02 11:53:27', NULL),
-(8773, 1, 'gestion_salud_vehiculos', 1, '2023-03-02 11:53:27', NULL),
-(8774, 1, 'gestion_categorias_inventario', 1, '2023-03-02 11:53:27', NULL),
-(8775, 1, 'gestion_almacenes_inventario', 1, '2023-03-02 11:53:27', NULL),
-(8776, 1, 'gestion_productos_inventario', 1, '2023-03-02 11:53:27', NULL),
-(8777, 1, 'gestion_inventario', 1, '2023-03-02 11:53:27', NULL),
-(8778, 1, 'ver_movimientos_inventario', 1, '2023-03-02 11:53:27', NULL),
-(8779, 1, 'solicitud_elementos', 1, '2023-03-02 11:53:27', NULL),
-(8780, 1, 'gestion_solicitudes', 1, '2023-03-02 11:53:27', NULL),
-(8781, 1, 'gesion_categorias_proyectos', 1, '2023-03-02 11:53:27', NULL),
-(8782, 1, 'gestion_proyectos', 1, '2023-03-02 11:53:27', NULL),
-(8783, 1, 'gestion_actas_proyectos', 1, '2023-03-02 11:53:27', NULL),
-(8784, 1, 'firma_cliente_proyectos', 1, '2023-03-02 11:53:27', NULL),
-(8785, 1, 'visto_bueno_proyectos', 1, '2023-03-02 11:53:27', NULL),
-(8786, 1, 'ver_reparaciones_asignadas', 1, '2023-03-02 11:53:27', NULL),
-(8787, 1, 'gestion_reparaciones', 1, '2023-03-02 11:53:27', NULL),
-(8788, 1, 'generar_informes_reparaciones', 1, '2023-03-02 11:53:27', NULL),
-(8789, 1, 'gestion_documentos', 1, '2023-03-02 11:53:27', NULL),
-(8790, 1, 'gestion_orden_compra', 1, '2023-03-02 11:53:27', NULL),
-(8791, 1, 'completar_orden_compra', 1, '2023-03-02 11:53:27', NULL),
-(8792, 1, 'enviar_orden_compra', 1, '2023-03-02 11:53:27', NULL),
-(8793, 1, 'eliminar_orden_compra', 1, '2023-03-02 11:53:27', NULL),
-(8794, 1, 'gestionar_cotizaciones', 1, '2023-03-02 11:53:27', '[\"6\",\"1\"]'),
-(8795, 1, 'completar_cotizaciones', 1, '2023-03-02 11:53:27', NULL),
-(8796, 1, 'enviar_cotizaciones', 1, '2023-03-02 11:53:27', NULL),
-(8797, 1, 'eliminar_cotizaciones', 1, '2023-03-02 11:53:27', NULL),
-(8798, 1, 'gestionar_remisiones', 1, '2023-03-02 11:53:27', NULL),
-(8799, 1, 'completar_remisiones', 1, '2023-03-02 11:53:27', NULL),
-(8800, 1, 'enviar_remisiones', 1, '2023-03-02 11:53:27', NULL),
-(8801, 1, 'eliminar_remisiones', 1, '2023-03-02 11:53:27', NULL),
-(8802, 1, 'gestionar_precios_proveedores', 1, '2023-03-02 11:53:27', NULL),
-(8803, 1, 'completar_precios_proveedores', 1, '2023-03-02 11:53:27', NULL),
-(8804, 1, 'enviar_precios_proveedores', 1, '2023-03-02 11:53:27', NULL),
-(8805, 1, 'eliminar_precios_proveedores', 1, '2023-03-02 11:53:27', NULL),
-(8806, 1, 'ver_prospectos_personas', 1, '2023-03-02 11:53:27', NULL),
-(8807, 1, 'gestionar_prospectos_personas', 1, '2023-03-02 11:53:27', NULL),
-(8808, 1, 'importar_prospectos_personas', 1, '2023-03-02 11:53:27', NULL),
-(8809, 1, 'exportar_prospectos_personas', 1, '2023-03-02 11:53:27', NULL),
-(8810, 1, 'ver_prospectos_empresas', 1, '2023-03-02 11:53:27', NULL),
-(8811, 1, 'gestionar_prospectos_empresas', 1, '2023-03-02 11:53:27', NULL),
-(8812, 1, 'importar_prospectos_empresas', 1, '2023-03-02 11:53:27', NULL),
-(8813, 1, 'exportar_prospectos_empresas', 1, '2023-03-02 11:53:27', NULL),
-(8814, 1, 'contabilidad_config_administrativa', 1, '2023-03-02 11:53:27', NULL),
-(8815, 1, 'contabilidad_config_general', 1, '2023-03-02 11:53:27', NULL),
-(8816, 1, 'contabilidad_config_catalogos', 1, '2023-03-02 11:53:27', NULL),
-(8817, 1, 'contabilidad_config_otros', 1, '2023-03-02 11:53:27', NULL),
-(8818, 1, 'contabilidad_factura_compra', 1, '2023-03-02 11:53:27', NULL),
-(8819, 1, 'contabilidad_factura_venta', 1, '2023-03-02 11:53:27', NULL),
-(8820, 1, 'contabilidad_nota_credito', 1, '2023-03-02 11:53:27', NULL),
-(8821, 1, 'contabilidad_nota_debito', 1, '2023-03-02 11:53:27', NULL),
-(8822, 1, 'contabilidad_recibo_pago', 1, '2023-03-02 11:53:27', NULL),
-(8823, 1, 'permisos_usuarios', 1, '2023-03-02 11:53:27', NULL),
-(8824, 1, 'categorias_calendario', 1, '2023-03-02 11:53:27', NULL),
 (8825, 6, 'ver_asignaciones', 1, '2023-03-27 09:42:57', NULL),
 (8826, 6, 'ver_asignaciones_proyectos', 1, '2023-03-27 09:42:57', NULL),
 (8827, 6, 'ver_puntos', 1, '2023-03-27 09:42:57', NULL),
@@ -6097,7 +6062,83 @@ INSERT INTO `permisos_new` (`id`, `empleado`, `modulo`, `administrador`, `fecha`
 (8848, 6, 'ver_prospectos_empresas', 1, '2023-03-27 09:42:57', NULL),
 (8849, 6, 'gestionar_prospectos_empresas', 1, '2023-03-27 09:42:57', NULL),
 (8850, 6, 'importar_prospectos_empresas', 1, '2023-03-27 09:42:57', NULL),
-(8851, 6, 'exportar_prospectos_empresas', 1, '2023-03-27 09:42:57', NULL);
+(8851, 6, 'exportar_prospectos_empresas', 1, '2023-03-27 09:42:57', NULL),
+(9454, 1, 'ver_asignaciones', 1, '2023-04-24 14:29:42', NULL),
+(9455, 1, 'gestion_asignacion', 1, '2023-04-24 14:29:42', NULL),
+(9456, 1, 'gestion_puntos', 1, '2023-04-24 14:29:42', NULL),
+(9457, 1, 'ver_asignaciones_proyectos', 1, '2023-04-24 14:29:42', NULL),
+(9458, 1, 'gestion_asignaciones_proyectos', 1, '2023-04-24 14:29:42', NULL),
+(9459, 1, 'gestion_puntos_proyectos', 1, '2023-04-24 14:29:42', NULL),
+(9460, 1, 'ver_clientes', 1, '2023-04-24 14:29:42', NULL),
+(9461, 1, 'gestionar_clientes', 1, '2023-04-24 14:29:42', NULL),
+(9462, 1, 'inactivar_clientes', 1, '2023-04-24 14:29:42', NULL),
+(9463, 1, 'eliminar_clientes', 1, '2023-04-24 14:29:42', NULL),
+(9464, 1, 'ver_proveedores', 1, '2023-04-24 14:29:42', NULL),
+(9465, 1, 'gestionar_proveedores', 1, '2023-04-24 14:29:42', NULL),
+(9466, 1, 'inactivar_proveedores', 1, '2023-04-24 14:29:42', NULL),
+(9467, 1, 'eliminar_proveedores', 1, '2023-04-24 14:29:42', NULL),
+(9468, 1, 'ver_empleados', 1, '2023-04-24 14:29:42', NULL),
+(9469, 1, 'gestionar_empleados', 1, '2023-04-24 14:29:42', NULL),
+(9470, 1, 'inactivar_empleados', 1, '2023-04-24 14:29:42', NULL),
+(9471, 1, 'eliminar_empleados', 1, '2023-04-24 14:29:42', NULL),
+(9472, 1, 'ver_puntos', 1, '2023-04-24 14:29:42', NULL),
+(9473, 1, 'gestionar_puntos', 1, '2023-04-24 14:29:42', NULL),
+(9474, 1, 'ver_vehiculos', 1, '2023-04-24 14:29:42', NULL),
+(9475, 1, 'gestion_vehiculos', 1, '2023-04-24 14:29:42', NULL),
+(9476, 1, 'enviar_checklist_vehiculos', 1, '2023-04-24 14:29:42', NULL),
+(9477, 1, 'gestion_checklist_vehiculos', 1, '2023-04-24 14:29:42', NULL),
+(9478, 1, 'gestion_salud_vehiculos', 1, '2023-04-24 14:29:42', NULL),
+(9479, 1, 'gestion_categorias_inventario', 1, '2023-04-24 14:29:42', NULL),
+(9480, 1, 'gestion_almacenes_inventario', 1, '2023-04-24 14:29:42', NULL),
+(9481, 1, 'gestion_productos_inventario', 1, '2023-04-24 14:29:42', NULL),
+(9482, 1, 'gestion_inventario', 1, '2023-04-24 14:29:42', NULL),
+(9483, 1, 'ver_movimientos_inventario', 1, '2023-04-24 14:29:42', NULL),
+(9484, 1, 'solicitud_elementos', 1, '2023-04-24 14:29:42', NULL),
+(9485, 1, 'gestion_solicitudes', 1, '2023-04-24 14:29:42', NULL),
+(9486, 1, 'gesion_categorias_proyectos', 1, '2023-04-24 14:29:42', NULL),
+(9487, 1, 'gestion_proyectos', 1, '2023-04-24 14:29:42', NULL),
+(9488, 1, 'gestion_actas_proyectos', 1, '2023-04-24 14:29:42', NULL),
+(9489, 1, 'firma_cliente_proyectos', 1, '2023-04-24 14:29:42', NULL),
+(9490, 1, 'visto_bueno_proyectos', 1, '2023-04-24 14:29:42', NULL),
+(9491, 1, 'ver_reparaciones_asignadas', 1, '2023-04-24 14:29:42', NULL),
+(9492, 1, 'gestion_reparaciones', 1, '2023-04-24 14:29:42', NULL),
+(9493, 1, 'generar_informes_reparaciones', 1, '2023-04-24 14:29:42', NULL),
+(9494, 1, 'gestion_documentos', 1, '2023-04-24 14:29:42', NULL),
+(9495, 1, 'gestion_orden_compra', 1, '2023-04-24 14:29:42', NULL),
+(9496, 1, 'completar_orden_compra', 1, '2023-04-24 14:29:42', NULL),
+(9497, 1, 'enviar_orden_compra', 1, '2023-04-24 14:29:42', NULL),
+(9498, 1, 'eliminar_orden_compra', 1, '2023-04-24 14:29:42', NULL),
+(9499, 1, 'gestionar_cotizaciones', 1, '2023-04-24 14:29:42', NULL),
+(9500, 1, 'completar_cotizaciones', 1, '2023-04-24 14:29:42', NULL),
+(9501, 1, 'enviar_cotizaciones', 1, '2023-04-24 14:29:42', NULL),
+(9502, 1, 'eliminar_cotizaciones', 1, '2023-04-24 14:29:42', NULL),
+(9503, 1, 'ver_remisiones', 1, '2023-04-24 14:29:42', NULL),
+(9504, 1, 'gestionar_remisiones', 1, '2023-04-24 14:29:42', NULL),
+(9505, 1, 'enviar_remisiones', 1, '2023-04-24 14:29:42', NULL),
+(9506, 1, 'eliminar_remisiones', 1, '2023-04-24 14:29:42', NULL),
+(9507, 1, 'gestionar_precios_proveedores', 1, '2023-04-24 14:29:42', NULL),
+(9508, 1, 'completar_precios_proveedores', 1, '2023-04-24 14:29:42', NULL),
+(9509, 1, 'enviar_precios_proveedores', 1, '2023-04-24 14:29:42', NULL),
+(9510, 1, 'eliminar_precios_proveedores', 1, '2023-04-24 14:29:42', NULL),
+(9511, 1, 'ver_prospectos_personas', 1, '2023-04-24 14:29:42', NULL),
+(9512, 1, 'gestionar_prospectos_personas', 1, '2023-04-24 14:29:42', NULL),
+(9513, 1, 'importar_prospectos_personas', 1, '2023-04-24 14:29:42', NULL),
+(9514, 1, 'exportar_prospectos_personas', 1, '2023-04-24 14:29:42', NULL),
+(9515, 1, 'ver_prospectos_empresas', 1, '2023-04-24 14:29:42', NULL),
+(9516, 1, 'gestionar_prospectos_empresas', 1, '2023-04-24 14:29:42', NULL),
+(9517, 1, 'importar_prospectos_empresas', 1, '2023-04-24 14:29:42', NULL),
+(9518, 1, 'exportar_prospectos_empresas', 1, '2023-04-24 14:29:42', NULL),
+(9519, 1, 'contabilidad_config_administrativa', 1, '2023-04-24 14:29:42', NULL),
+(9520, 1, 'contabilidad_config_general', 1, '2023-04-24 14:29:42', NULL),
+(9521, 1, 'contabilidad_config_catalogos', 1, '2023-04-24 14:29:42', NULL),
+(9522, 1, 'contabilidad_config_otros', 1, '2023-04-24 14:29:42', NULL),
+(9523, 1, 'contabilidad_factura_compra', 1, '2023-04-24 14:29:42', NULL),
+(9524, 1, 'contabilidad_factura_venta', 1, '2023-04-24 14:29:42', NULL),
+(9525, 1, 'contabilidad_nota_credito', 1, '2023-04-24 14:29:42', NULL),
+(9526, 1, 'contabilidad_nota_debito', 1, '2023-04-24 14:29:42', NULL),
+(9527, 1, 'contabilidad_recibo_pago', 1, '2023-04-24 14:29:42', NULL),
+(9528, 1, 'permisos_usuarios', 1, '2023-04-24 14:29:42', NULL),
+(9529, 1, 'categorias_calendario', 1, '2023-04-24 14:29:42', NULL);
 
 -- --------------------------------------------------------
 
@@ -9041,17 +9082,8 @@ CREATE TABLE `salida_inventario` (
 --
 
 INSERT INTO `salida_inventario` (`id`, `tipo`, `producto_id`, `inventario_id`, `cantidad`, `user_id`, `cliente_id`, `observaciones`, `status`, `created_by`, `created_at`) VALUES
-(16, 3, 1, 9, 1, NULL, 25, NULL, 0, 1, '2023-01-26 09:00:52'),
-(17, 1, 1, 12, 0, NULL, 73, NULL, 1, 1, '2023-02-02 14:57:58'),
-(18, 1, 1, 12, 0, NULL, 73, NULL, 0, 1, '2023-02-02 15:01:56'),
-(19, 2, 1, 12, 0, 6, NULL, NULL, 1, 1, '2023-02-02 15:03:08'),
-(20, 1, 1, 12, 1, NULL, 17, NULL, 0, 1, '2023-03-01 10:10:57'),
-(21, 4, 2, 14, 3, NULL, 17, 'Producto asignado a solicitud de inventario con códigoSOL-KAMTN', 0, 1, '2023-03-03 15:56:47'),
-(22, 4, 1, 13, 1, NULL, 17, 'Producto asignado a solicitud de inventario con códigoSOL-KAMTN', 0, 1, '2023-03-03 15:57:05'),
-(23, 4, 2, 14, 4, NULL, 17, 'Producto asignado a solicitud de inventario con códigoSOL-KAMTN', 0, 1, '2023-03-03 15:57:18'),
-(24, 1, 1, 13, 1, NULL, 28, 'Producto asignado a la solicitud de inventario con código: SOL-QQULM', 0, 1, '2023-03-03 16:06:13'),
-(25, 1, 1, 13, 1, NULL, 28, 'Producto asignado a la solicitud de inventario con código: SOL-QQULM', 0, 1, '2023-03-22 08:34:01'),
-(26, 1, 1, 11, 1, NULL, 28, 'Producto asignado a la solicitud de inventario con código: SOL-QQULM', 0, 1, '2023-03-22 08:34:01');
+(35, 2, 1, 16, 1, 1, NULL, NULL, 0, 1, '2023-04-13 14:33:11'),
+(36, 4, 1, 16, 0, NULL, 67, NULL, 1, 1, '2023-04-13 14:33:38');
 
 -- --------------------------------------------------------
 
@@ -9528,6 +9560,12 @@ ALTER TABLE `detalle_factura_compra`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `detalle_factura_venta`
+--
+ALTER TABLE `detalle_factura_venta`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `detalle_ordenes`
 --
 ALTER TABLE `detalle_ordenes`
@@ -9555,6 +9593,12 @@ ALTER TABLE `empleados`
 -- Indices de la tabla `factura_compra`
 --
 ALTER TABLE `factura_compra`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `factura_venta`
+--
+ALTER TABLE `factura_venta`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -9905,7 +9949,7 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de la tabla `configuracion_puc`
 --
 ALTER TABLE `configuracion_puc`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3242;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3243;
 
 --
 -- AUTO_INCREMENT de la tabla `contador`
@@ -9953,7 +9997,13 @@ ALTER TABLE `detalle_cotizaciones`
 -- AUTO_INCREMENT de la tabla `detalle_factura_compra`
 --
 ALTER TABLE `detalle_factura_compra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
+-- AUTO_INCREMENT de la tabla `detalle_factura_venta`
+--
+ALTER TABLE `detalle_factura_venta`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_ordenes`
@@ -9983,7 +10033,13 @@ ALTER TABLE `empleados`
 -- AUTO_INCREMENT de la tabla `factura_compra`
 --
 ALTER TABLE `factura_compra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT de la tabla `factura_venta`
+--
+ALTER TABLE `factura_venta`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `formas_pago`
@@ -10007,13 +10063,13 @@ ALTER TABLE `history_cotizaciones`
 -- AUTO_INCREMENT de la tabla `inventario`
 --
 ALTER TABLE `inventario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `movimientos_inventario`
 --
 ALTER TABLE `movimientos_inventario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT de la tabla `nomina`
@@ -10055,13 +10111,13 @@ ALTER TABLE `paises`
 -- AUTO_INCREMENT de la tabla `parametrizacion_documentos`
 --
 ALTER TABLE `parametrizacion_documentos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos_new`
 --
 ALTER TABLE `permisos_new`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8852;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9530;
 
 --
 -- AUTO_INCREMENT de la tabla `precio_proveedores`
@@ -10133,7 +10189,7 @@ ALTER TABLE `revisor_fiscal`
 -- AUTO_INCREMENT de la tabla `salida_inventario`
 --
 ALTER TABLE `salida_inventario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT de la tabla `salud`
