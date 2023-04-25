@@ -33,6 +33,18 @@
                 right: 20px;
             }
         }
+
+        .bg-pending {
+            background: rgb(255, 193, 7, .3);
+        }
+
+        .bg-paid {
+            background: rgb(40, 167, 69, .3);
+        }
+
+        .bg-cancel {
+            background: rgb(220, 53, 69, .3);
+        }
     </style>
 @endsection
 
@@ -114,8 +126,22 @@
                         <div class="p-0">
                             <div class="main-invoice-list" id="mainInvoiceList">
                                 @foreach ($facturas as $key => $factura)
+                                    @if ($factura->status == 0)
+                                        @php
+                                            $bg = 'bg-cancel';
+                                        @endphp
+                                    @elseif($factura->status == 2)
+                                        @php
+                                            $bg = 'bg-paid';
+                                        @endphp
+                                    @else
+                                        @php
+                                            $bg = 'bg-pending';
+                                        @endphp
+                                    @endif
+
                                     @if ($key == 0)
-                                        <div class="media factura_btn" data-id="{{ $factura->id }}">
+                                        <div class="media factura_btn {{ $bg }}" data-id="{{ $factura->id }}">
                                             <div class="media-icon">
                                                 <i class="far fa-file-alt"></i>
                                             </div>
@@ -132,7 +158,7 @@
                                             </div>
                                         </div>
                                     @else
-                                        <div class="media factura_btn" data-id="{{ $factura->id }}">
+                                        <div class="media factura_btn {{ $bg }}" data-id="{{ $factura->id }}">
                                             <div class="media-icon">
                                                 <i class="far fa-file-alt"></i>
                                             </div>
@@ -355,7 +381,9 @@
                                                         <select class="form-select producto_add">
                                                             <option value="">Seleccione una opción</option>
                                                         </select>
-                                                        <input type="text" class="form-control mt-2 serial_producto_add" disabled placeholder="Serial">
+                                                        <input type="text"
+                                                            class="form-control mt-2 serial_producto_add" disabled
+                                                            placeholder="Serial">
                                                     </td>
                                                     <td class="pad-4">
                                                         <textarea placeholder="Descripción" class="form-control descripcion_add" style="border: 0" rows="3"></textarea>

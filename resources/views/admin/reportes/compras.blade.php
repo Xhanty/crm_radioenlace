@@ -260,9 +260,9 @@
                                             @if ($factura->status == 2)
                                                 <td><span class="badge bg-success-gradient">Con Pago</span></td>
                                             @elseif($factura->status == 0)
-                                                <td><span class="badge bg-warning-gradient">Reversado</span></td>
+                                                <td><span class="badge bg-danger-gradient">Reversado</span></td>
                                             @else
-                                                <td><span class="badge bg-danger-gradient">Sin Pago</span></td>
+                                                <td><span class="badge bg-warning-gradient">Sin Pago</span></td>
                                             @endif
                                         </tr>
                                     @endforeach
@@ -473,8 +473,8 @@
             });
 
             const retenciones_array = {};
-
             impuestos_2.forEach(impuesto => {
+                if(impuesto == null) return;
                 let valor_1 = parseInt(impuesto[1]);
                 retenciones += valor_1;
 
