@@ -48,7 +48,7 @@
                                     www.radioenlacesas.com
                                 </div>
                                 <div class="tm_text_center">
-                                    <img src="https://josefacchin.com/wp-content/uploads/2022/04/qr-code.png.webp"
+                                    <img src="{{ asset('RadioEnlaceQr.png') }}"
                                         width="96px">
                                 </div>
                             </div>
@@ -152,6 +152,8 @@
                                                         {{ $count }}.
                                                         {{ $item->detalle->nombre }} ({{ $item->detalle->marca }} -
                                                         {{ $item->detalle->modelo }})
+                                                        <br>
+                                                        ({{ $item->serial_producto }})
                                                     </td>
                                                     <td class="tm_width_1 tm_accent_border_20 tm_text_center">
                                                         {{ $item->cantidad }}</td>
@@ -167,8 +169,8 @@
                                             @else
                                                 <tr>
                                                     <td class="tm_width_6 tm_accent_border_20 tm_text_center">
-                                                        {{ $count }}.
-                                                        {{ $item->detalle->nombre }} ({{ $item->detalle->code }})
+                                                        {{ $count }}. ({{ $item->detalle->code }}) |
+                                                        {{ $item->detalle->nombre }}
                                                     </td>
                                                     <td class="tm_width_1 tm_accent_border_20 tm_text_center">
                                                         {{ $item->cantidad }}</td>
@@ -289,9 +291,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="tm_bottom_invoice tm_accent_border_20">
+                <div class="tm_bottom_invoice tm_accent_border_20" style="justify-content: center;">
                     <div class="tm_bottom_invoice_left">
-                        <p class="tm_m0 tm_f11 tm_text_center">A esta factura de venta aplican las normas relativas
+                        <!--<p class="tm_m0 tm_f11 tm_text_center">
+                            A esta factura de venta aplican las normas relativas
                             a la letra de
                             cambio (artículo 5 Ley 1231 de 2008). Con esta el Comprador declara haber recibido real
                             y materialmente las
@@ -305,7 +308,8 @@
                             <br>
                             <b>CUFE:</b>
                             dbfecbbd3491e5214fb4f52f75f3ac56fa1e96643b64e85600a4d939558953d9c27b39d646a5e8e020e38ac95a22549b
-                        </p>
+                            
+                        </p>-->
                         <p class="tm_m0 tm_f11 tm_text_center"><b>Elaborado por CRM RADIO ENLACE S.A.S. NIT.
                                 830.504.313-5</b></p>
                     </div>

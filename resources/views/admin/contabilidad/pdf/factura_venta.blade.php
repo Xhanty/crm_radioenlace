@@ -48,7 +48,7 @@
                                     www.radioenlacesas.com
                                 </div>
                                 <div class="tm_text_center">
-                                    <img src="https://josefacchin.com/wp-content/uploads/2022/04/qr-code.png.webp"
+                                    <img src="{{ asset('RadioEnlaceQr.png') }}"
                                         width="96px">
                                 </div>
                             </div>

@@ -145,6 +145,7 @@ class FacturaCompraController extends Controller
                         'factura_id' => $id,
                         'tipo' => $producto['tipo'],
                         'producto' => $producto['producto'] ?? null,
+                        'serial_producto' => $producto['serial'] ?? null,
                         'cuenta' => null,
                         'description' => $producto['descripcion'],
                         'bodega' => $producto['bodega'],
@@ -160,6 +161,7 @@ class FacturaCompraController extends Controller
                         'factura_id' => $id,
                         'tipo' => $producto['tipo'],
                         'producto' => null,
+                        'serial_producto' => null,
                         'cuenta' => $producto['producto'] ?? null,
                         'description' => $producto['descripcion'],
                         'bodega' => $producto['bodega'],
@@ -258,6 +260,45 @@ class FacturaCompraController extends Controller
             }
 
             return response()->json(['info' => 1, 'factura' => $factura]);
+        } catch (Exception $ex) {
+            return $ex;
+            return response()->json(['info' => 0]);
+        }
+    }
+
+    public function filtro(Request $request)
+    {
+        try {
+            $numero_factura = $request->numero_factura;
+            $serial = $request->serial;
+
+            if (!$numero_factura && !$serial) {
+                return response()->json(['info' => 0]);
+            }
+
+            $factura_id = DB::table('factura_compra')
+                ->select('id')
+                ->where('numero', $numero_factura)
+                ->first();
+
+            if (!$factura_id) {
+                if (!$serial) {
+                    return response()->json(['info' => 0]);
+                } else {
+                    $factura_id = DB::table('detalle_factura_compra')
+                        ->select('factura_id')
+                        ->where('detalle_factura_compra.serial_producto', $serial)
+                        ->first();
+
+                    if (!$factura_id) {
+                        return response()->json(['info' => 0]);
+                    } else {
+                        return response()->json(['info' => 1, 'token' => $factura_id->factura_id]);
+                    }
+                }
+            } else {
+                return response()->json(['info' => 1, 'token' => $factura_id->id]);
+            }
         } catch (Exception $ex) {
             return $ex;
             return response()->json(['info' => 0]);

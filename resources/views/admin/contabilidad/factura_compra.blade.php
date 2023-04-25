@@ -1,5 +1,41 @@
 @extends('layouts.menu')
 
+@section('css')
+    <style>
+        .btn-flotante {
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            border-radius: 5px;
+            letter-spacing: 2px;
+            background-color: #3858F9;
+            padding: 18px 30px;
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            transition: all 300ms ease 0ms;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+            z-index: 99;
+        }
+
+        .btn-flotante:hover {
+            background-color: #3858F9;
+            color: #ffffff;
+            box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3);
+            transform: translateY(-7px);
+        }
+
+        @media only screen and (max-width: 600px) {
+            .btn-flotante {
+                font-size: 14px;
+                padding: 12px 20px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+@endsection
+
 @section('content')
     <style>
         .bg-gray {
@@ -319,9 +355,10 @@
                                                         <select class="form-select producto_add">
                                                             <option value="">Seleccione una opción</option>
                                                         </select>
+                                                        <input type="text" class="form-control mt-2 serial_producto_add" disabled placeholder="Serial">
                                                     </td>
                                                     <td class="pad-4">
-                                                        <textarea placeholder="Descripción" class="form-control descripcion_add" style="border: 0" rows="2"></textarea>
+                                                        <textarea placeholder="Descripción" class="form-control descripcion_add" style="border: 0" rows="3"></textarea>
                                                     </td>
                                                     <td class="pad-4">
                                                         <input type="text" placeholder="Bodega"
@@ -501,6 +538,50 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal Filtros -->
+        <div class="modal  fade" id="modalSelect">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Sección de filtros</h6>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Número Factura</label>
+                                <input type="number" placeholder="Número Factura" class="form-control"
+                                    id="factura_select">
+                            </div>
+                            <div class="col-lg">
+                                <label for="">Serial (Producto)</label>
+                                <input type="number" placeholder="Serial (Producto)" class="form-control"
+                                    id="serial_factura_select">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Fecha Inicio</label>
+                                <input type="date" disabled class="form-control" id="inicio_select">
+                            </div>
+                            <div class="col-lg">
+                                <label for="">Fecha Fin</label>
+                                <input type="date" disabled class="form-control" id="fin_select">
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <button class="btn btn-primary btn-block" id="btn_filtrar">Filtrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="javascript:void(0);" class="btn-flotante" data-bs-target="#modalSelect" data-bs-toggle="modal"
+            data-bs-effect="effect-scale">Filtros</a>
     </div>
 @endsection
 

@@ -76,9 +76,10 @@ $(document).ready(function () {
             '<select class="form-select producto_add">' +
             '<option value="">Seleccione una opción</option>' +
             '</select>' +
+            '<input type="text" class="form-control mt-2 serial_producto_add" disabled placeholder="Serial">' +
             '</td>' +
             '<td class="pad-4">' +
-            '<textarea placeholder="Descripción" class="form-control descripcion_add" style="border: 0" rows="2"></textarea>' +
+            '<textarea placeholder="Descripción" class="form-control descripcion_add" style="border: 0" rows="3"></textarea>' +
             '</td>' +
             '<td class="pad-4">' +
             '<input type="text" placeholder="Bodega" class="form-control bodega_add" style="border: 0">' +
@@ -233,6 +234,7 @@ $(document).ready(function () {
                     );
                 })
             );
+            $(this).parent().parent().find(".serial_producto_add").attr("disabled", false);
         } else {
             $(this).parent().parent().find(".producto_add").empty();
             $(this).parent().parent().find(".producto_add").append(
@@ -248,6 +250,7 @@ $(document).ready(function () {
                     );
                 })
             );
+            $(this).parent().parent().find(".serial_producto_add").attr("disabled", true);
         }
     });
 
@@ -300,6 +303,8 @@ $(document).ready(function () {
                                     '<td>' + count + '</td>' +
                                     '<td class="tx-13">' +
                                     detalle.nombre + " (" + detalle.marca + " - " + detalle.modelo + ")" +
+                                    '<br>' +
+                                    '(' + item.serial_producto + ')' +
                                     '</td>' +
                                     '<td class="text-center">' +
                                     parseInt(item.cantidad) +
@@ -810,6 +815,7 @@ $(document).ready(function () {
 
         $(".producto_add").each(function () {
             let producto = $(this).val();
+            let serial = $(this).parent().parent().find(".serial_producto_add").val();
             let tipo = $(this).parent().parent().find(".tipo_add").val();
             let descripcion = $(this).parent().parent().find(".descripcion_add").val();
             let bodega = $(this).parent().parent().find(".bodega_add").val();
@@ -828,9 +834,14 @@ $(document).ready(function () {
                 valid = true;
             }
 
+            if (tipo == 1 && serial.trim().length < 1) {
+                valid = true;
+            }
+
             productos.push({
                 tipo: tipo,
                 producto: producto,
+                serial: serial,
                 descripcion: descripcion,
                 bodega: bodega,
                 cantidad: cantidad,
@@ -862,6 +873,9 @@ $(document).ready(function () {
             return false;
         } else if (valid) {
             toastr.error('Debe ingresar todos los datos de los productos');
+            return false;
+        } else if (observaciones.trim().length < 1) {
+            toastr.error('Debe ingresar una observación');
             return false;
         } else {
             $("#btnAddFactura").attr("disabled", true);
@@ -923,6 +937,55 @@ $(document).ready(function () {
             $(".descuento_add").attr("type", "text");
             $(".descuento_add").val("0.00").trigger("change");
             descuento_porcentaje = 0;
+        }
+    });
+
+    // FILTROS
+    $("#btn_filtrar").click(function () {
+        let numero_factura = $("#factura_select").val();
+        let serial = $("#serial_factura_select").val();
+
+        if (numero_factura.trim().length < 1 && serial.trim().length < 1) {
+            toastr.error('Debe ingresar al menos un filtro');
+            return false;
+        } else {
+            $("#btn_filtrar").attr("disabled", true);
+            $("#btn_filtrar").html('<i class="fa fa-spinner fa-spin"></i> Filtrando...');
+
+            let formData = new FormData();
+            formData.append("numero_factura", numero_factura);
+            formData.append("serial", serial);
+
+            $.ajax({
+                url: "filtrar_facturas_compras",
+                type: "POST",
+                data: formData,
+                dataType: "JSON",
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    $("#btn_filtrar").attr("disabled", false);
+                    $("#btn_filtrar").html('Filtrar');
+                    if (response.info == 1) {
+                        let token = response.token;
+
+                        if (!token) {
+                            toastr.error('No se encontraron facturas');
+                        } else {
+                            window.open(url_general + 'pdf_factura_compra?token=' + token, '_blank');
+                        }
+                    } else {
+                        toastr.error('No se encontraron facturas');
+                        $("#btn_filtrar").attr("disabled", false);
+                        $("#btn_filtrar").html('Filtrar');
+                    }
+                },
+                error: function (error) {
+                    toastr.error('Ha ocurrido un error');
+                    $("#btn_filtrar").attr("disabled", false);
+                    $("#btn_filtrar").html('Filtrar');
+                }
+            });
         }
     });
 });

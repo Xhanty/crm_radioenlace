@@ -161,7 +161,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/data_solicitud_inventario', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'data'])->name('data_solicitud_inventario');
     Route::post('/solicitud_inventario_add', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'solicitud_add'])->name('solicitud_inventario_add');
     Route::post('/solicitud_inventario_update', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'solicitud_edit'])->name('solicitud_inventario_update');
-    
+
     // GESTIÓN SOLICITUDES DE INVENTARIO
     Route::get('/gestion_solicitudes', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'gestion'])->name('gestion_solicitudes');
     Route::post('/delete_solicitud_inventario', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'delete'])->name('delete_solicitud_inventario');
@@ -213,7 +213,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/precios_proveedores_send_email', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'send_email'])->name('precios_proveedores_send_email');
     Route::post('/precios_proveedores_data', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'data_precios'])->name('precios_proveedores_data');
     Route::post('/precios_proveedores_edit', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'edit'])->name('precios_proveedores_edit');
-    
+
     // REMISIONES
     Route::get('/remisiones', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'index'])->name('remisiones');
     Route::get('/remisiones_print', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'print'])->name('remisiones_print');
@@ -223,7 +223,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/remisiones_delete', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'delete'])->name('remisiones_delete');
     Route::post('/remisiones_completar', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'completar'])->name('remisiones_completar');
     Route::post('/remisiones_email', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'email'])->name('remisiones_email');
-    
+
     // HISTORIAL DE COTIZACIONES
     Route::get('/history_cotizaciones', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'history'])->name('history_cotizaciones');
     Route::post('/history_cotizaciones_add', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'history_add'])->name('history_cotizaciones_add');
@@ -232,19 +232,19 @@ Route::middleware(['auth_user'])->group(function () {
 
     // CONTABILIDAD
     Route::get('/configuracion_contabilidad', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'index'])->name('configuracion_contabilidad');
-    
+
     Route::post('/edit_organizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_organizacion'])->name('edit_organizacion');
-    
+
     Route::post('/tipo_empresa_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'tipo_empresa_data'])->name('tipo_empresa_data');
     Route::post('/add_tipo_empresa', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_tipo_empresa'])->name('add_tipo_empresa');
     Route::post('/edit_tipo_empresa', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_tipo_empresa'])->name('edit_tipo_empresa');
     Route::post('/status_tipo_empresa', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'status_tipo_empresa'])->name('status_tipo_empresa');
-    
+
     Route::post('/tipo_regimen_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'tipo_regimen_data'])->name('tipo_regimen_data');
     Route::post('/add_tipo_regimen', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_tipo_regimen'])->name('add_tipo_regimen');
     Route::post('/edit_tipo_regimen', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_tipo_regimen'])->name('edit_tipo_regimen');
     Route::post('/status_tipo_regimen', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'status_tipo_regimen'])->name('status_tipo_regimen');
-    
+
     Route::post('/tipo_documento_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'tipo_documento_data'])->name('tipo_documento_data');
     Route::post('/add_tipo_documento', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_tipo_documento'])->name('add_tipo_documento');
     Route::post('/edit_tipo_documento', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_tipo_documento'])->name('edit_tipo_documento');
@@ -254,17 +254,17 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/add_centros_costos', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_centros_costos'])->name('add_centros_costos');
     Route::post('/edit_centros_costos', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_centros_costos'])->name('edit_centros_costos');
     Route::post('/status_centros_costos', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'status_centros_costos'])->name('status_centros_costos');
-    
+
     Route::post('/actividades_economicas_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'actividades_economicas_data'])->name('actividades_economicas_data');
     Route::post('/add_actividad_economica', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_actividad_economica'])->name('add_actividad_economica');
     Route::post('/edit_actividad_economica', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_actividad_economica'])->name('edit_actividad_economica');
     Route::post('/status_actividad_economica', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'status_actividad_economica'])->name('status_actividad_economica');
-    
+
     Route::post('/ciudades_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'ciudades_data'])->name('ciudades_data');
     Route::post('/add_ciudad', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_ciudad'])->name('add_ciudad');
     Route::post('/edit_ciudad', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_ciudad'])->name('edit_ciudad');
     Route::post('/status_ciudad', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'status_ciudad'])->name('status_ciudad');
-   
+
     Route::post('/formas_pago_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'formas_pago_data'])->name('formas_pago_data');
     Route::post('/add_forma_pago', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_forma_pago'])->name('add_forma_pago');
     Route::post('/edit_forma_pago', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_forma_pago'])->name('edit_forma_pago');
@@ -280,16 +280,17 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/edit_child_puc_cliente', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_child_puc_cliente'])->name('edit_child_puc_cliente');
     Route::post('/delete_child_puc_cliente', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'delete_child_puc_cliente'])->name('delete_child_puc_cliente');
     Route::post('/update_config_nomina', [App\Http\Controllers\Admin\Contabilidad\NominaController::class, 'update_config_nomina'])->name('update_config_nomina');
-    
+
     Route::post('/add_cuenta_parametrizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_cuenta_parametrizacion'])->name('add_cuenta_parametrizacion');
     Route::post('/get_cuentas_parametrizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'get_cuentas_parametrizacion'])->name('get_cuentas_parametrizacion');
     Route::post('/update_status_cuenta_parametrizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'update_status_cuenta_parametrizacion'])->name('update_status_cuenta_parametrizacion');
-    
+
     // FACTURA COMPRA
     Route::get('/factura_compra', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'index'])->name('factura_compra');
     Route::get('/pdf_factura_compra', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'pdf'])->name('pdf_factura_compra');
     Route::post('/info_factura_compra', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'info'])->name('info_factura_compra');
     Route::post('/add_factura_compra', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'add'])->name('add_factura_compra');
+    Route::post('/filtrar_facturas_compras', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'filtro'])->name('filtrar_facturas_compras');
 
     // FACTURA VENTA
     Route::get('/factura_venta', [App\Http\Controllers\Admin\Contabilidad\FacturaVentaController::class, 'index'])->name('factura_venta');
@@ -359,7 +360,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/prospectos_empresas_bd_import', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'import_excel'])->name('prospectos_empresas_bd_import');
     Route::post('/prospectos_empresas_status', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'change_status'])->name('prospectos_empresas_status');
     Route::post('/prospectos_empresas_fecha', [App\Http\Controllers\Admin\Comercial\ProspectosEmpresasController::class, 'change_fecha'])->name('prospectos_empresas_fecha');
-    
+
     Route::get('/history_prospectos', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'history_prospectos'])->name('history_prospectos');
     Route::post('/history_prospectos_add', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'add_observacion'])->name('history_prospectos_add');
     Route::post('/history_prospectos_edit', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'edit_observacion'])->name('history_prospectos_edit');
