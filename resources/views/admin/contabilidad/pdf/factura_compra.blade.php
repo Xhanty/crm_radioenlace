@@ -198,8 +198,17 @@
                                 <br>
                                 <!--<p class="tm_mb2"><b class="tm_primary_color">Forma de Pago:</b></p>
                                 <p class="tm_m0">Otras cuentas por pagar - Cuota No. 001 vence el 20/05/2023</p>-->
-                                <p class="tm_mb2"><b class="tm_primary_color">Observaciones:</b></p>
-                                <p class="tm_m0">{{ $factura->observaciones }}</p>
+                                @if ($factura->observaciones != null)
+                                    <p class="tm_mb2"><b class="tm_primary_color">Observaciones:</b></p>
+                                    <p class="tm_m0">{{ $factura->observaciones }}</p>
+                                @endif
+
+                                @if ($factura->adjunto_pdf != null)
+                                    <br>
+                                    <p class="tm_mb2"><b class="tm_primary_color">Adjunto:</b></p>
+                                    <a href="{{ asset('images/contabilidad/facturas_compra/' . $factura->adjunto_pdf) }}"
+                                        style="color: rgb(217, 38, 28, 0.9);" target="_blank">Ver Adjunto</a>
+                                @endif
                             </div>
                             <div class="tm_right_footer">
                                 <table class="tm_mb15 tm_m0_md">
@@ -278,50 +287,50 @@
                                 </table>
                             </div>
                         </div>
-                        </div>
                     </div>
-                    <div class="tm_bottom_invoice tm_accent_border_20">
-                        <div class="tm_bottom_invoice_left">
-                            <p class="tm_m0 tm_f11 tm_text_center">A esta factura de venta aplican las normas relativas
-                                a la letra de
-                                cambio (artículo 5 Ley 1231 de 2008). Con esta el Comprador declara haber recibido real
-                                y materialmente las
-                                mercancías o prestación de servicios descritos en este título - Valor. <b>Número
-                                    Autorización 18764027118177 aprobado en 20211013 prefijo FE desde el número 2186 al
-                                    4000
-                                    Vigencia: 12 Meses</b>
-                                - Actividad Económica 4741 Comercio al por menor de computadores, equipos periféricos,
-                                programas de informática y equipos de telecomunicaciones en establecimientos
-                                especializados Tarifa 4.
-                                <br>
-                                <b>CUFE:</b>
-                                dbfecbbd3491e5214fb4f52f75f3ac56fa1e96643b64e85600a4d939558953d9c27b39d646a5e8e020e38ac95a22549b
-                            </p>
-                            <p class="tm_m0 tm_f11 tm_text_center"><b>Elaborado por CRM RADIO ENLACE S.A.S. NIT.
-                                    830.504.313-5</b></p>
-                        </div>
+                </div>
+                <div class="tm_bottom_invoice tm_accent_border_20">
+                    <div class="tm_bottom_invoice_left">
+                        <p class="tm_m0 tm_f11 tm_text_center">A esta factura de venta aplican las normas relativas
+                            a la letra de
+                            cambio (artículo 5 Ley 1231 de 2008). Con esta el Comprador declara haber recibido real
+                            y materialmente las
+                            mercancías o prestación de servicios descritos en este título - Valor. <b>Número
+                                Autorización 18764027118177 aprobado en 20211013 prefijo FE desde el número 2186 al
+                                4000
+                                Vigencia: 12 Meses</b>
+                            - Actividad Económica 4741 Comercio al por menor de computadores, equipos periféricos,
+                            programas de informática y equipos de telecomunicaciones en establecimientos
+                            especializados Tarifa 4.
+                            <br>
+                            <b>CUFE:</b>
+                            dbfecbbd3491e5214fb4f52f75f3ac56fa1e96643b64e85600a4d939558953d9c27b39d646a5e8e020e38ac95a22549b
+                        </p>
+                        <p class="tm_m0 tm_f11 tm_text_center"><b>Elaborado por CRM RADIO ENLACE S.A.S. NIT.
+                                830.504.313-5</b></p>
                     </div>
                 </div>
             </div>
-            <div class="tm_invoice_btns tm_hide_print">
-                <a href="javascript:void(0);" class="tm_invoice_btn tm_color1">
-                    <span class="tm_btn_icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
-                            <path
-                                d="M384 368h24a40.12 40.12 0 0040-40V168a40.12 40.12 0 00-40-40H104a40.12 40.12 0 00-40 40v160a40.12 40.12 0 0040 40h24"
-                                fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" />
-                            <rect x="128" y="240" width="256" height="208" rx="24.32"
-                                ry="24.32" fill="none" stroke="currentColor" stroke-linejoin="round"
-                                stroke-width="32" />
-                            <path d="M384 128v-24a40.12 40.12 0 00-40-40H168a40.12 40.12 0 00-40 40v24" fill="none"
-                                stroke="currentColor" stroke-linejoin="round" stroke-width="32" />
-                            <circle cx="392" cy="184" r="24" fill='currentColor' />
-                        </svg>
-                    </span>
-                    <span class="tm_btn_text">Imprimir</span>
-                </a>
-            </div>
         </div>
+        <div class="tm_invoice_btns tm_hide_print">
+            <a href="javascript:void(0);" class="tm_invoice_btn tm_color1">
+                <span class="tm_btn_icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                        <path
+                            d="M384 368h24a40.12 40.12 0 0040-40V168a40.12 40.12 0 00-40-40H104a40.12 40.12 0 00-40 40v160a40.12 40.12 0 0040 40h24"
+                            fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" />
+                        <rect x="128" y="240" width="256" height="208" rx="24.32"
+                            ry="24.32" fill="none" stroke="currentColor" stroke-linejoin="round"
+                            stroke-width="32" />
+                        <path d="M384 128v-24a40.12 40.12 0 00-40-40H168a40.12 40.12 0 00-40 40v24" fill="none"
+                            stroke="currentColor" stroke-linejoin="round" stroke-width="32" />
+                        <circle cx="392" cy="184" r="24" fill='currentColor' />
+                    </svg>
+                </span>
+                <span class="tm_btn_text">Imprimir</span>
+            </a>
+        </div>
+    </div>
     </div>
     <script src="https://invoma.vercel.app/assets/js/jquery.min.js"></script>
     <script>

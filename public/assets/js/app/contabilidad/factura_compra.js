@@ -20,6 +20,10 @@ $(document).ready(function () {
     let impuestos_1_general = [];
     let impuestos_2_general = [];
 
+    var protocol = window.location.protocol;
+    var host = window.location.host;
+    var url_general = protocol + "//" + host + "/";
+
     $(".open-toggle").trigger("click");
 
     var contact_forma_pago = '<div class="row row-sm mt-2">' +
@@ -368,16 +372,27 @@ $(document).ready(function () {
                             }
                         }
 
-                        if (!factura.observaciones) {
+                        if (factura.observaciones) {
+                            factura.observaciones = '<label class="main-content-label tx-13">Observaciones</label>' +
+                                '<p>' + factura.observaciones + '</p>';
+                        } else {
                             factura.observaciones = '';
+                        }
+
+                        if (factura.adjunto_pdf) {
+                            factura.adjunto_pdf = '<label class="main-content-label tx-13">Adjunto</label><br>' +
+                                '<a href="' + url_general + 'images/contabilidad/facturas_compra/' + factura.adjunto_pdf + '" target="_blank">Visualizar</a>';
+                        } else {
+                            factura.adjunto_pdf = '';
                         }
 
                         $("#productos_view").append(
                             '<tr>' +
                             '<td class="valign-middle" colspan="3" rowspan="' + rowspan + '">' +
                             '<div class="invoice-notes">' +
-                            '<label class="main-content-label tx-13">Observaciones</label>' +
-                            '<p>' + factura.observaciones + '</p>' +
+                            factura.observaciones +
+                            '<br>' +
+                            factura.adjunto_pdf +
                             '</div>' +
                             '</td>' +
                             '<td class="tx-right" style="font-weight: 700; color: #7987a1;">Total Bruto</td>' +
