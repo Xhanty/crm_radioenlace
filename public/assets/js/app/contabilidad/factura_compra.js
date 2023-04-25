@@ -304,7 +304,7 @@ $(document).ready(function () {
                                     '<td class="tx-13">' +
                                     detalle.nombre + " (" + detalle.marca + " - " + detalle.modelo + ")" +
                                     '<br>' +
-                                    '(' + item.serial_producto + ')' +
+                                    'S/N: ' + item.serial_producto +
                                     '</td>' +
                                     '<td class="text-center">' +
                                     parseInt(item.cantidad) +
