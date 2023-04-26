@@ -35,9 +35,10 @@
                                 </div>
                                 <div class="tm_text_center">
                                     <p class="tm_accent_color tm_mb0">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 232597 333333" width="24" height="24"
-                                            shape-rendering="geometricPrecision" text-rendering="geometricPrecision"
-                                            image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 232597 333333"
+                                            width="24" height="24" shape-rendering="geometricPrecision"
+                                            text-rendering="geometricPrecision" image-rendering="optimizeQuality"
+                                            fill-rule="evenodd" clip-rule="evenodd">
                                             <path
                                                 d="M151444 5419C140355 1916 128560 0 116311 0 80573 0 48591 16155 27269 41534l54942 46222 69232-82338z"
                                                 fill="#1a73e8" />
@@ -65,6 +66,16 @@
                             </div>
                         </div>
                         <div class="tm_shape_bg tm_accent_bg_10 tm_border tm_accent_border_20"></div>
+                        @if ($factura->status == 0)
+                            <img src="{{ asset('contabilidad/nota_credito.png') }}"
+                                alt="" style="position: absolute; left: -52px; top: -3px; height: 135px;">
+                        @elseif ($factura->status == 2)
+                            <img src="{{ asset('contabilidad/pagado.png') }}" alt=""
+                                style="position: absolute; left: -52px; top: -3px; height: 135px;">
+                        @else
+                            <img src="{{ asset('contabilidad/pendiente.png') }}"
+                                alt="" style="position: absolute; left: -52px; top: -3px; height: 135px;">
+                        @endif
                     </div>
                     <div class="tm_invoice_info tm_mb22 tm_align_center">
                         <div class="tm_invoice_info_left tm_mb20_md" style="margin-top: 2px">
