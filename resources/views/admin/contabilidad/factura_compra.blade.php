@@ -73,6 +73,10 @@
             cursor: not-allowed;
             border-radius: 20px;
         }
+
+        .orange {
+            color: #FF8000;
+        }
     </style>
 
     <style>
@@ -175,7 +179,8 @@
                                             </div>
                                             <div class="media-body">
                                                 <h6><span>Factura No.{{ $factura->numero }}</span>
-                                                    <span>{{ $factura->valor_total }}</span>
+                                                    <span>{{ $factura->valor_total }} <i data-id="{{ $factura->id }}"
+                                                            class="far fa-star btn_favorite"></i></span>
                                                 </h6>
                                                 <div>
                                                     <p><span>Fecha:</span>
@@ -192,7 +197,8 @@
                                             </div>
                                             <div class="media-body">
                                                 <h6><span>Factura No.{{ $factura->numero }}</span>
-                                                    <span>{{ $factura->valor_total }}</span>
+                                                    <span>{{ $factura->valor_total }} <i data-id="{{ $factura->id }}"
+                                                            class="far fa-star btn_favorite"></i></span>
                                                 </h6>
                                                 <div>
                                                     <p><span>Fecha:</span>
@@ -260,8 +266,27 @@
                                     </table>
                                 </div>
                                 <hr>
-                                <a class="btn btn-primary btn-block" target="_blank"
-                                    href="{{ route('pdf_factura_compra') }}?token=1">Generar PDF</a>
+                                <div style="display: flex; justify-content: center;">
+                                    <a class="btn btn-success btn_pago_factura" data-id="0" style="margin-right: 10px;"
+                                        href="javascript:void(0);">Recibir Pago</a>
+
+                                    <a class="btn btn-primary btn_imprimir_factura" style="margin-right: 10px;" target="_blank"
+                                        href="{{ route('pdf_factura_compra') }}?token=0">Descargar e Imprimir</a>
+
+                                    <div class="dropdown">
+                                        <button type="button" class="btn btn-primary dropdown-toggle"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            Otras Opciones
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item btn_options_factura" data-id="0" data-opcion="4" href="javascript:void(0)">Ver Contabilización</a>
+                                            <a class="dropdown-item btn_options_factura" data-id="0" data-opcion="3" href="javascript:void(0)">Aplicar Nota Débito</a>
+                                            <a class="dropdown-item btn_options_factura" data-id="0" data-opcion="2" href="javascript:void(0)">Anular</a>
+                                            <a class="dropdown-item btn_options_factura" data-id="0" data-opcion="1" href="javascript:void(0)">Duplicar</a>
+                                            <a class="dropdown-item btn_options_factura" data-id="0" data-opcion="0" href="javascript:void(0)">Modificar</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div id="content_loader" class="d-none">
                                 <div class="text-center">
@@ -683,7 +708,7 @@
             $todasFacturas.slice(facturasPorPagina).hide();
 
             // Agrega un evento click a cada botón de paginación
-            $('.pagination button').on('click', function() {
+            $(document).on("click", ".pagination button", function() {
                 var pagina = $(this).text();
                 var primerItem = (pagina - 1) * facturasPorPagina;
                 var ultimoItem = primerItem + facturasPorPagina;
@@ -697,6 +722,20 @@
                 // Actualiza la clase active del botón de paginación
                 $(this).closest('ul').find('.active').removeClass('active');
                 $(this).closest('li').addClass('active');
+            });
+
+            $(document).on("click", ".btn_favorite", function() {
+                if ($(this).hasClass('far')) {
+                    $(this).removeClass('far');
+                    $(this).addClass('fas');
+
+                    $(this).addClass('orange');
+                } else {
+                    $(this).removeClass('fas');
+                    $(this).addClass('far');
+
+                    $(this).removeClass('orange');
+                }
             });
         });
     </script>

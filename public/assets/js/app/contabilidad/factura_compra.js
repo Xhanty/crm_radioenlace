@@ -283,7 +283,9 @@ $(document).ready(function () {
                     $("#compra_view").html(fecha_compra.getDate() + "/" + (fecha_compra.getMonth() + 1) + "/" + fecha_compra.getFullYear());
                     $("#vencimiento_view").html(fecha_vencimiento.getDate() + "/" + (fecha_vencimiento.getMonth() + 1) + "/" + fecha_vencimiento.getFullYear());
                     $("#pagar_view").html(factura.valor_total);
-                    $(".btn-primary").attr("href", "pdf_factura_compra?token=" + factura.id);
+                    $(".btn_imprimir_factura").attr("href", "pdf_factura_compra?token=" + factura.id);
+                    $(".btn_options_factura").attr("data-id", factura.id);
+                    $(".btn_pago_factura").attr("data-id", factura.id);
 
                     if (productos) {
                         $("#productos_view").empty();
@@ -987,5 +989,190 @@ $(document).ready(function () {
                 }
             });
         }
+    });
+
+    $(document).on("click", ".btn_options_factura", function () {
+        let id = $(this).attr("data-id");
+        let opcion = $(this).attr("data-opcion");
+
+        if (opcion == 0) {
+            modificar_factura(id);
+        } else if (opcion == 1) {
+            duplicar_factura(id);
+        } else if (opcion == 2) {
+            anular_factura(id);
+        } else if (opcion == 3) {
+            nota_debito_factura(id);
+        } else if (opcion == 4) {
+            contabilizacion_factura(id);
+        }
+    });
+
+    // MODIFICAR FACTURA
+    function modificar_factura(id) {
+        $("#global-loader").fadeIn('slow');
+
+        let formData = new FormData();
+        formData.append("id", id);
+
+        $.ajax({
+            url: "get_factura_compra",
+            type: "POST",
+            data: formData,
+            dataType: "JSON",
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                $("#global-loader").fadeOut('slow');
+                if (response.info == 1) {
+                    let data = response.data;
+                    console.log(data);
+                } else {
+                    toastr.error('Ha ocurrido un error');
+                }
+            },
+            error: function (error) {
+                toastr.error('Ha ocurrido un error');
+                $("#global-loader").fadeOut('slow');
+            }
+        });
+    }
+
+    // DUPLICAR FACTURA
+    function duplicar_factura(id) {
+        $("#global-loader").fadeIn('slow');
+
+        let formData = new FormData();
+        formData.append("id", id);
+
+        $.ajax({
+            url: "get_factura_compra",
+            type: "POST",
+            data: formData,
+            dataType: "JSON",
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                $("#global-loader").fadeOut('slow');
+                if (response.info == 1) {
+                    let data = response.data;
+                    console.log(data);
+                } else {
+                    toastr.error('Ha ocurrido un error');
+                }
+            },
+            error: function (error) {
+                $("#global-loader").fadeOut('slow');
+                toastr.error('Ha ocurrido un error');
+            }
+        });
+    }
+
+    // ANULAR FACTURA
+    function anular_factura(id) {
+        Swal.fire({
+            title: '¿Está seguro de anular esta factura?',
+            text: "Esta acción no se puede revertir",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#dc3545',
+            confirmButtonText: 'Anular',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $("#global-loader").fadeIn('slow');
+                let formData = new FormData();
+                formData.append("id", id);
+
+                $.ajax({
+                    url: "anular_factura_compra",
+                    type: "POST",
+                    data: formData,
+                    dataType: "JSON",
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response.info == 1) {
+                            toastr.success('Factura anulada con éxito');
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000);
+                        } else {
+                            toastr.error('Ha ocurrido un error');
+                        }
+                    },
+                    error: function (error) {
+                        toastr.error('Ha ocurrido un error');
+                    }
+                });
+            }
+        });
+    }
+
+    // NOTA DEBITO
+    function nota_debito_factura(id) {
+        Swal.fire({
+            title: '¿Está seguro de generar una nota de débito para esta factura?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#dc3545',
+            confirmButtonText: 'Generar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.open(url_general + 'nota_debito_compra?id=' + id, '_blank');
+            }
+        });
+    }
+
+    // CONTABILIZACION
+    function contabilizacion_factura(id) {
+        $("#global-loader").fadeIn('slow');
+
+        let formData = new FormData();
+        formData.append("id", id);
+
+        $.ajax({
+            url: "contabilidad_factura_compra",
+            type: "POST",
+            data: formData,
+            dataType: "JSON",
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                $("#global-loader").fadeOut('slow');
+                if (response.info == 1) {
+                    let data = response.data;
+                    console.log(data);
+                    $("#modal_contabilizacion").modal('show');
+                } else {
+                    toastr.error('Ha ocurrido un error');
+                }
+            },
+            error: function (error) {
+                $("#global-loader").fadeOut('slow');
+                toastr.error('Ha ocurrido un error');
+            }
+        });
+    }
+
+    // RECIBIR PAGO
+    $(document).on("click", ".btn_pago_factura", function () {
+        let id = $(this).attr("data-id");
+        Swal.fire({
+            title: '¿Está seguro de recibir el pago de esta factura?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#dc3545',
+            confirmButtonText: 'Recibir',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.open(url_general + 'pago_compra?id=' + id, '_blank');
+            }
+        });
     });
 });
