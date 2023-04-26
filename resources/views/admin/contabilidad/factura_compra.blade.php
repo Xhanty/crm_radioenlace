@@ -45,10 +45,36 @@
         .bg-cancel {
             background: rgb(220, 53, 69, .3);
         }
-    </style>
-@endsection
 
-@section('content')
+        .center-div {
+            display: flex;
+            justify-content: center;
+        }
+
+        .pagination {
+            margin-top: 14px;
+            margin-bottom: 12px;
+        }
+
+        .page-link {
+            color: #000;
+            border-radius: 20px;
+        }
+
+        .page-item.active .page-link {
+            background-color: #007bff;
+            border-color: #007bff;
+            border-radius: 20px;
+        }
+
+        .page-item.disabled .page-link {
+            color: #6c757d;
+            pointer-events: none;
+            cursor: not-allowed;
+            border-radius: 20px;
+        }
+    </style>
+
     <style>
         .bg-gray {
             background-color: #bfbfbf;
@@ -96,7 +122,9 @@
             }
         }
     </style>
+@endsection
 
+@section('content')
     <div class="main-container container-fluid">
         <!-- breadcrumb -->
         <div class="breadcrumb-header justify-content-between">
@@ -619,10 +647,57 @@
             var productos = @json($productos);
             var formas_pago = @json($formas_pago);
             var cuentas_gastos = @json($cuentas_gastos);
-
             localStorage.setItem('productos', JSON.stringify(productos));
             localStorage.setItem('formas_pago', JSON.stringify(formas_pago));
             localStorage.setItem('cuentas_gastos', JSON.stringify(cuentas_gastos));
+
+            // Define el número de facturas por página
+            var facturasPorPagina = 10;
+
+            // Obtén todas las facturas
+            var $todasFacturas = $('.main-invoice-list').children('.media');
+
+            // Calcula el número total de páginas
+            var numPaginas = Math.ceil($todasFacturas.length / facturasPorPagina);
+
+            // Crea botones de paginación con Bootstrap
+            var $paginacion = $('<nav class="center-div" aria-label="Facturas"></nav>');
+            var $ul = $('<ul class="pagination"></ul>');
+            for (var i = 1; i <= numPaginas; i++) {
+                var $li = $('<li class="page-item"></li>');
+                var $botonPagina = $('<button class="page-link"></button>');
+                $botonPagina.text(i);
+                $li.append($botonPagina);
+                $ul.append($li);
+            }
+
+            // Agrega la clase "active" al primer botón de paginación
+            $ul.find('li:first-child').addClass('active');
+
+            $paginacion.append($ul);
+
+            // Agrega la paginación al DOM
+            $('.main-invoice-list').after($paginacion);
+
+            // Oculta todas las facturas, excepto las de la primera página
+            $todasFacturas.slice(facturasPorPagina).hide();
+
+            // Agrega un evento click a cada botón de paginación
+            $('.pagination button').on('click', function() {
+                var pagina = $(this).text();
+                var primerItem = (pagina - 1) * facturasPorPagina;
+                var ultimoItem = primerItem + facturasPorPagina;
+
+                // Oculta todas las facturas
+                $todasFacturas.hide();
+
+                // Muestra las facturas correspondientes a la página seleccionada
+                $todasFacturas.slice(primerItem, ultimoItem).show();
+
+                // Actualiza la clase active del botón de paginación
+                $(this).closest('ul').find('.active').removeClass('active');
+                $(this).closest('li').addClass('active');
+            });
         });
     </script>
     <script src="{{ asset('assets/js/app/contabilidad/factura_compra.js') }}"></script>

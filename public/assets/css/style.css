@@ -52960,7 +52960,7 @@ textarea.parsley-success:focus {
     align-items: center;
     border: 1px solid transparent;
     border-right-width: 0;
-    padding: 10px 20px;
+    padding: 7px 20px;
     position: relative;
 }
 
@@ -53043,7 +53043,7 @@ textarea.parsley-success:focus {
 
 @media (min-width: 992px) {
     .main-invoice-list .media {
-        padding: 10px 15px;
+        padding: 7px 15px;
     }
 }
 
