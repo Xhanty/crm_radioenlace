@@ -47,6 +47,8 @@ $(document).ready(function () {
     load_tipo_documento();
     load_centros_costos();
     load_actividad_economica();
+    load_impuestos();
+    load_retenciones();
 
     $(".open-toggle").trigger("click");
 
@@ -100,6 +102,11 @@ $(document).ready(function () {
         $("#div_config_pucs").removeClass("d-none");
     });
 
+    $("#btnImpuestos").on("click", function () {
+        $("#div_general").addClass("d-none");
+        $("#div_param_impuestos").removeClass("d-none");
+    });
+
     $(document).on("click", ".back_to_menu", function () {
         $("#div_general").removeClass("d-none");
         $("#div_organizacion").addClass("d-none");
@@ -113,6 +120,7 @@ $(document).ready(function () {
         $("#div_ciudades").addClass("d-none");
         $("#div_config_pucs").addClass("d-none");
         $("#div_param_cuentas").addClass("d-none");
+        $("#div_param_impuestos").addClass("d-none");
     });
 
     $(document).on("click", ".back_to_menu_param_doc", function () {
@@ -785,6 +793,139 @@ $(document).ready(function () {
 
                 }
                 $("#tipo_empresa").html(data);
+            },
+            error: function (data) {
+                toastr.error("Error al cargar la información");
+                console.log(data);
+            },
+        });
+    }
+
+    function load_impuestos() {
+        $.ajax({
+            url: "impuestos_data",
+            type: "POST",
+            dataType: "json",
+            success: function (response) {
+                if (response.info == 1) {
+                    var data = response.data;
+                    var html = '';
+
+                    for (let i = 0; i < data.length; i++) {
+                        let en_uso = '';
+                        let por_valor = '';
+
+                        if (data[i].en_uso == 1) {
+                            en_uso = 'checked';
+                        }
+
+                        if (data[i].por_valor == 1) {
+                            por_valor = 'checked';
+                        }
+
+                        if (data[i].tarifa == null) {
+                            data[i].tarifa = '';
+                        }
+
+                        html += '<tr>';
+                        html += '<td class="text-center"><input type="checkbox" style="margin-left: -8px" class="form-check-input" ' + en_uso + ' data-id="' + data[i].id + '"></td>';
+                        html += '<td class="text-center">' + data[i].codigo + '</td>';
+                        html += '<td class="text-center">' + data[i].nombre + '</td>';
+                        html += '<td class="text-center">' + data[i].tipo_impuesto + '</td>';
+                        html += '<td class="text-center"><input style="margin-left: -8px" type="checkbox" disabled class="form-check-input" ' + por_valor + '></td>';
+                        html += '<td class="text-center">' + data[i].tarifa + '</td>';
+                        html += '<td class="text-center">' + data[i].code_compras + ' | ' + data[i].nombre_compras + '</td>';
+                        html += '<td class="text-center">' + data[i].code_ventas + ' | ' + data[i].nombre_ventas + '</td>';
+                        html += '<td class="text-center">' + data[i].code_devolucion_ventas + ' | ' + data[i].nombre_devolucion_ventas + '</td>';
+                        html += '<td class="text-center">' + data[i].code_devolucion_compras + ' | ' + data[i].nombre_devolucion_compras + '</td>';
+                        html += '<td class="text-center">';
+                        html += '<button type="button" class="btn btn-sm btn-danger btnDeleteImpuesto" title="Eliminar Impuesto" data-id="' + data[i].id + '"><i class="fa fa-trash" style="color: #fff;"></i></button>';
+                        html += '</td>';
+                        html += '</tr>';
+                    }
+
+                    if ($.fn.DataTable.isDataTable("#tbl_impuestos")) {
+                        $("#tbl_impuestos").DataTable().destroy();
+                    }
+
+                    $("#tbl_impuestos tbody").empty();
+
+                    $("#tbl_impuestos tbody").html(html);
+
+                    $("#tbl_impuestos").DataTable({
+                        "responsive": true,
+                        "language": language,
+                        "order": [],
+                    });
+                } else {
+                    toastr.error("Error al cargar la información");
+
+                }
+            },
+            error: function (data) {
+                toastr.error("Error al cargar la información");
+                console.log(data);
+            },
+        });
+    }
+
+    function load_retenciones() {
+        $.ajax({
+            url: "retenciones_data",
+            type: "POST",
+            dataType: "json",
+            success: function (response) {
+                if (response.info == 1) {
+                    var data = response.data;
+                    var html = '';
+
+                    for (let i = 0; i < data.length; i++) {
+                        let en_uso = '';
+                        let por_valor = '';
+
+                        if (data[i].en_uso == 1) {
+                            en_uso = 'checked';
+                        }
+
+                        if (data[i].por_valor == 1) {
+                            por_valor = 'checked';
+                        }
+
+                        if (data[i].tarifa == null) {
+                            data[i].tarifa = '';
+                        }
+
+                        html += '<tr>';
+                        html += '<td class="text-center"><input type="checkbox" style="margin-left: -8px" class="form-check-input" ' + en_uso + ' data-id="' + data[i].id + '"></td>';
+                        html += '<td class="text-center">' + data[i].codigo + '</td>';
+                        html += '<td class="text-center">' + data[i].nombre + '</td>';
+                        html += '<td class="text-center">' + data[i].tipo_impuesto + '</td>';
+                        html += '<td class="text-center">' + data[i].tarifa + '</td>';
+                        html += '<td class="text-center">' + data[i].code_debito + ' | ' + data[i].nombre_debito + '</td>';
+                        html += '<td class="text-center">' + data[i].code_credito + ' | ' + data[i].nombre_credito + '</td>';
+                        html += '<td class="text-center">';
+                        html += '<button type="button" class="btn btn-sm btn-danger btnDeleteRetencion" title="Eliminar Autoretención" data-id="' + data[i].id + '"><i class="fa fa-trash" style="color: #fff;"></i></button>';
+                        html += '</td>';
+                        html += '</tr>';
+                    }
+
+                    if ($.fn.DataTable.isDataTable("#tbl_autoretenciones")) {
+                        $("#tbl_autoretenciones").DataTable().destroy();
+                    }
+
+                    $("#tbl_autoretenciones tbody").empty();
+
+                    $("#tbl_autoretenciones tbody").html(html);
+
+                    $("#tbl_autoretenciones").DataTable({
+                        "responsive": true,
+                        "language": language,
+                        "order": [],
+                    });
+                } else {
+                    toastr.error("Error al cargar la información");
+
+                }
             },
             error: function (data) {
                 toastr.error("Error al cargar la información");

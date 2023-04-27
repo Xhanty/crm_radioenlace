@@ -6,7 +6,7 @@
         <div class="card">
             <div class="card-header d-flex-header-table" style="border-radius: 4px; background: hsl(212, 86%, 64%)">
                 <div class="div-1-tables-header">
-                    <h3 class="card-title mt-2">PUC</h3>
+                    <h3 class="card-title mt-2">Cuentas Contables</h3>
                 </div>
                 <div class="div-2-tables-header">
                     <button class="btn btn-primary back_to_menu">&times;</button>

@@ -1012,4 +1012,46 @@ class ConfiguracionController extends Controller
             ]);
         }
     }
+
+    // IMPUESTOS
+    public function get_impuestos(Request $request)
+    {
+        $impuestos = DB::table('configuracion_impuestos')
+            ->select(
+                'configuracion_impuestos.*',
+                'compras.code as code_compras',
+                'compras.nombre as nombre_compras',
+                'ventas.code as code_ventas',
+                'ventas.nombre as nombre_ventas',
+                'devolucion_ventas.code as code_devolucion_ventas',
+                'devolucion_ventas.nombre as nombre_devolucion_ventas',
+                'devolucion_compras.code as code_devolucion_compras',
+                'devolucion_compras.nombre as nombre_devolucion_compras'
+            )
+            ->join('configuracion_puc as compras', 'configuracion_impuestos.compras', '=', 'compras.id')
+            ->join('configuracion_puc as ventas', 'configuracion_impuestos.ventas', '=', 'ventas.id')
+            ->join('configuracion_puc as devolucion_ventas', 'configuracion_impuestos.devolucion_ventas', '=', 'devolucion_ventas.id')
+            ->join('configuracion_puc as devolucion_compras', 'configuracion_impuestos.devolucion_compras', '=', 'devolucion_compras.id')
+            ->get();
+
+        return response()->json([
+            'info' => 1,
+            'data' => $impuestos,
+        ]);
+    }
+
+    // RETENCIONES
+    public function get_retenciones(Request $request)
+    {
+        $retenciones = DB::table('configuracion_autoretencion')
+            ->select('configuracion_autoretencion.*', 'debito.code as code_debito', 'debito.nombre as nombre_debito', 'credito.code as code_credito', 'credito.nombre as nombre_credito')
+            ->join('configuracion_puc as debito', 'configuracion_autoretencion.cuenta_debito', '=', 'debito.id')
+            ->join('configuracion_puc as credito', 'configuracion_autoretencion.cuenta_credito', '=', 'credito.id')
+            ->get();
+
+        return response()->json([
+            'info' => 1,
+            'data' => $retenciones,
+        ]);
+    }
 }

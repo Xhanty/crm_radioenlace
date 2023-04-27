@@ -192,48 +192,48 @@
 
         <div class="row row-sm" id="div_general">
             <div class="row1-container">
-                <div class="box box-down cyan">
-                    <h2>Parametrización</h2>
+                <div class="box box-down cyan" style="border-top: 14px solid hsl(180, 62%, 55%)">
+                    <h2 style="margin-top: -8px">Parametrización</h2>
                     <ul>
+                        <li><a href="javascript:void(0);" id="btnImpuestos">Impuestos</a></li>
                         <li><a href="javascript:void(0);" data-bs-target="#modalCuentas" data-bs-toggle="modal"
                                 data-bs-effect="effect-scale">Documentos</a></li>
-                        <li><a href="javascript:void(0);" id="btnClientess">Opción 1</a></li>
-                        <li><a href="javascript:void(0);" id="btnEmpleadoss">Opción 2</a></li>
+                        <li><a href="javascript:void(0);" id="btnComprobantes">Comprobantes</a></li>                        
                     </ul>
                     <img style="float:right; width: 40px;" src="https://assets.codepen.io/2301174/icon-team-builder.svg"
                         alt="Terceros">
                 </div>
 
-                <div class="box red">
-                    <h2>General</h2>
+                <div class="box red" style="border-top: 14px solid hsl(0, 78%, 62%)">
+                    <h2 style="margin-top: -8px">General</h2>
                     <ul>
-                        <li><a href="javascript:void(0);" id="btnCentrosCostos">Centros de costos</a></li>
                         <li><a href="javascript:void(0);" id="btnOrganizacion">Organización</a></li>
-                        <li><a href="javascript:void(0);" id="btnPucCliente">PUC</a></li>
+                        <li><a href="javascript:void(0);" id="btnCentrosCostos">Centros Costos</a></li>
+                        <li><a href="javascript:void(0);" id="btnPucCliente">Cuentas Contables</a></li>
                     </ul>
                     <img style="float:right; width: 40px;" src="https://assets.codepen.io/2301174/icon-supervisor.svg"
                         alt="General">
                 </div>
 
-                <div class="box box-down blue">
-                    <h2>Catálogo General</h2>
+                <div class="box box-down blue" style="border-top: 14px solid hsl(212, 86%, 64%)">
+                    <h2 style="margin-top: -8px">Catálogo Informativo</h2>
                     <ul>
+                        <li><a href="javascript:void(0);" id="btnPuc">Cuentas Contables</a></li>
                         <li><a href="javascript:void(0);" id="btnAdminActividadEconomica">Actividades Económicas</a></li>
-                        <li><a href="javascript:void(0);" id="btnPuc">PUC</a></li>
                     </ul>
                     <img style="float:right; width: 40px;" src="https://assets.codepen.io/2301174/icon-karma.svg"
                         alt="Catálogo">
                 </div>
             </div>
             <div class="row2-container">
-                <div class="box orange">
-                    <h2>Administrativo</h2>
+                <div class="box orange" style="border-top: 14px solid hsl(34, 97%, 64%)">
+                    <h2 style="margin-top: -8px">Administrativo</h2>
                     <ul>
-                        <li><a href="javascript:void(0);" id="btnAdminTipoDocumento">Tipos Documentos</a></li>
-                        <li><a href="javascript:void(0);" id="btnAdminTipoRegimen">Tipos Régimenes</a></li>
-                        <li><a href="javascript:void(0);" id="btnAdminTipoEmpresa">Tipos Empresas</a></li>
-                        <li><a href="javascript:void(0);" id="btnFormasPago">Formas de pago</a></li>
                         <li><a href="javascript:void(0);" id="btnAdminCiudades">Ciudades</a></li>
+                        <li><a href="javascript:void(0);" id="btnFormasPago">Formas Pago</a></li>
+                        <li><a href="javascript:void(0);" id="btnAdminTipoEmpresa">Tipos Empresas</a></li>
+                        <li><a href="javascript:void(0);" id="btnAdminTipoRegimen">Tipos Régimenes</a></li>
+                        <li><a href="javascript:void(0);" id="btnAdminTipoDocumento">Tipos Documentos</a></li>
                     </ul>
                     <img style="float:right; width: 40px;" src="https://assets.codepen.io/2301174/icon-calculator.svg"
                         alt="Opción">
@@ -252,6 +252,7 @@
         @include('admin.contabilidad.configuracion.tipos_empresas')
         @include('admin.contabilidad.configuracion.tipos_regimenes')
         @include('admin.contabilidad.configuracion.parametrizacion.cuentas_contables')
+        @include('admin.contabilidad.configuracion.parametrizacion.impuestos')
 
         <!-- Modal Seleccionar Parametrización -->
         <div class="modal  fade" id="modalCuentas">
