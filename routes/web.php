@@ -284,9 +284,17 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/add_cuenta_parametrizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_cuenta_parametrizacion'])->name('add_cuenta_parametrizacion');
     Route::post('/get_cuentas_parametrizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'get_cuentas_parametrizacion'])->name('get_cuentas_parametrizacion');
     Route::post('/update_status_cuenta_parametrizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'update_status_cuenta_parametrizacion'])->name('update_status_cuenta_parametrizacion');
-    
+
     Route::post('/impuestos_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'get_impuestos'])->name('impuestos_data');
     Route::post('/retenciones_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'get_retenciones'])->name('retenciones_data');
+
+    Route::post('/add_impuesto', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_impuesto'])->name('add_impuesto');
+    Route::post('/delete_impuesto', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'delete_impuesto'])->name('delete_impuesto');
+    Route::post('/update_uso_impuesto', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'update_uso_impuesto'])->name('update_uso_impuesto');
+
+    Route::post('/add_retencion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_retencion'])->name('add_retencion');
+    Route::post('/delete_retencion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'delete_retencion'])->name('delete_retencion');
+    Route::post('/update_uso_retencion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'update_uso_retencion'])->name('update_uso_retencion');
 
     // FACTURA COMPRA
     Route::get('/factura_compra', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'index'])->name('factura_compra');

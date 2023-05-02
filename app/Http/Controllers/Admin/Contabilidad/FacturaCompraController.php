@@ -58,6 +58,14 @@ class FacturaCompraController extends Controller
                 ->whereRaw('LENGTH(code) = 8')
                 ->get();
 
+            $impuestos_cargos = DB::table('configuracion_impuestos')
+                ->where('en_uso', 1)
+                ->get();
+
+            $impuestos_retencion = DB::table('configuracion_autoretencion')
+                ->where('en_uso', 1)
+                ->get();
+
             $facturas = DB::table('factura_compra')
                 ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion')
                 ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
@@ -68,7 +76,17 @@ class FacturaCompraController extends Controller
                 ->orderBy('factura_compra.id', 'desc')
                 ->get();
 
-            return view('admin.contabilidad.factura_compra', compact('productos', 'formas_pago', 'centros_costos', 'proveedores', 'cuentas_gastos', 'facturas', 'num_factura'));
+            return view('admin.contabilidad.factura_compra', compact(
+                'productos',
+                'formas_pago',
+                'centros_costos',
+                'proveedores',
+                'cuentas_gastos',
+                'facturas',
+                'num_factura',
+                'impuestos_cargos',
+                'impuestos_retencion'
+            ));
         } catch (Exception $ex) {
             //return $ex->getMessage();
             return view('errors.500');
@@ -96,10 +114,18 @@ class FacturaCompraController extends Controller
             $impuestos_1 = $request->impuestos_1;
             $impuestos_2 = $request->impuestos_2;
 
-            $factura = DB::table('factura_compra')
-                ->select('numero')
-                ->orderBy('id', 'desc')
-                ->first();
+            if ($tipo == 1) {
+                $factura = DB::table('factura_compra')
+                    ->select('numero')
+                    ->orderBy('id', 'desc')
+                    ->first();
+            } else {
+                $factura = DB::table('factura_compra')
+                    ->select('numero')
+                    ->where('tipo', 2)
+                    ->orderBy('id', 'desc')
+                    ->first();
+            }
 
             if (!$factura) {
                 $num_factura = 1;
@@ -339,7 +365,7 @@ class FacturaCompraController extends Controller
         }
     }
 
-    public function anular (Request $request)
+    public function anular(Request $request)
     {
         try {
             $id = $request->id;

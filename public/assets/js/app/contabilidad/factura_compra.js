@@ -16,6 +16,8 @@ $(document).ready(function () {
     var productos = JSON.parse(localStorage.getItem("productos"));
     var formas_pago = JSON.parse(localStorage.getItem("formas_pago"));
     var cuentas_gastos = JSON.parse(localStorage.getItem("cuentas_gastos"));
+    var impuestos_cargos = JSON.parse(localStorage.getItem("impuestos_cargos"));
+    var impuestos_retencion = JSON.parse(localStorage.getItem("impuestos_retencion"));
     var descuento_porcentaje = 0;
     let impuestos_1_general = [];
     let impuestos_2_general = [];
@@ -98,30 +100,21 @@ $(document).ready(function () {
             '<td class="pad-4">' +
             '<select class="form-select cargo_add">' +
             '<option value="">Seleccione una opción</option>' +
-            '<option data-impuesto="19" value="1">IVA 19%</option>' +
-            '<option data-impuesto="19" value="2">Iva Serv 19%</option>' +
-            '<option data-impuesto="16" value="3">IVA 16%</option>' +
-            '<option data-impuesto="5" value="4">IVA 5%</option>' +
-            '<option data-impuesto="8" value="5">Impoconsumo 8%</option>' +
+            impuestos_cargos.map((item) => {
+                return (
+                    '<option data-impuesto="' + item.tarifa + '" value="' + item.id + '">' + item.nombre + "</option>"
+                );
+            }) +
             '</select>' +
             '</td>' +
             '<td class="pad-4">' +
             '<select class="form-select retencion_add">' +
             '<option value="">Seleccione una opción</option>' +
-            '<option data-impuesto="11" value="1">Retefuente 11%</option>' +
-            '<option data-impuesto="10" value="2">Retefuente 10%</option>' +
-            '<option data-impuesto="7" value="3">Retefuente 7%</option>' +
-            '<option data-impuesto="6" value="4">Retefuente 6%</option>' +
-            '<option data-impuesto="5" value="5">Retención 5%</option>' +
-            '<option data-impuesto="4" value="6">Retefuente 4%</option>' +
-            '<option data-impuesto="4" value="8">Arriendos 4%</option>' +
-            '<option data-impuesto="3.5" value="9">Arriendos 3.5%</option>' +
-            '<option data-impuesto="3.5" value="10">Retefuente 3.5%</option>' +
-            '<option data-impuesto="2.5" value="11">Retefuente 2.5%</option>' +
-            '<option data-impuesto="2" value="12">Retefuente 2%</option>' +
-            '<option data-impuesto="1" value="13">Retefuente 1%</option>' +
-            '<option data-impuesto="0.4" value="14">Autoretención del cree 0.4%</option>' +
-            '<option data-impuesto="0.1" value="15">Retefuente 0.1%</option>' +
+            impuestos_retencion.map((item) => {
+                return (
+                    '<option data-impuesto="' + item.tarifa + '" value="' + item.id + '">' + item.nombre + "</option>"
+                );
+            }) +
             '</select>' +
             '</td>' +
             '<td class="text-center d-flex pad-4">' +
@@ -293,6 +286,14 @@ $(document).ready(function () {
                     } else {
                         $(".btn_options_factura").addClass("disabled");
                         $(".btn_pago_factura").addClass("disabled");
+                    }
+
+                    if (factura.tipo == 1) {
+                        $("#title_factura").html("FACTURA COMPRA");
+                        $("#factura_tlt_2").html("Factura No.");
+                    } else {
+                        $("#title_factura").html("DOCUMENTO SOPORTE");
+                        $("#factura_tlt_2").html("Documento No.");
                     }
 
                     if (productos) {
@@ -1024,6 +1025,7 @@ $(document).ready(function () {
                                     facturas.forEach(function (factura) {
                                         let bg = "";
                                         let favorito = "";
+                                        let tipo = "Factura No.";
 
                                         if (factura.status == 0) {
                                             bg = "bg-cancel";
@@ -1039,12 +1041,16 @@ $(document).ready(function () {
                                             favorito = "far fa-star";
                                         }
 
+                                        if (factura.tipo == 2) {
+                                            tipo = "Documento No.";
+                                        }
+
                                         let html = '<div class="media factura_btn ' + bg + '" data-id="' + factura.id + '">' +
                                             '<div class="media-icon">' +
                                             '<i class="far fa-file-alt"></i>' +
                                             '</div>' +
                                             '<div class="media-body">' +
-                                            '<h6><span>Factura No.' + factura.numero + '</span>' +
+                                            '<h6><span>' + tipo + factura.numero + '</span>' +
                                             '<span>' + factura.valor_total +
                                             '<i data-id="' + factura.id + '" class="' + favorito + ' btn_favorite"></i></span>' +
                                             '</h6>' +
@@ -1249,7 +1255,7 @@ $(document).ready(function () {
     // PAGINACIÓN
     function paginacionFacturas() {
         // Define el número de facturas por página
-        var facturasPorPagina = 2;
+        var facturasPorPagina = 10;
 
         // Obtén todas las facturas
         var $todasFacturas = $('.main-invoice-list').children('.media');

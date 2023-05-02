@@ -1040,6 +1040,80 @@ class ConfiguracionController extends Controller
         ]);
     }
 
+    public function update_uso_impuesto(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $uso = $request->uso;
+
+            DB::table('configuracion_impuestos')->where('id', $id)->update([
+                'en_uso' => $uso,
+            ]);
+
+            return response()->json([
+                'info' => 1,
+            ]);
+        } catch (Exception $ex) {
+            return response()->json([
+                'info' => 0,
+            ]);
+        }
+    }
+
+    public function add_impuesto(Request $request)
+    {
+        try {
+            $codigo = $request->codigo;
+            $nombre = $request->nombre;
+            $tipo = $request->tipo_impuesto;
+            $por_valor = $request->por_valor;
+            $tarifa = $request->tarifa;
+            $ventas = $request->ventas;
+            $compras = $request->compras;
+            $devolucion_ventas = $request->devolucion_ventas;
+            $devolucion_compras = $request->devolucion_compras;
+
+            DB::table('configuracion_impuestos')->insert([
+                'codigo' => $codigo,
+                'nombre' => $nombre,
+                'tipo_impuesto' => $tipo,
+                'por_valor' => $por_valor,
+                'tarifa' => $tarifa,
+                'ventas' => $ventas,
+                'compras' => $compras,
+                'devolucion_ventas' => $devolucion_ventas,
+                'devolucion_compras' => $devolucion_compras,
+                'created_by' => auth()->user()->id,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+
+            return response()->json([
+                'info' => 1,
+            ]);
+        } catch (Exception $ex) {
+            return response()->json([
+                'info' => 0,
+            ]);
+        }
+    }
+
+    public function delete_impuesto(Request $request)
+    {
+        try {
+            $id = $request->id;
+
+            DB::table('configuracion_impuestos')->where('id', $id)->delete();
+
+            return response()->json([
+                'info' => 1,
+            ]);
+        } catch (Exception $ex) {
+            return response()->json([
+                'info' => 0,
+            ]);
+        }
+    }
+
     // RETENCIONES
     public function get_retenciones(Request $request)
     {
@@ -1053,5 +1127,73 @@ class ConfiguracionController extends Controller
             'info' => 1,
             'data' => $retenciones,
         ]);
+    }
+
+    public function update_uso_retencion(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $uso = $request->uso;
+
+            DB::table('configuracion_autoretencion')->where('id', $id)->update([
+                'en_uso' => $uso,
+            ]);
+
+            return response()->json([
+                'info' => 1,
+            ]);
+        } catch (Exception $ex) {
+            return response()->json([
+                'info' => 0,
+            ]);
+        }
+    }
+
+    public function add_retencion(Request $request)
+    {
+        try {
+            $codigo = $request->codigo;
+            $nombre = $request->nombre;
+            $tipo_impuesto = $request->tipo_retencion;
+            $tarifa = $request->tarifa;
+            $cuenta_debito = $request->debito;
+            $cuenta_credito = $request->credito;
+
+            DB::table('configuracion_autoretencion')->insert([
+                'codigo' => $codigo,
+                'nombre' => $nombre,
+                'tipo_impuesto' => $tipo_impuesto,
+                'tarifa' => $tarifa,
+                'cuenta_debito' => $cuenta_debito,
+                'cuenta_credito' => $cuenta_credito,
+                'created_by' => auth()->user()->id,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+
+            return response()->json([
+                'info' => 1,
+            ]);
+        } catch (Exception $ex) {
+            return response()->json([
+                'info' => 0,
+            ]);
+        }
+    }
+
+    public function delete_retencion(Request $request)
+    {
+        try {
+            $id = $request->id;
+
+            DB::table('configuracion_autoretencion')->where('id', $id)->delete();
+
+            return response()->json([
+                'info' => 1,
+            ]);
+        } catch (Exception $ex) {
+            return response()->json([
+                'info' => 0,
+            ]);
+        }
     }
 }

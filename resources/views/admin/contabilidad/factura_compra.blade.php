@@ -177,7 +177,16 @@
                                             <i class="far fa-file-alt"></i>
                                         </div>
                                         <div class="media-body">
-                                            <h6><span>Factura No.{{ $factura->numero }}</span>
+                                            @php
+                                                $tipo = 'Factura No.';
+                                                if($factura->tipo == 1){
+                                                    $tipo = 'Factura No.';
+                                                } else {
+                                                    $tipo = 'Documento No.';
+                                                }
+                                            @endphp
+
+                                            <h6><span>{{ $tipo }}{{ $factura->numero }}</span>
                                                 <span>{{ $factura->valor_total }}
                                                     @if ($factura->favorito == 0)
                                                         <i data-id="{{ $factura->id }}"
@@ -207,7 +216,7 @@
             <div class="card card-invoice">
                 <div class="card-body">
                     <div class="invoice-header">
-                        <h1 class="invoice-title">FACTURA COMPRA</h1>
+                        <h1 class="invoice-title" id="title_factura"></h1>
                         <div class="billed-from">
                             <h6>RADIO ENLACE S.A.S.</h6>
                             <p>Nit 830.504.313-5<br>
@@ -228,7 +237,7 @@
                             </div>
                             <div class="col-md">
                                 <label class="tx-gray-600">Información de la factura</label>
-                                <p class="invoice-info-row"><span>Factura No.</span> <span id="num_fact_view">1743</span>
+                                <p class="invoice-info-row"><span id="factura_tlt_2">Factura No.</span> <span id="num_fact_view">1743</span>
                                 </p>
                                 <p class="invoice-info-row"><span>Fecha Compra</span> <span
                                         id="compra_view">21/03/2023</span></p>
@@ -313,8 +322,8 @@
                                     <label for="">Tipo</label>
                                     <select class="form-select" id="tipo_add">
                                         <option value="">Seleccione una opción</option>
-                                        <option value="1">FC-2-FCE</option>
-                                        <option value="2">FC-5-FCD</option>
+                                        <option value="1">(FC-1) Factura Electrónica Compra</option>
+                                        <option value="2">(FC-2) Documento Soporte</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-3">
@@ -455,44 +464,21 @@
                                                 <td class="pad-4">
                                                     <select class="form-select cargo_add">
                                                         <option value="">Seleccione una opción</option>
-                                                        <option data-impuesto="19" value="1">IVA 19%</option>
-                                                        <option data-impuesto="19" value="2">Iva Serv 19%
-                                                        </option>
-                                                        <option data-impuesto="16" value="3">IVA 16%</option>
-                                                        <option data-impuesto="5" value="4">IVA 5%</option>
-                                                        <option data-impuesto="8" value="5">Impoconsumo 8%
-                                                        </option>
+                                                        @foreach ($impuestos_cargos as $impuesto)
+                                                            <option data-impuesto="{{ $impuesto->tarifa }}"
+                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}
+                                                            </option>
+                                                        @endforeach
                                                     </select>
                                                 </td>
                                                 <td class="pad-4">
                                                     <select class="form-select retencion_add">
                                                         <option value="">Seleccione una opción</option>
-                                                        <option data-impuesto="11" value="1">Retefuente 11%
-                                                        </option>
-                                                        <option data-impuesto="10" value="2">Retefuente 10%
-                                                        </option>
-                                                        <option data-impuesto="7" value="3">Retefuente 7%
-                                                        </option>
-                                                        <option data-impuesto="6" value="4">Retefuente 6%
-                                                        </option>
-                                                        <option data-impuesto="5" value="5">Retención 5%</option>
-                                                        <option data-impuesto="4" value="6">Retefuente 4%
-                                                        </option>
-                                                        <option data-impuesto="4" value="8">Arriendos 4%</option>
-                                                        <option data-impuesto="3.5" value="9">Arriendos 3.5%
-                                                        </option>
-                                                        <option data-impuesto="3.5" value="10">Retefuente 3.5%
-                                                        </option>
-                                                        <option data-impuesto="2.5" value="11">Retefuente 2.5%
-                                                        </option>
-                                                        <option data-impuesto="2" value="12">Retefuente 2%
-                                                        </option>
-                                                        <option data-impuesto="1" value="13">Retefuente 1%
-                                                        </option>
-                                                        <option data-impuesto="0.4" value="14">Autoretención del
-                                                            cree 0.4%</option>
-                                                        <option data-impuesto="0.1" value="15">Retefuente 0.1%
-                                                        </option>
+                                                        @foreach ($impuestos_retencion as $impuesto)
+                                                            <option data-impuesto="{{ $impuesto->tarifa }}"
+                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}
+                                                            </option>
+                                                        @endforeach
                                                     </select>
                                                 </td>
                                                 <td class="text-center d-flex pad-4">
@@ -676,9 +662,13 @@
             var productos = @json($productos);
             var formas_pago = @json($formas_pago);
             var cuentas_gastos = @json($cuentas_gastos);
+            var impuestos_cargos = @json($impuestos_cargos);
+            var impuestos_retencion = @json($impuestos_retencion);
             localStorage.setItem('productos', JSON.stringify(productos));
             localStorage.setItem('formas_pago', JSON.stringify(formas_pago));
             localStorage.setItem('cuentas_gastos', JSON.stringify(cuentas_gastos));
+            localStorage.setItem('impuestos_cargos', JSON.stringify(impuestos_cargos));
+            localStorage.setItem('impuestos_retencion', JSON.stringify(impuestos_retencion));
         });
     </script>
     <script src="{{ asset('assets/js/app/contabilidad/factura_compra.js') }}"></script>

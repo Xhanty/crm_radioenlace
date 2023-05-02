@@ -5,7 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('pdf/style.css') }}">
-    <title>Factura Compra No. {{ $factura->numero }}</title>
+    @php
+        $tipo = 'Factura No.';
+        $tipo_2 = 'Factura Compra';
+
+        if ($factura->tipo == 2) {
+            $tipo = 'Documento No.';
+            $tipo_2 = 'Documento Soporte';
+        }
+    @endphp
+    <title>{{ $tipo }} {{ $factura->numero }}</title>
 </head>
 
 <body>
@@ -67,20 +76,20 @@
                         </div>
                         <div class="tm_shape_bg tm_accent_bg_10 tm_border tm_accent_border_20"></div>
                         @if ($factura->status == 0)
-                            <img src="{{ asset('contabilidad/anulada.png') }}"
-                                alt="" style="position: absolute; left: -52px; top: -3px; height: 135px;">
+                            <img src="{{ asset('contabilidad/anulada.png') }}" alt=""
+                                style="position: absolute; left: -52px; top: -3px; height: 135px;">
                         @elseif ($factura->status == 2)
                             <img src="{{ asset('contabilidad/pagado.png') }}" alt=""
                                 style="position: absolute; left: -52px; top: -3px; height: 135px;">
                         @else
-                            <img src="{{ asset('contabilidad/pendiente.png') }}"
-                                alt="" style="position: absolute; left: -52px; top: -3px; height: 135px;">
+                            <img src="{{ asset('contabilidad/pendiente.png') }}" alt=""
+                                style="position: absolute; left: -52px; top: -3px; height: 135px;">
                         @endif
                     </div>
                     <div class="tm_invoice_info tm_mb22 tm_align_center">
                         <div class="tm_invoice_info_left tm_mb20_md" style="margin-top: 2px">
                             <p class="tm_mb0">
-                                <b class="tm_primary_color ">Factura Compra Electrónica: </b>{{ $factura->numero }}<br>
+                                <b class="tm_primary_color ">{{ $tipo_2 }}: </b>{{ $factura->numero }}<br>
                                 <b class="tm_primary_color">Fecha Compra:
                                 </b>{{ date('d/m/Y', strtotime($factura->fecha_elaboracion)) }}<br>
                                 <b class="tm_primary_color">Fecha Vencimiento:

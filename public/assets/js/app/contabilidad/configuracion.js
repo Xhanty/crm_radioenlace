@@ -827,8 +827,20 @@ $(document).ready(function () {
                             data[i].tarifa = '';
                         }
 
+                        if (data[i].tipo_impuesto == 1) {
+                            data[i].tipo_impuesto = 'IVA';
+                        } else if (data[i].tipo_impuesto == 2) {
+                            data[i].tipo_impuesto = 'ReteFuente';
+                        } else if (data[i].tipo_impuesto == 3) {
+                            data[i].tipo_impuesto = 'ReteIva';
+                        } else if (data[i].tipo_impuesto == 4) {
+                            data[i].tipo_impuesto = 'ReteIca';
+                        } else if (data[i].tipo_impuesto == 5) {
+                            data[i].tipo_impuesto = 'Impoconsumo';
+                        }
+
                         html += '<tr>';
-                        html += '<td class="text-center"><input type="checkbox" style="margin-left: -8px" class="form-check-input" ' + en_uso + ' data-id="' + data[i].id + '"></td>';
+                        html += '<td class="text-center"><input type="checkbox" style="margin-left: -8px" class="chk_impuestos form-check-input" ' + en_uso + ' data-id="' + data[i].id + '"></td>';
                         html += '<td class="text-center">' + data[i].codigo + '</td>';
                         html += '<td class="text-center">' + data[i].nombre + '</td>';
                         html += '<td class="text-center">' + data[i].tipo_impuesto + '</td>';
@@ -896,15 +908,15 @@ $(document).ready(function () {
                         }
 
                         html += '<tr>';
-                        html += '<td class="text-center"><input type="checkbox" style="margin-left: -8px" class="form-check-input" ' + en_uso + ' data-id="' + data[i].id + '"></td>';
+                        html += '<td class="text-center"><input type="checkbox" style="margin-left: -8px" class="chk_retenciones form-check-input" ' + en_uso + ' data-id="' + data[i].id + '"></td>';
                         html += '<td class="text-center">' + data[i].codigo + '</td>';
                         html += '<td class="text-center">' + data[i].nombre + '</td>';
-                        html += '<td class="text-center">' + data[i].tipo_impuesto + '</td>';
+                        html += '<td class="text-center">Autorretención</td>';
                         html += '<td class="text-center">' + data[i].tarifa + '</td>';
                         html += '<td class="text-center">' + data[i].code_debito + ' | ' + data[i].nombre_debito + '</td>';
                         html += '<td class="text-center">' + data[i].code_credito + ' | ' + data[i].nombre_credito + '</td>';
                         html += '<td class="text-center">';
-                        html += '<button type="button" class="btn btn-sm btn-danger btnDeleteRetencion" title="Eliminar Autoretención" data-id="' + data[i].id + '"><i class="fa fa-trash" style="color: #fff;"></i></button>';
+                        html += '<button type="button" class="btn btn-sm btn-danger btnDeleteRetencion" title="Eliminar Autorretención" data-id="' + data[i].id + '"><i class="fa fa-trash" style="color: #fff;"></i></button>';
                         html += '</td>';
                         html += '</tr>';
                     }
@@ -2799,6 +2811,291 @@ $(document).ready(function () {
                         console.log(data);
                     }
                 });
+            }
+        });
+    });
+
+    $("#btnAddImpuesto").on("click", function () {
+        let codigo = $("#codigo_add_impuesto").val();
+        let nombre = $("#nombre_add_impuesto").val();
+        let tipo_impuesto = $("#tipo_add_impuesto").val();
+        let por_valor = $("#por_valor_add_impuesto").val();
+        let tarifa = $("#tarifa_add_impuesto").val();
+        let ventas = $("#ventas_add_impuesto").val();
+        let compras = $("#compras_add_impuesto").val();
+        let devolucion_ventas = $("#dev_ventas_add_impuesto").val();
+        let devolucion_compras = $("#dev_compras_add_impuesto").val();
+
+        if (codigo == "") {
+            toastr.error("Debe ingresar un código");
+            return false;
+        } else if (nombre == "") {
+            toastr.error("Debe ingresar un nombre");
+            return false;
+        } else if (tipo_impuesto <= 0) {
+            toastr.error("Debe seleccionar un tipo de impuesto");
+            return false;
+        } else if (tarifa < 0) {
+            toastr.error("Debe ingresar una tarifa");
+            return false;
+        } else if (ventas <= 0) {
+            toastr.error("Debe seleccionar una cuenta de ventas");
+            return false;
+        } else if (compras <= 0) {
+            toastr.error("Debe seleccionar una cuenta de compras");
+            return false;
+        } else if (devolucion_ventas <= 0) {
+            toastr.error("Debe seleccionar una cuenta de devolución de ventas");
+            return false;
+        } else if (devolucion_compras <= 0) {
+            toastr.error("Debe seleccionar una cuenta de devolución de compras");
+            return false;
+        } else {
+            $("#btnAddImpuesto").attr("disabled", true);
+            $("#btnAddImpuesto").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Agregando...'
+            );
+
+            $.ajax({
+                url: "add_impuesto",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    codigo: codigo,
+                    nombre: nombre,
+                    tipo_impuesto: tipo_impuesto,
+                    por_valor: por_valor,
+                    tarifa: tarifa,
+                    ventas: ventas,
+                    compras: compras,
+                    devolucion_ventas: devolucion_ventas,
+                    devolucion_compras: devolucion_compras,
+                },
+                success: function (response) {
+                    $("#btnAddImpuesto").attr("disabled", false);
+                    $("#btnAddImpuesto").html("Adicionar Impuesto");
+                    if (response.info == 1) {
+                        load_impuestos();
+                        toastr.success("Impuesto agregado correctamente");
+                        $("#codigo_add_impuesto").val("");
+                        $("#nombre_add_impuesto").val("");
+                        $("#tipo_add_impuesto").val("").trigger("change");
+                        $("#por_valor_add_impuesto").val("1").trigger("change");
+                        $("#tarifa_add_impuesto").val("");
+                        $("#ventas_add_impuesto").val("").trigger("change");
+                        $("#compras_add_impuesto").val("").trigger("change");
+                        $("#dev_ventas_add_impuesto").val("").trigger("change");
+                        $("#dev_compras_add_impuesto").val("").trigger("change");
+                        $("#modalAddImpuesto").modal("hide");
+                    } else {
+                        toastr.error("Error al agregar el impuesto");
+                    }
+                },
+                error: function (data) {
+                    $("#btnAddImpuesto").attr("disabled", false);
+                    $("#btnAddImpuesto").html("Adicionar Impuesto");
+                    toastr.error("Error al agregar el impuesto");
+                    console.log(data);
+                }
+            });
+        }
+    });
+
+    $("#btnAddRetencion").on("click", function () {
+        let codigo = $("#codigo_add_retencion").val();
+        let nombre = $("#nombre_add_retencion").val();
+        let tipo_retencion = $("#tipo_add_retencion").val();
+        let tarifa = $("#tarifa_add_retencion").val();
+        let debito = $("#debito_add_retencion").val();
+        let credito = $("#credito_add_retencion").val();
+
+        if (codigo == "") {
+            toastr.error("Debe ingresar un código");
+            return false;
+        } else if (nombre == "") {
+            toastr.error("Debe ingresar un nombre");
+            return false;
+        } else if (tipo_retencion < 0) {
+            toastr.error("Debe seleccionar un tipo de retención");
+            return false;
+        } else if (tarifa <= 0) {
+            toastr.error("Debe ingresar una tarifa");
+            return false;
+        } else if (debito <= 0) {
+            toastr.error("Debe seleccionar una cuenta de débito");
+            return false;
+        } else if (credito <= 0) {
+            toastr.error("Debe seleccionar una cuenta de crédito");
+            return false;
+        } else {
+            $("#btnAddRetencion").attr("disabled", true);
+            $("#btnAddRetencion").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Agregando...'
+            );
+
+            $.ajax({
+                url: "add_retencion",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    codigo: codigo,
+                    nombre: nombre,
+                    tipo_retencion: tipo_retencion,
+                    tarifa: tarifa,
+                    debito: debito,
+                    credito: credito,
+                },
+                success: function (response) {
+                    $("#btnAddRetencion").attr("disabled", false);
+                    $("#btnAddRetencion").html("Adicionar Autorretención");
+                    if (response.info == 1) {
+                        load_retenciones();
+                        toastr.success("Impuesto agregado correctamente");
+                        $("#codigo_add_retencion").val("");
+                        $("#nombre_add_retencion").val("");
+                        $("#tipo_add_retencion").val("").trigger("change");
+                        $("#tarifa_add_retencion").val("");
+                        $("#debito_add_retencion").val("").trigger("change");
+                        $("#credito_add_retencion").val("").trigger("change");
+                        $("#modalAddRetencion").modal("hide");
+                    } else {
+                        toastr.error("Error al agregar el impuesto");
+                    }
+                },
+                error: function (data) {
+                    $("#btnAddRetencion").attr("disabled", false);
+                    $("#btnAddRetencion").html("Adicionar Autorretención");
+                    toastr.error("Error al agregar el impuesto");
+                    console.log(data);
+                }
+            });
+        }
+    });
+
+    $(document).on("click", ".btnDeleteImpuesto", function () {
+        let id = $(this).data("id");
+
+        Swal.fire({
+            title: "¿Está seguro?",
+            text: "Está a punto de eliminar el impuesto",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, eliminar",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "delete_impuesto",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        id: id,
+                    },
+                    success: function (response) {
+                        if (response.info == 1) {
+                            load_impuestos();
+                            toastr.success("Impuesto eliminado correctamente");
+                        } else {
+                            toastr.error("Error al eliminar el impuesto");
+                        }
+                    },
+                    error: function (data) {
+                        toastr.error("Error al eliminar el impuesto");
+                        console.log(data);
+                    }
+                });
+            }
+        });
+    });
+
+    $(document).on("click", ".btnDeleteRetencion", function () {
+        let id = $(this).data("id");
+
+        Swal.fire({
+            title: "¿Está seguro?",
+            text: "Está a punto de eliminar la retención",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, eliminar",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "delete_retencion",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        id: id,
+                    },
+                    success: function (response) {
+                        if (response.info == 1) {
+                            load_retenciones();
+                            toastr.success("Retención eliminada correctamente");
+                        } else {
+                            toastr.error("Error al eliminar la retención");
+                        }
+                    },
+                    error: function (data) {
+                        toastr.error("Error al eliminar la retención");
+                        console.log(data);
+                    }
+                });
+            }
+        });
+    });
+
+    $(document).on("change", ".chk_impuestos", function () {
+        let id = $(this).data("id");
+        let uso = $(this).is(":checked") ? 1 : 0;
+
+        $.ajax({
+            url: "update_uso_impuesto",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id: id,
+                uso: uso,
+            },
+            success: function (response) {
+                if (response.info == 1) {
+                    toastr.success("Uso actualizado correctamente");
+                } else {
+                    toastr.error("Error al actualizar el uso");
+                }
+            },
+            error: function (data) {
+                toastr.error("Error al actualizar el uso");
+                console.log(data);
+            }
+        });
+    });
+
+    $(document).on("change", ".chk_retenciones", function () {
+        let id = $(this).data("id");
+        let uso = $(this).is(":checked") ? 1 : 0;
+
+        $.ajax({
+            url: "update_uso_retencion",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id: id,
+                uso: uso,
+            },
+            success: function (response) {
+                if (response.info == 1) {
+                    toastr.success("Uso actualizado correctamente");
+                } else {
+                    toastr.error("Error al actualizar el uso");
+                }
+            },
+            error: function (data) {
+                toastr.error("Error al actualizar el uso");
+                console.log(data);
             }
         });
     });

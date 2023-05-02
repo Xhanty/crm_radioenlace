@@ -1,4 +1,3 @@
-<!-- row Edit -->
 <div class="row row-sm d-none" id="div_param_impuestos">
     <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
         <!--div-->
@@ -22,7 +21,7 @@
                     <div class="card-body tab-content">
                         <div class="tab-pane show active" id="tabCont1">
                             <div style="display: flex; justify-content: right;">
-                                <button class="btn btn-primary" id="btn_add_impuesto">Adicionar Impuesto</button>
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddImpuesto">Adicionar Impuesto</button>
                             </div>
                             <br>
                             <div class="table-responsive">
@@ -50,7 +49,7 @@
                         </div>
                         <div class="tab-pane" id="tabCont2">
                             <div style="display: flex; justify-content: right;">
-                                <button class="btn btn-primary" id="btn_add_retencion">Adicionar Autorretención</button>
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddRetencion">Adicionar Autoretención</button>
                             </div>
                             <br>
                             <div class="table-responsive">
@@ -61,10 +60,10 @@
                                             <th class="text-center"></th>
                                             <th class="text-center">Código</th>
                                             <th class="text-center">Nombre</th>
-                                            <th class="text-center">Tipo Impuesto</th>
+                                            <th class="text-center">Tipo<br>Impuesto</th>
                                             <th class="text-center">Tarifa</th>
-                                            <th class="text-center">Cuenta Débito</th>
-                                            <th class="text-center">Cuenta Crédito</th>
+                                            <th class="text-center">Cuenta<br>Débito</th>
+                                            <th class="text-center">Cuenta<br>Crédito</th>
                                             <th class="text-center"></th>
                                         </tr>
                                     </thead>
@@ -80,32 +79,163 @@
     </div>
 </div>
 
-<!-- Modal -->
-<!--<div class="modal fade" id="modalEditCentroCosto">
+<!-- Modal Add Impuesto -->
+<div class="modal fade" id="modalAddImpuesto">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content modal-content-demo">
             <div class="modal-header">
-                <h6 class="modal-title">Modificar Centro de Costo</h6><button aria-label="Close" class="btn-close"
+                <h6 class="modal-title">Adicionar Impuesto</h6><button aria-label="Close" class="btn-close"
                     data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-                <input type="hidden" id="id_edit_centrocosto" disabled readonly>
                 <div class="row row-sm">
                     <div class="col-lg mg-t-10 mg-lg-t-0">
                         <label for="">Código</label>
-                        <input class="form-control" id="codigo_edit_centrocosto" placeholder="Código" type="text">
+                        <input class="form-control" id="codigo_add_impuesto" placeholder="Código" type="text">
                     </div>
                     <div class="col-lg mg-t-10 mg-lg-t-0">
-                        <label for="">Actividad Económica</label>
-                        <input class="form-control" id="tipo_regimen_edit_centrocosto" placeholder="Actividad Económica"
-                            type="text">
+                        <label for="">Nombre</label>
+                        <input class="form-control" id="nombre_add_impuesto" placeholder="Nombre" type="text">
+                    </div>
+                </div>
+                <br>
+                <div class="row row-sm">
+                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                        <label for="">Tipo Impuesto</label>
+                        <select id="tipo_add_impuesto" class="form-select">
+                            <option value="">Selecciona una opción</option>
+                            <option value="1">Iva</option>
+                            <option value="2">ReteFuente</option>
+                            <option value="3">ReteIva</option>
+                            <option value="4">ReteIca</option>
+                            <option value="5">Impoconsumo</option>
+                        </select>
+                    </div>
+                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                        <label for="">¿Por Valor?</label>
+                        <select id="por_valor_add_impuesto" class="form-select">
+                            <option value="0">No</option>
+                            <option value="1">Sí</option>
+                        </select>
+                    </div>
+                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                        <label for="">Tarifa</label>
+                        <input class="form-control" id="tarifa_add_impuesto" placeholder="Tarifa" type="number">
+                    </div>
+                </div>
+                <br>
+                <div class="row row-sm">
+                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                        <label for="">Cuenta Contable (Ventas)</label>
+                        <select id="ventas_add_impuesto" class="form-select">
+                            <option value="">Selecciona una opción</option>
+                            @foreach ($cuentas_contables as $cuenta)
+                                <option value="{{ $cuenta->id }}">{{ $cuenta->code }} | {{ $cuenta->nombre }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                        <label for="">Cuenta Contable (Compras)</label>
+                        <select id="compras_add_impuesto" class="form-select">
+                            <option value="">Selecciona una opción</option>
+                            @foreach ($cuentas_contables as $cuenta)
+                                <option value="{{ $cuenta->id }}">{{ $cuenta->code }} | {{ $cuenta->nombre }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="row row-sm">
+                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                        <label for="">Cuenta Contable (Devolución Ventas)</label>
+                        <select id="dev_ventas_add_impuesto" class="form-select">
+                            <option value="">Selecciona una opción</option>
+                            @foreach ($cuentas_contables as $cuenta)
+                                <option value="{{ $cuenta->id }}">{{ $cuenta->code }} | {{ $cuenta->nombre }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                        <label for="">Cuenta Contable (Devolución Compras)</label>
+                        <select id="dev_compras_add_impuesto" class="form-select">
+                            <option value="">Selecciona una opción</option>
+                            @foreach ($cuentas_contables as $cuenta)
+                                <option value="{{ $cuenta->id }}">{{ $cuenta->code }} | {{ $cuenta->nombre }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn ripple btn-primary" id="btnEditCentroCosto" type="button">Actualizar Centro de
-                    Costo</button>
+                <button class="btn ripple btn-primary" id="btnAddImpuesto" type="button">Adicionar Impuesto</button>
             </div>
         </div>
     </div>
-</div>-->
+</div>
+
+<!-- Modal Add Retención -->
+<div class="modal fade" id="modalAddRetencion">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h6 class="modal-title">Adicionar Autorretención</h6><button aria-label="Close" class="btn-close"
+                    data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row row-sm">
+                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                        <label for="">Código</label>
+                        <input class="form-control" id="codigo_add_retencion" placeholder="Código" type="text">
+                    </div>
+                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                        <label for="">Nombre</label>
+                        <input class="form-control" id="nombre_add_retencion" placeholder="Nombre" type="text">
+                    </div>
+                </div>
+                <br>
+                <div class="row row-sm">
+                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                        <label for="">Tipo Impuesto</label>
+                        <select id="tipo_add_retencion" class="form-select">
+                            <option value="1">Autorretención</option>
+                        </select>
+                    </div>
+                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                        <label for="">Tarifa</label>
+                        <input class="form-control" id="tarifa_add_retencion" placeholder="Tarifa" type="number">
+                    </div>
+                </div>
+                <br>
+                <div class="row row-sm">
+                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                        <label for="">Cuenta Contable (Débito)</label>
+                        <select id="debito_add_retencion" class="form-select">
+                            <option value="">Selecciona una opción</option>
+                            @foreach ($cuentas_contables as $cuenta)
+                                <option value="{{ $cuenta->id }}">{{ $cuenta->code }} | {{ $cuenta->nombre }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                        <label for="">Cuenta Contable (Crédito)</label>
+                        <select id="credito_add_retencion" class="form-select">
+                            <option value="">Selecciona una opción</option>
+                            @foreach ($cuentas_contables as $cuenta)
+                                <option value="{{ $cuenta->id }}">{{ $cuenta->code }} | {{ $cuenta->nombre }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn ripple btn-primary" id="btnAddRetencion" type="button">Adicionar Autorretención</button>
+            </div>
+        </div>
+    </div>
+</div>
