@@ -183,6 +183,7 @@ class SolicitudInventarioController extends Controller
                 ->select('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social as cliente', 'si.estado', 'e.nombre as empleado', 'si.codigo', 'c.nit', DB::raw('count(sid.id) as elementos'))
                 ->where('si.estado', 0)
                 ->groupBy('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social', 'si.estado', 'si.codigo', 'e.nombre', 'c.nit')
+                ->orderBy('si.id', 'desc')
                 ->get();
 
             $gestionados = DB::table('solicitud_inventario as si')
@@ -192,6 +193,7 @@ class SolicitudInventarioController extends Controller
                 ->select('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social as cliente', 'si.estado', 'e.nombre as empleado', 'si.codigo', 'c.nit', DB::raw('count(sid.id) as elementos'))
                 ->where('si.estado', '!=', 0)
                 ->groupBy('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social', 'si.estado', 'si.codigo', 'e.nombre', 'c.nit')
+                ->orderBy('si.id', 'desc')
                 ->get();
 
             $productos = DB::table('productos')
