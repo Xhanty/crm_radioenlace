@@ -294,6 +294,8 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/info_factura_compra', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'info'])->name('info_factura_compra');
     Route::post('/add_factura_compra', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'add'])->name('add_factura_compra');
     Route::post('/filtrar_facturas_compras', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'filtro'])->name('filtrar_facturas_compras');
+    Route::post('/anular_factura_compra', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'anular'])->name('anular_factura_compra');
+    Route::post('/favorito_factura_compra', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'favorito'])->name('favorito_factura_compra');
 
     // FACTURA VENTA
     Route::get('/factura_venta', [App\Http\Controllers\Admin\Contabilidad\FacturaVentaController::class, 'index'])->name('factura_venta');

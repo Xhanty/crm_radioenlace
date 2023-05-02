@@ -67,7 +67,7 @@
                         </div>
                         <div class="tm_shape_bg tm_accent_bg_10 tm_border tm_accent_border_20"></div>
                         @if ($factura->status == 0)
-                            <img src="{{ asset('contabilidad/nota_credito.png') }}"
+                            <img src="{{ asset('contabilidad/anulada.png') }}"
                                 alt="" style="position: absolute; left: -52px; top: -3px; height: 135px;">
                         @elseif ($factura->status == 2)
                             <img src="{{ asset('contabilidad/pagado.png') }}" alt=""

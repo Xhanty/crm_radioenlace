@@ -24,6 +24,8 @@ $(document).ready(function () {
     var host = window.location.host;
     var url_general = protocol + "//" + host + "/";
 
+    paginacionFacturas();
+
     $(".open-toggle").trigger("click");
 
     var contact_forma_pago = '<div class="row row-sm mt-2">' +
@@ -284,8 +286,14 @@ $(document).ready(function () {
                     $("#vencimiento_view").html(fecha_vencimiento.getDate() + "/" + (fecha_vencimiento.getMonth() + 1) + "/" + fecha_vencimiento.getFullYear());
                     $("#pagar_view").html(factura.valor_total);
                     $(".btn_imprimir_factura").attr("href", "pdf_factura_compra?token=" + factura.id);
-                    $(".btn_options_factura").attr("data-id", factura.id);
-                    $(".btn_pago_factura").attr("data-id", factura.id);
+
+                    if (factura.status == 1) {
+                        $(".btn_options_factura").attr("data-id", factura.id);
+                        $(".btn_pago_factura").attr("data-id", factura.id);
+                    } else {
+                        $(".btn_options_factura").addClass("disabled");
+                        $(".btn_pago_factura").addClass("disabled");
+                    }
 
                     if (productos) {
                         $("#productos_view").empty();
@@ -944,19 +952,48 @@ $(document).ready(function () {
 
     // FILTROS
     $("#btn_filtrar").click(function () {
+        let proveedor = $("#proveedor_select").val();
         let numero_factura = $("#factura_select").val();
         let serial = $("#serial_factura_select").val();
+        let fecha_inicio = $("#inicio_select").val();
+        let fecha_fin = $("#fin_select").val();
+        let valid = 1;
 
-        if (numero_factura.trim().length < 1 && serial.trim().length < 1) {
+        if (numero_factura.trim().length < 1 && serial.trim().length < 1 && fecha_inicio.trim().length < 1 && fecha_fin.trim().length < 1 && proveedor < 1) {
             toastr.error('Debe ingresar al menos un filtro');
+            valid = 0;
             return false;
-        } else {
+        } else if (fecha_inicio.trim().length > 0 && fecha_fin.trim().length < 1) {
+            toastr.error('Debe ingresar la fecha final');
+            valid = 0;
+            return false;
+        } else if (fecha_inicio.trim().length < 1 && fecha_fin.trim().length > 0) {
+            toastr.error('Debe ingresar la fecha inicial');
+            valid = 0;
+            return false;
+        } else if (fecha_inicio.trim().length > 0 && fecha_fin.trim().length > 0) {
+            let fecha_inicio_array = fecha_inicio.split("-");
+            let fecha_fin_array = fecha_fin.split("-");
+            let fecha_inicio_date = new Date(fecha_inicio_array[0], fecha_inicio_array[1], fecha_inicio_array[2]);
+            let fecha_fin_date = new Date(fecha_fin_array[0], fecha_fin_array[1], fecha_fin_array[2]);
+
+            if (fecha_inicio_date > fecha_fin_date) {
+                toastr.error('La fecha inicial no puede ser mayor a la fecha final');
+                valid = 0;
+                return false;
+            }
+        }
+
+        if (valid == 1) {
             $("#btn_filtrar").attr("disabled", true);
             $("#btn_filtrar").html('<i class="fa fa-spinner fa-spin"></i> Filtrando...');
 
             let formData = new FormData();
+            formData.append("proveedor", proveedor);
             formData.append("numero_factura", numero_factura);
             formData.append("serial", serial);
+            formData.append("fecha_inicio", fecha_inicio);
+            formData.append("fecha_fin", fecha_fin);
 
             $.ajax({
                 url: "filtrar_facturas_compras",
@@ -970,11 +1007,62 @@ $(document).ready(function () {
                     $("#btn_filtrar").html('Filtrar');
                     if (response.info == 1) {
                         let token = response.token;
+                        let facturas = response.facturas;
 
-                        if (!token) {
+                        if (!token && !facturas) {
                             toastr.error('No se encontraron facturas');
                         } else {
-                            window.open(url_general + 'pdf_factura_compra?token=' + token, '_blank');
+                            if (token) {
+                                window.open(url_general + 'pdf_factura_compra?token=' + token, '_blank');
+                            } else {
+                                if (facturas.length < 1) {
+                                    toastr.error('No se encontraron facturas');
+                                } else {
+                                    console.log(facturas);
+                                    $("#mainInvoiceList").html("");
+
+                                    facturas.forEach(function (factura) {
+                                        let bg = "";
+                                        let favorito = "";
+
+                                        if (factura.status == 0) {
+                                            bg = "bg-cancel";
+                                        } else if (factura.status == 2) {
+                                            bg = "bg-paid";
+                                        } else {
+                                            bg = "bg-pending";
+                                        }
+
+                                        if (factura.favorito == 1) {
+                                            favorito = "fas fa-star orange";
+                                        } else {
+                                            favorito = "far fa-star";
+                                        }
+
+                                        let html = '<div class="media factura_btn ' + bg + '" data-id="' + factura.id + '">' +
+                                            '<div class="media-icon">' +
+                                            '<i class="far fa-file-alt"></i>' +
+                                            '</div>' +
+                                            '<div class="media-body">' +
+                                            '<h6><span>Factura No.' + factura.numero + '</span>' +
+                                            '<span>' + factura.valor_total +
+                                            '<i data-id="' + factura.id + '" class="' + favorito + ' btn_favorite"></i></span>' +
+                                            '</h6>' +
+                                            '<div>' +
+                                            '<p><span>Fecha:</span>' + factura.fecha_elaboracion + '</p>' +
+                                            '<p>' + factura.razon_social + '(NIT: ' + factura.nit + '-' + factura.codigo_verificacion + ')</p>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '</div>';
+
+                                        $("#mainInvoiceList").append(html);
+                                    });
+                                    $(".center-div .pagination").remove();
+                                    paginacionFacturas();
+                                    $("#content_factura").addClass("d-none");
+                                    $("#modalSelect").modal("hide");
+                                }
+                            }
                         }
                     } else {
                         toastr.error('No se encontraron facturas');
@@ -1157,6 +1245,111 @@ $(document).ready(function () {
             }
         });
     }
+
+    // PAGINACIÓN
+    function paginacionFacturas() {
+        // Define el número de facturas por página
+        var facturasPorPagina = 2;
+
+        // Obtén todas las facturas
+        var $todasFacturas = $('.main-invoice-list').children('.media');
+
+        // Calcula el número total de páginas
+        var numPaginas = Math.ceil($todasFacturas.length / facturasPorPagina);
+
+        // Crea botones de paginación con Bootstrap
+        var $paginacion = $('<nav class="center-div" aria-label="Facturas"></nav>');
+        var $ul = $('<ul class="pagination"></ul>');
+
+        for (var i = 1; i <= numPaginas; i++) {
+            var $li = $('<li class="page-item"></li>');
+            var $botonPagina = $('<button class="page-link"></button>');
+            $botonPagina.text(i);
+            $li.append($botonPagina);
+            $ul.append($li);
+        }
+
+        // Agrega la clase "active" al primer botón de paginación
+        $ul.find('li:first-child').addClass('active');
+
+        $paginacion.append($ul);
+
+        // Agrega la paginación al DOM
+        $('.main-invoice-list').after($paginacion);
+
+        // Oculta todas las facturas, excepto las de la primera página
+        $todasFacturas.slice(facturasPorPagina).hide();
+
+        // Agrega un evento click a cada botón de paginación
+        $(document).on("click", ".pagination button", function () {
+            var pagina = $(this).text();
+            var primerItem = (pagina - 1) * facturasPorPagina;
+            var ultimoItem = primerItem + facturasPorPagina;
+
+            // Oculta todas las facturas
+            $todasFacturas.hide();
+
+            // Muestra las facturas correspondientes a la página seleccionada
+            $todasFacturas.slice(primerItem, ultimoItem).show();
+
+            // Actualiza la clase active del botón de paginación
+            $(this).closest('ul').find('.active').removeClass('active');
+            $(this).closest('li').addClass('active');
+        });
+    }
+
+    // FAVORITOS
+    $(document).on("click", ".btn_favorite", function () {
+        if ($(this).hasClass('far')) {
+            $(this).removeClass('far');
+            $(this).addClass('fas');
+            $(this).addClass('orange');
+
+            $.ajax({
+                url: "favorito_factura_compra",
+                type: "POST",
+                data: {
+                    id: $(this).attr("data-id"),
+                    favorito: 1,
+                },
+                dataType: "JSON",
+                success: function (response) {
+                    if (response.info == 1) {
+                        toastr.success('Factura agregada a favoritos');
+                    } else {
+                        toastr.error('Ha ocurrido un error');
+                    }
+                },
+                error: function (error) {
+                    toastr.error('Ha ocurrido un error');
+                }
+            });
+        } else {
+            $(this).removeClass('fas');
+            $(this).addClass('far');
+            $(this).removeClass('orange');
+
+            $.ajax({
+                url: "favorito_factura_compra",
+                type: "POST",
+                data: {
+                    id: $(this).attr("data-id"),
+                    favorito: 0,
+                },
+                dataType: "JSON",
+                success: function (response) {
+                    if (response.info == 1) {
+                        toastr.success('Factura agregada a favoritos');
+                    } else {
+                        toastr.error('Ha ocurrido un error');
+                    }
+                },
+                error: function (error) {
+                    toastr.error('Ha ocurrido un error');
+                }
+            });
+        }
+    });
 
     // RECIBIR PAGO
     $(document).on("click", ".btn_pago_factura", function () {

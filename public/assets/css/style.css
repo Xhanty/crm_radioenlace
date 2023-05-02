@@ -52967,7 +52967,7 @@ textarea.parsley-success:focus {
 .main-invoice-list .media:hover,
 .main-invoice-list .media:focus {
     cursor: pointer;
-    background-color: #f0eeff;
+    /*background-color: #f0eeff;*/
 }
 
 .main-invoice-list .media+.media {
@@ -53025,9 +53025,9 @@ textarea.parsley-success:focus {
 }
 
 .main-invoice-list .selected {
-    background-color: #f0eeff;
+    /*background-color: #f0eeff;
     border-top-color: #bbb8e2;
-    border-bottom-color: #bbb8e2;
+    border-bottom-color: #bbb8e2;*/
     border-left-color: var(--primary-bg-color);
 }
 

@@ -61,9 +61,10 @@ class FacturaCompraController extends Controller
             $facturas = DB::table('factura_compra')
                 ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion')
                 ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
-                ->where('factura_compra.status', 1)
                 //->whereMonth('factura_compra.fecha_elaboracion', '=', date('m'))
                 ->whereYear('factura_compra.fecha_elaboracion', '=', date('Y'))
+                ->orderByDesc('factura_compra.favorito') // ordenar los favoritos primero
+                ->orderBy('factura_compra.fecha_elaboracion', 'desc') // luego ordenar por fecha
                 ->orderBy('factura_compra.id', 'desc')
                 ->get();
 
@@ -269,36 +270,101 @@ class FacturaCompraController extends Controller
     public function filtro(Request $request)
     {
         try {
+            $proveedor = $request->proveedor;
             $numero_factura = $request->numero_factura;
             $serial = $request->serial;
+            $fecha_inicio = $request->fecha_inicio;
+            $fecha_fin = $request->fecha_fin;
 
-            if (!$numero_factura && !$serial) {
-                return response()->json(['info' => 0]);
-            }
+            if ($numero_factura) {
+                $factura_id = DB::table('factura_compra')
+                    ->select('id')
+                    ->where('numero', $numero_factura)
+                    ->first();
 
-            $factura_id = DB::table('factura_compra')
-                ->select('id')
-                ->where('numero', $numero_factura)
-                ->first();
-
-            if (!$factura_id) {
-                if (!$serial) {
-                    return response()->json(['info' => 0]);
-                } else {
-                    $factura_id = DB::table('detalle_factura_compra')
-                        ->select('factura_id')
-                        ->where('detalle_factura_compra.serial_producto', $serial)
-                        ->first();
-
-                    if (!$factura_id) {
-                        return response()->json(['info' => 0]);
-                    } else {
-                        return response()->json(['info' => 1, 'token' => $factura_id->factura_id]);
-                    }
-                }
-            } else {
                 return response()->json(['info' => 1, 'token' => $factura_id->id]);
             }
+
+            if ($serial) {
+                $factura_id = DB::table('detalle_factura_compra')
+                    ->select('factura_id')
+                    ->where('detalle_factura_compra.serial_producto', $serial)
+                    ->first();
+
+                return response()->json(['info' => 1, 'token' => $factura_id->id]);
+            }
+
+            if ($proveedor) {
+                if ($fecha_inicio && $fecha_fin) {
+                    $facturas = DB::table('factura_compra')
+                        ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion')
+                        ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
+                        ->where('factura_compra.proveedor_id', $proveedor)
+                        ->whereBetween('factura_compra.created_at', [$fecha_inicio, $fecha_fin])
+                        ->orderByDesc('factura_compra.favorito') // ordenar los favoritos primero
+                        ->orderBy('factura_compra.fecha_elaboracion', 'desc') // luego ordenar por fecha
+                        ->orderBy('factura_compra.id', 'desc')
+                        ->get();
+                } else {
+                    $facturas = DB::table('factura_compra')
+                        ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion')
+                        ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
+                        ->where('factura_compra.proveedor_id', $proveedor)
+                        ->orderByDesc('factura_compra.favorito') // ordenar los favoritos primero
+                        ->orderBy('factura_compra.fecha_elaboracion', 'desc') // luego ordenar por fecha
+                        ->orderBy('factura_compra.id', 'desc')
+                        ->get();
+                }
+
+                return response()->json(['info' => 1, 'facturas' => $facturas]);
+            }
+
+            if ($fecha_inicio && $fecha_fin) {
+                $facturas = DB::table('factura_compra')
+                    ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion')
+                    ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
+                    ->whereBetween('factura_compra.fecha', [$fecha_inicio, $fecha_fin])
+                    ->orderByDesc('factura_compra.favorito') // ordenar los favoritos primero
+                    ->orderBy('factura_compra.fecha_elaboracion', 'desc') // luego ordenar por fecha
+                    ->orderBy('factura_compra.id', 'desc')
+                    ->get();
+
+                return response()->json(['info' => 1, 'facturas' => $facturas]);
+            }
+
+            return response()->json(['info' => 0]);
+        } catch (Exception $ex) {
+            return $ex;
+            return response()->json(['info' => 0]);
+        }
+    }
+
+    public function anular (Request $request)
+    {
+        try {
+            $id = $request->id;
+            DB::table('factura_compra')
+                ->where('id', $id)
+                ->update(['status' => 0]);
+
+            return response()->json(['info' => 1]);
+        } catch (Exception $ex) {
+            return $ex;
+            return response()->json(['info' => 0]);
+        }
+    }
+
+    public function favorito(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $favorito = $request->favorito;
+
+            DB::table('factura_compra')
+                ->where('id', $id)
+                ->update(['favorito' => $favorito]);
+
+            return response()->json(['info' => 1]);
         } catch (Exception $ex) {
             return $ex;
             return response()->json(['info' => 0]);
