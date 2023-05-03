@@ -303,6 +303,7 @@
     </div><!-- COL-END -->
     </div>
 
+    <!-- Add -->
     <div class="row row-sm d-none" id="div_form_add">
         <div class="col-md-12 col-xl-12">
             <div class=" main-content-body-invoice">
@@ -589,6 +590,300 @@
                             </div>
                             <div class="text-center mt-5">
                                 <button class="btn btn-primary" id="btnAddFactura">Guardar Factura</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit -->
+    <div class="row row-sm d-none" id="div_form_edit">
+        <div class="col-md-12 col-xl-12">
+            <div class=" main-content-body-invoice">
+                <div class="card card-invoice">
+                    <div class="card-header ps-3 pe-3 pt-3 pb-0 d-flex-header-table">
+                        <div class="div-1-tables-header">
+                            <h3 class="card-title">Modificar factura de compra</h3>
+                        </div>
+                        <div class="div-2-tables-header" style="margin-bottom: 13px">
+                            <button class="btn btn-primary back_home">x</button>
+                        </div>
+                    </div>
+                    <div class="p-0">
+                        <div class="card-body" style="margin-top: -18px;">
+                            <input type="hidden" disabled readonly id="id_factura_edit">
+                            <div class="row row-sm">
+                                <div class="col-lg-3">
+                                    <label for="">Tipo</label>
+                                    <select class="form-select" id="tipo_edit">
+                                        <option value="">Seleccione una opción</option>
+                                        <option value="1">(FC-1) Factura Electrónica Compra</option>
+                                        <option value="2">(FC-2) Documento Soporte</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="">Centro de costo</label>
+                                    <select class="form-select" id="centro_costo_edit">
+                                        <option value="">Seleccione una opción</option>
+                                        @foreach ($centros_costos as $centro_costo)
+                                            <option value="{{ $centro_costo->id }}">({{ $centro_costo->code }})
+                                                {{ $centro_costo->nombre }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="">Fecha elaboración</label>
+                                    <input class="form-control" id="fecha_edit"
+                                        placeholder="Fecha elaboración" type="date">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="">Número</label>
+                                    <input class="form-control text-center" disabled
+                                        id="numero_edit" placeholder="Número" type="text">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row row-sm">
+                                <div class="col-lg-3">
+                                    <label for="">Proveedor</label>
+                                    <select class="form-select" id="proveedor_edit">
+                                        <option value="">Seleccione una opción</option>
+                                        @foreach ($proveedores as $proveedor)
+                                            <option value="{{ $proveedor->id }}">{{ $proveedor->razon_social }}
+                                                ({{ $proveedor->nit }})
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <label for="">Contacto</label>
+                                    <input class="form-control" disabled id="contacto_edit" placeholder="Contacto"
+                                        type="text">
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <label for="">No. Factura Proveedor</label>
+                                    <input class="form-control text-center" value="FC" id="factura1_proveedor_edit"
+                                        placeholder="No. Factura Proveedor" type="text">
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <label for="">Consecutivo Factura Proveedor</label>
+                                    <input class="form-control text-center" id="factura2_proveedor_edit"
+                                        placeholder="Consecutivo Factura Proveedor" type="text">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row row-sm">
+                                <div class="col-lg">
+                                </div>
+                                <div class="col-lg">
+                                    <label class="ckbox"><input id="chk_proveedor_edit" type="checkbox"><span>Proveedor
+                                            por item</span></label>
+                                </div>
+
+                                <div class="col-lg">
+                                    <label class="ckbox"><input id="chk_iva_edit" type="checkbox"><span>IVA/Impoconsumo
+                                            incluido</span></label>
+                                </div>
+
+                                <div class="col-lg">
+                                    <label class="ckbox"><input id="chk_procentaje_edit" type="checkbox"><span>Descuento
+                                            en porcentaje</span></label>
+                                </div>
+                                <div class="col-lg">
+                                </div>
+                            </div>
+                            <div class="row row-sm mt-5">
+                                <div class="table-responsive">
+                                    <table id="tbl_data_detail_edit"
+                                        class="table border-top-0 table-bordered text-nowrap border-bottom">
+                                        <thead>
+                                            <tr class="bg-gray">
+                                                <th class="text-center">#</th>
+                                                <th class="text-center">Tipo</th>
+                                                <th class="text-center">Producto</th>
+                                                <th class="text-center">Descripción</th>
+                                                <th class="text-center">Bodega</th>
+                                                <th class="text-center">Cant</th>
+                                                <th class="text-center">Valor Unitario</th>
+                                                <th class="text-center">Descuento</th>
+                                                <th class="text-center">Impuesto<br>Cargo</th>
+                                                <th class="text-center">Impuesto<br>Retención</th>
+                                                <th class="text-center">Valor Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr style="background: #f9f9f9;">
+                                                <td class="center-text pad-4">1</td>
+                                                <td class="pad-4">
+                                                    <select class="form-select tipo_edit">
+                                                        <option value="">Seleccione una opción</option>
+                                                        <option value="1">Producto</option>
+                                                        <option value="2">Activo Fijo</option>
+                                                        <option value="3">Gasto / Cuenta contable</option>
+                                                    </select>
+                                                </td>
+                                                <td class="pad-4">
+                                                    <select class="form-select producto_edit">
+                                                        <option value="">Seleccione una opción</option>
+                                                    </select>
+                                                    <input type="text" class="form-control mt-2 serial_producto_edit"
+                                                        disabled placeholder="Serial">
+                                                </td>
+                                                <td class="pad-4">
+                                                    <textarea placeholder="Descripción" class="form-control descripcion_edit" style="border: 0" rows="3"></textarea>
+                                                </td>
+                                                <td class="pad-4">
+                                                    <input type="text" placeholder="Bodega"
+                                                        class="form-control bodega_edit" style="border: 0">
+                                                </td>
+                                                <td class="pad-4">
+                                                    <input type="number" placeholder="Cantidad" step="1"
+                                                        min="1" class="form-control text-end cantidad_edit"
+                                                        value="1" style="border: 0">
+                                                </td>
+                                                <td class="pad-4">
+                                                    <input type="text" placeholder="Valor Unitario" value="0.00"
+                                                        class="form-control text-end valor_edit input_dinner"
+                                                        style="border: 0">
+                                                </td>
+                                                <td class="pad-4">
+                                                    <input type="text" min="0" max="100"
+                                                        placeholder="Descuento" value="0.00"
+                                                        class="form-control text-end descuento_edit input_dinner"
+                                                        style="border: 0">
+                                                </td>
+                                                <td class="pad-4">
+                                                    <select class="form-select cargo_edit">
+                                                        <option value="">Seleccione una opción</option>
+                                                        @foreach ($impuestos_cargos as $impuesto)
+                                                            <option data-impuesto="{{ $impuesto->tarifa }}"
+                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td class="pad-4">
+                                                    <select class="form-select retencion_edit">
+                                                        <option value="">Seleccione una opción</option>
+                                                        @foreach ($impuestos_retencion as $impuesto)
+                                                            <option data-impuesto="{{ $impuesto->tarifa }}"
+                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td class="text-center d-flex pad-4">
+                                                    <input disabled type="text" placeholder="0.00"
+                                                        class="form-control text-end total_edit input_dinner"
+                                                        style="border: 0">
+                                                    <a class="center-vertical mg-s-10" href="javascript:void(0)"
+                                                        id="new_row_edit"><i class="fa fa-plus"></i></a>
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row row-sm mt-3">
+                                <div class="col-lg-6 mt-3">
+                                    <h3 class="card-title">Forma de pago</h3>
+                                    <hr>
+                                    <div class="row row-sm">
+                                        <div class="col-lg-6">
+                                            <select class="form-select formas_pago_edit">
+                                                <option value="">Seleccione una opción</option>
+                                                @foreach ($formas_pago as $forma_pago)
+                                                    <option value="{{ $forma_pago->id }}">{{ $forma_pago->code }} |
+                                                        {{ $forma_pago->nombre }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-2"></div>
+                                        <div class="col-lg-3 d-flex" style="justify-content: end">
+                                            <input type="text" placeholder="0.00"
+                                                class="form-control col-8 text-end input_dinner forma_pago_input_edit">
+                                        </div>
+                                        <div class="col-lg-1 d-flex" style="justify-content: center">
+                                            <a class="center-vertical mg-s-10" href="javascript:void(0)"
+                                                id="new_row_forma_edit"><i class="fa fa-plus"></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="list_formas_pago_edit"></div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="row row-sm mt-2">
+                                        <div class="col-lg-12 d-flex" style="justify-content: end">
+                                            <div class="text-end col-6">
+                                                <p class="font-20">Total Bruto:</p>
+                                            </div>
+                                            <div class="text-end col-4">
+                                                <p class="font-20" id="total_bruto_edit">0.00</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 d-flex" style="justify-content: end">
+                                            <div class="text-end col-6">
+                                                <p class="font-20">Descuentos:</p>
+                                            </div>
+                                            <div class="text-end col-4">
+                                                <p class="font-20" id="total_descuentos_edit">0.00</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 d-flex" style="justify-content: end">
+                                            <div class="text-end col-6">
+                                                <p class="font-20">Subtotal:</p>
+                                            </div>
+                                            <div class="text-end col-4">
+                                                <p class="font-20" id="total_subtotal_edit">0.00</p>
+                                            </div>
+                                        </div>
+                                        <div id="impuestos_1_edit" style="padding: 0px;"></div>
+                                        <div id="impuestos_2_edit" style="padding: 0px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row" style="padding-right: 15px">
+                                <div class="col-lg d-flex" style="justify-content: end">
+                                    <div>
+                                        <p class="font-22">Total formas de pagos:</p>
+                                    </div>
+                                    <div style="margin-left: 10%">
+                                        <p class="font-22" id="total_formas_pago_edit">0.00</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg d-flex" style="justify-content: end">
+                                    <div>
+                                        <p class="font-22">Total Neto:</p>
+                                    </div>
+                                    <div style="margin-left: 10%">
+                                        <p class="font-22" id="total_neto_edit">0.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row row-sm">
+                                <div class="col-lg">
+                                    <label for="">Observaciones</label>
+                                    <textarea class="form-control" id="observaciones_edit" placeholder="Observaciones" rows="3"
+                                        style="resize: none"></textarea>
+                                </div>
+
+                                <div class="col-lg mt-4">
+                                    <label for="">Adjunto</label>
+                                    <input class="form-control" accept="application/pdf" id="factura_edit"
+                                        placeholder="Contacto" type="file">
+                                </div>
+                            </div>
+                            <div class="text-center mt-5">
+                                <button class="btn btn-primary" id="btnEditFactura">Modificar Factura</button>
                             </div>
                         </div>
                     </div>

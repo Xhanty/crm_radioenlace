@@ -215,6 +215,104 @@ class FacturaCompraController extends Controller
         }
     }
 
+    public function edit(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $id = $request->id;
+            $tipo = $request->tipo;
+            $centro = $request->centro;
+            $fecha = $request->fecha;
+            $proveedor = $request->proveedor;
+            $factura_proveedor = $request->factura_proveedor;
+            $consecutivo_proveedor = $request->consecutivo_proveedor;
+            $total = $request->total;
+            $productos = json_decode($request->productos, true);
+            $observaciones = $request->observaciones;
+            $adjunto = null;
+
+            $total_bruto = $request->total_bruto;
+            $descuentos = $request->descuentos;
+            $subtotal = $request->subtotal;
+            $impuestos_1 = $request->impuestos_1;
+            $impuestos_2 = $request->impuestos_2;
+
+            if ($request->hasFile('factura')) {
+                $file = $request->file('factura');
+                $name = time() . $file->getClientOriginalName();
+                $file->move('images/contabilidad/facturas_compra/', $name);
+                $adjunto = $name;
+            }
+
+            DB::table("factura_compra")->where("id", $id)->update([
+                'tipo' => $tipo,
+                'centro_costo' => $centro,
+                'fecha_elaboracion' => $fecha,
+                'fecha_vencimiento' => date('Y-m-d', strtotime($fecha . ' + 30 days')),
+                'proveedor_id' => $proveedor,
+                'factura_proveedor' => $factura_proveedor,
+                'num_factura_proveedor' => $consecutivo_proveedor,
+                'total_bruto' => $total_bruto,
+                'descuentos' => $descuentos,
+                'subtotal' => $subtotal,
+                'impuestos_1' => $impuestos_1,
+                'impuestos_2' => $impuestos_2,
+                'valor_total' => $total,
+                'observaciones' => $observaciones ?? null,
+                'adjunto_pdf' => $adjunto ?? null,
+            ]);
+
+            DB::table("detalle_factura_compra")->where("factura_id", $id)->delete();
+
+            foreach ($productos as $producto) {
+                if ($producto['tipo'] == 1) {
+                    $detalle = DB::table("detalle_factura_compra")->insert([
+                        'factura_id' => $id,
+                        'tipo' => $producto['tipo'],
+                        'producto' => $producto['producto'] ?? null,
+                        'serial_producto' => $producto['serial'] ?? null,
+                        'cuenta' => null,
+                        'description' => $producto['descripcion'],
+                        'bodega' => $producto['bodega'],
+                        'cantidad' => $producto['cantidad'],
+                        'valor_unitario' => $producto['valor_unitario'],
+                        'descuento' => $producto['descuento'],
+                        'impuesto_cargo' => $producto['impuesto_cargo'],
+                        'impuesto_retencion' => $producto['impuesto_retencion'],
+                        'valor_total' => $producto['total'],
+                    ]);
+                } else {
+                    $detalle = DB::table("detalle_factura_compra")->insert([
+                        'factura_id' => $id,
+                        'tipo' => $producto['tipo'],
+                        'producto' => null,
+                        'serial_producto' => null,
+                        'cuenta' => $producto['producto'] ?? null,
+                        'description' => $producto['descripcion'],
+                        'bodega' => $producto['bodega'],
+                        'cantidad' => $producto['cantidad'],
+                        'valor_unitario' => $producto['valor_unitario'],
+                        'descuento' => $producto['descuento'],
+                        'impuesto_cargo' => $producto['impuesto_cargo'],
+                        'impuesto_retencion' => $producto['impuesto_retencion'],
+                        'valor_total' => $producto['total'],
+                    ]);
+                }
+
+                if (!$detalle) {
+                    DB::rollBack();
+                    return response()->json(['info' => 0, 'error' => 'Error al modificar el detalle de la factura de compra']);
+                }
+            }
+
+            DB::commit();
+            return response()->json(['info' => 1, 'mensaje' => 'Factura de compra modificada correctamente']);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return response()->json(['info' => 0, 'error' => $ex->getMessage()]);
+        }
+    }
+
     public function pdf(Request $request)
     {
         $id = $request->get('token');
