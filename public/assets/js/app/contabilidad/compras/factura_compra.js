@@ -1647,6 +1647,10 @@ $(document).ready(function () {
                         setTimeout(function () {
                             location.reload();
                         }, 1000);
+                    } else if(response.info == 2) {
+                        toastr.error('La factura ya tiene un pago asociado');
+                        $("#btnEditFactura").attr("disabled", false);
+                        $("#btnEditFactura").html('Modificar Factura');
                     } else {
                         toastr.error('Ha ocurrido un error');
                         $("#btnEditFactura").attr("disabled", false);
@@ -2165,11 +2169,11 @@ $(document).ready(function () {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#dc3545',
-            confirmButtonText: 'Recibir',
+            confirmButtonText: 'Recibir Pago',
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.open(url_general + 'pago_compra?id=' + id, '_blank');
+                window.location.href = url_general + 'comprobante_egreso?fc=' + id;
             }
         });
     });

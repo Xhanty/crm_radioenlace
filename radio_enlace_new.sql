@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-04-2023 a las 22:32:30
+-- Tiempo de generación: 04-05-2023 a las 23:55:31
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -2362,7 +2362,7 @@ CREATE TABLE `configuracion_autoretencion` (
 --
 
 INSERT INTO `configuracion_autoretencion` (`id`, `en_uso`, `codigo`, `nombre`, `tipo_impuesto`, `tarifa`, `cuenta_debito`, `cuenta_credito`, `created_by`, `created_at`) VALUES
-(1, 1, '01', 'Autoretención 0.40', 1, '0.40', 3216, 3240, 1, '2023-04-27 22:27:20');
+(4, 1, '01', 'ReteFuente 4%', 1, '4', 3240, 3240, 1, '2023-05-02 16:34:35');
 
 -- --------------------------------------------------------
 
@@ -2391,7 +2391,7 @@ CREATE TABLE `configuracion_impuestos` (
 --
 
 INSERT INTO `configuracion_impuestos` (`id`, `en_uso`, `codigo`, `nombre`, `tipo_impuesto`, `por_valor`, `tarifa`, `ventas`, `compras`, `devolucion_ventas`, `devolucion_compras`, `created_by`, `created_at`) VALUES
-(1, 1, '01', 'Iva 19%', 1, 0, NULL, 3240, 3219, 3217, 3216, 1, '2023-04-27 21:48:24');
+(5, 1, '01', 'IVA 19%', 1, 1, '19', 3240, 3240, 3240, 3240, 1, '2023-05-02 16:33:16');
 
 -- --------------------------------------------------------
 
@@ -5268,10 +5268,8 @@ CREATE TABLE `detalle_factura_compra` (
 --
 
 INSERT INTO `detalle_factura_compra` (`id`, `factura_id`, `tipo`, `producto`, `serial_producto`, `cuenta`, `description`, `bodega`, `cantidad`, `valor_unitario`, `descuento`, `impuesto_cargo`, `impuesto_retencion`, `valor_total`) VALUES
-(27, 27, 1, 1, '5500', NULL, 'pppp', '', '1', '20.000,00', '0.00', '19', '11', '21.600,00'),
-(28, 28, 3, NULL, NULL, 3240, 'asdas', '', '1', '30.000,00', '0.00', '19', '4', '34.500,00'),
-(29, 29, 1, 2, '15201058', NULL, 'adsfdasd', '', '1', '20.000,00', '0.00', '19', '7', '22.400,00'),
-(30, 30, 1, 1, '5654', NULL, 'sdrff', '', '1', '3.000,00', '0.00', '19', '0', '3.570,00');
+(47, 40, 1, 1, '12333', NULL, '', '', '1', '45.000,00', '0.00', '19', '0', '53.550,00'),
+(48, 40, 1, 2, '1455', NULL, '', '', '4', '120.000,00', '0.00', '19', '0', '571.200,00');
 
 -- --------------------------------------------------------
 
@@ -5463,6 +5461,7 @@ INSERT INTO `empleados` (`id`, `codigo_empleado`, `nombre`, `cargo`, `password`,
 
 CREATE TABLE `factura_compra` (
   `id` int(11) NOT NULL,
+  `favorito` int(1) NOT NULL DEFAULT 0,
   `token` text DEFAULT NULL,
   `numero` int(11) NOT NULL,
   `tipo` int(11) NOT NULL,
@@ -5489,11 +5488,8 @@ CREATE TABLE `factura_compra` (
 -- Volcado de datos para la tabla `factura_compra`
 --
 
-INSERT INTO `factura_compra` (`id`, `token`, `numero`, `tipo`, `centro_costo`, `fecha_elaboracion`, `fecha_vencimiento`, `proveedor_id`, `factura_proveedor`, `num_factura_proveedor`, `total_bruto`, `descuentos`, `subtotal`, `impuestos_1`, `impuestos_2`, `valor_total`, `observaciones`, `adjunto_pdf`, `status`, `created_at`, `created_by`) VALUES
-(27, NULL, 1, 1, 2, '2023-04-25', '2023-05-25', 4, 'FC', 11, '20.000,00', '0,00', '20.000,00', '[[\"IVA 19%\",3800]]', '[[\"Retefuente 11%\\n                                                            \",2200]]', '21.600,00', 'No aplica', NULL, 1, '2023-04-25 10:02:27', 1),
-(28, NULL, 2, 1, 2, '2023-04-25', '2023-05-25', 4, 'FC', 2130, '30.000,00', '0,00', '30.000,00', '[[\"IVA 19%\",5700]]', '[[\"Retefuente 4%\\n                                                            \",1200]]', '34.500,00', 'ppppp', NULL, 1, '2023-04-25 10:02:58', 1),
-(29, NULL, 3, 1, 2, '2023-04-25', '2023-05-25', 5, 'FC', 8898, '20.000,00', '0,00', '20.000,00', '[[\"IVA 19%\",3800]]', '[[\"Retefuente 7%\\n                                                            \",1400.0000000000002]]', '22.400,00', 'No aplica', NULL, 1, '2023-04-25 11:18:06', 1),
-(30, NULL, 4, 1, 2, '2023-04-25', '2023-05-25', 4, 'FC', 666, '3000,00', '0,00', '3000,00', '[[\"IVA 19%\",570]]', '[]', '3570,00', 'No aplica', '1682440171Autofinanciera S.A_.pdf', 1, '2023-04-25 11:29:31', 1);
+INSERT INTO `factura_compra` (`id`, `favorito`, `token`, `numero`, `tipo`, `centro_costo`, `fecha_elaboracion`, `fecha_vencimiento`, `proveedor_id`, `factura_proveedor`, `num_factura_proveedor`, `total_bruto`, `descuentos`, `subtotal`, `impuestos_1`, `impuestos_2`, `valor_total`, `observaciones`, `adjunto_pdf`, `status`, `created_at`, `created_by`) VALUES
+(40, 0, NULL, 1, 1, 2, '2023-05-04', '2023-06-03', 4, 'FC', 4522, '525.000,00', '0,00', '525.000,00', '[[\"IVA 19%\\n                                                            \",8550],[\"IVA 19%\",91200]]', '[]', '624.750,00', 'No aplica', NULL, 2, '2023-05-04 14:44:50', 1);
 
 -- --------------------------------------------------------
 
@@ -5776,6 +5772,32 @@ CREATE TABLE `organizacion` (
 
 INSERT INTO `organizacion` (`id`, `tipo_empresa`, `organizacion`, `tipo_documento`, `documento`, `digito`, `ciudad`, `direccion`, `tipo_regimen`, `telefono`, `contacto`, `email_contacto`, `pagina_web`, `avatar`) VALUES
 (1, 2, 'ad', 5, '123', '4', 30, 'asd', 2, '123', 'asd', 'asd', 'asd', '1677244602inst4.png');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pagos_compras`
+--
+
+CREATE TABLE `pagos_compras` (
+  `id` int(11) NOT NULL,
+  `numero` int(11) DEFAULT 0,
+  `tipo` int(1) NOT NULL,
+  `factura_id` int(11) NOT NULL,
+  `valor` varchar(255) NOT NULL,
+  `status` int(1) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `pagos_compras`
+--
+
+INSERT INTO `pagos_compras` (`id`, `numero`, `tipo`, `factura_id`, `valor`, `status`, `created_by`, `created_at`) VALUES
+(1, 0, 0, 40, '624.750,00', 0, 1, '2023-05-04 14:44:50'),
+(5, 1, 1, 40, '24.750,00', 1, 1, '2023-05-04 16:51:58'),
+(6, 2, 1, 40, '600.000,00', 1, 1, '2023-05-04 16:52:10');
 
 -- --------------------------------------------------------
 
@@ -9735,6 +9757,12 @@ ALTER TABLE `organizacion`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `pagos_compras`
+--
+ALTER TABLE `pagos_compras`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `paises`
 --
 ALTER TABLE `paises`
@@ -10018,13 +10046,13 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de la tabla `configuracion_autoretencion`
 --
 ALTER TABLE `configuracion_autoretencion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `configuracion_impuestos`
 --
 ALTER TABLE `configuracion_impuestos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `configuracion_puc`
@@ -10078,7 +10106,7 @@ ALTER TABLE `detalle_cotizaciones`
 -- AUTO_INCREMENT de la tabla `detalle_factura_compra`
 --
 ALTER TABLE `detalle_factura_compra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_factura_venta`
@@ -10114,7 +10142,7 @@ ALTER TABLE `empleados`
 -- AUTO_INCREMENT de la tabla `factura_compra`
 --
 ALTER TABLE `factura_compra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT de la tabla `factura_venta`
@@ -10181,6 +10209,12 @@ ALTER TABLE `ordenes_compra`
 --
 ALTER TABLE `organizacion`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `pagos_compras`
+--
+ALTER TABLE `pagos_compras`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `paises`

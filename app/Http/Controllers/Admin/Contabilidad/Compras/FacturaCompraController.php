@@ -207,6 +207,29 @@ class FacturaCompraController extends Controller
                 }
             }
 
+            $last_number = DB::table('pagos_compras')
+                ->select('numero')
+                ->where('tipo', 1)
+                ->orderBy('id', 'desc')
+                ->first();
+
+
+            if (!$last_number) {
+                $num_egreso = 1;
+            } else {
+                $num_egreso = $last_number->numero + 1;
+            }
+
+            DB::table('pagos_compras')->insert([
+                'numero' => $num_egreso,
+                'tipo' => 0, //Valor a pagar
+                'factura_id' => $id,
+                'valor' => $total,
+                'status' => 0, //Pendiente
+                'created_by' => auth()->user()->id,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+
             DB::commit();
             return response()->json(['info' => 1, 'mensaje' => 'Factura de compra creada correctamente']);
         } catch (Exception $ex) {
@@ -262,46 +285,58 @@ class FacturaCompraController extends Controller
                 'adjunto_pdf' => $adjunto ?? null,
             ]);
 
-            DB::table("detalle_factura_compra")->where("factura_id", $id)->delete();
+            if ($productos && count($productos) > 0) {
+                $valid = DB::table('pagos_compras')
+                    ->where('tipo', 1)
+                    ->where('factura_id', $id)
+                    ->first();
 
-            foreach ($productos as $producto) {
-                if ($producto['tipo'] == 1) {
-                    $detalle = DB::table("detalle_factura_compra")->insert([
-                        'factura_id' => $id,
-                        'tipo' => $producto['tipo'],
-                        'producto' => $producto['producto'] ?? null,
-                        'serial_producto' => $producto['serial'] ?? null,
-                        'cuenta' => null,
-                        'description' => $producto['descripcion'],
-                        'bodega' => $producto['bodega'],
-                        'cantidad' => $producto['cantidad'],
-                        'valor_unitario' => $producto['valor_unitario'],
-                        'descuento' => $producto['descuento'],
-                        'impuesto_cargo' => $producto['impuesto_cargo'],
-                        'impuesto_retencion' => $producto['impuesto_retencion'],
-                        'valor_total' => $producto['total'],
-                    ]);
-                } else {
-                    $detalle = DB::table("detalle_factura_compra")->insert([
-                        'factura_id' => $id,
-                        'tipo' => $producto['tipo'],
-                        'producto' => null,
-                        'serial_producto' => null,
-                        'cuenta' => $producto['producto'] ?? null,
-                        'description' => $producto['descripcion'],
-                        'bodega' => $producto['bodega'],
-                        'cantidad' => $producto['cantidad'],
-                        'valor_unitario' => $producto['valor_unitario'],
-                        'descuento' => $producto['descuento'],
-                        'impuesto_cargo' => $producto['impuesto_cargo'],
-                        'impuesto_retencion' => $producto['impuesto_retencion'],
-                        'valor_total' => $producto['total'],
-                    ]);
+                if ($valid) {
+                    DB::rollBack();
+                    return response()->json(['info' => 2, 'error' => 'No se puede editar la factura de compra porque ya tiene un pago asociado']);
                 }
 
-                if (!$detalle) {
-                    DB::rollBack();
-                    return response()->json(['info' => 0, 'error' => 'Error al modificar el detalle de la factura de compra']);
+                DB::table("detalle_factura_compra")->where("factura_id", $id)->delete();
+
+                foreach ($productos as $producto) {
+                    if ($producto['tipo'] == 1) {
+                        $detalle = DB::table("detalle_factura_compra")->insert([
+                            'factura_id' => $id,
+                            'tipo' => $producto['tipo'],
+                            'producto' => $producto['producto'] ?? null,
+                            'serial_producto' => $producto['serial'] ?? null,
+                            'cuenta' => null,
+                            'description' => $producto['descripcion'],
+                            'bodega' => $producto['bodega'],
+                            'cantidad' => $producto['cantidad'],
+                            'valor_unitario' => $producto['valor_unitario'],
+                            'descuento' => $producto['descuento'],
+                            'impuesto_cargo' => $producto['impuesto_cargo'],
+                            'impuesto_retencion' => $producto['impuesto_retencion'],
+                            'valor_total' => $producto['total'],
+                        ]);
+                    } else {
+                        $detalle = DB::table("detalle_factura_compra")->insert([
+                            'factura_id' => $id,
+                            'tipo' => $producto['tipo'],
+                            'producto' => null,
+                            'serial_producto' => null,
+                            'cuenta' => $producto['producto'] ?? null,
+                            'description' => $producto['descripcion'],
+                            'bodega' => $producto['bodega'],
+                            'cantidad' => $producto['cantidad'],
+                            'valor_unitario' => $producto['valor_unitario'],
+                            'descuento' => $producto['descuento'],
+                            'impuesto_cargo' => $producto['impuesto_cargo'],
+                            'impuesto_retencion' => $producto['impuesto_retencion'],
+                            'valor_total' => $producto['total'],
+                        ]);
+                    }
+
+                    if (!$detalle) {
+                        DB::rollBack();
+                        return response()->json(['info' => 0, 'error' => 'Error al modificar el detalle de la factura de compra']);
+                    }
                 }
             }
 

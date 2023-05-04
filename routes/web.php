@@ -313,6 +313,7 @@ Route::middleware(['auth_user'])->group(function () {
 
     // COMPROBANTE EGRESO
     Route::get('/comprobante_egreso', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'index'])->name('comprobante_egreso');
+    Route::post('/compras_add_pago', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'add'])->name('compras_add_pago');
 
     
     // FACTURA VENTA
