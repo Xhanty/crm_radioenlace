@@ -270,7 +270,6 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/edit_forma_pago', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_forma_pago'])->name('edit_forma_pago');
     Route::post('/status_forma_pago', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'status_forma_pago'])->name('status_forma_pago');
 
-    Route::get('/config_nomina', [App\Http\Controllers\Admin\Contabilidad\NominaController::class, 'config_nomina'])->name('config_nomina');
     Route::get('/pucs_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'pucs'])->name('pucs_data');
     Route::get('/pucs_clientes_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'pucs_cliente'])->name('pucs_clientes_data');
     Route::get('/pucs_all_clientes_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'pucs_all_clientes_data'])->name('pucs_all_clientes_data');
@@ -279,7 +278,6 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/add_child_puc_cliente', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_child_puc_cliente'])->name('add_child_puc_cliente');
     Route::post('/edit_child_puc_cliente', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_child_puc_cliente'])->name('edit_child_puc_cliente');
     Route::post('/delete_child_puc_cliente', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'delete_child_puc_cliente'])->name('delete_child_puc_cliente');
-    Route::post('/update_config_nomina', [App\Http\Controllers\Admin\Contabilidad\NominaController::class, 'update_config_nomina'])->name('update_config_nomina');
 
     Route::post('/add_cuenta_parametrizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_cuenta_parametrizacion'])->name('add_cuenta_parametrizacion');
     Route::post('/get_cuentas_parametrizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'get_cuentas_parametrizacion'])->name('get_cuentas_parametrizacion');
@@ -295,31 +293,38 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/add_retencion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_retencion'])->name('add_retencion');
     Route::post('/delete_retencion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'delete_retencion'])->name('delete_retencion');
     Route::post('/update_uso_retencion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'update_uso_retencion'])->name('update_uso_retencion');
+    
+
+    //NOMINA
+    Route::get('/config_nomina', [App\Http\Controllers\Admin\Contabilidad\Nomina\NominaController::class, 'config_nomina'])->name('config_nomina');
+    Route::post('/update_config_nomina', [App\Http\Controllers\Admin\Contabilidad\Nomina\NominaController::class, 'update_config_nomina'])->name('update_config_nomina');
+
 
     // FACTURA COMPRA
-    Route::get('/factura_compra', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'index'])->name('factura_compra');
-    Route::get('/pdf_factura_compra', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'pdf'])->name('pdf_factura_compra');
-    Route::post('/info_factura_compra', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'info'])->name('info_factura_compra');
-    Route::post('/add_factura_compra', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'add'])->name('add_factura_compra');
-    Route::post('/edit_factura_compra', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'edit'])->name('edit_factura_compra');
-    Route::post('/filtrar_facturas_compras', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'filtro'])->name('filtrar_facturas_compras');
-    Route::post('/anular_factura_compra', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'anular'])->name('anular_factura_compra');
-    Route::post('/favorito_factura_compra', [App\Http\Controllers\Admin\Contabilidad\FacturaCompraController::class, 'favorito'])->name('favorito_factura_compra');
+    Route::get('/factura_compra', [App\Http\Controllers\Admin\Contabilidad\Compras\FacturaCompraController::class, 'index'])->name('factura_compra');
+    Route::get('/pdf_factura_compra', [App\Http\Controllers\Admin\Contabilidad\Compras\FacturaCompraController::class, 'pdf'])->name('pdf_factura_compra');
+    Route::post('/info_factura_compra', [App\Http\Controllers\Admin\Contabilidad\Compras\FacturaCompraController::class, 'info'])->name('info_factura_compra');
+    Route::post('/add_factura_compra', [App\Http\Controllers\Admin\Contabilidad\Compras\FacturaCompraController::class, 'add'])->name('add_factura_compra');
+    Route::post('/edit_factura_compra', [App\Http\Controllers\Admin\Contabilidad\Compras\FacturaCompraController::class, 'edit'])->name('edit_factura_compra');
+    Route::post('/filtrar_facturas_compras', [App\Http\Controllers\Admin\Contabilidad\Compras\FacturaCompraController::class, 'filtro'])->name('filtrar_facturas_compras');
+    Route::post('/anular_factura_compra', [App\Http\Controllers\Admin\Contabilidad\Compras\FacturaCompraController::class, 'anular'])->name('anular_factura_compra');
+    Route::post('/favorito_factura_compra', [App\Http\Controllers\Admin\Contabilidad\Compras\FacturaCompraController::class, 'favorito'])->name('favorito_factura_compra');
 
+
+    // COMPROBANTE EGRESO
+    Route::get('/comprobante_egreso', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'index'])->name('comprobante_egreso');
+
+    
     // FACTURA VENTA
-    Route::get('/factura_venta', [App\Http\Controllers\Admin\Contabilidad\FacturaVentaController::class, 'index'])->name('factura_venta');
-    Route::get('/pdf_factura_venta', [App\Http\Controllers\Admin\Contabilidad\FacturaVentaController::class, 'pdf'])->name('pdf_factura_venta');
-    Route::post('/info_factura_venta', [App\Http\Controllers\Admin\Contabilidad\FacturaVentaController::class, 'info'])->name('info_factura_venta');
-    Route::post('/add_factura_venta', [App\Http\Controllers\Admin\Contabilidad\FacturaVentaController::class, 'add'])->name('add_factura_venta');
+    Route::get('/factura_venta', [App\Http\Controllers\Admin\Contabilidad\Ventas\FacturaVentaController::class, 'index'])->name('factura_venta');
+    Route::get('/pdf_factura_venta', [App\Http\Controllers\Admin\Contabilidad\Ventas\FacturaVentaController::class, 'pdf'])->name('pdf_factura_venta');
+    Route::post('/info_factura_venta', [App\Http\Controllers\Admin\Contabilidad\Ventas\FacturaVentaController::class, 'info'])->name('info_factura_venta');
+    Route::post('/add_factura_venta', [App\Http\Controllers\Admin\Contabilidad\Ventas\FacturaVentaController::class, 'add'])->name('add_factura_venta');
 
-    // NOTA CREDITO
-    Route::get('/nota_credito', [App\Http\Controllers\Admin\Contabilidad\NotaCreditoController::class, 'index'])->name('nota_credito');
-
-    // NOTA DEBITO
-    Route::get('/nota_debito', [App\Http\Controllers\Admin\Contabilidad\NotaDebitoController::class, 'index'])->name('nota_debito');
 
     // RECIBO PAGO
-    Route::get('/recibo_pago', [App\Http\Controllers\Admin\Contabilidad\ReciboPagoController::class, 'index'])->name('recibo_pago');
+    Route::get('/recibo_pago', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'index'])->name('recibo_pago');
+
 
     // CALENDARIO
     Route::get('/calendario', [App\Http\Controllers\CalendarController::class, 'index'])->name('calendario');

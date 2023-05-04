@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Contabilidad;
+namespace App\Http\Controllers\Admin\Contabilidad\Nomina;
 
 use App\Http\Controllers\Controller;
 use Exception;
@@ -16,7 +16,7 @@ class NominaController extends Controller
                 return redirect()->route('home');
             }*/
 
-            return view('admin.contabilidad.nomina');
+            return view('admin.contabilidad.nomina.nomina');
         } catch (Exception $ex) {
             return view('errors.500');
         }
@@ -30,7 +30,7 @@ class NominaController extends Controller
             }*/
 
             $data = DB::table('configuracion_nomina')->first();
-            return view('admin.contabilidad.config_nomina', compact('data'));
+            return view('admin.contabilidad.nomina.config_nomina', compact('data'));
         } catch (Exception $ex) {
             return view('errors.500');
         }

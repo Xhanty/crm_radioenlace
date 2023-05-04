@@ -410,5 +410,5 @@
             localStorage.setItem('formas_pago', JSON.stringify(formas_pago));
         });
     </script>
-    <script src="{{ asset('assets/js/app/contabilidad/factura_venta.js') }}"></script>
+    <script src="{{ asset('assets/js/app/contabilidad/ventas/factura_venta.js') }}"></script>
 @endsection

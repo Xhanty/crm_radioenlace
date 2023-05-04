@@ -360,5 +360,5 @@
 
         });
     </script>
-    <script src="{{ asset('assets/js/app/contabilidad/recibo_pago.js') }}"></script>
+    <script src="{{ asset('assets/js/app/contabilidad/ventas/recibo_pago.js') }}"></script>
 @endsection

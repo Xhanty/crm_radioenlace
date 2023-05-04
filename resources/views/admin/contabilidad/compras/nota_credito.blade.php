@@ -552,5 +552,5 @@
             localStorage.setItem('formas_pago', JSON.stringify(formas_pago));
         });
     </script>
-    <script src="{{ asset('assets/js/app/contabilidad/nota_credito.js') }}"></script>
+    <script src="{{ asset('assets/js/app/contabilidad/compras/nota_credito.js') }}"></script>
 @endsection

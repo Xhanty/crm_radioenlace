@@ -966,5 +966,5 @@
             localStorage.setItem('impuestos_retencion', JSON.stringify(impuestos_retencion));
         });
     </script>
-    <script src="{{ asset('assets/js/app/contabilidad/factura_compra.js') }}"></script>
+    <script src="{{ asset('assets/js/app/contabilidad/compras/factura_compra.js') }}"></script>
 @endsection

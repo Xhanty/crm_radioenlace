@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Contabilidad;
+namespace App\Http\Controllers\Admin\Contabilidad\Ventas;
 
 use App\Http\Controllers\Controller;
 use Exception;
@@ -58,7 +58,7 @@ class FacturaVentaController extends Controller
                 ->orderBy('factura_venta.id', 'desc')
                 ->get();
 
-            return view('admin.contabilidad.factura_venta', compact('productos', 'formas_pago', 'clientes', 'usuarios', 'facturas', 'num_factura'));
+            return view('admin.contabilidad.ventas.factura_venta', compact('productos', 'formas_pago', 'clientes', 'usuarios', 'facturas', 'num_factura'));
         } catch (Exception $ex) {
             return view('errors.500');
         }
@@ -167,7 +167,7 @@ class FacturaVentaController extends Controller
             }
         }
 
-        return view('admin.contabilidad.pdf.factura_venta', compact('factura'));
+        return view('admin.contabilidad.ventas.pdf.factura_venta', compact('factura'));
     }
 
     public function info(Request $request)

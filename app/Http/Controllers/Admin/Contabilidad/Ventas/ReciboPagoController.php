@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Contabilidad;
+namespace App\Http\Controllers\Admin\Contabilidad\Ventas;
 
 use App\Http\Controllers\Controller;
 use Exception;
@@ -26,7 +26,7 @@ class ReciboPagoController extends Controller
                 ->where('estado', 1)
                 ->get();
 
-            return view('admin.contabilidad.recibo_pago', compact('centros_costos', 'proveedores'));
+            return view('admin.contabilidad.ventas.recibo_pago', compact('centros_costos', 'proveedores'));
         } catch (Exception $ex) {
             return view('errors.500');
         }

@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Contabilidad;
+namespace App\Http\Controllers\Admin\Contabilidad\Compras;
 
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class NotaCreditoController extends Controller
+class NotaDebitoController extends Controller
 {
     public function index()
     {
         try {
-            if (!auth()->user()->hasPermissionTo('contabilidad_nota_credito')) {
+            if (!auth()->user()->hasPermissionTo('contabilidad_nota_debito')) {
                 return redirect()->route('home');
             }
 
@@ -31,12 +31,17 @@ class NotaCreditoController extends Controller
                 ->where('estado', 1)
                 ->get();
 
+            $proveedores = DB::table('proveedores')
+                ->select('id', 'razon_social', 'nit')
+                ->where('estado', 1)
+                ->get();
+
             $usuarios = DB::table('empleados')
                 ->select('id', 'nombre')
                 ->where('status', 1)
                 ->get();
 
-            return view('admin.contabilidad.nota_credito', compact('productos', 'formas_pago', 'clientes', 'usuarios'));
+            return view('admin.contabilidad.compras.nota_debito', compact('productos', 'formas_pago', 'clientes', 'proveedores', 'usuarios'));
         } catch (Exception $ex) {
             return view('errors.500');
         }

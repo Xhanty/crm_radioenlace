@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Contabilidad;
+namespace App\Http\Controllers\Admin\Contabilidad\Compras;
 
 use App\Http\Controllers\Controller;
 use Exception;
@@ -76,7 +76,7 @@ class FacturaCompraController extends Controller
                 ->orderBy('factura_compra.id', 'desc')
                 ->get();
 
-            return view('admin.contabilidad.factura_compra', compact(
+            return view('admin.contabilidad.compras.factura_compra', compact(
                 'productos',
                 'formas_pago',
                 'centros_costos',
@@ -349,7 +349,7 @@ class FacturaCompraController extends Controller
             }
         }
 
-        return view('admin.contabilidad.pdf.factura_compra', compact('factura'));
+        return view('admin.contabilidad.compras.pdf.factura_compra', compact('factura'));
     }
 
     public function info(Request $request)

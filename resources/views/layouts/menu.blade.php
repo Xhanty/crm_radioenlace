@@ -336,7 +336,7 @@
                                                         Débito</a>
                                                 </li>
                                                 <li><a class="sub-side-menu__item"
-                                                        href="javascript:void(0);">Documento Equivalente</a>
+                                                        href="javascript:void(0);">Comprobante Egreso</a>
                                                 </li>
                                             </ul>
                                         </li>
@@ -354,12 +354,12 @@
                                                 @endif
                                                 @if (auth()->user()->hasPermissionTo('contabilidad_nota_credito'))
                                                     <li><a class="sub-side-menu__item"
-                                                            href="{{ route('nota_credito') }}">Nota Crédito</a>
+                                                            href="javascript:void(0);">Nota Crédito</a>
                                                     </li>
                                                 @endif
                                                 @if (auth()->user()->hasPermissionTo('contabilidad_nota_debito'))
                                                     <li><a class="sub-side-menu__item"
-                                                            href="{{ route('nota_debito') }}">Nota Débito</a>
+                                                            href="javascript:void(0);">Nota Débito</a>
                                                     </li>
                                                 @endif
                                                 @if (auth()->user()->hasPermissionTo('contabilidad_recibo_pago'))

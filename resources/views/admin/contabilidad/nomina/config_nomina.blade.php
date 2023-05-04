@@ -62,7 +62,7 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('assets/js/app/contabilidad/config_nomina.js') }}"></script>
+    <script src="{{ asset('assets/js/app/contabilidad/nomina/config_nomina.js') }}"></script>
     <script>
         function onk(event) {
             $(event.target).val(function(index, value) {
