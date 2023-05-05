@@ -189,7 +189,7 @@
 
         <!-- Modal Asignar -->
         <div class="modal  fade" id="modalAsignar">
-            <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
                         <h6 class="modal-title">Asignar elemento</h6>
