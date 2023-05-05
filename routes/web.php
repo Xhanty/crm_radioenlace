@@ -293,7 +293,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/add_retencion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_retencion'])->name('add_retencion');
     Route::post('/delete_retencion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'delete_retencion'])->name('delete_retencion');
     Route::post('/update_uso_retencion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'update_uso_retencion'])->name('update_uso_retencion');
-    
+
 
     //NOMINA
     Route::get('/config_nomina', [App\Http\Controllers\Admin\Contabilidad\Nomina\NominaController::class, 'config_nomina'])->name('config_nomina');
@@ -315,17 +315,20 @@ Route::middleware(['auth_user'])->group(function () {
     Route::get('/comprobante_egreso', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'index'])->name('comprobante_egreso');
     Route::post('/compras_add_pago', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'add'])->name('compras_add_pago');
 
-    
+
     // FACTURA VENTA
     Route::get('/factura_venta', [App\Http\Controllers\Admin\Contabilidad\Ventas\FacturaVentaController::class, 'index'])->name('factura_venta');
     Route::get('/pdf_factura_venta', [App\Http\Controllers\Admin\Contabilidad\Ventas\FacturaVentaController::class, 'pdf'])->name('pdf_factura_venta');
     Route::post('/info_factura_venta', [App\Http\Controllers\Admin\Contabilidad\Ventas\FacturaVentaController::class, 'info'])->name('info_factura_venta');
     Route::post('/add_factura_venta', [App\Http\Controllers\Admin\Contabilidad\Ventas\FacturaVentaController::class, 'add'])->name('add_factura_venta');
-
+    Route::post('/edit_factura_venta', [App\Http\Controllers\Admin\Contabilidad\Ventas\FacturaVentaController::class, 'edit'])->name('edit_factura_venta');
+    Route::post('/filtrar_facturas_ventas', [App\Http\Controllers\Admin\Contabilidad\Ventas\FacturaVentaController::class, 'filtro'])->name('filtrar_facturas_ventas');
+    Route::post('/anular_factura_venta', [App\Http\Controllers\Admin\Contabilidad\Ventas\FacturaVentaController::class, 'anular'])->name('anular_factura_venta');
+    Route::post('/favorito_factura_venta', [App\Http\Controllers\Admin\Contabilidad\Ventas\FacturaVentaController::class, 'favorito'])->name('favorito_factura_venta');
 
     // RECIBO PAGO
     Route::get('/recibo_pago', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'index'])->name('recibo_pago');
-
+    Route::post('/recibo_pago_add', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'add'])->name('recibo_pago_add');
 
     // CALENDARIO
     Route::get('/calendario', [App\Http\Controllers\CalendarController::class, 'index'])->name('calendario');
