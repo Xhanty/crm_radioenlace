@@ -384,12 +384,12 @@ class SolicitudInventarioController extends Controller
                 }
 
                 DB::table('inventario')->where("id", $element["serial"])->update([
-                    'cantidad' => $cantidad_old->cantidad - $element["cantidad"],
-                    'status' => $status,
+                    'cantidad' => $cantidad_old->cantidad - 0, //- $element["cantidad"],
+                    'status' => 1, //$status,
                 ]);
 
                 DB::table('salida_inventario')->insert([
-                    'tipo' => $tipo,
+                    'tipo' => 3, //$tipo,
                     'producto_id' => $producto_id,
                     'inventario_id' => $element["serial"],
                     'cantidad' => $element["cantidad"],
@@ -402,7 +402,7 @@ class SolicitudInventarioController extends Controller
                 ]);
 
                 DB::table('movimientos_inventario')->insert([
-                    'tipo' => $tipo + 1,
+                    'tipo' => 3, //$tipo + 1,
                     'inventario_id' => $element["serial"],
                     'almacen_id' => $almacen_id,
                     'cantidad' => $element["cantidad"],
