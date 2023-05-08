@@ -202,8 +202,10 @@ class GestionController extends Controller
             $count_salida = 0;
             $count_inventario = 0;
             $movimiento = 0;
+            $other = 0;
 
             $data_old = DB::table('salida_inventario')->where("id", $serial)->first();
+
             if ($data_old && $data_old != null) {
                 $data_inventario = DB::table('inventario')->where("id", $data_old->inventario_id)->first();
 
@@ -216,26 +218,48 @@ class GestionController extends Controller
                 if ($count_salida == 0) {
                     $status = 1;
                 }
+
+                if($tipo == 1) {
+                    $movimiento = 1;
+                }
             } else {
                 $data_inventario = DB::table('inventario')->where("id", $serial)->first();
                 $movimiento = 1;
+                $other = 1;
             }
-
+            
             if ($tipo == 1 && $movimiento == 1) {
-                DB::table('inventario')->where("id", $serial)->update([
-                    'cantidad' => $data_inventario->cantidad,
-                    'status' => 1,
-                ]);
+                if($other == 1) {
+                    DB::table('inventario')->where("id", $serial)->update([
+                        'cantidad' => $data_inventario->cantidad,
+                        'status' => 1,
+                    ]);
 
-                DB::table('movimientos_inventario')->insert([
-                    'tipo' => $tipo,
-                    'inventario_id' => $serial,
-                    'almacen_id' => $almacen_id,
-                    'cantidad' => $cantidad,
-                    'observaciones' => $observaciones ? $observaciones : null,
-                    'created_by' => auth()->user()->id,
-                    'created_at' => date('Y-m-d H:i:s'),
-                ]);
+                    DB::table('movimientos_inventario')->insert([
+                        'tipo' => $tipo,
+                        'inventario_id' => $serial,
+                        'almacen_id' => $almacen_id,
+                        'cantidad' => $cantidad,
+                        'observaciones' => $observaciones ? $observaciones : null,
+                        'created_by' => auth()->user()->id,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                } else {
+                    DB::table('inventario')->where("id", $data_inventario->id)->update([
+                        'cantidad' => $data_inventario->cantidad,
+                        'status' => 1,
+                    ]);
+
+                    DB::table('movimientos_inventario')->insert([
+                        'tipo' => $tipo,
+                        'inventario_id' => $data_inventario->id,
+                        'almacen_id' => $almacen_id,
+                        'cantidad' => $cantidad,
+                        'observaciones' => $observaciones ? $observaciones : null,
+                        'created_by' => auth()->user()->id,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                }
             } else {
 
                 DB::table('inventario')->where("id", $data_old->inventario_id)->update([

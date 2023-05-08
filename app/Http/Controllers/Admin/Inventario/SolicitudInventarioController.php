@@ -453,7 +453,7 @@ class SolicitudInventarioController extends Controller
                 ]);
 
                 DB::table('salida_inventario')->insert([
-                    'tipo' => 3, //$tipo,
+                    'tipo' => 2, //$tipo,
                     'producto_id' => $producto_id,
                     'inventario_id' => $element["serial"],
                     'cantidad' => $element["cantidad"],

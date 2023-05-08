@@ -390,7 +390,7 @@ $(document).ready(function () {
                                     });
                                 }
 
-                                if (element.cantidad > 0) {
+                                if (element.cantidad > 0 && !element.salidas) {
                                     let tipo = " (Disponible)";
 
                                     $("#producto_reingreso").append(
