@@ -422,4 +422,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('reporte_compras',  [App\Http\Controllers\Admin\Reportes\ComprasController::class, 'index'])->name('reporte_compras');
     Route::post('reportes_compras_filtro',  [App\Http\Controllers\Admin\Reportes\ComprasController::class, 'filtro'])->name('reportes_compras_filtro');
     Route::get('reporte_ventas',  [App\Http\Controllers\Admin\Reportes\VentasController::class, 'index'])->name('reporte_ventas');
+    Route::post('reportes_ventas_filtro',  [App\Http\Controllers\Admin\Reportes\VentasController::class, 'filtro'])->name('reportes_ventas_filtro');
 });

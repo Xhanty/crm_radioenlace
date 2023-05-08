@@ -460,6 +460,7 @@
             const cargos_array = {};
 
             impuestos_1.forEach(impuesto => {
+                if(impuesto == null) return;
                 let valor_1 = parseInt(impuesto[1]);
                 cargos += valor_1;
 
