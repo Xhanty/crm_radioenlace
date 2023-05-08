@@ -36,6 +36,7 @@ class FacturaVentaController extends Controller
             $formas_pago = DB::table('configuracion_puc')
                 ->select('id', 'code', 'nombre')
                 ->where('status', 1)
+                ->where('forma_pago', 1)
                 ->whereRaw('LENGTH(code) = 8')
                 ->get();
 

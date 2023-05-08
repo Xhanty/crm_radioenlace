@@ -39,6 +39,7 @@ class FacturaCompraController extends Controller
             $formas_pago = DB::table('configuracion_puc')
                 ->select('id', 'code', 'nombre')
                 ->where('status', 1)
+                ->where('forma_pago', 1)
                 ->whereRaw('LENGTH(code) = 8')
                 ->get();
 
@@ -55,6 +56,7 @@ class FacturaCompraController extends Controller
             $cuentas_gastos = DB::table('configuracion_puc')
                 ->select('id', 'code', 'nombre')
                 ->where('status', 1)
+                ->where('forma_pago', 0)
                 ->whereRaw('LENGTH(code) = 8')
                 ->get();
 
