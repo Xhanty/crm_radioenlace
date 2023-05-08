@@ -161,6 +161,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/data_solicitud_inventario', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'data'])->name('data_solicitud_inventario');
     Route::post('/solicitud_inventario_add', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'solicitud_add'])->name('solicitud_inventario_add');
     Route::post('/solicitud_inventario_update', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'solicitud_edit'])->name('solicitud_inventario_update');
+    Route::post('/solicitud_inventario_rechazar', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'rechazar_individual'])->name('solicitud_inventario_rechazar');
 
     // GESTIÓN SOLICITUDES DE INVENTARIO
     Route::get('/gestion_solicitudes', [App\Http\Controllers\Admin\Inventario\SolicitudInventarioController::class, 'gestion'])->name('gestion_solicitudes');

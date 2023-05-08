@@ -114,7 +114,10 @@ $(document).ready(function () {
                         var col = "col-4";
 
                         if (URLactual == "/gestion_solicitudes" && elemento.status == 0) {
-                            action = '<div class="col-1 center-vertical">' + '<a title="Asignar" class="btnAsignarIndividual" data-elemento="' + elemento.elemento + '" data-cantidad="' + elemento.cantidad + '" data-id="' + elemento.id + '" href="javascript:void(0)">' + '<i class="fa fa-check"></i>' + '</a>' + '</div>';
+                            action = '<div class="col-1" style="display: flex; justify-content: center; margin-top: 6px;">' +
+                                '<a title="Asignar" style="margin-right: 12px" class="btnAsignarIndividual" data-elemento="' + elemento.elemento + '" data-cantidad="' + elemento.cantidad + '" data-id="' + elemento.id + '" href="javascript:void(0)">' + '<i class="fa fa-check"></i>' + '</a>' +
+                                '<a title="Asignar" style="margin-right: 12px" class="btnRechazarIndividual" data-elemento="' + elemento.elemento + '" data-cantidad="' + elemento.cantidad + '" data-id="' + elemento.id + '" href="javascript:void(0)">' + '<i class="fa fa-times"></i>' + '</a>' +
+                                '</div>';
                             col = "col-3";
                         } else if (URLactual == "/solicitud_inventario" && elemento.status == 0) {
                             action = '<div class="col-1"><span class="badge bg-success side-badge bg-warning" style="margin-top: 8px; margin-left: -8px;">Pendiente</span></div>';
@@ -243,8 +246,10 @@ $(document).ready(function () {
                             setTimeout(function () {
                                 location.reload();
                             }, 1000);
+                        } else if (data.info == 2) {
+                            toastr.error("No se puede eliminar la solicitud, ya que tiene elementos asignados");
                         } else {
-                            toastr.error(data.mensaje);
+                            toastr.error("Error al eliminar la solicitud");
                         }
                     },
                     error: function (data) {
@@ -308,6 +313,58 @@ $(document).ready(function () {
         $("#modalView").modal("hide");
         $("#modalAsignar").modal({ backdrop: "static", keyboard: false });
         $("#modalAsignar").modal("show");
+    });
+
+    $(document).on("click", ".btnRechazarIndividual", function () {
+        let id = $(this).attr("data-id");
+        $("#modalView").modal("hide");
+        Swal.fire({
+            title: "¿Está seguro?",
+            text: "¡No podrás revertir esto!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "¡Sí, rechazar!",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $("#global-loader").fadeIn("fast");
+                $("#modalView").modal("hide");
+                $.ajax({
+                    url: "solicitud_inventario_rechazar",
+                    type: "POST",
+                    data: {
+                        id: id,
+                    },
+                    success: function (response) {
+                        if (response.info == 1) {
+                            $("#modalView").modal("hide");
+                            if (response.reload == 1) {
+                                toastr.success("Todos los elementos han sido gestionados");
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 1000);
+                            } else {
+                                toastr.success("Elemento rechazado con éxito");
+                                $(document).find(".btnView[data-id=" + btn_View + "]").click();
+                            }
+                        } else {
+                            toastr.error("Error al gestionar el elemento");
+                        }
+                    },
+                    error: function (error) {
+                        toastr.error("Error al gestionar el elemento");
+                        $("#btnAsignarElemento").attr("disabled", false);
+                        $("#btnAsignarElemento").html("Asignar Elemento");
+                        console.log(error);
+                    },
+                });
+            } else {
+                $(document).find(".btnView[data-id=" + btn_View + "]").click();
+            }
+        }
+        );
     });
 
     $("#btnCloseAsignar").click(function () {
@@ -446,6 +503,10 @@ $(document).ready(function () {
                         setTimeout(function () {
                             location.reload();
                         }, 2000);
+                    } else if (data.info == 2) {
+                        $("#btn_update_solicitud").attr("disabled", false);
+                        $("#btn_update_solicitud").html("Modificar");
+                        toastr.warning("No se puede modificar los elementos de la solicitud, porque ya se encuentra en proceso");
                     } else {
                         $("#btn_update_solicitud").attr("disabled", false);
                         $("#btn_update_solicitud").html("Modificar");
@@ -618,11 +679,11 @@ $(document).ready(function () {
                             $(document).find(".btnView[data-id=" + btn_View + "]").click();
                         }
                     } else {
-                        toastr.error("Error al realizar al asignar");
+                        toastr.error("Error al gestionar el elemento");
                     }
                 },
                 error: function (error) {
-                    toastr.error("Error al realizar al asignar");
+                    toastr.error("Error al gestionar el elemento");
                     $("#btnAsignarElemento").attr("disabled", false);
                     $("#btnAsignarElemento").html("Asignar Elemento");
                     console.log(error);
