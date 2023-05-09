@@ -65,6 +65,7 @@ class ConfiguracionController extends Controller
             $cuentas_contables = DB::table('configuracion_puc')
                 ->select('id', 'code', 'nombre')
                 ->where('status', 1)
+                ->where('forma_pago', 0)
                 ->whereRaw('LENGTH(code) = 8')
                 ->get();
 
