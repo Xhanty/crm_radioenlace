@@ -169,7 +169,8 @@
                         @php
                             $texto = $remision->asunto;
                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                            echo $texto_nuevo;
+                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                            echo nl2br($texto_nuevo);
                         @endphp
                     </td>
                 </tr>
@@ -188,7 +189,8 @@
                         @php
                             $texto = $remision->observacion;
                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                            echo $texto_nuevo;
+                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                            echo nl2br($texto_nuevo);
                         @endphp
                     </td>
                 </tr>
@@ -219,7 +221,8 @@
                                 @php
                                     $texto = $productos[$i]->descripcion;
                                     $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                                    echo $texto_nuevo;
+                                    $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                                    echo nl2br($texto_nuevo);
                                 @endphp
                             </p>
                         </td>
@@ -242,7 +245,8 @@
                                 @php
                                     $texto = $productos[$i]->descripcion;
                                     $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                                    echo $texto_nuevo;
+                                    $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                                    echo nl2br($texto_nuevo);
                                 @endphp
                             </p>
                         </td>

@@ -173,7 +173,8 @@
                         @php
                             $texto = $cotizacion->descripcion;
                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                            echo $texto_nuevo;
+                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                            echo nl2br($texto_nuevo);
                         @endphp
                     </td>
                 </tr>
@@ -192,18 +193,19 @@
                         @php
                             $texto = $cotizacion->incluye;
                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                            echo $texto_nuevo;
+                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                            echo nl2br($texto_nuevo);
                         @endphp
                     </td>
                 </tr>
             @endif
 
             <tr class="heading">
-                <td style="width: 100px; text-align: center;"></td>
-                <td style="width: 222px; text-align: center;">Producto</td>
-                <td style="text-align: center;">Cant.</td>
-                <td class="text-align-right">Precio U.</td>
-                <td class="text-align-right">Iva(%)</td>
+                <td style="width: 110px; text-align: center;"></td>
+                <td @if($colspan == 7) colspan="2" @endif style="width: 222px; text-align: center;">Producto</td>
+                <td style="text-align: center;">Cantidad</td>
+                <td style="text-align: center;">Precio U.</td>
+                <td style="text-align: center;">Iva(%)</td>
                 <!--<td class="text-align-right">Ret.(%)</td>-->
                 <td class="text-align-right">Subtotal</td>
             </tr>
@@ -245,12 +247,12 @@
                     @if ($i == count($productos) - 1)
                         @if ($productos[$i]->img_grande == 1)
                             <tr>
-                                <td style="text-align: center; padding-top: 2%;" colspan="2">
+                                <td @if($colspan == 7) colspan="2" @endif style="text-align: center; padding-top: 2%;" colspan="2">
                                     <b>{{ $productos[$i]->producto }}</b> <br>
                                     <b>{{ $productos[$i]->modelo }}</b>
                                 </td>
                                 <td style="text-align: center; padding-top: 3%;">{{ $productos[$i]->cantidad }}</td>
-                                <td class="text-align-right" style="padding-top: 3%">
+                                <td style="padding-top: 3%; text-align: center;">
                                     {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
                                 <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
                                 <!--<td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>-->
@@ -264,7 +266,8 @@
                                         @php
                                             $texto = $productos[$i]->descripcion;
                                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                                            echo $texto_nuevo;
+                                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                                            echo nl2br($texto_nuevo);
                                         @endphp
                                     </p>
                                 </td>
@@ -281,12 +284,12 @@
                                     <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
                                         style="width:100%; max-width:105px; max-height: 120px">
                                 </td>
-                                <td style="text-align: center; padding-top: 3%;">
+                                <td @if($colspan == 7) colspan="2" @endif style="text-align: center; padding-top: 3%;">
                                     <b>{{ $productos[$i]->producto }}</b><br>
                                     <b>{{ $productos[$i]->modelo }}</b>
                                 </td>
                                 <td style="text-align: center; padding-top: 3%">{{ $productos[$i]->cantidad }}</td>
-                                <td class="text-align-right" style="padding-top: 3%">
+                                <td style="padding-top: 3%; text-align: center;">
                                     {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
                                 <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
                                 <!--<td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>-->
@@ -300,7 +303,8 @@
                                         @php
                                             $texto = $productos[$i]->descripcion;
                                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                                            echo $texto_nuevo;
+                                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                                            echo nl2br($texto_nuevo);
                                         @endphp
                                     </p>
                                 </td>
@@ -309,12 +313,12 @@
                     @else
                         @if ($productos[$i]->img_grande == 1)
                             <tr>
-                                <td style="text-align: center; padding-top: 2%;" colspan="2">
+                                <td @if($colspan == 7) colspan="2" @endif style="text-align: center; padding-top: 2%;" colspan="2">
                                     <b>{{ $productos[$i]->producto }}</b> <br>
                                     <b>{{ $productos[$i]->modelo }}</b>
                                 </td>
                                 <td style="text-align: center; padding-top: 3%;">{{ $productos[$i]->cantidad }}</td>
-                                <td class="text-align-right" style="padding-top: 3%">
+                                <td style="padding-top: 3%; text-align: center;">
                                     {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
                                 <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
                                 <!--<td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>-->
@@ -328,7 +332,8 @@
                                         @php
                                             $texto = $productos[$i]->descripcion;
                                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                                            echo $texto_nuevo;
+                                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                                            echo nl2br($texto_nuevo);
                                         @endphp
                                     </p>
                                 </td>
@@ -345,12 +350,12 @@
                                     <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
                                         style="width:100%; max-width:105px; max-height: 120px">
                                 </td>
-                                <td style="text-align: center; padding-top: 3%;">
+                                <td @if($colspan == 7) colspan="2" @endif style="text-align: center; padding-top: 3%;">
                                     <b>{{ $productos[$i]->producto }}</b> <br>
                                     <b>{{ $productos[$i]->modelo }}</b>
                                 </td>
                                 <td style="text-align: center; padding-top: 3%;">{{ $productos[$i]->cantidad }}</td>
-                                <td class="text-align-right" style="padding-top: 3%">
+                                <td style="padding-top: 3%; text-align: center;">
                                     {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
                                 <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
                                 <!--<td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>-->
@@ -364,7 +369,8 @@
                                         @php
                                             $texto = $productos[$i]->descripcion;
                                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                                            echo $texto_nuevo;
+                                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                                            echo nl2br($texto_nuevo);
                                         @endphp
                                     </p>
                                 </td>
@@ -449,7 +455,8 @@
                         @php
                             $texto = $cotizacion->duracion;
                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                            echo $texto_nuevo;
+                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                            echo nl2br($texto_nuevo);
                         @endphp
                     </td>
 
@@ -457,7 +464,8 @@
                         @php
                             $texto = $cotizacion->tiempo_entrega;
                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                            echo $texto_nuevo;
+                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                            echo nl2br($texto_nuevo);
                         @endphp
                     </td>
                 </tr>
@@ -479,7 +487,8 @@
                         @php
                             $texto = $cotizacion->validez;
                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                            echo $texto_nuevo;
+                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                            echo nl2br($texto_nuevo);
                         @endphp
                     </td>
 
@@ -487,7 +496,8 @@
                         @php
                             $texto = $cotizacion->forma_pago;
                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                            echo $texto_nuevo;
+                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                            echo nl2br($texto_nuevo);
                         @endphp
                     </td>
                 </tr>
@@ -512,7 +522,8 @@
                     @php
                         $texto = $cotizacion->garantia;
                         $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                        echo $texto_nuevo;
+                        $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                        echo nl2br($texto_nuevo);
                     @endphp
                 </td>
             </tr>
@@ -529,7 +540,8 @@
                         @php
                             $texto = $cotizacion->envio;
                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                            echo $texto_nuevo;
+                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                            echo nl2br($texto_nuevo);
                         @endphp
                     </td>
                 </tr>

@@ -390,7 +390,25 @@ $(document).ready(function () {
                                     });
                                 }
 
-                                if (element.cantidad > 0 && !element.salidas) {
+                                /*if (element.cantidad > 0 && !element.salidas) {
+                                    let tipo = " (Disponible)";
+
+                                    $("#producto_reingreso").append(
+                                        "<option data-cantidad='" +
+                                        element.cantidad +
+                                        "' value='" +
+                                        element.id +
+                                        "'>" +
+                                        element.serial +
+                                        " | (Cantidad: " +
+                                        element.cantidad +
+                                        ") - " +
+                                        tipo +
+                                        "</option>"
+                                    );
+                                }*/
+
+                                if (element.cantidad > 0 && element.salidas.length == 0) {
                                     let tipo = " (Disponible)";
 
                                     $("#producto_reingreso").append(

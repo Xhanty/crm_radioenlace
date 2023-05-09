@@ -179,7 +179,7 @@
                                         <div class="media-body">
                                             @php
                                                 $tipo = 'Factura No.';
-                                                if($factura->tipo == 1){
+                                                if ($factura->tipo == 1) {
                                                     $tipo = 'Factura No.';
                                                 } else {
                                                     $tipo = 'Documento No.';
@@ -237,7 +237,8 @@
                             </div>
                             <div class="col-md">
                                 <label class="tx-gray-600">Información de la factura</label>
-                                <p class="invoice-info-row"><span id="factura_tlt_2">Factura No.</span> <span id="num_fact_view">1743</span>
+                                <p class="invoice-info-row"><span id="factura_tlt_2">Factura No.</span> <span
+                                        id="num_fact_view">1743</span>
                                 </p>
                                 <p class="invoice-info-row"><span>Fecha Compra</span> <span
                                         id="compra_view">21/03/2023</span></p>
@@ -443,7 +444,7 @@
                                                     <textarea placeholder="Descripción" class="form-control descripcion_add" style="border: 0" rows="3"></textarea>
                                                 </td>
                                                 <td class="pad-4">
-                                                    <input type="text" placeholder="Bodega"
+                                                    <input type="text" placeholder="Bodega" disabled
                                                         class="form-control bodega_add" style="border: 0">
                                                 </td>
                                                 <td class="pad-4">
@@ -636,13 +637,13 @@
                                 </div>
                                 <div class="col-lg-3">
                                     <label for="">Fecha elaboración</label>
-                                    <input class="form-control" id="fecha_edit"
-                                        placeholder="Fecha elaboración" type="date">
+                                    <input class="form-control" id="fecha_edit" placeholder="Fecha elaboración"
+                                        type="date">
                                 </div>
                                 <div class="col-lg-3">
                                     <label for="">Número</label>
-                                    <input class="form-control text-center" disabled
-                                        id="numero_edit" placeholder="Número" type="text">
+                                    <input class="form-control text-center" disabled id="numero_edit"
+                                        placeholder="Número" type="text">
                                 </div>
                             </div>
                             <br>
@@ -763,7 +764,8 @@
                                                         <option value="">Seleccione una opción</option>
                                                         @foreach ($impuestos_cargos as $impuesto)
                                                             <option data-impuesto="{{ $impuesto->tarifa }}"
-                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
+                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </td>
@@ -772,7 +774,8 @@
                                                         <option value="">Seleccione una opción</option>
                                                         @foreach ($impuestos_retencion as $impuesto)
                                                             <option data-impuesto="{{ $impuesto->tarifa }}"
-                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
+                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </td>
@@ -946,6 +949,99 @@
         </div>
     </div>
 
+    <!-- Modal Bodega Add -->
+    <div class="modal  fade" id="bodegaAddModal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content modal-content-demo">
+                <div class="modal-header">
+                    <h6 class="modal-title">Bodega</h6>
+                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- col -->
+                        <div class="col-lg mt-4 mt-lg-0">
+                            <label for="">Almacén de llegada</label>
+                            <ul id="tree1"
+                                style="padding: 20px; box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; border-radius: 10px;">
+                                @foreach ($almacenes as $key => $almacen)
+                                    <li><a href="javascript:void(0);">{{ $almacen->nombre }}</a>
+                                        @if (count($almacen->almacenes) > 0)
+                                            <ul>
+                                                @foreach ($almacen->almacenes as $sub2)
+                                                    <li style="cursor: pointer">{{ $sub2->nombre }}
+                                                        &nbsp;
+                                                        <a href="javascript:void(0);" class="btn_AlmacenAdd"
+                                                            data-id="{{ $sub2->id }}" title="Seleccionar">
+                                                            <i class="fa fa-check"></i>
+                                                        </a>
+                                                        @if (count($sub2->almacenes) > 0)
+                                                            <ul>
+                                                                @foreach ($sub2->almacenes as $sub3)
+                                                                    <li style="cursor: pointer">{{ $sub3->nombre }}
+                                                                        &nbsp;
+                                                                        <a href="javascript:void(0);"
+                                                                            class="btn_AlmacenAdd"
+                                                                            data-id="{{ $sub3->id }}"
+                                                                            title="Seleccionar">
+                                                                            <i class="fa fa-check"></i>
+                                                                        </a>
+                                                                        @if (count($sub3->almacenes) > 0)
+                                                                            <ul>
+                                                                                @foreach ($sub3->almacenes as $sub4)
+                                                                                    <li style="cursor: pointer">
+                                                                                        {{ $sub4->nombre }}
+                                                                                        &nbsp;
+                                                                                        <a href="javascript:void(0);"
+                                                                                            class="btn_AlmacenAdd"
+                                                                                            data-id="{{ $sub4->id }}"
+                                                                                            title="Seleccionar">
+                                                                                            <i class="fa fa-check"></i>
+                                                                                        </a>
+                                                                                        @if (count($sub4->almacenes) > 0)
+                                                                                            <ul>
+                                                                                                @foreach ($sub4->almacenes as $sub5)
+                                                                                                    <li
+                                                                                                        style="cursor: pointer">
+                                                                                                        {{ $sub5->nombre }}
+                                                                                                        &nbsp;
+                                                                                                        <a href="javascript:void(0);"
+                                                                                                            class="btn_AlmacenAdd"
+                                                                                                            data-id="{{ $sub5->id }}"
+                                                                                                            title="Seleccionar">
+                                                                                                            <i
+                                                                                                                class="fa fa-check"></i>
+                                                                                                        </a>
+                                                                                                    </li>
+                                                                                                @endforeach
+                                                                                            </ul>
+                                                                                        @endif
+                                                                                    </li>
+                                                                                @endforeach
+                                                                            </ul>
+                                                                        @endif
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        @endif
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <!-- /col -->
+                    </div>
+                    <br>
+                    <button class="btn btn-primary btn-block" id="AceptarBodegaAdd">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <a href="javascript:void(0);" class="btn-flotante" data-bs-target="#modalSelect" data-bs-toggle="modal"
         data-bs-effect="effect-scale">Filtros</a>
     </div>
@@ -966,5 +1062,6 @@
             localStorage.setItem('impuestos_retencion', JSON.stringify(impuestos_retencion));
         });
     </script>
+    <script src="{{ asset('assets/plugins/treeview/treeview.js') }}"></script>
     <script src="{{ asset('assets/js/app/contabilidad/compras/factura_compra.js') }}"></script>
 @endsection

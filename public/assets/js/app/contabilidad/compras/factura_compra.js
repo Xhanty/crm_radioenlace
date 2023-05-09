@@ -118,7 +118,7 @@ $(document).ready(function () {
             '<textarea placeholder="Descripción" class="form-control descripcion_add" style="border: 0" rows="3"></textarea>' +
             '</td>' +
             '<td class="pad-4">' +
-            '<input type="text" placeholder="Bodega" class="form-control bodega_add" style="border: 0">' +
+            '<input type="text" placeholder="Bodega" disabled class="form-control bodega_add" style="border: 0">' +
             '</td>' +
             '<td class="pad-4">' +
             '<input type="number" step="1" value="1" min="1" placeholder="Cantidad" class="form-control text-end cantidad_add" style="border: 0">' +
@@ -1647,7 +1647,7 @@ $(document).ready(function () {
                         setTimeout(function () {
                             location.reload();
                         }, 1000);
-                    } else if(response.info == 2) {
+                    } else if (response.info == 2) {
                         toastr.error('La factura ya tiene un pago asociado');
                         $("#btnEditFactura").attr("disabled", false);
                         $("#btnEditFactura").html('Modificar Factura');
@@ -2176,5 +2176,69 @@ $(document).ready(function () {
                 window.location.href = url_general + 'comprobante_egreso?fc=' + id;
             }
         });
+    });
+
+    // BODEGA
+    let selectBodega = [];
+    let position = 0;
+    
+    $(document).on("click", ".bodega_add", function () {
+        console.log("click");
+        var tipo = $(this).parent().parent().find(".tipo_add").val();
+        if (tipo == 1) {
+            position = $(this).parent().parent().index() + 1;
+            $("#bodegaAddModal").modal('show');
+        }
+    });
+
+    $(document).on("keyup", ".bodega_add", function () {
+        if (selectBodega.length < 1) {
+            $(this).val('');
+        }
+    });
+
+    $(document).on("click", ".btn_AlmacenAdd", function () {
+        var id = $(this).data("id");
+
+        var object = {
+            id: id,
+            position: position
+        };
+
+        //VALIDAR SI YA EXISTE
+        var existe = false;
+        for (var i = 0; i < selectBodega.length; i++) {
+            if (selectBodega[i].position == position) {
+                existe = true;
+            }
+        }
+
+        if (!existe) {
+            selectBodega.push(object);
+        } else {
+            for (var i = 0; i < selectBodega.length; i++) {
+                if (selectBodega[i].position == position) {
+                    selectBodega[i].id = id;
+                }
+            }
+        }
+
+        $(".btn_AlmacenAdd").parent().css("color", "#56546d");
+        $(this).parent().css("color", "#0ba360");
+    });
+
+    $("#AceptarBodegaAdd").click(function () {
+        var id = 0;
+        $("#bodegaAddModal").modal('hide');
+        for (var i = 0; i < selectBodega.length; i++) {
+            if (selectBodega[i].position == position) {
+                id = selectBodega[i].id;
+            }
+        }
+
+        if (id != 0) {
+            let tr = $("#tbl_data_detail tbody tr:nth-child(" + position + ")");
+            tr.find(".bodega_add").val(id);
+        }
     });
 });

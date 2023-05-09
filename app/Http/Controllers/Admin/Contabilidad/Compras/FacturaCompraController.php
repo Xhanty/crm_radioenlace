@@ -78,6 +78,15 @@ class FacturaCompraController extends Controller
                 ->orderBy('factura_compra.id', 'desc')
                 ->get();
 
+            $almacenes = DB::table('almacenes')->whereNull("parent_id")->get();
+
+            if ($almacenes->count() > 0) {
+                $almacenes = $almacenes->toArray();
+                $almacenes = $this->getAlmacenes($almacenes);
+            } else {
+                $almacenes = [];
+            }
+
             return view('admin.contabilidad.compras.factura_compra', compact(
                 'productos',
                 'formas_pago',
@@ -87,12 +96,29 @@ class FacturaCompraController extends Controller
                 'facturas',
                 'num_factura',
                 'impuestos_cargos',
-                'impuestos_retencion'
+                'impuestos_retencion',
+                'almacenes'
             ));
         } catch (Exception $ex) {
             //return $ex->getMessage();
             return view('errors.500');
         }
+    }
+
+    public function getAlmacenes($almacenes)
+    {
+        foreach ($almacenes as $key => $almacen) {
+            $almacenes[$key]->almacenes = DB::table('almacenes')->where('parent_id', $almacen->id)->get();
+
+            if ($almacenes[$key]->almacenes->count() > 0) {
+                $almacenes[$key]->almacenes = $almacenes[$key]->almacenes->toArray();
+                $almacenes[$key]->almacenes = $this->getAlmacenes($almacenes[$key]->almacenes);
+            } else {
+                $almacenes[$key]->almacenes = [];
+            }
+        }
+
+        return $almacenes;
     }
 
     public function add(Request $request)
