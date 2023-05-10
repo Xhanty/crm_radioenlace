@@ -596,6 +596,9 @@ $(document).ready(function () {
                 })
             );
             $(this).parent().parent().find(".serial_producto_add").attr("disabled", false);
+            $(this).parent().parent().find(".bodega_add").attr("disabled", false);
+            $(this).parent().parent().find(".bodega_add").val('');
+            $(this).parent().parent().find(".bodega_add").attr('data-id', '');
         } else {
             $(this).parent().parent().find(".producto_add").empty();
             $(this).parent().parent().find(".producto_add").append(
@@ -612,6 +615,9 @@ $(document).ready(function () {
                 })
             );
             $(this).parent().parent().find(".serial_producto_add").attr("disabled", true);
+            $(this).parent().parent().find(".bodega_add").attr("disabled", true);
+            $(this).parent().parent().find(".bodega_add").val('');
+            $(this).parent().parent().find(".bodega_add").attr('data-id', '');
         }
     });
 
@@ -1003,6 +1009,8 @@ $(document).ready(function () {
         let total = $("#total_neto_add").html();
         let observaciones = $("#observaciones_add").val();
         let valid = false;
+        let tipo_count = 0;
+        let bodega_count = 0;
 
         let productos = [];
 
@@ -1011,7 +1019,7 @@ $(document).ready(function () {
             let serial = $(this).parent().parent().find(".serial_producto_add").val();
             let tipo = $(this).parent().parent().find(".tipo_add").val();
             let descripcion = $(this).parent().parent().find(".descripcion_add").val();
-            let bodega = $(this).parent().parent().find(".bodega_add").val();
+            let bodega = $(this).parent().parent().find(".bodega_add").data("id");
             let cantidad = $(this).parent().parent().find(".cantidad_add").val();
             let valor_unitario = $(this).parent().parent().find(".valor_add").val();
             let descuento = $(this).parent().parent().find(".descuento_add").val();
@@ -1031,6 +1039,16 @@ $(document).ready(function () {
                 valid = true;
             }
 
+            if (tipo == 1) {
+                tipo_count++;
+            }
+
+            if(bodega <= 0) {
+                bodega_count++;
+            }
+
+            console.log(bodega);
+
             productos.push({
                 tipo: tipo,
                 producto: producto,
@@ -1045,6 +1063,11 @@ $(document).ready(function () {
                 total: total
             });
         });
+
+
+        console.log(tipo_count);
+        console.log(bodega_count);
+        //console.log(productos);
 
         if (!tipo) {
             toastr.error('Debe seleccionar un tipo de factura');
@@ -1066,6 +1089,9 @@ $(document).ready(function () {
             return false;
         } else if (valid) {
             toastr.error('Debe ingresar todos los datos de los productos');
+            return false;
+        } else if (tipo_count != bodega_count) {
+            toastr.error('Debe seleccionar una bodega para cada producto');
             return false;
         } else if (observaciones.trim().length < 1) {
             toastr.error('Debe ingresar una observación');
@@ -2183,7 +2209,6 @@ $(document).ready(function () {
     let position = 0;
     
     $(document).on("click", ".bodega_add", function () {
-        console.log("click");
         var tipo = $(this).parent().parent().find(".tipo_add").val();
         if (tipo == 1) {
             position = $(this).parent().parent().index() + 1;
@@ -2194,14 +2219,29 @@ $(document).ready(function () {
     $(document).on("keyup", ".bodega_add", function () {
         if (selectBodega.length < 1) {
             $(this).val('');
+        } else {
+            var id = 0;
+            var name = '';
+            $("#bodegaAddModal").modal('hide');
+            for (var i = 0; i < selectBodega.length; i++) {
+                if (selectBodega[i].position == position) {
+                    id = selectBodega[i].id;
+                    name = selectBodega[i].name;
+                }
+            }
+
+            $(this).val(name);
+            $(this).attr("data-id", id);
         }
     });
 
     $(document).on("click", ".btn_AlmacenAdd", function () {
         var id = $(this).data("id");
+        var name = $(this).data("name");
 
         var object = {
             id: id,
+            name: name,
             position: position
         };
 
@@ -2219,6 +2259,7 @@ $(document).ready(function () {
             for (var i = 0; i < selectBodega.length; i++) {
                 if (selectBodega[i].position == position) {
                     selectBodega[i].id = id;
+                    selectBodega[i].name = name;
                 }
             }
         }
@@ -2229,16 +2270,17 @@ $(document).ready(function () {
 
     $("#AceptarBodegaAdd").click(function () {
         var id = 0;
+        var name = '';
         $("#bodegaAddModal").modal('hide');
         for (var i = 0; i < selectBodega.length; i++) {
             if (selectBodega[i].position == position) {
                 id = selectBodega[i].id;
+                name = selectBodega[i].name;
             }
         }
 
-        if (id != 0) {
-            let tr = $("#tbl_data_detail tbody tr:nth-child(" + position + ")");
-            tr.find(".bodega_add").val(id);
-        }
+        let tr = $("#tbl_data_detail tbody tr:nth-child(" + position + ")");
+        tr.find(".bodega_add").val(name);
+        tr.find(".bodega_add").attr("data-id", id);
     });
 });

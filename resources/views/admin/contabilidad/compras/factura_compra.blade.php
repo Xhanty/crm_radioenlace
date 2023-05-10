@@ -973,7 +973,7 @@
                                                     <li style="cursor: pointer">{{ $sub2->nombre }}
                                                         &nbsp;
                                                         <a href="javascript:void(0);" class="btn_AlmacenAdd"
-                                                            data-id="{{ $sub2->id }}" title="Seleccionar">
+                                                            data-id="{{ $sub2->id }}" data-name="{{ $sub2->nombre }}" title="Seleccionar">
                                                             <i class="fa fa-check"></i>
                                                         </a>
                                                         @if (count($sub2->almacenes) > 0)
@@ -984,6 +984,7 @@
                                                                         <a href="javascript:void(0);"
                                                                             class="btn_AlmacenAdd"
                                                                             data-id="{{ $sub3->id }}"
+                                                                            data-name="{{ $sub3->nombre }}"
                                                                             title="Seleccionar">
                                                                             <i class="fa fa-check"></i>
                                                                         </a>
@@ -996,6 +997,7 @@
                                                                                         <a href="javascript:void(0);"
                                                                                             class="btn_AlmacenAdd"
                                                                                             data-id="{{ $sub4->id }}"
+                                                                                            data-name="{{ $sub4->nombre }}"
                                                                                             title="Seleccionar">
                                                                                             <i class="fa fa-check"></i>
                                                                                         </a>
@@ -1009,6 +1011,7 @@
                                                                                                         <a href="javascript:void(0);"
                                                                                                             class="btn_AlmacenAdd"
                                                                                                             data-id="{{ $sub5->id }}"
+                                                                                                            data-name="{{ $sub5->nombre }}"
                                                                                                             title="Seleccionar">
                                                                                                             <i
                                                                                                                 class="fa fa-check"></i>
