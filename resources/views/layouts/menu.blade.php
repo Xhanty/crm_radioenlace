@@ -353,13 +353,13 @@
                                                     </li>
                                                 @endif
                                                 @if (auth()->user()->hasPermissionTo('contabilidad_nota_credito'))
-                                                    <li><a class="sub-side-menu__item"
-                                                            href="javascript:void(0);">Nota Crédito</a>
+                                                    <li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
+                                                            Crédito</a>
                                                     </li>
                                                 @endif
                                                 @if (auth()->user()->hasPermissionTo('contabilidad_nota_debito'))
-                                                    <li><a class="sub-side-menu__item"
-                                                            href="javascript:void(0);">Nota Débito</a>
+                                                    <li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
+                                                            Débito</a>
                                                     </li>
                                                 @endif
                                                 @if (auth()->user()->hasPermissionTo('contabilidad_recibo_pago'))
@@ -460,14 +460,20 @@
                                         class="side-menu__label">Reparaciones</span><i
                                         class="angle fe fe-chevron-down"></i></a>
                                 <ul class="slide-menu">
+                                    @if (auth()->user()->hasPermissionTo('gestion_reparaciones'))
+                                        <li><a class="slide-item"
+                                                href="{{ route('accesorios_reparaciones') }}">Accesorios</a>
+                                        </li>
+                                        <li><a class="slide-item"
+                                                href="{{ route('categorias_reparaciones') }}">Categorías</a>
+                                        </li>
+                                        <li><a class="slide-item" href="{{ route('reparaciones') }}">Gestionar
+                                                Reparaciones</a>
+                                        </li>
+                                    @endif
                                     @if (auth()->user()->hasPermissionTo('ver_reparaciones_asignadas'))
                                         <li><a class="slide-item" href="{{ route('mis_reparaciones') }}">Reparaciones
                                                 Asignadas</a>
-                                        </li>
-                                    @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_reparaciones'))
-                                        <li><a class="slide-item" href="{{ route('reparaciones') }}">Gestionar
-                                                Reparaciones</a>
                                         </li>
                                     @endif
                                 </ul>

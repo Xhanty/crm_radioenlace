@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-05-2023 a las 23:32:13
+-- Tiempo de generación: 11-05-2023 a las 23:02:13
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -20,6 +20,28 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `crm`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `accesorios_reparaciones`
+--
+
+CREATE TABLE `accesorios_reparaciones` (
+  `id` int(11) NOT NULL,
+  `accesorio` varchar(255) NOT NULL,
+  `status` int(1) NOT NULL DEFAULT 1,
+  `created_by` int(11) NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `accesorios_reparaciones`
+--
+
+INSERT INTO `accesorios_reparaciones` (`id`, `accesorio`, `status`, `created_by`, `created_at`) VALUES
+(3, 'Perilla', 1, 1, '2023-05-11 14:53:08'),
+(4, 'Carcasa', 1, 1, '2023-05-11 14:53:16');
 
 -- --------------------------------------------------------
 
@@ -1076,6 +1098,28 @@ INSERT INTO `categorias_proyectos` (`id`, `nombre`, `created_by`) VALUES
 (44, 'FACTURACION', 39),
 (45, 'SEGUIMIENTO ', 39),
 (47, 'LABORATORIO', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `categorias_reparaciones`
+--
+
+CREATE TABLE `categorias_reparaciones` (
+  `id` int(11) NOT NULL,
+  `categoria` varchar(255) NOT NULL,
+  `status` int(1) NOT NULL DEFAULT 1,
+  `created_by` int(11) NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `categorias_reparaciones`
+--
+
+INSERT INTO `categorias_reparaciones` (`id`, `categoria`, `status`, `created_by`, `created_at`) VALUES
+(1, 'Radios', 1, 1, '2023-05-11 15:05:38'),
+(2, 'Antenas', 1, 1, '2023-05-11 15:06:29');
 
 -- --------------------------------------------------------
 
@@ -9688,6 +9732,12 @@ INSERT INTO `vehiculos` (`id`, `marca`, `modelo`, `year`, `placa`, `color`, `tip
 --
 
 --
+-- Indices de la tabla `accesorios_reparaciones`
+--
+ALTER TABLE `accesorios_reparaciones`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `actividades_economicas`
 --
 ALTER TABLE `actividades_economicas`
@@ -9781,6 +9831,12 @@ ALTER TABLE `categorias_productos`
 -- Indices de la tabla `categorias_proyectos`
 --
 ALTER TABLE `categorias_proyectos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `categorias_reparaciones`
+--
+ALTER TABLE `categorias_reparaciones`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -10172,6 +10228,12 @@ ALTER TABLE `vehiculos`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `accesorios_reparaciones`
+--
+ALTER TABLE `accesorios_reparaciones`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT de la tabla `actividades_economicas`
 --
 ALTER TABLE `actividades_economicas`
@@ -10266,6 +10328,12 @@ ALTER TABLE `categorias_productos`
 --
 ALTER TABLE `categorias_proyectos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+
+--
+-- AUTO_INCREMENT de la tabla `categorias_reparaciones`
+--
+ALTER TABLE `categorias_reparaciones`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias_seguimiento_clientes`

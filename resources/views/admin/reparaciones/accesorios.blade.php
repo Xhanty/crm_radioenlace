@@ -1,0 +1,93 @@
+@extends('layouts.menu')
+
+@section('content')
+    <div class="main-container container-fluid">
+
+        <!-- breadcrumb -->
+        <div class="breadcrumb-header justify-content-between">
+            <div>
+                <h4 class="content-title mb-2">CRM | Radio Enlace</h4>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Reparaciones</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"> Accesorios</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!-- /breadcrumb -->
+
+        <!-- Row -->
+        <div class="row row-sm">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header d-flex-header-table">
+                        <div class="div-1-tables-header">
+                            <h3 class="card-title mt-2">Lista de Accesorios</h3>
+                        </div>
+                        <div class="div-2-tables-header">
+                            <button class="btn btn-primary" data-bs-target="#modalAdd" data-bs-toggle="modal"
+                                data-bs-effect="effect-scale">Registrar Accesorio</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Creada Por</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($accesorios as $accesorio)
+                                        <tr>
+                                            <td>{{ $accesorio->accesorio }}</td>
+                                            <td>{{ $accesorio->nombre_empleado }}</td>
+                                            <td>
+                                                <button title="Borrar" class="btn btn-danger btn-sm btnDeleteAccesorio"
+                                                    data-id="{{ $accesorio->id }}">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Row -->
+
+        <!-- Modal Add -->
+        <div class="modal  fade" id="modalAdd">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Registro de Accesorio</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Nombre de Accesorio</label>
+                                <input class="form-control" id="accesorioadd" placeholder="Nombre de Accesorio"
+                                    type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" id="btnGuardarAccesorio" type="button">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('assets/js/app/reparaciones/configuracion.js') }}"></script>
+@endsection

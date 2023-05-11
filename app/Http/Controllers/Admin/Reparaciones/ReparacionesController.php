@@ -16,7 +16,12 @@ class ReparacionesController extends Controller
                 return redirect()->route('home');
             }
 
-            return view('admin.reparaciones.reparaciones');
+            $clientes = DB::table('cliente')->where('estado', 1)->get();
+            $empleados = DB::table('empleados')->where('status', 1)->get();
+            $categorias = DB::table('categorias_reparaciones')->get();
+            $accesorios = DB::table('accesorios_reparaciones')->get();
+
+            return view('admin.reparaciones.reparaciones', compact('categorias', 'accesorios', 'clientes', 'empleados'));
         } catch (Exception $ex) {
             return view('errors.500');
         }

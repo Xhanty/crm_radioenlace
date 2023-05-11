@@ -180,6 +180,15 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/proyectos_edit', [App\Http\Controllers\Admin\Proyectos\ProyectosController::class, 'proyectos_edit'])->name('proyectos_edit');
     Route::post('/change_visto_bueno_proyecto', [App\Http\Controllers\Admin\Proyectos\ProyectosController::class, 'visto_bueno'])->name('change_visto_bueno_proyecto');
 
+    // REPARACIONES CONFIG
+    Route::get('/accesorios_reparaciones', [App\Http\Controllers\Admin\Reparaciones\ConfigController::class, 'accesorios'])->name('accesorios_reparaciones');
+    Route::post('/accesorios_reparaciones_add', [App\Http\Controllers\Admin\Reparaciones\ConfigController::class, 'accesorios_add'])->name('accesorios_reparaciones_add');
+    Route::post('/accesorios_reparaciones_delete', [App\Http\Controllers\Admin\Reparaciones\ConfigController::class, 'accesorios_delete'])->name('accesorios_reparaciones_delete');
+    
+    Route::get('/categorias_reparaciones', [App\Http\Controllers\Admin\Reparaciones\ConfigController::class, 'categorias'])->name('categorias_reparaciones');
+    Route::post('/categorias_reparaciones_add', [App\Http\Controllers\Admin\Reparaciones\ConfigController::class, 'categorias_add'])->name('categorias_reparaciones_add');
+    Route::post('/categorias_reparaciones_delete', [App\Http\Controllers\Admin\Reparaciones\ConfigController::class, 'categorias_delete'])->name('categorias_reparaciones_delete');
+    
     // REPARACIONES
     Route::get('/reparaciones', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'index'])->name('reparaciones');
     Route::get('/mis_reparaciones', [App\Http\Controllers\Admin\Reparaciones\MisReparacionesController::class, 'index'])->name('mis_reparaciones');
