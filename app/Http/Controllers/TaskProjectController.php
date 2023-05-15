@@ -17,7 +17,7 @@ class TaskProjectController extends Controller
         try {
             $is_admin = 0;
 
-            if(auth()->user()->hasPermissionTo('gestion_asignaciones_proyectos')) {
+            if (auth()->user()->hasPermissionTo('gestion_asignaciones_proyectos')) {
                 $is_admin = 1;
             }
 
@@ -37,10 +37,11 @@ class TaskProjectController extends Controller
 
             $tasks = Status::get();
 
-            if ($valid_creator > 0) {
+            if (auth()->user()->hasPermissionTo('all_asignaciones_proyectos')) {
                 foreach ($tasks as $task) {
                     $task['tasks'] = TaskProject::where('status_id', $task->id)
                         ->where('project_id', $project)
+                        //->where('user_id', 'like', '%' . $id . '%')
                         ->orderBy('order')->get();
                     foreach ($task['tasks'] as $t) {
                         $users_id = json_decode($t->user_id);
@@ -58,24 +59,46 @@ class TaskProjectController extends Controller
                     }
                 }
             } else {
-                foreach ($tasks as $task) {
-                    $task['tasks'] = TaskProject::where('status_id', $task->id)
-                        ->where('project_id', $project)
-                        ->where('user_id', 'like', '%' . $id . '%')
-                        ->orderBy('order')->get();
-                    foreach ($task['tasks'] as $t) {
-                        $users_id = json_decode($t->user_id);
+                if ($valid_creator > 0) {
+                    foreach ($tasks as $task) {
+                        $task['tasks'] = TaskProject::where('status_id', $task->id)
+                            ->where('project_id', $project)
+                            ->orderBy('order')->get();
+                        foreach ($task['tasks'] as $t) {
+                            $users_id = json_decode($t->user_id);
 
-                        $users = [];
+                            $users = [];
 
-                        foreach ($users_id as $key => $value) {
-                            $find_user = DB::table('empleados')
-                                ->where('id', $value)
-                                ->first();
-                            $users[] = $find_user;
+                            foreach ($users_id as $key => $value) {
+                                $find_user = DB::table('empleados')
+                                    ->where('id', $value)
+                                    ->first();
+                                $users[] = $find_user;
+                            }
+
+                            $t['user'] = $users;
                         }
+                    }
+                } else {
+                    foreach ($tasks as $task) {
+                        $task['tasks'] = TaskProject::where('status_id', $task->id)
+                            ->where('project_id', $project)
+                            ->where('user_id', 'like', '%' . $id . '%')
+                            ->orderBy('order')->get();
+                        foreach ($task['tasks'] as $t) {
+                            $users_id = json_decode($t->user_id);
 
-                        $t['user'] = $users;
+                            $users = [];
+
+                            foreach ($users_id as $key => $value) {
+                                $find_user = DB::table('empleados')
+                                    ->where('id', $value)
+                                    ->first();
+                                $users[] = $find_user;
+                            }
+
+                            $t['user'] = $users;
+                        }
                     }
                 }
             }
