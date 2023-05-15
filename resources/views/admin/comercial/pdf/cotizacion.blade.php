@@ -202,7 +202,8 @@
 
             <tr class="heading">
                 <td style="width: 110px; text-align: center;"></td>
-                <td @if($colspan == 7) colspan="2" @endif style="width: 222px; text-align: center;">Producto</td>
+                <td @if ($colspan == 7) colspan="2" @endif style="width: 222px; text-align: center;">
+                    Producto</td>
                 <td style="text-align: center;">Cantidad</td>
                 <td style="text-align: center;">Precio U.</td>
                 <td style="text-align: center;">Iva(%)</td>
@@ -219,15 +220,66 @@
                 $iva_mensual = 0;
                 $retencion = 0;
                 $retencion_mensual = 0;
+                $titulo = 0;
+                $titulo_existe = 0;
             @endphp
 
             @for ($i = 0; $i < count($productos); $i++)
                 @if ($productos[$i]->titulo)
+                    @if ($titulo == 1)
+                        <tr class="total">
+                            @if ($incluye_mensual > 0)
+                                <td @if ($incluye_anual == 0) colspan="{{ $colspan }}" @else colspan="3" @endif
+                                    class="text-align-left">
+                                    <b>Pago Mensual</b><br />
+                                    Subtotal: {{ number_format($subtotal_mensual, 0, ',', '.') }}<br />
+                                    Iva: {{ number_format($iva_mensual, 0, ',', '.') }}<br />
+                                    @if ($retencion_mensual > 0)
+                                        Retención: {{ number_format($retencion_mensual, 0, ',', '.') }}<br />
+                                    @endif
+                                    <b>Total:
+                                        {{ number_format($subtotal_mensual + $iva_mensual - $retencion_mensual, 0, ',', '.') }}</b>
+                                </td>
+                            @endif
+
+                            @if ($incluye_anual > 0)
+                                <td @if ($incluye_mensual > 0) colspan="4" @else colspan="{{ $colspan }}" @endif
+                                    class="text-align-right">
+                                    @if ($incluye_mensual > 0)
+                                        <b>Pago Único</b><br />
+                                    @endif
+                                    Subtotal: {{ number_format($subtotal, 0, ',', '.') }}<br />
+                                    Iva: {{ number_format($iva, 0, ',', '.') }}<br />
+                                    @if ($retencion > 0)
+                                        Retención: {{ number_format($retencion, 0, ',', '.') }}<br />
+                                    @endif
+                                    <b>Total: {{ number_format($subtotal + $iva - $retencion, 0, ',', '.') }}</b>
+                                </td>
+                            @endif
+                        </tr>
+                    @endif
                     <tr style="background: #eee">
                         <td colspan="{{ $colspan }}" style="text-align: center; padding-top: 2%;">
                             <b>{{ $productos[$i]->titulo }}</b>
                         </td>
                     </tr>
+                    @php
+                        if ($titulo == 0) {
+                            $titulo = 1;
+                        } else if ($titulo == 1) {
+                            $titulo = 0;
+                            $subtotal = 0;
+                            $subtotal_mensual = 0;
+                            $incluye_mensual = 0;
+                            $incluye_anual = 0;
+                            $iva = 0;
+                            $iva_mensual = 0;
+                            $retencion = 0;
+                            $retencion_mensual = 0;
+                        }
+                        
+                        $titulo_existe = 1;
+                    @endphp
                 @else
                     @php
                         if ($productos[$i]->tipo_pago == 1) {
@@ -247,7 +299,8 @@
                     @if ($i == count($productos) - 1)
                         @if ($productos[$i]->img_grande == 1)
                             <tr>
-                                <td @if($colspan == 7) colspan="2" @endif style="text-align: center; padding-top: 2%;" colspan="2">
+                                <td @if ($colspan == 7) colspan="2" @endif
+                                    style="text-align: center; padding-top: 2%;" colspan="2">
                                     <b>{{ $productos[$i]->producto }}</b> <br>
                                     <b>{{ $productos[$i]->modelo }}</b>
                                 </td>
@@ -284,7 +337,8 @@
                                     <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
                                         style="width:100%; max-width:105px; max-height: 120px">
                                 </td>
-                                <td @if($colspan == 7) colspan="2" @endif style="text-align: center; padding-top: 3%;">
+                                <td @if ($colspan == 7) colspan="2" @endif
+                                    style="text-align: center; padding-top: 3%;">
                                     <b>{{ $productos[$i]->producto }}</b><br>
                                     <b>{{ $productos[$i]->modelo }}</b>
                                 </td>
@@ -313,7 +367,8 @@
                     @else
                         @if ($productos[$i]->img_grande == 1)
                             <tr>
-                                <td @if($colspan == 7) colspan="2" @endif style="text-align: center; padding-top: 2%;" colspan="2">
+                                <td @if ($colspan == 7) colspan="2" @endif
+                                    style="text-align: center; padding-top: 2%;" colspan="2">
                                     <b>{{ $productos[$i]->producto }}</b> <br>
                                     <b>{{ $productos[$i]->modelo }}</b>
                                 </td>
@@ -350,7 +405,8 @@
                                     <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
                                         style="width:100%; max-width:105px; max-height: 120px">
                                 </td>
-                                <td @if($colspan == 7) colspan="2" @endif style="text-align: center; padding-top: 3%;">
+                                <td @if ($colspan == 7) colspan="2" @endif
+                                    style="text-align: center; padding-top: 3%;">
                                     <b>{{ $productos[$i]->producto }}</b> <br>
                                     <b>{{ $productos[$i]->modelo }}</b>
                                 </td>
@@ -390,52 +446,90 @@
 
                 @endif
             @endfor
+
             @php
                 $valor_descuento = $cotizacion->descuento;
                 $valor_descuento = $valor_descuento > 0 ? $valor_descuento : 0;
-                    
-                if ($valor_descuento > 0) {                   
-                    $valor_descuento = ($subtotal * ($valor_descuento / 100));
+                
+                if ($valor_descuento > 0) {
+                    $valor_descuento = $subtotal * ($valor_descuento / 100);
                     $subtotal = $subtotal - $valor_descuento;
                 }
                 //$descuento_mensual = $subtotal_mensual * ($valor_descuento / 100);
             @endphp
-            <tr class="total">
-                @if ($incluye_mensual > 0)
-                    <td @if ($incluye_anual == 0) colspan="{{ $colspan }}" @else colspan="3" @endif
-                        class="text-align-left">
-                        <b>Pago Mensual</b><br />
-                        Subtotal: {{ number_format($subtotal_mensual, 0, ',', '.') }}<br />
-                        Iva: {{ number_format($iva_mensual, 0, ',', '.') }}<br />
-                        @if ($valor_descuento > 0)
-                            Descuento: {{ number_format($valor_descuento, 0, ',', '.') }}<br />
-                        @endif
-                        @if ($retencion_mensual > 0)
-                            Retención: {{ number_format($retencion_mensual, 0, ',', '.') }}<br />
-                        @endif
-                        <b>Total:
-                            {{ number_format($subtotal_mensual + $iva_mensual - $retencion_mensual, 0, ',', '.') }}</b>
-                    </td>
-                @endif
 
-                @if ($incluye_anual > 0)
-                    <td @if ($incluye_mensual > 0) colspan="4" @else colspan="{{ $colspan }}" @endif
-                        class="text-align-right">
-                        @if ($incluye_mensual > 0)
-                            <b>Pago Único</b><br />
-                        @endif
-                        Subtotal: {{ number_format($subtotal, 0, ',', '.') }}<br />
-                        Iva: {{ number_format($iva, 0, ',', '.') }}<br />
-                        @if ($valor_descuento > 0)
-                            Descuento: {{ number_format($valor_descuento, 0, ',', '.') }}<br />
-                        @endif
-                        @if ($retencion > 0)
-                            Retención: {{ number_format($retencion, 0, ',', '.') }}<br />
-                        @endif
-                        <b>Total: {{ number_format($subtotal + $iva - $retencion, 0, ',', '.') }}</b>
-                    </td>
-                @endif
-            </tr>
+
+            @if ($titulo_existe == 0)
+                <tr class="total">
+                    @if ($incluye_mensual > 0)
+                        <td @if ($incluye_anual == 0) colspan="{{ $colspan }}" @else colspan="3" @endif
+                            class="text-align-left">
+                            <b>Pago Mensual</b><br />
+                            Subtotal: {{ number_format($subtotal_mensual, 0, ',', '.') }}<br />
+                            Iva: {{ number_format($iva_mensual, 0, ',', '.') }}<br />
+                            @if ($valor_descuento > 0)
+                                Descuento: {{ number_format($valor_descuento, 0, ',', '.') }}<br />
+                            @endif
+                            @if ($retencion_mensual > 0)
+                                Retención: {{ number_format($retencion_mensual, 0, ',', '.') }}<br />
+                            @endif
+                            <b>Total:
+                                {{ number_format($subtotal_mensual + $iva_mensual - $retencion_mensual, 0, ',', '.') }}</b>
+                        </td>
+                    @endif
+
+                    @if ($incluye_anual > 0)
+                        <td @if ($incluye_mensual > 0) colspan="4" @else colspan="{{ $colspan }}" @endif
+                            class="text-align-right">
+                            @if ($incluye_mensual > 0)
+                                <b>Pago Único</b><br />
+                            @endif
+                            Subtotal: {{ number_format($subtotal, 0, ',', '.') }}<br />
+                            Iva: {{ number_format($iva, 0, ',', '.') }}<br />
+                            @if ($valor_descuento > 0)
+                                Descuento: {{ number_format($valor_descuento, 0, ',', '.') }}<br />
+                            @endif
+                            @if ($retencion > 0)
+                                Retención: {{ number_format($retencion, 0, ',', '.') }}<br />
+                            @endif
+                            <b>Total: {{ number_format($subtotal + $iva - $retencion, 0, ',', '.') }}</b>
+                        </td>
+                    @endif
+                </tr>
+            @endif
+
+            @if ($titulo_existe == 1)
+                <tr class="total">
+                    @if ($incluye_mensual > 0)
+                        <td @if ($incluye_anual == 0) colspan="{{ $colspan }}" @else colspan="3" @endif
+                            class="text-align-left">
+                            <b>Pago Mensual</b><br />
+                            Subtotal: {{ number_format($subtotal_mensual, 0, ',', '.') }}<br />
+                            Iva: {{ number_format($iva_mensual, 0, ',', '.') }}<br />
+                            @if ($retencion_mensual > 0)
+                                Retención: {{ number_format($retencion_mensual, 0, ',', '.') }}<br />
+                            @endif
+                            <b>Total:
+                                {{ number_format($subtotal_mensual + $iva_mensual - $retencion_mensual, 0, ',', '.') }}</b>
+                        </td>
+                    @endif
+
+                    @if ($incluye_anual > 0)
+                        <td @if ($incluye_mensual > 0) colspan="4" @else colspan="{{ $colspan }}" @endif
+                            class="text-align-right">
+                            @if ($incluye_mensual > 0)
+                                <b>Pago Único</b><br />
+                            @endif
+                            Subtotal: {{ number_format($subtotal, 0, ',', '.') }}<br />
+                            Iva: {{ number_format($iva, 0, ',', '.') }}<br />
+                            @if ($retencion > 0)
+                                Retención: {{ number_format($retencion, 0, ',', '.') }}<br />
+                            @endif
+                            <b>Total: {{ number_format($subtotal + $iva - $retencion, 0, ',', '.') }}</b>
+                        </td>
+                    @endif
+                </tr>
+            @endif
 
             <br>
 
