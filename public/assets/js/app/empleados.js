@@ -5,6 +5,9 @@ $(document).ready(function () {
         },
     });
 
+    $("input[type='search']").wrap("<form>");
+    $("input[type='search']").closest("form").attr("autocomplete", "off");
+
     $("#div_content_empleado_edit").hide();
     $("#div_content_empleado_add").hide();
     $(".open-toggle").trigger("click");
