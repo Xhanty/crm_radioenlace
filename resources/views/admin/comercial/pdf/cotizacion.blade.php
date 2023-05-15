@@ -173,7 +173,7 @@
                         @php
                             $texto = $cotizacion->descripcion;
                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto_nuevo);
                             echo nl2br($texto_nuevo);
                         @endphp
                     </td>
@@ -193,7 +193,7 @@
                         @php
                             $texto = $cotizacion->incluye;
                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto_nuevo);
                             echo nl2br($texto_nuevo);
                         @endphp
                     </td>
@@ -266,7 +266,7 @@
                                         @php
                                             $texto = $productos[$i]->descripcion;
                                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto_nuevo);
                                             echo nl2br($texto_nuevo);
                                         @endphp
                                     </p>
@@ -303,7 +303,7 @@
                                         @php
                                             $texto = $productos[$i]->descripcion;
                                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto_nuevo);
                                             echo nl2br($texto_nuevo);
                                         @endphp
                                     </p>
@@ -332,7 +332,7 @@
                                         @php
                                             $texto = $productos[$i]->descripcion;
                                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto_nuevo);
                                             echo nl2br($texto_nuevo);
                                         @endphp
                                     </p>
@@ -369,7 +369,7 @@
                                         @php
                                             $texto = $productos[$i]->descripcion;
                                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto_nuevo);
                                             echo nl2br($texto_nuevo);
                                         @endphp
                                     </p>
@@ -455,7 +455,7 @@
                         @php
                             $texto = $cotizacion->duracion;
                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto_nuevo);
                             echo nl2br($texto_nuevo);
                         @endphp
                     </td>
@@ -464,7 +464,7 @@
                         @php
                             $texto = $cotizacion->tiempo_entrega;
                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto_nuevo);
                             echo nl2br($texto_nuevo);
                         @endphp
                     </td>
@@ -487,7 +487,7 @@
                         @php
                             $texto = $cotizacion->validez;
                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto_nuevo);
                             echo nl2br($texto_nuevo);
                         @endphp
                     </td>
@@ -496,7 +496,7 @@
                         @php
                             $texto = $cotizacion->forma_pago;
                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto_nuevo);
                             echo nl2br($texto_nuevo);
                         @endphp
                     </td>
@@ -522,7 +522,7 @@
                     @php
                         $texto = $cotizacion->garantia;
                         $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                        $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                        $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto_nuevo);
                         echo nl2br($texto_nuevo);
                     @endphp
                 </td>
@@ -540,7 +540,7 @@
                         @php
                             $texto = $cotizacion->envio;
                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto_nuevo);
                             echo nl2br($texto_nuevo);
                         @endphp
                     </td>

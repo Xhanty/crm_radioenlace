@@ -169,7 +169,7 @@
                         @php
                             $texto = $remision->asunto;
                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto_nuevo);
                             echo nl2br($texto_nuevo);
                         @endphp
                     </td>
@@ -189,7 +189,7 @@
                         @php
                             $texto = $remision->observacion;
                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                            $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto_nuevo);
                             echo nl2br($texto_nuevo);
                         @endphp
                     </td>
@@ -221,7 +221,7 @@
                                 @php
                                     $texto = $productos[$i]->descripcion;
                                     $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                                    $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                                    $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto_nuevo);
                                     echo nl2br($texto_nuevo);
                                 @endphp
                             </p>
@@ -245,7 +245,7 @@
                                 @php
                                     $texto = $productos[$i]->descripcion;
                                     $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
-                                    $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto);
+                                    $texto_nuevo = preg_replace('/(-)(.*?)(-)/', "<span style='margin-left: 10px'>$2</span>", $texto_nuevo);
                                     echo nl2br($texto_nuevo);
                                 @endphp
                             </p>
