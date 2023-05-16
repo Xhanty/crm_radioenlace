@@ -153,6 +153,7 @@
                             </div>
                             <div class="div-2-tables-header" style="margin-bottom: 13px">
                                 <button class="btn btn-primary" id="btnNew">+</button>
+                                <button class="btn btn-primary" style="margin-right: 10px;" disabled id="btnSiigo">:)</button>
                             </div>
                         </div>
                         <div class="p-0">
@@ -467,9 +468,7 @@
                                                     <select class="form-select cargo_add">
                                                         <option value="">Seleccione una opción</option>
                                                         @foreach ($impuestos_cargos as $impuesto)
-                                                            <option data-impuesto="{{ $impuesto->tarifa }}"
-                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}
-                                                            </option>
+                                                            <option data-impuesto="{{ $impuesto->tarifa }}" value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
@@ -477,9 +476,7 @@
                                                     <select class="form-select retencion_add">
                                                         <option value="">Seleccione una opción</option>
                                                         @foreach ($impuestos_retencion as $impuesto)
-                                                            <option data-impuesto="{{ $impuesto->tarifa }}"
-                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}
-                                                            </option>
+                                                            <option data-impuesto="{{ $impuesto->tarifa }}" value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
@@ -763,9 +760,7 @@
                                                     <select class="form-select cargo_edit">
                                                         <option value="">Seleccione una opción</option>
                                                         @foreach ($impuestos_cargos as $impuesto)
-                                                            <option data-impuesto="{{ $impuesto->tarifa }}"
-                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}
-                                                            </option>
+                                                            <option data-impuesto="{{ $impuesto->tarifa }}"value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
@@ -773,9 +768,7 @@
                                                     <select class="form-select retencion_edit">
                                                         <option value="">Seleccione una opción</option>
                                                         @foreach ($impuestos_retencion as $impuesto)
-                                                            <option data-impuesto="{{ $impuesto->tarifa }}"
-                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}
-                                                            </option>
+                                                            <option data-impuesto="{{ $impuesto->tarifa }}" value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
@@ -973,7 +966,8 @@
                                                     <li style="cursor: pointer">{{ $sub2->nombre }}
                                                         &nbsp;
                                                         <a href="javascript:void(0);" class="btn_AlmacenAdd"
-                                                            data-id="{{ $sub2->id }}" data-name="{{ $sub2->nombre }}" title="Seleccionar">
+                                                            data-id="{{ $sub2->id }}"
+                                                            data-name="{{ $sub2->nombre }}" title="Seleccionar">
                                                             <i class="fa fa-check"></i>
                                                         </a>
                                                         @if (count($sub2->almacenes) > 0)
@@ -1048,21 +1042,33 @@
     <a href="javascript:void(0);" class="btn-flotante" data-bs-target="#modalSelect" data-bs-toggle="modal"
         data-bs-effect="effect-scale">Filtros</a>
     </div>
+
+    @php
+        $data = file_get_contents('facturas_compra.json');
+        $facturas = json_decode($data, true);
+    @endphp
 @endsection
 
 @section('scripts')
     <script>
         $(document).ready(function() {
+            let proveedores = @json($proveedores);
+            let centros_costos = @json($centros_costos);
             var productos = @json($productos);
             var formas_pago = @json($formas_pago);
             var cuentas_gastos = @json($cuentas_gastos);
             var impuestos_cargos = @json($impuestos_cargos);
             var impuestos_retencion = @json($impuestos_retencion);
+            let facturas_compra = @json($facturas);
+
             localStorage.setItem('productos', JSON.stringify(productos));
             localStorage.setItem('formas_pago', JSON.stringify(formas_pago));
             localStorage.setItem('cuentas_gastos', JSON.stringify(cuentas_gastos));
             localStorage.setItem('impuestos_cargos', JSON.stringify(impuestos_cargos));
             localStorage.setItem('impuestos_retencion', JSON.stringify(impuestos_retencion));
+            localStorage.setItem('centros_costos', JSON.stringify(centros_costos));
+            localStorage.setItem('proveedores', JSON.stringify(proveedores));
+            localStorage.setItem('facturas_compra_siigo', JSON.stringify(facturas_compra));
         });
     </script>
     <script src="{{ asset('assets/plugins/treeview/treeview.js') }}"></script>

@@ -480,7 +480,7 @@
                             </li>
                         @endif
 
-                        @if (auth()->user()->hasPermissionToMultiple('permisos_usuarios'))
+                        @if (auth()->user()->hasPermissionToMultiple('contabilidad_config_administrativa'))
                             <li class="slide">
                                 <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
                                         class="side-menu__icon fe fe-bar-chart-2"></i><span

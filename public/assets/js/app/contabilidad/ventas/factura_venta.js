@@ -700,6 +700,7 @@ $(document).ready(function () {
 
         $(".total_add").each(function () {
             let valor = $(this).val();
+            if (valor == "") valor = "0,00";
             valor = valor.split(',');
             valor = valor[0];
             valor = valor.replaceAll('.', '');
@@ -874,7 +875,7 @@ $(document).ready(function () {
         let observaciones = $("#observaciones_add").val();
         let valid = false;
 
-        let productos = [];
+        let productos_send = [];
 
         $(".producto_add").each(function () {
             let producto = $(this).val();
@@ -899,7 +900,7 @@ $(document).ready(function () {
                 valid = true;
             }*/
 
-            productos.push({
+            productos_send.push({
                 producto: producto,
                 //serial: serial,
                 descripcion: descripcion,
@@ -939,7 +940,7 @@ $(document).ready(function () {
             formData.append("fecha", fecha);
             formData.append("vendedor", vendedor);
             formData.append("cliente", cliente);
-            formData.append("productos", JSON.stringify(productos));
+            formData.append("productos", JSON.stringify(productos_send));
             formData.append("total_bruto", total_bruto);
             formData.append("descuentos", descuentos);
             formData.append("subtotal", subtotal);

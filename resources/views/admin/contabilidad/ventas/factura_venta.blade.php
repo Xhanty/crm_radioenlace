@@ -415,9 +415,7 @@
                                                     <select class="form-select cargo_add">
                                                         <option value="">Seleccione una opción</option>
                                                         @foreach ($impuestos_cargos as $impuesto)
-                                                            <option data-impuesto="{{ $impuesto->tarifa }}"
-                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}
-                                                            </option>
+                                                            <option data-impuesto="{{ $impuesto->tarifa }}" value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
@@ -425,9 +423,7 @@
                                                     <select class="form-select retencion_add">
                                                         <option value="">Seleccione una opción</option>
                                                         @foreach ($impuestos_retencion as $impuesto)
-                                                            <option data-impuesto="{{ $impuesto->tarifa }}"
-                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}
-                                                            </option>
+                                                            <option data-impuesto="{{ $impuesto->tarifa }}" value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
@@ -528,7 +524,16 @@
                                 <div class="col-lg">
                                     <label for="">Observaciones</label>
                                     <textarea class="form-control" id="observaciones_add" placeholder="Observaciones" rows="3"
-                                        style="resize: none"></textarea>
+                                        style="resize: none">VR05 VERSIÓN: 01 06/01/2020
+FAVOR CONSIGNAR EN LA CUENTA DE AHORROS BANCOLOMBIA 10825335162 A
+NOMBRE DE RADIO ENLACE S.A.S.
+Enviar comprobante de pago al correo facturacionelectronica@radioenlacesas.com
+Autorretenedores de ICA en el municipio de Medellín según Resolución 202050056223
+de 2020
+Esta factura de Venta constituye título valor según la Ley 1231 del 17 de Julio de 2008,
+El no pago de esta generará intereses por mora
+mensual a la tasa máxima legal autorizada. En caso de NO PAGO se procederá a
+reportarse en las centrales de crédito.</textarea>
                                 </div>
 
                                 <div class="col-lg mt-4">
@@ -619,7 +624,7 @@
                             </div>
                             <div class="row row-sm mt-5">
                                 <div class="table-responsive">
-                                    <table id="tbl_data_detail"
+                                    <table id="tbl_data_detail_edit"
                                         class="table border-top-0 table-bordered text-nowrap border-bottom">
                                         <thead>
                                             <tr class="bg-gray">
@@ -670,9 +675,7 @@
                                                     <select class="form-select cargo_edit">
                                                         <option value="">Seleccione una opción</option>
                                                         @foreach ($impuestos_cargos as $impuesto)
-                                                            <option data-impuesto="{{ $impuesto->tarifa }}"
-                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}
-                                                            </option>
+                                                            <option data-impuesto="{{ $impuesto->tarifa }}" value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
@@ -680,9 +683,7 @@
                                                     <select class="form-select retencion_edit">
                                                         <option value="">Seleccione una opción</option>
                                                         @foreach ($impuestos_retencion as $impuesto)
-                                                            <option data-impuesto="{{ $impuesto->tarifa }}"
-                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}
-                                                            </option>
+                                                            <option data-impuesto="{{ $impuesto->tarifa }}" value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
@@ -783,7 +784,16 @@
                                 <div class="col-lg">
                                     <label for="">Observaciones</label>
                                     <textarea class="form-control" id="observaciones_edit" placeholder="Observaciones" rows="3"
-                                        style="resize: none"></textarea>
+                                        style="resize: none">VR05 VERSIÓN: 01 06/01/2020
+FAVOR CONSIGNAR EN LA CUENTA DE AHORROS BANCOLOMBIA 10825335162 A
+NOMBRE DE RADIO ENLACE S.A.S.
+Enviar comprobante de pago al correo facturacionelectronica@radioenlacesas.com
+Autorretenedores de ICA en el municipio de Medellín según Resolución 202050056223
+de 2020
+Esta factura de Venta constituye título valor según la Ley 1231 del 17 de Julio de 2008,
+El no pago de esta generará intereses por mora
+mensual a la tasa máxima legal autorizada. En caso de NO PAGO se procederá a
+reportarse en las centrales de crédito.</textarea>
                                 </div>
 
                                 <div class="col-lg mt-4">

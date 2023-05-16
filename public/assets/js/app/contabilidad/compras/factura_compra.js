@@ -13,11 +13,14 @@ $(document).ready(function () {
         });
     });
 
+    var proveedores_all = JSON.parse(localStorage.getItem("proveedores"));
+    var centros_costos = JSON.parse(localStorage.getItem("centros_costos"));
     var productos = JSON.parse(localStorage.getItem("productos"));
     var formas_pago = JSON.parse(localStorage.getItem("formas_pago"));
     var cuentas_gastos = JSON.parse(localStorage.getItem("cuentas_gastos"));
     var impuestos_cargos = JSON.parse(localStorage.getItem("impuestos_cargos"));
     var impuestos_retencion = JSON.parse(localStorage.getItem("impuestos_retencion"));
+    let facturas_compra_siigo = JSON.parse(localStorage.getItem("facturas_compra_siigo"));
     var descuento_porcentaje = 0;
     var descuento_porcentaje_edit = 0;
 
@@ -806,6 +809,7 @@ $(document).ready(function () {
 
         $(".total_add").each(function () {
             let valor = $(this).val();
+            if (valor == "") valor = "0,00";
             valor = valor.split(',');
             valor = valor[0];
             valor = valor.replaceAll('.', '');
@@ -933,28 +937,32 @@ $(document).ready(function () {
         $("#total_descuentos_add").html((descuento).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
         $("#total_subtotal_add").html((subtotal).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
 
-        $("#impuestos_1_add").html('');
-        for (let i = 0; i < impuesto_cargo.length; i++) {
-            $("#impuestos_1_add").append('<div class="col-lg-12 d-flex" style="justify-content: end">' +
-                '<div class="text-end col-6">' +
-                '<p class="font-20">' + impuesto_cargo[i][0] + ':</p>' +
-                '</div>' +
-                '<div class="col-4 text-end">' +
-                '<p class="font-20">' + (impuesto_cargo[i][1]).toLocaleString('es-ES', { minimumFractionDigits: 2 }) + '</p>' +
-                '</div>' +
-                '</div>');
+        if (impuesto_cargo.length > 0) {
+            $("#impuestos_1_add").html('');
+            for (let i = 0; i < impuesto_cargo.length; i++) {
+                $("#impuestos_1_add").append('<div class="col-lg-12 d-flex" style="justify-content: end">' +
+                    '<div class="text-end col-6">' +
+                    '<p class="font-20">' + impuesto_cargo[i][0] + ':</p>' +
+                    '</div>' +
+                    '<div class="col-4 text-end">' +
+                    '<p class="font-20">' + (impuesto_cargo[i][1]).toLocaleString('es-ES', { minimumFractionDigits: 2 }) + '</p>' +
+                    '</div>' +
+                    '</div>');
+            }
         }
 
-        $("#impuestos_2_add").html('');
-        for (let i = 0; i < impuesto_retencion.length; i++) {
-            $("#impuestos_2_add").append('<div class="col-lg-12 d-flex" style="justify-content: end">' +
-                '<div class="text-end col-6">' +
-                '<p class="font-20">' + impuesto_retencion[i][0] + ':</p>' +
-                '</div>' +
-                '<div class="col-4 text-end">' +
-                '<p class="font-20">' + (impuesto_retencion[i][1]).toLocaleString('es-ES', { minimumFractionDigits: 2 }) + '</p>' +
-                '</div>' +
-                '</div>');
+        if (impuesto_retencion.length > 0) {
+            $("#impuestos_2_add").html('');
+            for (let i = 0; i < impuesto_retencion.length; i++) {
+                $("#impuestos_2_add").append('<div class="col-lg-12 d-flex" style="justify-content: end">' +
+                    '<div class="text-end col-6">' +
+                    '<p class="font-20">' + impuesto_retencion[i][0] + ':</p>' +
+                    '</div>' +
+                    '<div class="col-4 text-end">' +
+                    '<p class="font-20">' + (impuesto_retencion[i][1]).toLocaleString('es-ES', { minimumFractionDigits: 2 }) + '</p>' +
+                    '</div>' +
+                    '</div>');
+            }
         }
 
         $("#total_neto_add").html((total).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
@@ -1023,8 +1031,8 @@ $(document).ready(function () {
             let cantidad = $(this).parent().parent().find(".cantidad_add").val();
             let valor_unitario = $(this).parent().parent().find(".valor_add").val();
             let descuento = $(this).parent().parent().find(".descuento_add").val();
-            let impuesto_cargo = $(this).parent().parent().find(".cargo_add :selected").data("impuesto") ?? 0;
-            let impuesto_retencion = $(this).parent().parent().find(".retencion_add :selected").data("impuesto") ?? 0;
+            let impuesto_cargo = $(this).parent().parent().find(".cargo_add :selected").val() ?? 0;
+            let impuesto_retencion = $(this).parent().parent().find(".retencion_add :selected").val() ?? 0;
             let total = $(this).parent().parent().find(".total_add").val();
 
             if (!producto || !tipo) {
@@ -1043,7 +1051,7 @@ $(document).ready(function () {
                 tipo_count++;
             }
 
-            if(bodega <= 0) {
+            if (bodega <= 0) {
                 bodega_count++;
             }
 
@@ -1495,27 +1503,35 @@ $(document).ready(function () {
         $("#total_subtotal_edit").html((subtotal).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
 
         $("#impuestos_1_edit").html('');
-        for (let i = 0; i < impuesto_cargo.length; i++) {
-            $("#impuestos_1_edit").append('<div class="col-lg-12 d-flex" style="justify-content: end">' +
-                '<div class="text-end col-6">' +
-                '<p class="font-20">' + impuesto_cargo[i][0] + ':</p>' +
-                '</div>' +
-                '<div class="col-4 text-end">' +
-                '<p class="font-20">' + (impuesto_cargo[i][1]).toLocaleString('es-ES', { minimumFractionDigits: 2 }) + '</p>' +
-                '</div>' +
-                '</div>');
+        if (impuesto_cargo.length > 0) {
+            for (let i = 0; i < impuesto_cargo.length; i++) {
+                if (impuesto_cargo[i][0] != '') {
+                    $("#impuestos_1_edit").append('<div class="col-lg-12 d-flex" style="justify-content: end">' +
+                        '<div class="text-end col-6">' +
+                        '<p class="font-20">' + impuesto_cargo[i][0] + ':</p>' +
+                        '</div>' +
+                        '<div class="col-4 text-end">' +
+                        '<p class="font-20">' + (impuesto_cargo[i][1]).toLocaleString('es-ES', { minimumFractionDigits: 2 }) + '</p>' +
+                        '</div>' +
+                        '</div>');
+                }
+            }
         }
 
         $("#impuestos_2_edit").html('');
-        for (let i = 0; i < impuesto_retencion.length; i++) {
-            $("#impuestos_2_edit").append('<div class="col-lg-12 d-flex" style="justify-content: end">' +
-                '<div class="text-end col-6">' +
-                '<p class="font-20">' + impuesto_retencion[i][0] + ':</p>' +
-                '</div>' +
-                '<div class="col-4 text-end">' +
-                '<p class="font-20">' + (impuesto_retencion[i][1]).toLocaleString('es-ES', { minimumFractionDigits: 2 }) + '</p>' +
-                '</div>' +
-                '</div>');
+        if (impuesto_retencion.length > 0) {
+            for (let i = 0; i < impuesto_retencion.length; i++) {
+                if (impuesto_retencion[i][0] != '') {
+                    $("#impuestos_2_edit").append('<div class="col-lg-12 d-flex" style="justify-content: end">' +
+                        '<div class="text-end col-6">' +
+                        '<p class="font-20">' + impuesto_retencion[i][0] + ':</p>' +
+                        '</div>' +
+                        '<div class="col-4 text-end">' +
+                        '<p class="font-20">' + (impuesto_retencion[i][1]).toLocaleString('es-ES', { minimumFractionDigits: 2 }) + '</p>' +
+                        '</div>' +
+                        '</div>');
+                }
+            }
         }
 
         $("#total_neto_edit").html((total).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
@@ -1909,8 +1925,8 @@ $(document).ready(function () {
                             $(".cantidad_edit").val(producto.cantidad);
                             $(".valor_edit").val(producto.valor_unitario);
                             $(".descuento_edit").val(producto.descuento);
-                            $(".cargo_edit option[data-impuesto='" + producto.impuesto_cargo + "']").attr("selected", true).trigger("change");
-                            $(".retencion_edit option[data-impuesto='" + producto.impuesto_retencion + "']").attr("selected", true).trigger("change");
+                            $(".cargo_edit").val(producto.impuesto_cargo).trigger("change");
+                            $(".retencion_edit").val(producto.impuesto_retencion).trigger("change");
                         }
                         contador++;
                     });
@@ -1932,8 +1948,8 @@ $(document).ready(function () {
                         $(".cantidad_edit").eq(i + 1).val(productos[i + 1].cantidad);
                         $(".valor_edit").eq(i + 1).val(productos[i + 1].valor_unitario);
                         $(".descuento_edit").eq(i + 1).val(productos[i + 1].descuento);
-                        $(".cargo_edit option[data-impuesto='" + productos[i + 1].impuesto_cargo + "']").eq(i + 1).attr("selected", true).trigger("change");
-                        $(".retencion_edit option[data-impuesto='" + productos[i + 1].impuesto_retencion + "']").eq(i + 1).attr("selected", true).trigger("change");
+                        $(".cargo_edit").eq(i + 1).val(productos[i + 1].impuesto_cargo).trigger("change");
+                        $(".retencion_edit").eq(i + 1).val(productos[i + 1].impuesto_retencion).trigger("change");
                     }
 
                     $(".form-select").each(function () {
@@ -2207,7 +2223,7 @@ $(document).ready(function () {
     // BODEGA
     let selectBodega = [];
     let position = 0;
-    
+
     $(document).on("click", ".bodega_add", function () {
         var tipo = $(this).parent().parent().find(".tipo_add").val();
         if (tipo == 1) {
@@ -2283,4 +2299,225 @@ $(document).ready(function () {
         tr.find(".bodega_add").val(name);
         tr.find(".bodega_add").attr("data-id", id);
     });
+
+    $("#btnSiigo").click(function () {
+        let facturas_all = facturas_compra_siigo;
+        let inicial = 0;
+        let final = 50;
+        let facturas = facturas_all;//.slice(inicial, final);
+        let all_data = [];
+        let centros_filter = centros_costos;
+        let proveedores_filter = proveedores_all;
+
+        facturas.forEach(function (factura) {
+            if (factura.Quantity && factura.Quantity > 0) {
+                let id = factura.ACEntryID;
+                let fc_text = "";
+                let fc_number = "";
+                let number_dc = factura.ExternalDocumentNumber;
+
+                number_dc = number_dc.split("-");
+                fc_text = number_dc[0];
+                fc_number = number_dc[1];
+
+                let tipo = 1;
+
+                let centro = factura.CostCenter ?? "Grúas";
+
+                if (centro == "Venta Repuestos y accesorios") {
+                    centro = "Repuestos y accesorios";
+                }
+
+                centros_filter.forEach(function (centro_costo) {
+                    if (centro_costo.nombre.match(new RegExp(centro, 'i'))) {
+                        centro = centro_costo.id;
+                    }
+                });
+
+                let proveedor = factura.ClientIdentification;
+                proveedores_filter.forEach(function (proveedor_filter) {
+                    if (proveedor_filter.nit == proveedor) {
+                        proveedor = proveedor_filter.id;
+                    }
+                });
+
+                let fecha = factura.ElaborationDate;
+                let factura_proveedor = fc_text;
+                let consecutivo_proveedor = fc_number;
+                let descuentos = 0;
+
+                let subtotal = 0;
+
+                if (factura.Quantity) {
+                    subtotal = factura.Quantity * factura.UnitValue;
+                }
+
+                let total = factura.Value;
+                let observaciones = factura.Description;
+                let productos = [];
+
+                var settings = {
+                    "url": "https://services.siigo.com/ACEntryApi/api/v2/Purchase/GetItem?id=" + id,
+                    "method": "GET",
+                    "timeout": 0,
+                    "headers": {
+                        "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IkQ3OTkxNEU2MTJFRkI4NjE5RDNFQ0U4REFGQTU0RDFBMDdCQjM5QjJSUzI1NiIsInR5cCI6ImF0K2p3dCIsIng1dCI6IjE1a1U1aEx2dUdHZFBzNk5yNlZOR2dlN09iSSJ9.eyJuYmYiOjE2ODQyNjY4NTEsImV4cCI6MTY4NDM1MzI1MSwiaXNzIjoiaHR0cDovL21zLXNlY3VyaXR5c2VydmljZTo1MDAwIiwiYXVkIjoiaHR0cDovL21zLXNlY3VyaXR5c2VydmljZTo1MDAwL3Jlc291cmNlcyIsImNsaWVudF9pZCI6IlNpaWdvQVBJIiwic3ViIjoiNjAzODk2IiwiYXV0aF90aW1lIjoxNjg0MjY2ODUxLCJpZHAiOiJsb2NhbCIsIm5hbWUiOiJnY29tZXJjaWFsQHJhZGlvZW5sYWNlc2FzLmNvbSIsIm1haWxfc2lpZ28iOiJnY29tZXJjaWFsQHJhZGlvZW5sYWNlc2FzLmNvbSIsImNsb3VkX3RlbmFudF9jb21wYW55X2tleSI6IlJBRElPRU5MQUNFU0FTIiwidXNlcnNfaWQiOiI1OTQiLCJ0ZW5hbnRfaWQiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjEwNjE3IiwidXNlcl9saWNlbnNlX3R5cGUiOiIwIiwicGxhbl90eXBlIjoiMTQiLCJ0ZW5hbnRfc3RhdGUiOiIxIiwibXVsdGl0ZW5hbnRfaWQiOiIxNTMiLCJjb21wYW5pZXMiOiIwIiwiYXBpX3N1YnNjcmlwdGlvbl9rZXkiOiJlMWIwOWUzNjY0Y2U0ZjkwYTNhZWE4YThkYzZiOWQ4YyIsImFjY291bnRhbnQiOiJmYWxzZSIsImp0aSI6IkEzODYzQzI5N0Y5RDgyNDBCQjVERjZFMEMyRDM4OUM4IiwiaWF0IjoxNjg0MjY2ODUxLCJzY29wZSI6WyJTaWlnb0FQSSJdLCJhbXIiOlsiY3VzdG9tIl19.H20YWzXYSuEBZDNlcdBhl0_RCS6aD1Hm2YL3sgHWu6yenZZn8EcOU2DCSM4UwPtFMEkbF8i9M3SYeKdFSY4HJevx-LYSFECSvfvapT0NbaxbViDoEvsAhWaonfJEtEkihq3izVeBBUNhBD4szBcasoXVpmf6ewkHZ1xF4wcFrjhFm4GRMLm5vF3qp-NDFEJIvoJYtEYqF1ioeNDs829mjRMd_tzx94aK8eXIwQACy4PoBi61jga_UdYoi6dXJJ6tfnlSLIEsW34hx8jRZyYMYVWqZt32V5cbFajrl0p6DMrZCL4U_7t783flW6Qhy34zCPFmCKGClBYHJiJ3sMDjgg"
+                    },
+                };
+
+                $.ajax(settings).done(function (response) {
+                    productos = response.Items;
+
+                    all_data.push({
+                        id_siigo: id,
+                        tipo: tipo,
+                        centro: centro,
+                        fecha: fecha.substring(0, 10),
+                        proveedor: proveedor,
+                        factura_proveedor: factura_proveedor,
+                        consecutivo_proveedor: consecutivo_proveedor,
+                        descuentos: descuentos.toLocaleString('es-ES', { minimumFractionDigits: 2 }),
+                        subtotal: subtotal.toLocaleString('es-ES', { minimumFractionDigits: 2 }),
+                        total: total.toLocaleString('es-ES', { minimumFractionDigits: 2 }),
+                        observaciones: observaciones,
+                        productos: productos
+                    });
+                });
+            }
+        });
+
+        setTimeout(function () {
+            saveDataSiigo(all_data);
+        }, 10000);
+    });
+
+    function similarityScore(str1, str2) {
+        const m = str1.length;
+        const n = str2.length;
+        const dp = Array.from(Array(m + 1), () => Array(n + 1).fill(0));
+
+        for (let i = 1; i <= m; i++) {
+            for (let j = 1; j <= n; j++) {
+                if (str1[i - 1] === str2[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+
+        return dp[m][n];
+    }
+
+    function saveDataSiigo(data) {
+        data.forEach(function (factura) {
+            let productos = [];
+            let impuestos_1 = [];
+            let impuestos_2 = [];
+
+            factura.productos.forEach(function (producto) {
+                if (producto.Quantity && producto.Quantity > 0) {
+                    let tipo = 3;
+                    let producto_name = producto.Description.trim();
+                    let serial = null;
+                    let descripcion = producto.Description.trim();
+                    let bodega = null;
+                    let cantidad = producto.Quantity;
+                    let valor_unitario = producto.UnitValue.toLocaleString('es-ES', { minimumFractionDigits: 2 });
+                    let descuento = producto.DiscountValue.toLocaleString('es-ES', { minimumFractionDigits: 2 });
+                    let total = producto.Value;
+                    let impuesto_retencion = 0;
+                    let impuesto_cargo = 0;
+
+                    if (producto.TaxAddName && producto.TaxAddName != '') {
+                        let name = producto.TaxAddName;
+                        let value = 0;
+                        let tarifa = 0;
+                        let mejorCoincidencia = null;
+                        let mejorPuntuacion = 0;
+
+                        impuestos_cargos.forEach(function (impuesto) {
+                            const puntuacion = similarityScore(impuesto.nombre, name);
+                            if (puntuacion > mejorPuntuacion) {
+                                mejorCoincidencia = impuesto;
+                                mejorPuntuacion = puntuacion;
+                            }
+                        });
+
+                        if (mejorCoincidencia) {
+                            impuesto_cargo = mejorCoincidencia.id;
+                            tarifa = mejorCoincidencia.tarifa;
+                            encontro = true;
+                        }
+
+                        value = (total * tarifa) / 100;
+                        value = parseInt(value);
+                        let send = [name, value];
+                        impuestos_1.push(send);
+                    }
+
+                    total = total.toLocaleString('es-ES', { minimumFractionDigits: 2 });
+
+                    productos.push({
+                        tipo: tipo,
+                        producto: producto_name,
+                        serial: serial,
+                        descripcion: descripcion,
+                        bodega: bodega,
+                        cantidad: cantidad,
+                        valor_unitario: valor_unitario,
+                        descuento: descuento,
+                        total: total,
+                        impuesto_retencion: impuesto_retencion,
+                        impuesto_cargo: impuesto_cargo
+                    });
+                }
+            });
+
+            factura.impuestos_1 = impuestos_1;
+            factura.impuestos_2 = impuestos_2;
+            factura.productos = productos;
+        });
+
+        data.forEach(element => {
+            let formData = new FormData();
+
+            formData.append("tipo", element.tipo);
+            formData.append("centro", element.centro);
+            formData.append("fecha", element.fecha);
+            formData.append("proveedor", element.proveedor);
+            formData.append("factura_proveedor", element.factura_proveedor);
+            formData.append("consecutivo_proveedor", element.consecutivo_proveedor);
+            formData.append("productos", JSON.stringify(element.productos));
+            formData.append("total_bruto", element.subtotal);
+            formData.append("descuentos", element.descuentos);
+            formData.append("subtotal", element.subtotal);
+            formData.append("impuestos_1", JSON.stringify(element.impuestos_1));
+            formData.append("impuestos_2", JSON.stringify(element.impuestos_2));
+            formData.append("total", element.total);
+            formData.append("observaciones", element.observaciones);
+            formData.append("id_siigo", element.id_siigo);
+
+            $.ajax({
+                url: "add_factura_compra",
+                type: "POST",
+                data: formData,
+                dataType: "JSON",
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    console.log(response);
+                    if (response.info == 1) {
+                        toastr.success('Factura guardada con éxito');
+                    } else {
+                        toastr.error('Ha ocurrido un error');
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                    toastr.error('Ha ocurrido un error');
+                }
+            });
+        });
+    }
 });

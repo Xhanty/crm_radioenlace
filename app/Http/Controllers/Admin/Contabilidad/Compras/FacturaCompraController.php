@@ -125,6 +125,7 @@ class FacturaCompraController extends Controller
     {
         try {
             DB::beginTransaction();
+
             $tipo = $request->tipo;
             $centro = $request->centro;
             $fecha = $request->fecha;
@@ -212,6 +213,20 @@ class FacturaCompraController extends Controller
                         'valor_total' => $producto['total'],
                     ]);
                 } else {
+                    if ($request->id_siigo) {
+                        $id_cuenta = DB::table('configuracion_puc')->where(DB::raw('LOWER(nombre)'), 'like', '%' . strtolower($producto['producto']) . '%')->orderBy('id', 'desc')->first();
+
+                        if ($id_cuenta) {
+                            $producto['producto'] = $id_cuenta->id;
+                        } else {
+                            DB::rollBack();
+                            $errorLog = 'Error en la consulta (PRODUCTO): ' . print_r($request->id_siigo, true) . "\n";
+                            $file = 'errores.log';
+                            file_put_contents($file, $errorLog, FILE_APPEND);
+                            return response()->json(['info' => 0, 'error' => 'Error al crear el detalle de la factura de compra']);
+                            exit;
+                        }
+                    }
                     $detalle = DB::table("detalle_factura_compra")->insert([
                         'factura_id' => $id,
                         'tipo' => $producto['tipo'],
