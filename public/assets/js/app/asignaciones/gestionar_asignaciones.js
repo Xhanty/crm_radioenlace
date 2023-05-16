@@ -34,6 +34,14 @@ $(function () {
 
     $("#new_row_empleado").click(function () {
         $("#div_new_empleados").append(concat);
+
+        $(".form-select").each(function () {
+            $(this).select2({
+                dropdownParent: $(this).parent(),
+                placeholder: "Seleccione una opción",
+                searchInputPlaceholder: "Buscar",
+            });
+        });
     });
 
     $(document).on("click", ".delete_row_empleado", function () {
