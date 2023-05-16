@@ -94,6 +94,12 @@ $(function () {
         });        
     });
 
+    $(document).on('select2:open', function (e) {
+        window.setTimeout(function () {
+            document.querySelector('input.select2-search__field').focus();
+        }, 0);
+    });
+
     //______Basic Data Table
     var table_ll = $(".basic-datatable-t").DataTable({
         responsive: true,
