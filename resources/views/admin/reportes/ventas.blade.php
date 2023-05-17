@@ -83,7 +83,8 @@
                             <div class="">
                                 <h4 class="mb-1 font-weight-bold" id="cargos_facturas">400.600,00</h4>
                             </div>
-                            <div class="card-chart bg-teal-transparent brround ms-auto mt-0 btn_cargos">
+                            <div class="card-chart bg-teal-transparent brround ms-auto mt-0 btn_cargos"
+                                style="cursor: pointer;">
                                 <i class="typcn typcn-chart-bar-outline text-teal tx-20"></i>
                             </div>
                         </div>
@@ -101,7 +102,8 @@
                             <div class="">
                                 <h4 class="mb-1 font-weight-bold" id="retenciones_facturas">302.450,00</h4>
                             </div>
-                            <div class="card-chart bg-purple-transparent brround ms-auto mt-0 btn_retenciones">
+                            <div class="card-chart bg-purple-transparent brround ms-auto mt-0 btn_retenciones"
+                                style="cursor: pointer;">
                                 <i class="typcn typcn-time  text-purple tx-24"></i>
                             </div>
                         </div>
@@ -139,7 +141,7 @@
                         <p class="tx-12 tx-gray-500 mb-0">Clientes con más ventas realizadas.</p>
                     </div><!-- card-header -->
                     <div class="card-body p-0">
-                        <div class="browser-stats" id="div_clientes_factura"></div>
+                        <div class="browser-stats" style="height: 300px; overflow: auto;" id="div_clientes_factura"></div>
                     </div>
                 </div><!-- card -->
             </div>
@@ -153,7 +155,7 @@
                         <p class="tx-12 tx-gray-500 mb-0">Empleados con más ventas realizadas.</p>
                     </div><!-- card-header -->
                     <div class="card-body p-0">
-                        <div class="browser-stats" id="div_empleados_factura"></div>
+                        <div class="browser-stats" style="height: 300px; overflow: auto;" id="div_empleados_factura"></div>
                     </div>
                 </div><!-- card -->
             </div>
@@ -223,8 +225,8 @@
                         </div>
                         <p class="tx-12 text-muted mb-3">Listado de facturas registradas en el software.</p>
                         <div class="table-responsive mb-0">
-                            <table
-                                class="table table-hover table-bordered mb-0 text-md-nowrap text-lg-nowrap text-xl-nowrap table-striped ">
+                            <table id="tbl_data_facturas"
+                                class="table table-hover basic-datatable-t table-bordered mb-0 text-md-nowrap text-lg-nowrap text-xl-nowrap table-striped ">
                                 <thead>
                                     <tr>
                                         <th></th>
@@ -235,7 +237,7 @@
                                         <th>Estado</th>
                                     </tr>
                                 </thead>
-                                <tbody id="tbl_facturas_all">
+                                <tbody>
                                     @foreach ($facturas as $key => $factura)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
@@ -383,13 +385,29 @@
             clientes = [...dataArr];
             empleados = [...dataArr2];
 
-            clientes.forEach(element => {
+            //Ordenar clientes (mayor a menor según el total)
+            clientes.sort((a, b) => {
+                // Calcular el total de cada cliente 'a' y 'b'
+                let totalA = calcularTotalCliente(a);
+                let totalB = calcularTotalCliente(b);
+
+                // Comparar los totales y devolver el resultado de la comparación
+                if (totalA > totalB) {
+                    return -1; // 'a' debe colocarse antes que 'b'
+                } else if (totalA < totalB) {
+                    return 1; // 'b' debe colocarse antes que 'a'
+                } else {
+                    return 0; // No hay diferencia en los totales, el orden no importa
+                }
+            });
+
+            // Función auxiliar para calcular el total de un cliente
+            function calcularTotalCliente(cliente) {
                 let total = 0;
 
                 facturas.forEach(factura => {
-                    if (factura.razon_social + ' (' + factura.nit + '-' + factura
-                        .codigo_verificacion +
-                        ')' == element) {
+                    if (factura.razon_social + ' (' + factura.nit + '-' + factura.codigo_verificacion +
+                        ')' == cliente) {
                         let total_factura = factura.valor_total;
 
                         total_factura = total_factura.split(',');
@@ -400,13 +418,20 @@
                     }
                 });
 
+                return total;
+            }
+
+            // Imprimir clientes ordenados
+            clientes.forEach(element => {
+                let total = calcularTotalCliente(element);
+
                 $("#div_clientes_factura").append(
                     '<div class="d-flex align-items-center item  border-bottom">' +
                     '<div class="d-flex">' +
                     '<img src="{{ asset('images/empleados/noavatar.png') }}" alt="img"' +
                     'class="ht-30 wd-30 me-2">' +
                     '<div class="" style="margin-top: 8px">' +
-                    '<h6 class="">' + element + '</h6>' +
+                    '<h6 style="cursor: pointer;" class="txt_search_table">' + element + '</h6>' +
                     '</div>' +
                     '</div>' +
                     '<div class="ms-auto my-auto">' +
@@ -419,11 +444,28 @@
                     '</div>');
             });
 
-            empleados.forEach(element => {
+            //Ordenar empleados (mayor a menor según el total)
+            empleados.sort((a, b) => {
+                // Calcular el total de cada empleado 'a' y 'b'
+                let totalA = calcularTotalEmpleado(a);
+                let totalB = calcularTotalEmpleado(b);
+
+                // Comparar los totales y devolver el resultado de la comparación
+                if (totalA > totalB) {
+                    return -1; // 'a' debe colocarse antes que 'b'
+                } else if (totalA < totalB) {
+                    return 1; // 'b' debe colocarse antes que 'a'
+                } else {
+                    return 0; // No hay diferencia en los totales, el orden no importa
+                }
+            });
+
+            // Función auxiliar para calcular el total de un empleado
+            function calcularTotalEmpleado(empleado) {
                 let total = 0;
 
                 facturas.forEach(factura => {
-                    if (factura.empleado == element) {
+                    if (factura.empleado == empleado) {
                         let total_factura = factura.valor_total;
 
                         total_factura = total_factura.split(',');
@@ -433,6 +475,13 @@
                         total += total_factura;
                     }
                 });
+
+                return total;
+            }
+
+            // Imprimir empleados ordenados
+            empleados.forEach(element => {
+                let total = calcularTotalEmpleado(element);
 
                 $("#div_empleados_factura").append(
                     '<div class="d-flex align-items-center item  border-bottom">' +
@@ -456,7 +505,7 @@
             const cargos_array = {};
 
             impuestos_1.forEach(impuesto => {
-                if(impuesto == null) return;
+                if (impuesto == null) return;
                 let valor_1 = parseInt(impuesto[1]);
                 cargos += valor_1;
 

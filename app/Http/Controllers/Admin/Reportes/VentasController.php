@@ -21,6 +21,7 @@ class VentasController extends Controller
                 ->join('empleados', 'factura_venta.created_by', '=', 'empleados.id')
                 ->join('cliente', 'factura_venta.cliente_id', '=', 'cliente.id')
                 ->whereYear('factura_venta.created_at', date('Y'))
+                ->orderByRaw('CAST(REPLACE(factura_venta.valor_total, ".", "") AS DECIMAL(10,2)) DESC')
                 ->get();
 
             $empleados = DB::table('empleados')
@@ -72,6 +73,7 @@ class VentasController extends Controller
                         $query->whereBetween('factura_venta.created_at', [$fecha_inicio, $fecha_fin]);
                     }
                 })
+                ->orderByRaw('CAST(REPLACE(factura_venta.valor_total, ".", "") AS DECIMAL(10,2)) DESC')
                 ->get();
 
             return response()->json([

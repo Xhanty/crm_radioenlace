@@ -9,6 +9,31 @@ $(document).ready(function () {
     var host = window.location.host;
     var url_general = protocol + "//" + host + "/";
 
+    var language = {
+        searchPlaceholder: "Buscar...",
+        sSearch: "",
+        decimal: "",
+        emptyTable: "No hay información",
+        info: "Mostrando _START_ a _END_ de _TOTAL_ Resultados",
+        infoEmpty: "Mostrando 0 to 0 de 0 Resultados",
+        infoFiltered: "(Filtrado de _MAX_ total resultados)",
+        infoPostFix: "",
+        thousands: ",",
+        lengthMenu: "Mostrar _MENU_ Resultados",
+        loadingRecords: "Cargando...",
+        processing: "Procesando...",
+        search: "Buscar:",
+        zeroRecords: "Sin resultados encontrados",
+        paginate: {
+            first: "Primero",
+            last: "Ultimo",
+            next: "Siguiente",
+            previous: "Anterior",
+        },
+    };
+
+    $(".open-toggle").trigger("click");
+
     $("#btn_filtrar").click(function () {
         let factura = $("#factura_select").val();
         let cliente = $("#cliente_select").val();
@@ -60,7 +85,12 @@ $(document).ready(function () {
         $("#div_empleados_factura").html('');
         $("#tbl_impuesto_cargo").html('');
         $("#tbl_impuesto_retencion").html('');
-        $("#tbl_facturas_all").html('');
+
+        if ($.fn.DataTable.isDataTable("#tbl_data_facturas")) {
+            $("#tbl_data_facturas").DataTable().destroy();
+        }
+
+        $("#tbl_data_facturas tbody").empty();
     }
 
     function printData(data) {
@@ -118,7 +148,7 @@ $(document).ready(function () {
             let fecha_vencimiento = new Date(factura.fecha_vencimiento);
             fecha_vencimiento = fecha_vencimiento.toLocaleDateString("es-ES", opciones_date);
 
-            $("#tbl_facturas_all").append(
+            $("#tbl_data_facturas tbody").append(
                 '<tr>' +
                 '<td>' + count + '</td>' +
                 '<td><div class="project-contain">' +
@@ -138,19 +168,41 @@ $(document).ready(function () {
             count++;
         });
 
+        $("#tbl_data_facturas").DataTable({
+            responsive: true,
+            language: language,
+            order: [],
+        });
+
         const dataArr = new Set(clientes);
         const dataArr2 = new Set(empleados);
 
         clientes = [...dataArr];
         empleados = [...dataArr2];
 
-        clientes.forEach(element => {
+        //Ordenar clientes (mayor a menor según el total)
+        clientes.sort((a, b) => {
+            // Calcular el total de cada cliente 'a' y 'b'
+            let totalA = calcularTotalCliente(a);
+            let totalB = calcularTotalCliente(b);
+
+            // Comparar los totales y devolver el resultado de la comparación
+            if (totalA > totalB) {
+                return -1; // 'a' debe colocarse antes que 'b'
+            } else if (totalA < totalB) {
+                return 1; // 'b' debe colocarse antes que 'a'
+            } else {
+                return 0; // No hay diferencia en los totales, el orden no importa
+            }
+        });
+
+        // Función auxiliar para calcular el total de un cliente
+        function calcularTotalCliente(cliente) {
             let total = 0;
 
             facturas.forEach(factura => {
-                if (factura.razon_social + ' (' + factura.nit + '-' + factura
-                    .codigo_verificacion +
-                    ')' == element) {
+                if (factura.razon_social + ' (' + factura.nit + '-' + factura.codigo_verificacion +
+                    ')' == cliente) {
                     let total_factura = factura.valor_total;
 
                     total_factura = total_factura.split(',');
@@ -161,13 +213,20 @@ $(document).ready(function () {
                 }
             });
 
+            return total;
+        }
+
+        // Imprimir clientes ordenados
+        clientes.forEach(element => {
+            let total = calcularTotalCliente(element);
+
             $("#div_clientes_factura").append(
                 '<div class="d-flex align-items-center item  border-bottom">' +
                 '<div class="d-flex">' +
                 '<img src="' + url_general + 'images/empleados/noavatar.png' + '" alt="img"' +
                 'class="ht-30 wd-30 me-2">' +
                 '<div class="" style="margin-top: 8px">' +
-                '<h6 class="">' + element + '</h6>' +
+                '<h6 style="cursor: pointer;" class="txt_search_table">' + element + '</h6>' +
                 '</div>' +
                 '</div>' +
                 '<div class="ms-auto my-auto">' +
@@ -180,11 +239,28 @@ $(document).ready(function () {
                 '</div>');
         });
 
-        empleados.forEach(element => {
+        //Ordenar empleados (mayor a menor según el total)
+        empleados.sort((a, b) => {
+            // Calcular el total de cada empleado 'a' y 'b'
+            let totalA = calcularTotalEmpleado(a);
+            let totalB = calcularTotalEmpleado(b);
+
+            // Comparar los totales y devolver el resultado de la comparación
+            if (totalA > totalB) {
+                return -1; // 'a' debe colocarse antes que 'b'
+            } else if (totalA < totalB) {
+                return 1; // 'b' debe colocarse antes que 'a'
+            } else {
+                return 0; // No hay diferencia en los totales, el orden no importa
+            }
+        });
+
+        // Función auxiliar para calcular el total de un empleado
+        function calcularTotalEmpleado(empleado) {
             let total = 0;
 
             facturas.forEach(factura => {
-                if (factura.empleado == element) {
+                if (factura.empleado == empleado) {
                     let total_factura = factura.valor_total;
 
                     total_factura = total_factura.split(',');
@@ -194,6 +270,13 @@ $(document).ready(function () {
                     total += total_factura;
                 }
             });
+
+            return total;
+        }
+
+        // Imprimir empleados ordenados
+        empleados.forEach(element => {
+            let total = calcularTotalEmpleado(element);
 
             $("#div_empleados_factura").append(
                 '<div class="d-flex align-items-center item  border-bottom">' +
@@ -282,4 +365,10 @@ $(document).ready(function () {
             minimumFractionDigits: 2
         }));
     }
+
+    $(document).on('click', '.txt_search_table', function () {
+        let val = $(this).html();
+
+        $('input[aria-controls]').val(val).trigger('keyup');
+    });
 });
