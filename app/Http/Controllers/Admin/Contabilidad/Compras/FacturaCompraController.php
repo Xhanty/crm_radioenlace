@@ -410,7 +410,10 @@ class FacturaCompraController extends Controller
         }
 
         $factura->productos = DB::table('detalle_factura_compra')
+            ->select('detalle_factura_compra.*', 'configuracion_impuestos.tarifa as tarifa_cargo', 'configuracion_autoretencion.tarifa as tarifa_retencion')
             ->where('detalle_factura_compra.factura_id', $id)
+            ->leftJoin('configuracion_impuestos', 'configuracion_impuestos.id', '=', 'detalle_factura_compra.impuesto_cargo')
+            ->leftJoin('configuracion_autoretencion', 'configuracion_autoretencion.id', '=', 'detalle_factura_compra.impuesto_retencion')
             ->get();
 
         foreach ($factura->productos as $key => $producto) {
@@ -445,7 +448,10 @@ class FacturaCompraController extends Controller
             }
 
             $factura->productos = DB::table('detalle_factura_compra')
+                ->select('detalle_factura_compra.*', 'configuracion_impuestos.tarifa as tarifa_cargo', 'configuracion_autoretencion.tarifa as tarifa_retencion')
                 ->where('detalle_factura_compra.factura_id', $id)
+                ->leftJoin('configuracion_impuestos', 'configuracion_impuestos.id', '=', 'detalle_factura_compra.impuesto_cargo')
+                ->leftJoin('configuracion_autoretencion', 'configuracion_autoretencion.id', '=', 'detalle_factura_compra.impuesto_retencion')
                 ->get();
 
             foreach ($factura->productos as $key => $producto) {

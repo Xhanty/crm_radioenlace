@@ -174,8 +174,8 @@
                                         @endphp
                                         @foreach ($factura->productos as $key => $item)
                                             @php
-                                                $item->impuesto_cargo = $item->impuesto_cargo == null ? 0 : $item->impuesto_cargo;
-                                                $item->impuesto_retencion = $item->impuesto_retencion == null ? 0 : $item->impuesto_retencion;
+                                                $item->tarifa_cargo = $item->tarifa_cargo == null ? 0 : $item->tarifa_cargo;
+                                                $item->tarifa_retencion = $item->tarifa_retencion == null ? 0 : $item->tarifa_retencion;
                                             @endphp
                                             @if ($item->tipo == 1)
                                                 <tr>
@@ -191,9 +191,9 @@
                                                     <td class="tm_width_2 tm_accent_border_20 tm_text_center">
                                                         {{ $item->valor_unitario }}</td>
                                                     <td class="tm_width_2 tm_accent_border_20 tm_text_center">
-                                                        {{ $item->impuesto_cargo }}%</td>
+                                                        {{ $item->tarifa_cargo }}%</td>
                                                     <td class="tm_width_2 tm_accent_border_20 tm_text_center">
-                                                        {{ $item->impuesto_retencion }}%</td>
+                                                        {{ $item->tarifa_retencion }}%</td>
                                                     <td class="tm_width_2 tm_accent_border_20 tm_text_right">
                                                         {{ $item->valor_total }}</td>
                                                 </tr>
@@ -208,9 +208,9 @@
                                                     <td class="tm_width_2 tm_accent_border_20 tm_text_center">
                                                         {{ $item->valor_unitario }}</td>
                                                     <td class="tm_width_2 tm_accent_border_20 tm_text_center">
-                                                        {{ $item->impuesto_cargo }}%</td>
+                                                        {{ $item->tarifa_cargo }}%</td>
                                                     <td class="tm_width_2 tm_accent_border_20 tm_text_center">
-                                                        {{ $item->impuesto_retencion }}%</td>
+                                                        {{ $item->tarifa_retencion }}%</td>
                                                     <td class="tm_width_2 tm_accent_border_20 tm_text_right">
                                                         {{ $item->valor_total }}</td>
                                                 </tr>

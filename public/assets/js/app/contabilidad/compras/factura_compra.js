@@ -441,7 +441,9 @@ $(document).ready(function () {
                         let total = factura.valor_total;
                         productos.forEach((item) => {
                             let detalle = item.detalle;
-
+                            item.tarifa_cargo = item.tarifa_cargo ? item.tarifa_cargo : 0;
+                            item.tarifa_retencion = item.tarifa_retencion ? item.tarifa_retencion : 0;
+                            
                             if (item.producto) {
                                 $("#productos_view").append(
                                     '<tr>' +
@@ -455,10 +457,10 @@ $(document).ready(function () {
                                     parseInt(item.cantidad) +
                                     '</td>' +
                                     '<td style="text-align: center;">' +
-                                    item.impuesto_cargo +
+                                    item.tarifa_cargo +
                                     '%</td>' +
                                     '<td style="text-align: center;">' +
-                                    item.impuesto_retencion +
+                                    item.tarifa_retencion +
                                     '%</td>' +
                                     '<td style="text-align: right;">' +
                                     item.valor_total +
@@ -476,10 +478,10 @@ $(document).ready(function () {
                                     parseInt(item.cantidad) +
                                     '</td>' +
                                     '<td style="text-align: center;">' +
-                                    item.impuesto_cargo +
+                                    item.tarifa_cargo +
                                     '%</td>' +
                                     '<td style="text-align: center;">' +
-                                    item.impuesto_retencion +
+                                    item.tarifa_retencion +
                                     '%</td>' +
                                     '<td style="text-align: right;">' +
                                     item.valor_total +
