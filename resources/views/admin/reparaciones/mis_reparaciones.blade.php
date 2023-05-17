@@ -31,13 +31,37 @@
                             <table class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
                                 <thead>
                                     <tr>
-                                        <th>Cliente</th>
-                                        <th>Productos</th>
-                                        <th>Fecha</th>
-                                        <th>Acciones</th>
+                                        <th class="text-center">Código</th>
+                                        <th class="text-center">Cliente</th>
+                                        <th class="text-center">Productos</th>
+                                        <th class="text-center">Fecha Entrega</th>
+                                        <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($pendientes as $value)
+                                        <tr>
+                                            <td class="text-center">{{ $value->token }}</td>
+                                            <td class="text-center">{{ $value->razon_social }} ({{ $value->nit }})</td>
+                                            <td class="text-center">{{ $value->cantidad }}</td>
+                                            <td class="text-center">{{ date('d-m-Y', strtotime($value->created_at)) }}</td>
+                                            <td class="text-center">
+                                                <button title="Ver" class="btn btn-primary btn-sm btnView"
+                                                    data-id="{{ $value->id }}">
+                                                    <i class="fa fa-eye"></i> Ver
+                                                </button>
+                                                <button title="Avances" class="btn btn-warning btn-sm btnAvances"
+                                                    data-id="{{ $value->id }}">
+                                                    <i class="fa fa-pencil-alt"></i> Avances
+                                                </button>
+                                                <br>
+                                                <button title="Completar" class="btn btn-success btn-sm btnConfirmar mt-1"
+                                                    data-id="{{ $value->id }}">
+                                                    <i class="fa fa-check"></i> Completar
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -61,13 +85,39 @@
                             <table class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
                                 <thead>
                                     <tr>
-                                        <th>Cliente</th>
-                                        <th>Productos</th>
-                                        <th>Fecha</th>
-                                        <th>Acciones</th>
+                                        <th class="text-center">Código</th>
+                                        <th class="text-center">Cliente</th>
+                                        <th class="text-center">Productos</th>
+                                        <th class="text-center">Fecha Entrega</th>
+                                        <th class="text-center">Fecha Terminado</th>
+                                        <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($finalizadas as $value)
+                                        <tr>
+                                            <td class="text-center">{{ $value->token }}</td>
+                                            <td class="text-center">{{ $value->razon_social }} ({{ $value->nit }})</td>
+                                            <td class="text-center">{{ $value->cantidad }}</td>
+                                            <td class="text-center">{{ date('d-m-Y', strtotime($value->created_at)) }}</td>
+                                            <td class="text-center">{{ date('d-m-Y', strtotime($value->fecha_terminado)) }}</td>
+                                            <td class="text-center">
+                                                <button title="Ver" class="btn btn-primary btn-sm btnView"
+                                                    data-id="{{ $value->id }}">
+                                                    <i class="fa fa-eye"></i> Ver
+                                                </button>
+                                                <button title="Avances" class="btn btn-warning btn-sm btnAvances"
+                                                    data-id="{{ $value->id }}">
+                                                    <i class="fa fa-pencil-alt"></i> Avances
+                                                </button>
+                                                <br>
+                                                <button title="Imprimir" class="btn btn-success btn-sm btnImprimir mt-1"
+                                                    data-id="{{ $value->id }}">
+                                                    <i class="fa fa-print"></i> Imprimir
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

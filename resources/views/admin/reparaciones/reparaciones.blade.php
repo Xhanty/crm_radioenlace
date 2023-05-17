@@ -34,14 +34,53 @@
                             <table class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
                                 <thead>
                                     <tr>
-                                        <th>Cliente</th>
-                                        <th>Fecha</th>
-                                        <th>Técnico Asignado</th>
-                                        <th>Productos</th>
-                                        <th>Acciones</th>
+                                        <th class="text-center">Código</th>
+                                        <th class="text-center">Cliente</th>
+                                        <th class="text-center">Fecha Entrega</th>
+                                        <th class="text-center">Técnico Asignado</th>
+                                        <th class="text-center">Productos</th>
+                                        <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($pendientes as $value)
+                                        <tr>
+                                            <td class="text-center">{{ $value->token }}</td>
+                                            <td class="text-center">{{ $value->razon_social }} ({{ $value->nit }})</td>
+                                            <td class="text-center">{{ date('d-m-Y', strtotime($value->created_at)) }}</td>
+                                            <td class="text-center">{{ $value->encargado }}</td>
+                                            <td class="text-center">{{ $value->cantidad }}</td>
+                                            <td class="text-center">
+                                                <button title="Ver" class="btn btn-primary btn-sm btnView"
+                                                    data-id="{{ $value->id }}">
+                                                    <i class="fa fa-eye"></i> Ver
+                                                </button>
+                                                <button title="Modificar" class="btn btn-warning btn-sm btnEdit"
+                                                    data-id="{{ $value->id }}">
+                                                    <i class="fa fa-pencil-alt"></i> Modificar
+                                                </button>
+                                                <br>
+                                                <button title="Asignar Técnico"
+                                                    class="btn btn-primary btn-sm btnTecnico mt-1"
+                                                    data-tecnico="{{ $value->tecnico_id }}"
+                                                    data-id="{{ $value->id }}">
+                                                    <i class="fa fa-user"></i> Técnico
+                                                </button>
+                                                <button title="Borrar" class="btn btn-danger btn-sm btnDelete mt-1"
+                                                    data-id="{{ $value->id }}">
+                                                    <i class="fa fa-trash"></i> Borrar
+                                                </button>
+                                                @if ($value->encargado != null)
+                                                    <br>
+                                                    <button title="Completar"
+                                                        class="btn btn-success btn-sm btnConfirmar mt-1"
+                                                        data-id="{{ $value->id }}">
+                                                        <i class="fa fa-check"></i> Completar
+                                                    </button>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -65,16 +104,42 @@
                             <table class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
                                 <thead>
                                     <tr>
-                                        <th>Cliente</th>
-                                        <th>Fecha Recibido</th>
-                                        <th>Fecha Reparación</th>
-                                        <th>Fecha Entrega</th>
-                                        <th>Técnico Asignado</th>
-                                        <th>Status</th>
-                                        <th>Acciones</th>
+                                        <th class="text-center">Código</th>
+                                        <th class="text-center">Cliente</th>
+                                        <th class="text-center">Fecha Entrega</th>
+                                        <th class="text-center">Fecha Reparación</th>
+                                        <th class="text-center">Técnico Asignado</th>
+                                        <th class="text-center">Productos</th>
+                                        <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($finalizadas as $value)
+                                        <tr>
+                                            <td class="text-center">{{ $value->token }}</td>
+                                            <td class="text-center">{{ $value->razon_social }} ({{ $value->nit }})</td>
+                                            <td class="text-center">{{ date('d-m-Y', strtotime($value->created_at)) }}</td>
+                                            <td class="text-center">{{ date('d-m-Y', strtotime($value->fecha_terminado)) }}
+                                            </td>
+                                            <td class="text-center">{{ $value->encargado }}</td>
+                                            <td class="text-center">{{ $value->cantidad }}</td>
+                                            <td class="text-center">
+                                                <button title="Ver" class="btn btn-primary btn-sm btnView"
+                                                    data-id="{{ $value->id }}">
+                                                    <i class="fa fa-eye"></i> Ver
+                                                </button>
+                                                <button title="Imprimir" class="btn btn-success btn-sm btnImprimir"
+                                                    data-id="{{ $value->id }}">
+                                                    <i class="fa fa-print"></i> Imprimir
+                                                </button>
+                                                <br>
+                                                <button title="Borrar" class="btn btn-danger btn-sm btnDelete mt-1"
+                                                    data-id="{{ $value->id }}">
+                                                    <i class="fa fa-trash"></i> Borrar
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -89,7 +154,7 @@
             <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
-                        <h6 class="modal-title">Registro de recepción</h6><button aria-label="Close" class="btn-close"
+                        <h6 class="modal-title">Agregar recepción</h6><button aria-label="Close" class="btn-close"
                             data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
@@ -177,7 +242,115 @@
                         <div id="div_reparaciones_add"></div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn ripple btn-primary" id="btnGuardarRepacion" type="button">Guardar</button>
+                        <button class="btn ripple btn-primary" id="btnGuardarRecepcion" type="button">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal View -->
+        <div class="modal  fade" id="modalView">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Ver recepción</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Cliente</label>
+                                <select id="cliente_view" disabled class="form-select">
+                                    <option value="">Seleccione una opción</option>
+                                    @foreach ($clientes as $cliente)
+                                        <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}
+                                            ({{ $cliente->nit }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg">
+                                <label for="">Ingrese los correos separados por (,) para enviar el certificado de
+                                    recepción</label>
+                                <input class="form-control" disabled id="correos_view"
+                                    placeholder="Correos electrónicos para enviar informe separados por coma (,)"
+                                    type="text">
+                            </div>
+                        </div>
+                        <br>
+                        <div id="div_reparaciones_view"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Edit -->
+        <div class="modal  fade" id="modalEdit">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Modificar recepción</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" disabled readonly id="id_recepcion_edit">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Cliente</label>
+                                <select id="cliente_edit" class="form-select">
+                                    <option value="">Seleccione una opción</option>
+                                    @foreach ($clientes as $cliente)
+                                        <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}
+                                            ({{ $cliente->nit }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg">
+                                <label for="">Ingrese los correos separados por (,) para enviar el certificado de
+                                    recepción</label>
+                                <input class="form-control" id="correos_edit"
+                                    placeholder="Correos electrónicos para enviar informe separados por coma (,)"
+                                    type="text">
+                            </div>
+                        </div>
+                        <br>
+                        <div id="div_reparaciones_edit"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" id="btnModificarRecepcion"
+                            type="button">Modificar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Técnico -->
+        <div class="modal  fade" id="modalTecnico">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Asignar técnico</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" disabled readonly id="id_recepcion_tecnico">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Técnico</label>
+                                <select id="tecnico_add" class="form-select">
+                                    <option value="">Seleccione una opción</option>
+                                    @foreach ($empleados as $usuario)
+                                        <option value="{{ $usuario->id }}">{{ $usuario->nombre }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" id="btnTecnico"
+                            type="button">Asignar</button>
                     </div>
                 </div>
             </div>

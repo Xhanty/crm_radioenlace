@@ -191,6 +191,13 @@ Route::middleware(['auth_user'])->group(function () {
     
     // REPARACIONES
     Route::get('/reparaciones', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'index'])->name('reparaciones');
+    Route::post('/reparaciones_info', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'info'])->name('reparaciones_info');
+    Route::post('/reparaciones_add', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'add'])->name('reparaciones_add');
+    Route::post('/reparaciones_edit', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'edit'])->name('reparaciones_edit');
+    Route::post('/reparaciones_delete', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'delete'])->name('reparaciones_delete');
+    Route::post('/reparaciones_completar', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'completar'])->name('reparaciones_completar');
+    Route::post('/reparaciones_tecnico', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'tecnico'])->name('reparaciones_tecnico');
+    
     Route::get('/mis_reparaciones', [App\Http\Controllers\Admin\Reparaciones\MisReparacionesController::class, 'index'])->name('mis_reparaciones');
 
     // DOCUMENTOS
