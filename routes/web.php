@@ -329,6 +329,7 @@ Route::middleware(['auth_user'])->group(function () {
 
 
     // COMPROBANTE EGRESO
+    Route::get('/comprobantes_egresos', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'comprobantes'])->name('comprobantes_egresos');
     Route::get('/comprobante_egreso', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'index'])->name('comprobante_egreso');
     Route::post('/compras_add_pago', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'add'])->name('compras_add_pago');
 

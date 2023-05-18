@@ -336,7 +336,7 @@
                                                         Débito</a>
                                                 </li>
                                                 <li><a class="sub-side-menu__item"
-                                                        href="javascript:void(0);">Comprobante Egreso</a>
+                                                        href="{{ route('comprobantes_egresos') }}">Comprobante Egreso</a>
                                                 </li>
                                             </ul>
                                         </li>

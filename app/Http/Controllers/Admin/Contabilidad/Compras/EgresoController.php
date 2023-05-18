@@ -9,6 +9,33 @@ use Illuminate\Support\Facades\DB;
 
 class EgresoController extends Controller
 {
+    public function comprobantes()
+    {
+        try {
+            $facturas = DB::table('factura_compra')
+                ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion')
+                ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
+                ->join("pagos_compras", "pagos_compras.factura_id", "=", "factura_compra.id")
+                //->whereMonth('factura_compra.fecha_elaboracion', '=', date('m'))
+                ->where('pagos_compras.tipo', '=', 1)
+                ->where('factura_compra.status', '>', 0)
+                ->whereYear('factura_compra.fecha_elaboracion', '=', date('Y'))
+                ->orderBy('factura_compra.numero', 'desc') // luego ordenar por fecha
+                ->groupBy('factura_compra.id')
+                ->get();
+
+            $proveedores = DB::table('proveedores')
+                ->select('id', 'razon_social', 'nit')
+                ->where('estado', 1)
+                ->get();
+
+            return view('admin.contabilidad.compras.egresos', compact('facturas', 'proveedores'));
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+            return view('errors.500');
+        }
+    }
+
     public function index(Request $request)
     {
         try {
