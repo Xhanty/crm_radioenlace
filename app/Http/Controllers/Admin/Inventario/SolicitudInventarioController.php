@@ -358,11 +358,17 @@ class SolicitudInventarioController extends Controller
                 "status" => 2,
             ]);
 
+            $count_asignados_2 = DB::table('solicitud_inventario_detalle')
+                ->where('solicitud_id', $detalle_solicitud->solicitud_id)
+                ->where('status', 2)
+                ->count();
+
             $count_asignados = DB::table('solicitud_inventario_detalle')
                 ->where('solicitud_id', $detalle_solicitud->solicitud_id)
                 ->where('status', 1)
-                ->orWhere('status', 2)
                 ->count();
+
+            $count_asignados = $count_asignados + $count_asignados_2;
 
             if ($count_all == $count_asignados) {
                 DB::table('solicitud_inventario')->where("id", $detalle_solicitud->solicitud_id)->update([
@@ -412,10 +418,17 @@ class SolicitudInventarioController extends Controller
                 "status" => 1,
             ]);
 
+            $count_asignados_2 = DB::table('solicitud_inventario_detalle')
+                ->where('solicitud_id', $detalle_solicitud->solicitud_id)
+                ->where('status', 2)
+                ->count();
+
             $count_asignados = DB::table('solicitud_inventario_detalle')
                 ->where('solicitud_id', $detalle_solicitud->solicitud_id)
                 ->where('status', 1)
                 ->count();
+
+            $count_asignados = $count_asignados + $count_asignados_2;
 
             if ($count_all == $count_asignados) {
                 DB::table('solicitud_inventario')->where("id", $detalle_solicitud->solicitud_id)->update([

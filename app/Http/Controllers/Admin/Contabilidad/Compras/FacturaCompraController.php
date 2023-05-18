@@ -21,9 +21,8 @@ class FacturaCompraController extends Controller
 
             $last_factura = DB::table('factura_compra')
                 ->select('numero')
-                ->orderBy('id', 'desc')
+                ->orderBy('numero', 'desc')
                 ->first();
-
 
             if (!$last_factura) {
                 $num_factura = 1;
@@ -74,8 +73,9 @@ class FacturaCompraController extends Controller
                 //->whereMonth('factura_compra.fecha_elaboracion', '=', date('m'))
                 ->whereYear('factura_compra.fecha_elaboracion', '=', date('Y'))
                 ->orderByDesc('factura_compra.favorito') // ordenar los favoritos primero
-                ->orderBy('factura_compra.fecha_elaboracion', 'desc') // luego ordenar por fecha
-                ->orderBy('factura_compra.id', 'desc')
+                ->orderBy('factura_compra.numero', 'desc') // luego ordenar por fecha
+                //->orderBy('factura_compra.fecha_elaboracion', 'desc') // luego ordenar por fecha
+                //->orderBy('factura_compra.id', 'desc')
                 ->get();
 
             $almacenes = DB::table('almacenes')->whereNull("parent_id")->get();
@@ -146,13 +146,13 @@ class FacturaCompraController extends Controller
             if ($tipo == 1) {
                 $factura = DB::table('factura_compra')
                     ->select('numero')
-                    ->orderBy('id', 'desc')
+                    ->orderBy('numero', 'desc')
                     ->first();
             } else {
                 $factura = DB::table('factura_compra')
                     ->select('numero')
                     ->where('tipo', 2)
-                    ->orderBy('id', 'desc')
+                    ->orderBy('numero', 'desc')
                     ->first();
             }
 
@@ -208,8 +208,8 @@ class FacturaCompraController extends Controller
                         'cantidad' => $producto['cantidad'],
                         'valor_unitario' => $producto['valor_unitario'],
                         'descuento' => $producto['descuento'],
-                        'impuesto_cargo' => $producto['impuesto_cargo'],
-                        'impuesto_retencion' => $producto['impuesto_retencion'],
+                        'impuesto_cargo' => intval($producto['impuesto_cargo']),
+                        'impuesto_retencion' => intval($producto['impuesto_retencion']),
                         'valor_total' => $producto['total'],
                     ]);
                 } else {
@@ -238,8 +238,8 @@ class FacturaCompraController extends Controller
                         'cantidad' => $producto['cantidad'],
                         'valor_unitario' => $producto['valor_unitario'],
                         'descuento' => $producto['descuento'],
-                        'impuesto_cargo' => $producto['impuesto_cargo'],
-                        'impuesto_retencion' => $producto['impuesto_retencion'],
+                        'impuesto_cargo' => intval($producto['impuesto_cargo']),
+                        'impuesto_retencion' => intval($producto['impuesto_retencion']),
                         'valor_total' => $producto['total'],
                     ]);
                 }

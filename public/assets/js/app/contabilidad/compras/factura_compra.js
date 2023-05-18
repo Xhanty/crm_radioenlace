@@ -1100,10 +1100,10 @@ $(document).ready(function () {
         } else if (valid) {
             toastr.error('Debe ingresar todos los datos de los productos');
             return false;
-        } else if (tipo_count != bodega_count) {
+        }/* else if (tipo_count != bodega_count) {
             toastr.error('Debe seleccionar una bodega para cada producto');
             return false;
-        } else if (observaciones.trim().length < 1) {
+        }*/ else if (observaciones.trim().length < 1) {
             toastr.error('Debe ingresar una observación');
             return false;
         } else {
