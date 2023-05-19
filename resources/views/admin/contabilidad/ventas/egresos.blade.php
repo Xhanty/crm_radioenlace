@@ -137,7 +137,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0);">Contabilidad</a></li>
-                        <li class="breadcrumb-item active" aria-current="page"> Comprobantes de egreso</li>
+                        <li class="breadcrumb-item active" aria-current="page"> Recibo de caja</li>
                     </ol>
                 </nav>
             </div>
@@ -149,7 +149,7 @@
                     <div class="card card-invoice">
                         <div class="card-header ps-3 pe-3 pt-3 pb-0 d-flex-header-table">
                             <div class="div-1-tables-header">
-                                <h3 class="card-title">COMPROBANTES DE EGRESO</h3>
+                                <h3 class="card-title">RECIBOS DE CAJA</h3>
                             </div>
                             <div class="div-2-tables-header" style="margin-bottom: 13px">
                                 <button class="btn btn-primary" id="btnNew">+</button>
@@ -157,20 +157,20 @@
                         </div>
                         <div class="p-0">
                             <div class="main-invoice-list" id="mainInvoiceList">
-                                @foreach ($comprobantes as $key => $comprobante)
+                                @foreach ($egresos as $key => $comprobante)
                                     <div class="media comprobante_btn" data-id="{{ $comprobante->id }}">
                                         <div class="media-icon">
                                             <i class="far fa-file-alt"></i>
                                         </div>
                                         <div class="media-body">
 
-                                            <h6><span>Comprobante No.{{ $comprobante->numero }}</span>
+                                            <h6><span>Recibo No.{{ $comprobante->numero }}</span>
                                                 <span>{{ $comprobante->valor }}</span>
                                             </h6>
                                             <div>
                                                 <p><span>Fecha:</span>
                                                     {{ date('d/m/Y', strtotime($comprobante->fecha_elaboracion)) }}</p>
-                                                <p>{{ $comprobante->proveedor }} (NIT:
+                                                <p>{{ $comprobante->cliente }} (NIT:
                                                     {{ $comprobante->nit }}-{{ $comprobante->codigo_verificacion }})</p>
                                             </div>
                                         </div>
@@ -206,8 +206,8 @@
                                         </div>
                                     </div>
                                     <div class="col-md">
-                                        <label class="tx-gray-600">Información del comprobante</label>
-                                        <p class="invoice-info-row"><span id="factura_tlt_2">Comprobante No.</span> <span
+                                        <label class="tx-gray-600">Información del recibo</label>
+                                        <p class="invoice-info-row"><span id="factura_tlt_2">Recibo No.</span> <span
                                                 id="num_fact_view">1743</span>
                                         </p>
                                         <p class="invoice-info-row"><span>Fecha Pago</span> <span
@@ -231,7 +231,7 @@
                                 <hr>
                                 <div style="display: flex; justify-content: center;">
                                     <a class="btn btn-success btn_imprimir_factura" style="margin-right: 10px;"
-                                        target="_blank" href="{{ route('comprobante_egreso_pdf') }}?token=0">Descargar e
+                                        target="_blank" href="{{ route('recibos_pagos_pdf') }}?token=0">Descargar e
                                         Imprimir</a>
 
                                     <div class="dropdown">
@@ -277,12 +277,12 @@
                     <div class="modal-body">
                         <div class="row row-sm">
                             <div class="col-lg">
-                                <label for="">Proveedor</label>
-                                <select class="form-select" id="proveedor_select">
+                                <label for="">Cliente</label>
+                                <select class="form-select" id="cliente_select">
                                     <option value="">Seleccione una opción</option>|
-                                    @foreach ($proveedores as $proveedor)
-                                        <option value="{{ $proveedor->id }}">{{ $proveedor->razon_social }} -
-                                            ({{ $proveedor->nit }})
+                                    @foreach ($clientes as $cliente)
+                                        <option value="{{ $cliente->id }}">{{ $cliente->razon_social }} -
+                                            ({{ $cliente->nit }})
                                         </option>
                                     @endforeach
                                 </select>
@@ -326,5 +326,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('assets/js/app/contabilidad/compras/egresos.js') }}"></script>
+    <script src="{{ asset('assets/js/app/contabilidad/ventas/egresos.js') }}"></script>
 @endsection

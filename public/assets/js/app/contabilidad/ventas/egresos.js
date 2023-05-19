@@ -20,7 +20,7 @@ $(document).ready(function () {
         $(this).addClass("selected");
 
         $.ajax({
-            url: "compras_info_pago",
+            url: "recibos_info_pagos",
             type: "POST",
             data: {
                 id: id,
@@ -55,7 +55,7 @@ $(document).ready(function () {
                     $("#compra_view").html(fecha_compra.getDate() + "/" + (fecha_compra.getMonth() + 1) + "/" + fecha_compra.getFullYear());
                     $("#vencimiento_view").html(data.forma_pago);
                     $("#pagar_view").html(data.valor);
-                    $(".btn_imprimir_factura").attr("href", "comprobante_egreso_pdf?token=" + data.id);
+                    $(".btn_imprimir_factura").attr("href", "recibos_pagos_pdf?token=" + data.id);
 
                     $(".btn_options_factura").attr("data-id", data.id);
 
@@ -81,7 +81,7 @@ $(document).ready(function () {
                         '<tr>' +
                         '<td colspan="5">' +
                         '<span>Abono' + '</span>' +
-                        '<span style="margin-left:111px">' + data.factura_proveedor + '-' + data.num_factura_proveedor + '</span>' +
+                        '<span style="margin-left:111px">FCE-' + data.numero_factura + '</span>' +
                         '<span style="margin-left:60px">Cuota ' + response.cuota + '</span>' +
                         '<span style="margin-left:22px">' + fecha_compra.getDate() + "/" + (fecha_compra.getMonth() + 1) + "/" + fecha_compra.getFullYear() + '</span>' +
                         '<br>' +
@@ -111,7 +111,7 @@ $(document).ready(function () {
 
                     if (data.adjunto_pdf) {
                         data.adjunto_pdf = '<label class="main-content-label tx-13">Adjunto</label><br>' +
-                            '<a href="' + url_general + 'images/contabilidad/comprobantes_egreso/' + data.adjunto_pdf + '" target="_blank">Visualizar</a>';
+                            '<a href="' + url_general + 'images/contabilidad/recibos_caja/' + data.adjunto_pdf + '" target="_blank">Visualizar</a>';
                     } else {
                         data.adjunto_pdf = '';
                     }

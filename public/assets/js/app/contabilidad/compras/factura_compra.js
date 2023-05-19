@@ -417,6 +417,9 @@ $(document).ready(function () {
                     if (factura.status == 1) {
                         $(".btn_options_factura").attr("data-id", factura.id);
                         $(".btn_pago_factura").attr("data-id", factura.id);
+                        
+                        $(".btn_options_factura").removeClass("disabled");
+                        $(".btn_pago_factura").removeClass("disabled");
                     } else {
                         $(".btn_options_factura").addClass("disabled");
                         $(".btn_pago_factura").addClass("disabled");

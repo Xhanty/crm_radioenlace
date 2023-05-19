@@ -332,7 +332,9 @@ Route::middleware(['auth_user'])->group(function () {
 
     // COMPROBANTE EGRESO
     Route::get('/comprobantes_egresos', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'comprobantes'])->name('comprobantes_egresos');
+    Route::get('/comprobante_egreso_pdf', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'pdf'])->name('comprobante_egreso_pdf');
     Route::get('/comprobante_egreso', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'index'])->name('comprobante_egreso');
+    Route::post('/compras_info_pago', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'info'])->name('compras_info_pago');
     Route::post('/compras_add_pago', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'add'])->name('compras_add_pago');
 
 
@@ -348,7 +350,10 @@ Route::middleware(['auth_user'])->group(function () {
 
     // RECIBO PAGO
     Route::get('/recibo_pago', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'index'])->name('recibo_pago');
+    Route::get('/recibos_pagos', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'egresos'])->name('recibos_pagos');
+    Route::get('/recibos_pagos_pdf', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'pdf'])->name('recibos_pagos_pdf');
     Route::post('/recibo_pago_add', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'add'])->name('recibo_pago_add');
+    Route::post('/recibos_info_pagos', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'info'])->name('recibos_info_pagos');
 
     // CALENDARIO
     Route::get('/calendario', [App\Http\Controllers\CalendarController::class, 'index'])->name('calendario');

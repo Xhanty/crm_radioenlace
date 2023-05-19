@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('pdf/style.css') }}">
-    <title>Comprobante No. {{ $data->numero }}</title>
+    <title>Recibo No. {{ $data->numero }}</title>
 </head>
 
 <body>
@@ -70,8 +70,8 @@
                     <div class="tm_invoice_info tm_mb22 tm_align_center">
                         <div class="tm_invoice_info_left tm_mb20_md" style="margin-top: 2px">
                             <p class="tm_mb0">
-                                <b class="tm_primary_color ">Comprobante No: </b>{{ $data->numero }}<br>
-                                <b class="tm_primary_color">Fecha Compra:
+                                <b class="tm_primary_color ">Recibo No: </b>{{ $data->numero }}<br>
+                                <b class="tm_primary_color">Fecha Venta:
                                 </b>{{ date('d/m/Y', strtotime($data->fecha_elaboracion)) }}<br>
                                 <b class="tm_primary_color">Forma Pago:
                                 </b>{{ $data->forma_pago }}
@@ -96,7 +96,7 @@
                                         <tr>
                                             <td class="tm_width_6 tm_border_top_0">
                                                 <b class="tm_primary_color tm_medium">Proveedor:
-                                                </b>{{ $data->proveedor }}
+                                                </b>{{ $data->cliente }}
                                             </td>
                                             <td class="tm_width_6 tm_border_top_0 tm_border_left tm_accent_border_20">
                                                 <b class="tm_primary_color tm_medium">Nit:
@@ -137,8 +137,7 @@
                                         <tr>
                                             <td class="tm_width_6 tm_accent_border_20 tm_text_left">
                                                 <span>Abono</span>
-                                                <span
-                                                    style="margin-left:100px">{{ $data->factura_proveedor }}-{{ $data->num_factura_proveedor }}</span>
+                                                <span style="margin-left:100px">FCE-{{ $data->numero_factura }}</span>
                                                 <span style="margin-left:60px">Cuota {{ $cuota }}</span>
                                                 <span
                                                     style="margin-left:22px">{{ date('d/m/Y', strtotime($data->fecha_elaboracion)) }}</span>
@@ -174,7 +173,7 @@
                                 @if ($data->adjunto_pdf != null)
                                     <br>
                                     <p class="tm_mb2"><b class="tm_primary_color">Adjunto:</b></p>
-                                    <a href="{{ asset('images/contabilidad/comprobantes_egreso/' . $data->adjunto_pdf) }}"
+                                    <a href="{{ asset('images/contabilidad/recibos_caja/' . $data->adjunto_pdf) }}"
                                         style="color: rgb(217, 38, 28, 0.9);" target="_blank">Ver Adjunto</a>
                                 @endif
 

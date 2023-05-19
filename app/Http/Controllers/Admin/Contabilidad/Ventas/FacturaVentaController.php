@@ -161,21 +161,8 @@ class FacturaVentaController extends Controller
                 }
             }
 
-            $last_number = DB::table('pagos_ventas')
-                ->select('numero')
-                ->where('tipo', 1)
-                ->orderBy('id', 'desc')
-                ->first();
-
-
-            if (!$last_number) {
-                $num_egreso = 1;
-            } else {
-                $num_egreso = $last_number->numero + 1;
-            }
-
             DB::table('pagos_ventas')->insert([
-                'numero' => $num_egreso,
+                'numero' => 0,
                 'tipo' => 0, //Valor a pagar
                 'factura_id' => $id,
                 'valor' => $total,

@@ -250,24 +250,11 @@ class FacturaCompraController extends Controller
                 }
             }
 
-            $last_number = DB::table('pagos_compras')
-                ->select('numero')
-                ->where('tipo', 1)
-                ->orderBy('numero', 'desc')
-                ->first();
-
-
-            if (!$last_number) {
-                $num_egreso = 1;
-            } else {
-                $num_egreso = $last_number->numero + 1;
-            }
-
             DB::table('pagos_compras')->insert([
-                'numero' => $num_egreso,
-                'tipo' => 0, //Valor a pagar
+                'numero' => 0,
+                'tipo' => 0,
                 'factura_id' => $id,
-                'valor' => $total,
+                'valor' => $total, //Valor a pagar
                 'status' => 0, //Pendiente
                 'created_by' => auth()->user()->id,
                 'created_at' => date('Y-m-d H:i:s'),
