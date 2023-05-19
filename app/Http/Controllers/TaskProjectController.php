@@ -332,78 +332,84 @@ class TaskProjectController extends Controller
 
     public function tasks_edit(Request $request)
     {
-        $code = TaskProject::where('id', $request->id)->first();
+        try {
+            $code = TaskProject::where('id', $request->id)->first();
 
-        TaskProject::where('id', $request->id)->update([
-            'puntos' => $request->puntos ? $request->puntos : 0,
-            'title' => $request->title ? $request->title : '',
-            'description' => $request->description ? $request->description : '',
-            //'user_id' => $request->user_id,
-            'init_date' => $request->init_date,
-            'end_date' => $request->end_date,
-        ]);
+            TaskProject::where('id', $request->id)->update([
+                //'puntos' => $request->puntos ? $request->puntos : 0,
+                'title' => $request->title ? $request->title : '',
+                'description' => $request->description ? $request->description : '',
+                //'user_id' => $request->user_id,
+                'init_date' => $request->init_date,
+                'end_date' => $request->end_date,
+            ]);
 
-        DB::table("asignaciones")->where('codigo', $code->code)->update([
-            //'id_empleado' => $request->user_id,
-            'descripcion' => $request->description ? $request->description : '',
-            'asignacion' => $request->title ? $request->title : '',
-            'fecha' => $request->init_date,
-            'fecha_culminacion' => $request->end_date,
-            'fecha_completada' => $request->end_date,
-        ]);
+            DB::table("asignaciones")->where('codigo', $code->code)->update([
+                //'id_empleado' => $request->user_id,
+                'descripcion' => $request->description ? $request->description : '',
+                'asignacion' => $request->title ? $request->title : '',
+                'fecha' => $request->init_date,
+                'fecha_culminacion' => $request->end_date,
+                'fecha_completada' => $request->end_date,
+            ]);
 
-        $project = session('project_tasks');
+            $project = session('project_tasks');
 
-        $id = auth()->user()->id;
+            $id = auth()->user()->id;
 
-        $valid_creator = TaskProject::where('created_by', $id)->where('project_id', $project)->count();
+            $valid_creator = TaskProject::where('created_by', $id)->where('project_id', $project)->count();
 
-        $tasks = Status::get();
+            $tasks = Status::get();
 
-        if ($valid_creator > 0) {
-            foreach ($tasks as $task) {
-                $task['tasks'] = TaskProject::where('status_id', $task->id)
+            if ($valid_creator > 0) {
+                foreach ($tasks as $task) {
+                    $task['tasks'] = TaskProject::where('status_id', $task->id)
                     ->where('project_id', $project)
                     ->orderBy('order')->get();
-                foreach ($task['tasks'] as $t) {
-                    $users_id = json_decode($t->user_id);
+                    foreach ($task['tasks'] as $t) {
+                        $users_id = json_decode($t->user_id);
 
-                    $users = [];
+                        $users = [];
 
-                    foreach ($users_id as $key => $value) {
-                        $find_user = DB::table('empleados')
-                            ->where('id', $value)
-                            ->first();
-                        $users[] = $find_user;
+                        foreach ($users_id as $key => $value) {
+                            $find_user = DB::table('empleados')
+                                ->where('id', $value)
+                                ->first();
+                            $users[] = $find_user;
+                        }
+
+                        $t['user'] = $users;
                     }
-
-                    $t['user'] = $users;
                 }
-            }
-        } else {
-            foreach ($tasks as $task) {
-                $task['tasks'] = TaskProject::where('status_id', $task->id)
+            } else {
+                foreach ($tasks as $task) {
+                    $task['tasks'] = TaskProject::where('status_id', $task->id)
                     ->where('project_id', $project)
                     ->where('user_id', 'like', '%' . $id . '%')
-                    ->orderBy('order')->get();
-                foreach ($task['tasks'] as $t) {
-                    $users_id = json_decode($t->user_id);
+                        ->orderBy('order')->get();
+                    foreach ($task['tasks'] as $t) {
+                        $users_id = json_decode($t->user_id);
 
-                    $users = [];
+                        $users = [];
 
-                    foreach ($users_id as $key => $value) {
-                        $find_user = DB::table('empleados')
-                            ->where('id', $value)
-                            ->first();
-                        $users[] = $find_user;
+                        foreach ($users_id as $key => $value) {
+                            $find_user = DB::table('empleados')
+                                ->where('id', $value)
+                                ->first();
+                            $users[] = $find_user;
+                        }
+
+                        $t['user'] = $users;
                     }
-
-                    $t['user'] = $users;
                 }
             }
-        }
 
-        return $tasks;
+            return $tasks;
+        } catch (Exception $ex) {
+            return response()->json([
+                'error' => $ex->getMessage(),
+            ]);
+        }
     }
 
     public function task_change_responsable(Request $request)
