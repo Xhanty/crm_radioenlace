@@ -51,8 +51,14 @@ class HomeController extends Controller
                 ->sum("cantidad");
 
 
-            $reparaciones_pendientes = 0;
-            $reparaciones_completadas = 0;
+            $reparaciones_pendientes = DB::table('reparaciones')
+                ->where('status', 0)
+                ->where('tecnico_id', auth()->user()->id)
+                ->count();
+            $reparaciones_completadas = DB::table('reparaciones')
+                ->where('status', 1)
+                ->where('tecnico_id', auth()->user()->id)
+                ->count();
 
             $asignaciones_proyectos = DB::table("asignaciones")
                 ->where("asignaciones.id_empleado", session("user"))

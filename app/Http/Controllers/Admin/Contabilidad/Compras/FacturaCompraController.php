@@ -252,8 +252,8 @@ class FacturaCompraController extends Controller
 
             $last_number = DB::table('pagos_compras')
                 ->select('numero')
-                //->where('tipo', 1)
-                ->orderBy('id', 'desc')
+                ->where('tipo', 1)
+                ->orderBy('numero', 'desc')
                 ->first();
 
 

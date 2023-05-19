@@ -81,6 +81,76 @@ $(document).ready(function () {
         });
     });
 
+    $(document).on("click", "#new_row_edit", function () {
+        $("#div_reparaciones_edit").append('<div style="display: flex;" class="mt-3">' +
+            '<div style="width: 99%; border-bottom: 2px solid #ccc;">' +
+            '<div class="row row-sm">' +
+            '<div class="col-lg">' +
+            '<label for="">Persona que recibe</label>' +
+            '<select class="form-select encargado_edit">' +
+            '<option value="">Seleccione una opción</option>' +
+            encargados.map((encargado) => {
+                return `<option value="${encargado.id}">${encargado.nombre}</option>`;
+            }) +
+            '</select>' +
+            '</div>' +
+            '<div class="col-lg">' +
+            '<label for="">Categoría</label>' +
+            '<select class="form-select categoria_edit">' +
+            '<option value="">Seleccione una opción</option>' +
+            categorias.map((categoria) => {
+                return `<option value="${categoria.id}">${categoria.categoria}</option>`;
+            }) +
+            '</select>' +
+            '</div>' +
+            '<div class="col-lg">' +
+            '<label for="">Accesorios</label>' +
+            '<select multiple class="form-select accesorios_edit">' +
+            '<option value="">Seleccione una opción</option>' +
+            accesorios.map((accesorio) => {
+                return `<option value="${accesorio.id}">${accesorio.accesorio}</option>`;
+            }) +
+            '</select>' +
+            '</div>' +
+            '</div>' +
+            '<div class="row row-sm mt-2">' +
+            '<div class="col-lg">' +
+            '<label for="">Modelo</label>' +
+            '<input class="form-control modelo_edit" placeholder="Modelo" type="text">' +
+            '</div>' +
+            '<div class="col-lg">' +
+            '<label for="">Serie</label>' +
+            '<input class="form-control serie_edit" placeholder="Serie" type="text">' +
+            '</div>' +
+            '<div class="col-lg">' +
+            '<label for="">Foto</label>' +
+            '<input class="form-control foto_edit" type="file" accept="image/*">' +
+            '</div>' +
+            '</div>' +
+            '<div class="row row-sm mt-2">' +
+            '<div class="col-lg">' +
+            '<label for="">Observaciones</label>' +
+            '<textarea class="form-control observaciones_edit" placeholder="Observaciones" rows="3"' +
+            'style="height: 90px; resize: none"></textarea>' +
+            '</div>' +
+            '</div>' +
+            '<br>' +
+            '</div>' +
+            '<div style="display: flex;"">' +
+            '<a class="center-vertical delete_row" style="margin-left: 20px; margin-top: -22px;"' +
+            'href="javascript:void(0);"><i class="fa fa-trash"></i></a>' +
+            '</div>' +
+            '</div> ');
+
+        $(".form-select").each(function () {
+            $(this).select2({
+                dropdownParent: $(this).parent(),
+                placeholder: "Seleccione una opción",
+                searchInputPlaceholder: "Buscar",
+            });
+        });
+    });
+
     $(document).on("click", ".delete_row", function () {
         $(this).parent().parent().remove();
     });
@@ -115,49 +185,126 @@ $(document).ready(function () {
                 observaciones,
                 foto,
             });
+        });
 
-            if (cliente == "") {
-                toastr.error("El campo cliente es obligatorio");
-                return false;
-            } else if (valid) {
-                toastr.error("Debes llenar los campos obligatorios de cada recepción");
-                return false;
-            } else {
-                $("#btnGuardarRecepcion").attr("disabled", true);
-                $("#btnGuardarRecepcion").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...');
+        if (cliente == "") {
+            toastr.error("El campo cliente es obligatorio");
+            return false;
+        } else if (valid) {
+            toastr.error("Debes llenar los campos obligatorios de cada recepción");
+            return false;
+        } else {
+            $("#btnGuardarRecepcion").attr("disabled", true);
+            $("#btnGuardarRecepcion").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...');
 
-                let formData = new FormData();
-                formData.append("cliente", cliente);
-                formData.append("correos", correos);
-                formData.append("reparaciones", JSON.stringify(reparaciones));
+            let formData = new FormData();
+            formData.append("cliente", cliente);
+            formData.append("correos", correos);
+            formData.append("reparaciones", JSON.stringify(reparaciones));
 
-                $.ajax({
-                    url: "reparaciones_add",
-                    type: "POST",
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function (response) {
-                        if (response.info == 1) {
-                            toastr.success("Recepción registrada correctamente");
-                            setTimeout(() => {
-                                location.reload();
-                            }, 1000);
-                        } else {
-                            toastr.error("Ocurrió un error al registrar la recepción");
-                            $("#btnGuardarRecepcion").attr("disabled", false);
-                            $("#btnGuardarRecepcion").html("Guardar");
-                        }
-                    },
-                    error: function (error) {
-                        console.log(error);
+            $.ajax({
+                url: "reparaciones_add",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.info == 1) {
+                        toastr.success("Recepción registrada correctamente");
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000);
+                    } else {
                         toastr.error("Ocurrió un error al registrar la recepción");
                         $("#btnGuardarRecepcion").attr("disabled", false);
                         $("#btnGuardarRecepcion").html("Guardar");
                     }
-                });
+                },
+                error: function (error) {
+                    console.log(error);
+                    toastr.error("Ocurrió un error al registrar la recepción");
+                    $("#btnGuardarRecepcion").attr("disabled", false);
+                    $("#btnGuardarRecepcion").html("Guardar");
+                }
+            });
+        }
+    });
+
+    // Modificar
+    $("#btnModificarRecepcion").click(function () {
+        let id = $("#id_recepcion_edit").val();
+        let cliente = $("#cliente_edit").val();
+        let correos = $("#correos_edit").val();
+        let valid = false;
+
+        let reparaciones = [];
+
+        $(".encargado_edit").each(function () {
+            let encargado = $(this).val();
+            let categoria = $(this).parent().parent().find(".categoria_edit").val();
+            let accesorios = $(this).parent().parent().find(".accesorios_edit").val();
+            let modelo = $(this).parent().parent().parent().find(".modelo_edit").val();
+            let serie = $(this).parent().parent().parent().find(".serie_edit").val();
+            let observaciones = $(this).parent().parent().parent().find(".observaciones_edit").val();
+            let foto = $(this).parent().parent().parent().find(".foto_edit")[0].files[0];
+
+            if (encargado == "" || categoria == "") {
+                valid = true;
             }
+
+            reparaciones.push({
+                encargado,
+                categoria,
+                accesorios,
+                modelo,
+                serie,
+                observaciones,
+                foto,
+            });
         });
+
+        if (cliente == "") {
+            toastr.error("El campo cliente es obligatorio");
+            return false;
+        } else if (valid) {
+            toastr.error("Debes llenar los campos obligatorios de cada recepción");
+            return false;
+        } else {
+            $("#btnModificarRecepcion").attr("disabled", true);
+            $("#btnModificarRecepcion").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...');
+
+            let formData = new FormData();
+            formData.append("id", id);
+            formData.append("cliente", cliente);
+            formData.append("correos", correos);
+            formData.append("reparaciones", JSON.stringify(reparaciones));
+
+            $.ajax({
+                url: "reparaciones_edit",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.info == 1) {
+                        toastr.success("Recepción modificada correctamente");
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000);
+                    } else {
+                        toastr.error("Ocurrió un error al modificar la recepción");
+                        $("#btnModificarRecepcion").attr("disabled", false);
+                        $("#btnModificarRecepcion").html("Guardar");
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                    toastr.error("Ocurrió un error al modificar la recepción");
+                    $("#btnModificarRecepcion").attr("disabled", false);
+                    $("#btnModificarRecepcion").html("Guardar");
+                }
+            });
+        }
     });
 
     // Ver
@@ -285,7 +432,7 @@ $(document).ready(function () {
     });
 
     // Modificar
-    $(document).on("click", ".btnEdit", function () { 
+    $(document).on("click", ".btnEdit", function () {
         let id = $(this).attr("data-id");
 
         $("#global-loader").fadeIn("slow");
@@ -300,16 +447,23 @@ $(document).ready(function () {
                     let data = response.data;
                     let detalle = response.detalle;
 
+                    $("#id_recepcion_edit").val(data.id);
                     $("#cliente_edit").val(data.cliente_id).trigger("change");
                     $("#correos_edit").val(data.correos);
 
                     $("#div_reparaciones_edit").html("");
 
-                    detalle.forEach(element => {
+                    detalle.forEach(function (element, key) {
                         let accesorios_data = JSON.parse(element.accesorios);
+                        let btn = '<a class="center-vertical delete_row" style="margin-left: 20px; margin-top: -42px;" href="javascript:void(0);"><i class="fa fa-trash"></i></a>';
                         for (let i = 0; i < accesorios_data.length; i++) {
                             accesorios_data[i] = parseInt(accesorios_data[i]);
                         }
+
+                        if(key == 0) {
+                            btn = '<a class="center-vertical" id="new_row_edit" style="margin-left: 20px; margin-top: -42px;" href="javascript:void(0);"><i class="fa fa-plus"></i></a>';
+                        }
+
                         $("#div_reparaciones_edit").append('<div style="display: flex;" class="mt-3">' +
                             '<div style="width: 99%; border-bottom: 2px solid #ccc;">' +
                             '<div class="row row-sm">' +
@@ -377,8 +531,7 @@ $(document).ready(function () {
                             '<br>' +
                             '</div>' +
                             '<div style="display: flex;"">' +
-                            '<a class="center-vertical delete_row" style="margin-left: 20px; margin-top: -42px;"' +
-                            'href="javascript:void(0);"><i class="fa fa-trash"></i></a>' +
+                            btn +
                             '</div>' +
                             '</div>');
                     });
@@ -484,7 +637,7 @@ $(document).ready(function () {
         let id = $(this).attr("data-id");
         let tecnico = $(this).attr("data-tecnico");
 
-        if(tecnico != ""){
+        if (tecnico != "") {
             $("#tecnico_add").val(tecnico).trigger("change");
         }
 

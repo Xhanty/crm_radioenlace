@@ -16,6 +16,10 @@ class MisReparacionesController extends Controller
                 return redirect()->route('home');
             }
 
+            $clientes = DB::table('cliente')->where('estado', 1)->get();
+            $empleados = DB::table('empleados')->where('status', 1)->orderBy("nombre")->get();
+            $categorias = DB::table('categorias_reparaciones')->get();
+            $accesorios = DB::table('accesorios_reparaciones')->get();
             $pendientes = DB::table('reparaciones')
                 ->select('reparaciones.*', 'cliente.razon_social', 'cliente.nit', 'empleados.nombre as encargado', DB::raw('count(detalle_reparaciones.id) as cantidad'))
                 ->join('cliente', 'cliente.id', '=', 'reparaciones.cliente_id')
@@ -64,7 +68,7 @@ class MisReparacionesController extends Controller
                 )
                 ->get();
 
-            return view('admin.reparaciones.mis_reparaciones', compact('pendientes', 'finalizadas'));
+            return view('admin.reparaciones.mis_reparaciones', compact('pendientes', 'finalizadas', 'clientes', 'empleados', 'categorias', 'accesorios'));
         } catch (Exception $ex) {
             return view('errors.500');
         }

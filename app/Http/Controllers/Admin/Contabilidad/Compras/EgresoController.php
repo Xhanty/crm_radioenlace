@@ -12,16 +12,27 @@ class EgresoController extends Controller
     public function comprobantes()
     {
         try {
-            $facturas = DB::table('factura_compra')
-                ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion')
+            $facturas = DB::table('factura_compra')->get();
+
+            /*foreach ($facturas as $key => $value) {
+                DB::table('pagos_compras')->insert([
+                    'numero' => 0,
+                    'tipo' => 0,
+                    'factura_id' => $value->id,
+                    'valor' => $value->valor_total,
+                    'status' => 1,
+                    'created_by' => auth()->user()->id,
+                    'created_at' => date('Y-m-d H:i:s')
+                ]);
+            }*/
+
+            $comprobantes = DB::table('pagos_compras')
+                ->select('pagos_compras.*', 'proveedores.razon_social as proveedor', 'proveedores.nit', 'proveedores.codigo_verificacion', 'proveedores.ciudad', 'proveedores.telefono_fijo')
+                ->join('factura_compra', 'factura_compra.id', '=', 'pagos_compras.factura_id')
                 ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
-                ->join("pagos_compras", "pagos_compras.factura_id", "=", "factura_compra.id")
-                //->whereMonth('factura_compra.fecha_elaboracion', '=', date('m'))
-                ->where('pagos_compras.tipo', '=', 1)
-                ->where('factura_compra.status', '>', 0)
+                ->where('pagos_compras.tipo', 1)
                 ->whereYear('factura_compra.fecha_elaboracion', '=', date('Y'))
-                ->orderBy('factura_compra.numero', 'desc') // luego ordenar por fecha
-                ->groupBy('factura_compra.id')
+                ->orderBy('pagos_compras.numero', 'desc')
                 ->get();
 
             $proveedores = DB::table('proveedores')
@@ -29,7 +40,7 @@ class EgresoController extends Controller
                 ->where('estado', 1)
                 ->get();
 
-            return view('admin.contabilidad.compras.egresos', compact('facturas', 'proveedores'));
+            return view('admin.contabilidad.compras.egresos', compact('comprobantes', 'proveedores'));
         } catch (Exception $ex) {
             return $ex->getMessage();
             return view('errors.500');
@@ -105,13 +116,25 @@ class EgresoController extends Controller
             $tipo = $request->tipo;
             $centro = $request->centro;
             $fecha = $request->fecha;
-            $numero = $request->numero;
             $transaccion = $request->transaccion;
             $forma_pago = $request->forma_pago;
             $total = $request->total;
             $pagado = $request->pagado;
             $terminado = $request->terminado;
             $observacion = $request->observacion;
+
+            $last_number = DB::table('pagos_compras')
+                ->select('numero')
+                ->where('tipo', 1)
+                ->orderBy('numero', 'desc')
+                ->first();
+
+
+            if (!$last_number) {
+                $numero = 1;
+            } else {
+                $numero = $last_number->numero + 1;
+            }
 
             DB::table('pagos_compras')->insert([
                 'numero' => $numero,

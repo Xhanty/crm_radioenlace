@@ -184,8 +184,19 @@ class ReparacionesController extends Controller
     {
         try {
             DB::table('reparaciones')->where('id', $request->id)->update([
-                'aprobado' => 1,
                 'status' => 1,
+            ]);
+            return response()->json(['info' => 1, 'message' => 'Reparación finalizada correctamente.']);
+        } catch (Exception $ex) {
+            return response()->json(['info' => 0, 'message' => 'Error al finalizar la reparación.']);
+        }
+    }
+
+    public function aprobado(Request $request)
+    {
+        try {
+            DB::table('reparaciones')->where('id', $request->id)->update([
+                'aprobado' => 1,
                 'fecha_terminado' => date('Y-m-d H:i:s')
             ]);
             return response()->json(['info' => 1, 'message' => 'Reparación finalizada correctamente.']);

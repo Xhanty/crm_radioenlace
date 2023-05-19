@@ -50,15 +50,18 @@
                                                     data-id="{{ $value->id }}">
                                                     <i class="fa fa-eye"></i> Ver
                                                 </button>
-                                                <button title="Avances" class="btn btn-warning btn-sm btnAvances"
-                                                    data-id="{{ $value->id }}">
-                                                    <i class="fa fa-pencil-alt"></i> Avances
-                                                </button>
-                                                <br>
-                                                <button title="Completar" class="btn btn-success btn-sm btnConfirmar mt-1"
-                                                    data-id="{{ $value->id }}">
-                                                    <i class="fa fa-check"></i> Completar
-                                                </button>
+                                                @if ($value->aprobado == 0)
+                                                    <button title="Avances" class="btn btn-warning btn-sm btnAddAvances"
+                                                        data-id="{{ $value->id }}">
+                                                        <i class="fa fa-pencil-alt"></i> Avances
+                                                    </button>
+                                                    <br>
+                                                    <button title="Completar"
+                                                        class="btn btn-success btn-sm btnConfirmar mt-1"
+                                                        data-id="{{ $value->id }}">
+                                                        <i class="fa fa-check"></i> Completar
+                                                    </button>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -100,13 +103,14 @@
                                             <td class="text-center">{{ $value->razon_social }} ({{ $value->nit }})</td>
                                             <td class="text-center">{{ $value->cantidad }}</td>
                                             <td class="text-center">{{ date('d-m-Y', strtotime($value->created_at)) }}</td>
-                                            <td class="text-center">{{ date('d-m-Y', strtotime($value->fecha_terminado)) }}</td>
+                                            <td class="text-center">{{ date('d-m-Y', strtotime($value->fecha_terminado)) }}
+                                            </td>
                                             <td class="text-center">
                                                 <button title="Ver" class="btn btn-primary btn-sm btnView"
                                                     data-id="{{ $value->id }}">
                                                     <i class="fa fa-eye"></i> Ver
                                                 </button>
-                                                <button title="Avances" class="btn btn-warning btn-sm btnAvances"
+                                                <button title="Avances" class="btn btn-warning btn-sm btnVerAvances"
                                                     data-id="{{ $value->id }}">
                                                     <i class="fa fa-pencil-alt"></i> Avances
                                                 </button>
@@ -126,9 +130,56 @@
             </div>
         </div>
         <!-- End Row -->
+
+        <!-- Modal View -->
+        <div class="modal  fade" id="modalView">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Ver recepción</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Cliente</label>
+                                <select id="cliente_view" disabled class="form-select">
+                                    <option value="">Seleccione una opción</option>
+                                    @foreach ($clientes as $cliente)
+                                        <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}
+                                            ({{ $cliente->nit }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg">
+                                <label for="">Ingrese los correos separados por (,) para enviar el certificado de
+                                    recepción</label>
+                                <input class="form-control" disabled id="correos_view"
+                                    placeholder="Correos electrónicos para enviar informe separados por coma (,)"
+                                    type="text">
+                            </div>
+                        </div>
+                        <br>
+                        <div id="div_reparaciones_view"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
 @section('scripts')
+    <script>
+        $(document).ready(function() {
+            let encargados = @json($empleados);
+            let categorias = @json($categorias);
+            let accesorios = @json($accesorios);
+
+            localStorage.setItem('encargados', JSON.stringify(encargados));
+            localStorage.setItem('categorias', JSON.stringify(categorias));
+            localStorage.setItem('accesorios', JSON.stringify(accesorios));
+        });
+    </script>
     <script src="{{ asset('assets/js/app/reparaciones/mis_reparaciones.js') }}"></script>
 @endsection

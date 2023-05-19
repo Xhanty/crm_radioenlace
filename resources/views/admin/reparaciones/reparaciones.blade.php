@@ -70,7 +70,7 @@
                                                     data-id="{{ $value->id }}">
                                                     <i class="fa fa-trash"></i> Borrar
                                                 </button>
-                                                @if ($value->encargado != null)
+                                                @if ($value->aprobado == 1)
                                                     <br>
                                                     <button title="Completar"
                                                         class="btn btn-success btn-sm btnConfirmar mt-1"
