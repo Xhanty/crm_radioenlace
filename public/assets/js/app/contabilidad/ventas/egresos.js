@@ -59,8 +59,8 @@ $(document).ready(function () {
 
                     $(".btn_options_factura").attr("data-id", data.id);
 
-                    $("#title_factura").html("COMPROBANTE EGRESO");
-                    $("#factura_tlt_2").html("Comprobante No.");
+                    $("#title_factura").html("RECIBO CAJA");
+                    $("#factura_tlt_2").html("Recibo No.");
 
                     $("#productos_view").empty();
 
