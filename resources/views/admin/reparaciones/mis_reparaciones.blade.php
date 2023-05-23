@@ -33,8 +33,9 @@
                                     <tr>
                                         <th class="text-center">Código</th>
                                         <th class="text-center">Cliente</th>
-                                        <th class="text-center">Productos</th>
-                                        <th class="text-center">Fecha Entrega</th>
+                                        <th class="text-center">Modelo</th>
+                                        <th class="text-center">Serie</th>
+                                        <th class="text-center">F. Entrega</th>
                                         <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
@@ -43,7 +44,8 @@
                                         <tr>
                                             <td class="text-center">{{ $value->token }}</td>
                                             <td class="text-center">{{ $value->razon_social }} ({{ $value->nit }})</td>
-                                            <td class="text-center">{{ $value->cantidad }}</td>
+                                            <td class="text-center">{{ $value->modelo }}</td>
+                                            <td class="text-center">{{ $value->serie }}</td>
                                             <td class="text-center">{{ date('d-m-Y', strtotime($value->created_at)) }}</td>
                                             <td class="text-center">
                                                 <button title="Ver" class="btn btn-primary btn-sm btnView"
@@ -51,17 +53,27 @@
                                                     <i class="fa fa-eye"></i> Ver
                                                 </button>
                                                 @if ($value->aprobado == 0)
-                                                    <button title="Avances" class="btn btn-warning btn-sm btnAddAvances"
+                                                    <button title="Avances" class="btn btn-primary btn-sm btnAddAvances"
                                                         data-id="{{ $value->id }}">
-                                                        <i class="fa fa-pencil-alt"></i> Avances
+                                                        <i class="fa fa-book"></i> Informes
                                                     </button>
                                                     <br>
+                                                    <button title="Repuestos"
+                                                        class="btn btn-warning btn-sm btnRepuestos mt-1"
+                                                        data-id="{{ $value->id }}">
+                                                        <i class="fa fa-list"></i> Repuestos
+                                                    </button>
                                                     <button title="Completar"
                                                         class="btn btn-success btn-sm btnConfirmar mt-1"
                                                         data-id="{{ $value->id }}">
                                                         <i class="fa fa-check"></i> Completar
                                                     </button>
                                                 @endif
+                                                <br>
+                                                <a href="{{ route('reparacion_pdf') }}?token={{ $value->id }}"
+                                                    target="_BLANK" title="Imprimir" class="btn btn-primary btn-sm mt-1">
+                                                    <i class="fa fa-print"></i> Imprimir
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -90,9 +102,10 @@
                                     <tr>
                                         <th class="text-center">Código</th>
                                         <th class="text-center">Cliente</th>
-                                        <th class="text-center">Productos</th>
-                                        <th class="text-center">Fecha Entrega</th>
-                                        <th class="text-center">Fecha Terminado</th>
+                                        <th class="text-center">Modelo</th>
+                                        <th class="text-center">Serie</th>
+                                        <th class="text-center">F. Entrega</th>
+                                        <th class="text-center">F. Terminado</th>
                                         <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
@@ -101,7 +114,8 @@
                                         <tr>
                                             <td class="text-center">{{ $value->token }}</td>
                                             <td class="text-center">{{ $value->razon_social }} ({{ $value->nit }})</td>
-                                            <td class="text-center">{{ $value->cantidad }}</td>
+                                            <td class="text-center">{{ $value->modelo }}</td>
+                                            <td class="text-center">{{ $value->serie }}</td>
                                             <td class="text-center">{{ date('d-m-Y', strtotime($value->created_at)) }}</td>
                                             <td class="text-center">{{ date('d-m-Y', strtotime($value->fecha_terminado)) }}
                                             </td>
@@ -162,6 +176,121 @@
                         </div>
                         <br>
                         <div id="div_reparaciones_view"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Repuesto -->
+        <div class="modal  fade" id="modalRepuesto">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Repuestos Reparación</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" disabled readonly id="id_reparacion_repuestos">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Producto</label>
+                                <select id="producto_reparacion" class="form-select">
+                                    <option value="">Seleccione una opción</option>
+                                    @foreach ($productos as $producto)
+                                        <option value="{{ $producto->id }}">{{ $producto->nombre }} -
+                                            {{ $producto->modelo }}
+                                            ({{ $producto->marca }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Serial</label>
+                                <select id="serial_repuesto" disabled class="form-select">
+                                    <option value="">Seleccione una opción</option>
+                                </select>
+                            </div>
+                            <div class="col-lg">
+                                <label for="">Cantidad</label>
+                                <input class="form-control" id="cantidad_repuesto" type="number">
+                            </div>
+                        </div>
+                        <br>
+                        <div style="display: flex; justify-content: center">
+                            <button class="btn ripple btn-primary" id="btnGuardarRepuesto" type="button">Agregar
+                                Repuesto</button>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="table-responsive">
+                            <table id="reparaciones_tbl"
+                                class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Repuesto</th>
+                                        <th class="text-center">Cantidad</th>
+                                        <th class="text-center">Técnico</th>
+                                        <th class="text-center">Fecha</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Informe -->
+        <div class="modal  fade" id="modalAvances">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Informes Reparación</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" disabled readonly id="id_reparacion_avance">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Informe</label>
+                                <textarea class="form-control" placeholder="Informe" rows="3" id="observaciones_avance"></textarea>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Anexo (Opcional)</label>
+                                <input class="form-control" id="anexo_avance_add" type="file">
+                            </div>
+                        </div>
+                        <br>
+                        <div style="display: flex; justify-content: center">
+                            <button class="btn ripple btn-primary" id="btnGuardarAvance" type="button">Agregar
+                                Informe</button>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="table-responsive">
+                            <table id="avances_tbl"
+                                class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Informe</th>
+                                        <th class="text-center">Técnico</th>
+                                        <th class="text-center">Fecha</th>
+                                        <th class="text-center">Anexo</th>
+                                        <th class="text-center">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

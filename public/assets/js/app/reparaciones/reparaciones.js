@@ -185,49 +185,51 @@ $(document).ready(function () {
                 observaciones,
                 foto,
             });
-        });
 
-        if (cliente == "") {
-            toastr.error("El campo cliente es obligatorio");
-            return false;
-        } else if (valid) {
-            toastr.error("Debes llenar los campos obligatorios de cada recepción");
-            return false;
-        } else {
-            $("#btnGuardarRecepcion").attr("disabled", true);
-            $("#btnGuardarRecepcion").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...');
+            if (cliente == "") {
+                toastr.error("El campo cliente es obligatorio");
+                return false;
+            } else if (valid) {
+                toastr.error("Debes llenar los campos obligatorios de cada recepción");
+                return false;
+            } else {
+                $("#btnGuardarRecepcion").attr("disabled", true);
+                $("#btnGuardarRecepcion").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...');
 
-            let formData = new FormData();
-            formData.append("cliente", cliente);
-            formData.append("correos", correos);
-            formData.append("reparaciones", JSON.stringify(reparaciones));
+                let formData = new FormData();
+                formData.append("cliente", cliente);
+                formData.append("correos", correos);
+                formData.append("reparaciones", JSON.stringify(reparaciones));
 
-            $.ajax({
-                url: "reparaciones_add",
-                type: "POST",
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function (response) {
-                    if (response.info == 1) {
-                        toastr.success("Recepción registrada correctamente");
-                        setTimeout(() => {
-                            location.reload();
-                        }, 1000);
-                    } else {
+                $.ajax({
+                    url: "reparaciones_add",
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response.info == 1) {
+                            toastr.success("Recepción registrada correctamente");
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1000);
+                        } else {
+                            toastr.error("Ocurrió un error al registrar la recepción");
+                            $("#btnGuardarRecepcion").attr("disabled", false);
+                            $("#btnGuardarRecepcion").html("Guardar");
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
                         toastr.error("Ocurrió un error al registrar la recepción");
                         $("#btnGuardarRecepcion").attr("disabled", false);
                         $("#btnGuardarRecepcion").html("Guardar");
                     }
-                },
-                error: function (error) {
-                    console.log(error);
-                    toastr.error("Ocurrió un error al registrar la recepción");
-                    $("#btnGuardarRecepcion").attr("disabled", false);
-                    $("#btnGuardarRecepcion").html("Guardar");
-                }
-            });
-        }
+                });
+
+                reparaciones = [];
+            }
+        });
     });
 
     // Modificar
@@ -460,7 +462,7 @@ $(document).ready(function () {
                             accesorios_data[i] = parseInt(accesorios_data[i]);
                         }
 
-                        if(key == 0) {
+                        if (key == 0) {
                             btn = '<a class="center-vertical" id="new_row_edit" style="margin-left: 20px; margin-top: -42px;" href="javascript:void(0);"><i class="fa fa-plus"></i></a>';
                         }
 

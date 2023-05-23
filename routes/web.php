@@ -192,6 +192,7 @@ Route::middleware(['auth_user'])->group(function () {
     
     // REPARACIONES
     Route::get('/reparaciones', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'index'])->name('reparaciones');
+    Route::get('/reparacion_pdf', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'pdf'])->name('reparacion_pdf');
     Route::post('/reparaciones_info', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'info'])->name('reparaciones_info');
     Route::post('/reparaciones_add', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'add'])->name('reparaciones_add');
     Route::post('/reparaciones_edit', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'edit'])->name('reparaciones_edit');
@@ -200,7 +201,13 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/reparaciones_aprobado', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'aprobado'])->name('reparaciones_aprobado');
     Route::post('/reparaciones_tecnico', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'tecnico'])->name('reparaciones_tecnico');
     
+    // MIS REPARACIONES
     Route::get('/mis_reparaciones', [App\Http\Controllers\Admin\Reparaciones\MisReparacionesController::class, 'index'])->name('mis_reparaciones');
+    Route::post('/reparaciones_avances', [App\Http\Controllers\Admin\Reparaciones\MisReparacionesController::class, 'avances'])->name('reparaciones_avances');
+    Route::post('/reparaciones_repuestos', [App\Http\Controllers\Admin\Reparaciones\MisReparacionesController::class, 'repuestos'])->name('reparaciones_repuestos');
+    Route::post('/reparaciones_reparaciones', [App\Http\Controllers\Admin\Reparaciones\MisReparacionesController::class, 'reparaciones'])->name('reparaciones_reparaciones');
+    Route::post('/reparaciones_avances_add', [App\Http\Controllers\Admin\Reparaciones\MisReparacionesController::class, 'avance_add'])->name('reparaciones_avances_add');
+    Route::post('/reparaciones_avances_delete', [App\Http\Controllers\Admin\Reparaciones\MisReparacionesController::class, 'avance_delete'])->name('reparaciones_avances_delete');
 
     // DOCUMENTOS
     Route::get('/documentos', [App\Http\Controllers\Admin\Documentos\DocumentosController::class, 'index'])->name('documentos');

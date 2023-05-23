@@ -9,6 +9,33 @@ $(document).ready(function () {
     let categorias = JSON.parse(localStorage.getItem("categorias"));
     let accesorios = JSON.parse(localStorage.getItem("accesorios"));
 
+    var protocol = window.location.protocol;
+    var host = window.location.host;
+    var url_general = protocol + "//" + host + "/";
+
+    var language = {
+        searchPlaceholder: "Buscar...",
+        sSearch: "",
+        decimal: "",
+        emptyTable: "No hay información",
+        info: "Mostrando _START_ a _END_ de _TOTAL_ Resultados",
+        infoEmpty: "Mostrando 0 to 0 de 0 Resultados",
+        infoFiltered: "(Filtrado de _MAX_ total resultados)",
+        infoPostFix: "",
+        thousands: ",",
+        lengthMenu: "Mostrar _MENU_ Resultados",
+        loadingRecords: "Cargando...",
+        processing: "Procesando...",
+        search: "Buscar:",
+        zeroRecords: "Sin resultados encontrados",
+        paginate: {
+            first: "Primero",
+            last: "Ultimo",
+            next: "Siguiente",
+            previous: "Anterior",
+        },
+    };
+
     $(".open-toggle").trigger("click");
 
     // Ver
@@ -168,5 +195,290 @@ $(document).ready(function () {
                 });
             }
         });
+    });
+
+    // Avances
+    $(document).on("click", ".btnAddAvances", function () {
+        let id = $(this).attr("data-id");
+        $("#id_reparacion_avance").val(id);
+
+        $.ajax({
+            url: "reparaciones_avances",
+            type: "POST",
+            data: { id },
+            success: function (response) {
+                if (response.info == 1) {
+                    let data = response.data;
+
+                    if ($.fn.DataTable.isDataTable("#avances_tbl")) {
+                        $("#avances_tbl").DataTable().destroy();
+                    }
+
+                    $("#avances_tbl tbody").empty();
+
+                    data.forEach((element) => {
+                        let adjunto = "";
+                        let fecha = element.created_at.split(" ");
+                        fecha = fecha[0].split("-").reverse().join("/");
+
+                        if (element.adjunto != null) {
+                            adjunto = '<a href="' + url_general + "images/anexos_reparaciones/" + element.adjunto + '" target="_blank" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></a>';
+                        } else {
+                            adjunto = '<button class="btn btn-sm btn-secondary" disabled><i class="fa fa-eye"></i></button>';
+                        }
+
+                        $("#avances_tbl tbody").append('<tr>' +
+                            '<td class="text-center">' + element.observacion + '</td>' +
+                            '<td class="text-center">' + element.empleado + '</td>' +
+                            '<td class="text-center">' + fecha + '</td>' +
+                            '<td class="text-center">' + adjunto + '</td>' +
+                            '<td class="text-center"> <button title="Eliminar" data-reparacion="' + id + '" class="btn btn-sm btn-danger btnDeleteAvance" data-id="' + element.id + '"><i class="fa fa-trash"></i></button></td>' +
+                            '</tr>');
+                    });
+
+                    $("#avances_tbl").DataTable({
+                        language: language,
+                        responsive: true,
+                        order: [],
+                    });
+
+                    $("#modalAvances").modal("show");
+                } else {
+                    toastr.error("Ocurrió un error al obtener la información");
+                }
+            },
+            error: function (error) {
+                toastr.error("Ocurrió un error al obtener la información");
+                console.log(error);
+            }
+        });
+    });
+
+    $("#btnGuardarAvance").click(function () {
+        let id = $("#id_reparacion_avance").val();
+        let observacion = $("#observaciones_avance").val();
+
+        if (observacion == "") {
+            toastr.error("Ingrese un informe");
+            return false;
+        } else {
+            let formData = new FormData();
+            formData.append("id", id);
+            formData.append("observacion", observacion);
+            formData.append("adjunto", $("#anexo_avance_add")[0].files[0]);
+
+            $("#btnGuardarAvance").prop("disabled", true);
+            $("#btnGuardarAvance").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...');
+
+            $.ajax({
+                url: "reparaciones_avances_add",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.info == 1) {
+                        $("#observaciones_avance").val("");
+                        $("#anexo_avance_add").val("");
+
+                        $("#btnGuardarAvance").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Terminando...');
+                        cargarAvances(id);
+                        setTimeout(() => {
+                            $("#btnGuardarAvance").prop("disabled", false);
+                            $("#btnGuardarAvance").html("Agregar Informe");
+                        }, 900);
+                        toastr.success("Se guardó correctamente");
+                    } else {
+                        toastr.error("Ocurrió un error al guardar");
+                        $("#btnGuardarAvance").prop("disabled", false);
+                        $("#btnGuardarAvance").html("Agregar Informe");
+                    }
+                },
+                error: function (error) {
+                    toastr.error("Ocurrió un error al guardar");
+                    $("#btnGuardarAvance").prop("disabled", false);
+                    $("#btnGuardarAvance").html("Agregar Informe");
+                    console.log(error);
+                }
+            });
+        }
+    });
+
+    function cargarAvances(id) {
+        $.ajax({
+            url: "reparaciones_avances",
+            type: "POST",
+            data: { id },
+            success: function (response) {
+                if (response.info == 1) {
+                    let data = response.data;
+
+                    if ($.fn.DataTable.isDataTable("#avances_tbl")) {
+                        $("#avances_tbl").DataTable().destroy();
+                    }
+
+                    $("#avances_tbl tbody").empty();
+
+                    data.forEach((element) => {
+                        let adjunto = "";
+                        let fecha = element.created_at.split(" ");
+                        fecha = fecha[0].split("-").reverse().join("/");
+
+                        if (element.adjunto != null) {
+                            adjunto = '<a href="' + url_general + "images/anexos_reparaciones/" + element.adjunto + '" target="_blank" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></a>';
+                        } else {
+                            adjunto = '<button class="btn btn-sm btn-secondary" disabled><i class="fa fa-eye"></i></button>';
+                        }
+
+                        $("#avances_tbl tbody").append('<tr>' +
+                            '<td class="text-center">' + element.observacion + '</td>' +
+                            '<td class="text-center">' + element.empleado + '</td>' +
+                            '<td class="text-center">' + fecha + '</td>' +
+                            '<td class="text-center">' + adjunto + '</td>' +
+                            '<td class="text-center"> <button title="Eliminar" data-reparacion="' + id + '" class="btn btn-sm btn-danger btnDeleteAvance" data-id="' + element.id + '"><i class="fa fa-trash"></i></button></td>' +
+                            '</tr>');
+                    });
+
+                    $("#avances_tbl").DataTable({
+                        language: language,
+                        responsive: true,
+                        order: [],
+                    });
+
+                } else {
+                    toastr.error("Ocurrió un error al obtener la información");
+                }
+            },
+            error: function (error) {
+                toastr.error("Ocurrió un error al obtener la información");
+                console.log(error);
+            }
+        });
+    }
+
+    $(document).on("click", ".btnDeleteAvance", function () {
+        let reparacion = $(this).data("reparacion");
+        $("#modalAvances").modal("hide");
+        Swal.fire({
+            title: "¿Estás seguro?",
+            text: "No podrás revertir esto!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#dc3545",
+            confirmButtonText: "Si, eliminar!",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let id = $(this).data("id");
+
+                $.ajax({
+                    url: "reparaciones_avances_delete",
+                    type: "POST",
+                    data: { id },
+                    success: function (response) {
+                        if (response.info == 1) {
+                            cargarAvances(reparacion);
+                            toastr.success("Se eliminó correctamente");
+                            $("#modalAvances").modal("show");
+                        } else {
+                            toastr.error("Ocurrió un error al eliminar");
+                            $("#modalAvances").modal("show");
+                        }
+                    },
+                    error: function (error) {
+                        toastr.error("Ocurrió un error al eliminar");
+                        console.log(error);
+                    }
+                });
+            } else {
+                $("#modalAvances").modal("show");
+            }
+        }
+        );
+    });
+
+    $(document).on("click", ".btnRepuestos", function () {
+        let id = $(this).attr("data-id");
+        $("#id_reparacion_repuestos").val(id);
+
+        $.ajax({
+            url: "reparaciones_repuestos",
+            type: "POST",
+            data: { id },
+            success: function (response) {
+                if (response.info == 1) {
+                    let data = response.data;
+
+                    if ($.fn.DataTable.isDataTable("#reparaciones_tbl")) {
+                        $("#reparaciones_tbl").DataTable().destroy();
+                    }
+
+                    $("#reparaciones_tbl tbody").empty();
+
+                    data.forEach((element) => {
+                        let fecha = element.created_at.split(" ");
+                        fecha = fecha[0].split("-").reverse().join("/");
+
+                        $("#reparaciones_tbl tbody").append('<tr>' +
+                            '<td class="text-center">' + element.producto + '</td>' +
+                            '<td class="text-center">' + element.cantidad + '</td>' +
+                            '<td class="text-center">' + element.empleado + '</td>' +
+                            '<td class="text-center">' + fecha + '</td>' +
+                            '</tr>');
+                    });
+
+                    $("#reparaciones_tbl").DataTable({
+                        language: language,
+                        responsive: true,
+                        order: [],
+                    });
+
+                    $("#modalRepuesto").modal("show");
+                } else {
+                    toastr.error("Ocurrió un error al obtener la información");
+                }
+            },
+            error: function (error) {
+                toastr.error("Ocurrió un error al obtener la información");
+                console.log(error);
+            }
+        });
+    });
+
+    $("#btnGuardarRepuesto").click(function () {
+        let id = $("#id_reparacion_repuestos").val();
+        let producto = $("#producto_reparacion").val();
+        let cantidad = $("#cantidad_repuesto").val();
+
+        if (producto == "") {
+            toastr.error("El campo producto es obligatorio");
+        } else if (cantidad < 1) {
+            toastr.error("El campo cantidad es obligatorio");
+        } else {
+            $("#btnGuardarRepuesto").prop("disabled", true);
+            $("#btnGuardarRepuesto").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...');
+
+            $.ajax({
+                url: "reparaciones_repuestos_save",
+                type: "POST",
+                data: { id, producto, cantidad },
+                success: function (response) {
+                    if (response.info == 1) {
+
+                    } else {
+                        toastr.error("Ocurrió un error al guardar");
+                    }
+                }, error: function (error) {
+                    toastr.error("Ocurrió un error al guardar");
+                    console.log(error);
+                }
+            }).always(function () {
+                $("#btnGuardarRepuesto").prop("disabled", false);
+                $("#btnGuardarRepuesto").html("Guardar");
+                cargarRepuestos(id);
+            }
+            );
+        }
     });
 });

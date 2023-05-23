@@ -36,9 +36,10 @@
                                     <tr>
                                         <th class="text-center">Código</th>
                                         <th class="text-center">Cliente</th>
-                                        <th class="text-center">Fecha Entrega</th>
-                                        <th class="text-center">Técnico Asignado</th>
-                                        <th class="text-center">Productos</th>
+                                        <th class="text-center">Modelo</th>
+                                        <th class="text-center">Serie</th>
+                                        <th class="text-center">Técnico</th>
+                                        <th class="text-center">F. Entrega</th>
                                         <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
@@ -47,9 +48,10 @@
                                         <tr>
                                             <td class="text-center">{{ $value->token }}</td>
                                             <td class="text-center">{{ $value->razon_social }} ({{ $value->nit }})</td>
-                                            <td class="text-center">{{ date('d-m-Y', strtotime($value->created_at)) }}</td>
+                                            <td class="text-center">{{ $value->modelo }}</td>
+                                            <td class="text-center">{{ $value->serie }}</td>
                                             <td class="text-center">{{ $value->encargado }}</td>
-                                            <td class="text-center">{{ $value->cantidad }}</td>
+                                            <td class="text-center">{{ date('d-m-Y', strtotime($value->created_at)) }}</td>
                                             <td class="text-center">
                                                 <button title="Ver" class="btn btn-primary btn-sm btnView"
                                                     data-id="{{ $value->id }}">
@@ -62,8 +64,7 @@
                                                 <br>
                                                 <button title="Asignar Técnico"
                                                     class="btn btn-primary btn-sm btnTecnico mt-1"
-                                                    data-tecnico="{{ $value->tecnico_id }}"
-                                                    data-id="{{ $value->id }}">
+                                                    data-tecnico="{{ $value->tecnico_id }}" data-id="{{ $value->id }}">
                                                     <i class="fa fa-user"></i> Técnico
                                                 </button>
                                                 <button title="Borrar" class="btn btn-danger btn-sm btnDelete mt-1"
@@ -78,6 +79,12 @@
                                                         <i class="fa fa-check"></i> Completar
                                                     </button>
                                                 @endif
+                                                <br>
+                                                <a href="{{ route('reparacion_pdf') }}?token={{ $value->id }}"
+                                                    target="_BLANK" title="Imprimir" class="btn btn-success btn-sm mt-1"
+                                                    data-id="{{ $value->id }}">
+                                                    <i class="fa fa-print"></i> Imprimir
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -106,10 +113,11 @@
                                     <tr>
                                         <th class="text-center">Código</th>
                                         <th class="text-center">Cliente</th>
-                                        <th class="text-center">Fecha Entrega</th>
-                                        <th class="text-center">Fecha Reparación</th>
-                                        <th class="text-center">Técnico Asignado</th>
-                                        <th class="text-center">Productos</th>
+                                        <th class="text-center">Modelo</th>
+                                        <th class="text-center">Serie</th>
+                                        <th class="text-center">F. Entrega</th>
+                                        <th class="text-center">F. Reparación</th>
+                                        <th class="text-center">Técnico</th>
                                         <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
@@ -118,20 +126,22 @@
                                         <tr>
                                             <td class="text-center">{{ $value->token }}</td>
                                             <td class="text-center">{{ $value->razon_social }} ({{ $value->nit }})</td>
+                                            <td class="text-center">{{ $value->modelo }}</td>
+                                            <td class="text-center">{{ $value->serie }}</td>
                                             <td class="text-center">{{ date('d-m-Y', strtotime($value->created_at)) }}</td>
                                             <td class="text-center">{{ date('d-m-Y', strtotime($value->fecha_terminado)) }}
                                             </td>
                                             <td class="text-center">{{ $value->encargado }}</td>
-                                            <td class="text-center">{{ $value->cantidad }}</td>
                                             <td class="text-center">
                                                 <button title="Ver" class="btn btn-primary btn-sm btnView"
                                                     data-id="{{ $value->id }}">
                                                     <i class="fa fa-eye"></i> Ver
                                                 </button>
-                                                <button title="Imprimir" class="btn btn-success btn-sm btnImprimir"
+                                                <a href="{{ route('reparacion_pdf') }}?token={{ $value->id }}"
+                                                    target="_BLANK" title="Imprimir" class="btn btn-success btn-sm"
                                                     data-id="{{ $value->id }}">
                                                     <i class="fa fa-print"></i> Imprimir
-                                                </button>
+                                                </a>
                                                 <br>
                                                 <button title="Borrar" class="btn btn-danger btn-sm btnDelete mt-1"
                                                     data-id="{{ $value->id }}">
@@ -349,8 +359,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn ripple btn-primary" id="btnTecnico"
-                            type="button">Asignar</button>
+                        <button class="btn ripple btn-primary" id="btnTecnico" type="button">Asignar</button>
                     </div>
                 </div>
             </div>

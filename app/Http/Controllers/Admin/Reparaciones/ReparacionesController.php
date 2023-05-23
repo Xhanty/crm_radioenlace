@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class ReparacionesController extends Controller
 {
@@ -21,49 +22,19 @@ class ReparacionesController extends Controller
             $categorias = DB::table('categorias_reparaciones')->get();
             $accesorios = DB::table('accesorios_reparaciones')->get();
             $pendientes = DB::table('reparaciones')
-                ->select('reparaciones.*', 'cliente.razon_social', 'cliente.nit', 'empleados.nombre as encargado', DB::raw('count(detalle_reparaciones.id) as cantidad'))
+                ->select('reparaciones.*', 'cliente.razon_social', 'cliente.nit', 'empleados.nombre as encargado', 'detalle.modelo', 'detalle.serie')
                 ->join('cliente', 'cliente.id', '=', 'reparaciones.cliente_id')
-                ->leftJoin('detalle_reparaciones', 'detalle_reparaciones.reparacion_id', '=', 'reparaciones.id')
+                ->leftJoin('detalle_reparaciones as detalle', 'detalle.reparacion_id', '=', 'reparaciones.id')
                 ->leftJoin('empleados', 'empleados.id', '=', 'reparaciones.tecnico_id')
                 ->where('reparaciones.status', 0)
-                ->groupBy(
-                    'reparaciones.id',
-                    'reparaciones.tecnico_id',
-                    'reparaciones.status',
-                    'reparaciones.aprobado',
-                    'reparaciones.fecha_terminado',
-                    'reparaciones.token',
-                    'reparaciones.cliente_id',
-                    'reparaciones.correos',
-                    'reparaciones.created_by',
-                    'reparaciones.created_at',
-                    'cliente.razon_social',
-                    'cliente.nit',
-                    'empleados.nombre'
-                )
                 ->get();
             $finalizadas
                 = DB::table('reparaciones')
-                ->select('reparaciones.*', 'cliente.razon_social', 'cliente.nit', 'empleados.nombre as encargado', DB::raw('count(detalle_reparaciones.id) as cantidad'))
+                ->select('reparaciones.*', 'cliente.razon_social', 'cliente.nit', 'empleados.nombre as encargado', 'detalle.modelo', 'detalle.serie')
                 ->join('cliente', 'cliente.id', '=', 'reparaciones.cliente_id')
-                ->leftJoin('detalle_reparaciones', 'detalle_reparaciones.reparacion_id', '=', 'reparaciones.id')
                 ->leftJoin('empleados', 'empleados.id', '=', 'reparaciones.tecnico_id')
+                ->leftJoin('detalle_reparaciones as detalle', 'detalle.reparacion_id', '=', 'reparaciones.id')
                 ->where('reparaciones.status', 1)
-                ->groupBy(
-                    'reparaciones.id',
-                    'reparaciones.tecnico_id',
-                    'reparaciones.status',
-                    'reparaciones.aprobado',
-                    'reparaciones.fecha_terminado',
-                    'reparaciones.token',
-                    'reparaciones.cliente_id',
-                    'reparaciones.correos',
-                    'reparaciones.created_by',
-                    'reparaciones.created_at',
-                    'cliente.razon_social',
-                    'cliente.nit',
-                    'empleados.nombre'
-                )
                 ->get();
 
             return view('admin.reparaciones.reparaciones', compact('categorias', 'accesorios', 'clientes', 'empleados', 'pendientes', 'finalizadas'));
@@ -226,6 +197,91 @@ class ReparacionesController extends Controller
             return response()->json(['info' => 1]);
         } catch (Exception $ex) {
             return response()->json(['info' => 0, 'message' => 'Error al obtener la información.']);
+        }
+    }
+
+    public function pdf(Request $request)
+    {
+        try {
+            $id = $request->get('token');
+
+            if (!$id || $id < 1) {
+                return view('errors.500');
+            }
+
+            $reparacion = DB::table('reparaciones')
+                ->select(
+                    'reparaciones.*',
+                    'cliente.razon_social',
+                    'cliente.nit',
+                    'cliente.codigo_verificacion',
+                    'cliente.ciudad',
+                    'detalle.modelo',
+                    'detalle.serie',
+                    'detalle.observacion',
+                    'detalle.accesorios',
+                    'tbl_encargado.nombre as encargado',
+                    'tbl_recibe.nombre as recibe',
+                    'categorias_reparaciones.categoria'
+                )
+                ->join('cliente', 'cliente.id', '=', 'reparaciones.cliente_id')
+                ->leftJoin('detalle_reparaciones as detalle', 'detalle.reparacion_id', '=', 'reparaciones.id')
+                ->leftJoin('empleados as tbl_encargado', 'tbl_encargado.id', '=', 'reparaciones.tecnico_id')
+                ->leftJoin('empleados as tbl_recibe', 'tbl_recibe.id', '=', 'detalle.encargado_id')
+                ->leftJoin('categorias_reparaciones', 'categorias_reparaciones.id', '=', 'detalle.categoria_id')
+                ->where('reparaciones.id', $id)
+                ->first();
+
+            if (!$reparacion) {
+                return view('errors.404');
+            }
+
+            $accesorios_fin = "";
+
+            if ($reparacion->accesorios) {
+                $accesorios = json_decode($reparacion->accesorios);
+
+                if (count($accesorios) > 0) {
+                    foreach ($accesorios as $key => $value) {
+                        $accesorio = DB::table('accesorios_reparaciones')->where('id', $value)->first();
+
+                        if ($accesorio) {
+                            $accesorios_fin .= $accesorio->accesorio . ', ';
+                        }
+                    }
+                    $accesorios_fin = rtrim($accesorios_fin, ', ');
+                }
+            }
+
+            $repuestos = DB::table('repuestos_reparaciones')
+                ->select(
+                    'repuestos_reparaciones.*',
+                    'productos.nombre as producto',
+                    'productos.modelo',
+                    'productos.marca',
+                    'productos.imagen'
+                )
+                ->join('productos', 'productos.id', '=', 'repuestos_reparaciones.producto_id')
+                ->where('reparacion_id', $id)
+                ->get();
+
+            $informes = DB::table('avances_reparaciones')
+                ->select(
+                    'avances_reparaciones.*',
+                    'empleados.nombre as tecnico'
+                )
+                ->join('empleados', 'empleados.id', '=', 'avances_reparaciones.created_by')
+                ->where('reparacion_id', $id)
+                ->get();
+
+            $creador = DB::table('empleados')->where('id', $reparacion->created_by)->first();
+
+            $pdf = PDF::loadView('admin.reparaciones.pdf', compact('reparacion', 'creador', 'accesorios_fin', 'repuestos', 'informes'));
+
+            return $pdf->stream($reparacion->razon_social . ' - (' . $reparacion->token . ') (' . date('d-m-Y', strtotime($reparacion->created_at)) . ').pdf');
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+            return view('errors.500');
         }
     }
 }

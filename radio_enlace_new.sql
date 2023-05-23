@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-05-2023 a las 23:26:51
+-- Tiempo de generación: 23-05-2023 a las 23:42:36
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -950,7 +950,8 @@ CREATE TABLE `asignaciones` (
 --
 
 INSERT INTO `asignaciones` (`id`, `id_empleado`, `id_cliente`, `descripcion`, `asignacion`, `fecha`, `fecha_culminacion`, `status`, `created_by`, `fecha_completada`, `visto_bueno`, `devuelta`, `codigo`, `revision`) VALUES
-(887, 1, 11, 'Ver la asdjaskdjnf', 'Revisar la casa', '2023-03-22 10:41:00', '2023-03-23 10:42:00', 0, 1, NULL, 0, 0, 'RE1663935591', 0);
+(887, 1, 11, 'Ver la asdjaskdjnf', 'Revisar la casa', '2023-03-22 10:41:00', '2023-03-23 10:42:00', 0, 1, NULL, 0, 0, 'RE1663935591', 0),
+(888, 1, NULL, 'aa', 'a', '2023-05-19 00:00:00', NULL, 0, 1, NULL, 0, 0, 'CRM-ZVHJQU', 0);
 
 -- --------------------------------------------------------
 
@@ -977,9 +978,17 @@ CREATE TABLE `avances_reparaciones` (
   `id` int(11) NOT NULL,
   `reparacion_id` int(11) NOT NULL,
   `observacion` text DEFAULT NULL,
+  `adjunto` text DEFAULT NULL,
   `created_by` int(11) NOT NULL,
   `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `avances_reparaciones`
+--
+
+INSERT INTO `avances_reparaciones` (`id`, `reparacion_id`, `observacion`, `adjunto`, `created_by`, `created_at`) VALUES
+(4, 9, '· Se realizó el mantenimiento preventivo y correctivo del equipo, se revisaron todos los parámetros exigido para su óptimo funcionamiento.\r\nNivel de recepción 123dBm - Audio de recepción y transmisión OK - Error de frecuencia 69 hz - Potencia de salida 4.17W- Desviación de TX 2,1 Khz - Se realizó limpieza en general con Isopropanol, limpiador electrónico y silicona.', NULL, 1, '2023-05-23 09:38:12');
 
 -- --------------------------------------------------------
 
@@ -4154,7 +4163,8 @@ CREATE TABLE `detalle_reparaciones` (
 --
 
 INSERT INTO `detalle_reparaciones` (`id`, `reparacion_id`, `categoria_id`, `modelo`, `serie`, `encargado_id`, `accesorios`, `observacion`, `foto`, `created_by`, `created_at`) VALUES
-(3, 6, 1, 'aa', 'bbb', 1, '[\"3\",\"4\"]', '', NULL, 1, '2023-05-17 15:22:50');
+(7, 9, 1, 'aa', 'aa', 39, '[\"3\", \"4\"]', 'aa', NULL, 1, '2023-05-23 09:10:04'),
+(8, 10, 2, 'bb', 'bb', 36, '[\"4\", \"3\"]', 'bb', NULL, 1, '2023-05-23 09:10:04');
 
 -- --------------------------------------------------------
 
@@ -8285,7 +8295,8 @@ CREATE TABLE `reparaciones` (
 --
 
 INSERT INTO `reparaciones` (`id`, `token`, `cliente_id`, `correos`, `tecnico_id`, `status`, `aprobado`, `fecha_terminado`, `created_by`, `created_at`) VALUES
-(6, 'RP-2858941', 11, 'asdasd', 1, 0, 0, NULL, 1, '2023-05-17 15:22:50');
+(9, 'RP-8871814', 13, NULL, 1, 0, 0, NULL, 1, '2023-05-23 09:10:04'),
+(10, 'RP-9072670', 13, NULL, NULL, 0, 0, NULL, 1, '2023-05-23 09:10:04');
 
 -- --------------------------------------------------------
 
@@ -8311,6 +8322,28 @@ CREATE TABLE `representante_legal` (
 
 INSERT INTO `representante_legal` (`id`, `nombres`, `apellidos`, `tipo_documento`, `documento`, `nombres_suplente`, `apellidos_suplente`, `tipo_documento_suplente`, `documento_suplente`) VALUES
 (1, 'Santiago Smith', 'Delgado Henao', 4, '45544', 'Carlos', 'Slim', 6, '123');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `repuestos_reparaciones`
+--
+
+CREATE TABLE `repuestos_reparaciones` (
+  `id` int(11) NOT NULL,
+  `reparacion_id` int(11) NOT NULL,
+  `producto_id` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `repuestos_reparaciones`
+--
+
+INSERT INTO `repuestos_reparaciones` (`id`, `reparacion_id`, `producto_id`, `cantidad`, `created_by`, `created_at`) VALUES
+(1, 9, 2, 1, 1, '2023-05-23 21:47:08');
 
 -- --------------------------------------------------------
 
@@ -8555,6 +8588,13 @@ CREATE TABLE `task_projects` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `task_projects`
+--
+
+INSERT INTO `task_projects` (`id`, `code`, `title`, `description`, `order`, `project_id`, `user_id`, `status_id`, `puntos`, `init_date`, `end_date`, `created_by`, `created_at`, `updated_at`) VALUES
+(79, 'CRM-ZVHJQU', 'a', 'aa', 0, 66, '[1]', 1, 0, '2023-05-19', NULL, 1, '2023-05-19 21:40:49', '2023-05-19 21:40:55');
 
 -- --------------------------------------------------------
 
@@ -9093,6 +9133,12 @@ ALTER TABLE `representante_legal`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `repuestos_reparaciones`
+--
+ALTER TABLE `repuestos_reparaciones`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `revisor_fiscal`
 --
 ALTER TABLE `revisor_fiscal`
@@ -9238,7 +9284,7 @@ ALTER TABLE `anexos_viaticos`
 -- AUTO_INCREMENT de la tabla `asignaciones`
 --
 ALTER TABLE `asignaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=888;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=889;
 
 --
 -- AUTO_INCREMENT de la tabla `avances_asignaciones`
@@ -9250,7 +9296,7 @@ ALTER TABLE `avances_asignaciones`
 -- AUTO_INCREMENT de la tabla `avances_reparaciones`
 --
 ALTER TABLE `avances_reparaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `avances_tasks_projects`
@@ -9400,7 +9446,7 @@ ALTER TABLE `detalle_precios`
 -- AUTO_INCREMENT de la tabla `detalle_reparaciones`
 --
 ALTER TABLE `detalle_reparaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `detelle_remisiones`
@@ -9574,12 +9620,18 @@ ALTER TABLE `remisiones`
 -- AUTO_INCREMENT de la tabla `reparaciones`
 --
 ALTER TABLE `reparaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `representante_legal`
 --
 ALTER TABLE `representante_legal`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `repuestos_reparaciones`
+--
+ALTER TABLE `repuestos_reparaciones`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
@@ -9634,7 +9686,7 @@ ALTER TABLE `subcategorias_productos`
 -- AUTO_INCREMENT de la tabla `task_projects`
 --
 ALTER TABLE `task_projects`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT de la tabla `tipos_documentos`
