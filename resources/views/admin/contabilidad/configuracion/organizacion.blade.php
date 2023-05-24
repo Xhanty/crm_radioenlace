@@ -283,8 +283,19 @@
                                             </div>
                                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                                 <label for="">Tributos</label>
-                                                <select id="tributos_tribu_organizacion" class="form-select">
+                                                <select id="tributos_tribu_organizacion" multiple class="form-select">
                                                     <option value="">Seleccione un opción</option>
+                                                    @foreach ($tributos as $item)
+                                                        @if (in_array($item->id, $tributos_organizacion))
+                                                            <option value="{{ $item->id }}" selected>
+                                                                {{ $item->code }}
+                                                                - {{ $item->nombre }}</option>
+                                                        @else
+                                                            <option value="{{ $item->id }}">{{ $item->code }} -
+                                                                {{ $item->nombre }}</option>
+                                                        @endif
+                                                    @endforeach
+                                                    
                                                     <option @if ($datos_tributarios->tributos == 1) selected @endif
                                                         value="1">Sí</option>
                                                     <option @if ($datos_tributarios->tributos == 2) selected @endif

@@ -8,7 +8,7 @@
     @php
         $tipo = 'Factura No.';
         $tipo_2 = 'Factura Compra';
-
+        
         if ($factura->tipo == 2) {
             $tipo = 'Documento No.';
             $tipo_2 = 'Documento Soporte';
@@ -184,7 +184,9 @@
                                                         {{ $item->detalle->nombre }} ({{ $item->detalle->marca }} -
                                                         {{ $item->detalle->modelo }})
                                                         <br>
-                                                        S/N: {{ $item->serial_producto }}
+                                                        @if ($item->serial_producto)
+                                                            S/N: {{ $item->serial_producto }}
+                                                        @endif
                                                     </td>
                                                     <td class="tm_width_1 tm_accent_border_20 tm_text_center">
                                                         {{ $item->cantidad }}</td>

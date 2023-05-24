@@ -796,6 +796,7 @@ class ConfiguracionController extends Controller
         $tipo_documentos = DB::table('centros_costo')
             ->select('centros_costo.*', 'empleados.nombre as creador')
             ->join('empleados', 'empleados.id', '=', 'centros_costo.created_by')
+            ->orderBy('centros_costo.code', 'asc')
             ->get();
 
         return response()->json([
@@ -862,23 +863,41 @@ class ConfiguracionController extends Controller
                 $name = time() . $file->getClientOriginalName();
                 $file->move('images/logo_organizacion/', $name);
                 $avatar = $name;
-            }
 
-            DB::table('organizacion')->where('id', 1)->update([
-                'tipo_empresa' => $request->tipo_empresa ? $request->tipo_empresa : null,
-                'organizacion' => $request->organizacion ? $request->organizacion : null,
-                'tipo_documento' => $request->tipo_documento ? $request->tipo_documento : null,
-                'documento' => $request->documento ? $request->documento : null,
-                'digito' => $request->digito ? $request->digito : null,
-                'ciudad' => $request->ciudad ? $request->ciudad : null,
-                'direccion' => $request->direccion ? $request->direccion : null,
-                'tipo_regimen' => $request->tipo_regimen ? $request->tipo_regimen : null,
-                'telefono' => $request->telefono ? $request->telefono : null,
-                'contacto' => $request->contacto ? $request->contacto : null,
-                'email_contacto' => $request->email_contacto ? $request->email_contacto : null,
-                'pagina_web' => $request->pagina_web ? $request->pagina_web : null,
-                'avatar' => $avatar ? $avatar : null,
-            ]);
+                DB::table('organizacion')->where('id', 1)->update([
+                    'tipo_empresa' => $request->tipo_empresa ? $request->tipo_empresa : null,
+                    'organizacion' => $request->organizacion ? $request->organizacion : null,
+                    'tipo_documento' => $request->tipo_documento ? $request->tipo_documento : null,
+                    'documento' => $request->documento ? $request->documento : null,
+                    'digito' => $request->digito ? $request->digito : null,
+                    'ciudad' => $request->ciudad ? $request->ciudad : null,
+                    'direccion' => $request->direccion ? $request->direccion : null,
+                    'tipo_regimen' => $request->tipo_regimen ? $request->tipo_regimen : null,
+                    'telefono' => $request->telefono ? $request->telefono : null,
+                    'contacto' => $request->contacto ? $request->contacto : null,
+                    'email_contacto' => $request->email_contacto ? $request->email_contacto : null,
+                    'pagina_web' => $request->pagina_web ? $request->pagina_web : null,
+                    'avatar' => $avatar,
+                ]);
+            } else {
+                DB::table('organizacion')->where('id', 1)->update([
+                    'tipo_empresa' => $request->tipo_empresa ? $request->tipo_empresa : null,
+                    'organizacion' => $request->organizacion ? $request->organizacion : null,
+                    'tipo_documento' => $request->tipo_documento ? $request->tipo_documento : null,
+                    'documento' => $request->documento ? $request->documento : null,
+                    'digito' => $request->digito ? $request->digito : null,
+                    'ciudad' => $request->ciudad ? $request->ciudad : null,
+                    'direccion' => $request->direccion ? $request->direccion : null,
+                    'tipo_regimen' => $request->tipo_regimen ? $request->tipo_regimen : null,
+                    'telefono' => $request->telefono ? $request->telefono : null,
+                    'contacto' => $request->contacto ? $request->contacto : null,
+                    'email_contacto' => $request->email_contacto ? $request->email_contacto : null,
+                    'pagina_web' => $request->pagina_web ? $request->pagina_web : null,
+                ]);
+
+                $avatar = DB::table('organizacion')->where('id', 1)->first()->avatar;
+            }
+            
         } else if ($request->tipo == 2) {
             if ($request->hasFile('anexo_dian')) {
                 $file = $request->file('anexo_dian');

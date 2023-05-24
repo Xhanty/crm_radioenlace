@@ -446,6 +446,14 @@ $(document).ready(function () {
                             let detalle = item.detalle;
                             item.tarifa_cargo = item.tarifa_cargo ? item.tarifa_cargo : 0;
                             item.tarifa_retencion = item.tarifa_retencion ? item.tarifa_retencion : 0;
+
+                            let serial = item.serial_producto;
+
+                            if (serial == null) {
+                                serial = "";
+                            } else {
+                                serial = "S/N: " + serial;
+                            }
                             
                             if (item.producto) {
                                 $("#productos_view").append(
@@ -454,7 +462,7 @@ $(document).ready(function () {
                                     '<td class="tx-13">' +
                                     detalle.nombre + " (" + detalle.marca + " - " + detalle.modelo + ")" +
                                     '<br>' +
-                                    'S/N: ' + item.serial_producto +
+                                    serial +
                                     '</td>' +
                                     '<td class="text-center">' +
                                     parseInt(item.cantidad) +
