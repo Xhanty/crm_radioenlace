@@ -281,6 +281,11 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/edit_centros_costos', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_centros_costos'])->name('edit_centros_costos');
     Route::post('/status_centros_costos', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'status_centros_costos'])->name('status_centros_costos');
 
+    Route::post('/tributos_dian_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'tributos_dian_data'])->name('tributos_dian_data');
+    Route::post('/add_tributos_dian', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_tributos_dian'])->name('add_tributos_dian');
+    Route::post('/edit_tributos_dian', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_tributos_dian'])->name('edit_tributos_dian');
+    Route::post('/status_tributos_dian', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'status_tributos_dian'])->name('status_tributos_dian');
+
     Route::post('/actividades_economicas_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'actividades_economicas_data'])->name('actividades_economicas_data');
     Route::post('/add_actividad_economica', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_actividad_economica'])->name('add_actividad_economica');
     Route::post('/edit_actividad_economica', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_actividad_economica'])->name('edit_actividad_economica');

@@ -277,29 +277,25 @@
                                                     <option value="">Seleccione un opción</option>
                                                     <option @if ($datos_tributarios->responsabilidad_fiscal == 1) selected @endif
                                                         value="1">Sí</option>
-                                                    <option @if ($datos_tributarios->responsabilidad_fiscal == 2) selected @endif
-                                                        value="2">No</option>
                                                 </select>
                                             </div>
                                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                                 <label for="">Tributos</label>
                                                 <select id="tributos_tribu_organizacion" multiple class="form-select">
                                                     <option value="">Seleccione un opción</option>
+                                                    @php
+                                                        $data_tributarios = explode(',', $datos_tributarios->tributos);
+                                                    @endphp
                                                     @foreach ($tributos as $item)
-                                                        @if (in_array($item->id, $tributos_organizacion))
+                                                        @if (in_array($item->id, $data_tributarios))
                                                             <option value="{{ $item->id }}" selected>
-                                                                {{ $item->code }}
+                                                                {{ $item->codigo }}
                                                                 - {{ $item->nombre }}</option>
                                                         @else
-                                                            <option value="{{ $item->id }}">{{ $item->code }} -
+                                                            <option value="{{ $item->id }}">{{ $item->codigo }} -
                                                                 {{ $item->nombre }}</option>
                                                         @endif
                                                     @endforeach
-                                                    
-                                                    <option @if ($datos_tributarios->tributos == 1) selected @endif
-                                                        value="1">Sí</option>
-                                                    <option @if ($datos_tributarios->tributos == 2) selected @endif
-                                                        value="2">No</option>
                                                 </select>
                                             </div>
                                         </div>

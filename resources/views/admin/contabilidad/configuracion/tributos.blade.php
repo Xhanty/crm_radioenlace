@@ -1,11 +1,11 @@
 <!-- row Edit -->
-<div class="row row-sm d-none" id="div_centros_costos">
+<div class="row row-sm d-none" id="div_tributos">
     <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
         <!--div-->
         <div class="card">
-            <div class="card-header d-flex-header-table" style="border-radius: 4px; background: hsl(0, 78%, 62%)">
+            <div class="card-header d-flex-header-table" style="border-radius: 4px; background: hsl(212, 86%, 64%)">
                 <div class="div-1-tables-header">
-                    <h3 class="card-title mt-2">Centros de costos</h3>
+                    <h3 class="card-title mt-2">Tributos</h3>
                 </div>
                 <div class="div-2-tables-header">
                     <button class="btn btn-primary back_to_menu">&times;</button>
@@ -15,22 +15,22 @@
                 <div class="row row-sm">
                     <div class="col-lg mg-t-10 mg-lg-t-0">
                         <label for="">Código</label>
-                        <input class="form-control" id="codigo_add_centrocosto" placeholder="Código"
-                            type="text">
+                        <input class="form-control" id="codigo_add_tributo" placeholder="Código" type="text">
                     </div>
                     <div class="col-lg mg-t-10 mg-lg-t-0">
-                        <label for="">Centro de Costo</label>
-                        <input class="form-control" id="tipo_regimen_add_centrocosto" placeholder="Centro de Costo"
-                            type="text">
+                        <label for="">Tributo</label>
+                        <input class="form-control" id="nombre_add_tributo" placeholder="Tributo" type="text">
                     </div>
                 </div>
                 <br>
                 <div class="text-center">
-                    <button class="btn ripple btn-primary" id="btnAddCentroCosto" type="button">Agregar Centro de Costo</button>
+                    <button class="btn ripple btn-primary" id="btnAddTributo" type="button">Agregar
+                        Tributo</button>
                 </div>
                 <br>
                 <div class="table-responsive">
-                    <table id="tbl_centros_costos" class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
+                    <table id="tbl_tributos"
+                        class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
                         <thead>
                             <tr>
                                 <th>Código</th>
@@ -51,29 +51,28 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="modalEditCentroCosto">
+<div class="modal fade" id="modalEditTributo">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content modal-content-demo">
             <div class="modal-header">
-                <h6 class="modal-title">Modificar Centro de Costo</h6><button aria-label="Close" class="btn-close"
+                <h6 class="modal-title">Modificar Tributo</h6><button aria-label="Close" class="btn-close"
                     data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-                <input type="hidden" id="id_edit_centrocosto" disabled readonly>
+                <input type="hidden" id="id_edit_tributo" disabled readonly>
                 <div class="row row-sm">
                     <div class="col-lg mg-t-10 mg-lg-t-0">
                         <label for="">Código</label>
-                        <input class="form-control" id="codigo_edit_centrocosto" placeholder="Código" type="text">
+                        <input class="form-control" id="codigo_edit_tributo" placeholder="Código" type="text">
                     </div>
                     <div class="col-lg mg-t-10 mg-lg-t-0">
-                        <label for="">Centro Costo</label>
-                        <input class="form-control" id="tipo_regimen_edit_centrocosto"
-                            placeholder="Centro Costo" type="text">
+                        <label for="">Tributo</label>
+                        <input class="form-control" id="nombre_edit_tributo" placeholder="Tributo" type="text">
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn ripple btn-primary" id="btnEditCentroCosto" type="button">Actualizar Centro de Costo</button>
+                <button class="btn ripple btn-primary" id="btnEditTributo" type="button">Actualizar Tributo</button>
             </div>
         </div>
     </div>

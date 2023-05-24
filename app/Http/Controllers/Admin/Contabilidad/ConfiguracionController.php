@@ -51,6 +51,7 @@ class ConfiguracionController extends Controller
                 $revisor_fiscal = DB::table('revisor_fiscal')->where('id', 1)->first();
             }
 
+            $tributos = DB::table('tributos_dian')->where("status", 1)->get();
             $tipos_empresas = DB::table('tipos_empresas')->where("status", 1)->get();
             $tipos_documentos = DB::table('tipos_documentos')->where("status", 1)->get();
             $tipos_regimenes = DB::table('tipos_regimenes')->where("status", 1)->get();
@@ -81,7 +82,8 @@ class ConfiguracionController extends Controller
                 'representantes',
                 'contador',
                 'revisor_fiscal',
-                'cuentas_contables'
+                'cuentas_contables',
+                'tributos'
             ));
         } catch (Exception $ex) {
             return $ex->getMessage();
@@ -796,7 +798,7 @@ class ConfiguracionController extends Controller
         $tipo_documentos = DB::table('centros_costo')
             ->select('centros_costo.*', 'empleados.nombre as creador')
             ->join('empleados', 'empleados.id', '=', 'centros_costo.created_by')
-            ->orderBy('centros_costo.code', 'asc')
+            ->orderByRaw("CAST(centros_costo.code AS SIGNED) ASC")
             ->get();
 
         return response()->json([
@@ -852,6 +854,68 @@ class ConfiguracionController extends Controller
         ]);
     }
 
+    // TRIBUTOS
+    public function tributos_dian_data()
+    {
+        $tipo_documentos = DB::table('tributos_dian')
+            ->select('tributos_dian.*', 'empleados.nombre as creador')
+            ->join('empleados', 'empleados.id', '=', 'tributos_dian.created_by')
+            ->orderByRaw("CAST(tributos_dian.codigo AS SIGNED) ASC")
+            ->get();
+
+        return response()->json([
+            'info' => 1,
+            'data' => $tipo_documentos
+        ]);
+    }
+
+    public function add_tributos_dian(Request $request)
+    {
+
+        DB::table('tributos_dian')->insert([
+            'codigo' => $request->code,
+            'nombre' => $request->name,
+            'created_by' => auth()->user()->id,
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        return response()->json([
+            'info' => 1,
+        ]);
+    }
+
+    public function edit_tributos_dian(Request $request)
+    {
+
+        DB::table('tributos_dian')->where('id', $request->id)->update([
+            'codigo' => $request->code,
+            'nombre' => $request->name,
+        ]);
+
+        return response()->json([
+            'info' => 1,
+        ]);
+    }
+
+    public function status_tributos_dian(Request $request)
+    {
+        $status = $request->status;
+
+        if ($status == 1) {
+            $status = 0;
+        } else {
+            $status = 1;
+        }
+
+        DB::table('tributos_dian')->where('id', $request->id)->update([
+            'status' => $status,
+        ]);
+
+        return response()->json([
+            'info' => 1,
+        ]);
+    }
+
     // ORGANIZACION
     public function edit_organizacion(Request $request)
     {
@@ -897,26 +961,38 @@ class ConfiguracionController extends Controller
 
                 $avatar = DB::table('organizacion')->where('id', 1)->first()->avatar;
             }
-            
         } else if ($request->tipo == 2) {
             if ($request->hasFile('anexo_dian')) {
                 $file = $request->file('anexo_dian');
                 $name = time() . $file->getClientOriginalName();
                 $file->move('images/anexos_organizacion/', $name);
                 $anexo = $name;
-            }
 
-            DB::table('datos_tributarios')->where('id', 1)->update([
-                'actividad_economica' => $request->actividades ? $request->actividades : null,
-                'ica' => $request->ica ? $request->ica : null,
-                'aiu' => $request->aiu ? $request->aiu : null,
-                'dos_impuestos' => $request->impuestos ? $request->impuestos : null,
-                'iva' => $request->iva ? $request->iva : null,
-                'valorem' => $request->valorem ? $request->valorem : null,
-                'responsabilidad_fiscal' => $request->responsabilidad_fiscal ? $request->responsabilidad_fiscal : null,
-                'tributos' => $request->tributos ? $request->tributos : null,
-                'anexo_dian' => $anexo ? $anexo : null,
-            ]);
+                DB::table('datos_tributarios')->where('id', 1)->update([
+                    'actividad_economica' => $request->actividades ? $request->actividades : null,
+                    'ica' => $request->ica ? $request->ica : null,
+                    'aiu' => $request->aiu ? $request->aiu : null,
+                    'dos_impuestos' => $request->impuestos ? $request->impuestos : null,
+                    'iva' => $request->iva ? $request->iva : null,
+                    'valorem' => $request->valorem ? $request->valorem : null,
+                    'responsabilidad_fiscal' => $request->responsabilidad_fiscal ? $request->responsabilidad_fiscal : null,
+                    'tributos' => $request->tributos ? $request->tributos : null,
+                    'anexo_dian' => $anexo ? $anexo : null,
+                ]);
+            } else {
+                DB::table('datos_tributarios')->where('id', 1)->update([
+                    'actividad_economica' => $request->actividades ? $request->actividades : null,
+                    'ica' => $request->ica ? $request->ica : null,
+                    'aiu' => $request->aiu ? $request->aiu : null,
+                    'dos_impuestos' => $request->impuestos ? $request->impuestos : null,
+                    'iva' => $request->iva ? $request->iva : null,
+                    'valorem' => $request->valorem ? $request->valorem : null,
+                    'responsabilidad_fiscal' => $request->responsabilidad_fiscal ? $request->responsabilidad_fiscal : null,
+                    'tributos' => $request->tributos ? $request->tributos : null,
+                ]);
+
+                $anexo = DB::table('datos_tributarios')->where('id', 1)->first()->anexo_dian;
+            }
         } else if ($request->tipo == 3) {
             DB::table('representante_legal')->where('id', 1)->update([
                 'nombres' => $request->nombres ? $request->nombres : null,

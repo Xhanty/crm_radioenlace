@@ -49,6 +49,7 @@ $(document).ready(function () {
     load_actividad_economica();
     load_impuestos();
     load_retenciones();
+    load_tributos();
 
     $(".open-toggle").trigger("click");
 
@@ -97,6 +98,11 @@ $(document).ready(function () {
         $("#div_ciudades").removeClass("d-none");
     });
 
+    $("#btnAdminTributos").on("click", function () {
+        $("#div_general").addClass("d-none");
+        $("#div_tributos").removeClass("d-none");
+    });
+
     $("#btnPucCliente").on("click", function () {
         $("#div_general").addClass("d-none");
         $("#div_config_pucs").removeClass("d-none");
@@ -121,6 +127,7 @@ $(document).ready(function () {
         $("#div_config_pucs").addClass("d-none");
         $("#div_param_cuentas").addClass("d-none");
         $("#div_param_impuestos").addClass("d-none");
+        $("#div_tributos").addClass("d-none");
     });
 
     $(document).on("click", ".back_to_menu_param_doc", function () {
@@ -784,6 +791,64 @@ $(document).ready(function () {
                     $("#tbl_centros_costos tbody").html(html);
 
                     $("#tbl_centros_costos").DataTable({
+                        "responsive": true,
+                        "language": language,
+                        "order": [],
+                    });
+                } else {
+                    toastr.error("Error al cargar la información");
+
+                }
+                $("#tipo_empresa").html(data);
+            },
+            error: function (data) {
+                toastr.error("Error al cargar la información");
+                console.log(data);
+            },
+        });
+    }
+
+    function load_tributos() {
+        $.ajax({
+            url: "tributos_dian_data",
+            type: "POST",
+            dataType: "json",
+            success: function (response) {
+                if (response.info == 1) {
+                    var data = response.data;
+                    var html = '';
+
+                    for (let i = 0; i < data.length; i++) {
+                        data[i].created_at = new Date(data[i].created_at);
+                        data[i].created_at = data[i].created_at.toLocaleDateString('es-CO') + ' ' + data[i].created_at.toLocaleTimeString('es-CO');
+                        let status = '';
+                        if (data[i].status == 1) {
+                            status = '<span class="badge bg-success side-badge">Activo</span>';
+                        } else {
+                            status = '<span class="badge bg-danger side-badge">Inactivo</span>';
+                        }
+                        html += '<tr>';
+                        html += '<td>' + data[i].codigo + '</td>';
+                        html += '<td>' + data[i].nombre + '</td>';
+                        html += '<td>' + data[i].creador + '</td>';
+                        html += '<td>' + data[i].created_at + '</td>';
+                        html += '<td>' + status + '</td>';
+                        html += '<td class="text-center">';
+                        html += '<button type="button" class="btn btn-sm btn-primary btnEditTributo" title="Modificar" data-id="' + data[i].id + '" data-nombre="' + data[i].nombre + '" data-code="' + data[i].codigo + '"><i class="fa fa-edit"></i></button>&nbsp;';
+                        html += '<button type="button" class="btn btn-sm btn-warning btnStatusTributo" title="Cambiar Status" data-id="' + data[i].id + '" data-status="' + data[i].status + '"><i class="fa fa-times"></i></button>';
+                        html += '</td>';
+                        html += '</tr>';
+                    }
+
+                    if ($.fn.DataTable.isDataTable("#tbl_tributos")) {
+                        $("#tbl_tributos").DataTable().destroy();
+                    }
+
+                    $("#tbl_tributos tbody").empty();
+
+                    $("#tbl_tributos tbody").html(html);
+
+                    $("#tbl_tributos").DataTable({
                         "responsive": true,
                         "language": language,
                         "order": [],
@@ -1889,6 +1954,147 @@ $(document).ready(function () {
                 $(".btnStatusCentroCosto").attr("disabled", false);
                 $(".btnStatusCentroCosto").html('<i class="fa fa-times"></i>');
                 toastr.error("Error al actualizar el centro de costo");
+                console.log(data);
+            },
+        });
+    });
+
+    //TRIBUTOS
+    $(document).on("click", "#btnAddTributo", function () {
+        let code = $("#codigo_add_tributo").val();
+        let name = $("#nombre_add_tributo").val();
+
+        if (code.trim().length == 0) {
+            toastr.error("El código es obligatorio");
+            return false;
+        } else if (name.trim().length == 0) {
+            toastr.error("El nombre es obligatorio");
+            return false;
+        } else {
+            $("#btnAddTributo").attr("disabled", true);
+            $("#btnAddTributo").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
+            $.ajax({
+                url: "add_tributos_dian",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    code: code,
+                    name: name,
+                },
+                success: function (response) {
+                    if (response.info == 1) {
+                        load_tributos();
+                        $("#codigo_add_tributo").val('');
+                        $("#nombre_add_tributo").val('');
+                        toastr.success("Tributo agregado correctamente");
+                    } else {
+                        toastr.error("Error al agregar el tributo");
+                    }
+                    $("#btnAddTributo").attr("disabled", false);
+                    $("#btnAddTributo").html("Agregar Tributo");
+                },
+                error: function (data) {
+                    $("#btnAddTributo").attr("disabled", false);
+                    $("#btnAddTributo").html("Agregar Tributo");
+                    toastr.error("Error al agregar el tributo");
+                    console.log(data);
+                },
+            });
+        }
+    });
+
+    $(document).on("click", ".btnEditTributo", function () {
+        let id = $(this).data("id");
+        let code = $(this).data("code");
+        let name = $(this).data("nombre");
+
+        $("#id_edit_tributo").val(id);
+        $("#codigo_edit_tributo").val(code);
+        $("#nombre_edit_tributo").val(name);
+        $("#modalEditTributo").modal("show");
+    });
+
+    $(document).on("click", "#btnEditTributo", function () {
+        let id = $("#id_edit_tributo").val();
+        let code = $("#codigo_edit_tributo").val();
+        let name = $("#nombre_edit_tributo").val();
+
+        if (code.trim().length == 0) {
+            toastr.error("El código es obligatorio");
+            return false;
+        } else if (name.trim().length == 0) {
+            toastr.error("El nombre es obligatorio");
+            return false;
+        } else {
+            $("#btnEditTributo").attr("disabled", true);
+            $("#btnEditTributo").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
+            $.ajax({
+                url: "edit_tributos_dian",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id: id,
+                    code: code,
+                    name: name,
+                },
+                success: function (response) {
+                    if (response.info == 1) {
+                        load_tributos();
+                        $("#id_edit_tributo").val('');
+                        $("#codigo_edit_tributo").val('');
+                        $("#nombre_edit_tributo").val('');
+                        $("#modalEditTributo").modal("hide");
+                        toastr.success("Tributo actualizado correctamente");
+                    } else {
+                        toastr.error("Error al actualizar el tributo");
+                    }
+                    $("#btnEditTributo").attr("disabled", false);
+                    $("#btnEditTributo").html("Actualizar Tributo");
+                },
+                error: function (data) {
+                    $("#btnEditTributo").attr("disabled", false);
+                    $("#btnEditTributo").html("Actualizar Tributo");
+                    toastr.error("Error al actualizar el tributo");
+                    console.log(data);
+                },
+            });
+        }
+    });
+
+    $(document).on("click", ".btnStatusTributo", function () {
+        let id = $(this).data("id");
+        let status = $(this).data("status");
+
+        $(".btnStatusTributo").attr("disabled", true);
+        $(".btnStatusTributo").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'
+        );
+        $.ajax({
+            url: "status_tributos_dian",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id: id,
+                status: status,
+            },
+            success: function (response) {
+                if (response.info == 1) {
+                    load_tributos();
+                    toastr.success("Tributo actualizado correctamente");
+                } else {
+                    $(".btnStatusTributo").attr("disabled", false);
+                    $(".btnStatusTributo").html('<i class="fa fa-times"></i>');
+                    toastr.error("Error al actualizar el tributo");
+                }
+            },
+            error: function (data) {
+                $(".btnStatusTributo").attr("disabled", false);
+                $(".btnStatusTributo").html('<i class="fa fa-times"></i>');
+                toastr.error("Error al actualizar el tributo");
                 console.log(data);
             },
         });

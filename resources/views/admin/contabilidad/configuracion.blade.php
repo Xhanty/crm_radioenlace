@@ -218,6 +218,7 @@
                 <div class="box box-down blue" style="border-top: 14px solid hsl(212, 86%, 64%)">
                     <h2 style="margin-top: -8px">Catálogo Informativo</h2>
                     <ul>
+                        <li><a href="javascript:void(0);" id="btnAdminTributos">Tributos</a></li>
                         <li><a href="javascript:void(0);" id="btnPuc">Cuentas Contables</a></li>
                         <li><a href="javascript:void(0);" id="btnAdminActividadEconomica">Actividades Económicas</a></li>
                     </ul>
@@ -253,6 +254,7 @@
         @include('admin.contabilidad.configuracion.tipos_regimenes')
         @include('admin.contabilidad.configuracion.parametrizacion.cuentas_contables')
         @include('admin.contabilidad.configuracion.parametrizacion.impuestos')
+        @include('admin.contabilidad.configuracion.tributos')
 
         <!-- Modal Seleccionar Parametrización -->
         <div class="modal  fade" id="modalCuentas">
