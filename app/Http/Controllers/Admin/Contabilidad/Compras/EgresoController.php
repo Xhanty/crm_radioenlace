@@ -97,8 +97,11 @@ class EgresoController extends Controller
                 ->get();
 
             $pagos = DB::table('pagos_compras')
+                ->select('pagos_compras.*', 'empleados.nombre as creador')
+                ->join('empleados', 'empleados.id', '=', 'pagos_compras.created_by')
                 ->where('factura_id', $id)
                 ->where('tipo', 1)
+                ->orderBy('id', 'asc')
                 ->get();
 
             return view('admin.contabilidad.compras.egreso', compact('factura', 'num_egreso', 'centros_costos', 'proveedores', 'formas_pago', 'pagos'));
@@ -230,25 +233,25 @@ class EgresoController extends Controller
         try {
             $id = $request->get('token');
 
-            if(!$id){
+            if (!$id) {
                 return view('errors.500');
             }
 
             $cuota = 0;
             $data = DB::table('pagos_compras')
-            ->select(
-                'pagos_compras.*',
-                'configuracion_puc.nombre as forma_pago',
-                'proveedores.razon_social as proveedor',
-                'proveedores.nit',
-                'proveedores.codigo_verificacion',
-                'proveedores.ciudad',
-                'proveedores.direccion',
-                'proveedores.telefono_fijo',
-                'factura_compra.valor_total as valor_factura',
-                'factura_compra.factura_proveedor',
-                'factura_compra.num_factura_proveedor',
-            )
+                ->select(
+                    'pagos_compras.*',
+                    'configuracion_puc.nombre as forma_pago',
+                    'proveedores.razon_social as proveedor',
+                    'proveedores.nit',
+                    'proveedores.codigo_verificacion',
+                    'proveedores.ciudad',
+                    'proveedores.direccion',
+                    'proveedores.telefono_fijo',
+                    'factura_compra.valor_total as valor_factura',
+                    'factura_compra.factura_proveedor',
+                    'factura_compra.num_factura_proveedor',
+                )
                 ->join('configuracion_puc', 'configuracion_puc.id', '=', 'pagos_compras.forma_pago')
                 ->join('factura_compra', 'factura_compra.id', '=', 'pagos_compras.factura_id')
                 ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
@@ -260,13 +263,13 @@ class EgresoController extends Controller
             }
 
             $cuotas = DB::table('pagos_compras')
-            ->where('factura_id', $data->factura_id)
+                ->where('factura_id', $data->factura_id)
                 ->where('tipo', 1)
                 ->where('status', 1)
                 ->get();
 
             $lleva = DB::table('pagos_compras')
-            ->where('factura_id', $data->factura_id)
+                ->where('factura_id', $data->factura_id)
                 ->where('id', '<', $id)
                 ->where('tipo', 1)
                 ->where('status', 1)

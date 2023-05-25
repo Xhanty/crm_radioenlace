@@ -86,8 +86,11 @@ class ReciboPagoController extends Controller
                 ->get();
 
             $pagos = DB::table('pagos_ventas')
+                ->select('pagos_ventas.*', 'empleados.nombre as creador')
+                ->join('empleados', 'empleados.id', '=', 'pagos_ventas.created_by')
                 ->where('factura_id', $id)
                 ->where('tipo', 1)
+                ->orderBy('id', 'asc')
                 ->get();
 
             return view('admin.contabilidad.ventas.recibo_pago', compact('factura', 'num_egreso', 'centros_costos', 'clientes', 'formas_pago', 'pagos'));

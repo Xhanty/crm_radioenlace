@@ -9,7 +9,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0);">Contabilidad</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Compras / Recibo de pago</li>
+                        <li class="breadcrumb-item active" aria-current="page">Compras / Comprobante de egreso</li>
                     </ol>
                 </nav>
             </div>
@@ -23,7 +23,7 @@
                     <div class="card card-invoice">
                         <div class="card-header ps-3 pe-3 pt-3 pb-0 d-flex-header-table">
                             <div class="div-1-tables-header">
-                                <h3 class="card-title">Nueva recibo de pago</h3>
+                                <h3 class="card-title">Nuevo comprobante de egreso</h3>
                             </div>
                             <div class="div-2-tables-header" style="margin-bottom: 13px">
                                 <a href="{{ route('factura_compra') }}" class="btn btn-primary back_home">x</a>
@@ -38,7 +38,7 @@
                                         <label for="">Tipo</label>
                                         <select class="form-select" id="tipo_add">
                                             <option value="">Seleccione una opción</option>
-                                            <option value="1">(RP-1) Comprobante Egreso</option>
+                                            <option value="1">(CE-1) Comprobante Egreso</option>
                                         </select>
                                     </div>
                                     <div class="col-lg-4">
@@ -137,7 +137,7 @@
                                                     <td class="text-center pad-4">FE-{{ $factura->numero }}</td>
                                                     <td class="text-center pad-4">
                                                         {{ date('d-m-Y', strtotime($factura->fecha_vencimiento)) }}</td>
-                                                    <td class="text-center pad-4">1</td>
+                                                    <td class="text-center pad-4" id="cuota_pagar">1</td>
                                                     <td class="text-center pad-4">
                                                         {{ $factura->valor_total }}</td>
                                                     <td class="text-center pad-4" id="tlt_valor">
@@ -171,6 +171,53 @@
                 </div>
             </div>
         </div>
+
+        <!-- View -->
+        <div class="row row-sm">
+            <div class="col-md-12 col-xl-12">
+                <div class=" main-content-body-invoice">
+                    <div class="card card-invoice">
+                        <div class="card-header ps-3 pe-3 pt-3 pb-0 d-flex-header-table">
+                            <div class="div-1-tables-header">
+                                <h3 class="card-title" id="car_tlt_info">Comprobantes de egresos (Abonos)</h3>
+                            </div>
+                        </div>
+                        <div class="p-0">
+                            <div class="card-body" style="margin-top: -18px;">
+                                <div class="row row-sm mt-3">
+                                    <div class="table-responsive">
+                                        <table
+                                            class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
+                                            <thead>
+                                                <tr class="bg-gray">
+                                                    <th class="text-center">Comporbante Egreso</th>
+                                                    <th class="text-center">Cuota</th>
+                                                    <th class="text-center">Valor</th>
+                                                    <th class="text-center">Usuario</th>
+                                                    <th class="text-center">Fecha</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($pagos as $key => $value)
+                                                    <tr>
+                                                        <td class="text-center">CE-{{ $value->numero }}</td>
+                                                        <td class="text-center">{{ $key + 1 }}</td>
+                                                        <td class="text-center">{{ $value->valor }}</td>
+                                                        <td class="text-center">{{ $value->creador }}</td>
+                                                        <td class="text-center">
+                                                            {{ date('d-m-Y', strtotime($value->fecha_elaboracion)) }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -189,6 +236,9 @@
                 valor_factura = parseInt(valor_factura);
 
                 valor_pagar = valor_factura;
+
+                $("#cuota_pagar").html(1);
+                $("#car_tlt_info").html('Comprobantes de egresos (Abonos)');
             } else {
                 let valor_general = 0;
                 let valor_factura = $("#tlt_valor").text();
@@ -199,7 +249,7 @@
                 valor_factura = parseInt(valor_factura);
 
                 let valor_pagado = 0;
-
+                let count = 0;
                 pagos.forEach(pago => {
                     let valor = pago.valor;
                     valor = valor.split(',');
@@ -208,7 +258,13 @@
                     valor = parseInt(valor);
 
                     valor_pagado += valor;
+                    count++;
                 });
+
+                $("#car_tlt_info").html('Comprobantes de egresos (Abonos = ' + (valor_pagado).toLocaleString(
+                    'es-ES', {
+                        minimumFractionDigits: 2
+                    }) + ')');
 
                 valor_general = valor_factura - valor_pagado;
 
@@ -217,6 +273,8 @@
                 $("#tlt_valor").html((valor_general).toLocaleString('es-ES', {
                     minimumFractionDigits: 2
                 }));
+
+                $("#cuota_pagar").html(count + 1);
             }
 
             $("#vlv_pagar").val(valor_pagar);

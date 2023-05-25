@@ -122,7 +122,7 @@
                                                             class="check_fc">
                                                     </td>
                                                     <td class="text-center pad-4">FE-{{ $factura->numero }}</td>
-                                                    <td class="text-center pad-4">1</td>
+                                                    <td class="text-center pad-4" id="cuota_pagar">1</td>
                                                     <td class="text-center pad-4">
                                                         {{ $factura->valor_total }}</td>
                                                     <td class="text-center pad-4" id="tlt_valor">
@@ -156,6 +156,53 @@
                 </div>
             </div>
         </div>
+
+        <!-- View -->
+        <div class="row row-sm">
+            <div class="col-md-12 col-xl-12">
+                <div class=" main-content-body-invoice">
+                    <div class="card card-invoice">
+                        <div class="card-header ps-3 pe-3 pt-3 pb-0 d-flex-header-table">
+                            <div class="div-1-tables-header">
+                                <h3 class="card-title" id="car_tlt_info">Recibos de pago (Abonos)</h3>
+                            </div>
+                        </div>
+                        <div class="p-0">
+                            <div class="card-body" style="margin-top: -18px;">
+                                <div class="row row-sm mt-3">
+                                    <div class="table-responsive">
+                                        <table
+                                            class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
+                                            <thead>
+                                                <tr class="bg-gray">
+                                                    <th class="text-center">Recibo Pago</th>
+                                                    <th class="text-center">Cuota</th>
+                                                    <th class="text-center">Valor</th>
+                                                    <th class="text-center">Usuario</th>
+                                                    <th class="text-center">Fecha</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($pagos as $key => $value)
+                                                    <tr>
+                                                        <td class="text-center">RP-{{ $value->numero }}</td>
+                                                        <td class="text-center">{{ $key + 1 }}</td>
+                                                        <td class="text-center">{{ $value->valor }}</td>
+                                                        <td class="text-center">{{ $value->creador }}</td>
+                                                        <td class="text-center">
+                                                            {{ date('d-m-Y', strtotime($value->fecha_elaboracion)) }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -174,6 +221,8 @@
                 valor_factura = parseInt(valor_factura);
 
                 valor_pagar = valor_factura;
+                $("#cuota_pagar").html(1);
+                $("#car_tlt_info").html('Recibos de pago (Abonos)');
             } else {
                 let valor_general = 0;
                 let valor_factura = $("#tlt_valor").text();
@@ -184,6 +233,7 @@
                 valor_factura = parseInt(valor_factura);
 
                 let valor_pagado = 0;
+                let count = 0;
 
                 pagos.forEach(pago => {
                     let valor = pago.valor;
@@ -193,7 +243,12 @@
                     valor = parseInt(valor);
 
                     valor_pagado += valor;
+                    count++;
                 });
+
+                $("#car_tlt_info").html('Recibos de pago (Abonos = ' + (valor_pagado).toLocaleString('es-ES', {
+                    minimumFractionDigits: 2
+                }) + ')');
 
                 valor_general = valor_factura - valor_pagado;
 
@@ -202,6 +257,8 @@
                 $("#tlt_valor").html((valor_general).toLocaleString('es-ES', {
                     minimumFractionDigits: 2
                 }));
+
+                $("#cuota_pagar").html(count + 1);
             }
 
             $("#vlv_pagar").val(valor_pagar);
