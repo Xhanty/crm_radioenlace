@@ -83,10 +83,10 @@
                             <option value="">Seleccione un opción</option>
                             @foreach ($ciudades as $item)
                                 @if ($item->id == $organizacion->ciudad)
-                                    <option value="{{ $item->id }}" selected>{{ $item->nombre }} -
+                                    <option value="{{ $item->id }}" selected>{{ $item->nombre }} ({{ $item->code }}) -
                                         {{ $item->departamento }}</option>
                                 @else
-                                    <option value="{{ $item->id }}">{{ $item->nombre }} -
+                                    <option value="{{ $item->id }}">{{ $item->nombre }} ({{ $item->code }}) -
                                         {{ $item->departamento }}</option>
                                 @endif
                             @endforeach

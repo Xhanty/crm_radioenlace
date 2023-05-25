@@ -18,7 +18,7 @@
                         <select class="form-select" id="departamento_add_ciudad">
                             <option value="">Seleccione una opción</option>
                             @foreach ($departamentos as $departamento)
-                                <option value="{{ $departamento->id }}">{{ $departamento->nombre }}</option>
+                                <option value="{{ $departamento->id }}">{{ $departamento->nombre }} ({{ $departamento->code }})</option>
                             @endforeach
                         </select>
                     </div>
@@ -29,8 +29,8 @@
                     </div>
 
                     <div class="col-lg mg-t-10 mg-lg-t-0">
-                        <label for="">Código Postal (Opcional)</label>
-                        <input class="form-control" id="cdpostal_add_ciudad" placeholder="Código Postal (Opcional)" type="text">
+                        <label for="">Código</label>
+                        <input class="form-control" id="cdpostal_add_ciudad" placeholder="Código" type="text">
                     </div>
                 </div>
                 <br>
@@ -75,7 +75,7 @@
                         <select class="form-select" id="departamento_edit_ciudad">
                             <option value="">Seleccione una opción</option>
                             @foreach ($departamentos as $departamento)
-                                <option value="{{ $departamento->id }}">{{ $departamento->nombre }}</option>
+                                <option value="{{ $departamento->id }}">{{ $departamento->nombre }} ({{ $departamento->code }})</option>
                             @endforeach
                         </select>
                     </div>
@@ -86,8 +86,8 @@
                     </div>
 
                     <div class="col-lg mg-t-10 mg-lg-t-0">
-                        <label for="">Código Postal (Opcional)</label>
-                        <input class="form-control" id="cdpostal_edit_ciudad" placeholder="Código Postal (Opcional)" type="text">
+                        <label for="">Código</label>
+                        <input class="form-control" id="cdpostal_edit_ciudad" placeholder="Código" type="text">
                     </div>
                 </div>
             </div>

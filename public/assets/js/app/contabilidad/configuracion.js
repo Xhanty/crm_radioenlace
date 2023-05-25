@@ -685,13 +685,13 @@ $(document).ready(function () {
                             status = '<span class="badge bg-danger side-badge">Inactivo</span>';
                         }
                         html += '<tr>';
-                        html += '<td>' + data[i].departamento + '</td>';
-                        html += '<td>' + data[i].nombre + '</td>';
+                        html += '<td>' + data[i].departamento + ' (' + data[i].code_departamento + ')</td>';
+                        html += '<td>' + data[i].nombre + ' (' + data[i].code + ')</td>';
                         html += '<td>' + data[i].creador + '</td>';
                         html += '<td>' + data[i].created_at + '</td>';
                         html += '<td>' + status + '</td>';
                         html += '<td class="text-center">';
-                        html += '<button type="button" class="btn btn-sm btn-primary btnEditCiudad" title="Modificar" data-id="' + data[i].id + '" data-nombre="' + data[i].nombre + '" data-departamento="' + data[i].departamento_id + '" data-codigo_postal="' + data[i].codigo_postal + '"><i class="fa fa-edit"></i></button>&nbsp;';
+                        html += '<button type="button" class="btn btn-sm btn-primary btnEditCiudad" title="Modificar" data-id="' + data[i].id + '" data-nombre="' + data[i].nombre + '" data-departamento="' + data[i].departamento_id + '" data-codigo_postal="' + data[i].code + '"><i class="fa fa-edit"></i></button>&nbsp;';
                         html += '<button type="button" class="btn btn-sm btn-warning btnStatusCiudad" title="Cambiar Status" data-id="' + data[i].id + '" data-status="' + data[i].status + '"><i class="fa fa-times"></i></button>';
                         html += '</td>';
                         html += '</tr>';
@@ -1762,6 +1762,9 @@ $(document).ready(function () {
         } else if (name.trim().length == 0) {
             toastr.error("El nombre es obligatorio");
             return false;
+        } else if (codigo_postal.trim().length == 0) {
+            toastr.error("El código es obligatorio");
+            return false;
         } else {
             $("#btnAddCiudad").attr("disabled", true);
             $("#btnAddCiudad").html(
@@ -1823,6 +1826,9 @@ $(document).ready(function () {
             return false;
         } else if (name.trim().length == 0) {
             toastr.error("El nombre es obligatorio");
+            return false;
+        } else if (codigo_postal.trim().length == 0) {
+            toastr.error("El código es obligatorio");
             return false;
         } else {
             $("#btnEditCiudad").attr("disabled", true);

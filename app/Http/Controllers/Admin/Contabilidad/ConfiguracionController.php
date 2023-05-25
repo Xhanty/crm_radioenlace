@@ -676,7 +676,7 @@ class ConfiguracionController extends Controller
     public function ciudades_data()
     {
         $tipo_documentos = DB::table('ciudades')
-            ->select('ciudades.*', 'empleados.nombre as creador', 'departamentos.nombre as departamento')
+            ->select('ciudades.*', 'empleados.nombre as creador', 'departamentos.nombre as departamento', 'departamentos.code as code_departamento')
             ->join('empleados', 'empleados.id', '=', 'ciudades.created_by')
             ->join('departamentos', 'departamentos.id', '=', 'ciudades.departamento_id')
             ->get();
@@ -691,9 +691,9 @@ class ConfiguracionController extends Controller
     {
 
         DB::table('ciudades')->insert([
+            'code' => $request->codigo_postal ? $request->codigo_postal : null,
             'nombre' => $request->name,
             'departamento_id' => $request->departamento,
-            'codigo_postal' => $request->codigo_postal ? $request->codigo_postal : null,
             'created_by' => auth()->user()->id,
             'created_at' => date('Y-m-d H:i:s')
         ]);
@@ -709,7 +709,7 @@ class ConfiguracionController extends Controller
         DB::table('ciudades')->where('id', $request->id)->update([
             'nombre' => $request->name,
             'departamento_id' => $request->departamento,
-            'codigo_postal' => $request->codigo_postal ? $request->codigo_postal : null,
+            'code' => $request->codigo_postal ? $request->codigo_postal : null,
         ]);
 
         return response()->json([
