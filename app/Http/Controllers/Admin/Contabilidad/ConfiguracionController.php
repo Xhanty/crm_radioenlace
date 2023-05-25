@@ -51,6 +51,10 @@ class ConfiguracionController extends Controller
                 $revisor_fiscal = DB::table('revisor_fiscal')->where('id', 1)->first();
             }
 
+            $documentos_org = DB::table("anexos_organizacion")
+                ->select('anexos_organizacion.*', 'empleados.nombre as creador')
+                ->join('empleados', 'empleados.id', '=', 'anexos_organizacion.created_by')
+                ->get();
             $tributos = DB::table('tributos_dian')->where("status", 1)->get();
             $tipos_empresas = DB::table('tipos_empresas')->where("status", 1)->get();
             $tipos_documentos = DB::table('tipos_documentos')->where("status", 1)->get();
@@ -83,7 +87,8 @@ class ConfiguracionController extends Controller
                 'contador',
                 'revisor_fiscal',
                 'cuentas_contables',
-                'tributos'
+                'tributos',
+                'documentos_org'
             ));
         } catch (Exception $ex) {
             return $ex->getMessage();
@@ -1030,8 +1035,54 @@ class ConfiguracionController extends Controller
         ]);
     }
 
-    // PARAMETRIZACION
+    // ANEXOS ORGANIZACIÓN
+    public function anexos_organizacion(Request $request)
+    {
+        $data = DB::table('anexos_organizacion')
+            ->select('anexos_organizacion.*', 'empleados.nombre as creador')
+            ->join('empleados', 'empleados.id', '=', 'anexos_organizacion.created_by')
+            ->get();
 
+        return response()->json([
+            'info' => 1,
+            'data' => $data
+        ]);
+    }
+
+    public function add_anexo_organizacion(Request $request)
+    {
+        if ($request->hasFile('anexo')) {
+            $file = $request->file('anexo');
+            $name = time() . $file->getClientOriginalName();
+            $file->move('images/anexos_organizacion/', $name);
+
+            DB::table('anexos_organizacion')->insert([
+                'documento' => $request->documento,
+                'anexo' => $name,
+                'created_by' => auth()->user()->id,
+                'created_at' => date('Y-m-d H:i:s')
+            ]);
+
+            return response()->json([
+                'info' => 1,
+            ]);
+        }
+    }
+
+    public function delete_anexo_organizacion(Request $request)
+    {
+        $archivo = DB::table('anexos_organizacion')->where('id', $request->id)->first()->anexo;
+
+        unlink('images/anexos_organizacion/' . $archivo);
+
+        DB::table('anexos_organizacion')->where('id', $request->id)->delete();
+
+        return response()->json([
+            'info' => 1,
+        ]);
+    }
+
+    // PARAMETRIZACION
     public function get_cuentas_parametrizacion(Request $request)
     {
         $regimen = $request->regimen;

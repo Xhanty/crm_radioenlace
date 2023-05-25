@@ -38,6 +38,10 @@ $(document).ready(function () {
     var tbl_pucs_cliente = null;
     var tbl_pucs_all_cliente = null;
 
+    var protocol = window.location.protocol;
+    var host = window.location.host;
+    var url_general = protocol + "//" + host + "/";
+
     load_pucs_cliente();
     load_pucs();
     load_ciudades();
@@ -157,12 +161,14 @@ $(document).ready(function () {
         $(".nav-link-3").removeClass("active");
         $(".nav-link-4").removeClass("active");
         $(".nav-link-5").removeClass("active");
+        $(".nav-link-6").removeClass("active");
 
         $("#one_detail").addClass("active");
         $("#two_detail").removeClass("active");
         $("#three_detail").removeClass("active");
         $("#four_detail").removeClass("active");
         $("#five_detail").removeClass("active");
+        $("#six_detail").removeClass("active");
     });
 
     $(".nav-link-2").click(function () {
@@ -171,12 +177,14 @@ $(document).ready(function () {
         $(".nav-link-3").removeClass("active");
         $(".nav-link-4").removeClass("active");
         $(".nav-link-5").removeClass("active");
+        $(".nav-link-6").removeClass("active");
 
         $("#one_detail").removeClass("active");
         $("#two_detail").addClass("active");
         $("#three_detail").removeClass("active");
         $("#four_detail").removeClass("active");
         $("#five_detail").removeClass("active");
+        $("#six_detail").removeClass("active");
     });
 
     $(".nav-link-3").click(function () {
@@ -185,12 +193,14 @@ $(document).ready(function () {
         $(".nav-link-2").removeClass("active");
         $(".nav-link-4").removeClass("active");
         $(".nav-link-5").removeClass("active");
+        $(".nav-link-6").removeClass("active");
 
         $("#one_detail").removeClass("active");
         $("#two_detail").removeClass("active");
         $("#three_detail").addClass("active");
         $("#four_detail").removeClass("active");
         $("#five_detail").removeClass("active");
+        $("#six_detail").removeClass("active");
     });
 
     $(".nav-link-4").click(function () {
@@ -199,12 +209,14 @@ $(document).ready(function () {
         $(".nav-link-2").removeClass("active");
         $(".nav-link-3").removeClass("active");
         $(".nav-link-5").removeClass("active");
+        $(".nav-link-6").removeClass("active");
 
         $("#one_detail").removeClass("active");
         $("#two_detail").removeClass("active");
         $("#three_detail").removeClass("active");
         $("#four_detail").addClass("active");
         $("#five_detail").removeClass("active");
+        $("#six_detail").removeClass("active");
     });
 
     $(".nav-link-5").click(function () {
@@ -213,12 +225,30 @@ $(document).ready(function () {
         $(".nav-link-2").removeClass("active");
         $(".nav-link-3").removeClass("active");
         $(".nav-link-4").removeClass("active");
+        $(".nav-link-6").removeClass("active");
 
         $("#one_detail").removeClass("active");
         $("#two_detail").removeClass("active");
         $("#three_detail").removeClass("active");
         $("#four_detail").removeClass("active");
         $("#five_detail").addClass("active");
+        $("#six_detail").removeClass("active");
+    });
+
+    $(".nav-link-6").click(function () {
+        $(this).addClass("active");
+        $(".nav-link-1").removeClass("active");
+        $(".nav-link-2").removeClass("active");
+        $(".nav-link-3").removeClass("active");
+        $(".nav-link-4").removeClass("active");
+        $(".nav-link-5").removeClass("active");
+
+        $("#one_detail").removeClass("active");
+        $("#two_detail").removeClass("active");
+        $("#three_detail").removeClass("active");
+        $("#four_detail").removeClass("active");
+        $("#five_detail").removeClass("active");
+        $("#six_detail").addClass("active");
     });
 
     // CARGAR INFORMACIÓN
@@ -849,6 +879,55 @@ $(document).ready(function () {
                     $("#tbl_tributos tbody").html(html);
 
                     $("#tbl_tributos").DataTable({
+                        "responsive": true,
+                        "language": language,
+                        "order": [],
+                    });
+                } else {
+                    toastr.error("Error al cargar la información");
+
+                }
+                $("#tipo_empresa").html(data);
+            },
+            error: function (data) {
+                toastr.error("Error al cargar la información");
+                console.log(data);
+            },
+        });
+    }
+
+    function load_documentos_org() {
+        $.ajax({
+            url: "anexos_organizacion",
+            type: "POST",
+            dataType: "json",
+            success: function (response) {
+                if (response.info == 1) {
+                    var data = response.data;
+                    var html = '';
+
+                    for (let i = 0; i < data.length; i++) {
+                        data[i].created_at = new Date(data[i].created_at);
+                        data[i].created_at = data[i].created_at.toLocaleDateString('es-CO');
+                        html += '<tr>';
+                        html += '<td class="text-center"><a href="' + url_general + 'images/anexos_organizacion/' + data[i].anexo + '" target="_blank">' + data[i].documento + '</a>';
+                        html += '<td class="text-center">' + data[i].creador + '</td>';
+                        html += '<td class="text-center">' + data[i].created_at + '</td>';
+                        html += '<td class="text-center">';
+                        html += '<button type="button" class="btn btn-sm btn-warning btnDeleteDocumentoAnexo" title="Borrar" data-id="' + data[i].id + '"><i class="fa fa-trash"></i></button>';
+                        html += '</td>';
+                        html += '</tr>';
+                    }
+
+                    if ($.fn.DataTable.isDataTable("#tbl_documentos_org")) {
+                        $("#tbl_documentos_org").DataTable().destroy();
+                    }
+
+                    $("#tbl_documentos_org tbody").empty();
+
+                    $("#tbl_documentos_org tbody").html(html);
+
+                    $("#tbl_documentos_org").DataTable({
                         "responsive": true,
                         "language": language,
                         "order": [],
@@ -2498,6 +2577,95 @@ $(document).ready(function () {
                 }
             });
         }
+    });
+
+    // DOCUMENTACIÓN ORGANIZACIÓN
+    $("#btnModificarOrganizacion7").on("click", function () {
+        let documento = $("#documento_org_add").val();
+        let anexo = $("#archivo_org_add")[0].files[0];
+
+        if (documento.trim().length == 0) {
+            toastr.error("El nombre del documento es obligatorio");
+            return false;
+        } else if (!anexo) {
+            toastr.error("El archivo es obligatorio");
+            return false;
+        } else {
+            $("#btnModificarOrganizacion7").attr("disabled", true);
+            $("#btnModificarOrganizacion7").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+            );
+            var formData = new FormData();
+            formData.append("documento", documento);
+            formData.append("anexo", $("#archivo_org_add")[0].files[0]);
+
+            $.ajax({
+                url: "add_anexo_organizacion",
+                type: "POST",
+                dataType: "json",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.info == 1) {
+                        $("#documento_org_add").val("");
+                        $("#archivo_org_add").val("");
+                        load_documentos_org();
+                        toastr.success("Documento agregado correctamente");
+                        $("#btnModificarOrganizacion7").attr("disabled", false);
+                        $("#btnModificarOrganizacion7").html("Agregar Documentación");
+                    } else {
+                        toastr.error("Error al agregar el documento");
+                    }
+                    $("#btnModificarOrganizacion7").attr("disabled", false);
+                    $("#btnModificarOrganizacion7").html("Agregar Documentación");
+                },
+                error: function (data) {
+                    $("#btnModificarOrganizacion7").attr("disabled", false);
+                    $("#btnModificarOrganizacion7").html("Agregar Documentación");
+                    toastr.error("Error al agregar el documento");
+                    console.log(data);
+                }
+            });
+        }
+    });
+
+    $(document).on("click", ".btnDeleteDocumentoAnexo", function () {
+        let id = $(this).data("id");
+
+        Swal.fire({
+            title: "¿Está seguro de eliminar el documento",
+            text: "No podrá revertir esta acción",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sí, eliminar",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "delete_anexo_organizacion",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        id: id,
+                    },
+                    success: function (response) {
+                        if (response.info == 1) {
+                            load_documentos_org();
+                            toastr.success("Auxiliar eliminado correctamente");
+                        } else {
+                            toastr.error("Error al eliminar el auxiliar");
+                        }
+                    },
+                    error: function (data) {
+                        toastr.error("Error al eliminar el auxiliar");
+                        console.log(data);
+                    }
+                });
+            }
+        });
     });
 
     // CONFIGURACIÓN PUC

@@ -185,6 +185,11 @@
                                                 Revisor Fiscal
                                             </a>
                                         </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link nav-link-6" href="javascript:void(0)">
+                                                Documentación
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
 
@@ -305,7 +310,7 @@
                                                 $visible = '';
                                             }
                                         @endphp
-                                        <div class="row row-sm text-center mt-3 {{ $visible }}">
+                                        <!--<div class="row row-sm text-center mt-3 {{ $visible }}">
                                             <div class="col-lg">
                                                 <a id="link_anexo_dian" href="{{ asset('images/anexos_organizacion/' . $datos_tributarios->anexo_dian) }}"
                                                     target="_blank">Ver Anexo Dian</a>
@@ -317,7 +322,7 @@
                                                 <input class="form-control" id="anexo_dian_organizacion"
                                                     type="file" accept="application/pdf">
                                             </div>
-                                        </div>
+                                        </div>-->
                                         <br>
                                         <div class="text-center">
                                             <button class="btn ripple btn-primary" id="btnModificarOrganizacion2"
@@ -520,6 +525,59 @@
                                                 type="button">Actualizar Información</button>
                                         </div>
                                         <br>
+                                    </div>
+
+                                    <div class="tab-pane fade show p-3" id="six_detail">
+                                        <div class="row row-sm">
+                                            <div class="col-lg">
+                                                <label for="">Documento</label>
+                                                <input class="form-control" id="documento_org_add"
+                                                    placeholder="Documento" type="text">
+                                            </div>
+                                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                                <label for="">Archivo</label>
+                                                <input class="form-control" id="archivo_org_add"
+                                                    placeholder="Archivo" type="file">
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="text-center">
+                                            <button class="btn ripple btn-primary" id="btnModificarOrganizacion7"
+                                                type="button">Agregar Documentación</button>
+                                        </div>
+                                        <br>
+                                        <div class="table-responsive">
+                                            <table id="tbl_documentos_org"
+                                                class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">Documento</th>
+                                                        <th class="text-center">Creador</th>
+                                                        <th class="text-center">Fecha</th>
+                                                        <th class="text-center">Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($documentos_org as $value)
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                <a href="images/anexos_organizacion/{{ $value->anexo }}"
+                                                                    target="_blank">{{ $value->documento }}</a>
+                                                            </td>
+                                                            <td class="text-center">{{ $value->creador }}</td>
+                                                            <td class="text-center">{{ date('d/m/Y', strtotime($value->created_at)) }}</td>
+                                                            <td class="text-center">
+                                                                <button title="Borrar"
+                                                                    class="btn btn-warning btn-sm btnDeleteDocumentoAnexo"
+                                                                    data-id="{{ $value->id }}">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

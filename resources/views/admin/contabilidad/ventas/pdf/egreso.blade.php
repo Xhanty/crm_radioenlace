@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('pdf/style.css') }}">
-    <title>Recibo No. {{ $data->numero }}</title>
+    <title>Recibo Caja No. {{ $data->numero }}</title>
 </head>
 
 <body>
@@ -70,7 +70,7 @@
                     <div class="tm_invoice_info tm_mb22 tm_align_center">
                         <div class="tm_invoice_info_left tm_mb20_md" style="margin-top: 2px">
                             <p class="tm_mb0">
-                                <b class="tm_primary_color ">Recibo No: </b>{{ $data->numero }}<br>
+                                <b class="tm_primary_color ">Recibo Caja No: </b>{{ $data->numero }}<br>
                                 <b class="tm_primary_color">Fecha Venta:
                                 </b>{{ date('d/m/Y', strtotime($data->fecha_elaboracion)) }}<br>
                                 <b class="tm_primary_color">Forma Pago:

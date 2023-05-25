@@ -164,7 +164,7 @@
                                         </div>
                                         <div class="media-body">
 
-                                            <h6><span>Recibo No.{{ $comprobante->numero }}</span>
+                                            <h6><span>Recibo Caja No.{{ $comprobante->numero }}</span>
                                                 <span>{{ $comprobante->valor }}</span>
                                             </h6>
                                             <div>
@@ -206,7 +206,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md">
-                                        <label class="tx-gray-600">Información del recibo</label>
+                                        <label class="tx-gray-600">Información del recibo de caja</label>
                                         <p class="invoice-info-row"><span id="factura_tlt_2">Recibo No.</span> <span
                                                 id="num_fact_view">1743</span>
                                         </p>

@@ -260,6 +260,10 @@ Route::middleware(['auth_user'])->group(function () {
     Route::get('/configuracion_contabilidad', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'index'])->name('configuracion_contabilidad');
 
     Route::post('/edit_organizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_organizacion'])->name('edit_organizacion');
+    
+    Route::post('/anexos_organizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'anexos_organizacion'])->name('anexos_organizacion');
+    Route::post('/add_anexo_organizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_anexo_organizacion'])->name('add_anexo_organizacion');
+    Route::post('/delete_anexo_organizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'delete_anexo_organizacion'])->name('delete_anexo_organizacion');
 
     Route::post('/tipo_empresa_data', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'tipo_empresa_data'])->name('tipo_empresa_data');
     Route::post('/add_tipo_empresa', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_tipo_empresa'])->name('add_tipo_empresa');
