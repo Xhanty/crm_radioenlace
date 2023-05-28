@@ -196,9 +196,11 @@
                     <h2 style="margin-top: -8px">Parametrización</h2>
                     <ul>
                         <li><a href="javascript:void(0);" id="btnImpuestos">Impuestos</a></li>
+                        <li><a href="javascript:void(0);" data-bs-target="#modalResolucion" data-bs-toggle="modal"
+                                data-bs-effect="effect-scale">Resolución</a></li>
                         <li><a href="javascript:void(0);" data-bs-target="#modalCuentas" data-bs-toggle="modal"
                                 data-bs-effect="effect-scale">Documentos</a></li>
-                        <li><a href="javascript:void(0);" id="btnComprobantes">Comprobantes</a></li>                        
+                        <li><a href="javascript:void(0);" id="btnComprobantes">Comprobantes</a></li>
                     </ul>
                     <img style="float:right; width: 40px;" src="https://assets.codepen.io/2301174/icon-team-builder.svg"
                         alt="Terceros">
@@ -254,6 +256,7 @@
         @include('admin.contabilidad.configuracion.tipos_regimenes')
         @include('admin.contabilidad.configuracion.parametrizacion.cuentas_contables')
         @include('admin.contabilidad.configuracion.parametrizacion.impuestos')
+        @include('admin.contabilidad.configuracion.parametrizacion.resolucion')
         @include('admin.contabilidad.configuracion.tributos')
 
         <!-- Modal Seleccionar Parametrización -->
@@ -310,6 +313,31 @@
                                     <option disabled data-factura="[2,3]" value="2">Servicio</option>
                                     <option disabled data-factura="[2,3]" value="3">Activo</option>
                                     <option disabled data-factura="[2]" value="4">Gasto</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Resolución Factura -->
+        <div class="modal  fade" id="modalResolucion">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Parametrización de resolución</h6>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Documento</label>
+                                <select class="form-select" id="resoluc_select">
+                                    <option value="">Seleccione un opción</option>
+                                    <option value="1">Factura Venta</option>
                                 </select>
                             </div>
                         </div>

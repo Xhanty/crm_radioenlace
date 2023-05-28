@@ -259,7 +259,11 @@ Route::middleware(['auth_user'])->group(function () {
     // CONTABILIDAD
     Route::get('/configuracion_contabilidad', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'index'])->name('configuracion_contabilidad');
 
+    // ORGANIZACIÓN
     Route::post('/edit_organizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_organizacion'])->name('edit_organizacion');
+    
+    // RESOLUCIÓN
+    Route::post('/resolucion_add', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'resolucion_add'])->name('resolucion_add');
     
     Route::post('/anexos_organizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'anexos_organizacion'])->name('anexos_organizacion');
     Route::post('/add_anexo_organizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_anexo_organizacion'])->name('add_anexo_organizacion');

@@ -74,6 +74,16 @@ class ConfiguracionController extends Controller
                 ->whereRaw('LENGTH(code) = 8')
                 ->get();
 
+            $num_resoluc_fv = 0;
+            $fecha_resoluc_fv = null;
+
+            $valid_resoluc = DB::table('resolucion_dian')->where('documento', 1)->first();
+
+            if ($valid_resoluc) {
+                $num_resoluc_fv = $valid_resoluc->numero;
+                $fecha_resoluc_fv = $valid_resoluc->fecha;
+            }
+
             return view('admin.contabilidad.configuracion', compact(
                 'departamentos',
                 'tipos_empresas',
@@ -88,7 +98,9 @@ class ConfiguracionController extends Controller
                 'revisor_fiscal',
                 'cuentas_contables',
                 'tributos',
-                'documentos_org'
+                'documentos_org',
+                'num_resoluc_fv',
+                'fecha_resoluc_fv'
             ));
         } catch (Exception $ex) {
             return $ex->getMessage();
@@ -1340,6 +1352,49 @@ class ConfiguracionController extends Controller
         } catch (Exception $ex) {
             return response()->json([
                 'info' => 0,
+            ]);
+        }
+    }
+
+    // RESOLUCIÓN
+    public function resolucion_add(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $tipo = $request->tipo;
+            $numero = $request->numero;
+            $fecha = $request->fecha;
+
+            if ($tipo == 'fv') {
+                $valid = DB::table('resolucion_dian')->where('documento', 1)->first();
+
+                if ($valid) {
+                    DB::table('resolucion_dian')->where('documento', 1)->update([
+                        'numero' => $numero,
+                        'fecha' => $fecha,
+                        'created_by' => auth()->user()->id,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                } else {
+                    DB::table('resolucion_dian')->insert([
+                        'documento' => 1,
+                        'numero' => $numero,
+                        'fecha' => $fecha,
+                        'created_by' => auth()->user()->id,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                }
+            }
+
+            DB::commit();
+            return response()->json([
+                'info' => 1,
+            ]);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return response()->json([
+                'info' => 0,
+                'error' => $ex->getMessage(),
             ]);
         }
     }

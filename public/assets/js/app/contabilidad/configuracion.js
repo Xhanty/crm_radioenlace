@@ -3479,4 +3479,58 @@ $(document).ready(function () {
             }
         });
     });
+
+    $("#resoluc_select").on("change", function () {
+        let id = $(this).val();
+        if (id > 0) {
+            console.log(id);
+            $("#modalResolucion").modal("hide");
+            $("#modalResolucionAdd").modal("show");
+            $(this).val("").trigger("change");
+        }
+    });
+
+    $("#btnAddResolucionVenta").on("click", function () {
+        let numero = $("#num_resoluc_venta_add").val();
+        let fecha = $("#date_resoluc_venta_add").val();
+
+        if (numero < 1) {
+            toastr.error("Ingrese el número de la resolución");
+            return false;
+        } else if (fecha == "") {
+            toastr.error("Ingrese la fecha de la resolución");
+            return false;
+        } else {
+            $("#btnAddResolucionVenta").attr("disabled", true);
+            $("#btnAddResolucionVenta").html("<i class='fa fa-spinner fa-spin'></i> Adicionando Resolución");
+            $.ajax({
+                url: "resolucion_add",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    tipo: 'fv',
+                    numero: numero,
+                    fecha: fecha,
+                },
+                success: function (response) {
+                    if (response.info == 1) {
+                        toastr.success("Resolución agregada correctamente");
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000);
+                    } else {
+                        toastr.error("Error al agregar la resolución");
+                        $("#btnAddResolucionVenta").attr("disabled", false);
+                        $("#btnAddResolucionVenta").html("Adicionar Resolución");
+                    }
+                },
+                error: function (data) {
+                    toastr.error("Error al agregar la resolución");
+                    $("#btnAddResolucionVenta").attr("disabled", false);
+                    $("#btnAddResolucionVenta").html("Adicionar Resolución");
+                    console.log(data);
+                }
+            });
+        }
+    });
 });
