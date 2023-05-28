@@ -142,6 +142,11 @@
                 </nav>
             </div>
         </div>
+        <div class="alert alert-danger mb-2" role="alert">
+            <span class="alert-inner--icon"><i class="fe fe-info"></i></span>
+            <span class="alert-inner--text"><strong>Alerta!</strong> Quedan pocos números disponibles en la numeración de
+                facturación autorizada por la DIAN</span>
+        </div>
         <!-- /breadcrumb -->
         <div class="row row-sm" id="div_general">
             <div class="col-md-12 col-xl-4">
@@ -415,7 +420,9 @@
                                                     <select class="form-select cargo_add">
                                                         <option value="">Seleccione una opción</option>
                                                         @foreach ($impuestos_cargos as $impuesto)
-                                                            <option data-impuesto="{{ $impuesto->tarifa }}" value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
+                                                            <option data-impuesto="{{ $impuesto->tarifa }}"
+                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </td>
@@ -423,7 +430,9 @@
                                                     <select class="form-select retencion_add">
                                                         <option value="">Seleccione una opción</option>
                                                         @foreach ($impuestos_retencion as $impuesto)
-                                                            <option data-impuesto="{{ $impuesto->tarifa }}" value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
+                                                            <option data-impuesto="{{ $impuesto->tarifa }}"
+                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </td>
@@ -675,7 +684,9 @@ reportarse en las centrales de crédito.</textarea>
                                                     <select class="form-select cargo_edit">
                                                         <option value="">Seleccione una opción</option>
                                                         @foreach ($impuestos_cargos as $impuesto)
-                                                            <option data-impuesto="{{ $impuesto->tarifa }}" value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
+                                                            <option data-impuesto="{{ $impuesto->tarifa }}"
+                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </td>
@@ -683,7 +694,9 @@ reportarse en las centrales de crédito.</textarea>
                                                     <select class="form-select retencion_edit">
                                                         <option value="">Seleccione una opción</option>
                                                         @foreach ($impuestos_retencion as $impuesto)
-                                                            <option data-impuesto="{{ $impuesto->tarifa }}" value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
+                                                            <option data-impuesto="{{ $impuesto->tarifa }}"
+                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </td>
