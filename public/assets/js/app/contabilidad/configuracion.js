@@ -2328,7 +2328,7 @@ $(document).ready(function () {
             formData.append("valorem", valorem);
             formData.append("responsabilidad_fiscal", responsabilidad_fiscal);
             formData.append("tributos", tributos);
-            formData.append("anexo_dian", $("#anexo_dian_organizacion")[0].files[0]);
+            formData.append("anexo_dian", null)//$("#anexo_dian_organizacion")[0].files[0]);
 
             $.ajax({
                 url: "edit_organizacion",
