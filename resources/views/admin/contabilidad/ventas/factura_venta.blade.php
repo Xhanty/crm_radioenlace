@@ -142,11 +142,26 @@
                 </nav>
             </div>
         </div>
-        <div class="alert alert-danger mb-2" role="alert">
-            <span class="alert-inner--icon"><i class="fe fe-info"></i></span>
-            <span class="alert-inner--text"><strong>Alerta!</strong> Quedan pocos números disponibles en la numeración de
-                facturación autorizada por la DIAN</span>
-        </div>
+        @if ($view_alert == 1)
+            <div class="alert alert-danger mb-2" role="alert">
+                <span class="alert-inner--icon"><i class="fe fe-info"></i></span>
+                <span class="alert-inner--text"> Quedan pocos números disponibles en la numeración de
+                    facturación autorizada por la DIAN</span>
+            </div>
+        @elseif($view_alert == 2)
+            <div class="alert alert-danger mb-2" role="alert">
+                <span class="alert-inner--icon"><i class="fe fe-info"></i></span>
+                <span class="alert-inner--text"> La fecha de vigencia de la numeración de facturación autorizada por la
+                    DIAN esta próxima a vencer</span>
+            </div>
+        @endif
+
+        @if ($disabled_fv == 1)
+            <div class="alert alert-danger mb-2" role="alert">
+                <span class="alert-inner--icon"><i class="fe fe-info"></i></span>
+                <span class="alert-inner--text"> La numeración de facturación autorizada por la DIAN esta vencida</span>
+            </div>
+        @endif
         <!-- /breadcrumb -->
         <div class="row row-sm" id="div_general">
             <div class="col-md-12 col-xl-4">
@@ -157,7 +172,8 @@
                                 <h3 class="card-title">Facturas de venta</h3>
                             </div>
                             <div class="div-2-tables-header" style="margin-bottom: 13px">
-                                <button class="btn btn-primary" id="btnNew">+</button>
+                                <button @if ($disabled_fv == 1) disabled @endif class="btn btn-primary"
+                                    id="btnNew">+</button>
                             </div>
                         </div>
                         <div class="p-0">

@@ -68,6 +68,34 @@ class FacturaVentaController extends Controller
                 ->orderBy('factura_venta.id', 'desc')
                 ->get();
 
+            $view_alert = 0;
+            $disabled_fv = 0;
+
+            $resolucion_fv = DB::table('resolucion_dian')
+                ->where('documento', 1)
+                ->first();
+
+            if ($resolucion_fv) {
+                $last_numero = $num_factura - 1;
+
+                if (($resolucion_fv->numero - $last_numero) <= 10) {
+                    if (($resolucion_fv->numero - $last_numero) <= 1) {
+                        $disabled_fv = 1;
+                    }
+                    $view_alert = 1;
+                }
+
+                $fecha_actual = date('Y-m-d');
+                $fecha_vencimiento = $resolucion_fv->fecha;
+                $dias = (strtotime($fecha_vencimiento) - strtotime($fecha_actual)) / 86400;
+                if ($dias <= 30) {
+                    if ($dias <= 1) {
+                        $disabled_fv = 1;
+                    }
+                    $view_alert = 2;
+                }
+            }
+
             return view('admin.contabilidad.ventas.factura_venta', compact(
                 'num_factura',
                 'productos',
@@ -76,7 +104,9 @@ class FacturaVentaController extends Controller
                 'usuarios',
                 'impuestos_cargos',
                 'impuestos_retencion',
-                'facturas'
+                'facturas',
+                'view_alert',
+                'disabled_fv'
             ));
         } catch (Exception $ex) {
             return view('errors.500');
