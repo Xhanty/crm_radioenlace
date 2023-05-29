@@ -370,7 +370,15 @@
                         <div class="row row-sm">
                             <div class="col-8">
                                 <label for="">Elementos</label>
-                                <input class="form-control elementoedit" placeholder="Elemento" type="text">
+                                <select class="form-select elementoedit">
+                                    <option value="">Seleccione una opción</option>
+                                    @foreach ($productos as $producto)
+                                        <option
+                                            value="{{ $producto->nombre }} ({{ $producto->marca }} - {{ $producto->modelo }})">
+                                            {{ $producto->nombre }} ({{ $producto->marca }} - {{ $producto->modelo }})
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="col-3">
                                 <label for="">Cantidades</label>

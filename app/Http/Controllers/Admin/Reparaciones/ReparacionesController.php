@@ -284,4 +284,15 @@ class ReparacionesController extends Controller
             return view('errors.500');
         }
     }
+
+    public function mis_reparaciones(Request $request)
+    {
+        try {
+            $data = DB::table('reparaciones')->where('tecnico_id', auth()->user()->id)->get();
+
+            return response()->json(['info' => 1, 'data' => $data]);
+        } catch (Exception $ex) {
+            return response()->json(['info' => 0, 'message' => 'Error al obtener la información.']);
+        }
+    }
 }

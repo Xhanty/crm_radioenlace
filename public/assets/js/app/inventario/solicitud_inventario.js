@@ -11,10 +11,17 @@ $(document).ready(function () {
     var id_almacen_salida = 0;
     let btn_View = 0;
     let data_seriales_gestion = [];
+    let productos = JSON.parse(localStorage.getItem("productos"));
 
     let concat_add = '<div class="row row-sm mt-2">' +
         '<div class="col-8" >' +
-        '<input class="form-control elementoadd" placeholder="Elemento" type="text">' +
+        '<select class="form-select elementoadd">' +
+        '<option value="">Seleccione una opción</option>' +
+        productos.map((element) => {
+            return '<option value="' + element.nombre + ' (' + element.marca + ' - ' + element.modelo + ')">' +
+                element.nombre + ' (' + element.marca + ' - ' + element.modelo + ')</option>';
+        }) +
+        '</select>' +
         '</div>' +
         '<div class="col-3">' +
         '<input class="form-control cantidadadd" placeholder="Cantidad" type="number" min="1" step="1">' +
@@ -24,11 +31,17 @@ $(document).ready(function () {
         '<i class="fa fa-trash"></i>' +
         '</a>' +
         '</div>' +
-        '</div > ';
+        '</div>';
 
     let concat_edit = '<div class="row row-sm mt-2">' +
         '<div class="col-8" >' +
-        '<input class="form-control elementoedit" placeholder="Elemento" type="text">' +
+        '<select class="form-select elementoedit">' +
+        '<option value="">Seleccione una opción</option>' +
+        productos.map((element) => {
+            return '<option value="' + element.nombre + ' (' + element.marca + ' - ' + element.modelo + ')">' +
+                element.nombre + ' (' + element.marca + ' - ' + element.modelo + ')</option>';
+        }) +
+        '</select>' +
         '</div>' +
         '<div class="col-3">' +
         '<input class="form-control cantidadedit" placeholder="Cantidad" type="number" min="1" step="1">' +
@@ -42,6 +55,13 @@ $(document).ready(function () {
 
     $("#new_row_elemento").click(function () {
         $("#div_list_elementos").append(concat_add);
+        $(".form-select").each(function () {
+            $(this).select2({
+                dropdownParent: $(this).parent(),
+                placeholder: "Seleccione una opción",
+                searchInputPlaceholder: "Buscar",
+            });
+        });
     });
 
     $("#new_row_serial").click(function () {
@@ -77,6 +97,13 @@ $(document).ready(function () {
 
     $("#new_row_elemento_edit").click(function () {
         $("#div_list_elementos_edit").append(concat_edit);
+        $(".form-select").each(function () {
+            $(this).select2({
+                dropdownParent: $(this).parent(),
+                placeholder: "Seleccione una opción",
+                searchInputPlaceholder: "Buscar",
+            });
+        });
     });
 
     $(document).on("click", ".btn_delete_row_add", function () {
@@ -105,7 +132,18 @@ $(document).ready(function () {
                     var URLactual = window.location.pathname;
 
                     $("#tiposalida_selectview").val(solicitud.tipo).trigger("change");
-                    $("#clienteview").val(solicitud.cliente_id).trigger("change");
+
+                    if (solicitud.tipo == 6) {
+                        $("#clienteview").parent().addClass("d-none");
+                        $("#reparacionedit").parent().removeClass("d-none");
+                        setTimeout(() => {
+                            $("#reparacionedit").val(solicitud.reparacion_id).trigger("change");
+                        }, 1111);
+                    } else {
+                        $("#clienteview").parent().removeClass("d-none");
+                        $("#reparacionedit").parent().addClass("d-none");
+                        $("#clienteview").val(solicitud.cliente_id).trigger("change");
+                    }
                     $("#descripcionview").val(solicitud.descripcion);
 
                     let concat_view = "Elementos";
@@ -181,7 +219,7 @@ $(document).ready(function () {
                     $("#clienteedit").val(solicitud.cliente_id).trigger("change");
                     $("#descripcionedit").val(solicitud.descripcion);
 
-                    $(".elementoedit").val(primer_elemento.elemento);
+                    $(".elementoedit").val(primer_elemento.elemento).trigger("change");
                     $(".cantidadedit").val(primer_elemento.cantidad);
 
                     let concat_view = "";
@@ -190,7 +228,19 @@ $(document).ready(function () {
                         if (val > 1) {
                             concat_view += '<div class="row row-sm mt-2">' +
                                 '<div class="col-8" >' +
-                                '<input class="form-control elementoedit" title="Elemento" placeholder="Elemento" type="text" value="' + elemento.elemento + '">' +
+                                '<select class="form-select elementoedit">' +
+                                '<option value="">Seleccione una opción</option>' +
+                                productos.map((element) => {
+                                    var valid_name = element.nombre + ' (' + element.marca + ' - ' + element.modelo + ')';
+                                    if (valid_name == elemento.elemento) {
+                                        return '<option selected value="' + element.nombre + ' (' + element.marca + ' - ' + element.modelo + ')">' +
+                                            element.nombre + ' (' + element.marca + ' - ' + element.modelo + ')</option>';
+                                    } else {
+                                        return '<option value="' + element.nombre + ' (' + element.marca + ' - ' + element.modelo + ')">' +
+                                            element.nombre + ' (' + element.marca + ' - ' + element.modelo + ')</option>';
+                                    }
+                                }) +
+                                '</select>' +
                                 '</div>' +
                                 '<div class="col-3">' +
                                 '<input class="form-control cantidadedit" title="Cantidad" placeholder="Cantidad" type="number" min="1" step="1" value="' + elemento.cantidad + '">' +
@@ -207,6 +257,16 @@ $(document).ready(function () {
 
                     $("#div_list_elementos_edit").html(concat_view);
 
+                    $(".form-select").each(function () {
+                        $(this).select2({
+                            dropdownParent: $(this).parent(),
+                            placeholder: "Seleccione una opción",
+                            searchInputPlaceholder: "Buscar",
+                        });
+                    });
+                    setTimeout(function () {
+                        $("#reparacionedit").val(solicitud.reparacion_id).trigger("change");
+                    }, 1111);
                     $("#modalEdit").modal("show");
                 } else {
                     toastr.error("Error al cargar la solicitud");
@@ -375,6 +435,7 @@ $(document).ready(function () {
     $("#btn_save_solicitud").click(function () {
         let tipo = $("#tiposalida_selectadd").val();
         let cliente = $("#clienteadd").val();
+        let reparacion = $("#reparacionadd").val();
         let descripcion = $("#descripcionadd").val();
         let elementos = [];
         let cantidad = [];
@@ -399,7 +460,7 @@ $(document).ready(function () {
         if (tipo == "") {
             toastr.error("Seleccione un motivo");
             return;
-        } else if (cliente == "" || cliente == null) {
+        } else if (tipo != 6 && cliente == "") {
             toastr.error("Seleccione un cliente");
             return;
         } else if (descripcion == "" || descripcion == null) {
@@ -407,6 +468,9 @@ $(document).ready(function () {
             return;
         } else if (error) {
             toastr.error("Verifique los elementos y cantidades");
+            return;
+        } else if (tipo == 6 && reparacion == "") {
+            toastr.error("Seleccione una reparación");
             return;
         } else {
             $("#btn_save_solicitud").attr("disabled", true);
@@ -419,6 +483,7 @@ $(document).ready(function () {
                 data: {
                     tipo: tipo,
                     cliente: cliente,
+                    reparacion: reparacion,
                     descripcion: descripcion,
                     elementos: elementos,
                     cantidad: cantidad,
@@ -448,6 +513,7 @@ $(document).ready(function () {
         let id = $("#solicitudid").val();
         let tipo = $("#tiposalida_selectedit").val();
         let cliente = $("#clienteedit").val();
+        let reparacion = $("#reparacionedit").val();
         let descripcion = $("#descripcionedit").val();
         let elementos = [];
         let cantidad = [];
@@ -472,7 +538,7 @@ $(document).ready(function () {
         if (tipo == "") {
             toastr.error("Seleccione un motivo");
             return;
-        } else if (cliente == "" || cliente == null) {
+        } else if (tipo != 6 && cliente == "") {
             toastr.error("Seleccione un cliente");
             return;
         } else if (descripcion == "" || descripcion == null) {
@@ -480,6 +546,9 @@ $(document).ready(function () {
             return;
         } else if (error) {
             toastr.error("Verifique los elementos y cantidades");
+            return;
+        } else if (tipo == 6 && reparacion == "") {
+            toastr.error("Seleccione una reparación");
             return;
         } else {
             $("#btn_update_solicitud").attr("disabled", true);
@@ -493,6 +562,7 @@ $(document).ready(function () {
                     id: id,
                     tipo: tipo,
                     cliente: cliente,
+                    reparacion: reparacion,
                     descripcion: descripcion,
                     elementos: elementos,
                     cantidad: cantidad,
@@ -689,6 +759,96 @@ $(document).ready(function () {
                     console.log(error);
                 },
             });
+        }
+    });
+
+    $("#tiposalida_selectadd").change(function () {
+        let val = $(this).val();
+
+        if (val == 6) {
+            $("#reparacionadd").parent().removeClass("d-none");
+            $("#clienteadd").parent().addClass("d-none");
+            $("#clienteadd").val("").trigger("change");
+            $("#reparacionadd").val("").trigger("change");
+
+            $.ajax({
+                url: "mis_reparaciones",
+                type: "POST",
+                success: function (response) {
+                    let data = response.data;
+                    if (response.info == 1) {
+                        $("#reparacionadd").empty();
+                        $("#reparacionadd").append("<option value=''>Seleccione</option>");
+                        data.forEach((element) => {
+                            $("#reparacionadd").append(
+                                "<option value='" + element.id + "'>" + element.token + "</option>"
+                            );
+                        });
+                    }
+
+                    $(".form-select").each(function () {
+                        $(this).select2({
+                            dropdownParent: $(this).parent(),
+                            placeholder: "Seleccione una opción",
+                            searchInputPlaceholder: "Buscar",
+                        });
+                    });
+                },
+                error: function (error) {
+                    toastr.error("Error al cargar los datos");
+                    console.log(error);
+                },
+            });
+        } else {
+            $("#clienteadd").parent().removeClass("d-none");
+            $("#reparacionadd").parent().addClass("d-none");
+            $("#reparacionadd").val("").trigger("change");
+            $("#clienteadd").val("").trigger("change");
+        }
+    });
+
+    $("#tiposalida_selectedit").change(function () {
+        let val = $(this).val();
+
+        if (val == 6) {
+            $("#reparacionedit").parent().removeClass("d-none");
+            $("#clienteedit").parent().addClass("d-none");
+            $("#clienteedit").val("").trigger("change");
+            $("#reparacionedit").val("").trigger("change");
+
+            $.ajax({
+                url: "mis_reparaciones",
+                type: "POST",
+                success: function (response) {
+                    let data = response.data;
+                    if (response.info == 1) {
+                        $("#reparacionedit").empty();
+                        $("#reparacionedit").append("<option value=''>Seleccione</option>");
+                        data.forEach((element) => {
+                            $("#reparacionedit").append(
+                                "<option value='" + element.id + "'>" + element.token + "</option>"
+                            );
+                        });
+                    }
+
+                    $(".form-select").each(function () {
+                        $(this).select2({
+                            dropdownParent: $(this).parent(),
+                            placeholder: "Seleccione una opción",
+                            searchInputPlaceholder: "Buscar",
+                        });
+                    });
+                },
+                error: function (error) {
+                    toastr.error("Error al cargar los datos");
+                    console.log(error);
+                },
+            });
+        } else {
+            $("#clienteedit").parent().removeClass("d-none");
+            $("#reparacionedit").parent().addClass("d-none");
+            $("#reparacionedit").val("").trigger("change");
+            $("#clienteedit").val("").trigger("change");
         }
     });
 });

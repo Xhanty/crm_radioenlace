@@ -203,6 +203,7 @@ Route::middleware(['auth_user'])->group(function () {
     
     // MIS REPARACIONES
     Route::get('/mis_reparaciones', [App\Http\Controllers\Admin\Reparaciones\MisReparacionesController::class, 'index'])->name('mis_reparaciones');
+    Route::post('/mis_reparaciones', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'mis_reparaciones'])->name('mis_reparaciones');
     Route::post('/reparaciones_avances', [App\Http\Controllers\Admin\Reparaciones\MisReparacionesController::class, 'avances'])->name('reparaciones_avances');
     Route::post('/reparaciones_repuestos', [App\Http\Controllers\Admin\Reparaciones\MisReparacionesController::class, 'repuestos'])->name('reparaciones_repuestos');
     Route::post('/reparaciones_reparaciones', [App\Http\Controllers\Admin\Reparaciones\MisReparacionesController::class, 'reparaciones'])->name('reparaciones_reparaciones');

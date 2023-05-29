@@ -50,10 +50,12 @@
                                             <td>{{ $solicitud->descripcion }}</td>
                                             <td>{{ $solicitud->elementos }}</td>
                                             <td class="text-center">
-                                                <a href="javascript:void(0)" title="Ver" data-id="{{ $solicitud->id }}" class="btn btn-primary btn-sm btnView">
+                                                <a href="javascript:void(0)" title="Ver" data-id="{{ $solicitud->id }}"
+                                                    class="btn btn-primary btn-sm btnView">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
-                                                <a href="javascript:void(0)" title="Editar" data-id="{{ $solicitud->id }}" class="btn btn-primary btn-sm btnEditar">
+                                                <a href="javascript:void(0)" title="Editar" data-id="{{ $solicitud->id }}"
+                                                    class="btn btn-primary btn-sm btnEditar">
                                                     <i class="fa fa-pencil-alt"></i>
                                                 </a>
                                             </td>
@@ -100,14 +102,15 @@
                                             <td>{{ $solicitud->descripcion }}</td>
                                             <td>{{ $solicitud->elementos }}</td>
                                             <td>
-                                                @if($solicitud->estado == 1)
+                                                @if ($solicitud->estado == 1)
                                                     <span class="badge badge-success bg-success">Aceptado</span>
                                                 @elseif($solicitud->estado == 2)
                                                     <span class="badge badge-danger bg-danger">Rechazado</span>
                                                 @endif
                                             </td>
                                             <td class="text-center">
-                                                <a href="javascript:void(0)" title="Ver" data-id="{{ $solicitud->id }}" class="btn btn-primary btn-sm btnView">
+                                                <a href="javascript:void(0)" title="Ver" data-id="{{ $solicitud->id }}"
+                                                    class="btn btn-primary btn-sm btnView">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
                                             </td>
@@ -141,6 +144,7 @@
                                     <option value="3">Préstamo</option>
                                     <option value="4">Instalación</option>
                                     <option value="5">Venta</option>
+                                    <option value="6">Reparación</option>
                                 </select>
                             </div>
                             <div class="col-8">
@@ -148,8 +152,15 @@
                                 <select class="form-select" id="clienteadd">
                                     <option value="">Seleccione un cliente</option>
                                     @foreach ($clientes as $cliente)
-                                        <option value="{{ $cliente->id }}">{{ $cliente->nombre }} ({{ $cliente->nit }})</option>
+                                        <option value="{{ $cliente->id }}">{{ $cliente->nombre }} ({{ $cliente->nit }})
+                                        </option>
                                     @endforeach
+                                </select>
+                            </div>
+                            <div class="col-8 d-none">
+                                <label for="">Reparación</label>
+                                <select class="form-select" id="reparacionadd">
+                                    <option value="">Seleccione un cliente</option>
                                 </select>
                             </div>
                         </div>
@@ -165,12 +176,20 @@
                         <div class="row row-sm">
                             <div class="col-8">
                                 <label for="">Elementos</label>
-                                <input class="form-control elementoadd" placeholder="Elemento" type="text">
+                                <select class="form-select elementoadd">
+                                    <option value="">Seleccione una opción</option>
+                                    @foreach ($productos as $producto)
+                                        <option
+                                            value="{{ $producto->nombre }} ({{ $producto->marca }} - {{ $producto->modelo }})">
+                                            {{ $producto->nombre }} ({{ $producto->marca }} - {{ $producto->modelo }})
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="col-3">
                                 <label for="">Cantidades</label>
-                                <input class="form-control cantidadadd" placeholder="Cantidad" type="number" min="1"
-                                    step="1">
+                                <input class="form-control cantidadadd" placeholder="Cantidad" type="number"
+                                    min="1" step="1">
                             </div>
                             <div class="col-1 center-vertical">
                                 <a style="margin-top: 30px;" href="javascript:void(0)" id="new_row_elemento">
@@ -193,9 +212,8 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
-                        <h6 class="modal-title">Solicitud de elementos</h6><button aria-label="Close"
-                            class="btn-close" data-bs-dismiss="modal" type="button"><span
-                                aria-hidden="true">&times;</span></button>
+                        <h6 class="modal-title">Solicitud de elementos</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
                         <div class="row row-sm">
@@ -207,6 +225,7 @@
                                     <option value="3">Préstamo</option>
                                     <option value="4">Instalación</option>
                                     <option value="5">Venta</option>
+                                    <option value="6">Reparación</option>
                                 </select>
                             </div>
                             <div class="col-8">
@@ -214,8 +233,15 @@
                                 <select class="form-select" id="clienteview" disabled>
                                     <option value="">Seleccione un cliente</option>
                                     @foreach ($clientes as $cliente)
-                                        <option value="{{ $cliente->id }}">{{ $cliente->nombre }} ({{ $cliente->nit }})</option>
+                                        <option value="{{ $cliente->id }}">{{ $cliente->nombre }} ({{ $cliente->nit }})
+                                        </option>
                                     @endforeach
+                                </select>
+                            </div>
+                            <div class="col-8 d-none">
+                                <label for="">Reparación</label>
+                                <select class="form-select" disabled id="reparacionview">
+                                    <option value="">Seleccione un cliente</option>
                                 </select>
                             </div>
                         </div>
@@ -223,8 +249,8 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Descripción de la solicitud</label>
-                                <textarea class="form-control" disabled placeholder="Descripción de la solicitud" rows="3" id="descripcionview"
-                                    style="height: 70px; resize: none"></textarea>
+                                <textarea class="form-control" disabled placeholder="Descripción de la solicitud" rows="3"
+                                    id="descripcionview" style="height: 70px; resize: none"></textarea>
                             </div>
                         </div>
                         <br>
@@ -240,9 +266,8 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
-                        <h6 class="modal-title">Solicitud de elementos</h6><button aria-label="Close"
-                            class="btn-close" data-bs-dismiss="modal" type="button"><span
-                                aria-hidden="true">&times;</span></button>
+                        <h6 class="modal-title">Solicitud de elementos</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" disabled readonly id="solicitudid">
@@ -255,6 +280,7 @@
                                     <option value="3">Préstamo</option>
                                     <option value="4">Instalación</option>
                                     <option value="5">Venta</option>
+                                    <option value="6">Reparación</option>
                                 </select>
                             </div>
                             <div class="col-8">
@@ -262,8 +288,15 @@
                                 <select class="form-select" id="clienteedit">
                                     <option value="">Seleccione un cliente</option>
                                     @foreach ($clientes as $cliente)
-                                        <option value="{{ $cliente->id }}">{{ $cliente->nombre }} ({{ $cliente->nit }})</option>
+                                        <option value="{{ $cliente->id }}">{{ $cliente->nombre }} ({{ $cliente->nit }})
+                                        </option>
                                     @endforeach
+                                </select>
+                            </div>
+                            <div class="col-8 d-none">
+                                <label for="">Reparación</label>
+                                <select class="form-select" id="reparacionedit">
+                                    <option value="">Seleccione una opción</option>
                                 </select>
                             </div>
                         </div>
@@ -279,12 +312,20 @@
                         <div class="row row-sm">
                             <div class="col-8">
                                 <label for="">Elementos</label>
-                                <input class="form-control elementoedit" placeholder="Elemento" type="text">
+                                <select class="form-select elementoedit">
+                                    <option value="">Seleccione una opción</option>
+                                    @foreach ($productos as $producto)
+                                        <option
+                                            value="{{ $producto->nombre }} ({{ $producto->marca }} - {{ $producto->modelo }})">
+                                            {{ $producto->nombre }} ({{ $producto->marca }} - {{ $producto->modelo }})
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="col-3">
                                 <label for="">Cantidades</label>
-                                <input class="form-control cantidadedit" placeholder="Cantidad" type="number" min="1"
-                                    step="1">
+                                <input class="form-control cantidadedit" placeholder="Cantidad" type="number"
+                                    min="1" step="1">
                             </div>
                             <div class="col-1 center-vertical">
                                 <a style="margin-top: 30px;" href="javascript:void(0)" id="new_row_elemento_edit">
@@ -296,7 +337,8 @@
                         <br>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn ripple btn-primary" id="btn_update_solicitud" type="button">Modificar</button>
+                        <button class="btn ripple btn-primary" id="btn_update_solicitud"
+                            type="button">Modificar</button>
                     </div>
                 </div>
             </div>
@@ -305,5 +347,12 @@
 @endsection
 
 @section('scripts')
+    <script>
+        $(document).ready(function () {
+            let productos = @json($productos);
+
+            localStorage.setItem('productos', JSON.stringify(productos));
+        });
+    </script>
     <script src="{{ asset('assets/js/app/inventario/solicitud_inventario.js') }}"></script>
 @endsection

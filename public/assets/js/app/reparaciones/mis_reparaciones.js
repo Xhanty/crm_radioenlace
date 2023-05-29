@@ -423,7 +423,6 @@ $(document).ready(function () {
                         $("#reparaciones_tbl tbody").append('<tr>' +
                             '<td class="text-center">' + element.producto + '</td>' +
                             '<td class="text-center">' + element.cantidad + '</td>' +
-                            '<td class="text-center">' + element.empleado + '</td>' +
                             '<td class="text-center">' + fecha + '</td>' +
                             '</tr>');
                     });
@@ -444,41 +443,5 @@ $(document).ready(function () {
                 console.log(error);
             }
         });
-    });
-
-    $("#btnGuardarRepuesto").click(function () {
-        let id = $("#id_reparacion_repuestos").val();
-        let producto = $("#producto_reparacion").val();
-        let cantidad = $("#cantidad_repuesto").val();
-
-        if (producto == "") {
-            toastr.error("El campo producto es obligatorio");
-        } else if (cantidad < 1) {
-            toastr.error("El campo cantidad es obligatorio");
-        } else {
-            $("#btnGuardarRepuesto").prop("disabled", true);
-            $("#btnGuardarRepuesto").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...');
-
-            $.ajax({
-                url: "reparaciones_repuestos_save",
-                type: "POST",
-                data: { id, producto, cantidad },
-                success: function (response) {
-                    if (response.info == 1) {
-
-                    } else {
-                        toastr.error("Ocurrió un error al guardar");
-                    }
-                }, error: function (error) {
-                    toastr.error("Ocurrió un error al guardar");
-                    console.log(error);
-                }
-            }).always(function () {
-                $("#btnGuardarRepuesto").prop("disabled", false);
-                $("#btnGuardarRepuesto").html("Guardar");
-                cargarRepuestos(id);
-            }
-            );
-        }
     });
 });

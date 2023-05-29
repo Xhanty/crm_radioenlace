@@ -23,9 +23,11 @@ class SolicitudInventarioController extends Controller
                 ->where('estado', 1)
                 ->get();
 
+            $productos = DB::table("productos")->where("status", 1)->get();
+
             $pendientes = DB::table('solicitud_inventario as si')
                 ->join('solicitud_inventario_detalle as sid', 'sid.solicitud_id', '=', 'si.id')
-                ->join('cliente as c', 'c.id', '=', 'si.cliente_id')
+                ->leftJoin('cliente as c', 'c.id', '=', 'si.cliente_id')
                 ->select('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social as cliente', 'si.estado', 'si.codigo', 'c.nit', DB::raw('count(sid.id) as elementos'))
                 ->where('si.estado', 0)
                 ->where('si.solicitante_id', auth()->user()->id)
@@ -34,14 +36,14 @@ class SolicitudInventarioController extends Controller
 
             $gestionados = DB::table('solicitud_inventario as si')
                 ->join('solicitud_inventario_detalle as sid', 'sid.solicitud_id', '=', 'si.id')
-                ->join('cliente as c', 'c.id', '=', 'si.cliente_id')
+                ->leftJoin('cliente as c', 'c.id', '=', 'si.cliente_id')
                 ->select('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social as cliente', 'si.estado', 'si.codigo', 'c.nit', DB::raw('count(sid.id) as elementos'))
                 ->where('si.solicitante_id', auth()->user()->id)
                 ->where('si.estado', '!=', 0)
                 ->groupBy('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social', 'si.estado', 'si.codigo', 'c.nit')
                 ->get();
 
-            return view('admin.inventario.solicitud_inventario', compact('clientes', 'pendientes', 'gestionados'));
+            return view('admin.inventario.solicitud_inventario', compact('clientes', 'pendientes', 'gestionados', 'productos'));
         } catch (Exception $ex) {
             return view('errors.500');
             return $ex;
@@ -79,6 +81,7 @@ class SolicitudInventarioController extends Controller
         try {
             DB::beginTransaction();
             $cliente = $request->cliente;
+            $reparacion = $request->reparacion;
             $descripcion = $request->descripcion;
             $elementos = $request->elementos;
             $cantidades = $request->cantidad;
@@ -88,7 +91,8 @@ class SolicitudInventarioController extends Controller
                     'codigo' => 'SOL-' . Str::upper(Str::random(5)),
                     'tipo' => $request->tipo,
                     'solicitante_id' => auth()->user()->id,
-                    'cliente_id' => $cliente,
+                    'cliente_id' => $cliente ? $cliente : null,
+                    'reparacion_id' => $reparacion ? $reparacion : null,
                     'descripcion' => $descripcion,
                     'created_at' => date('Y-m-d H:i:s'),
                 ]);
@@ -132,6 +136,7 @@ class SolicitudInventarioController extends Controller
                 ->where('id', $id)
                 ->update([
                     'cliente_id' => $cliente,
+                    'reparacion_id' => $request->reparacion,
                     'tipo' => $request->tipo,
                     'descripcion' => $descripcion,
                 ]);

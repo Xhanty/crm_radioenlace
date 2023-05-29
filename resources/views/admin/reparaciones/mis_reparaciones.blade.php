@@ -190,40 +190,6 @@
                             data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" disabled readonly id="id_reparacion_repuestos">
-                        <div class="row row-sm">
-                            <div class="col-lg">
-                                <label for="">Producto</label>
-                                <select id="producto_reparacion" class="form-select">
-                                    <option value="">Seleccione una opción</option>
-                                    @foreach ($productos as $producto)
-                                        <option value="{{ $producto->id }}">{{ $producto->nombre }} -
-                                            {{ $producto->modelo }}
-                                            ({{ $producto->marca }})
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row row-sm">
-                            <div class="col-lg">
-                                <label for="">Serial</label>
-                                <select id="serial_repuesto" disabled class="form-select">
-                                    <option value="">Seleccione una opción</option>
-                                </select>
-                            </div>
-                            <div class="col-lg">
-                                <label for="">Cantidad</label>
-                                <input class="form-control" id="cantidad_repuesto" type="number">
-                            </div>
-                        </div>
-                        <br>
-                        <div style="display: flex; justify-content: center">
-                            <button class="btn ripple btn-primary" id="btnGuardarRepuesto" type="button">Agregar
-                                Repuesto</button>
-                        </div>
-                        <br>
                         <br>
                         <div class="table-responsive">
                             <table id="reparaciones_tbl"
@@ -232,7 +198,6 @@
                                     <tr>
                                         <th class="text-center">Repuesto</th>
                                         <th class="text-center">Cantidad</th>
-                                        <th class="text-center">Técnico</th>
                                         <th class="text-center">Fecha</th>
                                     </tr>
                                 </thead>
