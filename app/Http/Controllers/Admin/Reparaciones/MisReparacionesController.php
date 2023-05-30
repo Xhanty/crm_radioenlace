@@ -108,7 +108,7 @@ class MisReparacionesController extends Controller
             $id = $request->id;
 
             $reparaciones = DB::table('repuestos_reparaciones')
-                ->select('repuestos_reparaciones.*', 'productos.nombre as producto', 'empleados.nombre as empleado')
+                ->select('repuestos_reparaciones.*', 'productos.nombre as producto', 'productos.marca', 'productos.modelo', 'empleados.nombre as empleado')
                 ->join('productos', 'productos.id', '=', 'repuestos_reparaciones.producto_id')
                 ->join('empleados', 'empleados.id', '=', 'repuestos_reparaciones.created_by')
                 ->where('repuestos_reparaciones.reparacion_id', $id)
@@ -120,5 +120,3 @@ class MisReparacionesController extends Controller
         }
     }
 }
-
-// (01) Almacen de radios en reparación (Solo en pendiente de reparación)

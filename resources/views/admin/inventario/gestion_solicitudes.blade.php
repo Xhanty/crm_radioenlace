@@ -32,6 +32,7 @@
                                         <th>Código</th>
                                         <th>Empleado</th>
                                         <th>Fecha Solicitud</th>
+                                        <th>Reparación</th>
                                         <th>Cliente</th>
                                         <th>Descripción</th>
                                         <th>Elementos</th>
@@ -44,7 +45,13 @@
                                             <td>{{ $solicitud->codigo }}</td>
                                             <td>{{ $solicitud->empleado }}</td>
                                             <td>{{ date('d-m-Y h:i A', strtotime($solicitud->created_at)) }}</td>
-                                            <td>{{ $solicitud->cliente }} ({{ $solicitud->nit }})</td>
+                                            @if ($solicitud->reparacion)
+                                                <td>{{ $solicitud->reparacion }}</td>
+                                                <td></td>
+                                            @else
+                                                <td></td>
+                                                <td>{{ $solicitud->cliente }} ({{ $solicitud->nit }})</td>
+                                            @endif
                                             <td>{{ $solicitud->descripcion }}</td>
                                             <td>{{ $solicitud->elementos }}</td>
                                             <td class="text-center">
@@ -95,6 +102,7 @@
                                         <th>Código</th>
                                         <th>Empleado</th>
                                         <th>Fecha Solicitud</th>
+                                        <th>Reparación</th>
                                         <th>Cliente</th>
                                         <th>Descripción</th>
                                         <th>Elementos</th>
@@ -108,7 +116,13 @@
                                             <td>{{ $solicitud->codigo }}</td>
                                             <td>{{ $solicitud->empleado }}</td>
                                             <td>{{ date('d-m-Y h:i A', strtotime($solicitud->created_at)) }}</td>
-                                            <td>{{ $solicitud->cliente }} ({{ $solicitud->nit }})</td>
+                                            @if ($solicitud->reparacion)
+                                                <td>{{ $solicitud->reparacion }}</td>
+                                                <td></td>
+                                            @else
+                                                <td></td>
+                                                <td>{{ $solicitud->cliente }} ({{ $solicitud->nit }})</td>
+                                            @endif
                                             <td>{{ $solicitud->descripcion }}</td>
                                             <td>{{ $solicitud->elementos }}</td>
                                             <td>
@@ -158,6 +172,7 @@
                                     <option value="3">Préstamo</option>
                                     <option value="4">Instalación</option>
                                     <option value="5">Venta</option>
+                                    <option value="6">Reparación</option>
                                 </select>
                             </div>
                             <div class="col-8">
@@ -168,6 +183,12 @@
                                         <option value="{{ $cliente->id }}">{{ $cliente->nombre }} ({{ $cliente->nit }})
                                         </option>
                                     @endforeach
+                                </select>
+                            </div>
+                            <div class="col-8 d-none">
+                                <label for="">Reparación</label>
+                                <select class="form-select" disabled id="reparacionview">
+                                    <option value="">Seleccione una opción</option>
                                 </select>
                             </div>
                         </div>
@@ -345,6 +366,7 @@
                                     <option value="3">Préstamo</option>
                                     <option value="4">Instalación</option>
                                     <option value="5">Venta</option>
+                                    <option value="6">Reparación</option>
                                 </select>
                             </div>
                             <div class="col-8">
@@ -355,6 +377,12 @@
                                         <option value="{{ $cliente->id }}">{{ $cliente->nombre }} ({{ $cliente->nit }})
                                         </option>
                                     @endforeach
+                                </select>
+                            </div>
+                            <div class="col-8 d-none">
+                                <label for="">Reparación</label>
+                                <select class="form-select" id="reparacionedit">
+                                    <option value="">Seleccione una opción</option>
                                 </select>
                             </div>
                         </div>

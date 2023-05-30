@@ -42,6 +42,8 @@
                                         $title = 'Venta';
                                     } elseif ($value->tipo == 7) {
                                         $title = 'Dado de baja';
+                                    } elseif ($value->tipo == 8) {
+                                        $title = 'Reparación';
                                     }
                                 @endphp
 

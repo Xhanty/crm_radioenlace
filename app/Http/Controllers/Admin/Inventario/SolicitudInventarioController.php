@@ -26,27 +26,29 @@ class SolicitudInventarioController extends Controller
             $productos = DB::table("productos")->where("status", 1)->get();
 
             $pendientes = DB::table('solicitud_inventario as si')
+                ->select('rep.token as reparacion', 'si.id', 'si.descripcion', 'si.created_at', 'c.razon_social as cliente', 'si.estado', 'si.codigo', 'c.nit', DB::raw('count(sid.id) as elementos'))
                 ->join('solicitud_inventario_detalle as sid', 'sid.solicitud_id', '=', 'si.id')
                 ->leftJoin('cliente as c', 'c.id', '=', 'si.cliente_id')
-                ->select('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social as cliente', 'si.estado', 'si.codigo', 'c.nit', DB::raw('count(sid.id) as elementos'))
+                ->leftJoin('reparaciones as rep', 'rep.id', '=', 'si.reparacion_id')
                 ->where('si.estado', 0)
                 ->where('si.solicitante_id', auth()->user()->id)
-                ->groupBy('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social', 'si.estado', 'si.codigo', 'c.nit')
+                ->groupBy('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social', 'si.estado', 'si.codigo', 'c.nit', 'rep.token')
                 ->get();
 
             $gestionados = DB::table('solicitud_inventario as si')
+                ->select('rep.token as reparacion', 'si.id', 'si.descripcion', 'si.created_at', 'c.razon_social as cliente', 'si.estado', 'si.codigo', 'c.nit', DB::raw('count(sid.id) as elementos'))
                 ->join('solicitud_inventario_detalle as sid', 'sid.solicitud_id', '=', 'si.id')
                 ->leftJoin('cliente as c', 'c.id', '=', 'si.cliente_id')
-                ->select('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social as cliente', 'si.estado', 'si.codigo', 'c.nit', DB::raw('count(sid.id) as elementos'))
+                ->leftJoin('reparaciones as rep', 'rep.id', '=', 'si.reparacion_id')
                 ->where('si.solicitante_id', auth()->user()->id)
                 ->where('si.estado', '!=', 0)
-                ->groupBy('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social', 'si.estado', 'si.codigo', 'c.nit')
+                ->groupBy('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social', 'si.estado', 'si.codigo', 'c.nit', 'rep.token')
                 ->get();
 
             return view('admin.inventario.solicitud_inventario', compact('clientes', 'pendientes', 'gestionados', 'productos'));
         } catch (Exception $ex) {
-            return view('errors.500');
             return $ex;
+            return view('errors.500');
         }
     }
 
@@ -196,22 +198,24 @@ class SolicitudInventarioController extends Controller
                 ->get();
 
             $pendientes = DB::table('solicitud_inventario as si')
+                ->select('rep.token as reparacion', 'si.id', 'si.descripcion', 'si.created_at', 'c.razon_social as cliente', 'si.estado', 'e.nombre as empleado', 'si.codigo', 'c.nit', DB::raw('count(sid.id) as elementos'))
                 ->join('solicitud_inventario_detalle as sid', 'sid.solicitud_id', '=', 'si.id')
                 ->join('empleados as e', 'e.id', '=', 'si.solicitante_id')
-                ->join('cliente as c', 'c.id', '=', 'si.cliente_id')
-                ->select('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social as cliente', 'si.estado', 'e.nombre as empleado', 'si.codigo', 'c.nit', DB::raw('count(sid.id) as elementos'))
+                ->leftJoin('cliente as c', 'c.id', '=', 'si.cliente_id')
+                ->leftJoin('reparaciones as rep', 'rep.id', '=', 'si.reparacion_id')
                 ->where('si.estado', 0)
-                ->groupBy('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social', 'si.estado', 'si.codigo', 'e.nombre', 'c.nit')
+                ->groupBy('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social', 'si.estado', 'si.codigo', 'e.nombre', 'c.nit', 'rep.token')
                 ->orderBy('si.id', 'desc')
                 ->get();
 
             $gestionados = DB::table('solicitud_inventario as si')
+                ->select('rep.token as reparacion', 'si.id', 'si.descripcion', 'si.created_at', 'c.razon_social as cliente', 'si.estado', 'e.nombre as empleado', 'si.codigo', 'c.nit', DB::raw('count(sid.id) as elementos'))
                 ->join('solicitud_inventario_detalle as sid', 'sid.solicitud_id', '=', 'si.id')
                 ->join('empleados as e', 'e.id', '=', 'si.solicitante_id')
-                ->join('cliente as c', 'c.id', '=', 'si.cliente_id')
-                ->select('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social as cliente', 'si.estado', 'e.nombre as empleado', 'si.codigo', 'c.nit', DB::raw('count(sid.id) as elementos'))
+                ->leftJoin('cliente as c', 'c.id', '=', 'si.cliente_id')
+                ->leftJoin('reparaciones as rep', 'rep.id', '=', 'si.reparacion_id')
                 ->where('si.estado', '!=', 0)
-                ->groupBy('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social', 'si.estado', 'si.codigo', 'e.nombre', 'c.nit')
+                ->groupBy('si.id', 'si.descripcion', 'si.created_at', 'c.razon_social', 'si.estado', 'si.codigo', 'e.nombre', 'c.nit', 'rep.token')
                 ->orderBy('si.id', 'desc')
                 ->get();
 
@@ -449,6 +453,7 @@ class SolicitudInventarioController extends Controller
             $almacen_id = $request->almacen;
 
             $cliente = $solicitud->cliente_id;
+            $reparacion = $solicitud->reparacion_id;
             $empleado = $request->solicitante_id;
 
             $observaciones = 'Producto asignado a la solicitud de inventario con código: ' . $solicitud->codigo;
@@ -465,35 +470,78 @@ class SolicitudInventarioController extends Controller
                     $status = 0;
                 }
 
-                DB::table('inventario')->where("id", $element["serial"])->update([
-                    'cantidad' => $cantidad_old->cantidad - 0, //- $element["cantidad"],
-                    'status' => 1, //$status,
-                ]);
 
-                DB::table('salida_inventario')->insert([
-                    'tipo' => 2, //$tipo,
-                    'producto_id' => $producto_id,
-                    'inventario_id' => $element["serial"],
-                    'cantidad' => $element["cantidad"],
-                    'user_id' => $empleado ? $empleado : null,
-                    'cliente_id' => $cliente ? $cliente : null,
-                    'observaciones' => $observaciones ? $observaciones : null,
-                    'status' => 0,
-                    'created_by' => auth()->user()->id,
-                    'created_at' => date('Y-m-d H:i:s'),
-                ]);
+                if ($tipo == 6) {
+                    DB::table('inventario')->where("id", $element["serial"])->update([
+                        'cantidad' => $cantidad_old->cantidad - $element["cantidad"],
+                        'status' => $status,
+                    ]);
 
-                DB::table('movimientos_inventario')->insert([
-                    'tipo' => 3, //$tipo + 1,
-                    'inventario_id' => $element["serial"],
-                    'almacen_id' => $almacen_id,
-                    'cantidad' => $element["cantidad"],
-                    'empleado_id' => $empleado ? $empleado : null,
-                    'cliente_id' => $cliente ? $cliente : null,
-                    'observaciones' => $observaciones ? $observaciones : null,
-                    'created_by' => auth()->user()->id,
-                    'created_at' => date('Y-m-d H:i:s'),
-                ]);
+                    DB::table('salida_inventario')->insert([
+                        'tipo' => 8, // Reparación
+                        'producto_id' => $producto_id,
+                        'inventario_id' => $element["serial"],
+                        'cantidad' => $element["cantidad"],
+                        'user_id' => $empleado ? $empleado : null,
+                        'cliente_id' => $cliente ? $cliente : null,
+                        'reparacion_id' => $reparacion ? $reparacion : null,
+                        'observaciones' => $observaciones ? $observaciones : null,
+                        'status' => 0,
+                        'created_by' => auth()->user()->id,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+
+                    DB::table('movimientos_inventario')->insert([
+                        'tipo' => 8, // Reparación
+                        'inventario_id' => $element["serial"],
+                        'almacen_id' => $almacen_id,
+                        'cantidad' => $element["cantidad"],
+                        'empleado_id' => $empleado ? $empleado : null,
+                        'cliente_id' => $cliente ? $cliente : null,
+                        'reparacion_id' => $reparacion ? $reparacion : null,
+                        'observaciones' => $observaciones ? $observaciones : null,
+                        'created_by' => auth()->user()->id,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+
+                    DB::table('repuestos_reparaciones')->insert([
+                        'reparacion_id' => $reparacion,
+                        'producto_id' => $producto_id,
+                        'cantidad' => $element["cantidad"],
+                        'created_by' => auth()->user()->id,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                } else {
+                    DB::table('inventario')->where("id", $element["serial"])->update([
+                        'cantidad' => $cantidad_old->cantidad - 0, //- $element["cantidad"],
+                        'status' => 1, //$status,
+                    ]);
+
+                    DB::table('salida_inventario')->insert([
+                        'tipo' => 2, //$tipo,
+                        'producto_id' => $producto_id,
+                        'inventario_id' => $element["serial"],
+                        'cantidad' => $element["cantidad"],
+                        'user_id' => $empleado ? $empleado : null,
+                        'cliente_id' => $cliente ? $cliente : null,
+                        'observaciones' => $observaciones ? $observaciones : null,
+                        'status' => 0,
+                        'created_by' => auth()->user()->id,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+
+                    DB::table('movimientos_inventario')->insert([
+                        'tipo' => 3, //$tipo + 1,
+                        'inventario_id' => $element["serial"],
+                        'almacen_id' => $almacen_id,
+                        'cantidad' => $element["cantidad"],
+                        'empleado_id' => $empleado ? $empleado : null,
+                        'cliente_id' => $cliente ? $cliente : null,
+                        'observaciones' => $observaciones ? $observaciones : null,
+                        'created_by' => auth()->user()->id,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                }
             }
 
             DB::commit();

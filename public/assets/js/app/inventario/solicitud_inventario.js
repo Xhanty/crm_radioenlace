@@ -135,13 +135,13 @@ $(document).ready(function () {
 
                     if (solicitud.tipo == 6) {
                         $("#clienteview").parent().addClass("d-none");
-                        $("#reparacionedit").parent().removeClass("d-none");
+                        $("#reparacionview").parent().removeClass("d-none");
                         setTimeout(() => {
-                            $("#reparacionedit").val(solicitud.reparacion_id).trigger("change");
+                            $("#reparacionview").val(solicitud.reparacion_id).trigger("change");
                         }, 1111);
                     } else {
+                        $("#reparacionview").parent().addClass("d-none");
                         $("#clienteview").parent().removeClass("d-none");
-                        $("#reparacionedit").parent().addClass("d-none");
                         $("#clienteview").val(solicitud.cliente_id).trigger("change");
                     }
                     $("#descripcionview").val(solicitud.descripcion);
@@ -849,6 +849,51 @@ $(document).ready(function () {
             $("#reparacionedit").parent().addClass("d-none");
             $("#reparacionedit").val("").trigger("change");
             $("#clienteedit").val("").trigger("change");
+        }
+    });
+
+    $("#tiposalida_selectview").change(function () {
+        let val = $(this).val();
+
+        if (val == 6) {
+            $("#reparacionview").parent().removeClass("d-none");
+            $("#clienteview").parent().addClass("d-none");
+            $("#clienteview").val("").trigger("change");
+            $("#reparacionview").val("").trigger("change");
+
+            $.ajax({
+                url: "mis_reparaciones",
+                type: "POST",
+                success: function (response) {
+                    let data = response.data;
+                    if (response.info == 1) {
+                        $("#reparacionview").empty();
+                        $("#reparacionview").append("<option value=''>Seleccione</option>");
+                        data.forEach((element) => {
+                            $("#reparacionview").append(
+                                "<option value='" + element.id + "'>" + element.token + "</option>"
+                            );
+                        });
+                    }
+
+                    $(".form-select").each(function () {
+                        $(this).select2({
+                            dropdownParent: $(this).parent(),
+                            placeholder: "Seleccione una opción",
+                            searchInputPlaceholder: "Buscar",
+                        });
+                    });
+                },
+                error: function (error) {
+                    toastr.error("Error al cargar los datos");
+                    console.log(error);
+                },
+            });
+        } else {
+            $("#clienteview").parent().removeClass("d-none");
+            $("#reparacionview").parent().addClass("d-none");
+            $("#reparacionview").val("").trigger("change");
+            $("#clienteview").val("").trigger("change");
         }
     });
 });

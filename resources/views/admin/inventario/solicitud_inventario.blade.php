@@ -35,6 +35,7 @@
                                     <tr>
                                         <th>Código</th>
                                         <th>Fecha Solicitud</th>
+                                        <th>Reparación</th>
                                         <th>Cliente</th>
                                         <th>Descripción</th>
                                         <th>Elementos</th>
@@ -46,7 +47,13 @@
                                         <tr>
                                             <td>{{ $solicitud->codigo }}</td>
                                             <td>{{ date('d-m-Y h:i A', strtotime($solicitud->created_at)) }}</td>
-                                            <td>{{ $solicitud->cliente }} ({{ $solicitud->nit }})</td>
+                                            @if ($solicitud->reparacion)
+                                                <td>{{ $solicitud->reparacion }}</td>
+                                                <td></td>
+                                            @else
+                                                <td></td>
+                                                <td>{{ $solicitud->cliente }} ({{ $solicitud->nit }})</td>
+                                            @endif
                                             <td>{{ $solicitud->descripcion }}</td>
                                             <td>{{ $solicitud->elementos }}</td>
                                             <td class="text-center">
@@ -86,6 +93,7 @@
                                     <tr>
                                         <th>Código</th>
                                         <th>Fecha Solicitud</th>
+                                        <th>Reparación</th>
                                         <th>Cliente</th>
                                         <th>Descripción</th>
                                         <th>Elementos</th>
@@ -98,7 +106,13 @@
                                         <tr>
                                             <td>{{ $solicitud->codigo }}</td>
                                             <td>{{ date('d-m-Y h:i A', strtotime($solicitud->created_at)) }}</td>
-                                            <td>{{ $solicitud->cliente }} ({{ $solicitud->nit }})</td>
+                                            @if ($solicitud->reparacion)
+                                                <td>{{ $solicitud->reparacion }}</td>
+                                                <td></td>
+                                            @else
+                                                <td></td>
+                                                <td>{{ $solicitud->cliente }} ({{ $solicitud->nit }})</td>
+                                            @endif
                                             <td>{{ $solicitud->descripcion }}</td>
                                             <td>{{ $solicitud->elementos }}</td>
                                             <td>
@@ -348,7 +362,7 @@
 
 @section('scripts')
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             let productos = @json($productos);
 
             localStorage.setItem('productos', JSON.stringify(productos));

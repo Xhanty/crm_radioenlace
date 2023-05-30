@@ -421,7 +421,7 @@ $(document).ready(function () {
                         fecha = fecha[0].split("-").reverse().join("/");
 
                         $("#reparaciones_tbl tbody").append('<tr>' +
-                            '<td class="text-center">' + element.producto + '</td>' +
+                            '<td class="text-center">' + element.producto + ' (' + element.marca + ' - ' + element.modelo + ')</td>' +
                             '<td class="text-center">' + element.cantidad + '</td>' +
                             '<td class="text-center">' + fecha + '</td>' +
                             '</tr>');
