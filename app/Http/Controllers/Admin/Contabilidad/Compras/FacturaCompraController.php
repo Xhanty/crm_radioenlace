@@ -169,6 +169,10 @@ class FacturaCompraController extends Controller
                 $adjunto = $name;
             }
 
+            if($request->numero_factura_siigo) {
+                $num_factura = $request->numero_factura_siigo;
+            }
+
             $id = DB::table("factura_compra")->insertGetId([
                 'numero' => $num_factura,
                 'tipo' => $tipo,

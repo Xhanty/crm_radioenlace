@@ -2328,6 +2328,7 @@ $(document).ready(function () {
                 let fc_text = "";
                 let fc_number = "";
                 let number_dc = factura.ExternalDocumentNumber;
+                let numero_factura = factura.Consecutive;
 
                 number_dc = number_dc.split("-");
                 fc_text = number_dc[0];
@@ -2374,7 +2375,7 @@ $(document).ready(function () {
                     "method": "GET",
                     "timeout": 0,
                     "headers": {
-                        "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IkQ3OTkxNEU2MTJFRkI4NjE5RDNFQ0U4REFGQTU0RDFBMDdCQjM5QjJSUzI1NiIsInR5cCI6ImF0K2p3dCIsIng1dCI6IjE1a1U1aEx2dUdHZFBzNk5yNlZOR2dlN09iSSJ9.eyJuYmYiOjE2ODQyNjY4NTEsImV4cCI6MTY4NDM1MzI1MSwiaXNzIjoiaHR0cDovL21zLXNlY3VyaXR5c2VydmljZTo1MDAwIiwiYXVkIjoiaHR0cDovL21zLXNlY3VyaXR5c2VydmljZTo1MDAwL3Jlc291cmNlcyIsImNsaWVudF9pZCI6IlNpaWdvQVBJIiwic3ViIjoiNjAzODk2IiwiYXV0aF90aW1lIjoxNjg0MjY2ODUxLCJpZHAiOiJsb2NhbCIsIm5hbWUiOiJnY29tZXJjaWFsQHJhZGlvZW5sYWNlc2FzLmNvbSIsIm1haWxfc2lpZ28iOiJnY29tZXJjaWFsQHJhZGlvZW5sYWNlc2FzLmNvbSIsImNsb3VkX3RlbmFudF9jb21wYW55X2tleSI6IlJBRElPRU5MQUNFU0FTIiwidXNlcnNfaWQiOiI1OTQiLCJ0ZW5hbnRfaWQiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjEwNjE3IiwidXNlcl9saWNlbnNlX3R5cGUiOiIwIiwicGxhbl90eXBlIjoiMTQiLCJ0ZW5hbnRfc3RhdGUiOiIxIiwibXVsdGl0ZW5hbnRfaWQiOiIxNTMiLCJjb21wYW5pZXMiOiIwIiwiYXBpX3N1YnNjcmlwdGlvbl9rZXkiOiJlMWIwOWUzNjY0Y2U0ZjkwYTNhZWE4YThkYzZiOWQ4YyIsImFjY291bnRhbnQiOiJmYWxzZSIsImp0aSI6IkEzODYzQzI5N0Y5RDgyNDBCQjVERjZFMEMyRDM4OUM4IiwiaWF0IjoxNjg0MjY2ODUxLCJzY29wZSI6WyJTaWlnb0FQSSJdLCJhbXIiOlsiY3VzdG9tIl19.H20YWzXYSuEBZDNlcdBhl0_RCS6aD1Hm2YL3sgHWu6yenZZn8EcOU2DCSM4UwPtFMEkbF8i9M3SYeKdFSY4HJevx-LYSFECSvfvapT0NbaxbViDoEvsAhWaonfJEtEkihq3izVeBBUNhBD4szBcasoXVpmf6ewkHZ1xF4wcFrjhFm4GRMLm5vF3qp-NDFEJIvoJYtEYqF1ioeNDs829mjRMd_tzx94aK8eXIwQACy4PoBi61jga_UdYoi6dXJJ6tfnlSLIEsW34hx8jRZyYMYVWqZt32V5cbFajrl0p6DMrZCL4U_7t783flW6Qhy34zCPFmCKGClBYHJiJ3sMDjgg"
+                        "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IkQ3OTkxNEU2MTJFRkI4NjE5RDNFQ0U4REFGQTU0RDFBMDdCQjM5QjJSUzI1NiIsInR5cCI6ImF0K2p3dCIsIng1dCI6IjE1a1U1aEx2dUdHZFBzNk5yNlZOR2dlN09iSSJ9.eyJuYmYiOjE2ODU0ODE1NTQsImV4cCI6MTY4NTU2Nzk1NCwiaXNzIjoiaHR0cDovL21zLXNlY3VyaXR5c2VydmljZTo1MDAwIiwiYXVkIjoiaHR0cDovL21zLXNlY3VyaXR5c2VydmljZTo1MDAwL3Jlc291cmNlcyIsImNsaWVudF9pZCI6IlNpaWdvQVBJIiwic3ViIjoiNjAzODk2IiwiYXV0aF90aW1lIjoxNjg1NDgxNTU0LCJpZHAiOiJsb2NhbCIsIm5hbWUiOiJnY29tZXJjaWFsQHJhZGlvZW5sYWNlc2FzLmNvbSIsIm1haWxfc2lpZ28iOiJnY29tZXJjaWFsQHJhZGlvZW5sYWNlc2FzLmNvbSIsImNsb3VkX3RlbmFudF9jb21wYW55X2tleSI6IlJBRElPRU5MQUNFU0FTIiwidXNlcnNfaWQiOiI1OTQiLCJ0ZW5hbnRfaWQiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjEwNjE3IiwidXNlcl9saWNlbnNlX3R5cGUiOiIwIiwicGxhbl90eXBlIjoiMTQiLCJ0ZW5hbnRfc3RhdGUiOiIxIiwibXVsdGl0ZW5hbnRfaWQiOiIxNTMiLCJjb21wYW5pZXMiOiIwIiwiYXBpX3N1YnNjcmlwdGlvbl9rZXkiOiJlMWIwOWUzNjY0Y2U0ZjkwYTNhZWE4YThkYzZiOWQ4YyIsImFjY291bnRhbnQiOiJmYWxzZSIsImp0aSI6Ijc5QURBQkU1OTZGODg0OUU0ODIxRjNCM0NCRDEwRUVGIiwiaWF0IjoxNjg1NDgxNTU0LCJzY29wZSI6WyJTaWlnb0FQSSJdLCJhbXIiOlsiY3VzdG9tIl19.VN732s59NpIK6QdQyku6p_Z2cUq3Ajui_xRc8ujj5ktcO-NOp3KxVEj_9YFOdA7FyVAlSUC2NchL2rZNwWmED_p8fo1a6gPL2TMOJkpHFAON-_1dcIRF9wOfpmwlKltkGkl9TGBCj3rNKshWi9RcFu3hOGpJ9IrPPqDriGRZ191vPQWF-ZxZlG0ylikQv6Kbum2F_k2KBWtVKtFi_8zSVrfP9_sEfOhJbLWOahh2A7gBnVx8TCH77Bm18vaFDR0mr1F18pbMw_Q8ZV3nZ9484V3kkLeIRUYQAGFBxMOh01KYW_is65HpRvVsHDBb0O_w8NUKltNCqMHDVFpDFWhSWQ"
                     },
                 };
 
@@ -2383,6 +2384,7 @@ $(document).ready(function () {
 
                     all_data.push({
                         id_siigo: id,
+                        numero_factura: numero_factura,
                         tipo: tipo,
                         centro: centro,
                         fecha: fecha.substring(0, 10),
@@ -2496,6 +2498,7 @@ $(document).ready(function () {
             let formData = new FormData();
 
             formData.append("tipo", element.tipo);
+            formData.append("numero_factura_siigo", element.numero_factura);
             formData.append("centro", element.centro);
             formData.append("fecha", element.fecha);
             formData.append("proveedor", element.proveedor);
