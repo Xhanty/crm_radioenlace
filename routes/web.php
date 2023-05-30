@@ -64,7 +64,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/change_visto_bueno', [App\Http\Controllers\Admin\AsignacionesController::class, 'change_visto_bueno'])->name('change_visto_bueno');
     Route::post('/eliminar_archivo_asignacion', [App\Http\Controllers\Admin\AsignacionesController::class, 'eliminar_archivo_asignacion'])->name('eliminar_archivo_asignacion');
 
-    // ASIGNACIONES PROYECTOS
+    // ASIGNACIONES CLIENTES
     Route::get('/asignaciones_clientes', [App\Http\Controllers\Admin\AsignacionesController::class, 'asignaciones_clientes'])->name('asignaciones_clientes');
     Route::get('/gestionar_asignaciones_clientes', [App\Http\Controllers\Admin\AsignacionesController::class, 'gestionar_asignaciones_clientes'])->name('gestionar_asignaciones_clientes');
 
@@ -436,7 +436,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/history_prospectos_delete', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'delete_observacion'])->name('history_prospectos_delete');
 });
 
-// RUTAS PARA EL CALENDARIO
+// RUTAS PARA EL CANVA ASIGNACION DE TAREAS (PROYECTOS)
 Route::group(['middleware' => 'auth'], function () {
     Route::get('tasks',  [App\Http\Controllers\TaskProjectController::class, 'index'])->name('tasks.index');
     Route::post('tasks', [App\Http\Controllers\TaskProjectController::class, 'store'])->name('tasks.store');

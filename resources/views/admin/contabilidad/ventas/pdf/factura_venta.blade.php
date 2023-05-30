@@ -30,7 +30,7 @@
                                         </svg>
                                     </p>
                                     RADIO ENLACE S.A.S.<br>
-                                    NIT 930.504.313-5<br>
+                                    NIT 830.504.313-5<br>
                                     (604) 4448280
                                 </div>
                                 <div class="tm_text_center">
@@ -77,25 +77,24 @@
                                 style="position: absolute; left: -52px; top: -3px; height: 135px;">
                         @endif
                     </div>
-                    <div class="tm_invoice_info tm_mb22 tm_align_center">
-                        <div class="tm_invoice_info_left tm_mb20_md" style="margin-top: 2px">
-                            <p class="tm_mb0">
-                                <b class="tm_primary_color ">Factura No. </b>{{ $factura->numero }}<br>
-                                <b class="tm_primary_color">Fecha Compra:
+                    <div class="tm_invoice_info tm_mb22 tm_align_center" style="margin-top: -14px">
+                        <div class="tm_invoice_info_left tm_mb20_md" style="margin-top: 2px; width: 24%">
+                            <!--<p class="tm_mb0">
+                                <b class="tm_primary_color ">Factura Venta Electrónica: </b>{{ $factura->numero }}<br>
+                                <b class="tm_primary_color">Fecha Venta:
                                 </b>{{ date('d/m/Y', strtotime($factura->fecha_elaboracion)) }}
-                            </p>
+                            </p>-->
                         </div>
-                        <div class="tm_invoice_info_right">
+                        <div class="tm_invoice_info_right" style="width: 76%">
                             <div
                                 class="tm_border tm_accent_border_20 tm_radius_0 tm_accent_bg_10 tm_curve_35 tm_text_center">
                                 <div>
-                                    <b class="tm_accent_color tm_f26 tm_medium tm_body_lineheight">Total:
-                                        {{ $factura->valor_total }}</b>
+                                    <b class="tm_accent_color tm_f26 tm_medium tm_body_lineheight">FACTURA DE VENTA ELECTRÓNICA</b>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <h2 class="tm_f16 tm_section_heading tm_accent_border_20 tm_mb0"><span
+                    <h2 class="tm_f16 tm_section_heading tm_accent_border_20 tm_mb0" style="margin-top: -36px"><span
                             class="tm_accent_bg_10 tm_radius_0 tm_curve_35 tm_border tm_accent_border_20 tm_border_bottom_0 tm_accent_color">
                             <span>Facturado a</span>
                         </span></h2>

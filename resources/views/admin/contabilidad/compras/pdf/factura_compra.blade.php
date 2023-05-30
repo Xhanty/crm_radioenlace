@@ -39,7 +39,7 @@
                                         </svg>
                                     </p>
                                     RADIO ENLACE S.A.S.<br>
-                                    NIT 930.504.313-5<br>
+                                    NIT 830.504.313-5<br>
                                     (604) 4448280
                                 </div>
                                 <div class="tm_text_center">
