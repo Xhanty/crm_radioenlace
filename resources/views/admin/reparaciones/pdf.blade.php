@@ -119,7 +119,7 @@
     <div class="invoice-box">
         <table>
             <tr class="top">
-                <td colspan="3">
+                <td colspan="4">
                     <table>
                         <tr>
                             <td class="title">
@@ -138,7 +138,7 @@
             </tr>
 
             <tr class="information">
-                <td colspan="3">
+                <td colspan="4">
                     <table>
                         <tr>
                             <td>
@@ -162,7 +162,7 @@
                     Modelo
                 </td>
 
-                <td colspan="1">
+                <td colspan="2">
                     Serie
                 </td>
             </tr>
@@ -182,7 +182,7 @@
                     Persona que recibe
                 </td>
 
-                <td colspan="1">
+                <td colspan="2">
                     Técnico Asignado
                 </td>
             </tr>
@@ -202,7 +202,7 @@
                     Categoría
                 </td>
 
-                <td colspan="1">
+                <td colspan="2">
                     Accesorios
                 </td>
             </tr>
@@ -236,11 +236,13 @@
                 </tr>
             @endif
 
-            <tr class="heading">
-                <td style="width: 100px; text-align: center;"></td>
-                <td style="width: 222px; text-align: center;">Repuesto</td>
-                <td style="text-align: center;">Cantidad</td>
-            </tr>
+            @if (count($repuestos) > 0)
+                <tr class="heading">
+                    <td colspan="2" style="width: 100px; text-align: center;"></td>
+                    <td style="width: 222px; text-align: center;">Repuesto</td>
+                    <td style="text-align: center;">Cantidad</td>
+                </tr>
+            @endif
 
             @for ($i = 0; $i < count($repuestos); $i++)
                 @if ($i == count($repuestos) - 1)
@@ -249,7 +251,7 @@
                             <img src="https://crm.formrad.com/images/productos/{{ $repuestos[$i]->imagen }}"
                                 style="width:100%; max-width:100px; max-height: 120px">
                         </td>
-                        <td style="text-align: center; padding-top: 3%;">
+                        <td colspan="2" style="text-align: center; padding-top: 3%;">
                             <b>{{ $repuestos[$i]->producto }}</b><br>
                             <b>{{ $repuestos[$i]->modelo }}</b><br>
                             ({{ $repuestos[$i]->marca }})
@@ -275,7 +277,7 @@
             <br>
 
             <tr class="heading">
-                <td style="width: 300px; text-align: center;">Informe</td>
+                <td colspan="2" style="width: 300px; text-align: center;">Informe</td>
                 <td style="text-align: center;">Técnico</td>
                 <td style="text-align: center;">Anexo</td>
             </tr>
@@ -283,7 +285,7 @@
             @for ($i = 0; $i < count($informes); $i++)
                 @if ($i == count($informes) - 1)
                     <tr style="border-top: 1px solid #ccc;">
-                        <td style="text-align: justify;">{{ $informes[$i]->observacion }}</td>
+                        <td colspan="2" style="text-align: justify;">{{ $informes[$i]->observacion }}</td>
                         <td style="text-align: center;">{{ $informes[$i]->tecnico }}</td>
                         <td style="text-align: center;">
                             @if ($informes[$i]->adjunto)
