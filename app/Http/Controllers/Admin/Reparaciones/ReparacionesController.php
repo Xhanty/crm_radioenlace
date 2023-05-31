@@ -288,7 +288,7 @@ class ReparacionesController extends Controller
     public function mis_reparaciones(Request $request)
     {
         try {
-            $data = DB::table('reparaciones')->where('tecnico_id', auth()->user()->id)->get();
+            $data = DB::table('reparaciones')->where('tecnico_id', auth()->user()->id)->where('status', 0)->get();
 
             return response()->json(['info' => 1, 'data' => $data]);
         } catch (Exception $ex) {
