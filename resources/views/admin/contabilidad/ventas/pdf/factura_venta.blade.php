@@ -35,9 +35,10 @@
                                 </div>
                                 <div class="tm_text_center">
                                     <p class="tm_accent_color tm_mb0">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 232597 333333" width="24" height="24"
-                                            shape-rendering="geometricPrecision" text-rendering="geometricPrecision"
-                                            image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 232597 333333"
+                                            width="24" height="24" shape-rendering="geometricPrecision"
+                                            text-rendering="geometricPrecision" image-rendering="optimizeQuality"
+                                            fill-rule="evenodd" clip-rule="evenodd">
                                             <path
                                                 d="M151444 5419C140355 1916 128560 0 116311 0 80573 0 48591 16155 27269 41534l54942 46222 69232-82338z"
                                                 fill="#1a73e8" />
@@ -60,8 +61,7 @@
                                     www.radioenlacesas.com
                                 </div>
                                 <div class="tm_text_center">
-                                    <img src="{{ asset('RadioEnlaceQr.png') }}"
-                                        width="96px">
+                                    <img src="{{ asset('icontec.png') }}" width="136px">
                                 </div>
                             </div>
                         </div>
@@ -89,16 +89,17 @@
                             <div
                                 class="tm_border tm_accent_border_20 tm_radius_0 tm_accent_bg_10 tm_curve_35 tm_text_center">
                                 <div>
-                                    <b class="tm_accent_color tm_f26 tm_medium tm_body_lineheight">FACTURA DE VENTA ELECTRÓNICA</b>
+                                    <b class="tm_accent_color tm_f26 tm_medium tm_body_lineheight">FACTURA DE VENTA
+                                        ELECTRÓNICA</b>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <h2 class="tm_f16 tm_section_heading tm_accent_border_20 tm_mb0" style="margin-top: -36px"><span
+                    <h2 class="tm_f16 tm_section_heading tm_accent_border_20 tm_mb0" style="margin-top: -45px"><span
                             class="tm_accent_bg_10 tm_radius_0 tm_curve_35 tm_border tm_accent_border_20 tm_border_bottom_0 tm_accent_color">
                             <span>Facturado a</span>
                         </span></h2>
-                    <div class="tm_table tm_style1 tm_mb30">
+                    <div class="tm_table tm_style1 tm_mb20">
                         <div class="tm_border  tm_accent_border_20 tm_border_top_0">
                             <div class="tm_table_responsive">
                                 <table>
@@ -108,19 +109,25 @@
                                                 <b class="tm_primary_color tm_medium">Proveedor:
                                                 </b>{{ $factura->razon_social }}
                                             </td>
-                                            <td class="tm_width_6 tm_border_top_0 tm_border_left tm_accent_border_20">
+                                            <td class="tm_width_4 tm_border_top_0 tm_border_left tm_accent_border_20"
+                                                style="width: 28.3333%">
                                                 <b class="tm_primary_color tm_medium">Nit:
                                                 </b>{{ $factura->nit }}-{{ $factura->codigo_verificacion }}
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="tm_width_6 tm_accent_border_20">
-                                                <b class="tm_primary_color tm_medium">Teléfono:
-                                                </b>{{ $factura->telefono_fijo }}
+                                            <td class="tm_width_2 tm_accent_border_20">
+                                                <b class="tm_primary_color tm_medium">Dirección:
+                                                </b>{{ $factura->direccion }}
+                                            </td>
+                                            <td class="tm_width_4 tm_border_left tm_accent_border_20"
+                                                style="width: 28.3333%">
+                                                <b class="tm_primary_color tm_medium">Ciudad:
+                                                </b>{{ $factura->ciudad }} - Colombia
                                             </td>
                                             <td class="tm_width_6 tm_border_left tm_accent_border_20">
-                                                <b class="tm_primary_color tm_medium">Dirección:
-                                                </b>{{ $factura->direccion }}, {{ $factura->ciudad }} - Colombia
+                                                <b class="tm_primary_color tm_medium">Teléfono:
+                                                </b>{{ $factura->telefono_fijo }}
                                             </td>
                                         </tr>
                                     </tbody>
@@ -128,7 +135,35 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tm_table tm_style1">
+                    <h2 class="tm_f16 tm_section_heading tm_accent_border_20 tm_mb0" style="margin-top: -12px"><span
+                            class="tm_accent_bg_10 tm_radius_0 tm_curve_35 tm_border tm_accent_border_20 tm_border_bottom_0 tm_accent_color">
+                            <span>Fecha y hora facturación</span>
+                        </span></h2>
+                    <div class="tm_table tm_style1 tm_mb20">
+                        <div class="tm_border  tm_accent_border_20 tm_border_top_0">
+                            <div class="tm_table_responsive">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td class="tm_width_3 tm_accent_border_20">
+                                                <b class="tm_primary_color tm_medium">Generación:
+                                                </b>{{ date('d/m/Y H:m', strtotime($factura->created_at)) }}
+                                            </td>
+                                            <td class="tm_width_3 tm_border_left tm_accent_border_20">
+                                                <b class="tm_primary_color tm_medium">Expedición:
+                                                </b>{{ date('d/m/Y H:m', strtotime($factura->created_at)) }}
+                                            </td>
+                                            <td class="tm_width_3 tm_border_left tm_accent_border_20">
+                                                <b class="tm_primary_color tm_medium">Vencimiento:
+                                                </b>{{ date('d/m/Y H:m', strtotime($factura->created_at)) }}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tm_table tm_style1" style="margin-top: -12px">
                         <div class="tm_border tm_accent_border_20">
                             <div class="tm_table_responsive">
                                 <table>
@@ -142,7 +177,7 @@
                                                 class="tm_width_1 tm_semi_bold tm_accent_color tm_accent_bg_10 tm_text_center">
                                                 Cantidad
                                             </th>
-                                           <th
+                                            <th
                                                 class="tm_width_2 tm_semi_bold tm_accent_color tm_accent_bg_10 tm_text_center">
                                                 Vr.
                                                 Bruto</th>
@@ -165,22 +200,22 @@
                                         @endphp
                                         @foreach ($factura->productos as $key => $item)
                                             <tr>
-                                                    <td class="tm_width_6 tm_accent_border_20 tm_text_center">
-                                                        {{ $count }}.
-                                                        {{ $item->detalle->nombre }} ({{ $item->detalle->marca }} -
-                                                        {{ $item->detalle->modelo }})
-                                                    </td>
-                                                    <td class="tm_width_1 tm_accent_border_20 tm_text_center">
-                                                        {{ $item->cantidad }}</td>
-                                                    <td class="tm_width_2 tm_accent_border_20 tm_text_center">
-                                                        {{ $item->valor_unitario }}</td>
-                                                    <td class="tm_width_2 tm_accent_border_20 tm_text_center">
-                                                        {{ $item->impuesto_cargo }}%</td>
-                                                    <td class="tm_width_2 tm_accent_border_20 tm_text_center">
-                                                        {{ $item->impuesto_retencion }}%</td>
-                                                    <td class="tm_width_2 tm_accent_border_20 tm_text_right">
-                                                        {{ $item->valor_total }}</td>
-                                                </tr>
+                                                <td class="tm_width_6 tm_accent_border_20 tm_text_center">
+                                                    {{ $count }}.
+                                                    {{ $item->detalle->nombre }} ({{ $item->detalle->marca }} -
+                                                    {{ $item->detalle->modelo }})
+                                                </td>
+                                                <td class="tm_width_1 tm_accent_border_20 tm_text_center">
+                                                    {{ $item->cantidad }}</td>
+                                                <td class="tm_width_2 tm_accent_border_20 tm_text_center">
+                                                    {{ $item->valor_unitario }}</td>
+                                                <td class="tm_width_2 tm_accent_border_20 tm_text_center">
+                                                    {{ $item->impuesto_cargo }}%</td>
+                                                <td class="tm_width_2 tm_accent_border_20 tm_text_center">
+                                                    {{ $item->impuesto_retencion }}%</td>
+                                                <td class="tm_width_2 tm_accent_border_20 tm_text_right">
+                                                    {{ $item->valor_total }}</td>
+                                            </tr>
                                             @php
                                                 $count++;
                                             @endphp
@@ -208,6 +243,11 @@
                                     <a href="{{ asset('images/contabilidad/facturas_compra/' . $factura->adjunto_pdf) }}"
                                         style="color: rgb(217, 38, 28, 0.9);" target="_blank">Ver Adjunto</a>
                                 @endif
+                                <div class="tm_text_left" style="margin-bottom: -36px; margin-top: 60px;">
+                                    <img src="{{ asset('RadioEnlaceQr.png') }}" width="120px">
+                                    <br>
+                                    <b style="font-size: 13px">CUFE:</b><span style="font-size: 12px">dbfecbbd3491e5214fb4f52f75f3ac56fa1e96643b64e85600a4d939558953d9c27b39d646a5e8e020e38ac95a22549b</span>
+                                </div>
                             </div>
                             <div class="tm_right_footer">
                                 <table class="tm_mb15 tm_m0_md">
@@ -289,20 +329,26 @@
                     </div>
                     <div class="tm_bottom_invoice tm_accent_border_20">
                         <div class="tm_bottom_invoice_left">
-                            <p class="tm_m0 tm_f11 tm_text_center">A esta factura de venta aplican las normas relativas
-                                a la letra de
-                                cambio (artículo 5 Ley 1231 de 2008). Con esta el Comprador declara haber recibido real
-                                y materialmente las
-                                mercancías o prestación de servicios descritos en este título - Valor. <b>Número
-                                    Autorización 18764027118177 aprobado en 20211013 prefijo FE desde el número 2186 al
-                                    4000
-                                    Vigencia: 12 Meses</b>
-                                - Actividad Económica 4741 Comercio al por menor de computadores, equipos periféricos,
-                                programas de informática y equipos de telecomunicaciones en establecimientos
-                                especializados Tarifa 4.
+                            <p class="tm_m0 tm_f11 tm_text_center">
+                                <b>Esta factura de Venta constituye título valor según el artículo 5 de la ley 1231 del
+                                    17
+                                    de Julio de 2008 - El no pago de esta generará intereses por mora, mensual a la tasa
+                                    máxima legal autorizada. En caso de NO PAGO se procederá a reportarse en las
+                                    centrales
+                                    de crédito.
+                                    Resolución DIAN 18764046586505 prefijo FE numeración Autorizada del 3823 al 4000
+                                    Fecha
+                                    23/09/21 Vigencia: 12 Meses.
+                                    Responsable de IVA - Actividad Económica 4741 Comercio al por menor de computadores,
+                                    equipos periféricos, programas de informática y equipos de telecomunicaciones en
+                                    establecimientos especializados Tarifa 4. Autorretenedores de ICA en el municipio de
+                                    Medellín según Resolución 202050056223 de 2020
+                                    Favor abstenerse de practicar Retención por concepto de ICA.
+                                    VR05 VERSIÓN: 01 06/01/2020
+                                    FAVOR CONSIGNAR EN LA CUENTA DE AHORROS BANCOLOMBIA 10825335162 A
+                                    NOMBRE DE RADIO ENLACE S.A.S.
+                                    Enviar comprobante de pago al correo facturacionelectronica@radioenlacesas.com</b>
                                 <br>
-                                <b>CUFE:</b>
-                                dbfecbbd3491e5214fb4f52f75f3ac56fa1e96643b64e85600a4d939558953d9c27b39d646a5e8e020e38ac95a22549b
                             </p>
                             <p class="tm_m0 tm_f11 tm_text_center"><b>Elaborado por CRM RADIO ENLACE S.A.S. NIT.
                                     830.504.313-5</b></p>
