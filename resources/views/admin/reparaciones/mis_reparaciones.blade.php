@@ -31,6 +31,7 @@
                             <table class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
                                 <thead>
                                     <tr>
+                                        <th class="text-center">#</th>
                                         <th class="text-center">Código</th>
                                         <th class="text-center">Cliente</th>
                                         <th class="text-center">Modelo</th>
@@ -42,6 +43,7 @@
                                 <tbody>
                                     @foreach ($pendientes as $value)
                                         <tr>
+                                            <td class="text-center">{{ $value->consecutivo }}</td>
                                             <td class="text-center">{{ $value->token }}</td>
                                             <td class="text-center">{{ $value->razon_social }} ({{ $value->nit }})</td>
                                             <td class="text-center">{{ $value->modelo }}</td>
@@ -100,6 +102,7 @@
                             <table class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
                                 <thead>
                                     <tr>
+                                        <th class="text-center">#</th>
                                         <th class="text-center">Código</th>
                                         <th class="text-center">Cliente</th>
                                         <th class="text-center">Modelo</th>
@@ -112,6 +115,7 @@
                                 <tbody>
                                     @foreach ($finalizadas as $value)
                                         <tr>
+                                            <td class="text-center">{{ $value->consecutivo }}</td>
                                             <td class="text-center">{{ $value->token }}</td>
                                             <td class="text-center">{{ $value->razon_social }} ({{ $value->nit }})</td>
                                             <td class="text-center">{{ $value->modelo }}</td>

@@ -119,7 +119,7 @@
     <div class="invoice-box">
         <table>
             <tr class="top">
-                <td colspan="4">
+                <td colspan="3">
                     <table>
                         <tr>
                             <td class="title">
@@ -128,17 +128,16 @@
                             </td>
 
                             <td>
-                                <br>
-                                <strong>Reparación:</strong> {{ $reparacion->token }}<br>
-                                <strong>Fecha:</strong> {{ date('d-m-Y', strtotime($reparacion->created_at)) }}<br>
+                                <img src="icontec.png" style="width:100%; max-width:136px; float:right;">
                             </td>
                         </tr>
                     </table>
                 </td>
             </tr>
+            <br>
 
             <tr class="information">
-                <td colspan="4">
+                <td colspan="3">
                     <table>
                         <tr>
                             <td>
@@ -155,10 +154,37 @@
                     </table>
                 </td>
             </tr>
-            <br>
 
             <tr class="heading">
-                <td colspan="2">
+                <td colspan="1">
+                    Consecutivo
+                </td>
+
+                <td colspan="1" style="text-align: left">
+                    Reparación
+                </td>
+
+                <td colspan="1" style="text-align: right">
+                    Fecha
+                </td>
+            </tr>
+
+            <tr class="details">
+                <td colspan="1" style="font-size: 15px">
+                    {{ $reparacion->consecutivo }}
+                </td>
+
+                <td colspan="1" style="font-size: 15px; text-align: left">
+                    {{ $reparacion->token }}
+                </td>
+
+                <td colspan="1" style="font-size: 15px; text-align: right">
+                    {{ date('d-m-Y', strtotime($reparacion->created_at)) }}
+                </td>
+            </tr>
+
+            <tr class="heading">
+                <td colspan="1">
                     Modelo
                 </td>
 
@@ -168,7 +194,7 @@
             </tr>
 
             <tr class="details">
-                <td colspan="2" style="font-size: 15px">
+                <td colspan="1" style="font-size: 15px">
                     {{ $reparacion->modelo }}
                 </td>
 
@@ -178,7 +204,7 @@
             </tr>
 
             <tr class="heading">
-                <td colspan="2">
+                <td colspan="1">
                     Persona que recibe
                 </td>
 
@@ -188,7 +214,7 @@
             </tr>
 
             <tr class="details">
-                <td colspan="2" style="font-size: 15px">
+                <td colspan="1" style="font-size: 15px">
                     {{ $reparacion->recibe }}
                 </td>
 
@@ -198,7 +224,7 @@
             </tr>
 
             <tr class="heading">
-                <td colspan="2">
+                <td colspan="1">
                     Categoría
                 </td>
 
@@ -208,7 +234,7 @@
             </tr>
 
             <tr class="details">
-                <td colspan="2" style="font-size: 15px">
+                <td colspan="1" style="font-size: 15px">
                     {{ $reparacion->categoria }}
                 </td>
 
@@ -238,7 +264,7 @@
 
             @if (count($repuestos) > 0)
                 <tr class="heading">
-                    <td colspan="2" style="width: 100px; text-align: center;"></td>
+                    <td style="width: 100px; text-align: center;"></td>
                     <td style="width: 222px; text-align: center;">Repuesto</td>
                     <td style="text-align: center;">Cantidad</td>
                 </tr>
@@ -251,7 +277,7 @@
                             <img src="https://crm.formrad.com/images/productos/{{ $repuestos[$i]->imagen }}"
                                 style="width:100%; max-width:100px; max-height: 120px">
                         </td>
-                        <td colspan="2" style="text-align: center; padding-top: 3%;">
+                        <td style="text-align: center; padding-top: 3%;">
                             <b>{{ $repuestos[$i]->producto }}</b><br>
                             <b>{{ $repuestos[$i]->modelo }}</b><br>
                             ({{ $repuestos[$i]->marca }})
@@ -277,7 +303,7 @@
             <br>
 
             <tr class="heading">
-                <td colspan="2" style="width: 300px; text-align: center;">Informe</td>
+                <td style="width: 300px; text-align: center;">Informe</td>
                 <td style="text-align: center;">Técnico</td>
                 <td style="text-align: center;">Anexo</td>
             </tr>
@@ -285,7 +311,7 @@
             @for ($i = 0; $i < count($informes); $i++)
                 @if ($i == count($informes) - 1)
                     <tr style="border-top: 1px solid #ccc;">
-                        <td colspan="2" style="text-align: justify;">{{ $informes[$i]->observacion }}</td>
+                        <td style="text-align: justify;">{{ $informes[$i]->observacion }}</td>
                         <td style="text-align: center;">{{ $informes[$i]->tecnico }}</td>
                         <td style="text-align: center;">
                             @if ($informes[$i]->adjunto)
