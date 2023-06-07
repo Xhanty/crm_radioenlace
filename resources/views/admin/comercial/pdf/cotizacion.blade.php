@@ -232,13 +232,13 @@
                                 <td @if ($incluye_anual == 0) colspan="{{ $colspan }}" @else colspan="3" @endif
                                     class="text-align-left">
                                     <b>Pago Mensual</b><br />
-                                    Subtotal: {{ number_format($subtotal_mensual, 0, ',', '.') }}<br />
-                                    Iva: {{ number_format($iva_mensual, 0, ',', '.') }}<br />
+                                    Subtotal: {{ number_format($subtotal_mensual, 0, ',', '.') }} @if ($productos[$i]->tipo_divisa == 2) USD @endif<br />
+                                    Iva: {{ number_format($iva_mensual, 0, ',', '.') }} @if ($productos[$i]->tipo_divisa == 2) USD @endif<br />
                                     @if ($retencion_mensual > 0)
-                                        Retención: {{ number_format($retencion_mensual, 0, ',', '.') }}<br />
+                                        Retención: {{ number_format($retencion_mensual, 0, ',', '.') }} @if ($productos[$i]->tipo_divisa == 2) USD @endif<br />
                                     @endif
                                     <b>Total:
-                                        {{ number_format($subtotal_mensual + $iva_mensual - $retencion_mensual, 0, ',', '.') }}</b>
+                                        {{ number_format($subtotal_mensual + $iva_mensual - $retencion_mensual, 0, ',', '.') }} @if ($productos[$i]->tipo_divisa == 2) USD @endif</b>
                                 </td>
                             @endif
 
@@ -248,12 +248,12 @@
                                     @if ($incluye_mensual > 0)
                                         <b>Pago Único</b><br />
                                     @endif
-                                    Subtotal: {{ number_format($subtotal, 0, ',', '.') }}<br />
-                                    Iva: {{ number_format($iva, 0, ',', '.') }}<br />
+                                    Subtotal: {{ number_format($subtotal, 0, ',', '.') }} @if ($productos[$i]->tipo_divisa == 2) USD @endif<br />
+                                    Iva: {{ number_format($iva, 0, ',', '.') }} @if ($productos[$i]->tipo_divisa == 2) USD @endif<br />
                                     @if ($retencion > 0)
-                                        Retención: {{ number_format($retencion, 0, ',', '.') }}<br />
+                                        Retención: {{ number_format($retencion, 0, ',', '.') }} @if ($productos[$i]->tipo_divisa == 2) USD @endif<br />
                                     @endif
-                                    <b>Total: {{ number_format($subtotal + $iva - $retencion, 0, ',', '.') }}</b>
+                                    <b>Total: {{ number_format($subtotal + $iva - $retencion, 0, ',', '.') }} @if ($productos[$i]->tipo_divisa == 2) USD @endif</b>
                                 </td>
                             @endif
                         </tr>
@@ -306,11 +306,11 @@
                                 </td>
                                 <td style="text-align: center; padding-top: 3%;">{{ $productos[$i]->cantidad }}</td>
                                 <td style="padding-top: 3%; text-align: center;">
-                                    {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
+                                    {{ number_format($productos[$i]->precio, 0, ',', '.') }} @if ($productos[$i]->tipo_divisa == 2) USD @endif</td>
                                 <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
                                 <!--<td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>-->
                                 <td class="text-align-right" style="padding-top: 3%">
-                                    {{ number_format($total, 0, ',', '.') }}
+                                    {{ number_format($total, 0, ',', '.') }} @if ($productos[$i]->tipo_divisa == 2) USD @endif
                                 </td>
                             </tr>
                             <tr class="item">
@@ -344,11 +344,11 @@
                                 </td>
                                 <td style="text-align: center; padding-top: 3%">{{ $productos[$i]->cantidad }}</td>
                                 <td style="padding-top: 3%; text-align: center;">
-                                    {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
+                                    {{ number_format($productos[$i]->precio, 0, ',', '.') }} @if ($productos[$i]->tipo_divisa == 2) USD @endif</td>
                                 <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
                                 <!--<td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>-->
                                 <td class="text-align-right" style="padding-top: 3%">
-                                    {{ number_format($total, 0, ',', '.') }}
+                                    {{ number_format($total, 0, ',', '.') }} @if ($productos[$i]->tipo_divisa == 2) USD @endif
                                 </td>
                             </tr>
                             <tr class="item">
@@ -374,11 +374,11 @@
                                 </td>
                                 <td style="text-align: center; padding-top: 3%;">{{ $productos[$i]->cantidad }}</td>
                                 <td style="padding-top: 3%; text-align: center;">
-                                    {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
+                                    {{ number_format($productos[$i]->precio, 0, ',', '.') }} @if ($productos[$i]->tipo_divisa == 2) USD @endif</td>
                                 <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
                                 <!--<td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>-->
                                 <td class="text-align-right" style="padding-top: 3%">
-                                    {{ number_format($total, 0, ',', '.') }}
+                                    {{ number_format($total, 0, ',', '.') }} @if ($productos[$i]->tipo_divisa == 2) USD @endif
                                 </td>
                             </tr>
                             <tr class="item">
@@ -412,11 +412,11 @@
                                 </td>
                                 <td style="text-align: center; padding-top: 3%;">{{ $productos[$i]->cantidad }}</td>
                                 <td style="padding-top: 3%; text-align: center;">
-                                    {{ number_format($productos[$i]->precio, 0, ',', '.') }}</td>
+                                    {{ number_format($productos[$i]->precio, 0, ',', '.') }} @if ($productos[$i]->tipo_divisa == 2) USD @endif</td>
                                 <td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->iva }}%</td>
                                 <!--<td style="padding-top: 3%; text-align: center;">{{ $productos[$i]->retencion }}%</td>-->
                                 <td class="text-align-right" style="padding-top: 3%">
-                                    {{ number_format($total, 0, ',', '.') }}
+                                    {{ number_format($total, 0, ',', '.') }} @if ($productos[$i]->tipo_divisa == 2) USD @endif
                                 </td>
                             </tr>
                             <tr class="item">
@@ -465,16 +465,16 @@
                         <td @if ($incluye_anual == 0) colspan="{{ $colspan }}" @else colspan="3" @endif
                             class="text-align-left">
                             <b>Pago Mensual</b><br />
-                            Subtotal: {{ number_format($subtotal_mensual, 0, ',', '.') }}<br />
-                            Iva: {{ number_format($iva_mensual, 0, ',', '.') }}<br />
+                            Subtotal: {{ number_format($subtotal_mensual, 0, ',', '.') }} <br />
+                            Iva: {{ number_format($iva_mensual, 0, ',', '.') }} <br />
                             @if ($valor_descuento > 0)
-                                Descuento: {{ number_format($valor_descuento, 0, ',', '.') }}<br />
+                                Descuento: {{ number_format($valor_descuento, 0, ',', '.') }} <br />
                             @endif
                             @if ($retencion_mensual > 0)
-                                Retención: {{ number_format($retencion_mensual, 0, ',', '.') }}<br />
+                                Retención: {{ number_format($retencion_mensual, 0, ',', '.') }} <br />
                             @endif
                             <b>Total:
-                                {{ number_format($subtotal_mensual + $iva_mensual - $retencion_mensual, 0, ',', '.') }}</b>
+                                {{ number_format($subtotal_mensual + $iva_mensual - $retencion_mensual, 0, ',', '.') }} </b>
                         </td>
                     @endif
 
@@ -484,15 +484,15 @@
                             @if ($incluye_mensual > 0)
                                 <b>Pago Único</b><br />
                             @endif
-                            Subtotal: {{ number_format($subtotal, 0, ',', '.') }}<br />
-                            Iva: {{ number_format($iva, 0, ',', '.') }}<br />
+                            Subtotal: {{ number_format($subtotal, 0, ',', '.') }} <br />
+                            Iva: {{ number_format($iva, 0, ',', '.') }} <br />
                             @if ($valor_descuento > 0)
-                                Descuento: {{ number_format($valor_descuento, 0, ',', '.') }}<br />
+                                Descuento: {{ number_format($valor_descuento, 0, ',', '.') }} <br />
                             @endif
                             @if ($retencion > 0)
-                                Retención: {{ number_format($retencion, 0, ',', '.') }}<br />
+                                Retención: {{ number_format($retencion, 0, ',', '.') }} <br />
                             @endif
-                            <b>Total: {{ number_format($subtotal + $iva - $retencion, 0, ',', '.') }}</b>
+                            <b>Total:  {{ number_format($subtotal + $iva - $retencion, 0, ',', '.') }}</b>
                         </td>
                     @endif
                 </tr>
@@ -504,13 +504,13 @@
                         <td @if ($incluye_anual == 0) colspan="{{ $colspan }}" @else colspan="3" @endif
                             class="text-align-left">
                             <b>Pago Mensual</b><br />
-                            Subtotal: {{ number_format($subtotal_mensual, 0, ',', '.') }}<br />
-                            Iva: {{ number_format($iva_mensual, 0, ',', '.') }}<br />
+                            Subtotal: {{ number_format($subtotal_mensual, 0, ',', '.') }} <br />
+                            Iva: {{ number_format($iva_mensual, 0, ',', '.') }} <br />
                             @if ($retencion_mensual > 0)
-                                Retención: {{ number_format($retencion_mensual, 0, ',', '.') }}<br />
+                                Retención: {{ number_format($retencion_mensual, 0, ',', '.') }} <br />
                             @endif
                             <b>Total:
-                                {{ number_format($subtotal_mensual + $iva_mensual - $retencion_mensual, 0, ',', '.') }}</b>
+                                {{ number_format($subtotal_mensual + $iva_mensual - $retencion_mensual, 0, ',', '.') }} </b>
                         </td>
                     @endif
 
@@ -520,12 +520,12 @@
                             @if ($incluye_mensual > 0)
                                 <b>Pago Único</b><br />
                             @endif
-                            Subtotal: {{ number_format($subtotal, 0, ',', '.') }}<br />
-                            Iva: {{ number_format($iva, 0, ',', '.') }}<br />
+                            Subtotal: {{ number_format($subtotal, 0, ',', '.') }} <br />
+                            Iva: {{ number_format($iva, 0, ',', '.') }} <br />
                             @if ($retencion > 0)
-                                Retención: {{ number_format($retencion, 0, ',', '.') }}<br />
+                                Retención: {{ number_format($retencion, 0, ',', '.') }} <br />
                             @endif
-                            <b>Total: {{ number_format($subtotal + $iva - $retencion, 0, ',', '.') }}</b>
+                            <b>Total: {{ number_format($subtotal + $iva - $retencion, 0, ',', '.') }} </b>
                         </td>
                     @endif
                 </tr>
