@@ -128,7 +128,7 @@
                             </td>
 
                             <td>
-                                <img src="icontec.png" style="width:100%; max-width:136px; float:right;">
+                                <img src="https://crm.formrad.com/icontec.png" style="width:100%; max-width:136px; float:right;">
                             </td>
                         </tr>
                     </table>
