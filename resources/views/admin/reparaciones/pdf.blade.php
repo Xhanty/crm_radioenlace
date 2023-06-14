@@ -119,7 +119,7 @@
     <div class="invoice-box">
         <table>
             <tr class="top">
-                <td colspan="3">
+                <td colspan="6">
                     <table>
                         <tr>
                             <td class="title">
@@ -137,7 +137,7 @@
             <br>
 
             <tr class="information">
-                <td colspan="3">
+                <td colspan="6">
                     <table>
                         <tr>
                             <td>
@@ -160,11 +160,11 @@
                     Consecutivo
                 </td>
 
-                <td colspan="1" style="text-align: left">
+                <td colspan="3" style="text-align: left">
                     Reparación
                 </td>
 
-                <td colspan="1" style="text-align: right">
+                <td colspan="2" style="text-align: right">
                     Fecha
                 </td>
             </tr>
@@ -174,84 +174,84 @@
                     {{ $reparacion->consecutivo }}
                 </td>
 
-                <td colspan="1" style="font-size: 15px; text-align: left">
+                <td colspan="3" style="font-size: 15px; text-align: left">
                     {{ $reparacion->token }}
                 </td>
 
-                <td colspan="1" style="font-size: 15px; text-align: right">
+                <td colspan="2" style="font-size: 15px; text-align: right">
                     {{ date('d-m-Y', strtotime($reparacion->created_at)) }}
                 </td>
             </tr>
 
             <tr class="heading">
-                <td colspan="1">
+                <td colspan="3">
                     Modelo
                 </td>
 
-                <td colspan="2">
+                <td colspan="3">
                     Serie
                 </td>
             </tr>
 
             <tr class="details">
-                <td colspan="1" style="font-size: 15px">
+                <td colspan="3" style="font-size: 15px">
                     {{ $reparacion->modelo }}
                 </td>
 
-                <td colspan="2" style="font-size: 15px">
+                <td colspan="3" style="font-size: 15px">
                     {{ $reparacion->serie }}
                 </td>
             </tr>
 
             <tr class="heading">
-                <td colspan="1">
+                <td colspan="3">
                     Persona que recibe
                 </td>
 
-                <td colspan="2">
+                <td colspan="3">
                     Técnico Asignado
                 </td>
             </tr>
 
             <tr class="details">
-                <td colspan="1" style="font-size: 15px">
+                <td colspan="3" style="font-size: 15px">
                     {{ $reparacion->recibe }}
                 </td>
 
-                <td colspan="2" style="font-size: 15px">
+                <td colspan="3" style="font-size: 15px">
                     {{ $reparacion->encargado }}
                 </td>
             </tr>
 
             <tr class="heading">
-                <td colspan="1">
+                <td colspan="3">
                     Categoría
                 </td>
 
-                <td colspan="2">
+                <td colspan="3">
                     Accesorios
                 </td>
             </tr>
 
             <tr class="details">
-                <td colspan="1" style="font-size: 15px">
+                <td colspan="3" style="font-size: 15px">
                     {{ $reparacion->categoria }}
                 </td>
 
-                <td colspan="2" style="font-size: 15px">
+                <td colspan="3" style="font-size: 15px">
                     {{ $accesorios_fin }}
                 </td>
             </tr>
 
             @if ($reparacion->observacion)
                 <tr class="heading">
-                    <td colspan="3">
+                    <td colspan="6">
                         Detalle
                     </td>
                 </tr>
 
                 <tr class="details">
-                    <td colspan="3" style="font-size: 15px; text-align: justify;">
+                    <td colspan="6" style="font-size: 15px; text-align: justify;">
                         @php
                             $texto = $reparacion->observacion;
                             $texto_nuevo = preg_replace('/\*(.*?)\*/', "<b>$1</b>", $texto);
@@ -264,9 +264,9 @@
 
             @if (count($repuestos) > 0)
                 <tr class="heading">
-                    <td style="width: 100px; text-align: center;"></td>
-                    <td style="width: 222px; text-align: center;">Repuesto</td>
-                    <td style="text-align: center;">Cantidad</td>
+                    <td colspan="3" style="text-align: center;"></td>
+                    <td colspan="2" style="text-align: center; padding-right: 20px;">Repuesto</td>
+                    <td colspan="1" style="text-align: center;">Cantidad</td>
                 </tr>
             @endif
 
@@ -274,28 +274,28 @@
                 @if ($i == count($repuestos) - 1)
                     <tr>
                         <td style="text-align: center; padding-top: 2%;">
-                            <img src="https://crm.formrad.com/images/productos/{{ $repuestos[$i]->imagen }}"
+                            <img colspan="3" src="https://crm.formrad.com/images/productos/{{ $repuestos[$i]->imagen }}"
                                 style="width:100%; max-width:100px; max-height: 120px">
                         </td>
-                        <td style="text-align: center; padding-top: 3%;">
+                        <td colspan="2" style="text-align: center; padding-top: 3%;">
                             <b>{{ $repuestos[$i]->producto }}</b><br>
                             <b>{{ $repuestos[$i]->modelo }}</b><br>
                             ({{ $repuestos[$i]->marca }})
                         </td>
-                        <td style="text-align: center; padding-top: 3%">{{ $repuestos[$i]->cantidad }}</td>
+                        <td colspan="1" style="text-align: center; padding-top: 3%">{{ $repuestos[$i]->cantidad }}</td>
                     </tr>
                 @else
                     <tr>
                         <td style="text-align: center; padding-top: 2%;">
-                            <img src="https://crm.formrad.com/images/productos/{{ $repuestos[$i]->imagen }}"
+                            <img colspan="3" src="https://crm.formrad.com/images/productos/{{ $repuestos[$i]->imagen }}"
                                 style="width:100%; max-width:100px; max-height: 120px">
                         </td>
-                        <td style="text-align: center; padding-top: 3%;">
+                        <td colspan="2" style="text-align: center; padding-top: 3%;">
                             <b>{{ $repuestos[$i]->producto }}</b><br>
                             <b>{{ $repuestos[$i]->modelo }}</b><br>
                             ({{ $repuestos[$i]->marca }})
                         </td>
-                        <td style="text-align: center; padding-top: 3%;">{{ $repuestos[$i]->cantidad }}</td>
+                        <td colspan="1" style="text-align: center; padding-top: 3%;">{{ $repuestos[$i]->cantidad }}</td>
                     </tr>
                 @endif
             @endfor
@@ -303,17 +303,17 @@
             <br>
 
             <tr class="heading">
-                <td style="width: 300px; text-align: center;">Informe</td>
-                <td style="text-align: center;">Técnico</td>
-                <td style="text-align: center;">Anexo</td>
+                <td colspan="3" style="width: 300px; text-align: center;">Informe</td>
+                <td colspan="2" style="text-align: center; padding-right: 20px;">Técnico</td>
+                <td colspan="1" style="text-align: center;">Anexo</td>
             </tr>
 
             @for ($i = 0; $i < count($informes); $i++)
                 @if ($i == count($informes) - 1)
                     <tr style="border-top: 1px solid #ccc;">
-                        <td style="text-align: justify;">{{ $informes[$i]->observacion }}</td>
-                        <td style="text-align: center;">{{ $informes[$i]->tecnico }}</td>
-                        <td style="text-align: center;">
+                        <td colspan="3" style="text-align: justify; padding-right: 33px">{{ $informes[$i]->observacion }}</td>
+                        <td colspan="2" style="text-align: center;">{{ $informes[$i]->tecnico }}</td>
+                        <td colspan="1" style="text-align: center;">
                             @if ($informes[$i]->adjunto)
                                 <a href="https://crm.formrad.com/images/adjuntos/{{ $informes[$i]->adjunto }}"
                                     target="_blank">Ver</a>
@@ -324,9 +324,9 @@
                     </tr>
                 @else
                     <tr>
-                        <td style="text-align: justify;">{{ $informes[$i]->observacion }}</td>
-                        <td style="text-align: center;">{{ $informes[$i]->tecnico }}</td>
-                        <td style="text-align: center;">
+                        <td colspan="3" style="text-align: justify; padding-right: 33px">{{ $informes[$i]->observacion }}</td>
+                        <td colspan="2" style="text-align: center;">{{ $informes[$i]->tecnico }}</td>
+                        <td colspan="1" style="text-align: center;">
                             @if ($informes[$i]->adjunto)
                                 <a href="https://crm.formrad.com/images/adjuntos/{{ $informes[$i]->adjunto }}"
                                     target="_blank">Ver</a>
@@ -337,7 +337,9 @@
                         </trtyle=>
                 @endif
             @endfor
-
+            <br>
+            <br>
+            <br>
             <table cellpadding="0" width="500px"
                 style="border-collapse: collapse; font-size: 14.4px; bottom: 68; position: fixed;">
                 <tr>
