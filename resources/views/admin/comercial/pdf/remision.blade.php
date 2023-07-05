@@ -142,9 +142,19 @@
                     <table>
                         <tr>
                             <td>
-                                <b>{{ $remision->razon_social }}<br>
-                                    {{ $remision->nit }}-{{ $remision->codigo_verificacion }}<br>
-                                    {{ $remision->ciudad }}, Colombia</b>
+                                @if ($remision->id == 128)
+                                    <b>Sociedad de Seguridad Electrónica y Telecomunicaciones S.A.S<br>
+                                        900265297-2<br>
+                                        Bogotá, Colombia</b>
+                                @elseif($remision->id == 127)
+                                    <b>Sistemas Electrónicos y Telecomunicaciones S.A.S<br>
+                                        800162165-3<br>
+                                        , Colombia</b>
+                                @else
+                                    <b>{{ $remision->razon_social }}<br>
+                                        {{ $remision->nit }}-{{ $remision->codigo_verificacion }}<br>
+                                        {{ $remision->ciudad }}, Colombia</b>
+                                @endif
                             </td>
                             <td>
                                 <b>Radio Enlace S.A.S<br>
@@ -255,7 +265,7 @@
             @endfor
 
             <br>
-        
+
             <div style="width: 100%; position: absolute; margin-top: 55px;">
                 <div style="width: 300px">
                     <hr>
