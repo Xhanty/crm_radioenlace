@@ -319,7 +319,7 @@ class AsignacionesController extends Controller
                 ]);
             }
 
-            if($status == 2) {
+            if ($status == 2) {
                 DB::table("asignaciones")->where("id", $id)->update([
                     "revision" => 1,
                 ]);
@@ -460,5 +460,28 @@ class AsignacionesController extends Controller
             return $ex;
             return response()->json(['info' => 0, 'success' => 'Error al crear la asignación.']);
         }
+    }
+
+    public function calendario()
+    {
+        $empleados_id = [12, 19, 17];
+        $asignaciones_proyectos = DB::table("asignaciones")
+            ->join("empleados", "empleados.id", "=", "asignaciones.created_by")
+            ->join("task_projects", "task_projects.code", "=", "asignaciones.codigo")
+            ->join("proyecto", "task_projects.project_id", "=", "proyecto.id")
+            ->select("asignaciones.*", "empleados.nombre", "task_projects.id AS task_id", "task_projects.project_id", "proyecto.nombre AS proyecto")
+            ->whereIn("asignaciones.id_empleado", $empleados_id)
+            ->orderBy("asignaciones.id", "ASC")
+            ->get();
+
+        $asignaciones_generales = DB::table("asignaciones")
+            ->join("empleados", "empleados.id", "=", "asignaciones.created_by")
+            ->join("cliente", "cliente.id", "=", "asignaciones.id_cliente")
+            ->select("asignaciones.*", "empleados.nombre", "cliente.razon_social AS cliente")
+            ->whereIn("asignaciones.id_empleado", $empleados_id)
+            ->orderBy("asignaciones.id", "ASC")
+            ->get();
+
+        return view('admin.calendario_asignaciones', compact('asignaciones_proyectos', 'asignaciones_generales'));
     }
 }

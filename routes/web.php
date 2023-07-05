@@ -185,11 +185,11 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/accesorios_reparaciones_add', [App\Http\Controllers\Admin\Reparaciones\ConfigController::class, 'accesorios_add'])->name('accesorios_reparaciones_add');
     Route::post('/accesorios_reparaciones_add', [App\Http\Controllers\Admin\Reparaciones\ConfigController::class, 'accesorios_add'])->name('accesorios_reparaciones_add');
     Route::post('/accesorios_reparaciones_delete', [App\Http\Controllers\Admin\Reparaciones\ConfigController::class, 'accesorios_delete'])->name('accesorios_reparaciones_delete');
-    
+
     Route::get('/categorias_reparaciones', [App\Http\Controllers\Admin\Reparaciones\ConfigController::class, 'categorias'])->name('categorias_reparaciones');
     Route::post('/categorias_reparaciones_add', [App\Http\Controllers\Admin\Reparaciones\ConfigController::class, 'categorias_add'])->name('categorias_reparaciones_add');
     Route::post('/categorias_reparaciones_delete', [App\Http\Controllers\Admin\Reparaciones\ConfigController::class, 'categorias_delete'])->name('categorias_reparaciones_delete');
-    
+
     // REPARACIONES
     Route::get('/reparaciones', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'index'])->name('reparaciones');
     Route::get('/reparacion_pdf', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'pdf'])->name('reparacion_pdf');
@@ -200,7 +200,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/reparaciones_completar', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'completar'])->name('reparaciones_completar');
     Route::post('/reparaciones_aprobado', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'aprobado'])->name('reparaciones_aprobado');
     Route::post('/reparaciones_tecnico', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'tecnico'])->name('reparaciones_tecnico');
-    
+
     // MIS REPARACIONES
     Route::get('/mis_reparaciones', [App\Http\Controllers\Admin\Reparaciones\MisReparacionesController::class, 'index'])->name('mis_reparaciones');
     Route::post('/mis_reparaciones', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'mis_reparaciones'])->name('mis_reparaciones');
@@ -262,10 +262,10 @@ Route::middleware(['auth_user'])->group(function () {
 
     // ORGANIZACIÓN
     Route::post('/edit_organizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_organizacion'])->name('edit_organizacion');
-    
+
     // RESOLUCIÓN
     Route::post('/resolucion_add', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'resolucion_add'])->name('resolucion_add');
-    
+
     Route::post('/anexos_organizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'anexos_organizacion'])->name('anexos_organizacion');
     Route::post('/add_anexo_organizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_anexo_organizacion'])->name('add_anexo_organizacion');
     Route::post('/delete_anexo_organizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'delete_anexo_organizacion'])->name('delete_anexo_organizacion');
@@ -470,3 +470,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('reporte_ventas',  [App\Http\Controllers\Admin\Reportes\VentasController::class, 'index'])->name('reporte_ventas');
     Route::post('reportes_ventas_filtro',  [App\Http\Controllers\Admin\Reportes\VentasController::class, 'filtro'])->name('reportes_ventas_filtro');
 });
+
+Route::get('calendario_asignaciones',  [App\Http\Controllers\Admin\AsignacionesController::class, 'calendario'])->name('calendario_asignaciones');
