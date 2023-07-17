@@ -147,6 +147,11 @@
                                                     <i class="fa fa-print"></i> Imprimir
                                                 </a>
                                                 <br>
+                                                <button title="Reversar" class="btn btn-danger btn-sm btnReversar mt-1"
+                                                    data-id="{{ $value->id }}">
+                                                    <i class="fa fa-undo"></i> Reversar
+                                                </button>
+                                                <br>
                                                 <button title="Borrar" class="btn btn-danger btn-sm btnDelete mt-1"
                                                     data-id="{{ $value->id }}">
                                                     <i class="fa fa-trash"></i> Borrar

@@ -154,7 +154,7 @@ class ReparacionesController extends Controller
             return response()->json(['info' => 0, 'message' => 'Error al obtener la información.']);
         }
     }
-
+    
     public function completar(Request $request)
     {
         try {
@@ -164,6 +164,18 @@ class ReparacionesController extends Controller
             return response()->json(['info' => 1, 'message' => 'Reparación finalizada correctamente.']);
         } catch (Exception $ex) {
             return response()->json(['info' => 0, 'message' => 'Error al finalizar la reparación.']);
+        }
+    }
+
+    public function reversar(Request $request)
+    {
+        try {
+            DB::table('reparaciones')->where('id', $request->id)->update([
+                'status' => 0,
+            ]);
+            return response()->json(['info' => 1, 'message' => 'Reparación reversada correctamente.']);
+        } catch (Exception $ex) {
+            return response()->json(['info' => 0, 'message' => 'Error al reversar la reparación.']);
         }
     }
 

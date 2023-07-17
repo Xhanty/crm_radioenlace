@@ -596,6 +596,43 @@ $(document).ready(function () {
         });
     });
 
+    // Reversar
+    $(document).on("click", ".btnReversar", function () {
+        let id = $(this).attr("data-id");
+
+        Swal.fire({
+            title: "¿Estás seguro?",
+            text: "No podrás revertir esto!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Si, reversar!",
+            cancelButtonText: "No, cancelar!",
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "reparaciones_reversar",
+                    type: "POST",
+                    data: { id },
+                    success: function (response) {
+                        if (response.info == 1) {
+                            toastr.success("Se reversó correctamente");
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1000);
+                        } else {
+                            toastr.error("Ocurrió un error al reversar");
+                        }
+                    },
+                    error: function (error) {
+                        toastr.error("Ocurrió un error al reversar");
+                        console.log(error);
+                    }
+                });
+            }
+        });
+    });
+
     // Eliminar
     $(document).on("click", ".btnDelete", function () {
         let id = $(this).attr("data-id");

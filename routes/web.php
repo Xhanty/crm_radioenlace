@@ -198,6 +198,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/reparaciones_edit', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'edit'])->name('reparaciones_edit');
     Route::post('/reparaciones_delete', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'delete'])->name('reparaciones_delete');
     Route::post('/reparaciones_completar', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'completar'])->name('reparaciones_completar');
+    Route::post('/reparaciones_reversar', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'reversar'])->name('reparaciones_reversar');
     Route::post('/reparaciones_aprobado', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'aprobado'])->name('reparaciones_aprobado');
     Route::post('/reparaciones_tecnico', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'tecnico'])->name('reparaciones_tecnico');
 
