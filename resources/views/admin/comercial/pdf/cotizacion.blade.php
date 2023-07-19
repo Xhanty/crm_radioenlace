@@ -642,18 +642,18 @@
             @endif
 
             <table cellpadding="0" width="500px"
-                style="border-collapse: collapse; font-size: 14.4px; bottom: 77; position: fixed;">
+                style="border-collapse: collapse; font-size: 14.4px; bottom: 55; position: fixed;">
                 <tr>
                     <td style="margin: 0.1px; padding: 0px;">
                         <table cellpadding="0" style="border-collapse: collapse; font-size: 17px;">
                             <tr>
                                 <td valign="top">
                                     <img src="http://radioenlacesas.com/wp-content/uploads/2017/08/cropped-logoradioenlace-2.png"
-                                        width="120" style="display: block;">
+                                        width="100" style="display: block;">
                                 </td>
                                 <td valign="top"
                                     style="border-left: 1px solid rgb(176, 70, 70); margin: 0.1px; padding: 0px 0px 0px 12px; color: rgb(124, 124, 124);">
-                                    <table cellpadding="0" style="border-collapse: collapse;">
+                                    <table cellpadding="0" style="border-collapse: collapse; margin-top: 10px">
                                         <tr>
                                             <td
                                                 style="margin: 0.1px; padding: 0px 0px 8px; color: #DD3932; font-size: 18px; margin-top: 5px">
@@ -668,15 +668,6 @@
                                                             style="margin: 0.1px; padding: 0px 5px 0px 0px; color: rgb(124, 124, 124);;">
                                                             {{ $creador->cargo }} <br>
                                                             Email: {{ $creador->email }}
-                                                        </td>
-                                                        <td
-                                                            style="margin: 0.1px; padding: 0px; color: rgb(124, 124, 124);">
-                                                        </td>
-                                                    </tr>
-                                                    <tr style="cursor: pointer;">
-                                                        <td
-                                                            style="margin: 0.1px; padding: 0px 5px 0px 0px; color: rgb(124, 124, 124);;">
-                                                            Dirección: Medellín, Colombia
                                                         </td>
                                                         <td
                                                             style="margin: 0.1px; padding: 0px; color: rgb(124, 124, 124);">
