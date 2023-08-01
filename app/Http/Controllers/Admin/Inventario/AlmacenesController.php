@@ -16,7 +16,7 @@ class AlmacenesController extends Controller
                 return redirect()->route('home');
             }
 
-            $almacenes = DB::table('almacenes')->whereNull("parent_id")->get();
+            $almacenes = DB::table('almacenes')->whereNull("parent_id")->orderBy("nombre")->get();
 
             if ($almacenes->count() > 0) {
                 $almacenes = $almacenes->toArray();
@@ -145,7 +145,7 @@ class AlmacenesController extends Controller
     public function getAlmacenes($almacenes)
     {
         foreach ($almacenes as $key => $almacen) {
-            $almacenes[$key]->almacenes = DB::table('almacenes')->where('parent_id', $almacen->id)->get();
+            $almacenes[$key]->almacenes = DB::table('almacenes')->where('parent_id', $almacen->id)->orderBy("nombre")->get();
 
             if ($almacenes[$key]->almacenes->count() > 0) {
                 $almacenes[$key]->almacenes = $almacenes[$key]->almacenes->toArray();
