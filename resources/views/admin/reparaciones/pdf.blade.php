@@ -128,7 +128,8 @@
                             </td>
 
                             <td>
-                                <img src="https://crm.formrad.com/icontec.png" style="width:100%; max-width:136px; float:right;">
+                                <img src="https://crm.formrad.com/icontec.png"
+                                    style="width:100%; max-width:136px; float:right;">
                             </td>
                         </tr>
                     </table>
@@ -273,8 +274,8 @@
             @for ($i = 0; $i < count($repuestos); $i++)
                 @if ($i == count($repuestos) - 1)
                     <tr>
-                        <td style="text-align: center; padding-top: 2%;">
-                            <img colspan="3" src="https://crm.formrad.com/images/productos/{{ $repuestos[$i]->imagen }}"
+                        <td colspan="3" style="text-align: center; padding-top: 2%;">
+                            <img src="https://crm.formrad.com/images/productos/{{ $repuestos[$i]->imagen }}"
                                 style="width:100%; max-width:100px; max-height: 120px">
                         </td>
                         <td colspan="2" style="text-align: center; padding-top: 3%;">
@@ -282,12 +283,13 @@
                             <b>{{ $repuestos[$i]->modelo }}</b><br>
                             ({{ $repuestos[$i]->marca }})
                         </td>
-                        <td colspan="1" style="text-align: center; padding-top: 3%">{{ $repuestos[$i]->cantidad }}</td>
+                        <td colspan="1" style="text-align: center; padding-top: 3%">{{ $repuestos[$i]->cantidad }}
+                        </td>
                     </tr>
                 @else
                     <tr>
-                        <td style="text-align: center; padding-top: 2%;">
-                            <img colspan="3" src="https://crm.formrad.com/images/productos/{{ $repuestos[$i]->imagen }}"
+                        <td colspan="3" style="text-align: center; padding-top: 2%;">
+                            <img src="https://crm.formrad.com/images/productos/{{ $repuestos[$i]->imagen }}"
                                 style="width:100%; max-width:100px; max-height: 120px">
                         </td>
                         <td colspan="2" style="text-align: center; padding-top: 3%;">
@@ -295,23 +297,27 @@
                             <b>{{ $repuestos[$i]->modelo }}</b><br>
                             ({{ $repuestos[$i]->marca }})
                         </td>
-                        <td colspan="1" style="text-align: center; padding-top: 3%;">{{ $repuestos[$i]->cantidad }}</td>
+                        <td colspan="1" style="text-align: center; padding-top: 3%;">{{ $repuestos[$i]->cantidad }}
+                        </td>
                     </tr>
                 @endif
             @endfor
 
             <br>
 
-            <tr class="heading">
-                <td colspan="3" style="width: 300px; text-align: center;">Informe</td>
-                <td colspan="2" style="text-align: center; padding-right: 20px;">Técnico</td>
-                <td colspan="1" style="text-align: center;">Anexo</td>
-            </tr>
+            @if (count($informes) > 0)
+                <tr class="heading">
+                    <td colspan="3" style="width: 300px; text-align: center;">Informe</td>
+                    <td colspan="2" style="text-align: center; padding-right: 20px;">Técnico</td>
+                    <td colspan="1" style="text-align: center;">Anexo</td>
+                </tr>
+            @endif
 
             @for ($i = 0; $i < count($informes); $i++)
                 @if ($i == count($informes) - 1)
                     <tr style="border-top: 1px solid #ccc;">
-                        <td colspan="3" style="text-align: justify; padding-right: 33px">{{ $informes[$i]->observacion }}</td>
+                        <td colspan="3" style="text-align: justify; padding-right: 33px">
+                            {{ $informes[$i]->observacion }}</td>
                         <td colspan="2" style="text-align: center;">{{ $informes[$i]->tecnico }}</td>
                         <td colspan="1" style="text-align: center;">
                             @if ($informes[$i]->adjunto)
@@ -324,7 +330,8 @@
                     </tr>
                 @else
                     <tr>
-                        <td colspan="3" style="text-align: justify; padding-right: 33px">{{ $informes[$i]->observacion }}</td>
+                        <td colspan="3" style="text-align: justify; padding-right: 33px">
+                            {{ $informes[$i]->observacion }}</td>
                         <td colspan="2" style="text-align: center;">{{ $informes[$i]->tecnico }}</td>
                         <td colspan="1" style="text-align: center;">
                             @if ($informes[$i]->adjunto)
