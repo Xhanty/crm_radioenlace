@@ -43,34 +43,51 @@ $(function () {
 
     $("#btnGuardarVehiculo").click(function (e) {
         e.preventDefault();
-        let marca = $("#marcaadd").val();
-        let modelo = $("#modeloadd").val();
-        let tipo_combustible = $("#tipo_combustibleadd").val();
-        let year = $("#yearadd").val();
-        let soat = $("#soatadd").val();
         let placa = $("#placaadd").val();
-        let tecnomecanica = $("#tecnomecanicaadd").val();
+        let modelo = $("#modeloadd").val();
+        let marca = $("#marcaadd").val();
         let color = $("#coloradd").val();
-        let seguro = $("#seguroadd").val();
-        let tipo = $("#tipoadd").val();
-        let observaciones = $("#observacionesadd").val();
+        let tipo_carroceria = $("#corroseriaadd").val();
+        let capacidad = $("#capacidadadd").val();
+        let combustible = $("#combustibleadd").val();
+        let cilindraje = $("#cilindrajeadd").val();
+        let motor = $("#motoradd").val();
+        let serie = $("#serieadd").val();
+        let chasis = $("#chasisadd").val();
+        let clase = $("#claseadd").val();
+        let matricula = $("#matriculadd").val();
+        let puertas = $("#puertasadd").val();
+        let transito = $("#transitoadd").val();
+        let licencia = $("#licenciaadd").val();
+        let propietario = $("#propietarioadd").val();
+        let identificacion = $("#identificacionadd").val();
+        //Ckeditor falta
+        let observaciones = $("[name='observacionesadd']").val();
         let foto = $("#fotoadd")[0].files[0];
 
         let formData = new FormData();
-        formData.append("marca", marca);
-        formData.append("modelo", modelo);
-        formData.append("tipo_combustible", tipo_combustible);
-        formData.append("year", year);
-        formData.append("soat", soat);
         formData.append("placa", placa);
-        formData.append("tecnomecanica", tecnomecanica);
+        formData.append("modelo", modelo);
+        formData.append("marca", marca);
         formData.append("color", color);
-        formData.append("seguro", seguro);
-        formData.append("tipo", tipo);
+        formData.append("tipo_carroceria", tipo_carroceria);
+        formData.append("capacidad", capacidad);
+        formData.append("combustible", combustible);
+        formData.append("cilindraje", cilindraje);
+        formData.append("motor", motor);
+        formData.append("serie", serie);
+        formData.append("chasis", chasis);
+        formData.append("clase", clase);
+        formData.append("matricula", matricula);
+        formData.append("puertas", puertas);
+        formData.append("transito", transito);
+        formData.append("licencia", licencia);
+        formData.append("propietario", propietario);
+        formData.append("identificacion", identificacion);
         formData.append("observaciones", observaciones);
         formData.append("foto", foto);
 
-        $("#btnGuardarVehiculo")
+        $("#btnGuardarVehiculo");
         $("#btnGuardarVehiculo").html(
             '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
         );
@@ -124,7 +141,9 @@ $(function () {
                 );
                 $("#marcaedit").val(data.marca);
                 $("#modeloedit").val(data.modelo);
-                $("#tipo_combustibleedit").val(data.tipo_combustible).trigger("change");
+                $("#tipo_combustibleedit")
+                    .val(data.tipo_combustible)
+                    .trigger("change");
                 $("#yearedit").val(data.year);
                 $("#soatedit").val(data.soat);
                 $("#placaedit").val(data.placa);
@@ -165,7 +184,9 @@ $(function () {
                 $("#idedit").val(data.id);
                 $("#marcaedit").val(data.marca);
                 $("#modeloedit").val(data.modelo);
-                $("#tipo_combustibleedit").val(data.tipo_combustible).trigger("change");
+                $("#tipo_combustibleedit")
+                    .val(data.tipo_combustible)
+                    .trigger("change");
                 $("#yearedit").val(data.year);
                 $("#soatedit").val(data.soat);
                 $("#placaedit").val(data.placa);
@@ -214,7 +235,7 @@ $(function () {
         formData.append("observaciones", observaciones);
         formData.append("foto", foto);
 
-        $("#btnEditarVehiculo")
+        $("#btnEditarVehiculo");
         $("#btnEditarVehiculo").html(
             '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
         );
@@ -351,7 +372,7 @@ $(function () {
             toastr.error("Debe ingresar una sede");
             return false;
         } else {
-            $("#btnAgregarEncuesta")
+            $("#btnAgregarEncuesta");
             $("#btnAgregarEncuesta").html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
             );
@@ -426,16 +447,22 @@ $(function () {
                 $("#global-loader").fadeOut("fast");
 
                 $("#sede_view").val(data.sede);
-                $("#dolor_garganta_view").val(data.dolor_garganta).trigger("change");
+                $("#dolor_garganta_view")
+                    .val(data.dolor_garganta)
+                    .trigger("change");
                 $("#uno_view").val(data.malestar_general).trigger("change");
                 $("#dos_view").val(data.fiebre).trigger("change");
                 $("#tres_view").val(data.tos_seca).trigger("change");
                 $("#cuatro_view").val(data.perdida_olfato).trigger("change");
                 $("#cinco_view").val(data.contacto_covid19).trigger("change");
-                $("#seis_view").val(data.res_diagnostico_covid19).trigger("change");
+                $("#seis_view")
+                    .val(data.res_diagnostico_covid19)
+                    .trigger("change");
                 $("#siete_view").val(data.res_servicio_salud).trigger("change");
                 $("#ocho_view").val(data.res_65years).trigger("change");
-                $("#nueve_view").val(data.res_enfermedades_cronicas).trigger("change");
+                $("#nueve_view")
+                    .val(data.res_enfermedades_cronicas)
+                    .trigger("change");
                 $("#diez_view").val(data.botas).trigger("change");
                 $("#once_view").val(data.uniforme).trigger("change");
                 $("#doce_view").val(data.declaracion).trigger("change");

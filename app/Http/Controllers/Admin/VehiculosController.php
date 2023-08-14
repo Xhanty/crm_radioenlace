@@ -53,21 +53,32 @@ class VehiculosController extends Controller
     {
         try {
             DB::beginTransaction();
-            $image = $request->file('foto');
-            $new_name = rand() . rand() . '.' . $image->getClientOriginalExtension();
-            $image->move('images/vehiculos', $new_name);
+            $new_name = '';
+            if ($request->hasFile('foto')) {
+                $image = $request->file('foto');
+                $new_name = rand() . rand() . '.' . $image->getClientOriginalExtension();
+                $image->move('images/vehiculos', $new_name);
+            }
 
             DB::table("vehiculos")->insert([
-                'marca' => $request->marca,
-                'modelo' => $request->modelo,
-                'tipo_combustible' => $request->tipo_combustible,
-                'year' => $request->year,
-                'soat' => $request->soat,
                 'placa' => $request->placa,
-                'seguro_obligatorio' => $request->tecnomecanica,
+                'modelo' => $request->modelo,
+                'marca' => $request->marca,
                 'color' => $request->color,
-                'seguro_riesgos' => $request->seguro,
-                'tipo' => $request->tipo,
+                'tipo_carroceria' => $request->tipo_carroceria,
+                'capacidad' => $request->capacidad,
+                'combustible' => $request->combustible,
+                'cilindraje' => $request->cilindraje,
+                'motor' => $request->motor,
+                'serie' => $request->serie,
+                'chasis' => $request->chasis,
+                'clase' => $request->clase,
+                'matricula' => $request->matricula,
+                'puertas' => $request->puertas,
+                'transito' => $request->transito,
+                'licencia' => $request->licencia,
+                'propietario' => $request->propietario,
+                'identificacion' => $request->identificacion,
                 'observaciones' => $request->observaciones,
                 'foto' => $new_name,
                 'created_by' => session('user'),
@@ -353,7 +364,6 @@ class VehiculosController extends Controller
             $vehiculo = $request->vehiculo;
             $checklist = $request->checklist;
             $emails = $request->emails;
-            
         } catch (Exception $ex) {
             return response()->json(['info' => 0, 'error' => 'Error al obtener los datos del vehiculo.']);
         }
