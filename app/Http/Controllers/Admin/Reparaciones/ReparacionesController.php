@@ -172,6 +172,7 @@ class ReparacionesController extends Controller
         try {
             DB::table('reparaciones')->where('id', $request->id)->update([
                 'status' => 0,
+                'aprobado' => 0,
             ]);
             return response()->json(['info' => 1, 'message' => 'Reparación reversada correctamente.']);
         } catch (Exception $ex) {
