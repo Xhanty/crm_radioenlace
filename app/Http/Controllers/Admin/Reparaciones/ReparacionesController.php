@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Reparaciones;
 
+use App\Exports\ReparacionesExport;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 
 class ReparacionesController extends Controller
@@ -154,7 +156,7 @@ class ReparacionesController extends Controller
             return response()->json(['info' => 0, 'message' => 'Error al obtener la información.']);
         }
     }
-    
+
     public function completar(Request $request)
     {
         try {
@@ -300,6 +302,27 @@ class ReparacionesController extends Controller
             return $ex->getMessage();
             return view('errors.500');
         }
+    }
+
+    public function excel()
+    {
+        // Generar excel con las reparaciones finalizadas
+        $finalizadas
+            = DB::table('reparaciones')
+            ->select(
+                'reparaciones.token as codigo',
+                'reparaciones.created_at as fecha_entrega',
+                'reparaciones.fecha_terminado',
+                'cliente.razon_social as cliente',
+                'cliente.nit',
+                'empleados.nombre as tecnico'
+            )
+            ->join('cliente', 'cliente.id', '=', 'reparaciones.cliente_id')
+            ->leftJoin('empleados', 'empleados.id', '=', 'reparaciones.tecnico_id')
+            ->where('reparaciones.status', 1)
+            ->get();
+
+        return Excel::download(new ReparacionesExport($finalizadas), 'reparaciones_completadas.xlsx');
     }
 
     public function mis_reparaciones(Request $request)

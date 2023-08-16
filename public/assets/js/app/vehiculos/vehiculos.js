@@ -41,6 +41,91 @@ $(function () {
         $("#div_list_vehiculos").show();
     });
 
+    let editor_add;
+    let editor_edit;
+
+    ClassicEditor.create(document.querySelector("#observacionesadd"), {
+        toolbar: [
+            "heading",
+            "|",
+            "bold",
+            "italic",
+            "link",
+            "insertTable",
+            "bulletedList",
+            "numberedList",
+            "blockQuote",
+        ],
+        heading: {
+            options: [
+                {
+                    model: "paragraph",
+                    title: "Texto",
+                    class: "ck-heading_paragraph",
+                },
+                {
+                    model: "heading1",
+                    view: "h1",
+                    title: "Título",
+                    class: "ck-heading_heading1",
+                },
+                {
+                    model: "heading2",
+                    view: "h2",
+                    title: "Subtítulo",
+                    class: "ck-heading_heading2",
+                },
+            ],
+        },
+    })
+        .then((newEditorAdd) => {
+            editor_add = newEditorAdd;
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
+    ClassicEditor.create(document.querySelector("#observacionesedit"), {
+        toolbar: [
+            "heading",
+            "|",
+            "bold",
+            "italic",
+            "link",
+            "insertTable",
+            "bulletedList",
+            "numberedList",
+            "blockQuote",
+        ],
+        heading: {
+            options: [
+                {
+                    model: "paragraph",
+                    title: "Texto",
+                    class: "ck-heading_paragraph",
+                },
+                {
+                    model: "heading1",
+                    view: "h1",
+                    title: "Título",
+                    class: "ck-heading_heading1",
+                },
+                {
+                    model: "heading2",
+                    view: "h2",
+                    title: "Subtítulo",
+                    class: "ck-heading_heading2",
+                },
+            ],
+        },
+    })
+        .then((newEditorEdit) => {
+            editor_edit = newEditorEdit;
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
     $("#btnGuardarVehiculo").click(function (e) {
         e.preventDefault();
         let placa = $("#placaadd").val();
@@ -61,8 +146,7 @@ $(function () {
         let licencia = $("#licenciaadd").val();
         let propietario = $("#propietarioadd").val();
         let identificacion = $("#identificacionadd").val();
-        //Ckeditor falta
-        let observaciones = $("[name='observacionesadd']").val();
+        let observaciones = editor_add.getData();
         let foto = $("#fotoadd")[0].files[0];
 
         let formData = new FormData();
@@ -134,24 +218,31 @@ $(function () {
                 $("#modalEdit select").attr("disabled", "disabled");
                 $("#modalEdit textarea").attr("disabled", "disabled");
                 $("#modalEdit .modal-footer").addClass("d-none");
+                editor_edit.enableReadOnlyMode("editor");
 
                 $("#imagenedit").attr(
                     "src",
                     url_general + "images/vehiculos/" + data.foto
                 );
-                $("#marcaedit").val(data.marca);
-                $("#modeloedit").val(data.modelo);
-                $("#tipo_combustibleedit")
-                    .val(data.tipo_combustible)
-                    .trigger("change");
-                $("#yearedit").val(data.year);
-                $("#soatedit").val(data.soat);
                 $("#placaedit").val(data.placa);
-                $("#tecnomecanicaedit").val(data.tecnomecanica);
+                $("#modeloedit").val(data.modelo);
+                $("#marcaedit").val(data.marca);
                 $("#coloredit").val(data.color);
-                $("#seguroedit").val(data.seguro);
-                $("#tipoedit").val(data.tipo).trigger("change");
-                $("#observacionesedit").val(data.observaciones);
+                $("#corroseriaedit").val(data.tipo_carroceria);
+                $("#capacidadedit").val(data.capacidad);
+                $("#combustibleedit").val(data.combustible);
+                $("#cilindrajeedit").val(data.cilindraje);
+                $("#motoredit").val(data.motor);
+                $("#serieedit").val(data.serie);
+                $("#chasisedit").val(data.chasis);
+                $("#claseedit").val(data.clase);
+                $("#matriculedit").val(data.matricula);
+                $("#puertasedit").val(data.puertas);
+                $("#transitoedit").val(data.transito);
+                $("#licenciaedit").val(data.licencialicencia);
+                $("#propietarioedit").val(data.propietario);
+                $("#identificacionedit").val(data.identificacion);
+                editor_edit.setData(data.observaciones);
                 $("#global-loader").fadeOut("fast");
             },
             error: function (error) {
@@ -176,25 +267,33 @@ $(function () {
                 $("#modalEdit select").removeAttr("disabled");
                 $("#modalEdit textarea").removeAttr("disabled");
                 $("#modalEdit .modal-footer").removeClass("d-none");
+                editor_edit.disableReadOnlyMode("editor");
 
                 $("#imagenedit").attr(
                     "src",
                     url_general + "images/vehiculos/" + data.foto
                 );
                 $("#idedit").val(data.id);
-                $("#marcaedit").val(data.marca);
-                $("#modeloedit").val(data.modelo);
-                $("#tipo_combustibleedit")
-                    .val(data.tipo_combustible)
-                    .trigger("change");
-                $("#yearedit").val(data.year);
-                $("#soatedit").val(data.soat);
+
                 $("#placaedit").val(data.placa);
-                $("#tecnomecanicaedit").val(data.tecnomecanica);
+                $("#modeloedit").val(data.modelo);
+                $("#marcaedit").val(data.marca);
                 $("#coloredit").val(data.color);
-                $("#seguroedit").val(data.seguro);
-                $("#tipoedit").val(data.tipo).trigger("change");
-                $("#observacionesedit").val(data.observaciones);
+                $("#corroseriaedit").val(data.tipo_carroceria);
+                $("#capacidadedit").val(data.capacidad);
+                $("#combustibleedit").val(data.combustible);
+                $("#cilindrajeedit").val(data.cilindraje);
+                $("#motoredit").val(data.motor);
+                $("#serieedit").val(data.serie);
+                $("#chasisedit").val(data.chasis);
+                $("#claseedit").val(data.clase);
+                $("#matriculedit").val(data.matricula);
+                $("#puertasedit").val(data.puertas);
+                $("#transitoedit").val(data.transito);
+                $("#licenciaedit").val(data.licencialicencia);
+                $("#propietarioedit").val(data.propietario);
+                $("#identificacionedit").val(data.identificacion);
+                editor_edit.setData(data.observaciones);
                 $("#global-loader").fadeOut("fast");
             },
             error: function (error) {
@@ -207,31 +306,47 @@ $(function () {
     $("#btnEditarVehiculo").click(function (e) {
         e.preventDefault();
         let id = $("#idedit").val();
-        let marca = $("#marcaedit").val();
-        let modelo = $("#modeloedit").val();
-        let tipo_combustible = $("#tipo_combustibleedit").val();
-        let year = $("#yearedit").val();
-        let soat = $("#soatedit").val();
         let placa = $("#placaedit").val();
-        let tecnomecanica = $("#tecnomecanicaedit").val();
+        let modelo = $("#modeloedit").val();
+        let marca = $("#marcaedit").val();
         let color = $("#coloredit").val();
-        let seguro = $("#seguroedit").val();
-        let tipo = $("#tipoedit").val();
-        let observaciones = $("#observacionesedit").val();
+        let tipo_carroceria = $("#corroseriaedit").val();
+        let capacidad = $("#capacidadedit").val();
+        let combustible = $("#combustibleedit").val();
+        let cilindraje = $("#cilindrajeedit").val();
+        let motor = $("#motoredit").val();
+        let serie = $("#serieedit").val();
+        let chasis = $("#chasisedit").val();
+        let clase = $("#claseedit").val();
+        let matricula = $("#matriculedit").val();
+        let puertas = $("#puertasedit").val();
+        let transito = $("#transitoedit").val();
+        let licencia = $("#licenciaedit").val();
+        let propietario = $("#propietarioedit").val();
+        let identificacion = $("#identificacionedit").val();
+        let observaciones = editor_edit.getData();
         let foto = $("#fotoedit")[0].files[0];
 
         let formData = new FormData();
         formData.append("id", id);
-        formData.append("marca", marca);
-        formData.append("modelo", modelo);
-        formData.append("tipo_combustible", tipo_combustible);
-        formData.append("year", year);
-        formData.append("soat", soat);
         formData.append("placa", placa);
-        formData.append("tecnomecanica", tecnomecanica);
+        formData.append("modelo", modelo);
+        formData.append("marca", marca);
         formData.append("color", color);
-        formData.append("seguro", seguro);
-        formData.append("tipo", tipo);
+        formData.append("tipo_carroceria", tipo_carroceria);
+        formData.append("capacidad", capacidad);
+        formData.append("combustible", combustible);
+        formData.append("cilindraje", cilindraje);
+        formData.append("motor", motor);
+        formData.append("serie", serie);
+        formData.append("chasis", chasis);
+        formData.append("clase", clase);
+        formData.append("matricula", matricula);
+        formData.append("puertas", puertas);
+        formData.append("transito", transito);
+        formData.append("licencia", licencia);
+        formData.append("propietario", propietario);
+        formData.append("identificacion", identificacion);
         formData.append("observaciones", observaciones);
         formData.append("foto", foto);
 

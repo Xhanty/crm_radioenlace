@@ -193,6 +193,7 @@ Route::middleware(['auth_user'])->group(function () {
     // REPARACIONES
     Route::get('/reparaciones', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'index'])->name('reparaciones');
     Route::get('/reparacion_pdf', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'pdf'])->name('reparacion_pdf');
+    Route::get('/reparaciones_excel', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'excel'])->name('reparaciones_excel');
     Route::post('/reparaciones_info', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'info'])->name('reparaciones_info');
     Route::post('/reparaciones_add', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'add'])->name('reparaciones_add');
     Route::post('/reparaciones_edit', [App\Http\Controllers\Admin\Reparaciones\ReparacionesController::class, 'edit'])->name('reparaciones_edit');

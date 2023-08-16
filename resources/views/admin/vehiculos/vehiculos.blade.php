@@ -53,7 +53,7 @@
                                         <th class="wd-15p border-bottom-0">Marca</th>
                                         <th class="wd-10p border-bottom-0">Modelo</th>
                                         <th class="wd-10p border-bottom-0">Placa</th>
-                                        <th class="wd-10p border-bottom-0">Año</th>
+                                        <!--<th class="wd-10p border-bottom-0">Año</th>-->
                                         <th class="wd-10p border-bottom-0">Estado</th>
                                         <th class="wd-20p border-bottom-0">Acciones</th>
                                     </tr>
@@ -634,47 +634,17 @@
                     </div>
                     <br>
                     <div class="row row-sm">
-                        <div class="col-lg">
-                            <label for="">Marca</label>
-                            <input class="form-control" id="marcaedit" placeholder="Marca" type="text">
+                        <div class="col-lg mg-t-10 mg-lg-t-0">
+                            <label for="">Placa</label>
+                            <input class="form-control" id="placaedit" placeholder="Placa" type="text">
                         </div>
                         <div class="col-lg mg-t-10 mg-lg-t-0">
                             <label for="">Modelo</label>
                             <input class="form-control" id="modeloedit" placeholder="Modelo" type="text">
                         </div>
-                    </div>
-                    <br>
-                    <div class="row row-sm">
                         <div class="col-lg">
-                            <label for="">Tipo Combustible</label>
-                            <select id="tipo_combustibleedit" class="form-select">
-                                <option value="">Seleccione un tipo de combustible</option>
-                                <option value="ACPM">ACPM</option>
-                                <option value="Gasolina">Gasolina</option>
-                            </select>
-                        </div>
-                        <div class="col-lg mg-t-10 mg-lg-t-0">
-                            <label for="">Año</label>
-                            <input class="form-control" id="yearedit" placeholder="Año" type="text">
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row row-sm">
-                        <div class="col-lg">
-                            <label for="">Soat</label>
-                            <input class="form-control" id="soatedit" placeholder="Soat" type="text">
-                        </div>
-                        <div class="col-lg mg-t-10 mg-lg-t-0">
-                            <label for="">Placa</label>
-                            <input class="form-control" id="placaedit" placeholder="Placa" type="text">
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row row-sm">
-                        <div class="col-lg">
-                            <label for="">Tecnomecánica</label>
-                            <input class="form-control" id="tecnomecanicaedit" placeholder="Tecnomecánica"
-                                type="text">
+                            <label for="">Marca</label>
+                            <input class="form-control" id="marcaedit" placeholder="Marca" type="text">
                         </div>
                         <div class="col-lg mg-t-10 mg-lg-t-0">
                             <label for="">Color</label>
@@ -683,33 +653,85 @@
                     </div>
                     <br>
                     <div class="row row-sm">
+                        <div class="col-lg mg-t-10 mg-lg-t-0">
+                            <label for="">Tipo de carroseria</label>
+                            <input class="form-control" id="corroseriaedit" placeholder="Tipo de carroseria"
+                                type="text">
+                        </div>
                         <div class="col-lg">
-                            <label for="">Seguro de riesgos</label>
-                            <input class="form-control" id="seguroedit" placeholder="Seguro de riesgos" type="text">
+                            <label for="">Capacidad</label>
+                            <input class="form-control" id="capacidadedit" placeholder="Capacidad" type="text">
                         </div>
                         <div class="col-lg mg-t-10 mg-lg-t-0">
-                            <label for="">Tipo</label>
-                            <select id="tipoedit" class="form-select">
-                                <option value="">Seleccione un tipo</option>
-                                <option value="Automovil">Automovil</option>
-                                <option value="Sedan">Sedan</option>
-                                <option value="Camioneta">Camioneta</option>
-                                <option value="Campero">Campero</option>
-                                <option value="Grua Planchón">Grua Planchón</option>
-                                <option value="Grua Pluma">Grua Pluma</option>
-                                <option value="SUV">SUV</option>
-                                <option value="Tractocamión">Tractocamión</option>
-                            </select>
+                            <label for="">Combustible</label>
+                            <input class="form-control" id="combustibleedit" placeholder="Combustible" type="text">
+                        </div>
+                        <div class="col-lg">
+                            <label for="">Cilindraje</label>
+                            <input class="form-control" id="cilindrajeedit" placeholder="Cilindraje" type="text">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row row-sm">
+                        <div class="col-lg mg-t-10 mg-lg-t-0">
+                            <label for="">No. Motor</label>
+                            <input class="form-control" id="motoredit" placeholder="No. Motor" type="text">
+                        </div>
+                        <div class="col-lg">
+                            <label for="">Serie</label>
+                            <input class="form-control" id="serieedit" placeholder="Serie" type="text">
+                        </div>
+                        <div class="col-lg mg-t-10 mg-lg-t-0">
+                            <label for="">No. Chasis</label>
+                            <input class="form-control" id="chasisedit" placeholder="No. Chasis" type="text">
+                        </div>
+                        <div class="col-lg">
+                            <label for="">Clase de vehiculo</label>
+                            <input class="form-control" id="claseedit" placeholder="Clase de vehiculo" type="text">
                         </div>
                     </div>
                     <br>
                     <div class="row row-sm">
                         <div class="col-lg">
-                            <label for="">Observaciones</label>
-                            <textarea class="form-control" placeholder="Observaciones" rows="3" id="observacionesedit"
-                                style="height: 90px; resize: none"></textarea>
+                            <label for="">Matricula</label>
+                            <input class="form-control" id="matriculedit" placeholder="Matricula" type="text">
+                        </div>
+                        <div class="col-lg">
+                            <label for="">Puertas</label>
+                            <input class="form-control" id="puertasedit" placeholder="Puertas" type="text">
                         </div>
                         <div class="col-lg mg-t-10 mg-lg-t-0">
+                            <label for="">Org. de transito</label>
+                            <input class="form-control" id="transitoedit" placeholder="Org. de transito" type="text">
+                        </div>
+                        <div class="col-lg">
+                            <label for="">Licencia de transito</label>
+                            <input class="form-control" id="licenciaedit" placeholder="Licencia de transito"
+                                type="text">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row row-sm">
+                        <div class="col-lg">
+                            <label for="">Propietario</label>
+                            <input class="form-control" id="propietarioedit" placeholder="Propietario" type="text">
+                        </div>
+                        <div class="col-lg">
+                            <label for="">Identificación</label>
+                            <input class="form-control" id="identificacionedit" placeholder="Identificación"
+                                type="text">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row row-sm">
+                        <div class="col-lg-12">
+                            <label for="">Observaciones</label>
+                            <textarea name="observacionesedit" id="observacionesedit"></textarea>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row row-sm">
+                        <div class="col-lg">
                             <label for="">Foto</label>
                             <input class="form-control" id="fotoedit" type="file" accept="image/*">
                         </div>
@@ -727,35 +749,4 @@
     <script src="{{ asset('assets/js/app/vehiculos/vehiculos.js') }}"></script>
     <script src="{{ asset('assets/js/app/vehiculos/vehiculos_gruas.js') }}"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#observacionesadd'), {
-                toolbar: ['heading', '|', 'bold', 'italic', 'link', 'insertTable', 'bulletedList', 'numberedList',
-                    'blockQuote'
-                ],
-                heading: {
-                    options: [{
-                            model: 'paragraph',
-                            title: 'Texto',
-                            class: 'ck-heading_paragraph'
-                        },
-                        {
-                            model: 'heading1',
-                            view: 'h1',
-                            title: 'Título',
-                            class: 'ck-heading_heading1'
-                        },
-                        {
-                            model: 'heading2',
-                            view: 'h2',
-                            title: 'Subtítulo',
-                            class: 'ck-heading_heading2'
-                        }
-                    ]
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    </script>
 @endsection
