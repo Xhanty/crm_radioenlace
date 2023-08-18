@@ -67,6 +67,7 @@ Route::middleware(['auth_user'])->group(function () {
     // ASIGNACIONES CLIENTES
     Route::get('/asignaciones_clientes', [App\Http\Controllers\Admin\AsignacionesController::class, 'asignaciones_clientes'])->name('asignaciones_clientes');
     Route::get('/gestionar_asignaciones_clientes', [App\Http\Controllers\Admin\AsignacionesController::class, 'gestionar_asignaciones_clientes'])->name('gestionar_asignaciones_clientes');
+    Route::get('/asignaciones_clientes_excel', [App\Http\Controllers\Admin\AsignacionesController::class, 'excel'])->name('asignaciones_clientes_excel');
 
     // PUNTOS
     Route::get('/mis_puntos', [App\Http\Controllers\Admin\PuntosController::class, 'index'])->name('mis_puntos');

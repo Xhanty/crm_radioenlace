@@ -95,8 +95,14 @@
         <div class="row row-sm">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-header bg-success" style="border-radius: 4px">
-                        <h3 class="card-title mt-2">Lista de Asignaciones Completadas</h3>
+                    <div class="card-header d-flex-header-table bg-success" style="border-radius: 4px">
+                        <div class="div-1-tables-header">
+                            <h3 class="card-title mt-2">Lista de Asignaciones Completadas</h3>
+                        </div>
+                        <div class="div-2-tables-header">
+                            <!-- Excel -->
+                            <a href="{{ route('asignaciones_clientes_excel') }}" class="btn btn-primary">Generar Excel</a>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

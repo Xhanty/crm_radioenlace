@@ -265,8 +265,8 @@
 
             @if (count($repuestos) > 0)
                 <tr class="heading">
-                    <td colspan="3" style="text-align: center;"></td>
-                    <td colspan="2" style="text-align: center; padding-right: 20px;">Repuesto</td>
+                    <td colspan="2" style="text-align: center;"></td>
+                    <td colspan="3" style="text-align: center; padding-right: 20px;">Repuesto</td>
                     <td colspan="1" style="text-align: center;">Cantidad</td>
                 </tr>
             @endif
@@ -274,11 +274,11 @@
             @for ($i = 0; $i < count($repuestos); $i++)
                 @if ($i == count($repuestos) - 1)
                     <tr>
-                        <td colspan="3" style="text-align: center; padding-top: 2%;">
+                        <td colspan="2" style="text-align: center; padding-top: 2%;">
                             <img src="https://crm.formrad.com/images/productos/{{ $repuestos[$i]->imagen }}"
                                 style="width:100%; max-width:100px; max-height: 120px">
                         </td>
-                        <td colspan="2" style="text-align: center; padding-top: 3%;">
+                        <td colspan="3" style="text-align: center; padding-top: 3%;">
                             <b>{{ $repuestos[$i]->producto }}</b><br>
                             <b>{{ $repuestos[$i]->modelo }}</b><br>
                             ({{ $repuestos[$i]->marca }})

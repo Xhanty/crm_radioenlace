@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\AsignacionesExport;
 use App\Http\Controllers\Controller;
 use App\Models\TaskProject;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AsignacionesController extends Controller
 {
@@ -483,5 +485,21 @@ class AsignacionesController extends Controller
             ->get();
 
         return view('admin.calendario_asignaciones', compact('asignaciones_proyectos', 'asignaciones_generales'));
+    }
+
+    public function excel()
+    {
+        // Generar excel con las asignaciones finalizadas
+        $asignaciones_completadas = DB::table("asignaciones")
+            ->join("empleados", "empleados.id", "=", "asignaciones.id_empleado")
+            ->join("empleados AS creador", "creador.id", "=", "asignaciones.created_by")
+            ->join("cliente", "cliente.id", "=", "asignaciones.id_cliente")
+            ->select("asignaciones.*", "empleados.nombre", "creador.nombre AS creador", "cliente.razon_social AS cliente")
+            ->where("asignaciones.status", 1)
+            ->where("asignaciones.revision", 2)
+            ->orderBy("asignaciones.id", "desc")
+            ->get();
+
+        return Excel::download(new AsignacionesExport($asignaciones_completadas), 'asignaciones_completadas.xlsx');
     }
 }
