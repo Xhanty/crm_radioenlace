@@ -130,9 +130,9 @@ $(function () {
                     }
                 },
             },
+            { data: "placa", name: "placa" },
             { data: "marca", name: "marca" },
             { data: "modelo", name: "modelo" },
-            { data: "placa", name: "placa" },
             //{ data: "year", name: "year" },
             {
                 data: "estado",

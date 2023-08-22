@@ -50,9 +50,9 @@
                                 <thead>
                                     <tr>
                                         <th class="wd-15p border-bottom-0">Foto</th>
+                                        <th class="wd-10p border-bottom-0">Placa</th>
                                         <th class="wd-15p border-bottom-0">Marca</th>
                                         <th class="wd-10p border-bottom-0">Modelo</th>
-                                        <th class="wd-10p border-bottom-0">Placa</th>
                                         <!--<th class="wd-10p border-bottom-0">Año</th>-->
                                         <th class="wd-10p border-bottom-0">Estado</th>
                                         <th class="wd-20p border-bottom-0">Acciones</th>
