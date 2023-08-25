@@ -2387,11 +2387,11 @@ __webpack_require__.r(__webpack_exports__);
           })) {
             _this.permisoActividad = true;
             _this.permisoCreador = false;
-            _this.disabledCreador = true;
+            _this.disabledCreador = false;
           } else {
             _this.permisoActividad = false;
             _this.permisoCreador = false;
-            _this.disabledCreador = true;
+            _this.disabledCreador = false;
           }
           _this.anexosTask = [];
           _this.avancesTask = [];
