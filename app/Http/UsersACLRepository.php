@@ -51,6 +51,8 @@ class UsersACLRepository implements ACLRepository
                 //['disk' => 'public', 'path' => Auth::user()->nombre . '/*', 'access' => 2], // read and write
                 ['disk' => 'public', 'path' => 'Mintic', 'access' => 1], // main folder - read
                 ['disk' => 'public', 'path' => 'Mintic/*', 'access' => 2], // read and write
+                ['disk' => 'public', 'path' => 'Área Comercial', 'access' => 1], // main folder - read
+                ['disk' => 'public', 'path' => 'Área Comercial/*', 'access' => 2], // read and write
             ];
         }
 
