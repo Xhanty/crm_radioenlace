@@ -509,11 +509,13 @@ export default {
                     } else if (this.userSelected.find(user => user.id == this.userCreator.id)) {
                         this.permisoActividad = true;
                         this.permisoCreador = false;
-                        this.disabledCreador = true;
+                        //this.disabledCreador = true;
+                        this.disabledCreador = false;
                     } else {
                         this.permisoActividad = false;
                         this.permisoCreador = false;
-                        this.disabledCreador = true;
+                        //this.disabledCreador = true;
+                        this.disabledCreador = false;
                     }
                     this.anexosTask = [];
                     this.avancesTask = [];

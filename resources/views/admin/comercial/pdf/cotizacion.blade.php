@@ -132,9 +132,8 @@
                             </td>
 
                             <td>
-                                <br>
-                                <strong>Cotización No:</strong> {{ $cotizacion->code }}<br>
-                                <strong>Fecha:</strong> {{ date('d-m-Y', strtotime($cotizacion->created_at)) }}<br>
+                                <img src="https://crm.formrad.com/icontec.png"
+                                    style="width:100%; max-width:136px; float:right;">
                             </td>
                         </tr>
                     </table>
@@ -157,6 +156,26 @@
                             </td>
                         </tr>
                     </table>
+                </td>
+            </tr>
+
+            <tr class="heading">
+                <td colspan="3" style="text-align: left">
+                    Cotización
+                </td>
+
+                <td colspan="4" style="text-align: right">
+                    Fecha
+                </td>
+            </tr>
+
+            <tr class="details">
+                <td colspan="3" style="font-size: 15px; text-align: left">
+                    {{ $cotizacion->code }}
+                </td>
+
+                <td colspan="4" style="font-size: 15px; text-align: right">
+                    {{ date('d-m-Y', strtotime($cotizacion->created_at)) }}
                 </td>
             </tr>
 

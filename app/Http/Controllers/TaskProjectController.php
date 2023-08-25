@@ -21,6 +21,8 @@ class TaskProjectController extends Controller
                 $is_admin = 1;
             }
 
+            $is_admin = 1;
+
             $project = $request->get('project');
 
             $valid_project = DB::table('proyecto')

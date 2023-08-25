@@ -620,7 +620,7 @@
 
     <!-- Modal Edit y Show -->
     <div class="modal  fade" id="modalEdit">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content modal-content-demo">
                 <div class="modal-header">
                     <h6 class="modal-title">Datos del Vehículo</h6><button aria-label="Close" class="btn-close"
