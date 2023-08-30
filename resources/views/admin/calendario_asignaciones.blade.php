@@ -31,7 +31,7 @@
             // Agregar los eventos de asignaciones_generales al arreglo de eventos
             asignaciones_generales.forEach(function(asignacion) {
                 events.push({
-                    title: asignacion.nombre + ' (' + asignacion.cliente + ')',
+                    title: asignacion.nombre + ' (' + asignacion.cliente + ')' + ' - ' + asignacion.codigo,
                     start: asignacion.fecha,
                     end: asignacion.fecha_culminacion ?? asignacion.fecha,
                     color: 'blue' // Color para asignaciones_generales

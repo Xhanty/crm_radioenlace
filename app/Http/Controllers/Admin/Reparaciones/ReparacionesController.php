@@ -198,9 +198,11 @@ class ReparacionesController extends Controller
     public function delete(Request $request)
     {
         try {
-            DB::table('reparaciones')->where('id', $request->id)->delete();
-            DB::table('detalle_reparaciones')->where('reparacion_id', $request->id)->delete();
-            DB::table('avances_reparaciones')->where('reparacion_id', $request->id)->delete();
+            DB::table('reparaciones')->where('id', $request->id)->update([
+                'status' => 2,
+            ]);
+            //DB::table('detalle_reparaciones')->where('reparacion_id', $request->id)->delete();
+            //DB::table('avances_reparaciones')->where('reparacion_id', $request->id)->delete();
             return response()->json(['info' => 1, 'message' => 'Reparación eliminada correctamente.']);
         } catch (Exception $ex) {
             return response()->json(['info' => 0, 'message' => 'Error al eliminar la reparación.']);

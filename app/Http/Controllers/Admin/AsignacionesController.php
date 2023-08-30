@@ -467,17 +467,17 @@ class AsignacionesController extends Controller
     public function calendario()
     {
         $empleados_id = [12, 19, 17];
-        $asignaciones_proyectos = DB::table("asignaciones")
-            ->join("empleados", "empleados.id", "=", "asignaciones.created_by")
+        $asignaciones_proyectos = /*DB::table("asignaciones")
+            ->join("empleados", "empleados.id", "=", "asignaciones.id_empleado")
             ->join("task_projects", "task_projects.code", "=", "asignaciones.codigo")
             ->join("proyecto", "task_projects.project_id", "=", "proyecto.id")
             ->select("asignaciones.*", "empleados.nombre", "task_projects.id AS task_id", "task_projects.project_id", "proyecto.nombre AS proyecto")
             ->whereIn("asignaciones.id_empleado", $empleados_id)
             ->orderBy("asignaciones.id", "ASC")
-            ->get();
+            ->get();*/ [];
 
         $asignaciones_generales = DB::table("asignaciones")
-            ->join("empleados", "empleados.id", "=", "asignaciones.created_by")
+            ->join("empleados", "empleados.id", "=", "asignaciones.id_empleado")
             ->join("cliente", "cliente.id", "=", "asignaciones.id_cliente")
             ->select("asignaciones.*", "empleados.nombre", "cliente.razon_social AS cliente")
             ->whereIn("asignaciones.id_empleado", $empleados_id)
