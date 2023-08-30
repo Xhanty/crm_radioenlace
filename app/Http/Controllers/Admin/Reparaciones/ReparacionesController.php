@@ -60,7 +60,7 @@ class ReparacionesController extends Controller
             $correos = $request->correos;
             $reparaciones = json_decode($request->reparaciones);
             $token = $this->generar_codigo();
-            $num_last_reparacion = DB::table('reparaciones')->orderBy('id', 'desc')->first();
+            $num_last_reparacion = DB::table('reparaciones')->orderBy('consecutivo', 'desc')->first();
             $num_last_reparacion = ($num_last_reparacion ? $num_last_reparacion->consecutivo : 0) + 1;
 
 
