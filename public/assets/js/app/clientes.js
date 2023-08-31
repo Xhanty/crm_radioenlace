@@ -323,11 +323,11 @@ $(document).ready(function () {
                                     tipo_badge =
                                         "Cedula del representante Legal";
                                 } else if (anexo.tipo == 3) {
-                                    tipo_badge = "Remisiones";
+                                    tipo_badge = "SAGRILAFT";
                                 } else if (anexo.tipo == 4) {
-                                    tipo_badge = "Cotizaciones";
+                                    tipo_badge = "Encuesta";
                                 } else if (anexo.tipo == 5) {
-                                    tipo_badge = "Informacion Tecnica";
+                                    tipo_badge = "Informacion Técnica";
                                 } else if (anexo.tipo == 6) {
                                     tipo_badge = "Frecuencias";
                                 } else if (anexo.tipo == 7) {
@@ -342,7 +342,7 @@ $(document).ready(function () {
                                 } else if (anexo.tipo == 11) {
                                     tipo_badge = "Formulario ANE";
                                 } else if (anexo.tipo == 12) {
-                                    tipo_badge = "Informes Tecnicos";
+                                    tipo_badge = "Informes Técnicos";
                                 }
                                 $("#table_anexos_edit").append(
                                     "<tr><td>" +
@@ -507,11 +507,11 @@ $(document).ready(function () {
                         } else if (anexo.tipo == 2) {
                             tipo_badge = "Cedula del representante Legal";
                         } else if (anexo.tipo == 3) {
-                            tipo_badge = "Remisiones";
+                            tipo_badge = "SAGRILAFT";
                         } else if (anexo.tipo == 4) {
-                            tipo_badge = "Cotizaciones";
+                            tipo_badge = "Encuesta";
                         } else if (anexo.tipo == 5) {
-                            tipo_badge = "Informacion Tecnica";
+                            tipo_badge = "Informacion Técnica";
                         } else if (anexo.tipo == 6) {
                             tipo_badge = "Frecuencias";
                         } else if (anexo.tipo == 7) {
@@ -525,7 +525,7 @@ $(document).ready(function () {
                         } else if (anexo.tipo == 11) {
                             tipo_badge = "Formulario ANE";
                         } else if (anexo.tipo == 12) {
-                            tipo_badge = "Informes Tecnicos";
+                            tipo_badge = "Informes Técnicos";
                         }
                         $("#table_anexos_edit").append(
                             "<tr><td>" +

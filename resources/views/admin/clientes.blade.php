@@ -515,16 +515,16 @@
                                     <option value="0">Camara de comercio</option>
                                     <option value="1">RUT</option>
                                     <option value="2">Cedula del representante Legal</option>
-                                    <option value="3">Remisiones</option>
-                                    <option value="4">Cotizaciones</option>
-                                    <option value="5">Informacion Tecnica</option>
+                                    <option value="3">SAGRILAFT</option>
+                                    <option value="4">Encuesta</option>
+                                    <option value="5">Informacion Técnica</option>
                                     <option value="6">Frecuencias</option>
                                     <option value="7">Equipos Utilizados</option>
                                     <option value="8">Ubicación de Equipos e Inventario</option>
                                     <option value="9">Programaciones</option>
                                     <option value="10">Otros</option>
                                     <option value="11">Formulario ANE</option>
-                                    <option value="12">Informes Tecnicos</option>
+                                    <option value="12">Informes Técnicos</option>
                                 </select>
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
