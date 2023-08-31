@@ -56,6 +56,21 @@ class UsersACLRepository implements ACLRepository
             ];
         }
 
+        if (Auth::id() === 49) {
+            return [
+                ['disk' => 'public', 'path' => '/', 'access' => 1], // main folder - read
+                ['disk' => 'public', 'path' => '', 'access' => 1], // only read
+                //['disk' => 'public', 'path' => Auth::user()->nombre, 'access' => 1], // only read
+                //['disk' => 'public', 'path' => Auth::user()->nombre . '/*', 'access' => 2], // read and write
+                ['disk' => 'public', 'path' => 'Gestión de calidad', 'access' => 1], // main folder - read
+                ['disk' => 'public', 'path' => 'Gestión de calidad/*', 'access' => 2], // read and write
+                ['disk' => 'public', 'path' => 'Área Comercial', 'access' => 1], // main folder - read
+                ['disk' => 'public', 'path' => 'Área Comercial/*', 'access' => 2], // read and write
+                ['disk' => 'public', 'path' => 'Área Contable', 'access' => 1], // main folder - read
+                ['disk' => 'public', 'path' => 'Área Contable/*', 'access' => 2], // read and write
+            ];
+        }
+
         if (Auth::id() === 38) {
             return [
                 ['disk' => 'public', 'path' => '/', 'access' => 1], // main folder - read
