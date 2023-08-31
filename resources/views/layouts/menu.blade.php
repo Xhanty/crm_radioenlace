@@ -336,7 +336,8 @@
                                                         Débito</a>
                                                 </li>
                                                 <li><a class="sub-side-menu__item"
-                                                        href="{{ route('comprobantes_egresos') }}">Comprobante Egreso</a>
+                                                        href="{{ route('comprobantes_egresos') }}">Comprobante
+                                                        Egreso</a>
                                                 </li>
                                             </ul>
                                         </li>
@@ -364,7 +365,8 @@
                                                 @endif
                                                 @if (auth()->user()->hasPermissionTo('contabilidad_recibo_pago'))
                                                     <li><a class="sub-side-menu__item"
-                                                            href="{{ route('recibos_pagos') }}">Recibo Caja / Egreso</a>
+                                                            href="{{ route('recibos_pagos') }}">Recibo Caja /
+                                                            Egreso</a>
                                                     </li>
                                                 @endif
                                             </ul>
@@ -479,6 +481,23 @@
                                 </ul>
                             </li>
                         @endif
+
+                        <li class="slide">
+                            <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
+                                    class="side-menu__icon fe fe-map"></i><span
+                                    class="side-menu__label">Viáticos</span><i
+                                    class="angle fe fe-chevron-down"></i></a>
+                            <ul class="slide-menu">
+                                <li><a class="slide-item"
+                                        href="{{ route('config_viaticos') }}">Configuración</a>
+                                </li>
+                                <li><a class="slide-item"
+                                        href="{{ route('visitas_viaticos') }}">Visitas</a>
+                                </li>
+                                <li><a class="slide-item" href="{{ route('viaticos') }}">Viáticos</a>
+                                </li>
+                            </ul>
+                        </li>
 
                         @if (auth()->user()->hasPermissionToMultiple('contabilidad_config_administrativa'))
                             <li class="slide">

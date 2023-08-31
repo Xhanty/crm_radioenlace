@@ -437,6 +437,22 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/history_prospectos_add', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'add_observacion'])->name('history_prospectos_add');
     Route::post('/history_prospectos_edit', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'edit_observacion'])->name('history_prospectos_edit');
     Route::post('/history_prospectos_delete', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'delete_observacion'])->name('history_prospectos_delete');
+
+    // VIATICOS
+    Route::get('/config_viaticos', [App\Http\Controllers\Admin\Viaticos\ConfiguracionController::class, 'index'])->name('config_viaticos');
+    Route::post('/config_viaticos_edit', [App\Http\Controllers\Admin\Viaticos\ConfiguracionController::class, 'edit'])->name('config_viaticos_edit');
+
+    Route::get('/visitas_viaticos', [App\Http\Controllers\Admin\Viaticos\VisitasController::class, 'index'])->name('visitas_viaticos');
+    Route::post('/visitas_viaticos_add', [App\Http\Controllers\Admin\Viaticos\VisitasController::class, 'add'])->name('visitas_viaticos_add');
+    Route::post('/visitas_viaticos_data', [App\Http\Controllers\Admin\Viaticos\VisitasController::class, 'data'])->name('visitas_viaticos_data');
+    Route::post('/visitas_viaticos_edit', [App\Http\Controllers\Admin\Viaticos\VisitasController::class, 'edit'])->name('visitas_viaticos_edit');
+    Route::post('/visitas_viaticos_delete', [App\Http\Controllers\Admin\Viaticos\VisitasController::class, 'delete'])->name('visitas_viaticos_delete');
+
+    Route::get('/viaticos', [App\Http\Controllers\Admin\Viaticos\ViaticosController::class, 'index'])->name('viaticos');
+    Route::post('/viaticos_add', [App\Http\Controllers\Admin\Viaticos\ViaticosController::class, 'add'])->name('viaticos_add');
+    Route::post('/viaticos_data', [App\Http\Controllers\Admin\Viaticos\ViaticosController::class, 'data'])->name('viaticos_data');
+    Route::post('/viaticos_edit', [App\Http\Controllers\Admin\Viaticos\ViaticosController::class, 'edit'])->name('viaticos_edit');
+    Route::post('/viaticos_delete', [App\Http\Controllers\Admin\Viaticos\ViaticosController::class, 'delete'])->name('viaticos_delete');
 });
 
 // RUTAS PARA EL CANVA ASIGNACION DE TAREAS (PROYECTOS)
