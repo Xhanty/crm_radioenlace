@@ -159,6 +159,8 @@
                                     <option value="4">Instalación</option>
                                     <option value="5">Venta</option>
                                     <option value="6">Reparación</option>
+                                    <option value="7">Compras</option>
+                                    <option value="8">Servicios</option>
                                 </select>
                             </div>
                             <div class="col-8">
@@ -240,6 +242,8 @@
                                     <option value="4">Instalación</option>
                                     <option value="5">Venta</option>
                                     <option value="6">Reparación</option>
+                                    <option value="7">Compras</option>
+                                    <option value="8">Servicios</option>
                                 </select>
                             </div>
                             <div class="col-8">
@@ -295,6 +299,8 @@
                                     <option value="4">Instalación</option>
                                     <option value="5">Venta</option>
                                     <option value="6">Reparación</option>
+                                    <option value="7">Compras</option>
+                                    <option value="8">Servicios</option>
                                 </select>
                             </div>
                             <div class="col-8">
