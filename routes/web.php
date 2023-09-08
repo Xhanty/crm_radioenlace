@@ -446,6 +446,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/visitas_viaticos_add', [App\Http\Controllers\Admin\Viaticos\VisitasController::class, 'add'])->name('visitas_viaticos_add');
     Route::post('/visitas_viaticos_data', [App\Http\Controllers\Admin\Viaticos\VisitasController::class, 'data'])->name('visitas_viaticos_data');
     Route::post('/visitas_viaticos_edit', [App\Http\Controllers\Admin\Viaticos\VisitasController::class, 'edit'])->name('visitas_viaticos_edit');
+    Route::post('/visitas_viaticos_completar', [App\Http\Controllers\Admin\Viaticos\VisitasController::class, 'completar'])->name('visitas_viaticos_completar');
     Route::post('/visitas_viaticos_delete', [App\Http\Controllers\Admin\Viaticos\VisitasController::class, 'delete'])->name('visitas_viaticos_delete');
 
     Route::get('/viaticos', [App\Http\Controllers\Admin\Viaticos\ViaticosController::class, 'index'])->name('viaticos');

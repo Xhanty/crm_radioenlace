@@ -36,10 +36,10 @@
                                     <tr>
                                         <th class="text-center">#</th>
                                         <th class="text-center">Cliente</th>
-                                        <th class="text-center">Motivo</th>
                                         <th class="text-center">Destino</th>
                                         <th class="text-center">Responsable</th>
                                         <th class="text-center">F. Salida</th>
+                                        <th class="text-center">F. Llegada</th>
                                         <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
@@ -48,39 +48,34 @@
                                         <tr>
                                             <td class="text-center">{{ $value->consecutivo }}</td>
                                             <td class="text-center">{{ $value->razon_social }} ({{ $value->nit }})</td>
-                                            <td class="text-center">{{ $value->motivo }}</td>
                                             <td class="text-center">{{ $value->destino }}</td>
                                             <td class="text-center">{{ $value->encargado }}</td>
                                             <td class="text-center">{{ date('d-m-Y', strtotime($value->fecha_salida)) }}
+                                            <td class="text-center">{{ date('d-m-Y', strtotime($value->fecha_llegada)) }}
                                             <td class="text-center">
                                                 <button title="Ver" class="btn btn-primary btn-sm btnView"
                                                     data-id="{{ $value->id }}">
                                                     <i class="fa fa-eye"></i> Ver
+                                                </button>
+                                                <button title="Ver" class="btn btn-primary btn-sm btnViaticos"
+                                                    data-id="{{ $value->id }}">
+                                                    <i class="fa fa-eye"></i> Viáticos
                                                 </button>
                                                 <button title="Modificar" class="btn btn-warning btn-sm btnEdit"
                                                     data-id="{{ $value->id }}">
                                                     <i class="fa fa-pencil-alt"></i> Modificar
                                                 </button>
                                                 <br>
+                                                <button title="Completar" class="btn btn-success btn-sm btnConfirmar mt-1"
+                                                    data-id="{{ $value->id }}">
+                                                    <i class="fa fa-check"></i> Completar
+                                                </button>
                                                 <button title="Eliminar" class="btn btn-danger btn-sm btnDelete mt-1"
                                                     data-id="{{ $value->id }}">
                                                     <i class="fa fa-trash"></i> Eliminar
                                                 </button>
-                                                @if ($value->status == 1)
-                                                    <!--<br>
-                                                                                <button title="Completar"
-                                                                                    class="btn btn-success btn-sm btnConfirmar mt-1"
-                                                                                    data-id="{{ $value->id }}">
-                                                                                    <i class="fa fa-check"></i> Completar
-                                                                                </button>-->
-                                                @endif
-                                                <br>
-                                                <!--<a href="{{ route('reparacion_pdf') }}?token={{ $value->id }}"
-                                                                                target="_BLANK" title="Imprimir" class="btn btn-success btn-sm mt-1"
-                                                                                data-id="{{ $value->id }}">
-                                                                                <i class="fa fa-print"></i> Imprimir
-                                                                            </a>-->
                                             </td>
+
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -112,7 +107,6 @@
                                     <tr>
                                         <th class="text-center">#</th>
                                         <th class="text-center">Cliente</th>
-                                        <th class="text-center">Motivo</th>
                                         <th class="text-center">Destino</th>
                                         <th class="text-center">Responsable</th>
                                         <th class="text-center">F. Salida</th>
@@ -125,25 +119,26 @@
                                         <tr>
                                             <td class="text-center">{{ $value->consecutivo }}</td>
                                             <td class="text-center">{{ $value->razon_social }} ({{ $value->nit }})</td>
-                                            <td class="text-center">{{ $value->motivo }}</td>
                                             <td class="text-center">{{ $value->destino }}</td>
                                             <td class="text-center">{{ $value->encargado }}</td>
                                             <td class="text-center">{{ date('d-m-Y', strtotime($value->fecha_salida)) }}
-                                            </td>
                                             <td class="text-center">{{ date('d-m-Y', strtotime($value->fecha_llegada)) }}
-                                            </td>
-                                            <td class="text-center">{{ $value->encargado }}</td>
                                             <td class="text-center">
                                                 <button title="Ver" class="btn btn-primary btn-sm btnView"
                                                     data-id="{{ $value->id }}">
                                                     <i class="fa fa-eye"></i> Ver
                                                 </button>
-                                                <!--<a href="{{ route('reparacion_pdf') }}?token={{ $value->id }}"
-                                                                        target="_BLANK" title="Imprimir" class="btn btn-success btn-sm"
-                                                                        data-id="{{ $value->id }}">
-                                                                        <i class="fa fa-print"></i> Imprimir
-                                                                    </td>
-                                                                </a>-->
+                                                <button title="Ver" class="btn btn-primary btn-sm btnViaticos"
+                                                    data-id="{{ $value->id }}">
+                                                    <i class="fa fa-eye"></i> Viáticos
+                                                </button>
+                                                <br>
+                                                <button title="Eliminar" class="btn btn-danger btn-sm btnDelete mt-1"
+                                                    data-id="{{ $value->id }}">
+                                                    <i class="fa fa-trash"></i> Eliminar
+                                                </button>
+                                            </td>
+
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -210,8 +205,8 @@
                         <br>
                         <div class="row row-sm">
                             <div class="col-lg">
-                                <label for="">Vehículo</label>
-                                <select id="vehiculo_add" class="form-select">
+                                <label for="">Vehículos</label>
+                                <select id="vehiculos_add" class="form-select" multiple>
                                     <option value="">Seleccione una opción</option>
                                     @foreach ($vehiculos as $vehiculo)
                                         <option value="{{ $vehiculo->id }}">{{ $vehiculo->placa }}</option>
@@ -228,9 +223,27 @@
                                 </select>
                             </div>
                         </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Salida</label>
+                                <input id="salida_add" class="form-control" placeholder="Salida" type="date">
+                            </div>
+                            <div class="col-lg">
+                                <label for="">Llegada</label>
+                                <input id="llegada_add" class="form-control" placeholder="Llegada" type="date">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Observaciones</label>
+                                <textarea id="observaciones_add" class="form-control" placeholder="Observaciones" rows="3"></textarea>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn ripple btn-primary" id="btnGuardarRecepcion" type="button">Guardar</button>
+                        <button class="btn ripple btn-primary" id="btnGuardarVisita" type="button">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -247,7 +260,7 @@
                     <div class="modal-body">
                         <div class="row row-sm">
                             <div class="col-lg">
-                                <label for="">Cliente</label>
+                                <label for="">Empresa</label>
                                 <select id="cliente_view" disabled class="form-select">
                                     <option value="">Seleccione una opción</option>
                                     @foreach ($clientes as $cliente)
@@ -258,15 +271,78 @@
                                 </select>
                             </div>
                             <div class="col-lg">
-                                <label for="">Ingrese los correos separados por (,) para enviar el certificado de
-                                    recepción</label>
-                                <input class="form-control" disabled id="correos_view"
-                                    placeholder="Correos electrónicos para enviar informe separados por coma (,)"
+                                <label for="">Responsable</label>
+                                <select id="responsable_view" disabled class="form-select">
+                                    <option value="">Seleccione una opción</option>
+                                    @foreach ($empleados as $empleado)
+                                        <option value="{{ $empleado->id }}">{{ $empleado->nombre }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Motivo</label>
+                                <select id="motivo_view" disabled class="form-select">
+                                    <option value="1">Estudio de cobertura</option>
+                                    <option value="2">Instalación</option>
+                                    <option value="3">Mantenimiento correctivo</option>
+                                    <option value="4">Mantenimiento preventivo</option>
+                                    <option value="5">Desinstalación</option>
+                                    <option value="6">Mejoras en el servicio</option>
+                                    <option value="7">Configuración de equipos</option>
+                                    <option value="8">Instalación de anexos</option>
+                                    <option value="9">Capacitación o inducción</option>
+                                </select>
+                            </div>
+                            <div class="col-lg">
+                                <label for="">Destino</label>
+                                <input id="destino_view" disabled class="form-control" placeholder="Destino"
                                     type="text">
                             </div>
                         </div>
                         <br>
-                        <div id="div_reparaciones_view"></div>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Vehículos</label>
+                                <select id="vehiculos_view" disabled class="form-select" multiple>
+                                    <option value="">Seleccione una opción</option>
+                                    @foreach ($vehiculos as $vehiculo)
+                                        <option value="{{ $vehiculo->id }}">{{ $vehiculo->placa }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg">
+                                <label for="">Técnicos</label>
+                                <select id="tecnicos_view" disabled class="form-select" multiple>
+                                    <option value="">Seleccione una opción</option>
+                                    @foreach ($empleados as $empleado)
+                                        <option value="{{ $empleado->id }}">{{ $empleado->nombre }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Salida</label>
+                                <input id="salida_view" disabled class="form-control" placeholder="Salida"
+                                    type="date">
+                            </div>
+                            <div class="col-lg">
+                                <label for="">Llegada</label>
+                                <input id="llegada_view" disabled class="form-control" placeholder="Llegada"
+                                    type="date">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Observaciones</label>
+                                <textarea id="observaciones_view" disabled class="form-control" placeholder="Observaciones" rows="3"></textarea>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -281,10 +357,10 @@
                             data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" disabled readonly id="id_recepcion_edit">
+                        <input type="hidden" id="id_edit">
                         <div class="row row-sm">
                             <div class="col-lg">
-                                <label for="">Cliente</label>
+                                <label for="">Empresa</label>
                                 <select id="cliente_edit" class="form-select">
                                     <option value="">Seleccione una opción</option>
                                     @foreach ($clientes as $cliente)
@@ -295,19 +371,78 @@
                                 </select>
                             </div>
                             <div class="col-lg">
-                                <label for="">Ingrese los correos separados por (,) para enviar el certificado de
-                                    recepción</label>
-                                <input class="form-control" id="correos_edit"
-                                    placeholder="Correos electrónicos para enviar informe separados por coma (,)"
-                                    type="text">
+                                <label for="">Responsable</label>
+                                <select id="responsable_edit" class="form-select">
+                                    <option value="">Seleccione una opción</option>
+                                    @foreach ($empleados as $empleado)
+                                        <option value="{{ $empleado->id }}">{{ $empleado->nombre }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <br>
-                        <div id="div_reparaciones_edit"></div>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Motivo</label>
+                                <select id="motivo_edit" class="form-select">
+                                    <option value="1">Estudio de cobertura</option>
+                                    <option value="2">Instalación</option>
+                                    <option value="3">Mantenimiento correctivo</option>
+                                    <option value="4">Mantenimiento preventivo</option>
+                                    <option value="5">Desinstalación</option>
+                                    <option value="6">Mejoras en el servicio</option>
+                                    <option value="7">Configuración de equipos</option>
+                                    <option value="8">Instalación de anexos</option>
+                                    <option value="9">Capacitación o inducción</option>
+                                </select>
+                            </div>
+                            <div class="col-lg">
+                                <label for="">Destino</label>
+                                <input id="destino_edit" class="form-control" placeholder="Destino" type="text">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Vehículos</label>
+                                <select id="vehiculos_edit" class="form-select" multiple>
+                                    <option value="">Seleccione una opción</option>
+                                    @foreach ($vehiculos as $vehiculo)
+                                        <option value="{{ $vehiculo->id }}">{{ $vehiculo->placa }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg">
+                                <label for="">Técnicos</label>
+                                <select id="tecnicos_edit" class="form-select" multiple>
+                                    <option value="">Seleccione una opción</option>
+                                    @foreach ($empleados as $empleado)
+                                        <option value="{{ $empleado->id }}">{{ $empleado->nombre }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Salida</label>
+                                <input id="salida_edit" class="form-control" placeholder="Salida" type="date">
+                            </div>
+                            <div class="col-lg">
+                                <label for="">Llegada</label>
+                                <input id="llegada_edit" class="form-control" placeholder="Llegada" type="date">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Observaciones</label>
+                                <textarea id="observaciones_edit" class="form-control" placeholder="Observaciones" rows="3"></textarea>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn ripple btn-primary" id="btnModificarRecepcion"
-                            type="button">Modificar</button>
+                        <button class="btn ripple btn-primary" id="btnEditVisita" type="button">Modificar</button>
                     </div>
                 </div>
             </div>
@@ -320,9 +455,11 @@
         $(document).ready(function() {
             let empleados = @json($empleados);
             let clientes = @json($clientes);
+            let vehiculos = @json($vehiculos);
 
             localStorage.setItem('empleados', JSON.stringify(empleados));
             localStorage.setItem('clientes', JSON.stringify(clientes));
+            localStorage.setItem('vehiculos', JSON.stringify(vehiculos));
         });
     </script>
     <script src="{{ asset('assets/js/app/viaticos/visitas.js') }}"></script>
