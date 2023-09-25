@@ -29,6 +29,7 @@ class ReparacionesController extends Controller
                 ->leftJoin('detalle_reparaciones as detalle', 'detalle.reparacion_id', '=', 'reparaciones.id')
                 ->leftJoin('empleados', 'empleados.id', '=', 'reparaciones.tecnico_id')
                 ->where('reparaciones.status', 0)
+                ->orderBy('reparaciones.id', 'desc')
                 ->get();
             $finalizadas
                 = DB::table('reparaciones')
@@ -37,6 +38,7 @@ class ReparacionesController extends Controller
                 ->leftJoin('empleados', 'empleados.id', '=', 'reparaciones.tecnico_id')
                 ->leftJoin('detalle_reparaciones as detalle', 'detalle.reparacion_id', '=', 'reparaciones.id')
                 ->where('reparaciones.status', 1)
+                ->orderBy('reparaciones.id', 'desc')
                 ->get();
 
             return view('admin.reparaciones.reparaciones', compact('categorias', 'accesorios', 'clientes', 'empleados', 'pendientes', 'finalizadas'));

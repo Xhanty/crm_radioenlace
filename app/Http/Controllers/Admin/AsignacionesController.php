@@ -22,7 +22,7 @@ class AsignacionesController extends Controller
                 ->select("asignaciones.*", "empleados.nombre", "task_projects.id AS task_id", "task_projects.project_id", "proyecto.nombre AS proyecto")
                 ->where("asignaciones.status", 0)
                 ->where("asignaciones.id_empleado", session("user"))
-                ->orderBy("asignaciones.id", "ASC")
+                ->orderBy("asignaciones.id", "DESC")
                 ->get();
 
             $asignaciones_completadas = DB::table("asignaciones")
@@ -32,7 +32,7 @@ class AsignacionesController extends Controller
                 ->select("asignaciones.*", "empleados.nombre", "task_projects.id AS task_id", "task_projects.project_id", "proyecto.nombre AS proyecto")
                 ->where("asignaciones.status", 1)
                 ->where("asignaciones.id_empleado", session("user"))
-                ->orderBy("asignaciones.id", "ASC")
+                ->orderBy("asignaciones.id", "DESC")
                 ->get();
 
             return view('admin.asignaciones_proyectos.asignaciones', compact('asignaciones_pendientes', 'asignaciones_completadas'));
@@ -51,7 +51,7 @@ class AsignacionesController extends Controller
                 ->where("asignaciones.status", 0)
                 ->where("asignaciones.revision", 0)
                 ->where("asignaciones.id_empleado", session("user"))
-                ->orderBy("asignaciones.id", "ASC")
+                ->orderBy("asignaciones.id", "DESC")
                 ->get();
 
             $asignaciones_completadas = DB::table("asignaciones")
@@ -61,7 +61,7 @@ class AsignacionesController extends Controller
                 ->where("asignaciones.status", 1)
                 ->where("asignaciones.revision", 2)
                 ->where("asignaciones.id_empleado", session("user"))
-                ->orderBy("asignaciones.id", "ASC")
+                ->orderBy("asignaciones.id", "DESC")
                 ->get();
 
             $clientes = DB::table("cliente")->where("estado", 1)->get();
@@ -73,7 +73,7 @@ class AsignacionesController extends Controller
                 ->where("asignaciones.status", 0)
                 ->where("asignaciones.revision", 1)
                 ->where("asignaciones.id_empleado", session("user"))
-                ->orderBy("asignaciones.id", "ASC")
+                ->orderBy("asignaciones.id", "DESC")
                 ->get();
             return view('admin.asignaciones_clientes.asignaciones', compact('asignaciones_pendientes', 'asignaciones_completadas', 'clientes', 'asignaciones_revision'));
         } catch (Exception $ex) {
@@ -129,7 +129,7 @@ class AsignacionesController extends Controller
                 ->join("cliente", "cliente.id", "=", "asignaciones.id_cliente")
                 ->select("asignaciones.*", "empleados.nombre", "creador.nombre AS creador", "cliente.razon_social AS cliente")
                 ->where("asignaciones.status", 0)
-                ->orderBy("asignaciones.revision", "desc")
+                ->orderBy("asignaciones.id", "desc")
                 ->get();
 
             $asignaciones_completadas = DB::table("asignaciones")
@@ -473,7 +473,7 @@ class AsignacionesController extends Controller
             ->join("proyecto", "task_projects.project_id", "=", "proyecto.id")
             ->select("asignaciones.*", "empleados.nombre", "task_projects.id AS task_id", "task_projects.project_id", "proyecto.nombre AS proyecto")
             ->whereIn("asignaciones.id_empleado", $empleados_id)
-            ->orderBy("asignaciones.id", "ASC")
+            ->orderBy("asignaciones.id", "DESC")
             ->get();*/ [];
 
         $asignaciones_generales = DB::table("asignaciones")
@@ -481,7 +481,7 @@ class AsignacionesController extends Controller
             ->join("cliente", "cliente.id", "=", "asignaciones.id_cliente")
             ->select("asignaciones.*", "empleados.nombre", "cliente.razon_social AS cliente")
             ->whereIn("asignaciones.id_empleado", $empleados_id)
-            ->orderBy("asignaciones.id", "ASC")
+            ->orderBy("asignaciones.id", "DESC")
             ->get();
 
         return view('admin.calendario_asignaciones', compact('asignaciones_proyectos', 'asignaciones_generales'));
