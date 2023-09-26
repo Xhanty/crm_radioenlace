@@ -2112,54 +2112,46 @@ $(document).ready(function () {
 
     // PAGINACIÓN
     function paginacionFacturas() {
-        // Define el número de facturas por página
         var facturasPorPagina = 10;
-
-        // Obtén todas las facturas
         var $todasFacturas = $('.main-invoice-list').children('.media');
-
-        // Calcula el número total de páginas
-        var numPaginas = Math.ceil($todasFacturas.length / facturasPorPagina);
-
-        // Crea botones de paginación con Bootstrap
+        var numTotalFacturas = $todasFacturas.length;
+        var numPaginas = Math.ceil(numTotalFacturas / facturasPorPagina);
+        var paginaActual = 1;
+    
+        function mostrarPagina(pagina) {
+            var primerItem = (pagina - 1) * facturasPorPagina;
+            var ultimoItem = Math.min(primerItem + facturasPorPagina, numTotalFacturas);
+    
+            $todasFacturas.hide();
+            $todasFacturas.slice(primerItem, ultimoItem).show();
+        }
+    
         var $paginacion = $('<nav class="center-div" aria-label="Facturas"></nav>');
         var $ul = $('<ul class="pagination"></ul>');
-
-        for (var i = 1; i <= numPaginas; i++) {
-            var $li = $('<li class="page-item"></li>');
-            var $botonPagina = $('<button class="page-link"></button>');
-            $botonPagina.text(i);
-            $li.append($botonPagina);
-            $ul.append($li);
-        }
-
-        // Agrega la clase "active" al primer botón de paginación
-        $ul.find('li:first-child').addClass('active');
-
-        $paginacion.append($ul);
-
-        // Agrega la paginación al DOM
+    
+        $paginacion.append('<button class="page-link" id="btnAnterior"><</button>');
+        $paginacion.append('<button class="page-link" id="btnSiguiente">></button>');
+    
         $('.main-invoice-list').after($paginacion);
-
-        // Oculta todas las facturas, excepto las de la primera página
-        $todasFacturas.slice(facturasPorPagina).hide();
-
-        // Agrega un evento click a cada botón de paginación
-        $(document).on("click", ".pagination button", function () {
-            var pagina = $(this).text();
-            var primerItem = (pagina - 1) * facturasPorPagina;
-            var ultimoItem = primerItem + facturasPorPagina;
-
-            // Oculta todas las facturas
-            $todasFacturas.hide();
-
-            // Muestra las facturas correspondientes a la página seleccionada
-            $todasFacturas.slice(primerItem, ultimoItem).show();
-
-            // Actualiza la clase active del botón de paginación
-            $(this).closest('ul').find('.active').removeClass('active');
-            $(this).closest('li').addClass('active');
+    
+        // Manejar el clic en "Anterior"
+        $('#btnAnterior').click(function () {
+            if (paginaActual > 1) {
+                paginaActual--;
+                mostrarPagina(paginaActual);
+            }
         });
+    
+        // Manejar el clic en "Siguiente"
+        $('#btnSiguiente').click(function () {
+            if (paginaActual < numPaginas) {
+                paginaActual++;
+                mostrarPagina(paginaActual);
+            }
+        });
+    
+        // Mostrar la primera página al cargar
+        mostrarPagina(paginaActual);
     }
 
     // FAVORITOS
@@ -2334,7 +2326,7 @@ $(document).ready(function () {
                 fc_text = number_dc[0];
                 fc_number = number_dc[1];
 
-                let tipo = 1;
+                let tipo = 2;
 
                 let centro = factura.CostCenter ?? "Grúas";
 
@@ -2375,7 +2367,7 @@ $(document).ready(function () {
                     "method": "GET",
                     "timeout": 0,
                     "headers": {
-                        "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IkQ3OTkxNEU2MTJFRkI4NjE5RDNFQ0U4REFGQTU0RDFBMDdCQjM5QjJSUzI1NiIsInR5cCI6ImF0K2p3dCIsIng1dCI6IjE1a1U1aEx2dUdHZFBzNk5yNlZOR2dlN09iSSJ9.eyJuYmYiOjE2ODU0ODE1NTQsImV4cCI6MTY4NTU2Nzk1NCwiaXNzIjoiaHR0cDovL21zLXNlY3VyaXR5c2VydmljZTo1MDAwIiwiYXVkIjoiaHR0cDovL21zLXNlY3VyaXR5c2VydmljZTo1MDAwL3Jlc291cmNlcyIsImNsaWVudF9pZCI6IlNpaWdvQVBJIiwic3ViIjoiNjAzODk2IiwiYXV0aF90aW1lIjoxNjg1NDgxNTU0LCJpZHAiOiJsb2NhbCIsIm5hbWUiOiJnY29tZXJjaWFsQHJhZGlvZW5sYWNlc2FzLmNvbSIsIm1haWxfc2lpZ28iOiJnY29tZXJjaWFsQHJhZGlvZW5sYWNlc2FzLmNvbSIsImNsb3VkX3RlbmFudF9jb21wYW55X2tleSI6IlJBRElPRU5MQUNFU0FTIiwidXNlcnNfaWQiOiI1OTQiLCJ0ZW5hbnRfaWQiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjEwNjE3IiwidXNlcl9saWNlbnNlX3R5cGUiOiIwIiwicGxhbl90eXBlIjoiMTQiLCJ0ZW5hbnRfc3RhdGUiOiIxIiwibXVsdGl0ZW5hbnRfaWQiOiIxNTMiLCJjb21wYW5pZXMiOiIwIiwiYXBpX3N1YnNjcmlwdGlvbl9rZXkiOiJlMWIwOWUzNjY0Y2U0ZjkwYTNhZWE4YThkYzZiOWQ4YyIsImFjY291bnRhbnQiOiJmYWxzZSIsImp0aSI6Ijc5QURBQkU1OTZGODg0OUU0ODIxRjNCM0NCRDEwRUVGIiwiaWF0IjoxNjg1NDgxNTU0LCJzY29wZSI6WyJTaWlnb0FQSSJdLCJhbXIiOlsiY3VzdG9tIl19.VN732s59NpIK6QdQyku6p_Z2cUq3Ajui_xRc8ujj5ktcO-NOp3KxVEj_9YFOdA7FyVAlSUC2NchL2rZNwWmED_p8fo1a6gPL2TMOJkpHFAON-_1dcIRF9wOfpmwlKltkGkl9TGBCj3rNKshWi9RcFu3hOGpJ9IrPPqDriGRZ191vPQWF-ZxZlG0ylikQv6Kbum2F_k2KBWtVKtFi_8zSVrfP9_sEfOhJbLWOahh2A7gBnVx8TCH77Bm18vaFDR0mr1F18pbMw_Q8ZV3nZ9484V3kkLeIRUYQAGFBxMOh01KYW_is65HpRvVsHDBb0O_w8NUKltNCqMHDVFpDFWhSWQ"
+                        "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IkYyRDQ2NTgyMUY1QjE2QTU3QkZENDQ3NUVBNzgwRTk1MzlGMTFEOThSUzI1NiIsInR5cCI6ImF0K2p3dCIsIng1dCI6Ijh0UmxnaDliRnFWN19VUjE2bmdPbFRueEhaZyJ9.eyJuYmYiOjE2OTU3Mzg1ODIsImV4cCI6MTY5NTgyNDk4MiwiaXNzIjoiaHR0cDovL21zLXNlY3VyaXR5c2VydmljZTo1MDAwIiwiYXVkIjoiaHR0cDovL21zLXNlY3VyaXR5c2VydmljZTo1MDAwL3Jlc291cmNlcyIsImNsaWVudF9pZCI6IlNpaWdvQVBJIiwic3ViIjoiNjAzODk2IiwiYXV0aF90aW1lIjoxNjk1NzM4NTgyLCJpZHAiOiJsb2NhbCIsIm5hbWUiOiJnY29tZXJjaWFsQHJhZGlvZW5sYWNlc2FzLmNvbSIsIm1haWxfc2lpZ28iOiJnY29tZXJjaWFsQHJhZGlvZW5sYWNlc2FzLmNvbSIsImNsb3VkX3RlbmFudF9jb21wYW55X2tleSI6IlJBRElPRU5MQUNFU0FTIiwidXNlcnNfaWQiOiI1OTQiLCJ0ZW5hbnRfaWQiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjEwNjE3IiwidXNlcl9saWNlbnNlX3R5cGUiOiIwIiwicGxhbl90eXBlIjoiMTQiLCJ0ZW5hbnRfc3RhdGUiOiIxIiwibXVsdGl0ZW5hbnRfaWQiOiIxNTMiLCJjb21wYW5pZXMiOiIwIiwiYXBpX3N1YnNjcmlwdGlvbl9rZXkiOiJlMWIwOWUzNjY0Y2U0ZjkwYTNhZWE4YThkYzZiOWQ4YyIsImFwaV91c2VyX2NyZWF0ZWRfYXQiOiIxNjc2NjU2NDg0IiwiYWNjb3VudGFudCI6ImZhbHNlIiwianRpIjoiOTdBNDlENkZFMjE4MzA3N0FFMzU2Q0I4QUY5RDgyMTEiLCJpYXQiOjE2OTU3Mzg1ODIsInNjb3BlIjpbIlNpaWdvQVBJIl0sImFtciI6WyJjdXN0b20iXX0.brYs8VfClj_r0Zb0KS6qbejGVepjdaBlv-SEptW1wyT4gF7mMTnEA5Fm_Z1b-ZYAdINr8ctTxNwWi_vwhLTSEycHsLQ19khYs8iHyeMfWh6zQ9Mc0ARSFIWPAO0CspEA0Sway_gk8C0ezx1x9obidq88t7pfoI0q1hwCYSBQ7WJXJf_Vulefo0Ovr_Lyx8rFemm9UnOOTvsJKvIgWtvcPQGAIZ2OS0vdhkzqSV6Wa6bxNxMzhBm7BU8ZUpQ1Jzo4mx9rI0EA60Ji-Mc78yjKHfDFYla54BibeuhZWz09EqfxIISJoo8JCSJcYG2uiKSyPU_er6_dpPFfPAQ47GmJCg"
                     },
                 };
 

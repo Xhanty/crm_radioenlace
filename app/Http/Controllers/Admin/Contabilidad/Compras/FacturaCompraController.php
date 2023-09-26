@@ -69,14 +69,28 @@ class FacturaCompraController extends Controller
 
             $facturas = DB::table('factura_compra')
                 ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion')
-                ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
-                //->whereMonth('factura_compra.fecha_elaboracion', '=', date('m'))
+                ->leftJoin('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
                 ->whereYear('factura_compra.fecha_elaboracion', '=', date('Y'))
                 ->orderByDesc('factura_compra.favorito') // ordenar los favoritos primero
                 ->orderBy('factura_compra.numero', 'desc') // luego ordenar por fecha
-                //->orderBy('factura_compra.fecha_elaboracion', 'desc') // luego ordenar por fecha
-                //->orderBy('factura_compra.id', 'desc')
                 ->get();
+
+            /*$facturas = DB::table('factura_compra')
+                ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion')
+                ->leftJoin('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
+                ->whereYear('factura_compra.fecha_elaboracion', '=', date('Y'))
+                ->whereNull('proveedores.id')
+                ->orderByDesc('factura_compra.favorito') // ordenar los favoritos primero
+                ->orderBy('factura_compra.numero', 'desc') // luego ordenar por fecha
+                ->get();
+
+            $no_registrados = [];
+            foreach ($facturas as $key => $value) {
+                $no_registrados[] = $value->proveedor_id;
+            }
+            
+            echo json_encode($no_registrados);
+            exit;*/
 
             $almacenes = DB::table('almacenes')->whereNull("parent_id")->get();
 
@@ -169,7 +183,7 @@ class FacturaCompraController extends Controller
                 $adjunto = $name;
             }
 
-            if($request->numero_factura_siigo) {
+            if ($request->numero_factura_siigo) {
                 $num_factura = $request->numero_factura_siigo;
             }
 
@@ -224,7 +238,7 @@ class FacturaCompraController extends Controller
                             $producto['producto'] = $id_cuenta->id;
                         } else {
                             DB::rollBack();
-                            $errorLog = 'Error en la consulta (PRODUCTO): ' . print_r($request->id_siigo, true) . "\n";
+                            $errorLog = 'Error en la consulta (FACTURA): ' . print_r($request->numero_factura_siigo, true) . "\n";
                             $file = 'errores.log';
                             file_put_contents($file, $errorLog, FILE_APPEND);
                             return response()->json(['info' => 0, 'error' => 'Error al crear el detalle de la factura de compra']);
@@ -522,7 +536,7 @@ class FacturaCompraController extends Controller
                 $facturas = DB::table('factura_compra')
                     ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion')
                     ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
-                    ->whereBetween('factura_compra.fecha', [$fecha_inicio, $fecha_fin])
+                    ->whereBetween('factura_compra.fecha_elaboracion', [$fecha_inicio, $fecha_fin])
                     ->orderByDesc('factura_compra.favorito') // ordenar los favoritos primero
                     ->orderBy('factura_compra.fecha_elaboracion', 'desc') // luego ordenar por fecha
                     ->orderBy('factura_compra.id', 'desc')
