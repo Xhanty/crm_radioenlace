@@ -69,7 +69,8 @@ class FacturaCompraController extends Controller
 
             $facturas = DB::table('factura_compra')
                 ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion')
-                ->leftJoin('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
+                //->leftJoin('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
+                ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
                 ->whereYear('factura_compra.fecha_elaboracion', '=', date('Y'))
                 ->orderByDesc('factura_compra.favorito') // ordenar los favoritos primero
                 ->orderBy('factura_compra.numero', 'desc') // luego ordenar por fecha
@@ -85,10 +86,25 @@ class FacturaCompraController extends Controller
                 ->get();
 
             $no_registrados = [];
+            $total = 0;
             foreach ($facturas as $key => $value) {
-                $no_registrados[] = $value->proveedor_id;
+                $proveedor = DB::table('proveedores')
+                    ->select('id')
+                    ->where('nit', $value->proveedor_id)
+                    ->first();
+                
+                if ($proveedor) {
+                    DB::table('factura_compra')
+                        ->where('id', $value->id)
+                        ->update(['proveedor_id' => $proveedor->id]);
+                } else {
+                    $no_registrados[] = $value->proveedor_id;
+                    $total++;
+                }
             }
             
+            echo $total;
+            exit;
             echo json_encode($no_registrados);
             exit;*/
 
