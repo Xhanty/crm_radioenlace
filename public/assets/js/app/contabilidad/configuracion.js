@@ -3491,14 +3491,26 @@ $(document).ready(function () {
     });
 
     $("#btnAddResolucionVenta").on("click", function () {
+        let prefijo = $("#pref_resoluc_venta_add").val();
+        let numero_inicio = $("#ini_num_resoluc_venta_add").val();
         let numero = $("#num_resoluc_venta_add").val();
+        let fecha_inicio = $("#date_ini_resoluc_venta_add").val();
         let fecha = $("#date_resoluc_venta_add").val();
 
-        if (numero < 1) {
-            toastr.error("Ingrese el número de la resolución");
+        if(prefijo == "") {
+            toastr.error("Ingrese el prefijo de la resolución");
+            return false;
+        } else if (numero_inicio == "") {
+            toastr.error("Ingrese el número inicio de la resolución");
+            return false;
+        } else if (numero < 1) {
+            toastr.error("Ingrese el número fin de la resolución");
+            return false;
+        } else if (fecha_inicio == "") {
+            toastr.error("Ingrese la fecha inicio de la resolución");
             return false;
         } else if (fecha == "") {
-            toastr.error("Ingrese la fecha de la resolución");
+            toastr.error("Ingrese la fecha fin de la resolución");
             return false;
         } else {
             $("#btnAddResolucionVenta").attr("disabled", true);
@@ -3509,7 +3521,10 @@ $(document).ready(function () {
                 dataType: "json",
                 data: {
                     tipo: 'fv',
+                    prefijo: prefijo,
+                    numero_inicio: numero_inicio,
                     numero: numero,
+                    fecha_inicio: fecha_inicio,
                     fecha: fecha,
                 },
                 success: function (response) {

@@ -73,14 +73,24 @@ class ConfiguracionController extends Controller
                 ->where('forma_pago', 0)
                 ->whereRaw('LENGTH(code) = 8')
                 ->get();
+            
+            $resolu_resoluc_fv = '';
 
+            $numini_resoluc_fv = 0;
             $num_resoluc_fv = 0;
+            
+            $fechaini_resoluc_fv = null;
             $fecha_resoluc_fv = null;
 
             $valid_resoluc = DB::table('resolucion_dian')->where('documento', 1)->first();
 
             if ($valid_resoluc) {
+                $resolu_resoluc_fv = $valid_resoluc->prefijo;
+
+                $numini_resoluc_fv = $valid_resoluc->numero_inicio;
                 $num_resoluc_fv = $valid_resoluc->numero;
+
+                $fechaini_resoluc_fv = $valid_resoluc->fecha_inicio;
                 $fecha_resoluc_fv = $valid_resoluc->fecha;
             }
 
@@ -99,7 +109,10 @@ class ConfiguracionController extends Controller
                 'cuentas_contables',
                 'tributos',
                 'documentos_org',
+                'resolu_resoluc_fv',
+                'numini_resoluc_fv',
                 'num_resoluc_fv',
+                'fechaini_resoluc_fv',
                 'fecha_resoluc_fv'
             ));
         } catch (Exception $ex) {
@@ -1362,7 +1375,10 @@ class ConfiguracionController extends Controller
         try {
             DB::beginTransaction();
             $tipo = $request->tipo;
+            $prefijo = $request->prefijo;
+            $numero_inicio = $request->numero_inicio;
             $numero = $request->numero;
+            $fecha_inicio = $request->fecha_inicio;
             $fecha = $request->fecha;
 
             if ($tipo == 'fv') {
@@ -1370,7 +1386,10 @@ class ConfiguracionController extends Controller
 
                 if ($valid) {
                     DB::table('resolucion_dian')->where('documento', 1)->update([
+                        'prefijo' => $prefijo,
+                        'numero_inicio' => $numero_inicio,
                         'numero' => $numero,
+                        'fecha_inicio' => $fecha_inicio,
                         'fecha' => $fecha,
                         'created_by' => auth()->user()->id,
                         'created_at' => date('Y-m-d H:i:s'),
@@ -1378,7 +1397,10 @@ class ConfiguracionController extends Controller
                 } else {
                     DB::table('resolucion_dian')->insert([
                         'documento' => 1,
+                        'prefijo' => $prefijo,
+                        'numero_inicio' => $numero_inicio,
                         'numero' => $numero,
+                        'fecha_inicio' => $fecha_inicio,
                         'fecha' => $fecha,
                         'created_by' => auth()->user()->id,
                         'created_at' => date('Y-m-d H:i:s'),
