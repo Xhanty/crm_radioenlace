@@ -252,7 +252,7 @@
                                 <label class="tx-gray-600">Información de la factura</label>
                                 <p class="invoice-info-row"><span>Factura No.</span> <span id="num_fact_view">1743</span>
                                 </p>
-                                <p class="invoice-info-row"><span>Fecha Compra</span> <span
+                                <p class="invoice-info-row"><span>Fecha Venta</span> <span
                                         id="compra_view">21/03/2023</span></p>
                             </div>
                         </div>
@@ -358,9 +358,9 @@
                                     </select>
                                 </div>
                                 <div class="col-lg-3">
-                                    <label for="">Número</label>
-                                    <input class="form-control" value="{{ $num_factura }}" disabled
-                                        placeholder="Número" type="text">
+                                    <label for="">Consecutivo</label>
+                                    <input id="consecutivo_add" class="form-control" value="{{ $num_factura }}"
+                                        placeholder="Consecutivo" type="text">
                                 </div>
                             </div>
                             <br>
@@ -437,8 +437,7 @@
                                                         <option value="">Seleccione una opción</option>
                                                         @foreach ($impuestos_cargos as $impuesto)
                                                             <option data-impuesto="{{ $impuesto->tarifa }}"
-                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}
-                                                            </option>
+                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
@@ -447,8 +446,7 @@
                                                         <option value="">Seleccione una opción</option>
                                                         @foreach ($impuestos_retencion as $impuesto)
                                                             <option data-impuesto="{{ $impuesto->tarifa }}"
-                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}
-                                                            </option>
+                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
@@ -495,7 +493,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="row row-sm mt-2">
-                                        <div class="col-lg-12 d-flex" style="justify-content: end">
+                                        <div class="col-lg-12 mt-5 d-flex" style="justify-content: end">
                                             <div class="text-end col-6">
                                                 <p class="font-20">Total Bruto:</p>
                                             </div>
@@ -521,6 +519,30 @@
                                         </div>
                                         <div id="impuestos_1_add" style="padding: 0px;"></div>
                                         <div id="impuestos_2_add" style="padding: 0px;"></div>
+                                        <div class="col-lg-12 d-flex" style="justify-content: end">
+                                            <div class="text-end col-2">
+                                                <input id="retefte_add" class="form-control text-end" type="text" title="Rte Fte: (%)" placeholder="Rte Fte: (%)">
+                                            </div>
+                                            <div class="text-end col-4">
+                                                <p class="font-20" id="total_retefte_add">0.00</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 d-flex" style="justify-content: end">
+                                            <div class="text-end col-2">
+                                                <input id="reteiva_add" class="form-control text-end" type="text" title="Rte Iva: (%)" placeholder="Rte Iva: (%)">
+                                            </div>
+                                            <div class="text-end col-4">
+                                                <p class="font-20" id="total_reteiva_add">0.00</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 d-flex" style="justify-content: end">
+                                            <div class="text-end col-2">
+                                                <input id="reteica_add" class="form-control text-end" type="text" title="Rte Ica: (%)" placeholder="Rte Ica: (%)">
+                                            </div>
+                                            <div class="text-end col-4">
+                                                <p class="font-20" id="total_reteica_add">0.00</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -548,7 +570,7 @@
                             <div class="row row-sm">
                                 <div class="col-lg">
                                     <label for="">Observaciones</label>
-                                    <textarea class="form-control" id="observaciones_add" placeholder="Observaciones" rows="3"
+                                    <textarea class="form-control" id="observaciones_add" placeholder="Observaciones" rows="5"
                                         style="resize: none">VR05 VERSIÓN: 01 06/01/2020
 FAVOR CONSIGNAR EN LA CUENTA DE AHORROS BANCOLOMBIA 10825335162 A
 NOMBRE DE RADIO ENLACE S.A.S.
@@ -622,9 +644,9 @@ reportarse en las centrales de crédito.</textarea>
                                     </select>
                                 </div>
                                 <div class="col-lg-3">
-                                    <label for="">Número</label>
-                                    <input class="form-control" value="{{ $num_factura }}" disabled
-                                        placeholder="Número" type="text">
+                                    <label for="">Consecutivo</label>
+                                    <input id="consecutivo_edit" class="form-control" value="{{ $num_factura }}" disabled
+                                        placeholder="Consecutivo" type="text">
                                 </div>
                             </div>
                             <br>
@@ -785,6 +807,30 @@ reportarse en las centrales de crédito.</textarea>
                                         </div>
                                         <div id="impuestos_1_edit" style="padding: 0px;"></div>
                                         <div id="impuestos_2_edit" style="padding: 0px;"></div>
+                                        <div class="col-lg-12 d-flex" style="justify-content: end">
+                                            <div class="text-end col-2">
+                                                <input id="retefte_edit" class="form-control text-end" type="text" title="Rte Fte: (%)" placeholder="Rte Fte: (%)">
+                                            </div>
+                                            <div class="text-end col-4">
+                                                <p class="font-20" id="total_retefte_edit">0.00</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 d-flex" style="justify-content: end">
+                                            <div class="text-end col-2">
+                                                <input id="reteiva_edit" class="form-control text-end" type="text" title="Rte Iva: (%)" placeholder="Rte Iva: (%)">
+                                            </div>
+                                            <div class="text-end col-4">
+                                                <p class="font-20" id="total_reteiva_edit">0.00</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 d-flex" style="justify-content: end">
+                                            <div class="text-end col-2">
+                                                <input id="reteica_edit" class="form-control text-end" type="text" title="Rte Ica: (%)" placeholder="Rte Ica: (%)">
+                                            </div>
+                                            <div class="text-end col-4">
+                                                <p class="font-20" id="total_reteica_edit">0.00</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -812,7 +858,7 @@ reportarse en las centrales de crédito.</textarea>
                             <div class="row row-sm">
                                 <div class="col-lg">
                                     <label for="">Observaciones</label>
-                                    <textarea class="form-control" id="observaciones_edit" placeholder="Observaciones" rows="3"
+                                    <textarea class="form-control" id="observaciones_edit" placeholder="Observaciones" rows="5"
                                         style="resize: none">VR05 VERSIÓN: 01 06/01/2020
 FAVOR CONSIGNAR EN LA CUENTA DE AHORROS BANCOLOMBIA 10825335162 A
 NOMBRE DE RADIO ENLACE S.A.S.

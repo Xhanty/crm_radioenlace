@@ -852,6 +852,10 @@ $(document).ready(function () {
         $(".formas_pago_add").trigger("change");
         impuestos_1_general = impuesto_cargo;
         impuestos_2_general = impuesto_retencion;
+
+        $("#retefte_add").trigger("change");
+        $("#reteiva_add").trigger("change");
+        $("#reteica_add").trigger("change");
     }
 
     $(document).on("change", ".formas_pago_add", function () {
@@ -877,9 +881,13 @@ $(document).ready(function () {
         let tipo = $("#tipo_add").val();
         let fecha = $("#fecha_add").val();
         let vendedor = $("#vendedor_add").val();
+        let consecutivo = $("#consecutivo_add").val();
         let cliente = $("#cliente_add").val();
         let total_bruto = $("#total_bruto_add").html();
         let descuentos = $("#total_descuentos_add").html();
+        let retefuente = $("#retefte_add").val();
+        let reteiva = $("#reteiva_add").val();
+        let reteica = $("#reteica_add").val();
         let subtotal = $("#total_subtotal_add").html();
         let total = $("#total_neto_add").html();
         let observaciones = $("#observaciones_add").val();
@@ -929,6 +937,9 @@ $(document).ready(function () {
         } else if (!vendedor) {
             toastr.error('Debe seleccionar un vendendor');
             return false;
+        } else if (consecutivo <= 0) {
+            toastr.error('Debe ingresar un consecutivo válido');
+            return false;
         } else if (!cliente) {
             toastr.error('Debe seleccionar un cliente');
             return false;
@@ -949,6 +960,7 @@ $(document).ready(function () {
             formData.append("tipo", tipo);
             formData.append("fecha", fecha);
             formData.append("vendedor", vendedor);
+            formData.append("consecutivo", consecutivo);
             formData.append("cliente", cliente);
             formData.append("productos", JSON.stringify(productos_send));
             formData.append("total_bruto", total_bruto);
@@ -956,6 +968,9 @@ $(document).ready(function () {
             formData.append("subtotal", subtotal);
             formData.append("impuestos_1", JSON.stringify(impuestos_1_general));
             formData.append("impuestos_2", JSON.stringify(impuestos_2_general));
+            formData.append("retefuente", retefuente);
+            formData.append("reteiva", reteiva);
+            formData.append("reteica", reteica);
             formData.append("total", total);
             formData.append("observaciones", observaciones);
             formData.append("factura", $("#factura_add")[0].files[0]);
@@ -1295,6 +1310,10 @@ $(document).ready(function () {
         $(".formas_pago_edit").trigger("change");
         impuestos_1_general_edit = impuesto_cargo;
         impuestos_2_general_edit = impuesto_retencion;
+
+        $("#retefte_edit").trigger("change");
+        $("#reteiva_edit").trigger("change");
+        $("#reteica_edit").trigger("change");
     }
 
     $(document).on("change", ".formas_pago_edit", function () {
@@ -1321,9 +1340,13 @@ $(document).ready(function () {
         let tipo = $("#tipo_edit").val();
         let fecha = $("#fecha_edit").val();
         let vendedor = $("#vendedor_edit").val();
+        let consecutivo = $("#consecutivo_edit").val();
         let cliente = $("#cliente_edit").val();
         let total_bruto = $("#total_bruto_edit").html();
         let descuentos = $("#total_descuentos_edit").html();
+        let retefuente = $("#retefte_edit").val();
+        let reteiva = $("#reteiva_edit").val();
+        let reteica = $("#reteica_edit").val();
         let subtotal = $("#total_subtotal_edit").html();
         let total = $("#total_neto_edit").html();
         let observaciones = $("#observaciones_edit").val();
@@ -1373,6 +1396,9 @@ $(document).ready(function () {
         } else if (!vendedor) {
             toastr.error('Debe seleccionar un vendedor');
             return false;
+        } else if (consecutivo < 0) {
+            toastr.error('Debe ingresar un consecutivo válido');
+            return false;
         } else if (!cliente) {
             toastr.error('Debe seleccionar un cliente');
             return false;
@@ -1394,6 +1420,7 @@ $(document).ready(function () {
             formData.append("tipo", tipo);
             formData.append("fecha", fecha);
             formData.append("vendedor", vendedor);
+            formData.append("consecutivo", consecutivo);
             formData.append("cliente", cliente);
             formData.append("productos", JSON.stringify(productos));
             formData.append("total_bruto", total_bruto);
@@ -1401,6 +1428,9 @@ $(document).ready(function () {
             formData.append("subtotal", subtotal);
             formData.append("impuestos_1", JSON.stringify(impuestos_1_general_edit));
             formData.append("impuestos_2", JSON.stringify(impuestos_2_general_edit));
+            formData.append("retefuente", retefuente);
+            formData.append("reteiva", reteiva);
+            formData.append("reteica", reteica);
             formData.append("total", total);
             formData.append("observaciones", observaciones);
             formData.append("factura", $("#factura_edit")[0].files[0]);
@@ -1798,5 +1828,223 @@ $(document).ready(function () {
                 window.location.href = url_general + 'recibo_pago?fc=' + id;
             }
         });
+    });
+
+    // ADD
+    $("#retefte_add").on("change", function () {
+        let subtotal = $("#total_subtotal_add").text();
+        let reteiva = $("#total_reteiva_add").text();
+        let reteica = $("#total_reteica_add").text();
+        let impuestos = impuestos_1_general;
+        let iva = 0;
+
+        reteiva = reteiva.split(',');
+        reteiva = reteiva[0];
+        reteiva = reteiva.replaceAll('.', '');
+        reteiva = parseInt(reteiva);
+
+        reteica = reteica.split(',');
+        reteica = reteica[0];
+        reteica = reteica.replaceAll('.', '');
+        reteica = parseInt(reteica);
+
+        for (let i = 0; i < impuestos.length; i++) {
+            iva += impuestos[i][1];
+        }
+
+        subtotal = subtotal.split(',');
+        subtotal = subtotal[0];
+        subtotal = subtotal.replaceAll('.', '');
+        subtotal = parseInt(subtotal);
+
+        // Porcentaje
+        let retefte = $(this).val();
+
+        // Valor
+        let valor = (subtotal * (retefte / 100));
+
+        $("#total_retefte_add").html((valor).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+        $("#total_neto_add").html((subtotal - valor - reteiva - reteica + iva).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+    });
+
+    $("#reteiva_add").on("change", function () {
+        let subtotal = $("#total_subtotal_add").text();
+        let retefte = $("#total_retefte_add").text();
+        let reteica = $("#total_reteica_add").text();
+        let impuestos = impuestos_1_general;
+        let iva = 0;
+
+        retefte = retefte.split(',');
+        retefte = retefte[0];
+        retefte = retefte.replaceAll('.', '');
+        retefte = parseInt(retefte);
+
+        reteica = reteica.split(',');
+        reteica = reteica[0];
+        reteica = reteica.replaceAll('.', '');
+        reteica = parseInt(reteica);
+
+        for (let i = 0; i < impuestos.length; i++) {
+            iva += impuestos[i][1];
+        }
+
+        subtotal = subtotal.split(',');
+        subtotal = subtotal[0];
+        subtotal = subtotal.replaceAll('.', '');
+        subtotal = parseInt(subtotal);
+
+        // Porcentaje
+        let reteiva = $(this).val();
+
+        // Valor
+        let valor = (iva * (reteiva / 100));
+
+        $("#total_reteiva_add").html((valor).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+        $("#total_neto_add").html((subtotal - valor - retefte - reteica + iva).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+    });
+
+    $("#reteica_add").on("change", function () {
+        let subtotal = $("#total_subtotal_add").text();
+        let retefte = $("#total_retefte_add").text();
+        let reteiva = $("#total_reteiva_add").text();
+        let impuestos = impuestos_1_general;
+        let iva = 0;
+
+        retefte = retefte.split(',');
+        retefte = retefte[0];
+        retefte = retefte.replaceAll('.', '');
+        retefte = parseInt(retefte);
+
+        reteiva = reteiva.split(',');
+        reteiva = reteiva[0];
+        reteiva = reteiva.replaceAll('.', '');
+        reteiva = parseInt(reteiva);
+
+        for (let i = 0; i < impuestos.length; i++) {
+            iva += impuestos[i][1];
+        }
+
+        subtotal = subtotal.split(',');
+        subtotal = subtotal[0];
+        subtotal = subtotal.replaceAll('.', '');
+        subtotal = parseInt(subtotal);
+
+        // Porcentaje
+        let reteica = $(this).val();
+
+        // Valor
+        let valor = ((subtotal * reteica) / 1000);
+
+        $("#total_reteica_add").html((valor).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+        $("#total_neto_add").html((subtotal - valor - reteiva - retefte + iva).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+    });
+
+    // EDIT
+    $("#retefte_edit").on("change", function () {
+        let subtotal = $("#total_subtotal_edit").text();
+        let reteiva = $("#total_reteiva_edit").text();
+        let reteica = $("#total_reteica_edit").text();
+        let impuestos = impuestos_1_general_edit;
+        let iva = 0;
+
+        reteiva = reteiva.split(',');
+        reteiva = reteiva[0];
+        reteiva = reteiva.replaceAll('.', '');
+        reteiva = parseInt(reteiva);
+
+        reteica = reteica.split(',');
+        reteica = reteica[0];
+        reteica = reteica.replaceAll('.', '');
+        reteica = parseInt(reteica);
+
+        for (let i = 0; i < impuestos.length; i++) {
+            iva += impuestos[i][1];
+        }
+
+        subtotal = subtotal.split(',');
+        subtotal = subtotal[0];
+        subtotal = subtotal.replaceAll('.', '');
+        subtotal = parseInt(subtotal);
+
+        // Porcentaje
+        let retefte = $(this).val();
+
+        // Valor
+        let valor = (subtotal * (retefte / 100));
+
+        $("#total_retefte_edit").html((valor).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+        $("#total_neto_edit").html((subtotal - valor - reteiva - reteica + iva).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+    });
+
+    $("#reteiva_edit").on("change", function () {
+        let subtotal = $("#total_subtotal_edit").text();
+        let retefte = $("#total_retefte_edit").text();
+        let reteica = $("#total_reteica_edit").text();
+        let impuestos = impuestos_1_general_edit;
+        let iva = 0;
+
+        retefte = retefte.split(',');
+        retefte = retefte[0];
+        retefte = retefte.replaceAll('.', '');
+        retefte = parseInt(retefte);
+
+        reteica = reteica.split(',');
+        reteica = reteica[0];
+        reteica = reteica.replaceAll('.', '');
+        reteica = parseInt(reteica);
+
+        for (let i = 0; i < impuestos.length; i++) {
+            iva += impuestos[i][1];
+        }
+
+        subtotal = subtotal.split(',');
+        subtotal = subtotal[0];
+        subtotal = subtotal.replaceAll('.', '');
+        subtotal = parseInt(subtotal);
+
+        // Porcentaje
+        let reteiva = $(this).val();
+
+        // Valor
+        let valor = (iva * (reteiva / 100));
+
+        $("#total_reteiva_edit").html((valor).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+        $("#total_neto_edit").html((subtotal - valor - retefte - reteica + iva).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+    });
+
+    $("#reteica_edit").on("change", function () {
+        let subtotal = $("#total_subtotal_edit").text();
+        let retefte = $("#total_retefte_edit").text();
+        let reteiva = $("#total_reteiva_edit").text();
+        let impuestos = impuestos_1_general_edit;
+        let iva = 0;
+
+        retefte = retefte.split(',');
+        retefte = retefte[0];
+        retefte = retefte.replaceAll('.', '');
+        retefte = parseInt(retefte);
+
+        reteiva = reteiva.split(',');
+        reteiva = reteiva[0];
+        reteiva = reteiva.replaceAll('.', '');
+        reteiva = parseInt(reteiva);
+
+        for (let i = 0; i < impuestos.length; i++) {
+            iva += impuestos[i][1];
+        }
+
+        subtotal = subtotal.split(',');
+        subtotal = subtotal[0];
+        subtotal = subtotal.replaceAll('.', '');
+        subtotal = parseInt(subtotal);
+
+        // Porcentaje
+        let reteica = $(this).val();
+
+        // Valor
+        let valor = ((subtotal * reteica) / 1000);
+
+        $("#total_reteica_edit").html((valor).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+        $("#total_neto_edit").html((subtotal - valor - reteiva - retefte + iva).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
     });
 });

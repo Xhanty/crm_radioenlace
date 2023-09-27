@@ -145,17 +145,13 @@
                                 <table>
                                     <tbody>
                                         <tr>
-                                            <td class="tm_width_3 tm_accent_border_20">
-                                                <b class="tm_primary_color tm_medium">Generación:
-                                                </b>{{ date('d/m/Y H:m', strtotime($factura->created_at)) }}
-                                            </td>
                                             <td class="tm_width_3 tm_border_left tm_accent_border_20">
-                                                <b class="tm_primary_color tm_medium">Expedición:
-                                                </b>{{ date('d/m/Y H:m', strtotime($factura->created_at)) }}
+                                                <b class="tm_primary_color tm_medium">Generación:
+                                                </b>{{ date('d/m/Y', strtotime($factura->fecha_elaboracion)) }}
                                             </td>
                                             <td class="tm_width_3 tm_border_left tm_accent_border_20">
                                                 <b class="tm_primary_color tm_medium">Vencimiento:
-                                                </b>{{ date('d/m/Y H:m', strtotime($factura->created_at)) }}
+                                                </b>{{ date('d/m/Y', strtotime($factura->fecha_elaboracion . ' +30 days')) }}
                                             </td>
                                         </tr>
                                     </tbody>

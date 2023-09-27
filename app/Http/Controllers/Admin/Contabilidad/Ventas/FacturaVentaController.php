@@ -16,14 +16,17 @@ class FacturaVentaController extends Controller
                 return redirect()->route('home');
             }
 
+            $resolucion = DB::table('resolucion_dian')
+                ->where('documento', 1)
+                ->first();
+
             $last_factura = DB::table('factura_venta')
                 ->select('numero')
                 ->orderBy('id', 'desc')
                 ->first();
 
-
             if (!$last_factura) {
-                $num_factura = 1;
+                $num_factura = $resolucion->numero_inicial;
             } else {
                 $num_factura = $last_factura->numero + 1;
             }
@@ -52,6 +55,7 @@ class FacturaVentaController extends Controller
 
             $impuestos_cargos = DB::table('configuracion_impuestos')
                 ->where('en_uso', 1)
+                ->where('nombre', 'like', '%iva %')
                 ->get();
 
             $impuestos_retencion = DB::table('configuracion_autoretencion')
@@ -106,9 +110,11 @@ class FacturaVentaController extends Controller
                 'impuestos_retencion',
                 'facturas',
                 'view_alert',
-                'disabled_fv'
+                'disabled_fv',
             ));
         } catch (Exception $ex) {
+            echo $ex->getMessage();
+            exit;
             return view('errors.500');
         }
     }
@@ -120,6 +126,7 @@ class FacturaVentaController extends Controller
             $fecha = $request->fecha;
             $cliente = $request->cliente;
             $vendedor = $request->vendedor;
+            $consecutivo = $request->consecutivo;
             $total = $request->total;
             $productos = json_decode($request->productos, true);
             $observaciones = $request->observaciones;
@@ -131,15 +138,33 @@ class FacturaVentaController extends Controller
             $impuestos_1 = $request->impuestos_1;
             $impuestos_2 = $request->impuestos_2;
 
-            $factura = DB::table('factura_venta')
+            $retefuente = $request->retefuente;
+            $reteica = $request->reteica;
+            $reteiva = $request->reteiva;
+
+            /*$factura = DB::table('factura_venta')
                 ->select('numero')
                 ->orderBy('id', 'desc')
                 ->first();
 
+            $resolucion = DB::table('resolucion_dian')
+                ->where('documento', 1)
+                ->first();
+
             if (!$factura) {
-                $num_factura = 1;
+                $num_factura = $resolucion->numero_inicial;
             } else {
                 $num_factura = $factura->numero + 1;
+            }*/
+
+            $num_factura = $consecutivo;
+            $valid_cons = DB::table('factura_venta')
+                ->where('numero', $num_factura)
+                ->first();
+
+            if ($valid_cons) {
+                DB::rollBack();
+                return response()->json(['info' => 0, 'error' => 'El consecutivo de factura ya existe']);
             }
 
             if ($request->hasFile('factura')) {
@@ -159,6 +184,9 @@ class FacturaVentaController extends Controller
                 'subtotal' => $subtotal,
                 'impuestos_1' => $impuestos_1,
                 'impuestos_2' => $impuestos_2,
+                'valor_retefuente' => $retefuente,
+                'valor_reteica' => $reteica,
+                'valor_reteiva' => $reteiva,
                 'valor_total' => $total,
                 'observaciones' => $observaciones ?? null,
                 'adjunto_pdf' => $adjunto ?? null,
@@ -228,6 +256,10 @@ class FacturaVentaController extends Controller
             $impuestos_1 = $request->impuestos_1;
             $impuestos_2 = $request->impuestos_2;
 
+            $retefuente = $request->retefuente;
+            $reteica = $request->reteica;
+            $reteiva = $request->reteiva;
+
             if ($request->hasFile('factura')) {
                 $file = $request->file('factura');
                 $name = time() . $file->getClientOriginalName();
@@ -244,6 +276,9 @@ class FacturaVentaController extends Controller
                 'subtotal' => $subtotal,
                 'impuestos_1' => $impuestos_1,
                 'impuestos_2' => $impuestos_2,
+                'valor_retefuente' => $retefuente,
+                'valor_reteica' => $reteica,
+                'valor_reteiva' => $reteiva,
                 'valor_total' => $total,
                 'observaciones' => $observaciones ?? null,
                 'adjunto_pdf' => $adjunto ?? null,
