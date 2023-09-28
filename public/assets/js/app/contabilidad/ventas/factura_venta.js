@@ -99,6 +99,7 @@ $(document).ready(function () {
                 );
             }) +
             '</select>' +
+            '<textarea placeholder="Seriales (Opcional)" class="form-control text-uppercase seriales_add" cols="30" rows="5"></textarea>' +
             '</td>' +
             '<td class="pad-4">' +
             '<textarea placeholder="Descripción" class="form-control descripcion_add" style="border: 0" rows="2"></textarea>' +
@@ -172,6 +173,7 @@ $(document).ready(function () {
                 );
             }) +
             '</select>' +
+            '<textarea placeholder="Seriales (Opcional)" class="form-control text-uppercase seriales_edit" cols="30" rows="5"></textarea>' +
             '</td>' +
             '<td class="pad-4">' +
             '<textarea placeholder="Descripción" class="form-control descripcion_edit" style="border: 0" rows="2"></textarea>' +
@@ -423,7 +425,7 @@ $(document).ready(function () {
                             if(serial == null) {
                                 serial = "";
                             } else {
-                                serial = "S/N: " + serial;
+                                serial = "S/N: " + serial.toUpperCase();
                             }
 
                             if (item.producto) {
@@ -898,6 +900,7 @@ $(document).ready(function () {
         $(".producto_add").each(function () {
             let producto = $(this).val();
             //let serial = $(this).parent().parent().find(".serial_producto_add").val();
+            let seriales = $(this).parent().parent().find(".seriales_add").val();
             let descripcion = $(this).parent().parent().find(".descripcion_add").val();
             let cantidad = $(this).parent().parent().find(".cantidad_add").val();
             let valor_unitario = $(this).parent().parent().find(".valor_add").val();
@@ -921,6 +924,7 @@ $(document).ready(function () {
             productos_send.push({
                 producto: producto,
                 //serial: serial,
+                seriales: seriales,
                 descripcion: descripcion,
                 cantidad: cantidad,
                 valor_unitario: valor_unitario,
@@ -1357,6 +1361,7 @@ $(document).ready(function () {
         $(".producto_edit").each(function () {
             let producto = $(this).val();
             //let serial = $(this).parent().parent().find(".serial_producto_edit").val();
+            let seriales = $(this).parent().parent().find(".seriales_edit").val();
             let descripcion = $(this).parent().parent().find(".descripcion_edit").val();
             let cantidad = $(this).parent().parent().find(".cantidad_edit").val();
             let valor_unitario = $(this).parent().parent().find(".valor_edit").val();
@@ -1380,6 +1385,7 @@ $(document).ready(function () {
             productos.push({
                 producto: producto,
                 //serial: serial,
+                seriales: seriales,
                 descripcion: descripcion,
                 cantidad: cantidad,
                 valor_unitario: valor_unitario,

@@ -413,6 +413,7 @@
                                                             </option>
                                                         @endforeach
                                                     </select>
+                                                    <textarea placeholder="Seriales (Opcional)" class="form-control text-uppercase seriales_add" cols="30" rows="5"></textarea>
                                                 </td>
                                                 <td class="pad-4">
                                                     <textarea placeholder="Descripción" class="form-control descripcion_add" style="border: 0" rows="2"></textarea>
@@ -699,6 +700,7 @@ reportarse en las centrales de crédito.</textarea>
                                                             </option>
                                                         @endforeach
                                                     </select>
+                                                    <textarea placeholder="Seriales (Opcional)" class="form-control text-uppercase seriales_edit" cols="30" rows="5"></textarea>
                                                 </td>
                                                 <td class="pad-4">
                                                     <textarea placeholder="Descripción" class="form-control descripcion_edit" style="border: 0" rows="2"></textarea>

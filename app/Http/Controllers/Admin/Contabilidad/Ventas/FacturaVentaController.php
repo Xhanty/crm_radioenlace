@@ -36,6 +36,19 @@ class FacturaVentaController extends Controller
                 ->where('status', 1)
                 ->get();
 
+            foreach ($productos as $key => $producto) {
+                $inventario = DB::table('inventario')
+                    ->select('inventario.*')
+                    ->where('inventario.producto_id', $producto->id)
+                    ->orderBy('inventario.id', 'desc')
+                    ->get();
+
+                // Filtrar los inventarios con cantidad mayor a 0
+                $producto->inventario = $inventario->filter(function ($value) {
+                    return $value->cantidad > 0;
+                });
+            }
+
             $formas_pago = DB::table('configuracion_puc')
                 ->select('id', 'code', 'nombre')
                 ->where('status', 1)
@@ -203,7 +216,7 @@ class FacturaVentaController extends Controller
                 $detalle = DB::table("detalle_factura_venta")->insert([
                     'factura_id' => $id,
                     'producto' => $producto['producto'] ?? null,
-                    'serial_producto' => $producto['serial'] ?? null,
+                    'serial_producto' => $producto['seriales'] ?? null,
                     'description' => $producto['descripcion'],
                     'cantidad' => $producto['cantidad'],
                     'valor_unitario' => $producto['valor_unitario'],
@@ -301,7 +314,7 @@ class FacturaVentaController extends Controller
                     $detalle = DB::table("detalle_factura_venta")->insert([
                         'factura_id' => $id,
                         'producto' => $producto['producto'] ?? null,
-                        'serial_producto' => $producto['serial'] ?? null,
+                        'serial_producto' => $producto['seriales'] ?? null,
                         'description' => $producto['descripcion'],
                         'cantidad' => $producto['cantidad'],
                         'valor_unitario' => $producto['valor_unitario'],
