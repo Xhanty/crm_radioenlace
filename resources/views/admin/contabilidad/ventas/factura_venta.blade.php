@@ -416,7 +416,7 @@
                                                     <textarea placeholder="Seriales (Opcional)" class="form-control text-uppercase seriales_add" cols="30" rows="5"></textarea>
                                                 </td>
                                                 <td class="pad-4">
-                                                    <textarea placeholder="Descripción" class="form-control descripcion_add" style="border: 0" rows="2"></textarea>
+                                                    <textarea placeholder="Descripción" class="form-control descripcion_add" style="border: 0" rows="7"></textarea>
                                                 </td>
                                                 <td class="pad-4">
                                                     <input type="number" placeholder="Cantidad" step="1"
@@ -703,7 +703,7 @@ reportarse en las centrales de crédito.</textarea>
                                                     <textarea placeholder="Seriales (Opcional)" class="form-control text-uppercase seriales_edit" cols="30" rows="5"></textarea>
                                                 </td>
                                                 <td class="pad-4">
-                                                    <textarea placeholder="Descripción" class="form-control descripcion_edit" style="border: 0" rows="2"></textarea>
+                                                    <textarea placeholder="Descripción" class="form-control descripcion_edit" style="border: 0" rows="7"></textarea>
                                                 </td>
                                                 <td class="pad-4">
                                                     <input type="number" placeholder="Cantidad" step="1"
@@ -725,8 +725,7 @@ reportarse en las centrales de crédito.</textarea>
                                                         <option value="">Seleccione una opción</option>
                                                         @foreach ($impuestos_cargos as $impuesto)
                                                             <option data-impuesto="{{ $impuesto->tarifa }}"
-                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}
-                                                            </option>
+                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
@@ -735,8 +734,7 @@ reportarse en las centrales de crédito.</textarea>
                                                         <option value="">Seleccione una opción</option>
                                                         @foreach ($impuestos_retencion as $impuesto)
                                                             <option data-impuesto="{{ $impuesto->tarifa }}"
-                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}
-                                                            </option>
+                                                                value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
@@ -745,7 +743,7 @@ reportarse en las centrales de crédito.</textarea>
                                                         class="form-control text-end total_edit input_dinner"
                                                         style="border: 0">
                                                     <a class="center-vertical mg-s-10" href="javascript:void(0)"
-                                                        id="new_row"><i class="fa fa-plus"></i></a>
+                                                        id="new_row_edit"><i class="fa fa-plus"></i></a>
                                                     &nbsp;
                                                 </td>
                                             </tr>

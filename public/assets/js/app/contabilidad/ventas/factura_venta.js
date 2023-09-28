@@ -102,7 +102,7 @@ $(document).ready(function () {
             '<textarea placeholder="Seriales (Opcional)" class="form-control text-uppercase seriales_add" cols="30" rows="5"></textarea>' +
             '</td>' +
             '<td class="pad-4">' +
-            '<textarea placeholder="Descripción" class="form-control descripcion_add" style="border: 0" rows="2"></textarea>' +
+            '<textarea placeholder="Descripción" class="form-control descripcion_add" style="border: 0" rows="7"></textarea>' +
             '</td>' +
             '<td class="pad-4">' +
             '<input type="number" placeholder="Cantidad" step="1"' +
@@ -161,7 +161,7 @@ $(document).ready(function () {
     });
 
     $("#new_row_edit").click(function () {
-        $("#tbl_data_detail tbody").append(
+        $("#tbl_data_detail_edit tbody").append(
             '<tr style="background: #f9f9f9;">' +
             '<td class="center-text pad-4">1</td>' +
             '<td class="pad-4">' +
@@ -176,7 +176,7 @@ $(document).ready(function () {
             '<textarea placeholder="Seriales (Opcional)" class="form-control text-uppercase seriales_edit" cols="30" rows="5"></textarea>' +
             '</td>' +
             '<td class="pad-4">' +
-            '<textarea placeholder="Descripción" class="form-control descripcion_edit" style="border: 0" rows="2"></textarea>' +
+            '<textarea placeholder="Descripción" class="form-control descripcion_edit" style="border: 0" rows="7"></textarea>' +
             '</td>' +
             '<td class="pad-4">' +
             '<input type="number" placeholder="Cantidad" step="1"' +
@@ -1532,6 +1532,7 @@ $(document).ready(function () {
 
                     if (p_borrar > 1) {
                         for (let i = 0; i < p_borrar; i++) {
+                            console.log("Borrando fila " + i);
                             $('#tbl_data_detail_edit tbody tr:eq(' + i + ')').remove();
                         }
                     }
@@ -1544,7 +1545,9 @@ $(document).ready(function () {
                                 $(".producto_edit").val(producto.producto).trigger("change");
                             }, 1000);
                             //$(".serial_producto_edit").val(producto.serial_producto);
+                            $(".seriales_edit").val(producto.serial_producto);
                             $(".descripcion_edit").val(producto.description);
+                            console.log("P1: " + producto.description);
                             $(".cantidad_edit").val(producto.cantidad);
                             $(".valor_edit").val(producto.valor_unitario);
                             $(".descuento_edit").val(producto.descuento);
@@ -1555,11 +1558,14 @@ $(document).ready(function () {
                     });
 
                     for (let i = 0; i < contador - 1; i++) {
+                        console.log("P2: " + productos[i + 1].description);
+                        //console.log(productos[i + 1].impuesto_cargo);
                         $("#new_row_edit").trigger("click");
                         setTimeout(() => {
                             $(".producto_edit").eq(i + 1).val(productos[i + 1].producto).trigger("change");
                         }, 1000);
                         //$(".serial_producto_edit").eq(i + 1).val(productos[i + 1].serial_producto);
+                        $(".seriales_edit").eq(i + 1).val(productos[i + 1].serial_producto);
                         $(".descripcion_edit").eq(i + 1).val(productos[i + 1].description);
                         $(".cantidad_edit").eq(i + 1).val(productos[i + 1].cantidad);
                         $(".valor_edit").eq(i + 1).val(productos[i + 1].valor_unitario);

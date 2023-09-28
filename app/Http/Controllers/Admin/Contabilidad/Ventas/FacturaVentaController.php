@@ -26,7 +26,7 @@ class FacturaVentaController extends Controller
                 ->first();
 
             if (!$last_factura) {
-                $num_factura = $resolucion->numero_inicial;
+                $num_factura = $resolucion->numero_inicio;
             } else {
                 $num_factura = $last_factura->numero + 1;
             }
