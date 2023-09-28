@@ -209,9 +209,9 @@
                                                 <td class="tm_width_1 tm_accent_border_20 tm_text_center">
                                                     {{ $count }}
                                                 </td>
-                                                <td class="tm_width_6 tm_accent_border_20 tm_text_center">
-                                                    {{ $item->detalle->nombre }} ({{ $item->detalle->marca }} -
-                                                    {{ $item->detalle->modelo }})
+                                                <td class="tm_width_6 tm_accent_border_20 tm_text_center" style="text-align: justify">
+                                                    <b>{{ $item->detalle->nombre }} (@if($item->detalle->marca) {{ $item->detalle->marca }} - @endif{{ $item->detalle->modelo }})</b>
+                                                        <br><small>{{ $item->detalle->description }}</small>
                                                 </td>
                                                 <td class="tm_width_1 tm_accent_border_20 tm_text_center">
                                                     {{ $item->cantidad }}</td>

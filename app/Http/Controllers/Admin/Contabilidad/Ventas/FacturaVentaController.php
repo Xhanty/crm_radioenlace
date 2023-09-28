@@ -364,8 +364,9 @@ class FacturaVentaController extends Controller
         foreach ($factura->productos as $key => $producto) {
             if ($producto->producto) {
                 $producto->detalle = DB::table('productos')
-                    ->select('nombre', 'marca', 'modelo')
-                    ->where('id', $producto->producto)
+                    ->select('productos.nombre', 'productos.marca', 'productos.modelo', 'detalle_factura_venta.description')
+                    ->join('detalle_factura_venta', 'detalle_factura_venta.producto', '=', 'productos.id')
+                    ->where('productos.id', $producto->producto)
                     ->first();
             }
         }
