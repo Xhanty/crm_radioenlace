@@ -89,8 +89,9 @@
                             <div
                                 class="tm_border tm_accent_border_20 tm_radius_0 tm_accent_bg_10 tm_curve_35 tm_text_center">
                                 <div>
-                                    <b class="tm_accent_color tm_f26 tm_medium tm_body_lineheight">FACTURA DE VENTA
-                                        ELECTRÓNICA</b>
+                                    <b class="tm_accent_color tm_medium tm_body_lineheight"
+                                        style="font-size: 20px">FACTURA DE VENTA
+                                        ELECTRÓNICA # {{ $factura->numero }}</b>
                                 </div>
                             </div>
                         </div>
@@ -105,29 +106,30 @@
                                 <table>
                                     <tbody>
                                         <tr>
-                                            <td class="tm_width_6 tm_border_top_0">
-                                                <b class="tm_primary_color tm_medium">Proveedor:
-                                                </b>{{ $factura->razon_social }}
+                                            <td class="tm_width_6 tm_border_top_0" style="width: 55%">
+                                                <b class="tm_primary_color tm_medium">Cliente:
+                                                </b><br>{{ $factura->razon_social }}
                                             </td>
                                             <td class="tm_width_4 tm_border_top_0 tm_border_left tm_accent_border_20"
-                                                style="width: 28.3333%">
+                                                style="width: 22.5%">
                                                 <b class="tm_primary_color tm_medium">Nit:
-                                                </b>{{ $factura->nit }}-{{ $factura->codigo_verificacion }}
+                                                </b><br>{{ $factura->nit }}-{{ $factura->codigo_verificacion }}
                                             </td>
+
                                         </tr>
                                         <tr>
-                                            <td class="tm_width_2 tm_accent_border_20">
+                                            <td class="tm_width_6 tm_accent_border_20" style="width: 55%">
                                                 <b class="tm_primary_color tm_medium">Dirección:
-                                                </b>{{ $factura->direccion }}
+                                                </b><br>{{ $factura->direccion }}
                                             </td>
                                             <td class="tm_width_4 tm_border_left tm_accent_border_20"
-                                                style="width: 28.3333%">
+                                                style="width: 22.5%">
                                                 <b class="tm_primary_color tm_medium">Ciudad:
-                                                </b>{{ $factura->ciudad }} - Colombia
+                                                </b><br>{{ $factura->ciudad }} - Colombia
                                             </td>
                                             <td class="tm_width_6 tm_border_left tm_accent_border_20">
                                                 <b class="tm_primary_color tm_medium">Teléfono:
-                                                </b>{{ $factura->telefono_fijo }}
+                                                </b><br>{{ $factura->telefono_fijo }}
                                             </td>
                                         </tr>
                                     </tbody>
@@ -137,7 +139,7 @@
                     </div>
                     <h2 class="tm_f16 tm_section_heading tm_accent_border_20 tm_mb0" style="margin-top: -12px"><span
                             class="tm_accent_bg_10 tm_radius_0 tm_curve_35 tm_border tm_accent_border_20 tm_border_bottom_0 tm_accent_color">
-                            <span>Fecha y hora facturación</span>
+                            <span>Fecha facturación</span>
                         </span></h2>
                     <div class="tm_table tm_style1 tm_mb20">
                         <div class="tm_border  tm_accent_border_20 tm_border_top_0">
@@ -147,6 +149,10 @@
                                         <tr>
                                             <td class="tm_width_3 tm_border_left tm_accent_border_20">
                                                 <b class="tm_primary_color tm_medium">Generación:
+                                                </b>{{ date('d/m/Y', strtotime($factura->fecha_elaboracion)) }}
+                                            </td>
+                                            <td class="tm_width_3 tm_border_left tm_accent_border_20">
+                                                <b class="tm_primary_color tm_medium">Expedición:
                                                 </b>{{ date('d/m/Y', strtotime($factura->fecha_elaboracion)) }}
                                             </td>
                                             <td class="tm_width_3 tm_border_left tm_accent_border_20">
@@ -166,27 +172,31 @@
                                     <thead>
                                         <tr>
                                             <th
+                                                class="tm_width_1 tm_semi_bold tm_accent_color tm_accent_bg_10 tm_text_center">
+                                                #
+                                            </th>
+                                            <th
                                                 class="tm_width_6 tm_semi_bold tm_accent_color tm_accent_bg_10 tm_text_center">
                                                 Item
                                             </th>
                                             <th
                                                 class="tm_width_1 tm_semi_bold tm_accent_color tm_accent_bg_10 tm_text_center">
-                                                Cantidad
+                                                Cant.
                                             </th>
                                             <th
-                                                class="tm_width_2 tm_semi_bold tm_accent_color tm_accent_bg_10 tm_text_center">
+                                                class="tm_width_1 tm_semi_bold tm_accent_color tm_accent_bg_10 tm_text_center">
                                                 Vr.
                                                 Bruto</th>
                                             <th
-                                                class="tm_width_2 tm_semi_bold tm_accent_color tm_accent_bg_10 tm_text_center">
+                                                class="tm_width_1 tm_semi_bold tm_accent_color tm_accent_bg_10 tm_text_center">
                                                 Impto.
                                                 Cargo</th>
                                             <th
-                                                class="tm_width_2 tm_semi_bold tm_accent_color tm_accent_bg_10 tm_text_center">
+                                                class="tm_width_1 tm_semi_bold tm_accent_color tm_accent_bg_10 tm_text_center">
                                                 Impto.
                                                 Rete.</th>
                                             <th
-                                                class="tm_width_2 tm_semi_bold tm_accent_color tm_accent_bg_10 tm_text_right">
+                                                class="tm_width_1 tm_semi_bold tm_accent_color tm_accent_bg_10 tm_text_right">
                                                 Total</th>
                                         </tr>
                                     </thead>
@@ -196,20 +206,22 @@
                                         @endphp
                                         @foreach ($factura->productos as $key => $item)
                                             <tr>
+                                                <td class="tm_width_1 tm_accent_border_20 tm_text_center">
+                                                    {{ $count }}
+                                                </td>
                                                 <td class="tm_width_6 tm_accent_border_20 tm_text_center">
-                                                    {{ $count }}.
                                                     {{ $item->detalle->nombre }} ({{ $item->detalle->marca }} -
                                                     {{ $item->detalle->modelo }})
                                                 </td>
                                                 <td class="tm_width_1 tm_accent_border_20 tm_text_center">
                                                     {{ $item->cantidad }}</td>
-                                                <td class="tm_width_2 tm_accent_border_20 tm_text_center">
+                                                <td class="tm_width_1 tm_accent_border_20 tm_text_center">
                                                     {{ $item->valor_unitario }}</td>
-                                                <td class="tm_width_2 tm_accent_border_20 tm_text_center">
+                                                <td class="tm_width_1 tm_accent_border_20 tm_text_center">
                                                     {{ $item->impuesto_cargo }}%</td>
-                                                <td class="tm_width_2 tm_accent_border_20 tm_text_center">
+                                                <td class="tm_width_1 tm_accent_border_20 tm_text_center">
                                                     {{ $item->impuesto_retencion }}%</td>
-                                                <td class="tm_width_2 tm_accent_border_20 tm_text_right">
+                                                <td class="tm_width_1 tm_accent_border_20 tm_text_right">
                                                     {{ $item->valor_total }}</td>
                                             </tr>
                                             @php
@@ -228,21 +240,11 @@
                                 <br>
                                 <!--<p class="tm_mb2"><b class="tm_primary_color">Condiciones de Pago:</b></p>
                                 <p class="tm_m0">Otras cuentas por pagar - Cuota No. 001 vence el 20/04/2023</p>-->
-                                @if ($factura->observaciones != null)
-                                    <p class="tm_mb2"><b class="tm_primary_color">Observaciones:</b></p>
-                                    <p class="tm_m0">{{ $factura->observaciones }}</p>
-                                @endif
-
-                                @if ($factura->adjunto_pdf != null)
-                                    <br>
-                                    <p class="tm_mb2"><b class="tm_primary_color">Adjunto:</b></p>
-                                    <a href="{{ asset('images/contabilidad/facturas_compra/' . $factura->adjunto_pdf) }}"
-                                        style="color: rgb(217, 38, 28, 0.9);" target="_blank">Ver Adjunto</a>
-                                @endif
-                                <div class="tm_text_left" style="margin-bottom: -36px; margin-top: 60px;">
+                                <div class="tm_text_left">
                                     <img src="{{ asset('RadioEnlaceQr.png') }}" width="120px">
                                     <br>
-                                    <b style="font-size: 13px">CUFE:</b><span style="font-size: 12px">dbfecbbd3491e5214fb4f52f75f3ac56fa1e96643b64e85600a4d939558953d9c27b39d646a5e8e020e38ac95a22549b</span>
+                                    <b style="font-size: 13px">CUFE:</b><span
+                                        style="font-size: 12px">dbfecbbd3491e5214fb4f52f75f3ac56fa1e96643b64e85600a4d939558953d9c27b39d646a5e8e020e38ac95a22549b</span>
                                 </div>
                             </div>
                             <div class="tm_right_footer">
@@ -322,6 +324,17 @@
                                 </table>
                             </div>
                         </div>
+                        @if ($factura->observaciones != null)
+                            <p class="tm_mb2" style="margin-top: -18px"><b class="tm_primary_color">Observaciones:</b></p>
+                            <p class="tm_m0">{{ $factura->observaciones }}</p>
+                        @endif
+
+                        @if ($factura->adjunto_pdf != null)
+                            <br>
+                            <p class="tm_mb2"><b class="tm_primary_color">Adjunto:</b></p>
+                            <a href="{{ asset('images/contabilidad/facturas_compra/' . $factura->adjunto_pdf) }}"
+                                style="color: rgb(217, 38, 28, 0.9);" target="_blank">Ver Adjunto</a>
+                        @endif
                     </div>
                     <div class="tm_bottom_invoice tm_accent_border_20">
                         <div class="tm_bottom_invoice_left">
@@ -428,29 +441,29 @@
                             default:
                                 return "dieci" + Unidades(unidad);
                         }
-                        case 2:
-                            switch (unidad) {
-                                case 0:
-                                    return "veinte";
-                                default:
-                                    return "veinti" + Unidades(unidad);
-                            }
-                            case 3:
-                                return DecenasY("treinta", unidad);
-                            case 4:
-                                return DecenasY("cuarenta", unidad);
-                            case 5:
-                                return DecenasY("cincuenta", unidad);
-                            case 6:
-                                return DecenasY("sesenta", unidad);
-                            case 7:
-                                return DecenasY("setenta", unidad);
-                            case 8:
-                                return DecenasY("ochenta", unidad);
-                            case 9:
-                                return DecenasY("noventa", unidad);
+                    case 2:
+                        switch (unidad) {
                             case 0:
-                                return Unidades(unidad);
+                                return "veinte";
+                            default:
+                                return "veinti" + Unidades(unidad);
+                        }
+                    case 3:
+                        return DecenasY("treinta", unidad);
+                    case 4:
+                        return DecenasY("cuarenta", unidad);
+                    case 5:
+                        return DecenasY("cincuenta", unidad);
+                    case 6:
+                        return DecenasY("sesenta", unidad);
+                    case 7:
+                        return DecenasY("setenta", unidad);
+                    case 8:
+                        return DecenasY("ochenta", unidad);
+                    case 9:
+                        return DecenasY("noventa", unidad);
+                    case 0:
+                        return Unidades(unidad);
                 }
             } //Unidades()
 
