@@ -165,6 +165,7 @@ class ReciboPagoController extends Controller
             $pagado = $request->pagado;
             $terminado = $request->terminado;
             $observacion = $request->observacion;
+            $adjunto = null;
 
             $last_number = DB::table('pagos_ventas')
                 ->select('numero')
@@ -179,6 +180,13 @@ class ReciboPagoController extends Controller
                 $numero = $last_number->numero + 1;
             }
 
+            if ($request->hasFile('archivo')) {
+                $file = $request->file('archivo');
+                $name = time() . $file->getClientOriginalName();
+                $file->move('images/contabilidad/recibos_caja/', $name);
+                $adjunto = $name;
+            }
+
             DB::table('pagos_ventas')->insert([
                 'numero' => $numero,
                 'tipo' => 1,
@@ -188,6 +196,7 @@ class ReciboPagoController extends Controller
                 'valor' => $pagado,
                 'status' => 1,
                 'observacion' => $observacion,
+                'adjunto_pdf' => $adjunto ?? null,
                 'created_by' => auth()->user()->id,
                 'created_at' => date('Y-m-d H:i:s')
             ]);
