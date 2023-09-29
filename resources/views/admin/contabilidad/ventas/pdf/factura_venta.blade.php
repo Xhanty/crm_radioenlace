@@ -384,10 +384,10 @@
                                 style="color: rgb(217, 38, 28, 0.9);" target="_blank">Ver Adjunto</a>
                         @endif
                     </div>
-                    <div class="tm_bottom_invoice tm_accent_border_20">
+                    <div class="tm_bottom_invoice tm_accent_border_20" style="margin-top: 16px">
                         <div class="tm_bottom_invoice_left">
-                            <p class="tm_m0 tm_f11 tm_text_center">
-                                <b>Esta factura de Venta constituye título valor según el artículo 5 de la ley 1231 del
+                            <p class="tm_m0 tm_f11 tm_text_center" style="text-align: justify">
+                                Esta factura de Venta constituye título valor según el artículo 5 de la ley 1231 del
                                     17
                                     de Julio de 2008 - El no pago de esta generará intereses por mora, mensual a la tasa
                                     máxima legal autorizada. En caso de NO PAGO se procederá a reportarse en las
@@ -404,7 +404,8 @@
                                     VR05 VERSIÓN: 01 06/01/2020
                                     FAVOR CONSIGNAR EN LA CUENTA DE AHORROS BANCOLOMBIA 10825335162 A
                                     NOMBRE DE RADIO ENLACE S.A.S.
-                                    Enviar comprobante de pago al correo facturacionelectronica@radioenlacesas.com</b>
+                                    Enviar comprobante de pago al correo facturacionelectronica@radioenlacesas.com
+                                <br>
                                 <br>
                             </p>
                             <p class="tm_m0 tm_f11 tm_text_center"><b>Elaborado por CRM RADIO ENLACE S.A.S. NIT.
