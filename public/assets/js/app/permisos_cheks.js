@@ -147,7 +147,7 @@ $(function () {
 
     $(".check-con-0").on("change", function () {
         let check = $(this).prop("checked");
-        let cantidad = 8;
+        let cantidad = 9;
 
         for (let i = 1; i <= cantidad; i++) {
             if (check) {

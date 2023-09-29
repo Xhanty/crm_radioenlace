@@ -401,6 +401,11 @@ class FacturaVentaController extends Controller
                 }
             }
 
+            $factura->pagos = DB::table('pagos_ventas')
+                ->where('factura_id', $id)
+                ->where('tipo', 1)
+                ->get();
+
             return response()->json(['info' => 1, 'factura' => $factura]);
         } catch (Exception $ex) {
             return $ex;
@@ -504,6 +509,23 @@ class FacturaVentaController extends Controller
             DB::table('factura_venta')
                 ->where('id', $id)
                 ->update(['favorito' => $favorito]);
+
+            return response()->json(['info' => 1]);
+        } catch (Exception $ex) {
+            return $ex;
+            return response()->json(['info' => 0]);
+        }
+    }
+
+    public function visto_bueno(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $visto_bueno = $request->visto_bueno;
+
+            DB::table('factura_venta')
+                ->where('id', $id)
+                ->update(['visto_bueno' => $visto_bueno]);
 
             return response()->json(['info' => 1]);
         } catch (Exception $ex) {

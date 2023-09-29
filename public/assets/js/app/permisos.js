@@ -113,7 +113,7 @@ $(function () {
 
         updatePermisos(permisosCheck);
 
-        console.log(permisosCheck);
+        //console.log(permisosCheck);
     }
 
     function updatePermisos(permisos) {

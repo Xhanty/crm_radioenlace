@@ -203,11 +203,20 @@
                                                     @if ($factura->favorito == 0)
                                                         <i data-id="{{ $factura->id }}"
                                                             class="far fa-star btn_favorite"></i>
-                                                </span>
                                             @else
                                                 <i data-id="{{ $factura->id }}"
-                                                    class="fas fa-star btn_favorite orange"></i></span>
-                                @endif
+                                                    class="fas fa-star btn_favorite orange"></i>
+                                    @endif
+                                    
+                                        @if ($factura->visto_bueno == 0)
+                                                <i data-id="{{ $factura->id }}"
+                                                    class="far fa-check-circle @if (auth()->user()->hasPermissionTo('contabilidad_visto_bueno')) btn_visto_bueno @endif"></i>
+                                        </span>
+                                        @else
+                                            <i data-id="{{ $factura->id }}"
+                                                class="fas fa-check-circle @if (auth()->user()->hasPermissionTo('contabilidad_visto_bueno')) btn_visto_bueno @endif orange"></i></span>
+                                        
+                                    @endif
                                 </span>
                                 </h6>
                                 <div>

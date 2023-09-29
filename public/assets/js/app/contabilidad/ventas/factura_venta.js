@@ -460,6 +460,8 @@ $(document).ready(function () {
                         subtotal_num = subtotal_num.replaceAll('.', '');
                         subtotal_num = parseInt(subtotal_num);
 
+                        let pagos = '';
+
                         let sum_impuestos_1 = 0;
 
                         let impuestos_1_total = '';
@@ -502,6 +504,13 @@ $(document).ready(function () {
                             factura.observaciones = '';
                         }
 
+                        if(factura.pagos) {
+                            pagos += '<label class="main-content-label tx-13">Pagos recibidos</label><br>';
+                            factura.pagos.forEach((item) => {
+                                pagos += '<a href="/recibos_pagos_pdf?token=' + item.id + '" target="_blank">Recibo #' + item.numero + '</a><br>';
+                            });
+                        }
+
                         if (factura.adjunto_pdf) {
                             factura.adjunto_pdf = '<label class="main-content-label tx-13">Adjunto</label><br>' +
                                 '<a href="' + url_general + 'images/contabilidad/facturas_venta/' + factura.adjunto_pdf + '" target="_blank">Visualizar</a>';
@@ -542,6 +551,7 @@ $(document).ready(function () {
                             '<td class="valign-middle" colspan="3" rowspan="' + rowspan + '">' +
                             '<div class="invoice-notes">' +
                             factura.observaciones +
+                            pagos +
                             '<br>' +
                             factura.adjunto_pdf +
                             '</div>' +
@@ -1852,6 +1862,59 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response.info == 1) {
                         toastr.success('Factura agregada a favoritos');
+                    } else {
+                        toastr.error('Ha ocurrido un error');
+                    }
+                },
+                error: function (error) {
+                    toastr.error('Ha ocurrido un error');
+                }
+            });
+        }
+    });
+
+    // VISTO BUENO
+    $(document).on("click", ".btn_visto_bueno", function () {
+        if ($(this).hasClass('far')) {
+            $(this).removeClass('far');
+            $(this).addClass('fas');
+            $(this).addClass('orange');
+
+            $.ajax({
+                url: "visto_bueno_factura_venta",
+                type: "POST",
+                data: {
+                    id: $(this).attr("data-id"),
+                    visto_bueno: 1,
+                },
+                dataType: "JSON",
+                success: function (response) {
+                    if (response.info == 1) {
+                        //toastr.success('Factura agregada a favoritos');
+                    } else {
+                        toastr.error('Ha ocurrido un error');
+                    }
+                },
+                error: function (error) {
+                    toastr.error('Ha ocurrido un error');
+                }
+            });
+        } else {
+            $(this).removeClass('fas');
+            $(this).addClass('far');
+            $(this).removeClass('orange');
+
+            $.ajax({
+                url: "visto_bueno_factura_venta",
+                type: "POST",
+                data: {
+                    id: $(this).attr("data-id"),
+                    visto_bueno: 0,
+                },
+                dataType: "JSON",
+                success: function (response) {
+                    if (response.info == 1) {
+                        //toastr.success('Factura agregada a favoritos');
                     } else {
                         toastr.error('Ha ocurrido un error');
                     }
