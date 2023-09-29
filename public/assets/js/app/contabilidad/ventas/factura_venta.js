@@ -1722,7 +1722,7 @@ $(document).ready(function () {
     // PAGINACIÓN
     function paginacionFacturas() {
         // Define el número de facturas por página
-        var facturasPorPagina = 10;
+        var facturasPorPagina = 15;
 
         // Obtén todas las facturas
         var $todasFacturas = $('.main-invoice-list').children('.media');

@@ -359,7 +359,7 @@
                                 </div>
                                 <div class="col-lg-3">
                                     <label for="">Consecutivo</label>
-                                    <input id="consecutivo_add" class="form-control" value="{{ $num_factura }}"
+                                    <input id="consecutivo_add" class="form-control"
                                         placeholder="Consecutivo" type="text">
                                 </div>
                             </div>
