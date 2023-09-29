@@ -80,9 +80,9 @@ class FacturaVentaController extends Controller
                 ->join('cliente', 'cliente.id', '=', 'factura_venta.cliente_id')
                 //->whereMonth('factura_venta.fecha_elaboracion', '=', date('m'))
                 ->whereYear('factura_venta.fecha_elaboracion', '=', date('Y'))
-                ->orderByDesc('factura_venta.favorito') // ordenar los favoritos primero
-                ->orderBy('factura_venta.fecha_elaboracion', 'desc') // luego ordenar por fecha
-                ->orderBy('factura_venta.id', 'desc')
+                //->orderByDesc('factura_venta.favorito') // ordenar los favoritos primero
+                //->orderBy('factura_venta.fecha_elaboracion', 'desc') // luego ordenar por fecha
+                ->orderBy('factura_venta.numero', 'desc')
                 ->get();
 
             $view_alert = 0;
