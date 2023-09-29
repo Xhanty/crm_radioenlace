@@ -89,14 +89,14 @@ $(document).ready(function () {
                         data.forma_pago +
                         '</td>' +
                         '<td style="text-align: right;">' +
-                        valor_1.toLocaleString('es-ES', {
-                            minimumFractionDigits: 2
+                        valor_1.toLocaleString('de-DE', {
+                            minimumFractionDigits: 2, maximumFractionDigits: 2
                         }) +
                         '<br>' +
                         '<b>-' + data.valor + '</b>' +
                         '<br>' +
-                        '<b>Total COP:</b>&nbsp&nbsp&nbsp&nbsp&nbsp' + total_final.toLocaleString('es-ES', {
-                            minimumFractionDigits: 2
+                        '<b>Total COP:</b>&nbsp&nbsp&nbsp&nbsp&nbsp' + total_final.toLocaleString('de-DE', {
+                            minimumFractionDigits: 2, maximumFractionDigits: 2
                         }) + '' +
                         '</td>' +
                         '</tr>'

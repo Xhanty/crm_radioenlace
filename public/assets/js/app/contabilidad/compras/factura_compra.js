@@ -512,7 +512,7 @@ $(document).ready(function () {
 
                             for (var i = 0; i < impuestos_1.length; i++) {
                                 let valor = parseInt(impuestos_1[i][1]);
-                                valor = valor.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                                valor = valor.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
                                 impuestos_1_total = '<tr>' +
                                     '<td class="tx-right" style="font-weight: 700; color: #7987a1;">' + impuestos_1[i][0] + '</td>' +
@@ -526,7 +526,7 @@ $(document).ready(function () {
 
                             for (var i = 0; i < impuestos_2.length; i++) {
                                 let valor = parseInt(impuestos_2[i][1]);
-                                valor = valor.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                                valor = valor.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
                                 impuestos_2_total = '<tr>' +
                                     '<td class="tx-right" style="font-weight: 700; color: #7987a1;">' + impuestos_2[i][0] + '</td>' +
@@ -946,9 +946,9 @@ $(document).ready(function () {
 
         subtotal = bruto - descuento;
 
-        $("#total_bruto_add").html((bruto).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
-        $("#total_descuentos_add").html((descuento).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
-        $("#total_subtotal_add").html((subtotal).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        $("#total_bruto_add").html((bruto).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        $("#total_descuentos_add").html((descuento).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        $("#total_subtotal_add").html((subtotal).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
 
         if (impuesto_cargo.length > 0) {
             $("#impuestos_1_add").html('');
@@ -958,7 +958,7 @@ $(document).ready(function () {
                     '<p class="font-20">' + impuesto_cargo[i][0] + ':</p>' +
                     '</div>' +
                     '<div class="col-4 text-end">' +
-                    '<p class="font-20">' + (impuesto_cargo[i][1]).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</p>' +
+                    '<p class="font-20">' + (impuesto_cargo[i][1]).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</p>' +
                     '</div>' +
                     '</div>');
             }
@@ -972,13 +972,13 @@ $(document).ready(function () {
                     '<p class="font-20">' + impuesto_retencion[i][0] + ':</p>' +
                     '</div>' +
                     '<div class="col-4 text-end">' +
-                    '<p class="font-20">' + (impuesto_retencion[i][1]).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</p>' +
+                    '<p class="font-20">' + (impuesto_retencion[i][1]).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</p>' +
                     '</div>' +
                     '</div>');
             }
         }
 
-        $("#total_neto_add").html((total).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        $("#total_neto_add").html((total).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
         $(".formas_pago_add").trigger("change");
         impuestos_1_general = impuesto_cargo;
         impuestos_2_general = impuesto_retencion;
@@ -998,8 +998,8 @@ $(document).ready(function () {
         });
 
         if (count == 1) {
-            $(".forma_pago_input_add").val((total).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
-            $("#total_formas_pago_add").html((total).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+            $(".forma_pago_input_add").val((total).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+            $("#total_formas_pago_add").html((total).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
         }
     });
 
@@ -1511,9 +1511,9 @@ $(document).ready(function () {
 
         subtotal = bruto - descuento;
 
-        $("#total_bruto_edit").html((bruto).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
-        $("#total_descuentos_edit").html((descuento).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
-        $("#total_subtotal_edit").html((subtotal).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        $("#total_bruto_edit").html((bruto).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        $("#total_descuentos_edit").html((descuento).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        $("#total_subtotal_edit").html((subtotal).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
 
         $("#impuestos_1_edit").html('');
         if (impuesto_cargo.length > 0) {
@@ -1524,7 +1524,7 @@ $(document).ready(function () {
                         '<p class="font-20">' + impuesto_cargo[i][0] + ':</p>' +
                         '</div>' +
                         '<div class="col-4 text-end">' +
-                        '<p class="font-20">' + (impuesto_cargo[i][1]).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</p>' +
+                        '<p class="font-20">' + (impuesto_cargo[i][1]).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</p>' +
                         '</div>' +
                         '</div>');
                 }
@@ -1540,14 +1540,14 @@ $(document).ready(function () {
                         '<p class="font-20">' + impuesto_retencion[i][0] + ':</p>' +
                         '</div>' +
                         '<div class="col-4 text-end">' +
-                        '<p class="font-20">' + (impuesto_retencion[i][1]).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</p>' +
+                        '<p class="font-20">' + (impuesto_retencion[i][1]).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</p>' +
                         '</div>' +
                         '</div>');
                 }
             }
         }
 
-        $("#total_neto_edit").html((total).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        $("#total_neto_edit").html((total).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
         $(".formas_pago_edit").trigger("change");
         impuestos_1_general_edit = impuesto_cargo;
         impuestos_2_general_edit = impuesto_retencion;
@@ -1567,8 +1567,8 @@ $(document).ready(function () {
         });
 
         if (count == 1) {
-            $(".forma_pago_input_edit").val((total).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
-            $("#total_formas_pago_edit").html((total).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+            $(".forma_pago_input_edit").val((total).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+            $("#total_formas_pago_edit").html((total).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
         }
     });
 
@@ -2383,9 +2383,9 @@ $(document).ready(function () {
                         proveedor: proveedor,
                         factura_proveedor: factura_proveedor,
                         consecutivo_proveedor: consecutivo_proveedor,
-                        descuentos: descuentos.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
-                        subtotal: subtotal.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
-                        total: total.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+                        descuentos: descuentos.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+                        subtotal: subtotal.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+                        total: total.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
                         observaciones: observaciones,
                         productos: productos
                     });
@@ -2430,8 +2430,8 @@ $(document).ready(function () {
                     let descripcion = producto.Description.trim();
                     let bodega = null;
                     let cantidad = producto.Quantity;
-                    let valor_unitario = producto.UnitValue.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                    let descuento = producto.DiscountValue.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    let valor_unitario = producto.UnitValue.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    let descuento = producto.DiscountValue.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                     let total = producto.Value;
                     let impuesto_retencion = 0;
                     let impuesto_cargo = 0;
@@ -2463,7 +2463,7 @@ $(document).ready(function () {
                         impuestos_1.push(send);
                     }
 
-                    total = total.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    total = total.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
                     productos.push({
                         tipo: tipo,
