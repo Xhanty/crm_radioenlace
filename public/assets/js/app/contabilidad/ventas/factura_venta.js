@@ -422,7 +422,7 @@ $(document).ready(function () {
                             let detalle = item.detalle;
                             let serial = item.serial_producto;
 
-                            if(serial == null) {
+                            if(serial == null || serial == '') {
                                 serial = "";
                             } else {
                                 serial = "S/N: " + serial.toUpperCase();
@@ -455,15 +455,23 @@ $(document).ready(function () {
                             count++;
                         });
 
+                        let subtotal_num = subtotal.split(',');
+                        subtotal_num = subtotal_num[0];
+                        subtotal_num = subtotal_num.replaceAll('.', '');
+                        subtotal_num = parseInt(subtotal_num);
+
+                        let sum_impuestos_1 = 0;
+
                         let impuestos_1_total = '';
                         let impuestos_2_total = '';
-                        let rowspan = 4;
+                        let rowspan = 7;
 
                         if (impuestos_1) {
                             rowspan = impuestos_1.length > 0 ? rowspan + 1 : rowspan;
 
                             for (var i = 0; i < impuestos_1.length; i++) {
                                 let valor = parseInt(impuestos_1[i][1]);
+                                sum_impuestos_1 += valor;
                                 valor = valor.toLocaleString('es-ES', { minimumFractionDigits: 2 });
 
                                 impuestos_1_total = '<tr>' +
@@ -501,6 +509,34 @@ $(document).ready(function () {
                             factura.adjunto_pdf = '';
                         }
 
+                        let retefuente = '';
+                        let reteiva = '';
+                        let reteica = '';
+
+                        if(factura.valor_retefuente != null) {
+                            let valor = (subtotal_num * (factura.valor_retefuente / 100)).toLocaleString('es-ES', { minimumFractionDigits: 2 });
+                            retefuente = '<tr>' +
+                                '<td class="tx-right" style="font-weight: 700; color: #7987a1;">Rte Fte</td>' +
+                                '<td class="tx-right" colspan="2">' + valor + '</td>' +
+                                '</tr>';
+                        }
+
+                        if(factura.valor_reteiva != null) {
+                            let valor = (sum_impuestos_1 * (factura.valor_reteiva / 100)).toLocaleString('es-ES', { minimumFractionDigits: 2 });
+                            reteiva = '<tr>' +
+                                '<td class="tx-right" style="font-weight: 700; color: #7987a1;">Rte Iva</td>' +
+                                '<td class="tx-right" colspan="2">' + valor  + '</td>' +
+                                '</tr>';
+                        }
+
+                        if(factura.valor_reteica != null) {
+                            let valor = ((subtotal_num *  factura.valor_reteica) / 1000).toLocaleString('es-ES', { minimumFractionDigits: 2 });
+                            reteica = '<tr>' +
+                                '<td class="tx-right" style="font-weight: 700; color: #7987a1;">Rte Ica</td>' +
+                                '<td class="tx-right" colspan="2">' + valor + '</td>' +
+                                '</tr>';
+                        }
+
                         $("#productos_view").append(
                             '<tr>' +
                             '<td class="valign-middle" colspan="3" rowspan="' + rowspan + '">' +
@@ -526,6 +562,9 @@ $(document).ready(function () {
                             '</tr>' +
                             impuestos_1_total +
                             impuestos_2_total +
+                            retefuente +
+                            reteiva +
+                            reteica +
                             '<tr>' +
                             '<td class="tx-right tx-uppercase tx-bold tx-inverse">Total Neto</td>' +
                             '<td class="tx-right" colspan="2">' +

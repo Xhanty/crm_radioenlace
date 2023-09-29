@@ -238,13 +238,13 @@
                                 <p class="tm_mb2"><b class="tm_primary_color">Valor en Letras:</b></p>
                                 <p class="tm_m0" id="valor_txt">Cargando...</p>
                                 <br>
-                                <!--<p class="tm_mb2"><b class="tm_primary_color">Condiciones de Pago:</b></p>
-                                <p class="tm_m0">Otras cuentas por pagar - Cuota No. 001 vence el 20/04/2023</p>-->
+                                <p class="tm_mb2"><b class="tm_primary_color">Condiciones de Pago:</b></p>
+                                <p class="tm_m0">Otras cuentas por pagar - Cuota No. 001 vence el {{ date('d/m/Y', strtotime($factura->fecha_elaboracion . ' +30 days')) }}</p>
                                 <div class="tm_text_left">
-                                    <img src="{{ asset('RadioEnlaceQr.png') }}" width="120px">
+                                    <!--<img src="{{ asset('RadioEnlaceQr.png') }}" width="120px">
                                     <br>
                                     <b style="font-size: 13px">CUFE:</b><span
-                                        style="font-size: 12px">dbfecbbd3491e5214fb4f52f75f3ac56fa1e96643b64e85600a4d939558953d9c27b39d646a5e8e020e38ac95a22549b</span>
+                                        style="font-size: 12px">dbfecbbd3491e5214fb4f52f75f3ac56fa1e96643b64e85600a4d939558953d9c27b39d646a5e8e020e38ac95a22549b</span>-->
                                 </div>
                             </div>
                             <div class="tm_right_footer">
@@ -274,11 +274,24 @@
                                         @php
                                             $impuestos_1 = $factura->impuestos_1 == 'null' ? [] : $factura->impuestos_1;
                                             $impuestos_2 = $factura->impuestos_2 == 'null' ? [] : $factura->impuestos_2;
+
+                                            $subtotal = $factura->subtotal;
+                                            // Eliminar los dos ceros del final
+                                            $subtotal = rtrim($subtotal, '0');
+
+                                            // Reemplazar comas y puntos
+                                            $subtotal = str_replace(',', '', $subtotal);
+                                            $subtotal = str_replace('.', '', $subtotal);
+
+                                            // Convertir a entero
+                                            $subtotal_num = (int)$subtotal;
+                                            $sum_impuestos_1 = 0;
                                             
                                             if ($impuestos_1) {
                                                 if (json_decode($impuestos_1)) {
                                                     $impuestos = json_decode($impuestos_1);
                                                     foreach ($impuestos as $impuesto) {
+                                                        $sum_impuestos_1 += intval($impuesto[1]);
                                                         $valor_impuesto = number_format(intval($impuesto[1]), 2, ',', '.');
                                                         echo '<tr>
                                                             <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">' .
@@ -310,7 +323,42 @@
                                             }
                                         @endphp
 
-
+                                        @if($factura->valor_retefuente)
+                                            @php
+                                                $valor_rtefte = ($subtotal_num * ($factura->valor_retefuente / 100));
+                                            @endphp
+                                            <tr>
+                                                <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">Rte Fte
+                                                </td>
+                                                <td
+                                                    class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
+                                                    {{ number_format(intval($valor_rtefte), 2, ',', '.') }}</td>
+                                            </tr>
+                                        @endif
+                                        @if($factura->valor_reteiva)
+                                            @php
+                                                $valor_rteiva = ($sum_impuestos_1 * ($factura->valor_reteiva / 100));
+                                            @endphp
+                                            <tr>
+                                                <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">Rte Iva
+                                                </td>
+                                                <td
+                                                    class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
+                                                    {{ number_format(intval($valor_rteiva), 2, ',', '.') }}</td>
+                                            </tr>
+                                        @endif
+                                        @if($factura->valor_reteica)
+                                            @php
+                                                $valor_rteica = (($subtotal_num * $factura->valor_reteica) / 1000);
+                                            @endphp
+                                            <tr>
+                                                <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">Rte Ica
+                                                </td>
+                                                <td
+                                                    class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
+                                                    {{ number_format(intval($valor_rteica), 2, ',', '.')}}</td>
+                                            </tr>
+                                        @endif
                                         <tr class="tm_accent_border_20 tm_border">
                                             <td
                                                 class="tm_width_3 tm_bold tm_f16 tm_border_top_0 tm_accent_color tm_accent_bg_10">
@@ -325,8 +373,8 @@
                             </div>
                         </div>
                         @if ($factura->observaciones != null)
-                            <p class="tm_mb2" style="margin-top: -18px"><b class="tm_primary_color">Observaciones:</b></p>
-                            <p class="tm_m0">{{ $factura->observaciones }}</p>
+                            <p class="tm_mb2" style="margin-top: -44px"><b class="tm_primary_color">Observaciones:</b></p>
+                            <p class="tm_m0" style="font-size: 13px">{{ $factura->observaciones }}</p>
                         @endif
 
                         @if ($factura->adjunto_pdf != null)
