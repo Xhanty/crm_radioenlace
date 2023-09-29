@@ -3496,6 +3496,7 @@ $(document).ready(function () {
         let numero = $("#num_resoluc_venta_add").val();
         let fecha_inicio = $("#date_ini_resoluc_venta_add").val();
         let fecha = $("#date_resoluc_venta_add").val();
+        let descripcion = $("#text_resoluc_venta_add").val();
 
         if(prefijo == "") {
             toastr.error("Ingrese el prefijo de la resolución");
@@ -3526,6 +3527,7 @@ $(document).ready(function () {
                     numero: numero,
                     fecha_inicio: fecha_inicio,
                     fecha: fecha,
+                    descripcion: descripcion,
                 },
                 success: function (response) {
                     if (response.info == 1) {

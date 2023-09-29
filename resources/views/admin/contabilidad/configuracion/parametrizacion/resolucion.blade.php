@@ -37,6 +37,13 @@
                     </div>
                 </div>
                 <br>
+                <div class="row row-sm">
+                    <div class="col-lg">
+                        <label for="">Texto al final de la factura</label>
+                        <textarea class="form-control" placeholder="Texto al final de la factura" id="text_resoluc_venta_add" cols="30" rows="10">{{ $text_resoluc_fv }}</textarea>
+                    </div>
+                </div>
+                <br>
                 <div class="d-flex" style="justify-content: center;">
                     <button class="btn btn-primary mg-b-10" id="btnAddResolucionVenta">Adicionar Resolución</button>
                 </div>

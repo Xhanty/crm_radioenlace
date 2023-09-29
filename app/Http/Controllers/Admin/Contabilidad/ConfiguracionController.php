@@ -82,6 +82,8 @@ class ConfiguracionController extends Controller
             $fechaini_resoluc_fv = null;
             $fecha_resoluc_fv = null;
 
+            $text_resoluc_fv = '';
+
             $valid_resoluc = DB::table('resolucion_dian')->where('documento', 1)->first();
 
             if ($valid_resoluc) {
@@ -92,6 +94,8 @@ class ConfiguracionController extends Controller
 
                 $fechaini_resoluc_fv = $valid_resoluc->fecha_inicio;
                 $fecha_resoluc_fv = $valid_resoluc->fecha;
+
+                $text_resoluc_fv = $valid_resoluc->descripcion;
             }
 
             return view('admin.contabilidad.configuracion', compact(
@@ -113,7 +117,8 @@ class ConfiguracionController extends Controller
                 'numini_resoluc_fv',
                 'num_resoluc_fv',
                 'fechaini_resoluc_fv',
-                'fecha_resoluc_fv'
+                'fecha_resoluc_fv',
+                'text_resoluc_fv'
             ));
         } catch (Exception $ex) {
             return $ex->getMessage();
@@ -1380,6 +1385,7 @@ class ConfiguracionController extends Controller
             $numero = $request->numero;
             $fecha_inicio = $request->fecha_inicio;
             $fecha = $request->fecha;
+            $descripcion = $request->descripcion;
 
             if ($tipo == 'fv') {
                 $valid = DB::table('resolucion_dian')->where('documento', 1)->first();
@@ -1391,6 +1397,7 @@ class ConfiguracionController extends Controller
                         'numero' => $numero,
                         'fecha_inicio' => $fecha_inicio,
                         'fecha' => $fecha,
+                        'descripcion' => $descripcion,
                         'created_by' => auth()->user()->id,
                         'created_at' => date('Y-m-d H:i:s'),
                     ]);
@@ -1402,6 +1409,7 @@ class ConfiguracionController extends Controller
                         'numero' => $numero,
                         'fecha_inicio' => $fecha_inicio,
                         'fecha' => $fecha,
+                        'descripcion' => $descripcion,
                         'created_by' => auth()->user()->id,
                         'created_at' => date('Y-m-d H:i:s'),
                     ]);
