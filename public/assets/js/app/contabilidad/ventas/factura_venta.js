@@ -474,7 +474,7 @@ $(document).ready(function () {
                             for (var i = 0; i < impuestos_1.length; i++) {
                                 let valor = parseInt(impuestos_1[i][1]);
                                 sum_impuestos_1 += valor;
-                                valor = valor.toLocaleString('es-ES', { minimumFractionDigits: 2 });
+                                valor = valor.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
                                 impuestos_1_total = '<tr>' +
                                     '<td class="tx-right" style="font-weight: 700; color: #7987a1;">' + impuestos_1[i][0] + '</td>' +
@@ -488,7 +488,7 @@ $(document).ready(function () {
 
                             for (var i = 0; i < impuestos_2.length; i++) {
                                 let valor = parseInt(impuestos_2[i][1]);
-                                valor = valor.toLocaleString('es-ES', { minimumFractionDigits: 2 });
+                                valor = valor.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
                                 impuestos_2_total = '<tr>' +
                                     '<td class="tx-right" style="font-weight: 700; color: #7987a1;">' + impuestos_2[i][0] + '</td>' +
@@ -523,7 +523,7 @@ $(document).ready(function () {
                         let reteica = '';
 
                         if(factura.valor_retefuente != null) {
-                            let valor = (subtotal_num * (factura.valor_retefuente / 100)).toLocaleString('es-ES', { minimumFractionDigits: 2 });
+                            let valor = (subtotal_num * (factura.valor_retefuente / 100)).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                             retefuente = '<tr>' +
                                 '<td class="tx-right" style="font-weight: 700; color: #7987a1;">Rte Fte</td>' +
                                 '<td class="tx-right" colspan="2">' + valor + '</td>' +
@@ -531,7 +531,7 @@ $(document).ready(function () {
                         }
 
                         if(factura.valor_reteiva != null) {
-                            let valor = (sum_impuestos_1 * (factura.valor_reteiva / 100)).toLocaleString('es-ES', { minimumFractionDigits: 2 });
+                            let valor = (sum_impuestos_1 * (factura.valor_reteiva / 100)).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                             reteiva = '<tr>' +
                                 '<td class="tx-right" style="font-weight: 700; color: #7987a1;">Rte Iva</td>' +
                                 '<td class="tx-right" colspan="2">' + valor  + '</td>' +
@@ -539,7 +539,7 @@ $(document).ready(function () {
                         }
 
                         if(factura.valor_reteica != null) {
-                            let valor = ((subtotal_num *  factura.valor_reteica) / 1000).toLocaleString('es-ES', { minimumFractionDigits: 2 });
+                            let valor = ((subtotal_num *  factura.valor_reteica) / 1000).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                             reteica = '<tr>' +
                                 '<td class="tx-right" style="font-weight: 700; color: #7987a1;">Rte Ica</td>' +
                                 '<td class="tx-right" colspan="2">' + valor + '</td>' +
@@ -871,9 +871,9 @@ $(document).ready(function () {
 
         subtotal = bruto - descuento;
 
-        $("#total_bruto_add").html((bruto).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
-        $("#total_descuentos_add").html((descuento).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
-        $("#total_subtotal_add").html((subtotal).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+        $("#total_bruto_add").html((bruto).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        $("#total_descuentos_add").html((descuento).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        $("#total_subtotal_add").html((subtotal).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
 
         $("#impuestos_1_add").html('');
         for (let i = 0; i < impuesto_cargo.length; i++) {
@@ -882,7 +882,7 @@ $(document).ready(function () {
                 '<p class="font-20">' + impuesto_cargo[i][0] + ':</p>' +
                 '</div>' +
                 '<div class="col-4 text-end">' +
-                '<p class="font-20">' + (impuesto_cargo[i][1]).toLocaleString('es-ES', { minimumFractionDigits: 2 }) + '</p>' +
+                '<p class="font-20">' + (impuesto_cargo[i][1]).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</p>' +
                 '</div>' +
                 '</div>');
         }
@@ -894,12 +894,12 @@ $(document).ready(function () {
                 '<p class="font-20">' + impuesto_retencion[i][0] + ':</p>' +
                 '</div>' +
                 '<div class="col-4 text-end">' +
-                '<p class="font-20">' + (impuesto_retencion[i][1]).toLocaleString('es-ES', { minimumFractionDigits: 2 }) + '</p>' +
+                '<p class="font-20">' + (impuesto_retencion[i][1]).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</p>' +
                 '</div>' +
                 '</div>');
         }
-
-        $("#total_neto_add").html((total).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+        
+        $("#total_neto_add").html((total).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
         $(".formas_pago_add").trigger("change");
         impuestos_1_general = impuesto_cargo;
         impuestos_2_general = impuesto_retencion;
@@ -923,8 +923,8 @@ $(document).ready(function () {
         });
 
         if (count == 1) {
-            $(".forma_pago_input_add").val((total).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
-            $("#total_formas_pago_add").html((total).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+            $(".forma_pago_input_add").val((total).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+            $("#total_formas_pago_add").html((total).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
         }
     });
 
@@ -1331,9 +1331,9 @@ $(document).ready(function () {
 
         subtotal = bruto - descuento;
 
-        $("#total_bruto_edit").html((bruto).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
-        $("#total_descuentos_edit").html((descuento).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
-        $("#total_subtotal_edit").html((subtotal).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+        $("#total_bruto_edit").html((bruto).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        $("#total_descuentos_edit").html((descuento).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        $("#total_subtotal_edit").html((subtotal).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
 
         $("#impuestos_1_edit").html('');
         for (let i = 0; i < impuesto_cargo.length; i++) {
@@ -1342,7 +1342,7 @@ $(document).ready(function () {
                 '<p class="font-20">' + impuesto_cargo[i][0] + ':</p>' +
                 '</div>' +
                 '<div class="col-4 text-end">' +
-                '<p class="font-20">' + (impuesto_cargo[i][1]).toLocaleString('es-ES', { minimumFractionDigits: 2 }) + '</p>' +
+                '<p class="font-20">' + (impuesto_cargo[i][1]).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</p>' +
                 '</div>' +
                 '</div>');
         }
@@ -1354,12 +1354,12 @@ $(document).ready(function () {
                 '<p class="font-20">' + impuesto_retencion[i][0] + ':</p>' +
                 '</div>' +
                 '<div class="col-4 text-end">' +
-                '<p class="font-20">' + (impuesto_retencion[i][1]).toLocaleString('es-ES', { minimumFractionDigits: 2 }) + '</p>' +
+                '<p class="font-20">' + (impuesto_retencion[i][1]).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</p>' +
                 '</div>' +
                 '</div>');
         }
 
-        $("#total_neto_edit").html((total).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+        $("#total_neto_edit").html((total).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
         $(".formas_pago_edit").trigger("change");
         impuestos_1_general_edit = impuesto_cargo;
         impuestos_2_general_edit = impuesto_retencion;
@@ -1383,8 +1383,8 @@ $(document).ready(function () {
         });
 
         if (count == 1) {
-            $(".forma_pago_input_edit").val((total).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
-            $("#total_formas_pago_edit").html((total).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+            $(".forma_pago_input_edit").val((total).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+            $("#total_formas_pago_edit").html((total).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
         }
     });
 
@@ -1977,8 +1977,8 @@ $(document).ready(function () {
         // Valor
         let valor = (subtotal * (retefte / 100));
 
-        $("#total_retefte_add").html((valor).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
-        $("#total_neto_add").html((subtotal - valor - reteiva - reteica + iva).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+        $("#total_retefte_add").html((valor).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        $("#total_neto_add").html((subtotal - valor - reteiva - reteica + iva).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     });
 
     $("#reteiva_add").on("change", function () {
@@ -2013,8 +2013,8 @@ $(document).ready(function () {
         // Valor
         let valor = (iva * (reteiva / 100));
 
-        $("#total_reteiva_add").html((valor).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
-        $("#total_neto_add").html((subtotal - valor - retefte - reteica + iva).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+        $("#total_reteiva_add").html((valor).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        $("#total_neto_add").html((subtotal - valor - retefte - reteica + iva).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     });
 
     $("#reteica_add").on("change", function () {
@@ -2049,8 +2049,8 @@ $(document).ready(function () {
         // Valor
         let valor = ((subtotal * reteica) / 1000);
 
-        $("#total_reteica_add").html((valor).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
-        $("#total_neto_add").html((subtotal - valor - reteiva - retefte + iva).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+        $("#total_reteica_add").html((valor).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        $("#total_neto_add").html((subtotal - valor - reteiva - retefte + iva).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     });
 
     // EDIT
@@ -2086,8 +2086,8 @@ $(document).ready(function () {
         // Valor
         let valor = (subtotal * (retefte / 100));
 
-        $("#total_retefte_edit").html((valor).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
-        $("#total_neto_edit").html((subtotal - valor - reteiva - reteica + iva).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+        $("#total_retefte_edit").html((valor).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        $("#total_neto_edit").html((subtotal - valor - reteiva - reteica + iva).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     });
 
     $("#reteiva_edit").on("change", function () {
@@ -2122,8 +2122,8 @@ $(document).ready(function () {
         // Valor
         let valor = (iva * (reteiva / 100));
 
-        $("#total_reteiva_edit").html((valor).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
-        $("#total_neto_edit").html((subtotal - valor - retefte - reteica + iva).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+        $("#total_reteiva_edit").html((valor).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        $("#total_neto_edit").html((subtotal - valor - retefte - reteica + iva).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     });
 
     $("#reteica_edit").on("change", function () {
@@ -2158,7 +2158,7 @@ $(document).ready(function () {
         // Valor
         let valor = ((subtotal * reteica) / 1000);
 
-        $("#total_reteica_edit").html((valor).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
-        $("#total_neto_edit").html((subtotal - valor - reteiva - retefte + iva).toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+        $("#total_reteica_edit").html((valor).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        $("#total_neto_edit").html((subtotal - valor - reteiva - retefte + iva).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     });
 });

@@ -70,7 +70,7 @@ $(document).ready(function () {
             formData.append("transaccion", transaccion);
             formData.append("forma_pago", forma_pago);
             formData.append("total", total);
-            formData.append("pagado", pagado.toLocaleString('es-ES', { minimumFractionDigits: 2 }));
+            formData.append("pagado", pagado.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
             formData.append("terminado", terminado);
             formData.append("observacion", observacion);
             formData.append("archivo", $("#factura_add")[0].files[0]);
