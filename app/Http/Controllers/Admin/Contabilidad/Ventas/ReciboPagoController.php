@@ -12,21 +12,54 @@ class ReciboPagoController extends Controller
     public function egresos()
     {
         try {
-            $egresos = DB::table('pagos_ventas')
+            $last_number = DB::table('pagos_ventas')
+                ->select('numero')
+                ->where('tipo', 1)
+                ->orderBy('numero', 'desc')
+                ->first();
+
+            if (!$last_number) {
+                $num_egreso = 1;
+            } else {
+                $num_egreso = $last_number->numero + 1;
+            }
+
+            $formas_pago = DB::table('configuracion_puc')
+                ->select('id', 'code', 'nombre')
+                ->where('status', 1)
+                ->where('forma_pago', 1)
+                ->whereRaw('LENGTH(code) = 8')
+                ->get();
+
+            $egresos_simples = DB::table('pagos_ventas')
                 ->select('pagos_ventas.*', 'cliente.razon_social as cliente', 'cliente.nit', 'cliente.codigo_verificacion', 'cliente.ciudad', 'cliente.telefono_fijo')
                 ->join('factura_venta', 'factura_venta.id', '=', 'pagos_ventas.factura_id')
                 ->join('cliente', 'cliente.id', '=', 'factura_venta.cliente_id')
                 ->where('pagos_ventas.tipo', 1)
+                ->where('pagos_ventas.status', '!=', 3)
                 ->whereYear('pagos_ventas.fecha_elaboracion', '=', date('Y'))
                 ->orderBy('pagos_ventas.numero', 'desc')
                 ->get();
+
+            $egresos_grupales = DB::table('pagos_ventas')
+                ->select('pagos_ventas.*', 'cliente.razon_social as cliente', 'cliente.nit', 'cliente.codigo_verificacion', 'cliente.ciudad', 'cliente.telefono_fijo')
+                ->join('cliente', 'cliente.id', '=', 'pagos_ventas.cliente_id')
+                ->where('pagos_ventas.tipo', 1)
+                ->whereNull('pagos_ventas.factura_id')
+                ->whereYear('pagos_ventas.fecha_elaboracion', '=', date('Y'))
+                ->orderBy('pagos_ventas.numero', 'desc')
+                ->get();
+
+            //Ordenar los egresos por numero
+
+            $egresos = $egresos_simples->merge($egresos_grupales)->sortByDesc('numero');
 
             $clientes = DB::table('cliente')
                 ->select('id', 'razon_social', 'nit')
                 ->where('estado', 1)
                 ->get();
 
-            return view('admin.contabilidad.ventas.egresos', compact('egresos', 'clientes'));
+            return view('admin.contabilidad.ventas.egresos', compact('egresos', 'clientes', 'num_egreso', 'formas_pago'));
         } catch (Exception $ex) {
             return $ex->getMessage();
             return view('errors.500');
@@ -61,7 +94,7 @@ class ReciboPagoController extends Controller
                 ->where('tipo', 1)
                 ->orderBy('numero', 'desc')
                 ->first();
-            
+
             if (!$last_number) {
                 $num_egreso = 1;
             } else {
@@ -105,17 +138,17 @@ class ReciboPagoController extends Controller
             $id = $request->id;
             $cuota = 0;
             $data = DB::table('pagos_ventas')
-            ->select(
-                'pagos_ventas.*',
-                'configuracion_puc.nombre as forma_pago',
-                'cliente.razon_social as cliente',
-                'cliente.nit',
-                'cliente.codigo_verificacion',
-                'cliente.ciudad',
-                'cliente.telefono_fijo',
-                'factura_venta.valor_total as valor_factura',
-                'factura_venta.numero as numero_factura',
-            )
+                ->select(
+                    'pagos_ventas.*',
+                    'configuracion_puc.nombre as forma_pago',
+                    'cliente.razon_social as cliente',
+                    'cliente.nit',
+                    'cliente.codigo_verificacion',
+                    'cliente.ciudad',
+                    'cliente.telefono_fijo',
+                    'factura_venta.valor_total as valor_factura',
+                    'factura_venta.numero as numero_factura',
+                )
                 ->join('configuracion_puc', 'configuracion_puc.id', '=', 'pagos_ventas.forma_pago')
                 ->join('factura_venta', 'factura_venta.id', '=', 'pagos_ventas.factura_id')
                 ->join('cliente', 'cliente.id', '=', 'factura_venta.cliente_id')
@@ -127,13 +160,13 @@ class ReciboPagoController extends Controller
             }
 
             $cuotas = DB::table('pagos_ventas')
-            ->where('factura_id', $data->factura_id)
+                ->where('factura_id', $data->factura_id)
                 ->where('tipo', 1)
                 ->where('status', 1)
                 ->get();
 
             $lleva = DB::table('pagos_ventas')
-            ->where('factura_id', $data->factura_id)
+                ->where('factura_id', $data->factura_id)
                 ->where('id', '<', $id)
                 ->where('tipo', 1)
                 ->where('status', 1)
@@ -146,6 +179,49 @@ class ReciboPagoController extends Controller
             }
 
             return response()->json(['data' => $data, 'info' => 1, 'cuota' => $cuota, 'cuotas' => $lleva]);
+        } catch (Exception $ex) {
+            return response()->json(['error' => $ex->getMessage(), 'info' => 0]);
+        }
+    }
+
+    public function info_grupales(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $data = DB::table('pagos_ventas')
+                ->select(
+                    'pagos_ventas.*',
+                    'configuracion_puc.nombre as forma_pago',
+                    'cliente.razon_social as cliente',
+                    'cliente.nit',
+                    'cliente.codigo_verificacion',
+                    'cliente.ciudad',
+                    'cliente.telefono_fijo',
+                )
+                ->join('configuracion_puc', 'configuracion_puc.id', '=', 'pagos_ventas.forma_pago')
+                ->join('cliente', 'cliente.id', '=', 'pagos_ventas.cliente_id')
+                ->where('pagos_ventas.id', $id)
+                ->first();
+
+            //Facturas
+            $js_facturas = json_decode($data->grupo_facturas);
+            foreach ($js_facturas as $key => $value) {
+                $factura = DB::table('factura_venta')
+                    ->select('factura_venta.*', 'cliente.razon_social', 'cliente.nit', 'cliente.codigo_verificacion', 'cliente.ciudad', 'cliente.telefono_fijo')
+                    ->join('cliente', 'cliente.id', '=', 'factura_venta.cliente_id')
+                    ->where('factura_venta.id', $value->id)
+                    ->first();
+
+                $js_facturas[$key]->factura = $factura;
+            }
+
+            $data->facturas = $js_facturas;
+
+            if (!$data) {
+                return response()->json(['error' => 'No se encontraron datos', 'info' => 0]);
+            }
+
+            return response()->json(['data' => $data, 'info' => 1]);
         } catch (Exception $ex) {
             return response()->json(['error' => $ex->getMessage(), 'info' => 0]);
         }
@@ -227,25 +303,59 @@ class ReciboPagoController extends Controller
     {
         try {
             $id = $request->get('token');
+            $grupal = $request->get('grupal');
 
             if (!$id) {
                 return view('errors.500');
             }
 
+            if ($grupal == 1) {
+                $data = DB::table('pagos_ventas')
+                    ->select(
+                        'pagos_ventas.*',
+                        'configuracion_puc.nombre as forma_pago',
+                        'cliente.razon_social as cliente',
+                        'cliente.nit',
+                        'cliente.codigo_verificacion',
+                        'cliente.ciudad',
+                        'cliente.direccion',
+                        'cliente.telefono_fijo',
+                    )
+                    ->join('configuracion_puc', 'configuracion_puc.id', '=', 'pagos_ventas.forma_pago')
+                    ->join('cliente', 'cliente.id', '=', 'pagos_ventas.cliente_id')
+                    ->where('pagos_ventas.id', $id)
+                    ->first();
+
+                //Facturas
+                $js_facturas = json_decode($data->grupo_facturas);
+                foreach ($js_facturas as $key => $value) {
+                    $factura = DB::table('factura_venta')
+                        ->select('factura_venta.*', 'cliente.razon_social', 'cliente.nit', 'cliente.codigo_verificacion', 'cliente.ciudad', 'cliente.telefono_fijo')
+                        ->join('cliente', 'cliente.id', '=', 'factura_venta.cliente_id')
+                        ->where('factura_venta.id', $value->id)
+                        ->first();
+
+                    $js_facturas[$key]->factura = $factura;
+                }
+
+                $data->facturas = $js_facturas;
+                return view('admin.contabilidad.ventas.pdf.egreso_grupal', compact('data'));
+            }
+
             $cuota = 0;
             $data = DB::table('pagos_ventas')
-            ->select(
-                'pagos_ventas.*',
-                'configuracion_puc.nombre as forma_pago',
-                'cliente.razon_social as cliente',
-                'cliente.nit',
-                'cliente.codigo_verificacion',
-                'cliente.ciudad',
-                'cliente.direccion',
-                'cliente.telefono_fijo',
-                'factura_venta.valor_total as valor_factura',
-                'factura_venta.numero as numero_factura',
-            )
+                ->select(
+                    'pagos_ventas.*',
+                    'configuracion_puc.nombre as forma_pago',
+                    'cliente.razon_social as cliente',
+                    'cliente.nit',
+                    'cliente.codigo_verificacion',
+                    'cliente.ciudad',
+                    'cliente.direccion',
+                    'cliente.telefono_fijo',
+                    'factura_venta.valor_total as valor_factura',
+                    'factura_venta.numero as numero_factura',
+                )
                 ->join('configuracion_puc', 'configuracion_puc.id', '=', 'pagos_ventas.forma_pago')
                 ->join('factura_venta', 'factura_venta.id', '=', 'pagos_ventas.factura_id')
                 ->join('cliente', 'cliente.id', '=', 'factura_venta.cliente_id')
@@ -257,13 +367,13 @@ class ReciboPagoController extends Controller
             }
 
             $cuotas = DB::table('pagos_ventas')
-            ->where('factura_id', $data->factura_id)
+                ->where('factura_id', $data->factura_id)
                 ->where('tipo', 1)
                 ->where('status', 1)
                 ->get();
 
             $lleva = DB::table('pagos_ventas')
-            ->where('factura_id', $data->factura_id)
+                ->where('factura_id', $data->factura_id)
                 ->where('id', '<', $id)
                 ->where('tipo', 1)
                 ->where('status', 1)
@@ -277,7 +387,114 @@ class ReciboPagoController extends Controller
 
             return view('admin.contabilidad.ventas.pdf.egreso', compact('data', 'cuota', 'lleva'));
         } catch (Exception $ex) {
+            echo $ex->getMessage();
+            exit;
             return view('errors.500');
         }
+    }
+
+    public function cliente_facturas(Request $request)
+    {
+        $cliente = $request->cliente;
+
+        $facturas = DB::table('factura_venta')
+            ->where('cliente_id', $cliente)
+            ->where('status', 1)
+            ->get();
+
+        // Pagos de la factura
+        foreach ($facturas as $key => $value) {
+            $pagos = DB::table('pagos_ventas')
+                ->where('factura_id', $value->id)
+                ->where('tipo', 1)
+                ->where('status', 1)
+                ->get();
+
+            $value->pagos = $pagos;
+        }
+
+        return response()->json(['info' => 1, 'facturas' => $facturas]);
+    }
+
+    public function pago_grupo_add(Request $request)
+    {
+        $tipo = $request->tipo;
+        $fecha = $request->fecha;
+        $cliente = $request->cliente;
+        //$numero = $request->numero;
+        //$transaccion = $request->transaccion;
+        $forma_pago = $request->forma_pago;
+        $pagado = $request->pagado;
+        $facturas = json_decode($request->facturas);
+        $observacion = $request->observacion;
+        $archivo = $request->archivo;
+        $adjunto = null;
+
+        if ($request->hasFile('archivo')) {
+            $file = $request->file('archivo');
+            $name = time() . $file->getClientOriginalName();
+            $file->move('images/contabilidad/recibos_caja/', $name);
+            $adjunto = $name;
+        }
+
+        $last_number = DB::table('pagos_ventas')
+            ->select('numero')
+            ->where('tipo', 1)
+            ->orderBy('numero', 'desc')
+            ->first();
+
+        if (!$last_number) {
+            $numero = 1;
+        } else {
+            $numero = $last_number->numero + 1;
+        }
+
+        DB::table('pagos_ventas')->insert([
+            'numero' => $numero,
+            'tipo' => 1,
+            //'factura_id' => $factura_id,
+            'grupo_facturas' => json_encode($facturas),
+            'cliente_id' => $cliente,
+            'fecha_elaboracion' => $fecha,
+            'forma_pago' => $forma_pago,
+            'valor' => $pagado,
+            'status' => 1,
+            'observacion' => $observacion,
+            'adjunto_pdf' => $adjunto ?? null,
+            'created_by' => auth()->user()->id,
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        foreach ($facturas as $key => $value) {
+            $factura = DB::table('factura_venta')
+                ->where('id', $value->id)
+                ->first();
+
+            if ($factura->valor_total == $value->valor) {
+                DB::table('factura_venta')
+                    ->where('id', $value->id)
+                    ->update([
+                        'status' => 2,
+                    ]);
+            }
+
+            DB::table('pagos_ventas')->insert([
+                'numero' => $numero,
+                'tipo' => 1,
+                'factura_id' => $value->id,
+                'grupo_facturas' => json_encode($facturas),
+                'cliente_id' => $cliente,
+                'fecha_elaboracion' => $fecha,
+                'forma_pago' => $forma_pago,
+                'valor' => $value->valor,
+                'status' => 3, // Pago grupal
+                'observacion' => $observacion,
+                'adjunto_pdf' => $adjunto ?? null,
+                'created_by' => auth()->user()->id,
+                'created_at' => date('Y-m-d H:i:s')
+            ]);
+        }
+
+        return response()->json(['info' => 1, 'msg' => 'Pago registrado correctamente']);
     }
 }

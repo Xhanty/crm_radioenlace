@@ -136,18 +136,20 @@
                                     <tbody>
                                         <tr>
                                             <td class="tm_width_6 tm_accent_border_20 tm_text_left">
-                                                <span>Abono</span>
-                                                <span style="margin-left:100px">FE-{{ $data->numero_factura }}</span>
-                                                <span style="margin-left:60px">Valor: {{ $data->valor }}</span>
+                                                @foreach ($data->facturas as $key => $item)
+                                                    @if ($key > 0)
+                                                        <br>
+                                                    @endif
+                                                    <span>Abono</span>
+                                                    <span
+                                                        style="margin-left:100px">FE-{{ $item->factura->numero }}</span>
+                                                    <span style="margin-left:60px">Valor: {{ $item->valor }}</span>
+                                                @endforeach
                                                 <br>
                                                 <br>
                                                 {{ $data->forma_pago }}
                                             </td>
                                             <td class="tm_width_4 tm_accent_border_20 tm_text_right">
-                                                <span id="valor_1">{{ $data->valor }}</span>
-                                                <br>
-                                                <b>-{{ $data->valor }}</b>
-                                                <br>
                                                 <b>Total COP:</b> <span id="valor_2">{{ $data->valor }}</span>
                                             </td>
                                         </tr>
@@ -242,40 +244,16 @@
     <script src="https://invoma.vercel.app/assets/js/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
-            let total_final = 0;
-            let valor_1 = @json($data->valor_factura);
-            let valor_2 = @json($data->valor);
-            let lleva = @json($lleva);
+            let total_final = 0;;
+            let valor1 = @json($data->valor);
 
-            valor_1 = valor_1.split(',');
-            valor_1 = valor_1[0];
-            valor_1 = valor_1.replaceAll('.', '');
-            valor_1 = parseInt(valor_1);
-
-            valor_2 = valor_2.split(',');
-            valor_2 = valor_2[0];
-            valor_2 = valor_2.replaceAll('.', '');
-            valor_2 = parseInt(valor_2);
+            valor1 = valor1.split(',');
+            valor1 = valor1[0];
+            valor1 = valor1.replaceAll('.', '');
+            valor1 = parseInt(valor1);
 
 
-            total_final = valor_1 - valor_2;
-
-            if (lleva) {
-                lleva.forEach(element => {
-                    let valor = element.valor;
-                    valor = valor.split(',');
-                    valor = valor[0];
-                    valor = valor.replaceAll('.', '');
-                    valor = parseInt(valor);
-
-                    valor_1 = valor_1 - valor;
-                    total_final = total_final - valor;
-                });
-            }
-
-            $("#valor_1").html(valor_1.toLocaleString('es-ES', {
-                minimumFractionDigits: 2
-            }));
+            total_final = valor1;
 
             $("#valor_2").html(total_final.toLocaleString('es-ES', {
                 minimumFractionDigits: 2
@@ -334,29 +312,29 @@
                             default:
                                 return "dieci" + Unidades(unidad);
                         }
-                        case 2:
-                            switch (unidad) {
-                                case 0:
-                                    return "veinte";
-                                default:
-                                    return "veinti" + Unidades(unidad);
-                            }
-                            case 3:
-                                return DecenasY("treinta", unidad);
-                            case 4:
-                                return DecenasY("cuarenta", unidad);
-                            case 5:
-                                return DecenasY("cincuenta", unidad);
-                            case 6:
-                                return DecenasY("sesenta", unidad);
-                            case 7:
-                                return DecenasY("setenta", unidad);
-                            case 8:
-                                return DecenasY("ochenta", unidad);
-                            case 9:
-                                return DecenasY("noventa", unidad);
+                    case 2:
+                        switch (unidad) {
                             case 0:
-                                return Unidades(unidad);
+                                return "veinte";
+                            default:
+                                return "veinti" + Unidades(unidad);
+                        }
+                    case 3:
+                        return DecenasY("treinta", unidad);
+                    case 4:
+                        return DecenasY("cuarenta", unidad);
+                    case 5:
+                        return DecenasY("cincuenta", unidad);
+                    case 6:
+                        return DecenasY("sesenta", unidad);
+                    case 7:
+                        return DecenasY("setenta", unidad);
+                    case 8:
+                        return DecenasY("ochenta", unidad);
+                    case 9:
+                        return DecenasY("noventa", unidad);
+                    case 0:
+                        return Unidades(unidad);
                 }
             } //Unidades()
 

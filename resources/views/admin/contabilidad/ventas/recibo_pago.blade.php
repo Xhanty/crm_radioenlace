@@ -121,7 +121,7 @@
                                                     <td class="text-center pad-4"><input type="checkbox" checked
                                                             class="check_fc">
                                                     </td>
-                                                    <td class="text-center pad-4">FERE-{{ $factura->numero }}</td>
+                                                    <td class="text-center pad-4">FE-{{ $factura->numero }}</td>
                                                     <td class="text-center pad-4" id="cuota_pagar">1</td>
                                                     <td class="text-center pad-4">
                                                         {{ $factura->valor_total }}</td>

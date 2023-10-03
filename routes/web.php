@@ -379,6 +379,9 @@ Route::middleware(['auth_user'])->group(function () {
     Route::get('/recibos_pagos_pdf', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'pdf'])->name('recibos_pagos_pdf');
     Route::post('/recibo_pago_add', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'add'])->name('recibo_pago_add');
     Route::post('/recibos_info_pagos', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'info'])->name('recibos_info_pagos');
+    Route::post('/recibos_info_pagos_grupales', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'info_grupales'])->name('recibos_info_pagos_grupales');
+    Route::post('/recibos_info_cliente', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'cliente_facturas'])->name('recibos_info_cliente');
+    Route::post('/recibo_pago_grupo_add', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'pago_grupo_add'])->name('recibo_pago_grupo_add');
 
     // CALENDARIO
     Route::get('/calendario', [App\Http\Controllers\CalendarController::class, 'index'])->name('calendario');
