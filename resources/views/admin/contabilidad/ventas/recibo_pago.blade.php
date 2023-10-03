@@ -46,10 +46,15 @@
                                         <input class="form-control" value="{{ date('Y-m-d') }}" id="fecha_add"
                                             placeholder="Fecha de pago" type="date">
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-2">
                                         <label for="">Número</label>
                                         <input class="form-control text-center" value="{{ $num_egreso }}" disabled
                                             id="numero_add" placeholder="Número" type="text">
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label for="">Número Siigo</label>
+                                        <input class="form-control text-center"
+                                            id="numero_siigo_add" placeholder="Número Siigo" type="number">
                                     </div>
                                 </div>
                                 <br>

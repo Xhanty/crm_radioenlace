@@ -240,6 +240,7 @@ class ReciboPagoController extends Controller
             //$total = $request->total;
             $pagado = $request->pagado;
             $terminado = $request->terminado;
+            $numero_siigo = $request->numero_siigo;
             $observacion = $request->observacion;
             $adjunto = null;
 
@@ -265,6 +266,7 @@ class ReciboPagoController extends Controller
 
             DB::table('pagos_ventas')->insert([
                 'numero' => $numero,
+                'numero_siigo' => $numero_siigo,
                 'tipo' => 1,
                 'factura_id' => $factura_id,
                 'fecha_elaboracion' => $fecha,
@@ -422,6 +424,7 @@ class ReciboPagoController extends Controller
         $fecha = $request->fecha;
         $cliente = $request->cliente;
         //$numero = $request->numero;
+        $numero_siigo = $request->numero_siigo;
         //$transaccion = $request->transaccion;
         $forma_pago = $request->forma_pago;
         $pagado = $request->pagado;
@@ -451,6 +454,7 @@ class ReciboPagoController extends Controller
 
         DB::table('pagos_ventas')->insert([
             'numero' => $numero,
+            'numero_siigo' => $numero_siigo,
             'tipo' => 1,
             //'factura_id' => $factura_id,
             'grupo_facturas' => json_encode($facturas),

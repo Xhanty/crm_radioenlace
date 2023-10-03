@@ -28,6 +28,7 @@ $(document).ready(function () {
         let tipo = $("#tipo_add").val();
         let fecha = $("#fecha_add").val();
         let numero = $("#numero_add").val();
+        let numero_siigo = $("#numero_siigo_add").val();
         let transaccion = $("#transaccion_add").val();
         let forma_pago = $("#formas_pago_add").val();
         let total = $("#vlv_pagar").val();
@@ -41,6 +42,9 @@ $(document).ready(function () {
 
         if (tipo == "") {
             toastr.error("Seleccione un tipo");
+            return false;
+        } else if (numero_siigo < 1) {
+            toastr.error("Ingrese un número siigo");
             return false;
         } else if (forma_pago == "") {
             toastr.error("Seleccione dónde ingresa el dinero");
@@ -67,6 +71,7 @@ $(document).ready(function () {
             formData.append("tipo", tipo);
             formData.append("fecha", fecha);
             formData.append("numero", numero);
+            formData.append("numero_siigo", numero_siigo);
             formData.append("transaccion", transaccion);
             formData.append("forma_pago", forma_pago);
             formData.append("total", total);
