@@ -393,7 +393,7 @@ $(document).ready(function () {
                     $("#cliente_view").html(factura.razon_social);
                     $("#nit_view").html(factura.nit + '-' + factura.codigo_verificacion + "<br>" + factura.telefono_fijo + "<br>" + factura.ciudad + ' - Colombia');
 
-                    $("#num_fact_view").html(factura.numero);
+                    $("#num_fact_view").html("FE-" + factura.numero);
                     $("#compra_view").html(fecha_compra.getDate() + "/" + (fecha_compra.getMonth() + 1) + "/" + fecha_compra.getFullYear());
                     $("#pagar_view").html(factura.valor_total);
                     $(".btn_imprimir_factura").attr("href", "pdf_factura_venta?token=" + factura.id);

@@ -91,7 +91,7 @@
                                 <div>
                                     <b class="tm_accent_color tm_medium tm_body_lineheight"
                                         style="font-size: 20px">FACTURA DE VENTA
-                                        ELECTRÓNICA # {{ $factura->numero }}</b>
+                                        ELECTRÓNICA # FE-{{ $factura->numero }}</b>
                                 </div>
                             </div>
                         </div>
@@ -108,28 +108,28 @@
                                         <tr>
                                             <td class="tm_width_6 tm_border_top_0" style="width: 55%">
                                                 <b class="tm_primary_color tm_medium">Cliente:
-                                                </b><br>{{ $factura->razon_social }}
+                                                </b>{{ $factura->razon_social }}
                                             </td>
                                             <td class="tm_width_4 tm_border_top_0 tm_border_left tm_accent_border_20"
                                                 style="width: 22.5%">
                                                 <b class="tm_primary_color tm_medium">Nit:
-                                                </b><br>{{ $factura->nit }}-{{ $factura->codigo_verificacion }}
+                                                </b>{{ $factura->nit }}-{{ $factura->codigo_verificacion }}
                                             </td>
 
                                         </tr>
                                         <tr>
                                             <td class="tm_width_6 tm_accent_border_20" style="width: 55%">
                                                 <b class="tm_primary_color tm_medium">Dirección:
-                                                </b><br>{{ $factura->direccion }}
+                                                </b>{{ $factura->direccion }}
                                             </td>
                                             <td class="tm_width_4 tm_border_left tm_accent_border_20"
                                                 style="width: 22.5%">
                                                 <b class="tm_primary_color tm_medium">Ciudad:
-                                                </b><br>{{ $factura->ciudad }} - Colombia
+                                                </b>{{ $factura->ciudad }} - Colombia
                                             </td>
                                             <td class="tm_width_6 tm_border_left tm_accent_border_20">
                                                 <b class="tm_primary_color tm_medium">Teléfono:
-                                                </b><br>{{ $factura->telefono_fijo }}
+                                                </b>{{ $factura->telefono_fijo }}
                                             </td>
                                         </tr>
                                     </tbody>
@@ -187,11 +187,11 @@
                                                 class="tm_width_1 tm_semi_bold tm_accent_color tm_accent_bg_10 tm_text_center">
                                                 Vr.
                                                 Bruto</th>
-                                            <th
+                                            <th style="display: none"
                                                 class="tm_width_1 tm_semi_bold tm_accent_color tm_accent_bg_10 tm_text_center">
                                                 Impto.
                                                 Cargo</th>
-                                            <th
+                                            <th style="display: none"
                                                 class="tm_width_1 tm_semi_bold tm_accent_color tm_accent_bg_10 tm_text_center">
                                                 Impto.
                                                 Rete.</th>
@@ -217,9 +217,9 @@
                                                     {{ $item->cantidad }}</td>
                                                 <td class="tm_width_1 tm_accent_border_20 tm_text_center">
                                                     {{ $item->valor_unitario }}</td>
-                                                <td class="tm_width_1 tm_accent_border_20 tm_text_center">
+                                                <td style="display: none" class="tm_width_1 tm_accent_border_20 tm_text_center">
                                                     {{ $item->impuesto_cargo }}%</td>
-                                                <td class="tm_width_1 tm_accent_border_20 tm_text_center">
+                                                <td style="display: none" class="tm_width_1 tm_accent_border_20 tm_text_center">
                                                     {{ $item->impuesto_retencion }}%</td>
                                                 <td class="tm_width_1 tm_accent_border_20 tm_text_right">
                                                     {{ $item->valor_total }}</td>

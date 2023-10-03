@@ -250,7 +250,7 @@
                                                     $color = 'badge-danger';
                                                 }
                                             @endphp
-                                            <h6><span>Factura No.{{ $factura->numero }}@if($bg == 'bg-pending')<badge
+                                            <h6><span>Factura No. FE-{{ $factura->numero }}@if($bg == 'bg-pending')<badge
                                                         class="badge {{ $color }}">{{ $dias_pasados }}</badge>@endif</span>
                                                 <span>{{ $factura->valor_total }}
                                                     @if ($factura->favorito == 0)

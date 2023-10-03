@@ -197,7 +197,7 @@
                             <div id="content_factura" class="d-none">
                                 <div class="row mg-t-20">
                                     <div class="col-md">
-                                        <label class="tx-gray-600">Pagado a</label>
+                                        <label class="tx-gray-600">Cliente</label>
                                         <div class="billed-to">
                                             <h6 id="proveedor_view">EDATEL TIGO</h6>
                                             <p id="nit_view">Nit 890.905.065-2<br>
