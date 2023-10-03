@@ -201,6 +201,12 @@
         </div>
         <!-- row closed -->
 
+        <style>
+            .selection .select2-selection {
+                border: 1px solid red
+            }
+        </style>
+
         <!-- Modal Add -->
         <div class="modal  fade" id="modalAdd">
             <div class="modal-dialog modal-xl" role="document">

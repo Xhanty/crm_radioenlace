@@ -67,6 +67,9 @@
                                                         href="javascript:void(0);"><i
                                                             class="fa fa-times"></i>&nbsp;Rechazar</a>
                                                 @endif
+                                                <a class="d-flex btn_openDetalles" data-id="{{ $value->id }}"
+                                                    href="javascript:void(0);"><i
+                                                        class="fa fa-eye"></i>&nbsp;Ver</a>
                                                 <a class="d-flex btn_editar" data-id="{{ $value->id }}"
                                                     href="javascript:void(0);"><i
                                                         class="fa fa-pencil-alt"></i>&nbsp;Editar</a>
@@ -132,6 +135,9 @@
                                             <td>{{ date('d-m-Y g:i A', strtotime($value->fecha_culminacion)) }}</td>
                                             <td>{{ $value->creador }}</td>
                                             <td>
+                                                <a class="d-flex btn_openDetalles" data-id="{{ $value->id }}"
+                                                    href="javascript:void(0);"><i
+                                                        class="fa fa-eye"></i>&nbsp;Ver</a>
                                                 <a class="d-flex btn_avances" data-id="{{ $value->id }}"
                                                     href="javascript:void(0);"><i class="fa fa-file"></i>&nbsp;Ver
                                                     Avances</a>
@@ -330,6 +336,67 @@
                                     <th class="wd-15p border-bottom-0">Archivo</th>
                                     <th class="wd-40p border-bottom-0">Descripción</th>
                                     <th class="wd-10p border-bottom-0">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Show Asignación -->
+    <div class="modal  fade" id="modalDetalles">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content modal-content-demo">
+                <div class="modal-header">
+                    <h6 class="modal-title">Detalles de la asignación</h6><button aria-label="Close"
+                        class="btn-close" data-bs-dismiss="modal" type="button"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row row-sm">
+                        <div class="col-lg">
+                            <label for="">Asignación</label>
+                            <input type="text" class="form-control" placeholder="Asignación" disabled
+                                id="asignacion_show">
+                        </div>
+                        <div class="col-lg">
+                            <label for="">Cliente</label>
+                            <select class="form-select" id="cliente_show" disabled>
+                                @foreach ($clientes as $cliente)
+                                    <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row row-sm">
+                        <div class="col-lg">
+                            <label for="">Descripción de la asignación</label>
+                            <textarea class="form-control" placeholder="Descripción de la asignación" disabled rows="3"
+                                id="observacion_show" style="height: 90px; resize: none"></textarea>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row row-sm">
+                        <div class="col-lg">
+                            <label for="">Fecha y Hora de inicio</label>
+                            <input class="form-control" id="fecha_inicio_show" disabled type="datetime-local">
+                        </div>
+                        <div class="col-lg mg-t-10 mg-lg-t-0">
+                            <label for="">Fecha y Hora de tentativa de culminación</label>
+                            <input class="form-control" id="fecha_fin_show" disabled type="datetime-local">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="table-responsive">
+                        <table class="table border-top-0 table-bordered text-nowrap border-bottom"
+                            id="tbl_anexos_asignacion_show">
+                            <thead>
+                                <tr>
+                                    <th class="wd-40p border-bottom-0">Anexos</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>

@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Validar facturas
+Route::get('/validate_fv', [App\Http\Controllers\Apis\FacturaVentaController::class, 'validate_fv'])->name('validate_fv');

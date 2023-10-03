@@ -421,4 +421,37 @@ $(function () {
             },
         });
     });
+
+    $(document).on("click", ".btn_openDetalles", function () {
+        $("#global-loader").show();
+        let id = $(this).data("id");
+        $("#tbl_anexos_asignacion_show tbody").empty();
+        $.ajax({
+            url: "asignaciones_data",
+            type: "POST",
+            data: { id: id },
+            success: function (data) {
+                let asignacion = data.asignacion;
+                let archivos = data.archivos;
+                $("#asignacion_show").val(asignacion.asignacion);
+                $("#cliente_show").val(asignacion.id_cliente).trigger("change");
+                $("#observacion_show").val(asignacion.descripcion);
+                $("#fecha_inicio_show").val(asignacion.fecha);
+                $("#fecha_fin_show").val(asignacion.fecha_culminacion);
+                archivos.forEach((archivo) => {
+                    $("#tbl_anexos_asignacion_show tbody").append(`
+                        <tr>
+                            <td><a href="images/asignaciones/${archivo.archivo}" target="_blank">Ver Archivo</a></td>
+                        </tr>
+                    `);
+                });
+                $("#global-loader").hide();
+                $("#modalDetalles").modal("show");
+            },
+            error: function (data) {
+                toastr.error("Error al obtener datos de la asignación");
+                $("#global-loader").hide();
+            },
+        });
+    });
 });
