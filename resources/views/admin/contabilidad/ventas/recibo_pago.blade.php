@@ -42,9 +42,9 @@
                                         </select>
                                     </div>
                                     <div class="col-lg-4">
-                                        <label for="">Fecha elaboración</label>
+                                        <label for="">Fecha de pago</label>
                                         <input class="form-control" value="{{ date('Y-m-d') }}" id="fecha_add"
-                                            placeholder="Fecha elaboración" type="date">
+                                            placeholder="Fecha de pago" type="date">
                                     </div>
                                     <div class="col-lg-4">
                                         <label for="">Número</label>
@@ -81,7 +81,7 @@
                                     </div>
 
                                     <div class="col-lg-4">
-                                        <label for="">De donde sale el dinero</label>
+                                        <label for="">Dónde ingresa el dinero</label>
                                         <select class="form-select" id="formas_pago_add">
                                             <option value="">Seleccione una opción</option>
                                             @foreach ($formas_pago as $forma_pago)
@@ -121,7 +121,7 @@
                                                     <td class="text-center pad-4"><input type="checkbox" checked
                                                             class="check_fc">
                                                     </td>
-                                                    <td class="text-center pad-4">FE-{{ $factura->numero }}</td>
+                                                    <td class="text-center pad-4">FERE-{{ $factura->numero }}</td>
                                                     <td class="text-center pad-4" id="cuota_pagar">1</td>
                                                     <td class="text-center pad-4">
                                                         {{ $factura->valor_total }}</td>

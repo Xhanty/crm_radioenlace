@@ -43,7 +43,7 @@ $(document).ready(function () {
             toastr.error("Seleccione un tipo");
             return false;
         } else if (forma_pago == "") {
-            toastr.error("Seleccione una forma de pago");
+            toastr.error("Seleccione dónde ingresa el dinero");
             return false;
         } else if (pagado < 1) {
             toastr.error("Ingrese un valor a pagar");

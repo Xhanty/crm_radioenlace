@@ -47,6 +47,35 @@
                 transform: translateY(0);
             }
         }
+
+        .badge {
+            margin-left: 6px;
+            display: inline-block;
+            padding: 0.25em 0.5em; /* Ajusta el padding según tus preferencias */
+            font-size: 12px; /* Tamaño de fuente */
+            font-weight: bold; /* Peso de la fuente */
+            border-radius: 4px; /* Borde redondeado */
+            background-color: #ffc107; /* Color de fondo */
+            color: #000; /* Color del texto */
+        }
+
+        /* Estilo para el badge de éxito */
+        .badge-success {
+            background-color: #28a745; /* Color de fondo para el éxito */
+            color: #fff; /* Color del texto para el éxito */
+        }
+
+        /* Estilo para el badge de advertencia */
+        .badge-warning {
+            background-color: #ffc107; /* Color de fondo para la advertencia */
+            color: #000; /* Color del texto para la advertencia */
+        }
+
+        /* Estilo para el badge de error */
+        .badge-danger {
+            background-color: #dc3545; /* Color de fondo para el error */
+            color: #fff; /* Color del texto para el error */
+        }
     </style>
 
     <style>
@@ -198,7 +227,31 @@
                                             <i class="far fa-file-alt"></i>
                                         </div>
                                         <div class="media-body">
-                                            <h6><span>Factura No.{{ $factura->numero }}</span>
+                                            @php
+                                                $fecha_vencimiento = date('Y-m-d', strtotime($factura->fecha_elaboracion . ' + 30 days'));
+                                                $fecha_actual = date('Y-m-d');
+                                                $color = '';
+                                                // Convierte ambas fechas en objetos DateTime
+                                                $fecha_vencimiento_obj = new DateTime($fecha_vencimiento);
+                                                $fecha_actual_obj = new DateTime($fecha_actual);
+
+                                                // Calcula la diferencia entre las fechas
+                                                $diferencia = $fecha_actual_obj->diff($fecha_vencimiento_obj);
+
+                                                // Obtiene el número de días pasados
+                                                $dias_pasados = $diferencia->days;
+
+                                                // Si van menos de 20 días, poner en verde
+                                                if ($dias_pasados < 20) {
+                                                    $color = 'badge-success';
+                                                } else if ($dias_pasados < 28) {
+                                                    $color = 'badge-warning';
+                                                } else {
+                                                    $color = 'badge-danger';
+                                                }
+                                            @endphp
+                                            <h6><span>Factura No.{{ $factura->numero }}@if($bg == 'bg-pending')<badge
+                                                        class="badge {{ $color }}">{{ $dias_pasados }}</badge>@endif</span>
                                                 <span>{{ $factura->valor_total }}
                                                     @if ($factura->favorito == 0)
                                                         <i data-id="{{ $factura->id }}"
