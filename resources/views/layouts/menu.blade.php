@@ -365,8 +365,7 @@
                                                 @endif
                                                 @if (auth()->user()->hasPermissionTo('contabilidad_recibo_pago'))
                                                     <li><a class="sub-side-menu__item"
-                                                            href="{{ route('recibos_pagos') }}">Recibo Caja /
-                                                            Egreso</a>
+                                                            href="{{ route('recibos_pagos') }}">Recibo Caja</a>
                                                     </li>
                                                 @endif
                                             </ul>

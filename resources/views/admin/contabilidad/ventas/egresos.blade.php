@@ -210,9 +210,11 @@
                                             </div>
                                         </div>
                                         <div class="col-md">
-                                            <label class="tx-gray-600">Información del recibo de caja</label>
+                                            <!--<label class="tx-gray-600">Información del recibo de caja</label>-->
                                             <p class="invoice-info-row"><span id="factura_tlt_2">Recibo No.</span> <span
                                                     id="num_fact_view">1743</span>
+                                            <p class="invoice-info-row"><span id="factura_tlt_siigo_2">Recibo Siigo.</span> <span
+                                                        id="num_fact_view_siigo">1743</span>
                                             </p>
                                             <p class="invoice-info-row"><span>Fecha Pago</span> <span
                                                     id="compra_view">21/03/2023</span></p>
@@ -447,6 +449,7 @@
                                                                 id="check_all">-->
                                                         </th>
                                                         <th class="text-center">Factura</th>
+                                                        <th class="text-center">Retenciones</th>
                                                         <th class="text-center">Saldo Total</th>
                                                         <th class="text-center">Saldo a Pagar</th>
                                                         <th class="text-center"></th>
@@ -455,7 +458,7 @@
                                                 <tbody id="tbl_facturas_list"></tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <th colspan="2" class="text-end"></th>
+                                                        <th colspan="3" class="text-end"></th>
                                                         <th class="text-center" id="total_saldo">0.00</th>
                                                         <th class="text-center" id="total_saldo_pendiente">0.00</th>
                                                         <th class="text-end" id="saldo_pagado">0.00</th>

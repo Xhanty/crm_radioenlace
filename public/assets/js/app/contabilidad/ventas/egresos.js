@@ -43,7 +43,6 @@ $(document).ready(function () {
                         let data = response.data;
                         let total_final = 0;
                         let valor = data.valor;
-                        console.log(data);
 
                         valor = valor.split(",");
                         valor = valor[0];
@@ -65,6 +64,7 @@ $(document).ready(function () {
                         );
 
                         $("#num_fact_view").html(data.numero);
+                        $("#num_fact_view_siigo").html(data.numero_siigo);
                         $("#compra_view").html(
                             fecha_compra.getDate() +
                                 "/" +
@@ -175,6 +175,39 @@ $(document).ready(function () {
                         let total_final = 0;
                         let valor_1 = data.valor_factura;
                         let valor_2 = data.valor;
+                        
+                        let factura = response.data.factura;
+                        let impuestos_1 = JSON.parse(factura.impuestos_1);
+                        let sum_impuestos_1 = 0;
+
+                        let subtotal_num = factura.subtotal.split(',');
+                        subtotal_num = subtotal_num[0];
+                        subtotal_num = subtotal_num.replaceAll('.', '');
+                        subtotal_num = parseInt(subtotal_num);
+
+                        let retenciones_html = '';
+
+                        if (impuestos_1) {
+                            for (var i = 0; i < impuestos_1.length; i++) {
+                                let valor = parseInt(impuestos_1[i][1]);
+                                sum_impuestos_1 += valor;
+                            }
+                        }
+
+                        if(factura.valor_retefuente) {
+                            let valor = (subtotal_num * (factura.valor_retefuente / 100)).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                            retenciones_html += '<span>Rte Fte: ' + factura.valor_retefuente + '% <b>(' + valor + ')</b></span><br>';
+                        }
+                        
+                        if (factura.valor_reteiva) {
+                            let valor = (sum_impuestos_1 * (factura.valor_reteiva / 100)).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                            retenciones_html += '<span>Rte Iva: ' + factura.valor_reteiva + '% <b>(' + valor + ')</b></span><br>';
+                        } 
+                        
+                        if (factura.valor_reteica) {
+                            let valor = ((subtotal_num *  factura.valor_reteica) / 1000).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                            retenciones_html += '<span>Rte Ica: ' + factura.valor_reteica + '% <b>(' + valor + ')</b></span><br>';
+                        }
 
                         valor_1 = valor_1.split(",");
                         valor_1 = valor_1[0];
@@ -188,8 +221,11 @@ $(document).ready(function () {
 
                         total_final = valor_1 - valor_2;
 
+                        console.log(factura);
+
+
                         var fecha_compra = new Date(data.fecha_elaboracion);
-                        $("#proveedor_view").html(data.proveedor);
+                        $("#proveedor_view").html(data.cliente);
                         $("#nit_view").html(
                             data.nit +
                                 "-" +
@@ -202,6 +238,7 @@ $(document).ready(function () {
                         );
 
                         $("#num_fact_view").html(data.numero);
+                        $("#num_fact_view_siigo").html(data.numero_siigo);
                         $("#compra_view").html(
                             fecha_compra.getDate() +
                                 "/" +
@@ -254,6 +291,8 @@ $(document).ready(function () {
                                 "/" +
                                 fecha_compra.getFullYear() +
                                 "</span>" +
+                                //"<br>" +
+                                //retenciones_html +
                                 "<br>" +
                                 "<br>" +
                                 data.forma_pago +
@@ -354,6 +393,8 @@ $(document).ready(function () {
                             valor = valor.replaceAll(".", "");
                             total += parseInt(valor);
                             let pendiente = parseInt(valor);
+                            let impuestos_1 = JSON.parse(element.impuestos_1);
+                            let sum_impuestos_1 = 0;
 
                             if (element.pagos && element.pagos.length > 0) {
                                 element.pagos.forEach((element) => {
@@ -364,14 +405,46 @@ $(document).ready(function () {
                                 });
                             }
 
+                            let subtotal_num = element.subtotal.split(',');
+                            subtotal_num = subtotal_num[0];
+                            subtotal_num = subtotal_num.replaceAll('.', '');
+                            subtotal_num = parseInt(subtotal_num);
+
+                            let retenciones_html = '';
+
+                            if (impuestos_1) {
+                                for (var i = 0; i < impuestos_1.length; i++) {
+                                    let valor = parseInt(impuestos_1[i][1]);
+                                    sum_impuestos_1 += valor;
+                                }
+                            }
+
+                            if(element.valor_retefuente) {
+                                let valor = (subtotal_num * (element.valor_retefuente / 100)).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                                retenciones_html += '<span>Rte Fte: ' + element.valor_retefuente + '% <b>(' + valor + ')</b></span><br>';
+                            }
+                            
+                            if (element.valor_reteiva) {
+                                let valor = (sum_impuestos_1 * (element.valor_reteiva / 100)).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                                retenciones_html += '<span>Rte Iva: ' + element.valor_reteiva + '% <b>(' + valor + ')</b></span><br>';
+                            } 
+                            
+                            if (element.valor_reteica) {
+                                let valor = ((subtotal_num *  element.valor_reteica) / 1000).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                                retenciones_html += '<span>Rte Ica: ' + element.valor_reteica + '% <b>(' + valor + ')</b></span><br>';
+                            }
+
                             total_pendiente += pendiente;
                             $("#tbl_facturas_list").append(
                                 "<tr>" +
                                     '<td class="text-center pad-4"><input data-id="' +
                                     element.id +
                                     '" type="checkbox" class="check_fc_add"></td>' +
-                                    '<td class="text-center pad-4">FE-' +
+                                    '<td class="text-center pad-4"><a href="' + url_general + 'pdf_factura_venta?token=' + element.id + '" target="_blank">FE-' +
                                     element.numero +
+                                    "</a></td>" +
+                                    '<td class="text-center pad-4">' +
+                                    retenciones_html +
                                     "</td>" +
                                     '<td class="text-center pad-4">' +
                                     element.valor_total +

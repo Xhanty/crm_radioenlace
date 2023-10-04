@@ -71,10 +71,10 @@
                         <div class="tm_invoice_info_left tm_mb20_md" style="margin-top: 2px">
                             <p class="tm_mb0">
                                 <b class="tm_primary_color ">Recibo Caja No: </b>{{ $data->numero }}<br>
+                                <b class="tm_primary_color">Recibo Siigo No:
+                                </b>{{ $data->numero_siigo }}<br>
                                 <b class="tm_primary_color">Fecha Ingreso:
                                 </b>{{ date('d/m/Y', strtotime($data->fecha_elaboracion)) }}<br>
-                                <b class="tm_primary_color">Dónde Ingresó:
-                                </b>{{ $data->forma_pago }}
                             </p>
                         </div>
                         <div class="tm_invoice_info_right">
@@ -134,6 +134,39 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @php
+                                            $impuestos_1 = json_decode($factura->impuestos_1);
+                                            $sum_impuestos_1 = 0;
+                                            $retenciones_html = '';
+                                            
+                                            $subtotal_str = $factura->subtotal; // Supongo que $factura->subtotal contiene el valor en formato de cadena
+                                            
+                                            // Eliminar comas y puntos del valor
+                                            $subtotal_parts = explode(',', $subtotal_str);
+                                            $subtotal_num = (int) str_replace('.', '', $subtotal_parts[0]);
+                                            
+                                            if ($impuestos_1) {
+                                                foreach ($impuestos_1 as $impuesto) {
+                                                    $valor = (int) $impuesto[1];
+                                                    $sum_impuestos_1 += $valor;
+                                                }
+                                            }
+                                            
+                                            if ($factura->valor_retefuente) {
+                                                $valor = number_format($subtotal_num * ($factura->valor_retefuente / 100), 2, ',', '.');
+                                                $retenciones_html .= '<span>Rte Fte: ' . $factura->valor_retefuente . '% <b>(' . $valor . ')</b></span><br>';
+                                            }
+                                            
+                                            if ($factura->valor_reteiva) {
+                                                $valor = number_format($sum_impuestos_1 * ($factura->valor_reteiva / 100), 2, ',', '.');
+                                                $retenciones_html .= '<span>Rte Iva: ' . $factura->valor_reteiva . '% <b>(' . $valor . ')</b></span><br>';
+                                            }
+                                            
+                                            if ($factura->valor_reteica) {
+                                                $valor = number_format(($subtotal_num * $factura->valor_reteica) / 1000, 2, ',', '.');
+                                                $retenciones_html .= '<span>Rte Ica: ' . $factura->valor_reteica . '% <b>(' . $valor . ')</b></span><br>';
+                                            }
+                                        @endphp
                                         <tr>
                                             <td class="tm_width_6 tm_accent_border_20 tm_text_left">
                                                 <span>Abono</span>
@@ -334,29 +367,29 @@
                             default:
                                 return "dieci" + Unidades(unidad);
                         }
-                        case 2:
-                            switch (unidad) {
-                                case 0:
-                                    return "veinte";
-                                default:
-                                    return "veinti" + Unidades(unidad);
-                            }
-                            case 3:
-                                return DecenasY("treinta", unidad);
-                            case 4:
-                                return DecenasY("cuarenta", unidad);
-                            case 5:
-                                return DecenasY("cincuenta", unidad);
-                            case 6:
-                                return DecenasY("sesenta", unidad);
-                            case 7:
-                                return DecenasY("setenta", unidad);
-                            case 8:
-                                return DecenasY("ochenta", unidad);
-                            case 9:
-                                return DecenasY("noventa", unidad);
+                    case 2:
+                        switch (unidad) {
                             case 0:
-                                return Unidades(unidad);
+                                return "veinte";
+                            default:
+                                return "veinti" + Unidades(unidad);
+                        }
+                    case 3:
+                        return DecenasY("treinta", unidad);
+                    case 4:
+                        return DecenasY("cuarenta", unidad);
+                    case 5:
+                        return DecenasY("cincuenta", unidad);
+                    case 6:
+                        return DecenasY("sesenta", unidad);
+                    case 7:
+                        return DecenasY("setenta", unidad);
+                    case 8:
+                        return DecenasY("ochenta", unidad);
+                    case 9:
+                        return DecenasY("noventa", unidad);
+                    case 0:
+                        return Unidades(unidad);
                 }
             } //Unidades()
 

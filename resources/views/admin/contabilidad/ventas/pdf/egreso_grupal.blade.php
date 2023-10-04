@@ -71,10 +71,10 @@
                         <div class="tm_invoice_info_left tm_mb20_md" style="margin-top: 2px">
                             <p class="tm_mb0">
                                 <b class="tm_primary_color ">Recibo Caja No: </b>{{ $data->numero }}<br>
+                                <b class="tm_primary_color">Recibo Siigo No:
+                                </b>{{ $data->numero_siigo }}<br>
                                 <b class="tm_primary_color">Fecha Ingreso:
                                 </b>{{ date('d/m/Y', strtotime($data->fecha_elaboracion)) }}<br>
-                                <b class="tm_primary_color">Dónde Ingresó:
-                                </b>{{ $data->forma_pago }}
                             </p>
                         </div>
                         <div class="tm_invoice_info_right">

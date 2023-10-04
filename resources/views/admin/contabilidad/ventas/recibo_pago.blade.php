@@ -112,9 +112,10 @@
                                             class="table border-top-0 table-bordered text-nowrap border-bottom">
                                             <thead>
                                                 <tr class="bg-gray">
-                                                    <th class="text-center"><input type="checkbox" checked id="check_all">
+                                                    <th class="text-center"><input type="checkbox" checked id="check_all" disabled>
                                                     </th>
                                                     <th class="text-center">Factura</th>
+                                                    <th class="text-center">Retenciones</th>
                                                     <th class="text-center">Cuota</th>
                                                     <th class="text-center">Saldo Total</th>
                                                     <th class="text-center">Saldo a Pagar</th>
@@ -123,10 +124,47 @@
                                             </thead>
                                             <tbody>
                                                 <tr style="background: #f9f9f9;">
-                                                    <td class="text-center pad-4"><input type="checkbox" checked
+                                                    <td class="text-center pad-4"><input type="checkbox" checked disabled
                                                             class="check_fc">
                                                     </td>
-                                                    <td class="text-center pad-4">FE-{{ $factura->numero }}</td>
+                                                    <td class="text-center pad-4"><a href="{{ route('pdf_factura_venta') . '?token=' . $factura->id }}" target="_blank">FE-{{ $factura->numero }}</a></td>
+                                                    <td class="text-center pad-4">
+                                                        @php
+                                                            $impuestos_1 = json_decode($factura->impuestos_1);
+                                                            $sum_impuestos_1 = 0;
+                                                            $retenciones_html = '';
+
+                                                            $subtotal_str = $factura->subtotal; // Supongo que $factura->subtotal contiene el valor en formato de cadena
+
+                                                            // Eliminar comas y puntos del valor
+                                                            $subtotal_parts = explode(',', $subtotal_str);
+                                                            $subtotal_num = (int)str_replace('.', '', $subtotal_parts[0]);
+
+                                                            if ($impuestos_1) {
+                                                                foreach ($impuestos_1 as $impuesto) {
+                                                                    $valor = (int)$impuesto[1];
+                                                                    $sum_impuestos_1 += $valor;
+                                                                }
+                                                            }
+
+                                                            if ($factura->valor_retefuente) {
+                                                                $valor = number_format($subtotal_num * ($factura->valor_retefuente / 100), 2, ',', '.');
+                                                                $retenciones_html .= '<span>Rte Fte: ' . $factura->valor_retefuente . '% <b>(' . $valor . ')</b></span><br>';
+                                                            }
+
+                                                            if ($factura->valor_reteiva) {
+                                                                $valor = number_format($sum_impuestos_1 * ($factura->valor_reteiva / 100), 2, ',', '.');
+                                                                $retenciones_html .= '<span>Rte Iva: ' . $factura->valor_reteiva . '% <b>(' . $valor . ')</b></span><br>';
+                                                            }
+
+                                                            if ($factura->valor_reteica) {
+                                                                $valor = number_format(($subtotal_num * $factura->valor_reteica) / 1000, 2, ',', '.');
+                                                                $retenciones_html .= '<span>Rte Ica: ' . $factura->valor_reteica . '% <b>(' . $valor . ')</b></span><br>';
+                                                            }
+                                                        @endphp
+
+                                                        {!! $retenciones_html !!}
+                                                    </td>
                                                     <td class="text-center pad-4" id="cuota_pagar">1</td>
                                                     <td class="text-center pad-4">
                                                         {{ $factura->valor_total }}</td>

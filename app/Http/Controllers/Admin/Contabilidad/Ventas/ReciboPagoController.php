@@ -159,6 +159,13 @@ class ReciboPagoController extends Controller
                 return response()->json(['error' => 'No se encontraron datos', 'info' => 0]);
             }
 
+            //Consultar factura
+            $factura = DB::table('factura_venta')
+                ->where('id', $data->factura_id)
+                ->first();
+
+            $data->factura = $factura;
+
             $cuotas = DB::table('pagos_ventas')
                 ->where('factura_id', $data->factura_id)
                 ->where('tipo', 1)
@@ -387,7 +394,11 @@ class ReciboPagoController extends Controller
                 }
             }
 
-            return view('admin.contabilidad.ventas.pdf.egreso', compact('data', 'cuota', 'lleva'));
+            $factura = DB::table('factura_venta')
+                ->where('id', $data->factura_id)
+                ->first();
+
+            return view('admin.contabilidad.ventas.pdf.egreso', compact('data', 'cuota', 'lleva', 'factura'));
         } catch (Exception $ex) {
             echo $ex->getMessage();
             exit;
