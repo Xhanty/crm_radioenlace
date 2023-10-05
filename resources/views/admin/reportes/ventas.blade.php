@@ -326,6 +326,10 @@
                         <br>
                         <br>
                         <button class="btn btn-primary btn-block" id="btn_filtrar">Filtrar</button>
+                        <br>
+                        <div class="text-center">
+                            <a href="{{ route('reporte_ventas') }}" id="btn_clear">Limpiar filtros</a>
+                        </div>
                     </div>
                 </div>
             </div>
