@@ -473,7 +473,7 @@ class FacturaVentaController extends Controller
             }
 
             if ($fecha_inicio && $fecha_fin) {
-                $query->whereBetween('factura_venta.created_at', [$fecha_inicio, $fecha_fin]);
+                $query->whereBetween('factura_venta.fecha_elaboracion', [$fecha_inicio, $fecha_fin]);
             }
 
             if ($mayor_menor_mora && $dia_mora) {

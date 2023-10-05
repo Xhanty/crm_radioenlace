@@ -85,7 +85,7 @@ class VentasController extends Controller
                 })
                 ->where(function ($query) use ($fecha_inicio, $fecha_fin) {
                     if ($fecha_inicio != '' && $fecha_fin != '') {
-                        $query->whereBetween('factura_venta.created_at', [$fecha_inicio, $fecha_fin]);
+                        $query->whereBetween('factura_venta.fecha_elaboracion', [$fecha_inicio, $fecha_fin]);
                     }
                 })
                 ->orderByRaw('CAST(REPLACE(factura_venta.valor_total, ".", "") AS DECIMAL(10,2)) DESC')
