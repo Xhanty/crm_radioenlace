@@ -417,10 +417,15 @@ class FacturaVentaController extends Controller
     {
         try {
             $cliente = $request->cliente;
-            $numero_factura = $request->numero_factura;
-            $serial = $request->serial;
+            $estado = $request->estado;
+            $producto = $request->producto;
+            $numero_factura = $request->num_factura;
+            $cons_inicio = $request->cons_inicio;
+            $cons_fin = $request->cons_fin;
             $fecha_inicio = $request->fecha_inicio;
             $fecha_fin = $request->fecha_fin;
+            $mayor_menor_mora = $request->mayor_menor_mora;
+            $dia_mora = $request->dia_mora;
 
             if ($numero_factura) {
                 $factura_id = DB::table('factura_venta')
@@ -428,57 +433,61 @@ class FacturaVentaController extends Controller
                     ->where('numero', $numero_factura)
                     ->first();
 
-                return response()->json(['info' => 1, 'token' => $factura_id->id]);
-            }
-
-            if ($serial) {
-                $factura_id = DB::table('detalle_factura_venta')
-                    ->select('factura_id')
-                    ->where('detalle_factura_venta.serial_producto', $serial)
-                    ->first();
-
-                return response()->json(['info' => 1, 'token' => $factura_id->id]);
-            }
-
-            if ($cliente) {
-                if ($fecha_inicio && $fecha_fin) {
-                    $facturas = DB::table('factura_venta')
-                        ->select('factura_venta.*', 'cliente.razon_social', 'cliente.nit', 'cliente.codigo_verificacion')
-                        ->join('cliente', 'cliente.id', '=', 'factura_venta.cliente_id')
-                        ->where('factura_venta.cliente_id', $cliente)
-                        ->whereBetween('factura_venta.created_at', [$fecha_inicio, $fecha_fin])
-                        ->orderByDesc('factura_venta.favorito') // ordenar los favoritos primero
-                        ->orderBy('factura_venta.fecha_elaboracion', 'desc') // luego ordenar por fecha
-                        ->orderBy('factura_venta.id', 'desc')
-                        ->get();
-                } else {
-                    $facturas = DB::table('factura_venta')
-                        ->select('factura_venta.*', 'cliente.razon_social', 'cliente.nit', 'cliente.codigo_verificacion')
-                        ->join('cliente', 'cliente.id', '=', 'factura_venta.cliente_id')
-                        ->where('factura_venta.cliente_id', $cliente)
-                        ->orderByDesc('factura_venta.favorito') // ordenar los favoritos primero
-                        ->orderBy('factura_venta.fecha_elaboracion', 'desc') // luego ordenar por fecha
-                        ->orderBy('factura_venta.id', 'desc')
-                        ->get();
+                if (!$factura_id) {
+                    return response()->json(['info' => 1]);
                 }
 
-                return response()->json(['info' => 1, 'facturas' => $facturas]);
+                return response()->json(['info' => 1, 'token' => $factura_id->id]);
+            }
+
+            $query = DB::table('factura_venta')
+                ->select('factura_venta.*', 'cliente.razon_social', 'cliente.nit', 'cliente.codigo_verificacion')
+                ->join('cliente', 'cliente.id', '=', 'factura_venta.cliente_id')
+                ->orderByDesc('factura_venta.favorito') // ordenar los favoritos primero
+                ->orderBy('factura_venta.fecha_elaboracion', 'desc'); // luego ordenar por fecha
+
+            if ($cliente) {
+                $query->where('factura_venta.cliente_id', $cliente);
+            }
+
+            if ($estado) {
+                $query->where('factura_venta.status', $estado);
+            }
+
+            if ($producto) {
+                $query->whereIn('factura_venta.id', function($subquery) use ($producto) {
+                    $subquery->select('factura_id')
+                        ->from('detalle_factura_venta')
+                        ->where('producto', $producto);
+                });
+            }
+
+            if ($cons_inicio && $cons_fin) {
+                $query->whereBetween('factura_venta.numero', [$cons_inicio, $cons_fin]);
             }
 
             if ($fecha_inicio && $fecha_fin) {
-                $facturas = DB::table('factura_venta')
-                    ->select('factura_venta.*', 'cliente.razon_social', 'cliente.nit', 'cliente.codigo_verificacion')
-                    ->join('cliente', 'cliente.id', '=', 'factura_venta.cliente_id')
-                    ->whereBetween('factura_venta.fecha', [$fecha_inicio, $fecha_fin])
-                    ->orderByDesc('factura_venta.favorito') // ordenar los favoritos primero
-                    ->orderBy('factura_venta.fecha_elaboracion', 'desc') // luego ordenar por fecha
-                    ->orderBy('factura_venta.id', 'desc')
-                    ->get();
-
-                return response()->json(['info' => 1, 'facturas' => $facturas]);
+                $query->whereBetween('factura_venta.created_at', [$fecha_inicio, $fecha_fin]);
             }
 
-            return response()->json(['info' => 0]);
+            if ($mayor_menor_mora && $dia_mora) {
+                if ($mayor_menor_mora == 1) {
+                    // Si es mayor y mirar cuantos días tiene de mora la factura, y los compare con $dia_mora
+                    $query->whereRaw('DATEDIFF(CURDATE(), factura_venta.fecha_elaboracion) > ' . $dia_mora);
+                } elseif ($mayor_menor_mora == 2) {
+                    // Si es menor y mirar cuantos días tiene de mora la factura, y los compare con $dia_mora
+                    $query->whereRaw('DATEDIFF(CURDATE(), factura_venta.fecha_elaboracion) < ' . $dia_mora);
+                }
+            }
+
+
+            $facturas = $query->orderBy('factura_venta.numero', 'desc')->get();
+
+            if ($facturas->isEmpty()) {
+                return response()->json(['info' => 1]);
+            }
+
+            return response()->json(['info' => 1, 'facturas' => $facturas]);
         } catch (Exception $ex) {
             return $ex;
             return response()->json(['info' => 0]);

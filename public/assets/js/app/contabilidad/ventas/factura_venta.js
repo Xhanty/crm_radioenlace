@@ -2161,4 +2161,160 @@ $(document).ready(function () {
         $("#total_reteica_edit").html((valor).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
         $("#total_neto_edit").html((subtotal - valor - reteiva - retefte + iva).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     });
+
+    // Filtros
+    $("#btn_filtrar").on("click", function () {
+        let cliente = $("#cliente_select").val();
+        let estado = $("#estado_select").val();
+        let producto = $("#producto_select").val();
+        let num_factura = $("#num_factura_select").val();
+        let cons_inicio = $("#cons_inicio_select").val();
+        let cons_fin = $("#cons_fin_select").val();
+        let fecha_inicio = $("#fecha_inicio_select").val();
+        let fecha_fin = $("#fecha_fin_select").val();
+        let mayor_menor_mora = $("#mayor_menor_select").val();
+        let dia_mora = $("#dia_mora_select").val();
+
+        // Validar si todos los campos están vacíos
+        if (!cliente && !estado && !producto && !num_factura && !cons_inicio && !cons_fin && !fecha_inicio && !fecha_fin && !mayor_menor_mora && !dia_mora) {
+            toastr.error('Debe ingresar al menos un filtro');
+            return false;
+        }
+
+        if(cons_inicio && !cons_fin){
+            toastr.error('Debe ingresar el consecutivo final');
+            return false;
+        }
+
+        if(!cons_inicio && cons_fin){
+            toastr.error('Debe ingresar el consecutivo inicial');
+            return false;
+        }
+
+        if(fecha_inicio && !fecha_fin){
+            toastr.error('Debe ingresar la fecha final');
+            return false;
+        }
+
+        if(!fecha_inicio && fecha_fin){
+            toastr.error('Debe ingresar la fecha inicial');
+            return false;
+        }
+
+        if(!mayor_menor_mora && dia_mora){
+            toastr.error('Debe ingresar si es mayor o menor');
+            return false;
+        }
+
+        if(mayor_menor_mora && !dia_mora){
+            toastr.error('Debe ingresar los días de mora');
+            return false;
+        }
+
+        $("#modalSelect").modal('hide');
+        $("#global-loader").fadeIn('slow');
+
+        $.ajax({
+            url: "filtrar_facturas_ventas",
+            type: "POST",
+            data: {
+                cliente: cliente,
+                estado: estado,
+                producto: producto,
+                num_factura: num_factura,
+                cons_inicio: cons_inicio,
+                cons_fin: cons_fin,
+                fecha_inicio: fecha_inicio,
+                fecha_fin: fecha_fin,
+                mayor_menor_mora: mayor_menor_mora,
+                dia_mora: dia_mora,
+            },
+            dataType: "JSON",
+            success: function (response) {
+                $("#global-loader").fadeOut('slow');
+                $("#modalSelectFilter").modal('show');
+                if (response.info == 1) {
+                    let token = response.token;
+                    let facturas = response.facturas;
+
+                    if (!token && !facturas) {
+                        toastr.error('No se encontraron facturas');
+                    } else {
+                        if (token) {
+                            toastr.success('Factura filtrada con éxito');
+                            window.open(url_general + 'pdf_factura_venta?token=' + token, '_blank');
+                        } else {
+                            console.log(facturas);
+                            $("#mainInvoiceList").html("");
+
+                            facturas.forEach(function (factura) {
+                                let bg = "";
+                                let favorito = "";
+                                let tipo = "Factura No. FE-";
+                                let mora_html = "";
+
+                                let fechaVencimiento = new Date(factura.fecha_elaboracion);
+                                let fechaActual = new Date();
+                                let diasPasados = Math.floor((fechaActual - fechaVencimiento) / (1000 * 60 * 60 * 24));
+
+                                let color = "";
+                                if (diasPasados < 20) {
+                                    color = "badge-success";
+                                } else if (diasPasados < 28) {
+                                    color = "badge-warning";
+                                } else {
+                                    color = "badge-danger";
+                                }
+
+                                if (factura.status == 0) {
+                                    bg = "bg-cancel";
+                                } else if (factura.status == 2) {
+                                    bg = "bg-paid";
+                                } else {
+                                    bg = "bg-pending";
+                                    mora_html = '<span style="color: white" class="badge ' + color + '">' + diasPasados + '</span>';
+                                }
+
+                                if (factura.favorito == 1) {
+                                    favorito = "fas fa-star orange";
+                                } else {
+                                    favorito = "far fa-star";
+                                }
+
+                                let html = '<div class="media factura_btn ' + bg + '" data-id="' + factura.id + '">' +
+                                    '<div class="media-icon">' +
+                                    '<i class="far fa-file-alt"></i>' +
+                                    '</div>' +
+                                    '<div class="media-body">' +
+                                    '<h6><span>' + tipo + factura.numero + mora_html + '</span>' +
+                                    '<span>' + factura.valor_total +
+                                    '<i data-id="' + factura.id + '" class="' + favorito + ' btn_favorite"></i></span>' +
+                                    '</h6>' +
+                                    '<div>' +
+                                    '<p><span>Fecha:</span>' + factura.fecha_elaboracion + '</p>' +
+                                    '<p>' + factura.razon_social + '(NIT: ' + factura.nit + '-' + factura.codigo_verificacion + ')</p>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>';
+
+                                $("#mainInvoiceList").append(html);
+                            });
+
+                            $(".center-div .pagination").remove();
+                            paginacionFacturas();
+                            $("#content_factura").addClass("d-none");
+                            $("#modalSelectFilter").modal('hide');
+                        }
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error');
+                }
+            },
+            error: function (error) {
+                $("#global-loader").fadeOut('slow');
+                toastr.error('Ha ocurrido un error');
+                $("#modalSelect").modal('show');
+            }
+        });
+    });
 });
