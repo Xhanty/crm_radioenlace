@@ -36,6 +36,11 @@ class FacturaVentaController extends Controller
                 ->where('status', 1)
                 ->get();
 
+            $productos_filtro = DB::table('productos')
+                ->select('id', 'nombre', 'marca', 'modelo')
+                ->where('status', 1)
+                ->get();
+
             foreach ($productos as $key => $producto) {
                 $inventario = DB::table('inventario')
                     ->select('inventario.*')
@@ -124,6 +129,7 @@ class FacturaVentaController extends Controller
                 'facturas',
                 'view_alert',
                 'disabled_fv',
+                'productos_filtro'
             ));
         } catch (Exception $ex) {
             echo $ex->getMessage();

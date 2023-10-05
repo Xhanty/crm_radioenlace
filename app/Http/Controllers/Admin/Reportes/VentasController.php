@@ -16,6 +16,11 @@ class VentasController extends Controller
                 return redirect()->route('home');
             }*/
 
+            $productos = DB::table('productos')
+                ->select('id', 'nombre', 'marca', 'modelo')
+                ->where('status', 1)
+                ->get();
+
             $facturas = DB::table('factura_venta')
                 ->select('factura_venta.*', 'empleados.nombre as empleado', 'empleados.codigo_empleado', 'cliente.nit', 'cliente.codigo_verificacion', 'cliente.razon_social')
                 ->join('empleados', 'factura_venta.created_by', '=', 'empleados.id')
@@ -34,7 +39,7 @@ class VentasController extends Controller
                 ->where('estado', '1')
                 ->get();
 
-            return view('admin.reportes.ventas', compact('facturas', 'empleados', 'clientes'));
+            return view('admin.reportes.ventas', compact('facturas', 'empleados', 'clientes', 'productos'));
         } catch (Exception $ex) {
             return view('errors.500');
         }
@@ -43,8 +48,9 @@ class VentasController extends Controller
     public function filtro(Request $request)
     {
         try {
-            $factura = $request->factura;
             $cliente = $request->cliente;
+            $estado = $request->estado;
+            $producto = $request->producto;
             $empleado = $request->empleado;
             $fecha_inicio = $request->fecha_inicio;
             $fecha_fin = $request->fecha_fin;
@@ -53,14 +59,23 @@ class VentasController extends Controller
                 ->select('factura_venta.*', 'empleados.nombre as empleado', 'empleados.codigo_empleado', 'cliente.nit', 'cliente.codigo_verificacion', 'cliente.razon_social')
                 ->join('empleados', 'factura_venta.created_by', '=', 'empleados.id')
                 ->join('cliente', 'factura_venta.cliente_id', '=', 'cliente.id')
-                ->where(function ($query) use ($factura) {
-                    if ($factura != '') {
-                        $query->where('factura_venta.numero', $factura);
-                    }
-                })
                 ->where(function ($query) use ($cliente) {
                     if ($cliente != '') {
                         $query->where('factura_venta.cliente_id', $cliente);
+                    }
+                })
+                ->where(function ($query) use ($estado) {
+                    if ($estado != '') {
+                        $query->where('factura_venta.status', $estado);
+                    }
+                })
+                ->where(function ($query) use ($producto) {
+                    if ($producto != '') {
+                        $query->whereIn('factura_venta.id', function($subquery) use ($producto) {
+                            $subquery->select('factura_id')
+                                ->from('detalle_factura_venta')
+                                ->where('producto', $producto);
+                        });
                     }
                 })
                 ->where(function ($query) use ($empleado) {

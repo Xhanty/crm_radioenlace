@@ -244,8 +244,7 @@
                                             <td>
                                                 <div class="project-contain">
                                                     <h6 class="mb-1 tx-13"><a target="_blank"
-                                                            href="{{ route('pdf_factura_venta') }}?token={{ $factura->id }}">Factura
-                                                            No.
+                                                            href="{{ route('pdf_factura_venta') }}?token={{ $factura->id }}">FE-
                                                             {{ $factura->numero }}</a>
                                                     </h6>
                                                 </div>
@@ -273,7 +272,7 @@
         </div>
 
         <!-- Modal Filtros -->
-        <div class="modal  fade" id="modalSelect">
+        <div class="modal  fade" id="modalSelectFilter">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
@@ -284,20 +283,36 @@
                     <div class="modal-body">
                         <div class="row row-sm">
                             <div class="col-lg">
-                                <label for="">Número Factura</label>
-                                <input type="number" placeholder="Número Factura" class="form-control"
-                                    id="factura_select">
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row row-sm">
-                            <div class="col-lg">
                                 <label for="">Cliente</label>
                                 <select class="form-select" id="cliente_select">
                                     <option value="">Seleccione un cliente</option>
                                     @foreach ($clientes as $cliente)
                                         <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}
                                             ({{ $cliente->nit }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg">
+                                <label for="">Estado</label>
+                                <select class="form-select" id="estado_select">
+                                    <option value="">Seleccione una opción</option>
+                                    <option value="1">Pendiente</option>
+                                    <option value="2">Pagada</option>
+                                    <!--<option value="0">Anulada</option>-->
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">Producto / Servicio</label>
+                                <select class="form-select" id="producto_select">
+                                    <option value="">Seleccione un cliente</option>
+                                    @foreach ($productos as $producto)
+                                        <option value="{{ $producto->id }}">
+                                            {{ $producto->nombre }}
+                                            ({{ $producto->marca }} - {{ $producto->modelo }})
                                         </option>
                                     @endforeach
                                 </select>
@@ -335,7 +350,7 @@
             </div>
         </div>
 
-        <a href="javascript:void(0);" class="btn-flotante" data-bs-target="#modalSelect" data-bs-toggle="modal"
+        <a href="javascript:void(0);" class="btn-flotante" data-bs-target="#modalSelectFilter" data-bs-toggle="modal"
             data-bs-effect="effect-scale">Filtros</a>
     </div>
 @endsection

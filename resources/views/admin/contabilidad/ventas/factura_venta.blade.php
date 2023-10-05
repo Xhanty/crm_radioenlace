@@ -987,7 +987,7 @@ reportarse en las centrales de crédito.</textarea>
                             <label for="">Producto / Servicio</label>
                             <select class="form-select" id="producto_select">
                                 <option value="">Seleccione una opción</option>
-                                @foreach ($productos as $producto)
+                                @foreach ($productos_filtro as $producto)
                                     <option value="{{ $producto->id }}">
                                         {{ $producto->nombre }}
                                         ({{ $producto->marca }} - {{ $producto->modelo }})

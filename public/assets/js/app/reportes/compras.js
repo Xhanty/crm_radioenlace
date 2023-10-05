@@ -41,6 +41,23 @@ $(document).ready(function () {
         let fecha_inicio = $("#inicio_select").val();
         let fecha_fin = $("#fin_select").val();
 
+        // Validar que se ingrese al menos un filtro
+        if (factura == '' && proveedor == '' && empleado == '' && fecha_inicio == '' && fecha_fin == '') {
+            toastr.error("Debe ingresar al menos un filtro");
+            return;
+        }
+
+        // Validar que la fecha de inicio no sea mayor a la fecha de fin
+        if (fecha_inicio != '' && fecha_fin != '') {
+            let fecha_inicio = new Date($("#inicio_select").val());
+            let fecha_fin = new Date($("#fin_select").val());
+
+            if (fecha_inicio > fecha_fin) {
+                toastr.error("La fecha de inicio no puede ser mayor a la fecha de fin");
+                return false;
+            }
+        }
+
         $("#btn_filtrar").attr("disabled", true);
         $("#btn_filtrar").html(
             '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Cargando...'

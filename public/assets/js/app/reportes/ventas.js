@@ -35,11 +35,29 @@ $(document).ready(function () {
     $(".open-toggle").trigger("click");
 
     $("#btn_filtrar").click(function () {
-        let factura = $("#factura_select").val();
         let cliente = $("#cliente_select").val();
+        let estado = $("#estado_select").val();
+        let producto = $("#producto_select").val();
         let empleado = $("#empleado_select").val();
         let fecha_inicio = $("#inicio_select").val();
         let fecha_fin = $("#fin_select").val();
+
+        // Validar que ingresen al menos un filtro
+        if (cliente == "" && estado == "" && producto == "" && empleado == "" && fecha_inicio == "" && fecha_fin == "") {
+            toastr.error("Debe ingresar al menos un filtro");
+            return false;
+        }
+
+        // Validar que la fecha de inicio no sea mayor a la fecha de fin
+        if (fecha_inicio != "" && fecha_fin != "") {
+            let fecha_inicio = new Date($("#inicio_select").val());
+            let fecha_fin = new Date($("#fin_select").val());
+
+            if (fecha_inicio > fecha_fin) {
+                toastr.error("La fecha de inicio no puede ser mayor a la fecha de fin");
+                return false;
+            }
+        }
 
         $("#btn_filtrar").attr("disabled", true);
         $("#btn_filtrar").html(
@@ -49,8 +67,9 @@ $(document).ready(function () {
             url: "reportes_ventas_filtro",
             type: "POST",
             data: {
-                factura: factura,
                 cliente: cliente,
+                estado: estado,
+                producto: producto,
                 empleado: empleado,
                 fecha_inicio: fecha_inicio,
                 fecha_fin: fecha_fin,
@@ -60,7 +79,7 @@ $(document).ready(function () {
                     let data = response.data;
                     clearAll();
                     printData(data)
-                    $("#modalSelect").modal("hide");
+                    $("#modalSelectFilter").modal("hide");
                 } else {
                     toasr.error("Error al filtrar los datos");
                 }
@@ -145,21 +164,18 @@ $(document).ready(function () {
             let fecha_elaboracion = new Date(factura.fecha_elaboracion);
             fecha_elaboracion = fecha_elaboracion.toLocaleDateString("es-ES", opciones_date);
 
-            let fecha_vencimiento = new Date(factura.fecha_vencimiento);
-            fecha_vencimiento = fecha_vencimiento.toLocaleDateString("es-ES", opciones_date);
-
             $("#tbl_data_facturas tbody").append(
                 '<tr>' +
                 '<td>' + count + '</td>' +
                 '<td><div class="project-contain">' +
                 '<h6 class="mb-1 tx-13">' +
-                '<a target="_blank" href="' + url_general + 'pdf_factura_compra?token=' + factura.id + '">Factura No.' + factura.numero + '</a>' +
+                '<a target="_blank" href="' + url_general + 'pdf_factura_venta?token=' + factura.id + '">FE-' + factura.numero + '</a>' +
                 '</h6>' +
                 '</div>' +
+                '</td>' +
                 '<td>' + factura.razon_social + ' (' + factura.nit + '-' + factura
                     .codigo_verificacion + ')' + '</td>' +
                 '<td>' + fecha_elaboracion + '</td>' +
-                '<td>' + fecha_vencimiento + '</td>' +
                 '<td>' + factura.valor_total + '</td>' +
                 '<td>' + estado + '</td>' +
                 '</tr>'

@@ -2211,6 +2211,17 @@ $(document).ready(function () {
             return false;
         }
 
+        // Validar que la fecha de inicio no sea mayor a la fecha de fin
+        if (fecha_inicio && fecha_fin) {
+            let fecha_inicio = new Date($("#fecha_inicio_select").val());
+            let fecha_fin = new Date($("#fecha_fin_select").val());
+
+            if (fecha_inicio > fecha_fin) {
+                toastr.error("La fecha de inicio no puede ser mayor a la fecha de fin");
+                return false;
+            }
+        }
+
         $("#modalSelect").modal('hide');
         $("#global-loader").fadeIn('slow');
 
