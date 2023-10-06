@@ -103,7 +103,7 @@
                                     <div class="col-lg-3">
                                         <label for="">Valor Pagado</label>
                                         <input class="form-control input_dinner" style="text-align: right;" value="0.00"
-                                            id="valor_add" placeholder="Número" type="text">
+                                            id="valor_add" placeholder="Valor Pagado" type="text">
                                     </div>
                                 </div>
                                 <div class="row row-sm mt-3">

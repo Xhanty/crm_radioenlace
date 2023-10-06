@@ -198,7 +198,8 @@
                     <div class="card card-invoice">
                         <div class="card-header ps-3 pe-3 pt-3 pb-0 d-flex-header-table">
                             <div class="div-1-tables-header">
-                                <h3 class="card-title">Facturas de venta</h3>
+                                <h3 class="card-title">Facturas de venta <badge
+                                        class="badge" style="background: #007bff; color: white;" id="cant_facturas">{{ count($facturas) }}</badge></h3>
                             </div>
                             <div class="div-2-tables-header" style="margin-bottom: 13px">
                                 <button @if ($disabled_fv == 1) disabled @endif class="btn btn-primary"
@@ -269,7 +270,7 @@
                                                     $color = 'badge-danger';
                                                 }
                                             @endphp
-                                            <h6><span>Factura No. FE-{{ $factura->numero }}@if($bg == 'bg-pending')<badge
+                                            <h6><span>FE-{{ $factura->numero }}@if($bg == 'bg-pending')<badge
                                                         class="badge {{ $color }}">{{ $dias_pasados }}</badge>@endif</span>
                                                 <span>{{ $factura->valor_total }}
                                                     @if ($factura->favorito == 0)
@@ -1058,7 +1059,7 @@ reportarse en las centrales de crédito.</textarea>
                         </div>
                         <div class="col-lg">
                             <label for="">Días de elaboración</label>
-                            <input type="number" placeholder="Día de mora" class="form-control" id="dia_mora_select">
+                            <input type="number" placeholder="Días de elaboración" class="form-control" id="dia_mora_select">
                         </div>
                     </div>
                     <br>

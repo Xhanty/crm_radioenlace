@@ -433,24 +433,14 @@ class FacturaVentaController extends Controller
             $mayor_menor_mora = $request->mayor_menor_mora;
             $dia_mora = $request->dia_mora;
 
-            if ($numero_factura) {
-                $factura_id = DB::table('factura_venta')
-                    ->select('id')
-                    ->where('numero', $numero_factura)
-                    ->first();
-
-                if (!$factura_id) {
-                    return response()->json(['info' => 1]);
-                }
-
-                return response()->json(['info' => 1, 'token' => $factura_id->id]);
-            }
-
             $query = DB::table('factura_venta')
                 ->select('factura_venta.*', 'cliente.razon_social', 'cliente.nit', 'cliente.codigo_verificacion')
                 ->join('cliente', 'cliente.id', '=', 'factura_venta.cliente_id')
-                ->orderByDesc('factura_venta.favorito') // ordenar los favoritos primero
-                ->orderBy('factura_venta.fecha_elaboracion', 'desc'); // luego ordenar por fecha
+                ->orderBy('factura_venta.numero', 'desc'); // luego consecutivo
+
+            if ($numero_factura) {
+                $query->where('factura_venta.numero', $numero_factura);
+            }
 
             if ($cliente) {
                 $query->where('factura_venta.cliente_id', $cliente);
@@ -461,7 +451,7 @@ class FacturaVentaController extends Controller
             }
 
             if ($producto) {
-                $query->whereIn('factura_venta.id', function($subquery) use ($producto) {
+                $query->whereIn('factura_venta.id', function ($subquery) use ($producto) {
                     $subquery->select('factura_id')
                         ->from('detalle_factura_venta')
                         ->where('producto', $producto);
@@ -485,7 +475,6 @@ class FacturaVentaController extends Controller
                     $query->whereRaw('DATEDIFF(CURDATE(), factura_venta.fecha_elaboracion) < ' . $dia_mora);
                 }
             }
-
 
             $facturas = $query->orderBy('factura_venta.numero', 'desc')->get();
 

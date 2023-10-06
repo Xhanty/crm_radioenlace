@@ -2257,11 +2257,12 @@ $(document).ready(function () {
                         } else {
                             console.log(facturas);
                             $("#mainInvoiceList").html("");
+                            $("#cant_facturas").html(facturas.length);
 
                             facturas.forEach(function (factura) {
                                 let bg = "";
                                 let favorito = "";
-                                let tipo = "Factura No. FE-";
+                                let tipo = "FE-";
                                 let mora_html = "";
 
                                 let fechaVencimiento = new Date(factura.fecha_elaboracion);
