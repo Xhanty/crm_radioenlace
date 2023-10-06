@@ -111,7 +111,7 @@ $(document).ready(function () {
             '</td>' +
             '<td class="pad-4">' +
             '<input type="text" placeholder="Valor Unitario" value="0.00"' +
-            'class="form-control text-end valor_add input_dinner"' +
+            'class="form-control text-end valor_add input_dinner_valor"' +
             'style="border: 0">' +
             '</td>' +
             '<td class="pad-4">' +
@@ -363,6 +363,25 @@ $(document).ready(function () {
 
     $(document).on("keyup", ".input_dinner", function () {
         let v = $(this).val().replace(/\D+/g, '');
+        if (v.length > 14) v = v.slice(0, 14);
+        $(this).val(
+            v.replace(/(\d)(\d\d)$/, "$1,$2")
+                .replace(/(^\d{1,3}|\d{3})(?=(?:\d{3})+(?:,|$))/g, '$1.'));
+    });
+
+    $(document).on("keyup", ".input_dinner_valor", function () {
+        $(this).val(function (index, value) {
+            return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        });
+    });
+
+    $(document).on("change", ".input_dinner_valor", function () {
+        let valor = $(this).val();
+        valor = valor.replaceAll('.', '');
+        valor = parseInt(valor);
+        valor = valor + "00";
+
+        let v = valor.replace(/\D+/g, '');
         if (v.length > 14) v = v.slice(0, 14);
         $(this).val(
             v.replace(/(\d)(\d\d)$/, "$1,$2")

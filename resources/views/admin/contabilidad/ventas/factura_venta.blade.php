@@ -507,7 +507,7 @@
                                                 </td>
                                                 <td class="pad-4">
                                                     <input type="text" placeholder="Valor Unitario" value="0.00"
-                                                        class="form-control text-end valor_add input_dinner"
+                                                        class="form-control text-end valor_add input_dinner_valor"
                                                         style="border: 0">
                                                 </td>
                                                 <td class="pad-4">
