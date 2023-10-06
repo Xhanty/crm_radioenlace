@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Contabilidad\Ventas;
 
+use App\Exports\FacturasVentaExcel;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FacturaVentaController extends Controller
 {
@@ -535,6 +537,37 @@ class FacturaVentaController extends Controller
         } catch (Exception $ex) {
             return $ex;
             return response()->json(['info' => 0]);
+        }
+    }
+
+    public function pdf_export(Request $request)
+    {
+        $facturas = DB::table('factura_venta')
+            ->select('factura_venta.*', 'cliente.razon_social', 'cliente.nit', 'cliente.codigo_verificacion')
+            ->join('cliente', 'cliente.id', '=', 'factura_venta.cliente_id')
+            ->orderBy('factura_venta.numero', 'desc')
+            ->get();
+        
+        if ($facturas->isEmpty()) {
+            return view('errors.404');
+        } else {
+            return view('admin.contabilidad.ventas.pdf.factura_venta_export', compact('facturas'));
+        }
+    }
+
+    public function excel(Request $request)
+    {
+        $facturas = DB::table('factura_venta')
+            ->select('factura_venta.*', 'cliente.razon_social', 'cliente.nit', 'cliente.codigo_verificacion')
+            ->join('cliente', 'cliente.id', '=', 'factura_venta.cliente_id')
+            ->orderBy('factura_venta.numero', 'desc')
+            ->get();
+
+        if ($facturas->isEmpty()) {
+            return response()->json(['info' => 0, 'error' => 'No hay facturas de venta para exportar']);
+        } else {
+            $data = $facturas->toArray();
+            return Excel::download(new FacturasVentaExcel($data), 'Facturas de venta.xlsx');
         }
     }
 }

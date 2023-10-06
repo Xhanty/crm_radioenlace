@@ -372,6 +372,8 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/anular_factura_venta', [App\Http\Controllers\Admin\Contabilidad\Ventas\FacturaVentaController::class, 'anular'])->name('anular_factura_venta');
     Route::post('/favorito_factura_venta', [App\Http\Controllers\Admin\Contabilidad\Ventas\FacturaVentaController::class, 'favorito'])->name('favorito_factura_venta');
     Route::post('/visto_bueno_factura_venta', [App\Http\Controllers\Admin\Contabilidad\Ventas\FacturaVentaController::class, 'visto_bueno'])->name('visto_bueno_factura_venta');
+    Route::get('/pdf_factura_venta', [App\Http\Controllers\Admin\Contabilidad\Ventas\FacturaVentaController::class, 'pdf_export'])->name('pdf_factura_venta');
+    Route::get('/excel_factura_venta', [App\Http\Controllers\Admin\Contabilidad\Ventas\FacturaVentaController::class, 'excel'])->name('excel_factura_venta');
 
     // RECIBO PAGO
     Route::get('/recibo_pago', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'index'])->name('recibo_pago');
