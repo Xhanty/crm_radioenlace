@@ -3,11 +3,16 @@
 namespace App\Exports;
 
 use Carbon\Carbon;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithTitle;
+use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class FacturasVentaExcel implements FromCollection, WithHeadings
+class FacturasVentaExcel implements WithMultipleSheets
 {
+    use Exportable;
+
     protected $data;
 
     public function __construct($data)
@@ -15,47 +20,14 @@ class FacturasVentaExcel implements FromCollection, WithHeadings
         $this->data = $data;
     }
 
-    public function collection()
+    public function sheets(): array
     {
-        // Transformar los datos para mostrar las columnas
-        return $this->transformData();
-    }
-
-    public function headings(): array
-    {
-        // Definir los títulos de las columnas
-        return [
-            'Factura',
-            'Identificación',
-            'Razón Social',
-            'Valor',
-            'Estado',
-            'Fecha Elaboración'
+        // Crear una segunda hoja para los detalles de las facturas
+        $sheets = [
+            new FacturaVentaSheet($this->data),
+            new DetallesFacturaSheet($this->data),
         ];
-    }
 
-    protected function transformData()
-    {
-        // Crear una colección transformada
-        return collect($this->data)->map(function ($item) {
-            $status = $item->status;
-
-            if ($status == 2) {
-                $status = "Pagada";
-            } else if ($status == 0) {
-                $status = "Anulada";
-            } else {
-                $status = "Pendiente";
-            }
-
-            return [
-                "FE-" . $item->numero,
-                $item->nit . "-" . $item->codigo_verificacion,
-                $item->razon_social,
-                $item->valor_total,
-                $status,
-                Carbon::parse($item->fecha_elaboracion)->format('d-m-Y'), // Formato de fecha
-            ];
-        });
+        return $sheets;
     }
 }

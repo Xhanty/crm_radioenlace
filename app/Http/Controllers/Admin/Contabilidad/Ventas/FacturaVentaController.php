@@ -577,6 +577,22 @@ class FacturaVentaController extends Controller
                 ->get();
         }
 
+        // Recorrer las facturas y agregar los productos
+        foreach ($facturas as $key => $factura) {
+            $factura->detalle = DB::table('detalle_factura_venta')
+                ->where('detalle_factura_venta.factura_id', $factura->id)
+                ->get();
+
+            foreach ($factura->detalle as $key => $producto) {
+                if ($producto->producto) {
+                    $producto->producto = DB::table('productos')
+                        ->select('nombre', 'marca', 'modelo')
+                        ->where('id', $producto->producto)
+                        ->first();
+                }
+            }
+        }
+
         if ($facturas->isEmpty()) {
             return response()->json(['info' => 0, 'error' => 'No hay facturas de venta para exportar']);
         } else {
