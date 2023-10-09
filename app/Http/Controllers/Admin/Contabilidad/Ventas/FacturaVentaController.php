@@ -18,6 +18,9 @@ class FacturaVentaController extends Controller
                 return redirect()->route('home');
             }
 
+            // Eliminar la sesión de la consulta
+            session()->forget('facturas_venta_filtro');
+
             $resolucion = DB::table('resolucion_dian')
                 ->where('documento', 1)
                 ->first();
@@ -424,6 +427,9 @@ class FacturaVentaController extends Controller
     public function filtro(Request $request)
     {
         try {
+            // Eliminar la sesión de la consulta anterior
+            session()->forget('facturas_venta_filtro');
+
             $cliente = $request->cliente;
             $estado = $request->estado;
             $producto = $request->producto;
@@ -483,6 +489,9 @@ class FacturaVentaController extends Controller
             if ($facturas->isEmpty()) {
                 return response()->json(['info' => 1]);
             }
+
+            // Guardar la consulta en una sesión
+            session()->put('facturas_venta_filtro', $facturas);
 
             return response()->json(['info' => 1, 'facturas' => $facturas]);
         } catch (Exception $ex) {
@@ -557,11 +566,16 @@ class FacturaVentaController extends Controller
 
     public function excel(Request $request)
     {
-        $facturas = DB::table('factura_venta')
-            ->select('factura_venta.*', 'cliente.razon_social', 'cliente.nit', 'cliente.codigo_verificacion')
-            ->join('cliente', 'cliente.id', '=', 'factura_venta.cliente_id')
-            ->orderBy('factura_venta.numero', 'desc')
-            ->get();
+        //Validar si existe la sesión de la consulta
+        if (session()->has('facturas_venta_filtro')) {
+            $facturas = session('facturas_venta_filtro');
+        } else {
+            $facturas = DB::table('factura_venta')
+                ->select('factura_venta.*', 'cliente.razon_social', 'cliente.nit', 'cliente.codigo_verificacion')
+                ->join('cliente', 'cliente.id', '=', 'factura_venta.cliente_id')
+                ->orderBy('factura_venta.numero', 'desc')
+                ->get();
+        }
 
         if ($facturas->isEmpty()) {
             return response()->json(['info' => 0, 'error' => 'No hay facturas de venta para exportar']);
