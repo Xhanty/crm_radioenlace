@@ -23,9 +23,12 @@ class DetallesFacturaSheet implements FromArray, WithHeadings, WithTitle
             foreach ($item->detalle as $detalle) {
                 $detalleData[] = [
                     "Factura" => "FE-" . $item->numero,
+                    "Identificación" => $item->nit . "-" . $item->codigo_verificacion,
+                    "Razón Social" => $item->razon_social,
                     "Producto/Servicio" => $detalle->producto->nombre . " (" . $detalle->producto->marca . " - " . $detalle->producto->modelo . ")",
                     "Cantidad" => $detalle->cantidad,
-                    "Valor" => $detalle->valor_total,
+                    "Iva" => $detalle->impuesto_cargo . "%" ?? 0 . "%",
+                    "Valor Total" => $detalle->valor_total,
                 ];
             }
         }
@@ -38,9 +41,12 @@ class DetallesFacturaSheet implements FromArray, WithHeadings, WithTitle
         // Definir los títulos de las columnas para la segunda hoja (Detalles de Factura)
         return [
             "Factura",
+            'Identificación',
+            'Razón Social',
             "Producto/Servicio",
             "Cantidad",
-            "Valor",
+            "Iva",
+            "Valor Total",
         ];
     }
 
