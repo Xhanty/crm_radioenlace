@@ -7,6 +7,18 @@
     <link rel="stylesheet" href="{{ asset('pdf/style.css') }}">
     <title>Factura Venta No. {{ $factura->numero }}</title>
 </head>
+<style>
+    .descrip-personalizado {
+        font-size: 12px;
+        text-transform: lowercase;
+        /* Convierte todo el texto en minúsculas */
+    }
+
+    .descrip-personalizado::first-letter {
+        text-transform: uppercase;
+        /* Convierte la primera letra en mayúscula */
+    }
+</style>
 
 <body>
     <div class="tm_container">
@@ -209,17 +221,23 @@
                                                 <td class="tm_width_1 tm_accent_border_20 tm_text_center">
                                                     {{ $count }}
                                                 </td>
-                                                <td class="tm_width_6 tm_accent_border_20 tm_text_center" style="text-align: justify">
-                                                    <b>{{ $item->detalle->nombre }} (@if($item->detalle->marca) {{ $item->detalle->marca }} - @endif{{ $item->detalle->modelo }})</b>
-                                                        <br><small>{{ $item->detalle->description }}</small>
+                                                <td class="tm_width_6 tm_accent_border_20 tm_text_center"
+                                                    style="text-align: justify">
+                                                    <b>{{ $item->detalle->nombre }} (@if ($item->detalle->marca)
+                                                            {{ $item->detalle->marca }} -
+                                                        @endif{{ $item->detalle->modelo }})</b>
+                                                    <br><p
+                                                        class="descrip-personalizado">{{ $item->detalle->description }}</p>
                                                 </td>
                                                 <td class="tm_width_1 tm_accent_border_20 tm_text_center">
                                                     {{ $item->cantidad }}</td>
                                                 <td class="tm_width_1 tm_accent_border_20 tm_text_center">
                                                     {{ $item->valor_unitario }}</td>
-                                                <td style="display: none" class="tm_width_1 tm_accent_border_20 tm_text_center">
+                                                <td style="display: none"
+                                                    class="tm_width_1 tm_accent_border_20 tm_text_center">
                                                     {{ $item->impuesto_cargo }}%</td>
-                                                <td style="display: none" class="tm_width_1 tm_accent_border_20 tm_text_center">
+                                                <td style="display: none"
+                                                    class="tm_width_1 tm_accent_border_20 tm_text_center">
                                                     {{ $item->impuesto_retencion }}%</td>
                                                 <td class="tm_width_1 tm_accent_border_20 tm_text_right">
                                                     {{ $item->valor_total }}</td>
@@ -239,7 +257,8 @@
                                 <p class="tm_m0" id="valor_txt">Cargando...</p>
                                 <br>
                                 <p class="tm_mb2"><b class="tm_primary_color">Condiciones de Pago:</b></p>
-                                <p class="tm_m0">Otras cuentas por pagar - Cuota No. 001 vence el {{ date('d/m/Y', strtotime($factura->fecha_elaboracion . ' +30 days')) }}</p>
+                                <p class="tm_m0">Otras cuentas por pagar - Cuota No. 001 vence el
+                                    {{ date('d/m/Y', strtotime($factura->fecha_elaboracion . ' +30 days')) }}</p>
                                 <div class="tm_text_left">
                                     <!--<img src="{{ asset('RadioEnlaceQr.png') }}" width="120px">
                                     <br>
@@ -274,17 +293,17 @@
                                         @php
                                             $impuestos_1 = $factura->impuestos_1 == 'null' ? [] : $factura->impuestos_1;
                                             $impuestos_2 = $factura->impuestos_2 == 'null' ? [] : $factura->impuestos_2;
-
+                                            
                                             $subtotal = $factura->subtotal;
                                             // Eliminar los dos ceros del final
                                             $subtotal = rtrim($subtotal, '0');
-
+                                            
                                             // Reemplazar comas y puntos
                                             $subtotal = str_replace(',', '', $subtotal);
                                             $subtotal = str_replace('.', '', $subtotal);
-
+                                            
                                             // Convertir a entero
-                                            $subtotal_num = (int)$subtotal;
+                                            $subtotal_num = (int) $subtotal;
                                             $sum_impuestos_1 = 0;
                                             
                                             if ($impuestos_1) {
@@ -323,9 +342,9 @@
                                             }
                                         @endphp
 
-                                        @if($factura->valor_retefuente)
+                                        @if ($factura->valor_retefuente)
                                             @php
-                                                $valor_rtefte = ($subtotal_num * ($factura->valor_retefuente / 100));
+                                                $valor_rtefte = $subtotal_num * ($factura->valor_retefuente / 100);
                                             @endphp
                                             <tr>
                                                 <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">Rte Fte
@@ -335,9 +354,9 @@
                                                     {{ number_format(intval($valor_rtefte), 2, ',', '.') }}</td>
                                             </tr>
                                         @endif
-                                        @if($factura->valor_reteiva)
+                                        @if ($factura->valor_reteiva)
                                             @php
-                                                $valor_rteiva = ($sum_impuestos_1 * ($factura->valor_reteiva / 100));
+                                                $valor_rteiva = $sum_impuestos_1 * ($factura->valor_reteiva / 100);
                                             @endphp
                                             <tr>
                                                 <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">Rte Iva
@@ -347,16 +366,16 @@
                                                     {{ number_format(intval($valor_rteiva), 2, ',', '.') }}</td>
                                             </tr>
                                         @endif
-                                        @if($factura->valor_reteica)
+                                        @if ($factura->valor_reteica)
                                             @php
-                                                $valor_rteica = (($subtotal_num * $factura->valor_reteica) / 1000);
+                                                $valor_rteica = ($subtotal_num * $factura->valor_reteica) / 1000;
                                             @endphp
                                             <tr>
                                                 <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">Rte Ica
                                                 </td>
                                                 <td
                                                     class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
-                                                    {{ number_format(intval($valor_rteica), 2, ',', '.')}}</td>
+                                                    {{ number_format(intval($valor_rteica), 2, ',', '.') }}</td>
                                             </tr>
                                         @endif
                                         <tr class="tm_accent_border_20 tm_border">
@@ -373,7 +392,8 @@
                             </div>
                         </div>
                         @if ($factura->observaciones != null)
-                            <p class="tm_mb2" style="margin-top: -44px"><b class="tm_primary_color">Observaciones:</b></p>
+                            <p class="tm_mb2" style="margin-top: -44px"><b
+                                    class="tm_primary_color">Observaciones:</b></p>
                             <p class="tm_m0" style="font-size: 13px">{{ $factura->observaciones }}</p>
                         @endif
 
@@ -388,23 +408,23 @@
                         <div class="tm_bottom_invoice_left">
                             <p class="tm_m0 tm_f11 tm_text_center" style="text-align: justify">
                                 Esta factura de Venta constituye título valor según el artículo 5 de la ley 1231 del
-                                    17
-                                    de Julio de 2008 - El no pago de esta generará intereses por mora, mensual a la tasa
-                                    máxima legal autorizada. En caso de NO PAGO se procederá a reportarse en las
-                                    centrales
-                                    de crédito.
-                                    Resolución DIAN 18764046586505 prefijo FE numeración Autorizada del 3823 al 4000
-                                    Fecha
-                                    23/09/21 Vigencia: 12 Meses.
-                                    Responsable de IVA - Actividad Económica 4741 Comercio al por menor de computadores,
-                                    equipos periféricos, programas de informática y equipos de telecomunicaciones en
-                                    establecimientos especializados Tarifa 4. Autorretenedores de ICA en el municipio de
-                                    Medellín según Resolución 202050056223 de 2020
-                                    Favor abstenerse de practicar Retención por concepto de ICA.
-                                    VR05 VERSIÓN: 01 06/01/2020
-                                    FAVOR CONSIGNAR EN LA CUENTA DE AHORROS BANCOLOMBIA 10825335162 A
-                                    NOMBRE DE RADIO ENLACE S.A.S.
-                                    Enviar comprobante de pago al correo facturacionelectronica@radioenlacesas.com
+                                17
+                                de Julio de 2008 - El no pago de esta generará intereses por mora, mensual a la tasa
+                                máxima legal autorizada. En caso de NO PAGO se procederá a reportarse en las
+                                centrales
+                                de crédito.
+                                Resolución DIAN 18764046586505 prefijo FE numeración Autorizada del 3823 al 4000
+                                Fecha
+                                23/09/21 Vigencia: 12 Meses.
+                                Responsable de IVA - Actividad Económica 4741 Comercio al por menor de computadores,
+                                equipos periféricos, programas de informática y equipos de telecomunicaciones en
+                                establecimientos especializados Tarifa 4. Autorretenedores de ICA en el municipio de
+                                Medellín según Resolución 202050056223 de 2020
+                                Favor abstenerse de practicar Retención por concepto de ICA.
+                                VR05 VERSIÓN: 01 06/01/2020
+                                FAVOR CONSIGNAR EN LA CUENTA DE AHORROS BANCOLOMBIA 10825335162 A
+                                NOMBRE DE RADIO ENLACE S.A.S.
+                                Enviar comprobante de pago al correo facturacionelectronica@radioenlacesas.com
                                 <br>
                                 <br>
                             </p>

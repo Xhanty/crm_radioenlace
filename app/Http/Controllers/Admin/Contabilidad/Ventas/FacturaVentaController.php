@@ -442,7 +442,7 @@ class FacturaVentaController extends Controller
             $dia_mora = $request->dia_mora;
 
             $query = DB::table('factura_venta')
-                ->select('factura_venta.*', 'cliente.razon_social', 'cliente.nit', 'cliente.codigo_verificacion')
+                ->select('factura_venta.*', 'cliente.razon_social', 'cliente.nit', 'cliente.codigo_verificacion', 'cliente.ciudad', 'cliente.telefono_fijo', 'cliente.direccion')
                 ->join('cliente', 'cliente.id', '=', 'factura_venta.cliente_id')
                 ->orderBy('factura_venta.numero', 'desc'); // luego consecutivo
 
@@ -551,16 +551,44 @@ class FacturaVentaController extends Controller
 
     public function pdf_export(Request $request)
     {
-        $facturas = DB::table('factura_venta')
-            ->select('factura_venta.*', 'cliente.razon_social', 'cliente.nit', 'cliente.codigo_verificacion')
-            ->join('cliente', 'cliente.id', '=', 'factura_venta.cliente_id')
-            ->orderBy('factura_venta.numero', 'desc')
-            ->get();
-        
-        if ($facturas->isEmpty()) {
-            return view('errors.404');
-        } else {
-            return view('admin.contabilidad.ventas.pdf.factura_venta_export', compact('facturas'));
+        try {
+            //Validar si existe la sesión de la consulta
+            if (session()->has('facturas_venta_filtro')) {
+                $facturas = session('facturas_venta_filtro');
+            } else {
+                $facturas = DB::table('factura_venta')
+                    ->select('factura_venta.*', 'cliente.razon_social', 'cliente.nit', 'cliente.codigo_verificacion', 'cliente.ciudad', 'cliente.telefono_fijo', 'cliente.direccion')
+                    ->join('cliente', 'cliente.id', '=', 'factura_venta.cliente_id')
+                    ->orderBy('factura_venta.numero', 'desc')
+                    ->get();
+            }
+
+            $ultima_factura = $facturas->first()->numero;
+
+            // Recorrer las facturas y agregar los productos
+            foreach ($facturas as $key => $factura) {
+                $factura->productos = DB::table('detalle_factura_venta')
+                    ->where('detalle_factura_venta.factura_id', $factura->id)
+                    ->get();
+
+                foreach ($factura->productos as $key => $producto) {
+                    if ($producto->producto) {
+                        $producto->detalle = DB::table('productos')
+                            ->select('productos.nombre', 'productos.marca', 'productos.modelo', 'detalle_factura_venta.description')
+                            ->join('detalle_factura_venta', 'detalle_factura_venta.producto', '=', 'productos.id')
+                            ->where('productos.id', $producto->producto)
+                            ->first();
+                    }
+                }
+            }
+
+            if ($facturas->isEmpty()) {
+                return view('errors.404');
+            } else {
+                return view('admin.contabilidad.ventas.pdf.factura_venta_export', compact('facturas', 'ultima_factura'));
+            }
+        } catch (Exception $ex) {
+            return view('errors.500');
         }
     }
 

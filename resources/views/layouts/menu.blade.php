@@ -328,7 +328,6 @@
                                                     <li><a class="sub-side-menu__item"
                                                             href="{{ route('factura_compra') }}">Facturación</a>
                                                     </li>
-                                                @endif
                                                 <li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
                                                         Crédito</a>
                                                 </li>
@@ -339,6 +338,7 @@
                                                         href="{{ route('comprobantes_egresos') }}">Comprobante
                                                         Egreso</a>
                                                 </li>
+                                                @endif
                                             </ul>
                                         </li>
                                         <li class="sub-slide">
