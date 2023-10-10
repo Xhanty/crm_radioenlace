@@ -237,7 +237,7 @@
 
             @for ($i = 0; $i < count($productos); $i++) @if ($i==count($productos) - 1) <tr>
                 <td style="text-align: center; padding-top: 2%;">
-                    <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}" style="width:100%; max-width:100px; max-height: 120px">
+                    <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}" style="width:70%; max-width:90px; max-height: 110px">
                 </td>
                 <td style="text-align: center; padding-top: 3%;">
                     <b>{{ $productos[$i]->producto }}</b><br>
@@ -260,7 +260,7 @@
                 @else
                 <tr>
                     <td style="text-align: center; padding-top: 2%;">
-                        <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}" style="width:100%; max-width:100px; max-height: 120px">
+                        <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}" style="width:70%; max-width:90px; max-height: 110px">
                     </td>
                     <td style="text-align: center; padding-top: 3%;">
                         <b>{{ $productos[$i]->producto }}</b> <br>
