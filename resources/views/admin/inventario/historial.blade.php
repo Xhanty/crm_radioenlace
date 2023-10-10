@@ -23,6 +23,10 @@
                 <div class="card custom-card">
                     <div class="card-body">
                         <div class="vtimeline">
+                            <!-- Check Visto Bueno -->
+                            <input type="hidden" id="id_serial" disabled value="{{ $id }}">
+                            <input type="checkbox" class="form-check-input" id="visto_bueno"
+                                value="1" style="position: absolute; top: -16px; right: 14px;" @if ($inventario->visto_bueno == 1) checked @endif>
                             @foreach ($inventario->movimientos as $key => $value)
                                 @php
                                     $title = '';
@@ -46,12 +50,6 @@
                                         $title = 'Reparación';
                                     }
                                 @endphp
-                                <!-- Check Visto Bueno -->
-                                <input type="hidden" id="id_serial" disabled value="{{ $id }}">
-                                @if ($key == count($inventario->movimientos) - 1)
-                                    <input type="checkbox" class="form-check-input" id="visto_bueno"
-                                    value="1" style="position: absolute; top: 17px; right: 14px;" @if ($inventario->visto_bueno == 1) checked @endif>
-                                @endif
                                 @if ($key % 2 === 0)
                                     <div class="timeline-wrapper timeline-wrapper-primary">
                                         <div class="timeline-badge"></div>
