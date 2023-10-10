@@ -416,6 +416,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/get_inventario', [App\Http\Controllers\Admin\Inventario\GestionController::class, 'get_inventario'])->name('get_inventario');
     Route::post('/salidas_inventario', [App\Http\Controllers\Admin\Inventario\GestionController::class, 'salidas_inventario'])->name('salidas_inventario');
     Route::post('/eliminar_serial', [App\Http\Controllers\Admin\Inventario\GestionController::class, 'eliminar_serial'])->name('eliminar_serial');
+    Route::post('/visto_bueno_inventario', [App\Http\Controllers\Admin\Inventario\GestionController::class, 'visto_bueno'])->name('visto_bueno_inventario');
 
     // PROSPECTOS PERSONAS
     Route::get('/prospectos_bd', [App\Http\Controllers\Admin\Comercial\ProspectosController::class, 'index'])->name('prospectos_bd');

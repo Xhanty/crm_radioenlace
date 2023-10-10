@@ -51,8 +51,9 @@ $(document).ready(function () {
             data: { id: id },
             success: function (response) {
                 let data = response.data;
-                let inventario = data.inventario;
+                //console.log(response.info);
                 if (response.info == 1) {
+                    let inventario = data.inventario;
                     $("#title_prodc_view").text(
                         data.nombre + " " + data.marca + " - " + data.modelo
                     );

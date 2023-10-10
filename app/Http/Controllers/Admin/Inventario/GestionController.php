@@ -82,7 +82,7 @@ class GestionController extends Controller
                 }
             }
 
-            return view('admin.inventario.historial', compact('inventario'));
+            return view('admin.inventario.historial', compact('inventario', 'id'));
         } catch (Exception $ex) {
             return $ex->getMessage();
             return view('errors.500');
@@ -502,5 +502,21 @@ class GestionController extends Controller
         }
 
         return $almacenes;
+    }
+
+    public function visto_bueno (Request $request) {
+        try {
+            $id = $request->id;
+            $visto_bueno = $request->visto_bueno;
+
+            DB::table('inventario')->where("id", $id)->update([
+                'visto_bueno' => $visto_bueno,
+            ]);
+
+            return response()->json(['info' => 1, 'data' => 'Visto bueno actualizado.']);
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+            return response()->json(['info' => 0, 'error' => 'Error al actualizar el visto bueno.']);
+        }
     }
 }

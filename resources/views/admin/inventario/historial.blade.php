@@ -46,7 +46,12 @@
                                         $title = 'Reparación';
                                     }
                                 @endphp
-
+                                <!-- Check Visto Bueno -->
+                                <input type="hidden" id="id_serial" disabled value="{{ $id }}">
+                                @if ($key == count($inventario->movimientos) - 1)
+                                    <input type="checkbox" class="form-check-input" id="visto_bueno"
+                                    value="1" style="position: absolute; top: 17px; right: 14px;" @if ($inventario->visto_bueno == 1) checked @endif>
+                                @endif
                                 @if ($key % 2 === 0)
                                     <div class="timeline-wrapper timeline-wrapper-primary">
                                         <div class="timeline-badge"></div>
@@ -132,4 +137,47 @@
 @endsection
 
 @section('scripts')
+<script>
+    $(function() {
+        // Check Visto Bueno
+        $('#visto_bueno').on('change', function() {
+            let id_serial = $('#id_serial').val();
+            if ($(this).is(':checked')) {
+                $.ajax({
+                    url: "{{ route('visto_bueno_inventario') }}",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        visto_bueno: 1,
+                        id: id_serial
+                    },
+                    type: 'POST',
+                    success: function(data) {
+                        if (data.info == 1) {
+                            toastr.success(data.data);
+                        } else {
+                            toastr.error("Error al marcar como visto bueno.");
+                        }
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: "{{ route('visto_bueno_inventario') }}",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        visto_bueno: 0,
+                        id: id_serial
+                    },
+                    type: 'POST',
+                    success: function(data) {
+                        if (data.info == 1) {
+                            toastr.success(data.data);
+                        } else {
+                            toastr.error("Error al marcar como no visto bueno.");
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
 @endsection
