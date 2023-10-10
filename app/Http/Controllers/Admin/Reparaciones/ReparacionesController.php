@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin\Reparaciones;
 
 use App\Exports\ReparacionesExport;
 use App\Http\Controllers\Controller;
+use App\Mail\ReparacionesMail;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 
@@ -191,6 +193,12 @@ class ReparacionesController extends Controller
                 'aprobado' => 1,
                 'fecha_terminado' => date('Y-m-d H:i:s')
             ]);
+
+            $reparacion = DB::table('reparaciones')->where('id', $request->id)->first();
+            $creador = DB::table('empleados')->where('id', $reparacion->created_by)->first();
+
+            Mail::to($creador->email)->send(new ReparacionesMail($creador, $reparacion, 0));
+
             return response()->json(['info' => 1, 'message' => 'Reparación finalizada correctamente.']);
         } catch (Exception $ex) {
             return response()->json(['info' => 0, 'message' => 'Error al finalizar la reparación.']);
@@ -217,6 +225,12 @@ class ReparacionesController extends Controller
             DB::table('reparaciones')->where('id', $request->id)->update([
                 'tecnico_id' => $request->tecnico
             ]);
+
+            $tecnico = DB::table('empleados')->where('id', $request->tecnico)->first();
+            $reparacion = DB::table('reparaciones')->where('id', $request->id)->first();
+
+            Mail::to($tecnico->email)->send(new ReparacionesMail($tecnico, $reparacion, 1));
+
             return response()->json(['info' => 1]);
         } catch (Exception $ex) {
             return response()->json(['info' => 0, 'message' => 'Error al obtener la información.']);

@@ -155,14 +155,14 @@
                                                     style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:18px;line-height:1;text-align:center;color:#555;">
                                                     Hola. Se te ha asignado una nueva reparación con el código
                                                     <b>{{ $reparacion->token }}</b>. Por el usuario
-                                                    <b>{{ $user->name }}</b>.
+                                                    <b>{{ $user->nombre }}</b>.
                                                 </div>
                                             @else
                                                 <div
                                                     style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:18px;line-height:1;text-align:center;color:#555;">
                                                     Hola. Se ha finalizado la reparación con el código
                                                     <b>{{ $reparacion->token }}</b>. Por el usuario
-                                                    <b>{{ $user->name }}</b>.
+                                                    <b>{{ $user->nombre }}</b>.
                                                 </div>
                                             @endif
                                         </td>

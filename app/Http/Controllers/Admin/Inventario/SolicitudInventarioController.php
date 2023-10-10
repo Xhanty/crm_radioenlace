@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin\Inventario;
 
 use App\Http\Controllers\Controller;
+use App\Mail\SolicitudesInventarioMail;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class SolicitudInventarioController extends Controller
@@ -108,7 +110,15 @@ class SolicitudInventarioController extends Controller
                         'created_at' => date('Y-m-d H:i:s'),
                     ]);
             }
+
             DB::commit();
+
+            $email = env("EMAIL_INVENTARIO");
+            $id_admin_inventario = env("ID_ADMIN_INVENTARIO");
+            $creador = DB::table('empleados')->where('id', $id_admin_inventario)->first();
+
+            Mail::to($email)->send(new SolicitudesInventarioMail($creador, $solicitud, 1));
+
             return response()->json([
                 'info' => 1,
                 'message' => 'Solicitud de inventario creada correctamente',
@@ -445,6 +455,10 @@ class SolicitudInventarioController extends Controller
                 ]);
 
                 $reload = 1;
+
+                $user = DB::table('empleados')->where('id', $solicitud->solicitante_id)->first();
+
+                Mail::to($user->email)->send(new SolicitudesInventarioMail($user, $solicitud, 0));
             }
 
             // DESCONTAR DEL INVENTARIO
