@@ -83,7 +83,7 @@
                 <tbody>
                     <tr>
                         <td
-                            style="border-bottom:#333957 solid 5px;direction:ltr;font-size:0px;padding:20px 0;text-align:center;vertical-align:top;">
+                            style="border-bottom:#DA251D solid 5px;direction:ltr;font-size:0px;padding:20px 0;text-align:center;vertical-align:top;">
                         </td>
                     </tr>
                 </tbody>
@@ -153,14 +153,14 @@
                                             @if ($valid_transaction == 1)
                                                 <div
                                                     style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:18px;line-height:1;text-align:center;color:#555;">
-                                                    Hola. Se te ha asignado una nueva reparación con el token
+                                                    Hola. Se te ha asignado una nueva reparación con el código
                                                     <b>{{ $reparacion->token }}</b>. Por el usuario
                                                     <b>{{ $user->name }}</b>.
                                                 </div>
                                             @else
                                                 <div
                                                     style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:18px;line-height:1;text-align:center;color:#555;">
-                                                    Hola. Se ha finalizado la reparación con el token
+                                                    Hola. Se ha finalizado la reparación con el código
                                                     <b>{{ $reparacion->token }}</b>. Por el usuario
                                                     <b>{{ $user->name }}</b>.
                                                 </div>
@@ -177,7 +177,7 @@
                                                 <tbody>
                                                     <tr>
                                                         <td style="width:128px;">
-                                                            <img height="auto" src="{{ asset('icon-asignacion.png') }}"
+                                                            <img height="auto" src="{{ asset('emails/img/icon-reparacion.png') }}"
                                                                 style="border:0;display:block;outline:none;text-decoration:none;width:100%;"
                                                                 width="128" />
                                                         </td>

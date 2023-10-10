@@ -89,6 +89,10 @@
                         <div class="div-1-tables-header">
                             <h3 class="card-title mt-2">Cotizaciones Completadas</h3>
                         </div>
+                        <div class="div-2-tables-header">
+                            <!-- Excel -->
+                            <a href="{{ route('cotizaciones_excel') }}" class="btn btn-primary">Generar Excel</a>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

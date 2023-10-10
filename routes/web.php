@@ -227,6 +227,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/orden_compra_email', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'send_email'])->name('orden_compra_email');
     Route::post('/orden_compra_aprobado', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'aprobacion'])->name('orden_compra_aprobado');
     Route::get('/ordenes_print', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'print'])->name('ordenes_print');
+    
     Route::get('/cotizaciones', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'index'])->name('cotizaciones');
     Route::get('/cotizaciones_print', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'print'])->name('cotizaciones_print');
     Route::post('/cotizacion_data', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'data'])->name('cotizacion_data');
@@ -237,6 +238,8 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/cotizacion_email', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'send'])->name('cotizacion_email');
     Route::post('/cotizacion_aprobado', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'aprobacion'])->name('cotizacion_aprobado');
     Route::post('/cotizacion_fecha_revision', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'update_revision'])->name('cotizacion_fecha_revision');
+    Route::get('/cotizaciones_excel', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'cotizaciones_excel'])->name('cotizaciones_excel');
+    
     Route::get('/precios_proveedores', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'index'])->name('precios_proveedores');
     Route::post('/precios_proveedores_add', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'add'])->name('precios_proveedores_add');
     Route::post('/precios_proveedores_delete', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'delete'])->name('precios_proveedores_delete');
@@ -253,6 +256,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/remisiones_delete', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'delete'])->name('remisiones_delete');
     Route::post('/remisiones_completar', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'completar'])->name('remisiones_completar');
     Route::post('/remisiones_email', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'email'])->name('remisiones_email');
+    Route::get('/remisones_excel', [App\Http\Controllers\Admin\Comercial\RemisionController::class, 'remisones_excel'])->name('remisones_excel');
 
     // HISTORIAL DE COTIZACIONES
     Route::get('/history_cotizaciones', [App\Http\Controllers\Admin\Comercial\CotizacionController::class, 'history'])->name('history_cotizaciones');

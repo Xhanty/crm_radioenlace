@@ -1789,54 +1789,46 @@ $(document).ready(function () {
 
     // PAGINACIÓN
     function paginacionFacturas() {
-        // Define el número de facturas por página
-        var facturasPorPagina = 15;
-
-        // Obtén todas las facturas
+        var facturasPorPagina = 10;
         var $todasFacturas = $('.main-invoice-list').children('.media');
-
-        // Calcula el número total de páginas
-        var numPaginas = Math.ceil($todasFacturas.length / facturasPorPagina);
-
-        // Crea botones de paginación con Bootstrap
+        var numTotalFacturas = $todasFacturas.length;
+        var numPaginas = Math.ceil(numTotalFacturas / facturasPorPagina);
+        var paginaActual = 1;
+    
+        function mostrarPagina(pagina) {
+            var primerItem = (pagina - 1) * facturasPorPagina;
+            var ultimoItem = Math.min(primerItem + facturasPorPagina, numTotalFacturas);
+    
+            $todasFacturas.hide();
+            $todasFacturas.slice(primerItem, ultimoItem).show();
+        }
+    
         var $paginacion = $('<nav class="center-div" aria-label="Facturas"></nav>');
         var $ul = $('<ul class="pagination"></ul>');
-
-        for (var i = 1; i <= numPaginas; i++) {
-            var $li = $('<li class="page-item"></li>');
-            var $botonPagina = $('<button class="page-link"></button>');
-            $botonPagina.text(i);
-            $li.append($botonPagina);
-            $ul.append($li);
-        }
-
-        // Agrega la clase "active" al primer botón de paginación
-        $ul.find('li:first-child').addClass('active');
-
-        $paginacion.append($ul);
-
-        // Agrega la paginación al DOM
+    
+        $paginacion.append('<button class="page-link" id="btnAnterior"><</button>');
+        $paginacion.append('<button class="page-link" id="btnSiguiente">></button>');
+    
         $('.main-invoice-list').after($paginacion);
-
-        // Oculta todas las facturas, excepto las de la primera página
-        $todasFacturas.slice(facturasPorPagina).hide();
-
-        // Agrega un evento click a cada botón de paginación
-        $(document).on("click", ".pagination button", function () {
-            var pagina = $(this).text();
-            var primerItem = (pagina - 1) * facturasPorPagina;
-            var ultimoItem = primerItem + facturasPorPagina;
-
-            // Oculta todas las facturas
-            $todasFacturas.hide();
-
-            // Muestra las facturas correspondientes a la página seleccionada
-            $todasFacturas.slice(primerItem, ultimoItem).show();
-
-            // Actualiza la clase active del botón de paginación
-            $(this).closest('ul').find('.active').removeClass('active');
-            $(this).closest('li').addClass('active');
+    
+        // Manejar el clic en "Anterior"
+        $('#btnAnterior').click(function () {
+            if (paginaActual > 1) {
+                paginaActual--;
+                mostrarPagina(paginaActual);
+            }
         });
+    
+        // Manejar el clic en "Siguiente"
+        $('#btnSiguiente').click(function () {
+            if (paginaActual < numPaginas) {
+                paginaActual++;
+                mostrarPagina(paginaActual);
+            }
+        });
+    
+        // Mostrar la primera página al cargar
+        mostrarPagina(paginaActual);
     }
 
     // FAVORITOS

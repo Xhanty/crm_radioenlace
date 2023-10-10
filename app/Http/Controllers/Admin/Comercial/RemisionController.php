@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Comercial;
 
+use App\Exports\RemisionesExport;
 use App\Http\Controllers\Controller;
 use App\Mail\RemisionMail;
 use Exception;
@@ -9,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 
 class RemisionController extends Controller
@@ -332,5 +334,26 @@ class RemisionController extends Controller
             return $ex->getMessage();
             return response()->json(['info' => 0, 'error' => 'Error al enviar la cotización']);
         }
+    }
+
+    public function remisones_excel()
+    {
+        $remisiones = DB::table('remisiones')
+            ->select(
+                'remisiones.code',
+                'cliente.nit',
+                'cliente.razon_social',
+                'remisiones.asunto',
+                'empleados.nombre as creador',
+                'remisiones.created_at',
+            )
+            ->join('cliente', 'cliente.id', '=', 'remisiones.cliente_id')
+            ->join('empleados', 'empleados.id', '=', 'remisiones.created_by')
+            ->where('remisiones.status', 1)
+            ->orderBy('remisiones.id', 'desc')
+            //->groupBy('remisiones.id', 'remisiones.firma_recibed', 'remisiones.code', 'remisiones.asunto', 'remisiones.created_at', 'cliente.razon_social', 'cliente.nit', 'empleados.nombre')
+            ->get();
+
+        return Excel::download(new RemisionesExport($remisiones), 'remisiones_completadas.xlsx');
     }
 }

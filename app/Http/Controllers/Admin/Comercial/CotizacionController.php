@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Comercial;
 
+use App\Exports\CotizacionExport;
 use App\Http\Controllers\Controller;
 use App\Mail\CotizacionMail;
 use Exception;
@@ -9,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 
 class CotizacionController extends Controller
@@ -23,17 +25,17 @@ class CotizacionController extends Controller
             $usuarios_cotizaciones = [];
 
             $permiso_ver = DB::table("permisos_new")
-            ->select("cotizaciones")
-            ->where("empleado", auth()->user()->id)
-            ->where("modulo", "gestionar_cotizaciones")
-            ->first();
+                ->select("cotizaciones")
+                ->where("empleado", auth()->user()->id)
+                ->where("modulo", "gestionar_cotizaciones")
+                ->first();
 
-            if($permiso_ver && $permiso_ver->cotizaciones) {
+            if ($permiso_ver && $permiso_ver->cotizaciones) {
                 foreach (json_decode($permiso_ver->cotizaciones) as $usuario) {
                     array_push($usuarios_cotizaciones, $usuario);
                 }
             }
-            
+
 
             array_push($usuarios_cotizaciones, auth()->user()->id);
 
@@ -571,5 +573,47 @@ class CotizacionController extends Controller
             return $ex->getMessage();
             return response()->json(['info' => 0, 'error' => 'Error al actualizar la observación']);
         }
+    }
+
+    public function cotizaciones_excel()
+    {
+        $usuarios_cotizaciones = [];
+
+        $permiso_ver = DB::table("permisos_new")
+            ->select("cotizaciones")
+            ->where("empleado", auth()->user()->id)
+            ->where("modulo", "gestionar_cotizaciones")
+            ->first();
+
+        if ($permiso_ver && $permiso_ver->cotizaciones) {
+            foreach (json_decode($permiso_ver->cotizaciones) as $usuario) {
+                array_push($usuarios_cotizaciones, $usuario);
+            }
+        }
+
+
+        array_push($usuarios_cotizaciones, auth()->user()->id);
+
+        $cotizaciones = DB::table('cotizaciones')
+            ->select(
+                'cotizaciones.code',
+                'cliente.nit',
+                'cliente.razon_social',
+                'cotizaciones.descripcion',
+                'cotizaciones.created_at',
+                'cotizaciones.aprobado',
+                //'cotizaciones.fecha_revision',
+                'empleados.nombre as creador',
+            )
+            ->join('cliente', 'cotizaciones.cliente_id', '=', 'cliente.id')
+            ->join('empleados', 'cotizaciones.created_by', '=', 'empleados.id')
+            ->where('cotizaciones.status', 1)
+            ->whereIn('cotizaciones.created_by', $usuarios_cotizaciones)
+            ->orderBy('cotizaciones.id', 'desc')
+            //->groupBy('cotizaciones.code', 'cotizaciones.created_at', 'cotizaciones.descripcion', 'cotizaciones.aprobado', 'cliente.razon_social', 'empleados.nombre')
+            ->orderBy('cotizaciones.id', 'desc')
+            ->get();
+
+        return Excel::download(new CotizacionExport($cotizaciones), 'cotizaciones_completadas.xlsx');
     }
 }
