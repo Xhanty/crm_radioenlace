@@ -446,6 +446,14 @@ class CotizacionController extends Controller
 
             unlink(storage_path('app/public/cotizaciones/' . $cotizacion->razon_social . ' - (' . $cotizacion->code . ') (' . date('d-m-Y', strtotime($cotizacion->created_at)) . ').pdf'));
 
+            // Guardar la fecha de recordatorio
+            DB::table("notificaciones_cotizaciones")->insert([
+                'cotizacion_id' => $cotizacion_id,
+                'fecha_recordatorio' => $request->fecha_recordatorio,
+                'created_by' => auth()->user()->id,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+            
             return response()->json(['info' => 1, 'message' => 'Cotización enviada correctamente']);
         } catch (Exception $ex) {
             return $ex->getMessage();

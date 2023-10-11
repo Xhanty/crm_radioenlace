@@ -602,6 +602,17 @@
                     </div>
                     <div class="modal-body">
                         <input type="hidden" disabled readonly id="id_cotizacion_email">
+                        @php
+                            $fecha_recordatorio = date('Y-m-d');
+                            $fecha_recordatorio = date('Y-m-d', strtotime($fecha_recordatorio . ' + 5 days'));
+                        @endphp
+                        <div class="row row-sm">
+                            <label for="">Fecha recordatorio</label>
+                            <div class="col-lg">
+                                <input class="form-control" value="{{ $fecha_recordatorio }}" id="fecha_email_recordatorio" type="date">
+                            </div>
+                        </div>
+                        <br>
                         <div class="row row-sm">
                             <label for="">Emails</label>
                             <div class="col-lg" style="display: flex">

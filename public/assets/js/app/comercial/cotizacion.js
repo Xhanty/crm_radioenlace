@@ -1147,6 +1147,7 @@ $(document).ready(function () {
 
     $("#btn_save_email").click(function () {
         let id = $("#id_cotizacion_email").val();
+        let fecha_recordatorio = $("#fecha_email_recordatorio").val();
         let emails = [];
         let valid = 0;
 
@@ -1170,7 +1171,7 @@ $(document).ready(function () {
             $.ajax({
                 type: "POST",
                 url: "cotizacion_email",
-                data: { id: id, emails: emails },
+                data: { id: id, emails: emails, fecha_recordatorio: fecha_recordatorio },
                 success: function (response) {
                     if (response.info == 1) {
                         toastr.success("Correo enviado correctamente");
