@@ -314,6 +314,9 @@
                                         <li><a class="slide-item"
                                                 href="{{ route('configuracion_contabilidad') }}">Configuración</a>
                                         </li>
+                                        <li><a class="slide-item"
+                                                href="{{ route('configuracion_contabilidad') }}">Conciliación Bancaría</a>
+                                        </li>
                                     @endif
                                     @if (auth()->user()->hasPermissionToMultiple(
                                                 'contabilidad_factura_compra|contabilidad_factura_venta|contabilidad_nota_credito|contabilidad_nota_debito|contabilidad_recibo_pago'))

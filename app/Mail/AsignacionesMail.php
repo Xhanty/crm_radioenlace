@@ -9,29 +9,29 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ReparacionesMail extends Mailable
+class AsignacionesMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $user;
-    public $reparacion;
+    public $asignacion;
     public $valid_transaction;
 
-    public function __construct($user, $reparacion, $type_email)
+    public function __construct($user, $asignacion, $type_email)
     {
         $this->user = $user;
-        $this->reparacion = $reparacion;
+        $this->asignacion = $asignacion;
         $this->valid_transaction = $type_email;
     }
 
     public function build()
     {
-        $subject = 'Nueva reparación asignada. Código ' . $this->reparacion->token;
+        $subject = 'Nueva asignación. Código ' . $this->asignacion->codigo;
 
         if ($this->valid_transaction != 1) {
-            $subject = 'Reparación gestionada. Código ' . $this->reparacion->token;
+            $subject = 'Asignación gestionada. Código ' . $this->asignacion->codigo;
         }
 
-        return $this->view('emails.ReparacionesMail')->subject($subject);
+        return $this->view('emails.AsignacionesMail')->subject($subject);
     }
 }

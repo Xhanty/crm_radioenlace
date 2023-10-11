@@ -26,10 +26,10 @@ class SolicitudesInventarioMail extends Mailable
 
     public function build()
     {
-        $subject = 'Nueva solicitud de inventario. Código' . $this->solicitud->codigo;
+        $subject = 'Nueva solicitud de inventario. Código ' . $this->solicitud->codigo;
 
         if ($this->valid_transaction != 1) {
-            $subject = 'Solicitud de inventario gestionada. Código' . $this->solicitud->codigo;
+            $subject = 'Solicitud de inventario gestionada. Código ' . $this->solicitud->codigo;
         }
 
         return $this->view('emails.SolicitudInventarioMail')->subject($subject);

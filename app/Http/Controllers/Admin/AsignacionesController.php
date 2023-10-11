@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exports\AsignacionesExport;
 use App\Http\Controllers\Controller;
+use App\Mail\AsignacionesMail;
 use App\Models\TaskProject;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 
 class AsignacionesController extends Controller
@@ -154,7 +156,7 @@ class AsignacionesController extends Controller
     public function asignacion_add(Request $request)
     {
         try {
-            DB::beginTransaction();
+            //DB::beginTransaction();
             $empleados = explode(',', $request->empleados);
             $observaciones = explode(',', $request->observaciones);
             $observacion_general = $request->observacion_general;
@@ -198,11 +200,17 @@ class AsignacionesController extends Controller
                         ]);
                     }
                 }
+
+                $data_empleado = DB::table("empleados")->where("id", $empleado)->first();
+                $data_asignacion = DB::table("asignaciones")->where("id", $asignacion)->first();
+
+                Mail::to($data_empleado->email)->send(new AsignacionesMail($data_empleado, $data_asignacion, 1));
             }
-            DB::commit();
+            //DB::commit();
+
             return response()->json(['info' => 1, 'success' => 'Asignación creada correctamente.']);
         } catch (Exception $ex) {
-            DB::rollBack();
+            //DB::rollBack();
             return $ex;
             return response()->json(['info' => 0, 'success' => 'Error al crear la asignación.']);
         }
@@ -230,6 +238,11 @@ class AsignacionesController extends Controller
                     "revision" => 2,
                     "fecha_completada" => $fecha,
                 ]);
+
+                $data_asignacion = DB::table("asignaciones")->where("id", $id)->first();
+                $creador = DB::table("empleados")->where("id", $data_asignacion->created_by)->first();
+
+                Mail::to($creador->email)->send(new AsignacionesMail($creador, $data_asignacion, 0));
             } else {
                 DB::table("asignaciones")->where("id", $id)->update([
                     "status" => $status,
