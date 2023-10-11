@@ -115,9 +115,10 @@ class SolicitudInventarioController extends Controller
 
             $email = env("EMAIL_INVENTARIO");
             $id_admin_inventario = env("ID_ADMIN_INVENTARIO");
+            $solicitud_creada = DB::table('solicitud_inventario')->where('id', $solicitud)->first();
             $creador = DB::table('empleados')->where('id', $id_admin_inventario)->first();
 
-            Mail::to($email)->send(new SolicitudesInventarioMail($creador, $solicitud, 1));
+            Mail::to($email)->send(new SolicitudesInventarioMail($creador, $solicitud_creada, 1));
 
             return response()->json([
                 'info' => 1,
