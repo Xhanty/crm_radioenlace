@@ -1682,7 +1682,7 @@ $(document).ready(function () {
         formData.append("id", id);
 
         $.ajax({
-            url: "get_factura_venta",
+            url: "info_factura_venta",
             type: "POST",
             data: formData,
             dataType: "JSON",
@@ -1691,9 +1691,94 @@ $(document).ready(function () {
             success: function (response) {
                 $("#global-loader").fadeOut('slow');
                 if (response.info == 1) {
-                    let data = response.data;
-                    //console.log(data);
+                    let data = response.factura;
+                    let productos = data.productos;
+
+                    $("#tipo_add").val(data.tipo).trigger("change");
+                    $("#fecha_add").val(data.fecha_elaboracion);
+                    //$("#consecutivo_add").val(data.numero);
+                    //$("#vendedor_add").val(data.vendedor_id).trigger("change");
+                    $("#cliente_add").val(data.cliente_id).trigger("change");
+                    $("#observaciones_add").val(data.observaciones);
+
+                    //PAGOS
+                    $("#total_bruto_add").html(data.total_bruto);
+                    $("#total_descuentos_add").html(data.descuentos);
+                    $("#total_subtotal_add").html(data.subtotal);
+
+                    $("#total_formas_pago_add").html(data.valor_total);
+                    $("#total_neto_add").html(data.valor_total);
+
+                    $("#impuestos_1_add").empty();
+                    $("#impuestos_2_add").empty();
+
+                    let p_borrar = $('#tbl_data_detail tbody tr').length;
+
+                    if (p_borrar > 1) {
+                        for (let i = 0; i < p_borrar; i++) {
+                            //console.log("Borrando fila " + i);
+                            $('#tbl_data_detail tbody tr:eq(' + i + ')').remove();
+                        }
+                    }
+
+                    //PRODUCTOS
+                    let contador = 0;
+                    productos.forEach(producto => {
+                        if (contador == 0) {
+                            setTimeout(() => {
+                                $(".producto_add").val(producto.producto).trigger("change");
+                            }, 1000);
+                            //$(".serial_producto_add").val(producto.serial_producto);
+                            $(".seriales_add").val(producto.serial_producto);
+                            $(".descripcion_add").val(producto.description);
+                            //console.log("P1: " + producto.description);
+                            $(".cantidad_add").val(producto.cantidad);
+                            $(".valor_add").val(producto.valor_unitario);
+                            $(".descuento_add").val(producto.descuento);
+                            $(".cargo_add option[data-impuesto='" + producto.impuesto_cargo + "']").attr("selected", true).trigger("change");
+                            $(".retencion_add option[data-impuesto='" + producto.impuesto_retencion + "']").attr("selected", true).trigger("change");
+                        }
+                        contador++;
+                    });
+
+                    for (let i = 0; i < contador - 1; i++) {
+                        //console.log("P2: " + productos[i + 1].description);
+                        //console.log(productos[i + 1].impuesto_cargo);
+                        $("#new_row").trigger("click");
+                        setTimeout(() => {
+                            $(".producto_add").eq(i + 1).val(productos[i + 1].producto).trigger("change");
+                        }, 1000);
+                        //$(".serial_producto_add").eq(i + 1).val(productos[i + 1].serial_producto);
+                        $(".seriales_add").eq(i + 1).val(productos[i + 1].serial_producto);
+                        $(".descripcion_add").eq(i + 1).val(productos[i + 1].description);
+                        $(".cantidad_add").eq(i + 1).val(productos[i + 1].cantidad);
+                        $(".valor_add").eq(i + 1).val(productos[i + 1].valor_unitario);
+                        $(".descuento_add").eq(i + 1).val(productos[i + 1].descuento);
+                        $(".cargo_add option[data-impuesto='" + productos[i + 1].impuesto_cargo + "']").eq(i + 1).attr("selected", true).trigger("change");
+                        $(".retencion_add option[data-impuesto='" + productos[i + 1].impuesto_retencion + "']").eq(i + 1).attr("selected", true).trigger("change");
+                    }
+
+                    $(".form-select").each(function () {
+                        $(this).select2({
+                            dropdownParent: $(this).parent(),
+                            placeholder: "Seleccione",
+                            searchInputPlaceholder: "Buscar",
+                        });
+                    });
+
+                    numero_filas();
+
+                    $("#retefte_add").val(data.valor_retefuente).trigger("change");
+                    $("#reteiva_add").val(data.valor_reteiva).trigger("change");
+                    $("#reteica_add").val(data.valor_reteica).trigger("change");
+
+                    $("#global-loader").fadeOut('slow');
+                    $("#div_general").addClass("d-none");
+                    $("#div_form_add").removeClass("d-none");
+
+                    console.log(data);
                 } else {
+                    $("#global-loader").fadeOut('slow');
                     toastr.error('Ha ocurrido un error');
                 }
             },
