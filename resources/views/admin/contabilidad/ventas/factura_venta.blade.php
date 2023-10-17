@@ -478,7 +478,7 @@
                                                 <th class="text-center">Valor Unitario</th>
                                                 <th class="text-center">Descuento</th>
                                                 <th class="text-center">Impuesto<br>Cargo</th>
-                                                <th class="text-center">Impuesto<br>Retención</th>
+                                                <!--<th class="text-center">Impuesto<br>Retención</th>-->
                                                 <th class="text-center">Valor Total</th>
                                             </tr>
                                         </thead>
@@ -524,7 +524,7 @@
                                                         @endforeach
                                                     </select>
                                                 </td>
-                                                <td class="pad-4">
+                                                <!--<td class="pad-4">
                                                     <select class="form-select retencion_add">
                                                         <option value="">Seleccione una opción</option>
                                                         @foreach ($impuestos_retencion as $impuesto)
@@ -532,7 +532,7 @@
                                                                 value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
                                                         @endforeach
                                                     </select>
-                                                </td>
+                                                </td>-->
                                                 <td class="text-center d-flex pad-4">
                                                     <input disabled type="text" placeholder="0.00"
                                                         class="form-control text-end total_add input_dinner"
@@ -765,7 +765,7 @@ reportarse en las centrales de crédito.</textarea>
                                                 <th class="text-center">Valor Unitario</th>
                                                 <th class="text-center">Descuento</th>
                                                 <th class="text-center">Impuesto<br>Cargo</th>
-                                                <th class="text-center">Impuesto<br>Retención</th>
+                                                <!--<th class="text-center">Impuesto<br>Retención</th>-->
                                                 <th class="text-center">Valor Total</th>
                                             </tr>
                                         </thead>
@@ -811,7 +811,7 @@ reportarse en las centrales de crédito.</textarea>
                                                         @endforeach
                                                     </select>
                                                 </td>
-                                                <td class="pad-4">
+                                                <!--<td class="pad-4">
                                                     <select class="form-select retencion_edit">
                                                         <option value="">Seleccione una opción</option>
                                                         @foreach ($impuestos_retencion as $impuesto)
@@ -819,7 +819,7 @@ reportarse en las centrales de crédito.</textarea>
                                                                 value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
                                                         @endforeach
                                                     </select>
-                                                </td>
+                                                </td>-->
                                                 <td class="text-center d-flex pad-4">
                                                     <input disabled type="text" placeholder="0.00"
                                                         class="form-control text-end total_edit input_dinner"

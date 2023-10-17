@@ -129,7 +129,7 @@ $(document).ready(function () {
             }) +
             '</select>' +
             '</td>' +
-            '<td class="pad-4">' +
+            /*'<td class="pad-4">' +
             '<select class="form-select retencion_add">' +
             '<option value="">Seleccione una opción</option>' +
             impuestos_retencion.map((item) => {
@@ -138,7 +138,7 @@ $(document).ready(function () {
                 );
             }) +
             '</select>' +
-            '</td>' +
+            '</td>' +*/
             '<td class="text-center d-flex pad-4">' +
             '<input disabled type="text" placeholder="0.00"' +
             'class="form-control text-end total_add input_dinner"' +
@@ -203,7 +203,7 @@ $(document).ready(function () {
             }) +
             '</select>' +
             '</td>' +
-            '<td class="pad-4">' +
+            /*'<td class="pad-4">' +
             '<select class="form-select retencion_edit">' +
             '<option value="">Seleccione una opción</option>' +
             impuestos_retencion.map((item) => {
@@ -212,7 +212,7 @@ $(document).ready(function () {
                 );
             }) +
             '</select>' +
-            '</td>' +
+            '</td>' +*/
             '<td class="text-center d-flex pad-4">' +
             '<input disabled type="text" placeholder="0.00"' +
             'class="form-control text-end total_edit input_dinner"' +

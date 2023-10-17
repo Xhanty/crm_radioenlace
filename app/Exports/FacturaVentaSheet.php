@@ -32,6 +32,10 @@ class FacturaVentaSheet implements FromCollection, WithHeadings, WithTitle
             'Factura',
             'Identificación',
             'Razón Social',
+            "Iva",
+            "Rte Fte",
+            "Rte Iva",
+            "Rte Ica",
             'Valor',
             'Estado',
             'Fecha Elaboración'
@@ -52,10 +56,37 @@ class FacturaVentaSheet implements FromCollection, WithHeadings, WithTitle
                 $status = "Pendiente";
             }
 
+            $subtotal = str_replace(',', '.', str_replace('.', '', $item->subtotal));
+            $subtotal = (float) $subtotal;
+
+            $html_iva = "";
+            $html_rte_fte = "";
+            $html_rte_iva = "";
+            $html_rte_ica = "";
+
+            if($item->valor_retefuente) {
+                $html_rte_fte = "(" . $item->valor_retefuente . "%): ";
+                $html_rte_fte .= $item->valor_retefuente * $subtotal / 100;
+            }
+
+            if($item->valor_reteiva) {
+                $html_rte_iva = "(" . $item->valor_reteiva . "%): ";
+                $html_rte_iva .= $item->valor_reteiva * $subtotal / 100;
+            }
+
+            if($item->valor_reteica) {
+                $html_rte_ica = "(" . $item->valor_reteica . "%): ";
+                $html_rte_ica .= $item->valor_reteica * $subtotal / 1000;
+            }
+            
             return [
                 "FE-" . $item->numero,
                 $item->nit . "-" . $item->codigo_verificacion,
                 $item->razon_social,
+                $html_iva,
+                $html_rte_fte,
+                $html_rte_iva,
+                $html_rte_ica,
                 $item->valor_total,
                 $status,
                 Carbon::parse($item->fecha_elaboracion)->format('d-m-Y'), // Formato de fecha
