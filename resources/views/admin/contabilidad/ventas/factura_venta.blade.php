@@ -369,13 +369,13 @@
                                     Otras Opciones
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item btn_options_factura" data-id="0" data-opcion="4"
-                                        href="javascript:void(0)">Ver Contabilización</a>
-                                    <a class="dropdown-item btn_options_factura" data-id="0" data-opcion="3"
-                                        href="javascript:void(0)">Aplicar Nota Débito</a>
-                                    <a class="dropdown-item btn_options_factura" data-id="0" data-opcion="2"
-                                        href="javascript:void(0)">Anular</a>
-                                    <a class="dropdown-item btn_options_factura" data-id="0" data-opcion="1"
+                                    <!--<a class="dropdown-item btn_options_factura" data-id="0" data-opcion="4"
+                                        href="javascript:void(0)">Ver Contabilización</a>-->
+                                    <!--<a class="dropdown-item btn_options_factura" data-id="0" data-opcion="3"
+                                        href="javascript:void(0)">Aplicar Nota Débito</a>-->
+                                    <!--<a class="dropdown-item btn_options_factura" data-id="0" data-opcion="2"
+                                        href="javascript:void(0)">Anular</a>-->
+                                    <a class="dropdown-item btn_options_factura btn_option_duplicar" data-id="0" data-opcion="1"
                                         href="javascript:void(0)">Duplicar</a>
                                     <a class="dropdown-item btn_options_factura" data-id="0" data-opcion="0"
                                         href="javascript:void(0)">Modificar</a>

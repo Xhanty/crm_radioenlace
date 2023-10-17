@@ -206,6 +206,8 @@ $(document).ready(function () {
 
                     $("#tbl_seriales_view tbody").empty();
 
+                    let count_visto_bueno = 0;
+
                     products.forEach((element) => {
                         let estado = "";
                         if (element.status == 0) {
@@ -216,6 +218,16 @@ $(document).ready(function () {
                                 '<span class="badge bg-success side-badge">Disponible</span>';
                         }
 
+                        console.log(element);
+
+                        let is_visto_bueno = "";
+
+                        if(element.visto_bueno == 1) {
+                            is_visto_bueno = "checked"
+                            count_visto_bueno++;
+                        }
+
+
                         let tr = `<tr>
                             <td class="text-center" style="width: 80px"><img src="${url_general}images/productos/${element.imagen}" alt="" width="80px"></td>
                             <td>${element.codigo_interno ? element.codigo_interno : ""}</td>
@@ -224,6 +236,7 @@ $(document).ready(function () {
                             <td>${element.cantidad}</td>
                             <td>${estado}</td>
                             <td class="text-center">
+                            <input type="checkbox" class="form-check-input" ${is_visto_bueno} disabled>
                             <a href="${url_general +
                             "historial_serial?token=" +
                             element.id
@@ -232,6 +245,8 @@ $(document).ready(function () {
                             </tr>`;
                         $("#tbl_seriales_view tbody").append(tr);
                     });
+
+                    $("#count_visto_bueno").html(count_visto_bueno);
 
                     $("#tbl_seriales_view").DataTable({
                         responsive: true,

@@ -294,7 +294,7 @@
                         <input type="hidden" disabled readonly id="id_almacen_view">
                         <div class="row row-sm">
                             <div class="col-lg">
-                                <label for="">Almacén</label>
+                                <label for="">Almacén (<span id="count_visto_bueno"></span> Vistos Buenos)</label>
                                 <input class="form-control" id="almacenview" readonly placeholder="Almacén"
                                     type="text">
                             </div>

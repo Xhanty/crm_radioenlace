@@ -266,6 +266,14 @@ Route::middleware(['auth_user'])->group(function () {
 
     // CONTABILIDAD
     Route::get('/configuracion_contabilidad', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'index'])->name('configuracion_contabilidad');
+    
+    // CONCILIACIÓN BANCARIA
+    Route::get('/conciliacion_bancaria', [App\Http\Controllers\Admin\Contabilidad\ConciliacionBancariaController::class, 'index'])->name('conciliacion_bancaria');
+    Route::post('/valid_concil_bancaria', [App\Http\Controllers\Admin\Contabilidad\ConciliacionBancariaController::class, 'valid'])->name('valid_concil_bancaria');
+    Route::post('/data_concil_bancaria', [App\Http\Controllers\Admin\Contabilidad\ConciliacionBancariaController::class, 'data'])->name('data_concil_bancaria');
+    Route::post('/add_concil_bancaria', [App\Http\Controllers\Admin\Contabilidad\ConciliacionBancariaController::class, 'add'])->name('add_concil_bancaria');
+    Route::post('/edit_concil_bancaria', [App\Http\Controllers\Admin\Contabilidad\ConciliacionBancariaController::class, 'edit'])->name('edit_concil_bancaria');
+    Route::post('/completar_concil_bancaria', [App\Http\Controllers\Admin\Contabilidad\ConciliacionBancariaController::class, 'completar'])->name('completar_concil_bancaria');
 
     // ORGANIZACIÓN
     Route::post('/edit_organizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_organizacion'])->name('edit_organizacion');

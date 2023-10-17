@@ -174,6 +174,7 @@ class AlmacenesController extends Controller
                     'movimientos_inventario.cantidad',
                     'inventario.serial',
                     'inventario.status',
+                    'inventario.visto_bueno',
                     'movimientos_inventario.created_at'
                 )
                 ->join('inventario', 'inventario.id', '=', 'movimientos_inventario.inventario_id')

@@ -294,6 +294,7 @@ $(document).ready(function () {
     });
 
     $(".back_home").click(function () {
+        location.reload();
         $("#div_general").removeClass("d-none");
         $("#div_form_add").addClass("d-none");
         $("#div_form_edit").addClass("d-none");
@@ -427,6 +428,8 @@ $(document).ready(function () {
                         $(".btn_options_factura").addClass("disabled");
                         $(".btn_pago_factura").addClass("disabled");
                     }
+
+                    $(".btn_option_duplicar").removeClass("disabled");
 
                     if (productos) {
                         $("#productos_view").empty();
@@ -1580,7 +1583,7 @@ $(document).ready(function () {
                     $("#id_factura_edit").val(data.id);
                     $("#tipo_edit").val(data.tipo).trigger("change");
                     $("#fecha_edit").val(data.fecha_elaboracion);
-                    $("#numero_edit").val(data.numero);
+                    $("#consecutivo_edit").val(data.numero);
                     $("#vendedor_edit").val(data.vendedor_id).trigger("change");
                     $("#cliente_edit").val(data.cliente_id).trigger("change");
                     $("#observaciones_edit").val(data.observaciones);
@@ -1600,7 +1603,7 @@ $(document).ready(function () {
 
                     if (p_borrar > 1) {
                         for (let i = 0; i < p_borrar; i++) {
-                            console.log("Borrando fila " + i);
+                            //console.log("Borrando fila " + i);
                             $('#tbl_data_detail_edit tbody tr:eq(' + i + ')').remove();
                         }
                     }
@@ -1615,7 +1618,7 @@ $(document).ready(function () {
                             //$(".serial_producto_edit").val(producto.serial_producto);
                             $(".seriales_edit").val(producto.serial_producto);
                             $(".descripcion_edit").val(producto.description);
-                            console.log("P1: " + producto.description);
+                            //console.log("P1: " + producto.description);
                             $(".cantidad_edit").val(producto.cantidad);
                             $(".valor_edit").val(producto.valor_unitario);
                             $(".descuento_edit").val(producto.descuento);
@@ -1626,7 +1629,7 @@ $(document).ready(function () {
                     });
 
                     for (let i = 0; i < contador - 1; i++) {
-                        console.log("P2: " + productos[i + 1].description);
+                        //console.log("P2: " + productos[i + 1].description);
                         //console.log(productos[i + 1].impuesto_cargo);
                         $("#new_row_edit").trigger("click");
                         setTimeout(() => {
@@ -1651,6 +1654,10 @@ $(document).ready(function () {
                     });
 
                     numero_filas_edit();
+
+                    $("#retefte_edit").val(data.valor_retefuente).trigger("change");
+                    $("#reteiva_edit").val(data.valor_reteiva).trigger("change");
+                    $("#reteica_edit").val(data.valor_reteica).trigger("change");
 
                     $("#global-loader").fadeOut('slow');
                     $("#div_general").addClass("d-none");
@@ -1685,7 +1692,7 @@ $(document).ready(function () {
                 $("#global-loader").fadeOut('slow');
                 if (response.info == 1) {
                     let data = response.data;
-                    console.log(data);
+                    //console.log(data);
                 } else {
                     toastr.error('Ha ocurrido un error');
                 }
@@ -1774,7 +1781,7 @@ $(document).ready(function () {
                 $("#global-loader").fadeOut('slow');
                 if (response.info == 1) {
                     let data = response.data;
-                    console.log(data);
+                    //console.log(data);
                     $("#modal_contabilizacion").modal('show');
                 } else {
                     toastr.error('Ha ocurrido un error');
@@ -1789,6 +1796,9 @@ $(document).ready(function () {
 
     // PAGINACIÓN
     function paginacionFacturas() {
+        //Limpiar paginación
+        $('.center-div').remove();
+
         var facturasPorPagina = 10;
         var $todasFacturas = $('.main-invoice-list').children('.media');
         var numTotalFacturas = $todasFacturas.length;
@@ -2266,7 +2276,7 @@ $(document).ready(function () {
                             toastr.success('Factura filtrada con éxito');
                             window.open(url_general + 'pdf_factura_venta?token=' + token, '_blank');
                         } else {
-                            console.log(facturas);
+                            //console.log(facturas);
                             $("#mainInvoiceList").html("");
                             $("#cant_facturas").html(facturas.length);
 

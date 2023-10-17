@@ -68,7 +68,7 @@
                         <a href="javascript:void(0)" class="header-logo"><img
                                 src="{{ asset('assets/img/brand/logo.png') }}" class="logo-11"></a>
                         <a href="javascript:void(0)" class="header-logo"><img
-                                src="{{ asset('assets/img/brand/logo-white.png') }}" class="logo-1"></a>
+                                src="{{ asset('assets/img/brand/logo.png') }}" class="logo-1"></a>
                     </div>
                 </div>
                 <button class="navbar-toggler nav-link icon navresponsive-toggler vertical-icon ms-auto" type="button"
@@ -315,7 +315,7 @@
                                                 href="{{ route('configuracion_contabilidad') }}">Configuración</a>
                                         </li>
                                         <li><a class="slide-item"
-                                                href="{{ route('configuracion_contabilidad') }}">Conciliación Bancaría</a>
+                                                href="{{ route('conciliacion_bancaria') }}">Conciliación Bancaría</a>
                                         </li>
                                     @endif
                                     @if (auth()->user()->hasPermissionToMultiple(
