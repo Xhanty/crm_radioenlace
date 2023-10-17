@@ -110,7 +110,7 @@ $(document).ready(function () {
             'class="form-control text-end cantidad_add" style="border: 0">' +
             '</td>' +
             '<td class="pad-4">' +
-            '<input type="text" placeholder="Valor Unitario" value="0.00"' +
+            '<input type="text" placeholder="Valor Unitario" value=""' +
             'class="form-control text-end valor_add input_dinner_valor"' +
             'style="border: 0">' +
             '</td>' +
@@ -184,7 +184,7 @@ $(document).ready(function () {
             'class="form-control text-end cantidad_edit" style="border: 0">' +
             '</td>' +
             '<td class="pad-4">' +
-            '<input type="text" placeholder="Valor Unitario" value="0.00"' +
+            '<input type="text" placeholder="Valor Unitario" value=""' +
             'class="form-control text-end valor_edit input_dinner"' +
             'style="border: 0">' +
             '</td>' +
@@ -369,14 +369,14 @@ $(document).ready(function () {
             v.replace(/(\d)(\d\d)$/, "$1,$2")
                 .replace(/(^\d{1,3}|\d{3})(?=(?:\d{3})+(?:,|$))/g, '$1.'));
     });
-
+    
     $(document).on("keyup", ".input_dinner_valor", function () {
         $(this).val(function (index, value) {
             return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         });
     });
 
-    $(document).on("change", ".input_dinner_valor", function () {
+    /*$(document).on("change", ".input_dinner_valor", function () {
         let valor = $(this).val();
         valor = valor.replaceAll('.', '');
         valor = parseInt(valor);
@@ -387,7 +387,7 @@ $(document).ready(function () {
         $(this).val(
             v.replace(/(\d)(\d\d)$/, "$1,$2")
                 .replace(/(^\d{1,3}|\d{3})(?=(?:\d{3})+(?:,|$))/g, '$1.'));
-    });
+    });*/
 
     $(document).on("click", ".factura_btn", function () {
         let id = $(this).data("id");

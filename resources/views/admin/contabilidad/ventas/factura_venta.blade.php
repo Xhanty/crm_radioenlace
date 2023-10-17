@@ -506,7 +506,7 @@
                                                         class="form-control text-end cantidad_add" style="border: 0">
                                                 </td>
                                                 <td class="pad-4">
-                                                    <input type="text" placeholder="Valor Unitario" value="0.00"
+                                                    <input type="text" placeholder="Valor Unitario" value=""
                                                         class="form-control text-end valor_add input_dinner_valor"
                                                         style="border: 0">
                                                 </td>
@@ -793,7 +793,7 @@ reportarse en las centrales de crédito.</textarea>
                                                         class="form-control text-end cantidad_edit" style="border: 0">
                                                 </td>
                                                 <td class="pad-4">
-                                                    <input type="text" placeholder="Valor Unitario" value="0.00"
+                                                    <input type="text" placeholder="Valor Unitario" value=""
                                                         class="form-control text-end valor_edit input_dinner"
                                                         style="border: 0">
                                                 </td>
