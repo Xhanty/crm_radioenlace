@@ -12,6 +12,7 @@
                         <li class="breadcrumb-item"><a href="javascript:void(0);">Historial</a></li>
                         <li class="breadcrumb-item active" aria-current="page"> {{ $inventario->producto }} -
                             {{ $inventario->modelo }} | (Serial: {{ $inventario->serial }} - Código Interno: {{ $inventario->codigo_interno }})</li>
+                            <li class="breadcrumb-item"><a target="_blank" href="{{ route('gestion_inventario') . '?pr=' . $inventario->cod_producto }} "><i class="fa fa-eye"></i> Ver</a></li>
                     </ol>
                 </nav>
             </div>

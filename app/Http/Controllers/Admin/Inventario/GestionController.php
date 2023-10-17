@@ -28,7 +28,7 @@ class GestionController extends Controller
             }
 
             $inventario = DB::table('inventario')
-                ->select('inventario.*', 'productos.nombre as producto', 'productos.marca as marca', 'productos.modelo as modelo', 'productos.imagen as imagen')
+                ->select('inventario.*', 'productos.cod_producto', 'productos.nombre as producto', 'productos.marca as marca', 'productos.modelo as modelo', 'productos.imagen as imagen')
                 ->join('productos', 'productos.id', '=', 'inventario.producto_id')
                 ->where('inventario.id', $id)
                 ->first();

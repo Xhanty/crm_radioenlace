@@ -35,7 +35,8 @@
                         <div class="div-2-tables-header">
                             <div class="col-lg-6 mg-t-20 mg-lg-t-0">
                                 <div class="input-group">
-                                    <input class="form-control text-center" id="serial_search" placeholder="Serial o Código Interno" type="text">
+                                    <input class="form-control text-center" id="serial_search"
+                                        placeholder="Serial o Código Interno" type="text">
                                     <span class="input-group-btn">
                                         <button class="btn btn-primary" id="btnSearchSerial" type="button">
                                             <span class="input-group-btn">
@@ -160,4 +161,21 @@
 @section('scripts')
     <script src="{{ asset('assets/js/app/inventario/gestion_inventario.js') }}"></script>
     <script src="{{ asset('assets/plugins/treeview/treeview.js') }}"></script>
+    <script>
+        setTimeout(() => {
+            // Obtener la URL de la página actual
+            var url = new URL(window.location.href);
+
+            // Obtener el valor del parámetro 'pr'
+            var prParam = url.searchParams.get("pr");
+
+            // Validar si 'pr' está presente
+            if (prParam !== null) {
+                console.log("El parámetro 'pr' está presente con el valor: " + prParam);
+                $("#table_productos_gestion_img_filter input").val(prParam).trigger("keyup");
+            } else {
+                console.log("El parámetro 'pr' no está presente en la URL.");
+            }
+        }, 2000);
+    </script>
 @endsection
