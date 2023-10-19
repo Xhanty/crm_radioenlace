@@ -128,7 +128,7 @@
                             </td>
 
                             <td>
-                                <img src="https://crm.formrad.com/icontec.png"
+                                <img src="https://crm.radioenlacesas.com/icontec.png"
                                     style="width:100%; max-width:136px; float:right;">
                             </td>
                         </tr>
@@ -275,7 +275,7 @@
                 @if ($i == count($repuestos) - 1)
                     <tr>
                         <td colspan="2" style="text-align: center; padding-top: 2%;">
-                            <img src="https://crm.formrad.com/images/productos/{{ $repuestos[$i]->imagen }}"
+                            <img src="https://crm.radioenlacesas.com/images/productos/{{ $repuestos[$i]->imagen }}"
                                 style="width:100%; max-width:100px; max-height: 120px">
                         </td>
                         <td colspan="3" style="text-align: center; padding-top: 3%;">
@@ -289,7 +289,7 @@
                 @else
                     <tr>
                         <td colspan="3" style="text-align: center; padding-top: 2%;">
-                            <img src="https://crm.formrad.com/images/productos/{{ $repuestos[$i]->imagen }}"
+                            <img src="https://crm.radioenlacesas.com/images/productos/{{ $repuestos[$i]->imagen }}"
                                 style="width:100%; max-width:100px; max-height: 120px">
                         </td>
                         <td colspan="2" style="text-align: center; padding-top: 3%;">
@@ -321,7 +321,7 @@
                         <td colspan="2" style="text-align: center;">{{ $informes[$i]->tecnico }}</td>
                         <td colspan="1" style="text-align: center;">
                             @if ($informes[$i]->adjunto)
-                                <a href="https://crm.formrad.com/images/adjuntos/{{ $informes[$i]->adjunto }}"
+                                <a href="https://crm.radioenlacesas.com/images/adjuntos/{{ $informes[$i]->adjunto }}"
                                     target="_blank">Ver</a>
                             @else
                                 -
@@ -335,7 +335,7 @@
                         <td colspan="2" style="text-align: center;">{{ $informes[$i]->tecnico }}</td>
                         <td colspan="1" style="text-align: center;">
                             @if ($informes[$i]->adjunto)
-                                <a href="https://crm.formrad.com/images/adjuntos/{{ $informes[$i]->adjunto }}"
+                                <a href="https://crm.radioenlacesas.com/images/adjuntos/{{ $informes[$i]->adjunto }}"
                                     target="_blank">Ver</a>
                             @else
                                 -

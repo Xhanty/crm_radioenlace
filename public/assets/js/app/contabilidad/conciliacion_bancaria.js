@@ -471,6 +471,10 @@ $(document).ready(function () {
         let data = [];
         let error = false;
 
+        if(!$("#excelTable tbody tr").html()) {
+            error = true;
+        }
+
         $("#excelTable tbody tr").each(function () {
             let fecha = $(this).find(".fecha_add").val();
             let descripcion = $(this).find(".descripcion_add").val();
@@ -484,8 +488,14 @@ $(document).ready(function () {
                 error = true;
             } else if (descripcion == "") {
                 error = true;
-            } else if (debito == "" && credito == "") {
-                error = true;
+            } else if (!debito && !credito) {
+                if($(this).find("td:nth-child(3)").html() != "") {
+                    debito = $(this).find("td:nth-child(3)").html();
+                } else if($(this).find("td:nth-child(4)").html() != "") {
+                    credito = $(this).find("td:nth-child(4)").html();
+                } else {
+                    error = true;
+                }
             } else if (!saldo || saldo == "" || saldo == "0.00" || saldo == "NaN") {
                 error = true;
             }
@@ -544,6 +554,104 @@ $(document).ready(function () {
                 },
             });
         }
+    });
+
+    $(document).on("click", ".btnView", function () {
+        let id = $(this).attr("data-id");
+        $("#global-loader").fadeIn('slow');
+
+        $.ajax({
+            url: "data_concil_bancaria",
+            type: "POST",
+            data: {
+                id: id,
+            },
+            success: function (response) {
+                $("#global-loader").fadeOut('slow');
+                if (response.info == 1) {
+                    let data = response.data;
+                    console.log(data);
+                } else {
+                    toastr.error("Error al cargar la información");
+                }
+            },
+            error: function (error) {
+                $("#global-loader").fadeOut('slow');
+                console.log(error);
+                toastr.error("Error al cargar la información");
+            },
+        });
+    });
+
+    $(document).on("click", ".btnEdit", function () {
+        let id = $(this).attr("data-id");
+
+        $("#global-loader").fadeIn('slow');
+
+        $.ajax({
+            url: "data_concil_bancaria",
+            type: "POST",
+            data: {
+                id: id,
+            },
+            success: function (response) {
+                $("#global-loader").fadeOut('slow');
+                if (response.info == 1) {
+                    let data = response.data;
+                    console.log(data);
+                } else {
+                    toastr.error("Error al cargar la información");
+                }
+            },
+            error: function (error) {
+                $("#global-loader").fadeOut('slow');
+                console.log(error);
+                toastr.error("Error al cargar la información");
+            },
+        });
+    });
+
+    $(document).on("click", ".btnCompletar", function () {
+        let id = $(this).attr("data-id");
+
+        Swal.fire({
+            title: "¿Está seguro de completar la conciliación bancaria?",
+            text: "Esta acción no se puede revertir",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#28a745",
+            cancelButtonColor: "#dc3545",
+            confirmButtonText: "Completar",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "completar_concil_bancaria",
+                    type: "POST",
+                    data: {
+                        id: id,
+                    },
+                    success: function (response) {
+                        if (response.info == 1) {
+                            toastr.success("Conciliación bancaria completada");
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000);
+                        } else {
+                            toastr.error(
+                                "Error al completar la conciliación bancaria"
+                            );
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        toastr.error(
+                            "Error al completar la conciliación bancaria"
+                        );
+                    },
+                });
+            }
+        });
     });
 
     function totales() {

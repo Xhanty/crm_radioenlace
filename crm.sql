@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-10-2023 a las 15:36:08
+-- Tiempo de generación: 19-10-2023 a las 19:36:12
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -4492,8 +4492,17 @@ CREATE TABLE `conciliacion_bancaria` (
   `archivo` text DEFAULT NULL,
   `visto_bueno` int(1) NOT NULL DEFAULT 0,
   `created_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL
+  `created_at` datetime NOT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `conciliacion_bancaria`
+--
+
+INSERT INTO `conciliacion_bancaria` (`id`, `mes`, `anio`, `saldo_final`, `archivo`, `visto_bueno`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
+(11, 8, 2023, '157.809.349,81', NULL, 0, 43, '2023-10-19 09:38:24', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -6186,6 +6195,20 @@ CREATE TABLE `detalle_conciliacion_bancaria` (
   `created_at` datetime NOT NULL,
   `created_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `detalle_conciliacion_bancaria`
+--
+
+INSERT INTO `detalle_conciliacion_bancaria` (`id`, `conciliacion_id`, `fecha`, `descripcion`, `debito`, `credito`, `saldo`, `documento`, `nota`, `created_at`, `created_by`) VALUES
+(3, 11, '2023-08-01', 'PAGO DE PROV SEGURIDAD ATLAS', '1.165.626,00', '', '154.200.494,18', NULL, '', '2023-10-19 09:38:24', 43),
+(4, 11, '2023-08-01', 'ABONO INTERESES AHORROS', '422,46', '', '154.200.916,64', NULL, '', '2023-10-19 09:38:24', 43),
+(5, 11, '2023-08-02', 'PAGO INTERBANC COSCUEZ SA', '', '5.046.642,00', '159.247.558,64', NULL, '', '2023-10-19 09:38:24', 43),
+(6, 11, '2023-08-02', 'ABONO INTERESES AHORROS', '368,47', '', '159.247.927,11', NULL, '', '2023-10-19 09:38:24', 43),
+(7, 11, '2023-08-02', 'COMISION PAGO A PROVEEDORES', '3.490,00', '', '159.244.437,11', NULL, '', '2023-10-19 09:38:24', 43),
+(8, 11, '2023-08-02', 'COMISION PAGO DE NOMINA', '', '3.490,00', '159.240.947,11', NULL, '', '2023-10-19 09:38:24', 43),
+(9, 11, '2023-08-02', 'IMPTO GOBIERNO 4X1000', '30.713,30', '', '159.210.233,81', NULL, '', '2023-10-19 09:38:24', 43),
+(10, 11, '2023-08-02', 'PAGO A NOMIN WILSON JAVIER P', '1.400.884,00', '', '157.809.349,81', NULL, '', '2023-10-19 09:38:24', 43);
 
 -- --------------------------------------------------------
 
@@ -23695,7 +23718,7 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de la tabla `conciliacion_bancaria`
 --
 ALTER TABLE `conciliacion_bancaria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `configuracion_autoretencion`
@@ -23761,7 +23784,7 @@ ALTER TABLE `departamentos`
 -- AUTO_INCREMENT de la tabla `detalle_conciliacion_bancaria`
 --
 ALTER TABLE `detalle_conciliacion_bancaria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_cotizaciones`

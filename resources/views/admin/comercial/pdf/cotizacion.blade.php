@@ -132,7 +132,7 @@
                             </td>
 
                             <td>
-                                <img src="https://crm.formrad.com/icontec.png"
+                                <img src="https://crm.radioenlacesas.com/icontec.png"
                                     style="width:100%; max-width:136px; float:right;">
                             </td>
                         </tr>
@@ -346,14 +346,14 @@
                             </tr>
                             <tr>
                                 <td style="text-align: center; padding-top: 2%;" colspan="{{ $colspan }}">
-                                    <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
+                                    <img src="https://crm.radioenlacesas.com/images/productos/{{ $productos[$i]->imagen }}"
                                         style="width:100%; max-height: 288px">
                                 </td>
                             </tr>
                         @else
                             <tr>
                                 <td style="text-align: center; padding-top: 2%;">
-                                    <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
+                                    <img src="https://crm.radioenlacesas.com/images/productos/{{ $productos[$i]->imagen }}"
                                         style="width:100%; max-width:105px; max-height: 120px">
                                 </td>
                                 <td @if ($colspan == 7) colspan="2" @endif
@@ -414,14 +414,14 @@
                             </tr>
                             <tr>
                                 <td style="text-align: center; padding-top: 2%;" colspan="{{ $colspan }}">
-                                    <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
+                                    <img src="https://crm.radioenlacesas.com/images/productos/{{ $productos[$i]->imagen }}"
                                         style="width:100%; max-height: 288px">
                                 </td>
                             </tr>
                         @else
                             <tr>
                                 <td style="text-align: center; padding-top: 2%;">
-                                    <img src="https://crm.formrad.com/images/productos/{{ $productos[$i]->imagen }}"
+                                    <img src="https://crm.radioenlacesas.com/images/productos/{{ $productos[$i]->imagen }}"
                                         style="width:100%; max-width:105px; max-height: 120px">
                                 </td>
                                 <td @if ($colspan == 7) colspan="2" @endif

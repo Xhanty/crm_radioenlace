@@ -77,54 +77,159 @@ class ConciliacionBancariaController extends Controller
             ->get();
 
         return response()->json([
+            'info' => 1,
             'data' => $data,
         ]);
     }
 
     public function add(Request $request)
     {
-        $mes = $request->mes;
-        $anio = $request->anio;
-        $saldo_final = $request->saldo_final;
-        $archivo = null;
-        $data = $request->data;
-        $created_at = date('Y-m-d H:i:s');
-        $created_by = auth()->user()->id;
+        try {
+            DB::beginTransaction();
 
-        $conciliacion_id = DB::table('conciliacion_bancaria')->insertGetId([
-            'mes' => $mes,
-            'anio' => $anio,
-            'saldo_final' => $saldo_final,
-            'archivo' => $archivo,
-            'created_by' => $created_by,
-            'created_at' => $created_at,
-        ]);
+            $mes = $request->mes;
+            $anio = $request->anio;
+            $saldo_final = $request->saldo_final;
+            $archivo = null;
+            $data = json_decode($request->data);
+            $created_at = date('Y-m-d H:i:s');
+            $created_by = auth()->user()->id;
 
-        foreach ($data as $item) {
-            $detalle = DB::table('detalle_conciliacion_bancaria')->insert([
-                'conciliacion_id' => $conciliacion_id,
-                'fecha' => $item['fecha'],
-                'descripcion' => $item['descripcion'],
-                'debito' => $item['debito'],
-                'credito' => $item['credito'],
-                'saldo' => $item['saldo'],
-                'documento' => $item['documento'],
-                'nota' => $item['nota'],
-                'created_at' => $created_at,
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $name = time() . $file->getClientOriginalName();
+                $file->move('images/contabilidad/conciliacion_bancaria/', $name);
+                $archivo = $name;
+            }
+
+            $conciliacion_id = DB::table('conciliacion_bancaria')->insertGetId([
+                'mes' => $mes,
+                'anio' => $anio,
+                'saldo_final' => $saldo_final,
+                'archivo' => $archivo ?? null,
                 'created_by' => $created_by,
+                'created_at' => $created_at,
+            ]);
+
+            foreach ($data as $item) {
+                $detalle = DB::table('detalle_conciliacion_bancaria')->insert([
+                    'conciliacion_id' => $conciliacion_id,
+                    'fecha' => $item->fecha,
+                    'descripcion' => $item->descripcion,
+                    'debito' => $item->debito ?? '',
+                    'credito' => $item->credito ?? '',
+                    'saldo' => $item->saldo,
+                    'documento' => $item->documento,
+                    'nota' => $item->nota,
+                    'created_at' => $created_at,
+                    'created_by' => $created_by,
+                ]);
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'info' => 1,
+            ]);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            echo $ex->getMessage();
+            return response()->json([
+                'info' => 0,
             ]);
         }
-
-        return response()->json([
-            'info' => 1,
-        ]);
     }
 
     public function edit(Request $request)
     {
+        try {
+            DB::beginTransaction();
+
+            $conciliacion_id = $request->id;
+            $mes = $request->mes;
+            $anio = $request->anio;
+            $saldo_final = $request->saldo_final;
+            $data = json_decode($request->data);
+            $updated_by = auth()->user()->id;
+            $updated_at = date('Y-m-d H:i:s');
+            $archivo = null;
+
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $name = time() . $file->getClientOriginalName();
+                $file->move('images/contabilidad/conciliacion_bancaria/', $name);
+                $archivo = $name;
+            }
+
+            DB::table('conciliacion_bancaria')
+                ->where('id', $conciliacion_id)
+                ->update([
+                    'mes' => $mes,
+                    'anio' => $anio,
+                    'saldo_final' => $saldo_final,
+                    'archivo' => $archivo ?? null,
+                    'updated_by' => $updated_by,
+                    'updated_at' => $updated_at,
+                ]);
+
+            DB::table('detalle_conciliacion_bancaria')
+                ->where('conciliacion_id', $conciliacion_id)
+                ->delete();
+
+            foreach ($data as $item) {
+                $detalle = DB::table('detalle_conciliacion_bancaria')->insert([
+                    'conciliacion_id' => $conciliacion_id,
+                    'fecha' => $item->fecha,
+                    'descripcion' => $item->descripcion,
+                    'debito' => $item->debito ?? '',
+                    'credito' => $item->credito ?? '',
+                    'saldo' => $item->saldo,
+                    'documento' => $item->documento,
+                    'nota' => $item->nota,
+                    'created_at' => $updated_at,
+                    'created_by' => $updated_by,
+                ]);
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'info' => 1,
+            ]);
+
+        } catch (Exception $ex) {
+            DB::rollBack();
+            echo $ex->getMessage();
+            return response()->json([
+                'info' => 0,
+            ]);
+        }
     }
 
     public function completar(Request $request)
     {
+        try {
+            DB::beginTransaction();
+
+            $conciliacion_id = $request->id;
+
+            DB::table('conciliacion_bancaria')
+                ->where('id', $conciliacion_id)
+                ->update([
+                    'visto_bueno' => 1,
+                ]);
+
+            DB::commit();
+
+            return response()->json([
+                'info' => 1,
+            ]);
+
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return response()->json([
+                'info' => 0,
+            ]);
+        }
     }
 }

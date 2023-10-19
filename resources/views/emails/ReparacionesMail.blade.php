@@ -117,7 +117,7 @@
                                                         <td>
 
                                                             <img height="auto"
-                                                                src="https://crm.formrad.com/assets/img/brand/favicon.png"
+                                                                src="https://crm.radioenlacesas.com/assets/img/brand/favicon.png"
                                                                 style="border:0;display:block;outline:none;text-decoration:none;width:100%;"
                                                                 width="64" />
 
@@ -197,7 +197,7 @@
                                                     <td align="center" bgcolor="#DA251D" role="presentation"
                                                         style="border:none;border-radius:3px;color:#ffffff;cursor:auto;padding:15px 25px;"
                                                         valign="middle">
-                                                        <a href="https://crm.formrad.com/home" target="_blank"
+                                                        <a href="https://crm.radioenlacesas.com/home" target="_blank"
                                                             style="text-decoration: none;">
                                                             <p
                                                                 style="background:#DA251D;color:#ffffff;font-family:'Helvetica Neue',Arial,sans-serif;font-size:15px;font-weight:normal;line-height:120%;Margin:0;text-decoration:none;text-transform:none;">
