@@ -99,7 +99,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/checklist_send_email', [App\Http\Controllers\Admin\VehiculosController::class, 'send_email'])->name('checklist_send_email');
 
     // CLIENTES
-    Route::get('/clientes', [App\Http\Controllers\Admin\ClientesController::class, 'index'])->name('clientes');
+    Route::get('/terceros', [App\Http\Controllers\Admin\ClientesController::class, 'index'])->name('terceros');
     Route::get('/clientes_list', [App\Http\Controllers\Admin\ClientesController::class, 'clientes_list'])->name('clientes_list');
     Route::post('/info_cliente', [App\Http\Controllers\Admin\ClientesController::class, 'info_cliente'])->name('info_cliente');
     Route::post('/clientes_data', [App\Http\Controllers\Admin\ClientesController::class, 'clientes_data'])->name('clientes_data');

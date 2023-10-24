@@ -37,11 +37,11 @@
                 <div class="card">
                     <div class="card-header d-flex-header-table">
                         <div class="div-1-tables-header">
-                            <h3 class="card-title mt-2">Lista de Clientes</h3>
+                            <h3 class="card-title mt-2">Lista de Terceros</h3>
                         </div>
                         @if (auth()->user()->hasPermissionTo('gestionar_clientes'))
                             <div class="div-2-tables-header">
-                                <button class="btn btn-primary" id="btnNewCliente">Registrar Cliente</button>
+                                <button class="btn btn-primary" id="btnNewCliente">Registrar Tercero</button>
                             </div>
                         @endif
                     </div>
@@ -284,7 +284,7 @@
                                                     <br>
 
                                                     <div class="text-center">
-                                                        <button class="btn ripple btn-primary" id="btnModificarCliente2"
+                                                        <button disabled class="btn ripple btn-primary" id="btnModificarCliente2"
                                                             type="button">Modificar Datos Facturación</button>
                                                     </div>
                                                 @endif
@@ -335,7 +335,7 @@
                                                     <br>
 
                                                     <div class="text-center">
-                                                        <button class="btn ripple btn-primary" id="btnModificarCliente3"
+                                                        <button disabled class="btn ripple btn-primary" id="btnModificarCliente3"
                                                             type="button">Modificar Datos Técnicos</button>
                                                     </div>
                                                 @endif
@@ -344,7 +344,7 @@
                                             <div class="tab-pane fade show p-3" id="three_detail">
                                                 @if (auth()->user()->hasPermissionTo('gestionar_clientes'))
                                                     <div class="d-flex justify-content-end">
-                                                        <button class="btn ripple btn-primary" data-bs-target="#modalAdd"
+                                                        <button disabled class="btn ripple btn-primary" data-bs-target="#modalAdd"
                                                             data-bs-toggle="modal" data-bs-effect="effect-scale"
                                                             type="button">Agregar Anexo</button>
                                                     </div>

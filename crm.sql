@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-10-2023 a las 19:36:12
+-- Tiempo de generación: 24-10-2023 a las 21:18:00
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -6862,6 +6862,42 @@ INSERT INTO `detalle_factura_venta` (`id`, `factura_id`, `producto`, `serial_pro
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `detalle_nota_credito_fv`
+--
+
+CREATE TABLE `detalle_nota_credito_fv` (
+  `id` int(11) NOT NULL,
+  `nota_credito_id` int(11) DEFAULT NULL,
+  `producto` int(11) DEFAULT NULL,
+  `serial_producto` text DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `bodega` varchar(255) DEFAULT NULL,
+  `cantidad` varchar(255) DEFAULT NULL,
+  `valor_unitario` varchar(255) DEFAULT NULL,
+  `descuento` varchar(255) DEFAULT NULL,
+  `impuesto_cargo` varchar(255) DEFAULT NULL,
+  `impuesto_retencion` varchar(255) DEFAULT NULL,
+  `valor_total` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `detalle_nota_credito_fv`
+--
+
+INSERT INTO `detalle_nota_credito_fv` (`id`, `nota_credito_id`, `producto`, `serial_producto`, `description`, `bodega`, `cantidad`, `valor_unitario`, `descuento`, `impuesto_cargo`, `impuesto_retencion`, `valor_total`) VALUES
+(10, 2, 402, '', 'ALQUILER ESPACIO EN CERRO QUININI PARA LA REPETIDORA #1', NULL, '1', '546.828,00', '0,00', '19', '0', '650.725,00'),
+(11, 2, 402, '', 'ALQUILER ESPACIO EN CERRO GRANADA PARA LA\nREPETIDORA #1', NULL, '1', '546.828,00', '0,00', '19', '0', '650.725,00'),
+(12, 2, 402, '', 'ALQUILER ESPACIO EN CERRO PALMITA PARA LA REPETIDORA #1', NULL, '1', '546.828,00', '0,00', '19', '0', '650.725,00'),
+(13, 2, 402, '', 'ALQUILER TRES SITIOS PARA ENLACE DE DATOS (4 UND)', NULL, '1', '1.367.069,00', '0,00', '19', '0', '1.626.812,00'),
+(14, 2, 402, '', 'ALQUILER FRECUENCIA EN EL CERRO GRANADA', NULL, '1', '683.535,00', '0,00', '19', '0', '813.406,00'),
+(15, 2, 402, '', 'ALQUILER FRECUENCIA EN EL CERRO QUININI', NULL, '1', '683.535,00', '0,00', '19', '0', '813.406,00'),
+(16, 2, 402, '', 'ALQUILER FRECUENCIA EN EL CERRO PALMITA', NULL, '1', '683.535,00', '0,00', '19', '0', '813.406,00'),
+(17, 2, 402, '', 'SERVICIO DE INTERNET EN TRES CERROS PARA CONECTAR CON VENTANA (TUNEL)', NULL, '1', '341.737,00', '0,00', '19', '0', '406.667,00'),
+(18, 2, 181, '', 'SERVICIO DE MANTENIMIENTO PREVENTIVO TRIMESTRAL DE\nLA RED DE VOZ, DATOS Y EQUPOS, CORRESPONDIENTE AL\nMES DE ENERO.\nFIDEICOMISO 9622\nHE:\nCONTRATO :\n550-2022\nSERVICIO CORRESPONDIENTE AL MES DE ENERO 2023.', NULL, '1', '3.645.815,00', '0,00', '19', '0', '4.338.519,00');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `detalle_ordenes`
 --
 
@@ -8254,7 +8290,7 @@ INSERT INTO `factura_venta` (`id`, `favorito`, `token`, `numero`, `tipo`, `fecha
 (51, 0, NULL, 48, 1, '2023-05-10', 40, 45, '931.000,00', '0,00', '931.000,00', '[[\"IVA 19%\",176890]]', '[]', NULL, NULL, NULL, '1.107.890,00', 'N/A', NULL, 1, NULL, '2023-05-17 16:16:02', 45),
 (52, 0, NULL, 49, 1, '2023-05-10', 40, 45, '233.000,00', '0,00', '233.000,00', '[[\"IVA 19%\",44270]]', '[]', NULL, NULL, NULL, '277.270,00', 'N/A', NULL, 1, NULL, '2023-05-17 16:18:00', 45),
 (53, 0, NULL, 50, 1, '2023-05-10', 40, 45, '638.000,00', '0,00', '638.000,00', '[[\"IVA 19%\",121220]]', '[]', '2.5', '7', '15', '720.621,00', 'N/A', NULL, 1, NULL, '2023-05-17 16:28:48', 45),
-(54, 0, NULL, 51, 1, '2023-04-19', 104, 45, '9.045.710,00', '0,00', '9.045.710,00', '[[\"IVA 19%\",1718684.9000000001]]', '[]', NULL, NULL, NULL, '10.764.391,00', 'N/A', NULL, 1, NULL, '2023-05-17 17:16:50', 45),
+(54, 0, NULL, 51, 1, '2023-04-19', 104, 45, '9.045.710,00', '0,00', '9.045.710,00', '[[\"IVA 19%\",1718684.9000000001]]', '[]', NULL, NULL, NULL, '10.764.391,00', 'N/A', NULL, 0, NULL, '2023-05-17 17:16:50', 45),
 (55, 0, NULL, 52, 1, '2023-05-10', 40, 45, '972.000,00', '0,00', '972.000,00', '[[\"IVA 19%\",184680]]', '[]', NULL, NULL, NULL, '1.156.680,00', 'N/A', NULL, 1, NULL, '2023-05-19 17:26:39', 45),
 (56, 0, NULL, 5975, 1, '2023-09-28', 9, 43, '10.000.000,00', '0,00', '10.000.000,00', '[[\"IVA 19%\",1900000]]', '[]', '2.5', '7', '15', '11.295.000,00', 'VR05 VERSIÓN: 01 06/01/2020\r\nFAVOR CONSIGNAR EN LA CUENTA DE AHORROS BANCOLOMBIA 10825335162 A\r\nNOMBRE DE RADIO ENLACE S.A.S.\r\nEnviar comprobante de pago al correo facturacionelectronica@radioenlacesas.com\r\nAutorretenedores de ICA en el municipio de Medellín según Resolución 202050056223\r\nde 2020\r\nEsta factura de Venta constituye título valor según la Ley 1231 del 17 de Julio de 2008,\r\nEl no pago de esta generará intereses por mora\r\nmensual a la tasa máxima legal autorizada. En caso de NO PAGO se procederá a\r\nreportarse en las centrales de crédito.', NULL, 2, 1, '2023-09-27 16:43:37', 43),
 (57, 0, NULL, 5974, 1, '2023-09-07', 9, 43, '30.000.000,00', '0,00', '30.000.000,00', '[[\"IVA 19%\",5700000]]', '[]', NULL, NULL, NULL, '35.700.000,00', 'VR05 VERSIÓN: 01 06/01/2020\r\nFAVOR CONSIGNAR EN LA CUENTA DE AHORROS BANCOLOMBIA 10825335162 A\r\nNOMBRE DE RADIO ENLACE S.A.S.\r\nEnviar comprobante de pago al correo facturacionelectronica@radioenlacesas.com\r\nAutorretenedores de ICA en el municipio de Medellín según Resolución 202050056223\r\nde 2020\r\nEsta factura de Venta constituye título valor según la Ley 1231 del 17 de Julio de 2008,\r\nEl no pago de esta generará intereses por mora\r\nmensual a la tasa máxima legal autorizada. En caso de NO PAGO se procederá a\r\nreportarse en las centrales de crédito.', NULL, 1, 0, '2023-09-28 10:55:24', 43),
@@ -12570,6 +12606,49 @@ CREATE TABLE `nomina` (
   `porcentaje_fte` float DEFAULT 0,
   `porcentaje_fsp` float DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `nota_credito_fv`
+--
+
+CREATE TABLE `nota_credito_fv` (
+  `id` int(11) NOT NULL,
+  `tipo_nc` int(1) NOT NULL DEFAULT 1,
+  `fecha_elaboracion_nc` date NOT NULL,
+  `usuario_nc` int(11) NOT NULL,
+  `consecutivo_nc` int(11) NOT NULL,
+  `motivo_nc` int(11) NOT NULL,
+  `token` text DEFAULT NULL,
+  `numero` int(11) DEFAULT NULL,
+  `tipo` int(11) NOT NULL DEFAULT 1,
+  `fecha_elaboracion` date DEFAULT NULL,
+  `cliente_id` int(11) DEFAULT NULL,
+  `vendedor_id` int(11) DEFAULT NULL,
+  `total_bruto` varchar(255) DEFAULT NULL,
+  `descuentos` varchar(255) DEFAULT NULL,
+  `subtotal` varchar(255) DEFAULT NULL,
+  `impuestos_1` text DEFAULT NULL,
+  `impuestos_2` text DEFAULT NULL,
+  `valor_retefuente` varchar(255) DEFAULT NULL,
+  `valor_reteica` varchar(255) DEFAULT NULL,
+  `valor_reteiva` varchar(255) DEFAULT NULL,
+  `valor_total` varchar(255) DEFAULT NULL,
+  `observaciones` text DEFAULT NULL,
+  `adjunto_pdf` text DEFAULT NULL,
+  `status` int(1) DEFAULT 1,
+  `visto_bueno` int(1) DEFAULT 0,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `nota_credito_fv`
+--
+
+INSERT INTO `nota_credito_fv` (`id`, `tipo_nc`, `fecha_elaboracion_nc`, `usuario_nc`, `consecutivo_nc`, `motivo_nc`, `token`, `numero`, `tipo`, `fecha_elaboracion`, `cliente_id`, `vendedor_id`, `total_bruto`, `descuentos`, `subtotal`, `impuestos_1`, `impuestos_2`, `valor_retefuente`, `valor_reteica`, `valor_reteiva`, `valor_total`, `observaciones`, `adjunto_pdf`, `status`, `visto_bueno`, `created_at`, `created_by`) VALUES
+(2, 1, '2023-10-24', 43, 1, 1, NULL, 51, 1, '2023-04-19', 104, 45, '9.045.710,00', '0,00', '9.045.710,00', '[[\"IVA 19%\",1718684.9000000001]]', '[]', NULL, NULL, NULL, '10.764.394,90', 'N/A', NULL, 1, 0, '2023-10-24 08:06:37', 43);
 
 -- --------------------------------------------------------
 
@@ -22781,6 +22860,479 @@ INSERT INTO `task_projects` (`id`, `code`, `title`, `description`, `order`, `pro
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `terceros`
+--
+
+CREATE TABLE `terceros` (
+  `id` int(11) NOT NULL,
+  `tipo_tercero` int(2) NOT NULL COMMENT '1 = Proveedor,\r\n2 = Cliente,\r\n3 = Empleado,\r\n4 = Proveedor y cliente,\r\n5 = Empleado y proveedor,\r\n6 = Empleado y cliente,\r\n7 = Todos',
+  `nit` varchar(255) DEFAULT NULL,
+  `razon_social` varchar(255) DEFAULT NULL,
+  `direccion` text DEFAULT NULL,
+  `telefono_fijo` varchar(255) DEFAULT NULL,
+  `celular` varchar(255) DEFAULT NULL,
+  `contacto` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `observaciones` text DEFAULT NULL,
+  `avatar` varchar(255) DEFAULT NULL,
+  `tipo_regimen` varchar(255) DEFAULT NULL,
+  `estado` int(11) DEFAULT NULL,
+  `ciudad` varchar(255) DEFAULT NULL,
+  `codigo_verificacion` int(11) DEFAULT NULL,
+  `tipo` int(11) DEFAULT NULL,
+  `tipo_identificacion` int(11) DEFAULT NULL,
+  `documento` varchar(255) DEFAULT NULL,
+  `clave` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `terceros`
+--
+
+INSERT INTO `terceros` (`id`, `tipo_tercero`, `nit`, `razon_social`, `direccion`, `telefono_fijo`, `celular`, `contacto`, `email`, `observaciones`, `avatar`, `tipo_regimen`, `estado`, `ciudad`, `codigo_verificacion`, `tipo`, `tipo_identificacion`, `documento`, `clave`) VALUES
+(1, 1, '900382335', 'Radiotrans Colombia S.A.S', 'Carrera 71 Circular 1 - 42', '(604) 4481991', '3137487534', 'Martha Liliana Leon', 'mleon@radiotrans.com', '', 'bfbcb18259412a2d6ec5884d55437a6c.png', '', 1, 'Medellín', 5, NULL, NULL, NULL, NULL),
+(2, 1, '800162165', 'Sistemas Electrónicos y Telecomunicaciones S.A.S', 'Carrera 33 No. 62 - 34', '(601) 6433825', '3114772496', 'David Roldan', 'david.roldan@sistelec.com.co', '', '08b883f641ae8473d574cdbec7221fe8.png', '', 1, '', 3, NULL, NULL, NULL, NULL),
+(3, 1, '901192317', 'Syscom Colombia S.A.S', 'Cra. 90A No. 64C 38 Álamos Norte', '(601) 7443650', '3147209764', 'William Cárdenas', 'luis@syscomcolombia.com', '', '8d07ce149e754e0c0d7c96075b8db3e2.png', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(4, 1, '890941103', 'Equielect S.A.S', 'Carrera 72 No. 30-53', '(604) 4443133', '', '', 'equielect@equielect.com.co', '', '7c101e2faed734ec911ce2ffe4290d22.png', '', 1, '', 7, NULL, NULL, NULL, NULL),
+(5, 1, '830079015', 'Meltec Comunicaciones S.A', 'CL 130A # 58A 29', '(601) 4111899 ', '3143956689', 'Alejandro Arango', 'cartera@meltec.com.co', '', 'e817c1d6da72e09bdb041b3379421e39.png', '', 1, '', 1, NULL, NULL, NULL, NULL),
+(6, 1, '800170775', 'Transmicosta S.A.S', 'CL 75 58 48', '(605) 3689050', '3157187962', 'Cecilia Danies', 'gerencia@transmicosta.com', '', '138ea9cb785d4a19b9e5d64eaffaf185.png', '', 1, '', 1, NULL, NULL, NULL, NULL),
+(7, 1, '900245554', 'Amarillo LTDA', 'Calle 8C N° 87B - 40 oficina 223', '(601)7460018 EXT 03', '(601) 7460018', 'Gloria Díaz', ' admon.amarilloltda@gmail.com', '', '9ad2a29267149e68f27582cefb4c0172.png', '', 1, '', 5, NULL, NULL, NULL, NULL),
+(8, 1, '890913902', 'Antioqueña de Automotores y Repuestos S.A.S  ANDAR', 'CARRERA 77 N° 28 - 13 BELEN', '(604) 4440800', '3213139234', 'Leonardo Vásquez', 'leonardo.velasquez@andar.com.co', '', '0638eaa95b618e76d814eac90f0974f6.png', '', 1, '', 6, NULL, NULL, NULL, NULL),
+(9, 1, '98490197', 'Baterías JV', 'Diagonal 44 31 41', '', '3155182035', 'Marcela', 'ventasbateriasjv@gmail.com', '', '7b552d80ddb53403e0536b78794e6915.png', '', 1, '', 1, NULL, NULL, NULL, NULL),
+(10, 1, '900413864', 'Calza Soluciones ', 'Carrera 67 A N°51-79', '(604) 4488584', '3175163310', 'Melissa', 'comercial@radioenlacesas.com', '', '829763b900cba9a5063863f49f896808.png', '', 1, '', 4, NULL, NULL, NULL, NULL),
+(11, 1, '900722974', 'Copimarks S.A.S', 'Carrera 78 45 E 61', '(604) 4482874', '3105025201 / 3134909757', 'Jorge Sánchez', 'copimarks@gmail.com', '', '33aa09f76666e6e2e51e96ba775416b7.png', '', 1, '', 1, NULL, NULL, NULL, NULL),
+(12, 1, '811015782', 'Elian Comunicaciones y Montajes S.A.S', 'Calle 36 SA Sur N° 46 A 81 Of. 237', '(604) 3317287', '31038372530', 'Cesar Hoyos', 'eliancomunicaciones@hotmail.com', '', '0ac198f3fd1f3db014321505bab757a7.png', '', 1, '', 9, NULL, NULL, NULL, NULL),
+(13, 1, '10883737', 'Juan Eduardo Alvarado Solorzano', 'Carrera 52, Calle 82 -24 Medellín', '(604) 2131785', '', 'Juan Alvarado', 'metrofuego@une.net.co', '', 'c19fa572fa0ad7d5081b9841c8234a36.png', '', 1, '', 4, NULL, NULL, NULL, NULL),
+(14, 1, '900323290', 'Estación de Servicio Estrella del Norte S.A.S', 'Aut. Norte KM 16 Vda. Zarzal', '(604) 4480313 / 4015252', '', 'Sebastián Vélez', 'edsestrelladelnorte@une.net,co', '', '42e2a66f84519c31f1904a26fd7a43e3.png', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(15, 1, '860500630', 'Isec', 'Carrera 43A # 14 -27 Oficina 202', '(604) 2666434', '3153838392', 'Luz Stella Vásquez ', 'stella.vasquez@isec.com.co', '', '87a7a92578531a3c8ba5778a1a6f927f.png', '', 1, '', 6, NULL, NULL, NULL, NULL),
+(16, 1, '900225832', 'Luchos Lujomania LTDA', 'Carrera 64 N° 42B - 31', '(604) 4082320 / 4087942', '', 'Alexandra Restrepo', 'contacto@luchoslujomania.com', '', '98c016f888a2f9257dc9d9ae9143093a.png', '', 1, '', 2, NULL, NULL, NULL, NULL),
+(17, 1, '811000995', 'Mas Frenos S.A.S', 'Calle 30 A 65 B 66', '(604) 4798744 / 4798461', '', 'German Hernández', 'masfrenos@gmail.com', '', '551c5c6b0068c144a559fe35e3467522.png', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(18, 1, '901436594', 'Inversiones Mas Repuestos S.A.S', 'Carera 61 N°45 - 08', '', '3003641449 / 3007631988', 'Karen', 'masrepuestos@gmail.com', '', '6beb3c5bb911d29e684faf35564e7d06.png', '', 1, '', 3, NULL, NULL, NULL, NULL),
+(19, 1, '901446306', 'Grupo Empresarial ADSL S.A.S', 'Calle 48 # 10-45 CC Monterrey Loc. 315-316', '(604) 6090123', '3122510095', 'Mauricio Franco', 'm.franco@grupoadsl.com', '', '', '', 1, '', 1, NULL, NULL, NULL, NULL),
+(20, 1, '900585869', 'Mega Storage Colombia S.A.S', 'Calle 8 B N° 65 251', '(604) 6051525', '3216390098', 'Yurani Mendez', 'contabilidad@megastorage.com.co', '', 'a261bf5349156150b4d68835d461b52e.png', '', 1, '', 8, NULL, NULL, NULL, NULL),
+(21, 1, '900744916', 'Mundirepuestos  del Norte S.A.S', 'Diagonal 52 N° 15 A 351 - Interior 5 Centro Logístico del Norte - Bello', '(604) 3666709', '3113555851', 'Carolina Castro', 'administracion@mundirepuestosdelnorte.com.co', '', 'a04872500ff3a5c3469bc04ff4f7f871.png', '', 1, '', 9, NULL, NULL, NULL, NULL),
+(22, 1, '900986403', 'Radiofrecuencia e Ingeniería en Comunicaciones S.A.S', 'Carrera 37 B N° 1 G  - 20', '(601) 3843687', '3102256990', 'William Marín', 'williammartincom@gmail.com', '', '5e4adc3438c110f95dc526885b0bad77.png', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(23, 1, '900906969', 'Soluciones en Seguridad y Salud en el Trabajo S3 S.A.S', 'Carera 53 N°  36 - 35', '(604) 4796057', '3044783532', 'Laura', 'cartera3soluciones@gmail.com', '', 'a6fcc619567ef2feef6e591d852dd027.png', 'Común', 1, 'Medellín', 5, NULL, NULL, NULL, NULL),
+(24, 1, '900265297', 'Sociedad de Seguridad Electrónica y Telecomunicaciones S.A.S', 'Av. Carera 20 N° 85 A - 21', '(601) 4321757', '3125085416 / 3115446076', 'Lucia González / Diany Delgado', 'contabilidad@setronics.net', '', 'fa966e69754c8fb7701fc5d3714641ea.png', 'Común', 1, 'Bogotá', 2, NULL, NULL, NULL, NULL),
+(25, 1, '890942699', 'Almacén Sus Llantas S.A.S', 'Carrera 59 N° 48 - 20 Barrio Triste', '(604) 5112424', '3215112424', 'Ana Gil', 'conta.susllantas@une.net.co', '', 'b339711c7a2df622bf33b12b4dc66d07.png', 'Común', 1, 'Medellín', 9, NULL, NULL, NULL, NULL),
+(26, 1, '900034424', 'Electrónica  I+D S.A.S ', 'Calle 48 D N° 65 A - 35', '(604) 6073333', '3159282544', '', 'administrtivo@didacticaselectronicas.com', '', 'd7797cb044065303b7982449bf23457e.png', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(27, 1, '900597685', 'Sustento Jurídico ', 'Calle 8 B N° 65 167', '(604) 4199704', '3104415759', 'Edison Garcia', 'edisongarcia@sustentojuridico.com', '', '9ef3a8963714462abc64b441a3ae6a40.png', '', 1, '', 1, NULL, NULL, NULL, NULL),
+(28, 1, '900037505', 'Felda S.A', 'Calle 30 A N° 69 C - 11', '(604) 2350517', '3117229415', 'Francia Zapata', 'primaxbelenauxiliar@gmail.com', '', '', 'Común', 1, 'Medellín', 2, NULL, NULL, NULL, NULL),
+(29, 1, '800224025', 'Tablecol S.A.S', 'Carrera 56 N° 29-72 ', '(604) 44083129', '3104525720 / 3122581879', 'Margoth Rincon', 'cartera@tablecol.com.co', '', 'e0ad738367faee457a6d7eb79e105e62.png', 'Común', 1, 'Medellín', 8, NULL, NULL, NULL, NULL),
+(30, 1, '900529671', 'Ferretería Servillaves la 30 S.A.S', 'Calle 30 N° 75-04', '(604) 4449471', '3148851469', '', 'servillavesla30@une.net.co', '', 'd7beaa386ac040062c8aef0bc3664b78.png', 'Común', 1, 'Medellín ', 9, NULL, NULL, NULL, NULL),
+(31, 1, '900653389', 'Grupo Empresarial Camaleón S.A.S', 'Calle 30 N° 74-77', '(604) 5821080', '3041733035', '', 'pinturaselcamaleondela30@gmail.com', '', '88aa84cb01113f26141423fe28a2c96c.png', 'Común', 1, 'Medellín', 6, NULL, NULL, NULL, NULL),
+(32, 1, '830504313', 'Radio Enlace S.A.S', 'Calle 27 N°81 - 70 Belén la Palma', '(604) 4448280', '3116307079', 'Oscar Sánchez ', 'facturacionelectronica@radioenlacesas.com', '', 'e5f8af09c439c8602ceab505144e8879.png', 'Común', 1, 'Medellín', 5, NULL, NULL, NULL, NULL),
+(33, 1, '901248086', 'Uno A Tecnología S.A.S', 'Calle 14 # 48-33 CC. Monterrey Local 380A ', '(604) 4441818', '', '', 'www.unoacomputadores.com', '', '76726cc66c2b4bbe4efe00f0df965afe.png', 'Común', 1, 'Medellín', 7, NULL, NULL, NULL, NULL),
+(34, 1, '800242106', 'Sodimac Colombia S.A.', 'Calle 30 A N° 82 A - 26', '', '3208899933', '', 'servicioalcliente@corp.homecenter.cpm.co', '', '61689d16f9f015cf10096e217d9143be.png', 'Común', 1, 'Medellín', 2, NULL, NULL, NULL, NULL),
+(35, 1, '900525717', 'Almacén LCC S.A.S', 'Cra. 65 No. 8 B 91 LC174', '3611263', '', '', 'contabilidad.lcc@dotakondor.com', '', '18a4b3c5eef3d3e8a22a795637fc7c72.png', 'Juridico', 1, 'Medellín ', 0, NULL, NULL, NULL, NULL),
+(36, 1, '900933129', 'Meca S.A.S', 'Cra. 54 No. 29c120 loc 101', '5017013', '3117655802', '', 'meca701@hotmail.com', '', '7e93e958bf92c10b91b7378cf01eec5e.png', 'Juridico', 1, 'Medellín ', 1, NULL, NULL, NULL, NULL),
+(37, 1, '43094755', 'Moto Veloz', 'Cl 38 No. 51-32', '2328265', '', '', '', '', 'cbbc9342f18b9ba5c51dab8873e3de5f.png', 'Juridico', 1, 'Medellín ', 1, NULL, NULL, NULL, NULL),
+(38, 1, '900702001', 'Fénix Producciones S.A.S', 'Cl 49 No. 67 A 32', '4482246', '2304408', '', 'info♠fenixcomercial.com.co', '', '13ed291c09189f15fc05994b080c20f7.png', 'Juridico', 1, 'Medellín ', 5, NULL, NULL, NULL, NULL),
+(39, 1, '800227071', 'Tornifer S.A.S', 'Cl 30 No. 54-11', '3228015', '3137466', '', '', '', 'b7b02797d0b7410fe16c7b9685be934f.png', '', 1, 'Medellín ', 0, NULL, NULL, NULL, NULL),
+(40, 1, '890943055', 'Suconel Suministros y Controles Electronicos', 'Cra 53 No. 50 - 51 Of 506', '4487830', '3012578952', 'Suconel', 'suconel@suconel.com', '', 'df0a29132fca02bc7fa1c2971e4fbf42.png', 'Juridico', 1, 'Medellín ', 0, NULL, NULL, NULL, NULL),
+(41, 1, '800147520', 'Compel  S.A Tecnología &amp; Vigilancia ', 'Cra 70 No. 32b -147', '3512492', '3006351247', 'Compel', 'Compel@compel.com.co', '', '5347b32148d744287cb069a0984a799f.png', 'Juridico', 1, 'Medellín ', 2, NULL, NULL, NULL, NULL),
+(42, 1, '890922294', 'Protokimica S.A.S', 'Cra 56b No. 49-58', '4448787', '3117192216', 'Efren Villalba ', 'protokimica@une.net.co', '', '0d38a412b45f03cd3d5eddfeadb4d242.png', 'Juridico', 1, 'Medellín ', 4, NULL, NULL, NULL, NULL),
+(44, 1, '900434009', 'Macrotics S.A.S', 'Carrera 50 C 10 sur 35 BRR la Aguacatala', '6048418828', '3330333228', 'Jaime García', 'ventas@macrotics.com', '', '1962dbc1e33a9ee7d07aeded0e9e32e1.png', 'Común', 1, 'Medellín', 3, NULL, NULL, NULL, NULL),
+(45, 1, '900164446', 'Grupo Empresarial de Radiocomunicaciones E.U.', 'Calle 79B N 69 R-28', '6012516969', '3124347142', 'Jaime Hernández', 'radiotelefonos@hotmail.com', '', '66541273565ad7d34453f484ae6225a0.png', 'Común', 1, 'Bogotá', 1, NULL, NULL, NULL, NULL),
+(46, 1, '811039882', 'Comercializadora Jagir S.A.S', 'Cra  52 #38-58', '', '3157804512', '', '', '', 'ea54ab55a65a9519a3a97cad065e8213.png', '', 1, 'Medellín ', 0, NULL, NULL, NULL, NULL),
+(47, 1, '900458715', 'Uricamperos &amp; Diesel  S.A.S', 'Cra 51 No 39-21', '3229673', '3122574274', '', 'ventas@uricamperos.com', '', 'e38fe9b8f6f32d71ed86968ba9bb323a.png', '', 1, '', 9, NULL, NULL, NULL, NULL),
+(48, 1, '2684800', 'Jairo Vásquez', 'Medellín', '2684800', '', 'Jairo Vásquez', '', 'Cta. Ahorros Bancolombia 10349100332  //  \r\nCliente Seguridad de Colombia  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 'Simplificado', 1, 'Medellín', 0, NULL, NULL, NULL, NULL),
+(49, 1, '15381163', 'Luis Antonio Giraldo Rincón', 'CALLE 27 81 70', '3054551899', '3006659005', 'Luis Antonio Giraldo', 'comercial@radioenlacesas.com', 'Cta. Ahorros Bancolombia 10309362858  / /  \r\nCliente Masivos de Occidente  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 'Simplificado', 1, 'Medellín', 57, NULL, NULL, NULL, NULL),
+(50, 1, '70257077', 'Edwar Ernesto Gallego', 'Cerro el Rubí - Yolombo', '', '3504869245', 'Edwar Ernesto Gallego', '', 'Cta. Ahorros Bancolombia 0-7299667612 //  \r\nCliente Vinus  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 'Simplificado', 1, 'Yolombo', 0, NULL, NULL, NULL, NULL),
+(51, 1, '3401378', 'Miguel Vahos', 'Cerro Horizonte', '', '3103790947', 'Miguel Vahos', '', 'Cta. Ahorros Bancolombia 41867033597  / /  \r\nCliente Continental Gold  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n\r\n', '', 'Simplificado', 1, 'Horizonte', 0, NULL, NULL, NULL, NULL),
+(52, 1, '3669716', 'Alfonso Tapias Machado', 'Finca el Mico, Remedios.', '', '3137968328', 'Alfonso Tapias Machado', '', 'Cta. Ahorros Bancolombia62527282204  //  \r\nCliente Conexión Norte, Grupo Ortiz, Intramaq y Atempi  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 'Simplificado', 1, 'Remedios', 0, NULL, NULL, NULL, NULL),
+(53, 1, '15421478', 'Luis Alberto Pérez Arboleda', 'Finca Boquerón', '', '', 'Luis Alberto Pérez Arboleda', '', 'Cta. Ahorros Banco Bogotá  //  \r\nCliente Seracis  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 'Simplificado', 1, 'Bogotá', 0, NULL, NULL, NULL, NULL),
+(54, 1, '21580004', 'Belarmina Durango', 'Cerro Cativo', '', '3217582751', 'Belarmina Durango', '', 'Cta. Ahorros CFC 0-1201053377  //  \r\nCliente Continental Gold y Atempi  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 'Simplificado', 1, 'Cativo', 0, NULL, NULL, NULL, NULL),
+(55, 1, '43905052', 'Beatriz Correa', 'Cerro Toto ', '', '3127238853', 'Beatriz Correa', '', 'Cta. Ahorro a la Mano 13127238853  //  \r\nCliente Seracis  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 'Simplificado', 1, 'Mutata', 0, NULL, NULL, NULL, NULL),
+(56, 1, '1128452089', 'Esneider Espinosa', 'Cerro la Meseta', '', '3007729918', 'Esneider Espinosa', '', 'Cta. Ahorros Bancolombia 1560885543  / /  Cliente Consorcio R&amp;S  //  Se debe incrementar en Enero de cada año según el porcentaje del IPC.', '', 'Simplificado', 1, 'Titiribí', 0, NULL, NULL, NULL, NULL),
+(57, 1, '8415976', 'José Ignacio Higuita Vásquez', 'Cerro Dabeiba', '', '3108440238', 'Luis Ignacio Higuita Vásquez', '', 'Cta. Ahorros Bancolombia  //  \r\nCliente Sp. Ingenieros Mar II  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 'Simplificado', 1, 'Dabeiba', 0, NULL, NULL, NULL, NULL),
+(58, 1, '43363356', 'Gloria Ruiz', 'Cerro Bello San Félix', '', '3205417102', 'Gloria Ruiz', '', 'Cta. Ahorros Bancolombia 54100033634  //  \r\nCliente Seguridad de Colombia  //  \r\nSe debe incrementar en Octubre de cada año según el porcentaje del IPC.\r\n\r\n', '', 'Simplificado', 1, 'San Félix ', 0, NULL, NULL, NULL, NULL),
+(59, 1, '32210151', 'María Hilda Quintero Zabala', 'Cerro Otú, Vereda la Brava', '', '3122415933', 'María Hilda Quintero Zabala', '', 'Cta. Ahorros Bancolombia 52700015548  //  \r\nCliente Seracis  //  \r\nSe debe incrementar en Marzo de cada año según el porcentaje del IPC.\r\n', '', 'Simplificado', 1, 'Remedios', 0, NULL, NULL, NULL, NULL),
+(60, 1, '71578126', 'Gabriel Jaime Ochoa Peláez', 'Cerro Sevilla', '', '3233001425', 'Gabriel Jaime Ochoa Peláez', '', 'Cta. Ahorros Bancolombia 2167007751  //  \r\nCliente Minerales Camino Real  //  \r\n Se debe incrementar en Junio de cada año según el porcentaje del IPC.\r\n\r\n', '', 'Simplificado', 1, 'Sevilla', 0, NULL, NULL, NULL, NULL),
+(61, 1, '1026159146', 'Yeison David Henao Atehortúa', 'Cerro el Colombianito', '', '3194508493', 'Yeison David Henao Atehortúa ', '', 'Cta. Ahorros Bancolombia 27900001266  //  \r\nCliente Consorcio R&amp;S  //  \r\nSe debe incrementar en Agosto de cada año según el porcentaje del IPC.\r\n', '', 'Simplificado', 1, 'Caldas', 0, NULL, NULL, NULL, NULL),
+(62, 1, '16075309', 'Camilo Andres Lopera', 'Cerro San José de la Montaña', '', '3206322680', 'Camilo Andres Lopera', '', 'Cta. Corriente Bancolombia 7014384380  //                                                                                                                                          Cliente Hdroituango y Conconcreto  //                                                                                                                                             \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', '', 1, 'San José ', 0, NULL, NULL, NULL, NULL),
+(63, 1, '7530716', 'Guillermo Adolfo Atehortúa Agudelo ', 'Cerro el Cedro, Amaga', '', '3223093528', 'Guillermo Adolfo Atehortúa Agudelo ', '', 'Cta. Ahorros Bancolombia 52001440071  //  \r\nCliente Consorcio R&amp;S  //  \r\nSe debe incrementar en Septiembre de cada año según el porcentaje del IPC.\r\n', '', '', 1, 'Amaga', 0, NULL, NULL, NULL, NULL),
+(64, 1, '1037368146', 'Eliana María Suarez', 'Cerro Maceo', '', '3108255728', 'Eliana María Suarez', '', 'Cta. Ahorros Bancolombia 16390361991  //  \r\nCliente Intramaq  //  \r\nSe debe incrementar en Abril de cada año según el porcentaje del IPC.\r\n', '', 'Simplificado', 1, 'Maceo', 0, NULL, NULL, NULL, NULL),
+(65, 1, '8075270', 'Oscar Darío Giraldo Ramírez', 'Dabeiba - Chinos', '', '3218735537', 'Oscar Darío Giraldo / Flor', '', 'Cta. Ahorro a la Mano 03126059317 / /\r\nSolo se cancelan los servicios una vez que ellos envían la factura, del recibo se debe restar (140.000 pesos) que es lo que normalmente ellos pagaban de luz y se le debe pagar el diferencial.', '', 'Simplificado', 1, 'Dabeiba', 0, NULL, NULL, NULL, NULL),
+(66, 1, '43424223', 'Omaira del Socorro escobar Sánchez ', 'Cerro Pantanillo', '', '3113136979', 'Omaira del Socorro Escobar Sánchez', '', 'Gana BArbosa  //  \r\nCliente Hatovial  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 'Simplificado', 1, 'Barbosa', 0, NULL, NULL, NULL, NULL),
+(67, 1, '1039284416', 'Robinson Flores Vargas', 'Dabeiba', '', '31732002976', 'Robinson Flores Vargas', '', 'Gana Dabeiba  //  \r\nCliente Seracis Chinos  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n\r\n\r\n', '', 'Simplificado', 1, 'Dabeiba', 0, NULL, NULL, NULL, NULL),
+(68, 1, '8333249', 'José Joaquín León Gases ', 'Mutata', '', '3218903562', 'José Joaquim León Gases', '', 'Gana Mutata  //  \r\nCliente Seracis Chinos  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 'Simplificado', 1, 'Mutata', 0, NULL, NULL, NULL, NULL),
+(69, 1, '8417622', 'Rubiel  Benítez ', 'Dabeiba', '', '3183757447', 'Rubiel Benítez', '', 'Gana Dabeiba  //  \r\nCliente Seracis Chinos  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 'Simplificado', 1, 'Dabeiba', 0, NULL, NULL, NULL, NULL),
+(70, 1, '21818287', 'María Nidia Macías Flores ', 'Vegachí', '', '3165676391', 'María Nidia Flores', '', 'Gana Vegachí  //  \r\nCliente  //  \r\nSe debe incrementar en Febrero de cada año según el porcentaje del IPC.\r\n\r\n', '', 'Simplificado', 1, 'Vegachí', 0, NULL, NULL, NULL, NULL),
+(71, 1, '6271627', 'Eduardo Calderón', 'Santa Fe ', '', '3148895933', 'Eduardo Calderón ', '', 'Gana Santa Fe  //  \r\nCliente El Cóndor  //  \r\nSe debe incrementar en Febrero de cada año según el porcentaje del IPC.\r\n\r\n', '', 'Simplificado', 1, 'Santa Fe', 0, NULL, NULL, NULL, NULL),
+(72, 1, '30760476', 'Rocío Beltrán Castro', 'Codazzi el Cesar', '', '3144245571', 'Rocío Beltrán Castro', '', 'Cta Ahorro a la Mano Bancolombia 52491370742  // \r\nCliente Isla Caribe  //  \r\nSe debe incrementar en Agosto de cada año según el porcentaje del IPC.\r\n', '', 'Simplificado', 1, 'El Cesar', 0, NULL, NULL, NULL, NULL),
+(73, 1, '71023107', 'Jorge Humberto Lopera Durando', 'Frontino', '', '3122814104', 'Jorge Humberto Lopera Durando ', '', 'Cta. Ahorro a la Mano Bancolombia 03122814104  //  \r\nCliente Sp. Ingenieros Mar II  //  \r\nSe debe incrementar en Enero de cada año según el porcentaje del IPC.\r\n', '', 'Simplificado', 1, 'Frontino', 0, NULL, NULL, NULL, NULL),
+(74, 1, '900802615', 'Solarplus Energy S.A.S', 'Calle 65 Calle 8 B 91 IN 372', '6044483363', '3137330883', 'Juan Bernal ', 'tradecontabilidad@gmail.com', '', '40d568165a13576e7db2432794952b8e.png', 'Común', 1, 'Medellín', 6, NULL, NULL, NULL, NULL),
+(76, 1, '890980958', 'MUNICIPIO DE MACEO', 'Carrera 30 #30-32', '8640209', '8640209', '', 'alcaldia@maceo-antioquia.gov.co', '', '', '', 1, 'MACEO', 3, NULL, NULL, NULL, NULL),
+(77, 1, '19708332', 'ROBERTO CARLOS 	LEIVA PEREZ', 'VEREDA 4 VIENTOS', '', '3002349561', 'ROBERTO CARLOS 	LEIVA PEREZ', '', '', '', 'SIMPLE', 1, '', 1, NULL, NULL, NULL, NULL),
+(78, 1, '830114921', 'COLOMBIA MOVIL S A E S P', 'CR 65 30A 58', '', '018003000000', 'TIGO BUSINES', 'atencionprimercontacto@mail.tigo.com.co', '', 'c8fb2c2ab13b2cbb0a75db1749c2f859.png', 'GRANDES CONTRIBUYENTES', 1, 'MEDELLIN', 1, NULL, NULL, NULL, NULL),
+(79, 1, '800153993', 'COMUNICACION CELULAR S A COMCEL S A', 'Cl 30 A 82 a-26 C.C Los Molinos L 3031 ', '01-800-0341818', '01-800-0341818', 'CLARO', 'solucionesclaro@claro.com.co', '', 'b5f2dc14220cc7faec83e84120c5e7a8.png', 'GRANDES CONTRIBUYENTES', 1, 'MEDELLIN', 7, NULL, NULL, NULL, NULL),
+(80, 1, '890904996', 'EMPRESAS PUBLICAS DE MEDELLIN E.S.P.', 'CRA 58  42 125', '3808080', '', 'EPM', 'notificacionesjudicialesepm@epm.com.co', '', '3486570319715963e6ec1f22ee3dd5bb.png', 'GRANDES CONTRIBUYENTES', 1, 'MEDELLIN', 1, NULL, NULL, NULL, NULL),
+(81, 1, '1128404557', 'JUAN PABLO CADAVID MUÑOS', '', '', '3015353766', 'JUAN PABLO CADAVID MUÑOS', '', '', '', 'SIMPLE', 1, 'MEDELLIN', 0, NULL, NULL, NULL, NULL),
+(82, 1, '1036610363', 'SIRLEY TATIANA MURILLO GOMEZ', 'Carre 69 calle 34 b sur 102', '', '3148783053', 'SIRLEY TATIANA MURILLO GOMEZ', 'coordinadora.sst@radioenlacesas.com', '', '', 'SIMPLE', 1, 'MEDELLIN', 0, NULL, NULL, NULL, NULL),
+(83, 1, '41948443', 'ANGELA MARIAPEREZ ARANGO', 'CL 39 SUR 25C 89 APTO 428', '', '3122476898', 'ANGELA MARIAPEREZ ARANGO', 'angelaperez1980@hotmail.com', '', '', 'SIMPLE', 1, '', 0, NULL, NULL, NULL, NULL),
+(84, 1, '71687072', 'JEFERSON ARANGO RESTREPO', 'Cra 98#22h 57', '311 6396382', '311 6396382', 'JEFERSON ARANGO RESTREPO', 'jefersonarango@gmail.com', '', '', 'SIMPLE', 1, 'MEDELLIN', 0, NULL, NULL, NULL, NULL),
+(85, 1, '901296977', 'PUNTA DEL PARQUE - PROPIEDAD HORIZONTAL', 'CL 37B SUR 27 30', '', '3501546', 'PUNTA DEL PARQUE - PROPIEDAD HORIZONTAL', 'puntadelparqueph@gmail.com', '', '', 'REGIMEN COMUN', 1, 'MEDELLIN', 9, NULL, NULL, NULL, NULL),
+(86, 1, '3518230', 'Electrónicas ADM ', 'Cra 53 No.  51-51 Local 311 CC La Cascada', '4807950', '', '', '', '', '', '', 1, 'Medellín ', 3, NULL, NULL, NULL, NULL),
+(87, 1, '901291245', 'ICANN GROUP S.A.S', 'cl 33 74e 84', '2503941', '313 7366882', 'Alejandro Torres', 'orestrepo@hotmail.com', '', 'ccc209e3e7abc29adcfd6edd4ee8fcdc.png', 'REGIMEN COMUN', 1, 'MEDELLIN', 3, NULL, NULL, NULL, NULL),
+(88, 1, '800060880', 'Ferragro S.A.S', 'Cra. 42 # 51 - 34', '4483797', '3117207435', '', 'jjrestrepo@ferragro.com', '', 'c4f0d1c3ac3ef4e1880f6338c4bd6e3a.png', '', 1, 'Medellín ', 3, NULL, NULL, NULL, NULL),
+(89, 1, '43620699', 'Marcela Ríos Urrea / Enactivo Consulting', 'CR 35 65 SUR 135 AP 1505', '', '3187170367', '', 'marcelariosurrea@gmail.com', '', 'e6724d6b019cd529315f3818a51c4924.png', '', 1, 'Medellín ', 4, NULL, NULL, NULL, NULL),
+(90, 1, '860516314', 'DAGA S.A. EN REORGANIZACION', 'CR 106 15 25 MZ 10 BG 65', '6016 0 3 1 0 0 0', '', '', 'contabilidad@daga-sa.com', '', '19653033601843855423.png', 'Persona juridica', 1, 'Bogota', 3, NULL, NULL, NULL, NULL),
+(91, 1, '900427263', 'ELECTRO ANDU S.A.S.', 'CL 52 54 24', '604 4484387', '', '', 'secretariaelectroandu@gmail.com', '', '12200879241133583691.png', 'Persona juridica', 1, 'MEDELLIN', 9, NULL, NULL, NULL, NULL),
+(92, 1, '890913555', 'FERROINDUSTRIAL S.A.', 'CL 39 46 235', '6053702105', '3164229337', 'Daliana', 'contabilidad@ferroindustrial.com.co', '', '42207541934782113.png', 'Persona juridica', 1, 'Barranquilla', 3, NULL, NULL, NULL, NULL),
+(93, 1, '900367868', 'Marketing de insumos S.A.S.', 'CR 20 13 58 OF 413 CC PUERTO RICO', '9370257', '3112815885', '', 'gerencia@markyn.com', '', '', '', 1, 'Bogotá D.C', 6, NULL, NULL, NULL, NULL),
+(94, 1, '43136138', 'Sandra Milena', 'Marulanda Montoya', '', '(617)2818997', 'Sandra Milena Marulanda Montoya', 'Sandraespinosa1@aol.com', '', '', '', 1, 'Titiribi', 0, NULL, NULL, NULL, NULL),
+(95, 1, '900985188', 'ELECSU COMUNICACIONES S.A.S', 'CR 12 19 46 P 4 OF 402 elecsu@', '2 8 1 4 5 3 1', '', '', '', '', 'noavatar.png', '', 1, 'Bogota', 7, NULL, NULL, NULL, NULL),
+(96, 1, '71658966', 'Alberto Federico alvarez Gonsalez', 'CR 59 19 14', '5812448', '3012651922', '', 'mitchell.alvarez.e@gmail.com', '', 'noavatar.png', 'No responsable de IVA', 1, 'Medellin', 2, NULL, NULL, NULL, NULL),
+(98, 1, '811001008', ' TELEVIGIA LIMITADA', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(99, 1, '900142335', 'ACQUA MARKETING  COLOMBIA S.A.S.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(100, 1, '900667139', 'ALIMENTOS DE LA SIERRA S.A.S.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(102, 1, '890900608', 'ALMACENES EXITO S A', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(103, 1, '32390107', 'AMPARO DEL SOCORRO PELAEZ GIRALDO', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(104, 1, '830137461', 'BELLA PIEL SAS', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(105, 1, '890905080', 'CAMARA DE COMERCIO DE MEDELLIN', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(106, 1, '1042709801', 'CARLOS ANDRES ATEHORTUA VASCO', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(107, 1, '43644070', 'CARMEN PATRICIA OSSA HOYOS', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(108, 1, '890900076', 'CINE COLOMBIA SAS', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(109, 1, '900993023', 'COCOROLLO EL ALTICO S.A.S', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(110, 1, '900133093', 'COMBUSTIBLES DEL CESAR & CIA LTDA CODELCE', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(111, 1, '900342297', 'COMERCIALIZADORA ARTURO CALLE S.A.S', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(112, 1, '800069933', 'COMODIN S.A.S.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(113, 1, '890901172', 'COOPERATIVA CONSUMO TOMA POSESION', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(114, 1, '890901672', 'CRYSTAL S.A.S', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(115, 1, '70785806', 'DIEGO RESTREPO RAMIREZ', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(116, 1, '890941663', 'DISTRIBUIDORA PASTEUR S.A', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(117, 1, '900221395', 'DISTRICOMBUSTIBLES S.A.S', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(118, 1, '83003584', 'D-PORTES S.A.S', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(119, 1, '811009359', 'DYVAL S.A', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(120, 1, '900017447', 'FALABELLA DE COLOMBIA S A', 'CR 43 A 7', '60456326', '', 'FALABELLA DE COLOMBIA S A', '', '', '15361539591874229052.png', '', 1, 'Medellin', 8, NULL, NULL, NULL, NULL),
+(121, 1, '890901481', 'FEDERACION NACIONAL DE COMERCIANTES FENALCO SECCIONAL ANTIOQUIA', 'CLL 50 42 54', '4446444', '', 'Beatriz Espinosa', 'soportecobranzas@fenalcoantioquia.com', '', '', '', 1, '', 5, NULL, NULL, NULL, NULL),
+(122, 1, '900410127', 'FERRETERIA Y DEPOSITO ALTO DE LA VIRGEN S.A.S.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(123, 1, '71080014', 'GERARDO ANTONIO CIERRA CORREA', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(124, 1, '900521807', 'GLOBAL OPERADORA HOTELERA S.A.S.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(125, 1, '901405506', 'GOES GRUPO DE OPERACIONES ESTRATEGICAS EN MARKETING SAS', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(126, 1, '900759077', 'GROUND LIGHTNING S.A.S.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(127, 1, '890900307', 'GROUPE SEB ANDEAN S. A.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(128, 1, '900677711', 'GRUAS VANEGAS ROJAS S. A. S.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(129, 1, '70326533', 'HECTOR MADRID SALDARRIAGA MADRID', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(130, 1, '900277370', 'I SHOP COLOMBIA SAS', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(131, 1, '901555347', 'IMPROTO 3D S.A.S', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(132, 1, '800251569', 'INTER RAPIDISIMO SA', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(133, 1, '811045607', 'INVERSIONES EURO S. A.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(134, 1, '901197499', 'INVERSIONES MARIN VELASQUEZ  S.A.S.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(135, 1, '901609298', 'INVERSIONES MONANO S.A.S.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(136, 1, '900670975', 'INVERSIONES TORRE DE LONDRES S.A.S.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(137, 1, '1006858', 'JESUS DAVID VASQUEZ BARRIOS', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(138, 1, '83165404', 'JOSE ARLEX OSORIO NORIEGA', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(139, 1, '4350842', 'JOSE JAIRO VASQUEZ QUICENO', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(140, 1, '1028780632', 'JUAN ESTEBAN BOLIVAR SUAREZ', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(141, 1, '1036651968', 'Julian Esteban Sanchez Pabon', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(142, 1, '8351444', 'JULIO CESAR RESTREPO VASQUEZ', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(143, 1, '900276962', 'KOBA COLOMBIA S A S', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(144, 1, '901000330', 'KUSHKI COLOMBIA SAS', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(145, 1, '900407432', 'L&C S.A.S.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(146, 1, '890940499', 'LA CASA DEL GRANJERO S.A.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(147, 1, '901140415', 'LA MIGUERIA S.A.S.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(148, 1, '811034562', 'LA RECETA Y CIA S.A.S', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(149, 1, '890900098', 'LANDERS Y CIA S.A.S', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(150, 1, '39167260', 'LIA MARGARITA ARBELAEZ DE LOPEZ', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(151, 1, '901106003', 'LM INVESTMENT HOUSE S A S', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(152, 1, '900428510', 'MC HOMAS Y ZAPATOS  S.A.S.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(153, 1, '901137699', 'MINISO COLOMBIA S.A.S.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(154, 1, '98557903', 'NELSON DAVID VELASQUEZ', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(155, 1, '8410602', 'PEDRO NEL RIVERA RIVERA', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(156, 1, '16051795', 'PEDRO PEREZ SOTO', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(157, 1, '890912426', 'PEREZ Y CARDONA S.A.S.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(158, 1, '901446111', 'PERU AMSTERDAN S.A.S.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(159, 1, '811007170', 'Pinturas el aguila  S.A.S.', 'Autopista norte  KM  16 CL 65 25', '4489959', '3117690451', 'Pinturas el aguila  S.A.S.', '', '', '5232843682023033621.png', '', 1, 'Medellin', 8, NULL, NULL, NULL, NULL),
+(160, 1, '830112317', 'PROCAFECOL S.A', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(161, 1, '890904382', 'REENCAUCHADORA MEJIA S.A.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(162, 1, '71420636', 'REINALDO DE JESUS RODRIGUEZ QUICENO', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(163, 1, '4339285', 'RODRIGO ANDRES MOLINA MOLINA', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(164, 1, '890903790', 'SEGUROS DE VIDA SURAMERICANA S.S', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(165, 1, '900641439', 'SEINCODE SAS', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(166, 1, '901028482', 'SELOASEGURO S.A.S', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(167, 1, '860512330', 'SERVIENTREGA S.A.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(168, 1, '900817989', 'TECNOLOGIA HELICOIL S.A.S.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(169, 1, '900092385', 'UNE EPM TELECOMUNICACIONES S.A.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(170, 1, '890908099', 'VIAJES VERACRUZ LALIANXA S.A.S.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(171, 1, '901575818', 'W GRUAS S.A.S.', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(172, 1, '15405614', 'YOVANY ALBERTO DURANGO', '', '', '', '', '', '', '', '', 1, '', 0, NULL, NULL, NULL, NULL),
+(173, 1, '900219834', 'F2X S.A.S.', 'DG 43 28 41', '3222021', '', 'F2X S.A.S.', 'Info@f2x.com.co', '', '2131893904686931378.png', '', 1, 'medellin', 2, NULL, NULL, NULL, NULL),
+(174, 1, '900137696', 'CENTRO DE DIAGNOSTICO AUTOMOTOR METROPOLITANO S.A.S.', 'CL 30 A 69 78', '2351127', '', 'CENTRO DE DIAGNOSTICO AUTOMOTOR METROPOLITANO', '', '', '841076109167779742.png', '', 1, 'medellin', 1, NULL, NULL, NULL, NULL),
+(175, 1, '900551266', 'ConsorcioCCC ituango', 'CR 43 A 6 SUR 15 OF 253', '2667935', '', 'paola', '15 OF 253 paula.pelaez@cccituango.com', '', '14786828452140547131.png', 'persona juridica', 1, 'medellin', 0, NULL, NULL, NULL, NULL),
+(176, 1, '901447678', 'Green House Project SAS', 'av troncal occidente # 18-76', '', '3105735834', 'Green House Project SAS', 'Greenhproject@gmail.com', '', 'noavatar.png', '', 1, 'Medellin', 0, NULL, NULL, NULL, NULL),
+(177, 1, '901445319', 'INVERSIONES SOLUCIONES Y TRANSPORTE S.A.S.', 'CRA 50 33 58', '', 'CRA 50 33 58', 'INVERSIONES SOLUCIONES Y TRANSPORTE S.A.S.', 'i.transportesysoluciones@gmail.com', '', 'noavatar.png', 'impuesto sobre las ventas - iva', 1, 'Bello', 2, NULL, NULL, NULL, NULL),
+(178, 1, '890333105', ' ANDINA SEGURIDAD DEL VALLE ', 'CL 47 NORTE 4B N. 85 BRR LA FLORA', '052-4860202-', '', 'PATRICIA RODRIGUEZ', '', '', '', '', 1, 'Cali', 3, NULL, NULL, NULL, NULL),
+(179, 1, '811011475', ' CONCESIÓN ABURRA NORTE S.A.S. HATOVIAL', 'CL 59 No. 48 35 AUTOPISTA NORTE', '-4012277-', '', 'TATIANA GUILLEN', '', '', '', '', 1, 'Copacabana', 4, NULL, NULL, NULL, NULL),
+(180, 1, '811012172', ' CONCESION TUNEL ABURRA ORIENTE S.A.', 'CR 35A No. 15 B 35 OF. 508', '054-4446178-', '', 'YULI URIBE', '', '', '', '', 1, 'Medellín', 2, NULL, NULL, NULL, NULL),
+(181, 1, '890929951', ' CONCRETOS Y ASFALTOS S.A.', 'DIAG 51 N. 15 A 161 KM 12 AUT.NORTE', '054-4000000-', '', 'NATALIA CORREA', '', '', '', '', 1, 'Medellín', 7, NULL, NULL, NULL, NULL),
+(182, 1, '900937826', ' CONSORCIO CONSTRUCTOR CONEXION NORTE ', 'CRA 20 No. 2 - 170 Piso 2 Mall San Rafael', '054-8390437-', '', 'YEIMY MOLINA', '', '', '', '', 1, 'Caucasia', 3, NULL, NULL, NULL, NULL),
+(183, 1, '900958134', ' CONSORCIO UNICA SP', 'CRA 74 No. 28-29', '054-3417600-', '', 'KAREN RODRIGUEZ', '', '', '', '', 1, 'Medellín', 5, NULL, NULL, NULL, NULL),
+(184, 1, '901141344', ' CONSORCIO VIAS PARA EL CHOCO', 'CRA 11A N. 94 A 31 OF.401', '051-6361919-', '', 'CAROLINA VILLARAGA', '', '', '', '', 1, 'Bogotá', 1, NULL, NULL, NULL, NULL),
+(186, 1, '900166687', ' CONTINENTAL GOLD', 'CL 7 N.37 215', '054-3121026-', '', 'PAOLA RUIZ', '', '', '', '', 1, 'Medellín', 7, NULL, NULL, NULL, NULL),
+(187, 1, '890981683', ' CORPORACIÓN DE FOMENTO ASISTENCIAL DEL HOSPITAL UNIVERSITARIO SAN VICENTE DE PAUL', 'CR 52 A No. 39 80', '054-4480550-', '', 'DIANA MILENA ARANGO', '', '', '', '', 1, 'Medellín', 8, NULL, NULL, NULL, NULL),
+(188, 1, '901170140', ' ECR INVERSIONES S.A.S', 'CL 21 8 27', '056-3330694-', '', 'ECR INVERSIONES', '', '', '', '', 1, 'Pereira', 1, NULL, NULL, NULL, NULL),
+(189, 1, '890930811', ' EDIFICIO NOVA TEMPO - PH', 'CRA 43a No. 14 - 109 OF 801', '054-2666608-', '', 'SANDRA LONDOÑO', '', '', '', '', 1, 'Medellín', 6, NULL, NULL, NULL, NULL),
+(198, 1, '900172144', ' RADIONET SOLUCUIONES S.A', 'CL 52 No. 3F23', '052-6643302-', '', 'J CANDADO', '', '', '', '', 1, 'Cali', 4, NULL, NULL, NULL, NULL),
+(199, 1, '890312749', ' SEGURIDAD ATLAS S.A.S.', 'CL 14 No. 52 51', '-3788660-', '', 'DIEGO TAMAYO', '', '', '', '', 1, 'Medellín', 6, NULL, NULL, NULL, NULL),
+(200, 1, '890911846', ' SEGURIDAD DE COLOMBIA ANTIOQUIA LTDA', 'Cr 43D No. 8 -06', '054-2684800-3', '', 'JAIRO VASQUEZ', '', '', '', '', 1, 'Medellín', 2, NULL, NULL, NULL, NULL),
+(201, 1, '860526603', ' SEGURIDAD EL PENTAGONO COLOMBIANO LTDA SEPECOL', 'CL 48B 81 A 16', '054-3229438612-', '', 'CAMILO ECHEVERRI', '', '', '', '', 1, 'Medellín', 1, NULL, NULL, NULL, NULL),
+(202, 1, '800201668', ' SEGURIDAD ONCOR LTDA', 'CL 47 D No. 77 B 07', '054-4489320-', '', 'Hector Bonilla', '', '', '', '', 1, 'Medellín', 4, NULL, NULL, NULL, NULL),
+(204, 1, '890329946', ' SISTEMAS INTEGRALES DE INFORMATICA SISA S.A', 'AV CRA 45 No. 118 - 30 OF 501', '051-3138721431-', '', 'LILIANA LEON', '', '', '', '', 1, 'Bogotá', 5, NULL, NULL, NULL, NULL),
+(205, 1, '900672611', ' SOPICO S.A.S', 'CL 46A SUR No. 42 22 INTERIOR 301', '054-5088060-', '', 'ANGELICA SUAREZ', '', '', '', '', 1, 'Envigado', 8, NULL, NULL, NULL, NULL),
+(206, 1, '890932424', ' SP INGENIEROS S.A.S.', 'CRA 74 No. 28-29', '-3417600-', '', 'MARIA MUNERA', '', '', '', '', 1, 'Medellín', 8, NULL, NULL, NULL, NULL),
+(208, 1, '844000518', ' TELEMATICA LTDA', 'CRA 57 No. 94b 25', '051-2189672-', '', 'TELEMATICA TELEMATICA', '', '', '', '', 1, 'Bogotá', 5, NULL, NULL, NULL, NULL),
+(211, 1, '900340610', ' WB INGENIERIA DE PROYECTOS  S,A.S', 'CRA 53 No. 46-49', '055-3443512-', '', 'DANIELA YERENA', '', '', '', '', 1, 'Barranquilla', 6, NULL, NULL, NULL, NULL),
+(213, 1, '900843076', '3M EXCAVACIONES S.A.S.', 'CE28  80A 32', '034-3414321-', '', 'NN NN', '', '', '', '', 1, 'Medellín', 1, NULL, NULL, NULL, NULL),
+(214, 1, '901044339', '808 EMPRESARIAL PH', 'CRA 50FF 8 SUR 27', '034-6047094-', '', '808 EMPRESARIAL PH 808 EMPRESARIAL PH', '', '', '', '', 1, 'MALO medellin', 9, NULL, NULL, NULL, NULL),
+(215, 1, '900471934', 'A ABACHAR COMERCIALIZADORA S.A.S.', 'CL 2 SUR 67 250', '034-3113112209-', '', 'NN NN', '', '', '', '', 1, 'Medellín', 9, NULL, NULL, NULL, NULL),
+(216, 1, '817001773', 'A.I.C.', 'Cra. 36c #5B2-32', '', '', '', '', '', '', '', 1, 'Cali', 0, NULL, NULL, NULL, NULL),
+(217, 1, '811020131', 'A.M.H. SERVICIOS LIMITADA', '', '034--', '', 'A.M.H. SERVICIOS LIMITADA ', '', '', '', '', 1, 'Medellín', 4, NULL, NULL, NULL, NULL),
+(218, 1, '5841579', 'ABELDE JESUS TORO VALENCIA', 'AV CENTRO 11', '604-3185937839-', '', 'ABELDE JESUS TORO VALENCIA', '', '', '', '', 1, 'Melgar', 9, NULL, NULL, NULL, NULL),
+(219, 1, '890905975', 'ABRASIVOS INDUSTRIALES S.A.S.', 'Carrera 52 No 25-17', '604-300856351-', '', 'andres breasivos', '', '', '', '', 1, 'Medellín', 1, NULL, NULL, NULL, NULL),
+(220, 1, '830078512', 'ACH Colombia S.A.', 'Tv. 23 # 97-73', '-7444686-', '', '', '', '', '', '', 1, 'Bogotá', 0, NULL, NULL, NULL, NULL),
+(222, 1, '901445599', 'ACTIVIDADES ENTRE RIOS S.A.S', 'CONJUNTO SAN JOSE DE LAS VILLAS ET 5 CA 58', '056-3137295328-', '', 'JUAN FELIPE CASAS', '', '', '', '', 1, 'Pereira', 8, NULL, NULL, NULL, NULL),
+(223, 1, '811033005', 'ACUAMETRO SA', 'CRA 52 9B SUR 45', '604--', '', 'ACUAMETRO SA ', '', '', '', '', 1, 'Medellín', 0, NULL, NULL, NULL, NULL),
+(224, 1, '98562661', 'ADAN DARIO ZAPATA ZAPATA', 'MCP VENECIA BOLOMBOLO', '604-3233664149-', '', 'ADAN DARIO ZAPATA ZAPATA', '', '', '', '', 1, 'Venecia', 6, NULL, NULL, NULL, NULL),
+(225, 1, '805011074', 'ADIDAS COLOMBIA LTDA', '', '034--', '', 'ADIDAS COLOMBIA LTDA ', '', '', '', '', 1, 'Medellín', 2, NULL, NULL, NULL, NULL),
+(226, 1, '21439195', 'ADIELA MARIA PEREZ TORRES', 'VEREDA CAMINO C VIA FREDONIA', '604-3105906315-', '', 'ADIELA MARIA PEREZ TORRES', '', '', '', '', 1, 'Amagá', 1, NULL, NULL, NULL, NULL),
+(227, 1, '800138188', 'Administradora de Fondos de Pensiones y Cesantía Protección S.A.', 'Calle 49 No. 63 - 100', '', '', '', '', '', '', '', 1, 'Bogotá', 0, NULL, NULL, NULL, NULL),
+(228, 1, '70694906', 'ADRIAN DARIO QUINTERO CARDONA', 'CL 30 74 31', '034-2385870-', '', 'ADRIAN DARIO QUINTERO CARDONA', '', '', '', '', 1, 'Medellín', 1, NULL, NULL, NULL, NULL),
+(229, 1, '43276358', 'ADRIANA ISABEL AGUDELO MEJIA', 'CL 32  86 42', '034-3023225936-', '', 'ADRIANA ISABEL AGUDELO MEJIA', '', '', '', '', 1, 'Medellín', 2, NULL, NULL, NULL, NULL),
+(230, 1, '1087993311', 'ADRIANA MILENA MORALES GRANADA', 'CL 32C 76 08', '604-5468823-', '', 'ADRIANA MILENA MORALES GRANADA', '', '', '', '', 1, 'Medellín', 3, NULL, NULL, NULL, NULL),
+(231, 1, '42682174', 'ADRIANA PATRICIA SIERRA TOBON', 'CR 54 36 85', '604-3113760306-', '', 'ADRIANA PATRICIA SIERRA TOBON', '', '', '', '', 1, 'Medellín', 1, NULL, NULL, NULL, NULL),
+(232, 1, '43848508', 'ADRIANA YANET MUÑOZ', 'MEDELLIN', '034-4445541-', '', 'ADRIANA YANET MUÑOZ', '', '', '', '', 1, 'Medellín', 6, NULL, NULL, NULL, NULL),
+(233, 1, '830125996', 'AGENCIA NACIONAL DE INFRAESTRUCTURA', 'Cl 24 A  59 42', '034-4848860-', '', 'NN NN', '', '', '', '', 1, 'Bogotá', 9, NULL, NULL, NULL, NULL),
+(234, 1, '900318997', 'AGREGADOS DE LA SIERRA S.A.', 'CL 8 35 69 OF 424', '604-4444744-', '', 'AGREGADOS DE LA SIERRA S.A. ', '', '', '', '', 1, 'Medellín', 9, NULL, NULL, NULL, NULL),
+(235, 1, '901265486', 'AGROINVEME S.A.S - ZOMAC', 'KM 83 VEREDA AURES CARTAGENA VIA LA UNION SONSON', '034-3117001420-', '', 'DARIO MONTOYA', '', '', '', '', 1, 'Medellín', 1, NULL, NULL, NULL, NULL),
+(236, 1, '900345431', 'AGROPAISA S.A.S', 'CR 35 W 71 37 BOD 59', '607-6378080-', '', 'AGROPAISA S.A.S ', '', '', '', '', 1, 'Bucaramanga', 7, NULL, NULL, NULL, NULL),
+(237, 1, '900109800', 'AIRRIGAR SA', 'CLL 85B 48 68', '034-2853513-', '', 'JHON JADER PEREZ', '', '', '', '', 1, 'Itagui', 0, NULL, NULL, NULL, NULL),
+(239, 1, '3567761', 'ALBERTO DE JESUS SANCHEZ GOMEZ', 'CL 82 51C 10', '604-2111809-', '', 'ALBERTO DE JESUS SANCHEZ GOMEZ', '', '', '', '', 1, 'Medellín', 1, NULL, NULL, NULL, NULL),
+(240, 1, '70051912', 'ALBERTO ELIAS MIRANDA JARAMILLO', 'CLL 44 A 58 49', '034-5111620-', '', 'ALBERTO ELIAS MIRANDA JARAMILLO', '', '', '', '', 1, 'Medellín', 5, NULL, NULL, NULL, NULL),
+(241, 1, '32253621', 'ALEIDA DE  JESUS MESTRA MASS', 'TRV 29 41 231', '604-3116119116-', '', 'ALEIDA DE  JESUS MESTRA MASS', '', '', '', '', 1, 'Montería', 0, NULL, NULL, NULL, NULL),
+(242, 1, '70385678', 'ALEISER ANTONIO GOMEZ QUINTERO', '', '034--', '', 'ALEISER ANTONIO GOMEZ QUINTERO', '', '', '', '', 1, 'Medellín', 1, NULL, NULL, NULL, NULL),
+(243, 1, '1152439073', 'ALEJANDRA CHICA', 'CR 89C 30C 36', '604-3122471319-000', '', 'ALEJANDRA CHICA', '', '', '', '', 1, 'Medellín', 6, NULL, NULL, NULL, NULL),
+(247, 1, '1037602632', 'ALEJANDRA GARCIA RAMIREZ', '', '034--', '', 'ALEJANDRA GARCIA RAMIREZ', '', '', '', '', 1, 'Medellín', 4, NULL, NULL, NULL, NULL),
+(248, 1, '71648669', 'ALEJANDRO ACOSTA', '', '604--', '', 'ALEJANDRO ACOSTA', '', '', '', '', 1, 'Medellín', 7, NULL, NULL, NULL, NULL),
+(250, 1, '70541631', 'ALEJANDRO DE JESUS MONTIEL MENESES', 'CISNEROS', '-3506125035-', '', 'ALEJANDRO DE JESUS MONTIEL MENESES', '', '', '', '', 1, 'Medellín', 3, NULL, NULL, NULL, NULL),
+(251, 1, '1037577835', 'ALEJANDRO HOYOS YEPES', '', '034--', '', 'ALEJANDRO HOYOS YEPES', '', '', '', '', 1, 'Medellín', 5, NULL, NULL, NULL, NULL),
+(253, 1, '80067398', 'ALEJANDRO TORRES MUANOVIC', 'KM 67 BOGOTA', '604-3123852110-', '', 'ALEJANDRO TORRES MUANOVIC', '', '', '', '', 1, 'Bogotá', 5, NULL, NULL, NULL, NULL),
+(254, 1, '70729953', 'ALEX ALBERTO ROMERO MONTOYA', 'CRA 76 29 16', '034-3439157-', '', 'ALEX ALBERTO ROMERO MONTOYA', '', '', '', '', 1, 'Medellín', 9, NULL, NULL, NULL, NULL),
+(255, 1, '77158654', 'ALEXANDER ARAUJO RODIRGUEZ', '', '034--', '', 'ALEXANDER ARAUJO RODIRGUEZ', '', '', '', '', 1, 'Medellín', 6, NULL, NULL, NULL, NULL),
+(257, 1, '43627431', 'ALEXANDRA LAVERDE VANEGAS', 'CRA 1  53 11', '034-8332408-', '', 'ALEXANDRA LAVERDE VANEGAS', '', '', '', '', 1, 'Medellín', 1, NULL, NULL, NULL, NULL),
+(258, 1, '98712394', 'ALEXIS DUARTE GOMEZ', 'CL 56 42 201', '604-3147089802-', '', 'ALEXIS DUARTE GOMEZ', '', '', '', '', 1, 'Copacabana', 9, NULL, NULL, NULL, NULL),
+(259, 1, '860503617', 'Alfa', 'Av. calle 24A #59', '', '', '', '', '', '', '', 1, 'Bogotá', 0, NULL, NULL, NULL, NULL),
+(260, 1, '70411487', 'ALFONSO EDUARDO GUERRA VELEZ', 'CL 51 51 04', '034-3105976519-', '', 'ALFONSO EDUARDO GUERRA VELEZ', '', '', '', '', 1, 'Bolívar', 1, NULL, NULL, NULL, NULL),
+(261, 1, '830113831', 'Aliansalud', 'Cr 8 38 - 31', '', '', '', '', '', '', '', 1, 'Bogotá', 0, NULL, NULL, NULL, NULL),
+(262, 1, '830053812', 'ALIANZA FIDUCIARIA S.A. FIDEICOMISOS', 'MEDELLIN', '034-2585858-', '', 'NN NN', '', '', '', '', 1, 'Medellín', 2, NULL, NULL, NULL, NULL),
+(263, 1, '800145103', 'ALIMENTOS CRIOLLOS S.A', '', '034--', '', 'NN ', '', '', '', '', 1, 'Medellín', 5, NULL, NULL, NULL, NULL),
+(265, 1, '3179276', 'ALIRIO AHUMADA RUIZ', 'CL 5 4 B 4', '604-3112642775-', '', 'ALIRIO AHUMADA RUIZ', '', '', '', '', 1, 'Medellín', 6, NULL, NULL, NULL, NULL),
+(267, 1, '8411941', 'ALMACEN DE REPUESTOS Y FERRETERIA', 'CRA URIBE URIBE  8 75', '034-8591250-', '', 'LUIS ALFONSO OCAMPO VALDERRAMA', '', '', '', '', 1, 'Dabeiba', 9, NULL, NULL, NULL, NULL),
+(268, 1, '800175064', 'ALMACEN RAMONELECTRICOS SAS', 'CRA 59 44 48', '034-2314194-', '', 'RAMON ', '', '', '', '', 1, 'Medellín', 4, NULL, NULL, NULL, NULL),
+(270, 1, '890900221', 'ALMACEN VULCANO S.A.S', 'CRA 50 41-103', '604-4444554-', '', 'Margarita ', '', '', '', '', 1, 'Medellín', 2, NULL, NULL, NULL, NULL),
+(273, 1, '860645854', 'ALMACENES MAXIMO S.A.S.', 'CR 106 15 A 25', '604-4395488-', '', 'ALMACENES MAXIMO S.A.S. ', '', '', '', '', 1, 'Medellín', 1, NULL, NULL, NULL, NULL),
+(274, 1, '890920782', 'ALMACENES Y TALLERES MOTO PRECISION S.A', 'CL 38  5297', '034-2324932-', '', 'DANIEL MAURICIO PARRA RINCON', '', '', '', '', 1, 'Medellín', 8, NULL, NULL, NULL, NULL),
+(275, 1, '811029355', 'ALMETALCO S.A.S.', 'PRINCIPAL CL 32 14 28', '034-4482525-', '', 'NN NN', '', '', '', '', 1, 'Itagui', 8, NULL, NULL, NULL, NULL),
+(278, 1, '5083474', 'ALVARO ANTONIO TRILLOS CONTRERAS', 'KM 25 ENTRE AGUACHICA - MORRISO', '604-3217153661-', '', 'ALVARO ANTONIO TRILLOS CONTRERAS', '', '', '', '', 1, 'Aguachica', 1, NULL, NULL, NULL, NULL),
+(287, 1, '890922447', ' CONSTRUCCIONES EL CONDOR S.A', 'CRA 25 No. 3 - 45 INT 37', '054-4480029-', '', 'FELIPE NARANJO', '', '', '', '', 1, 'Medellín', 4, NULL, NULL, NULL, NULL),
+(292, 1, '900448692', ' FIDELITY SECURITY COMPANY LTDA', 'CL 105 N. 46 57', '051-8052631-', '', 'ANGY YOMARI', '', '', '', '', 1, 'Bogotá', 5, NULL, NULL, NULL, NULL),
+(293, 1, '901172312', ' FRESHCOLOMBIA INTERNATIONAL S.A.S', 'ZONA FRANCA RIONEGRO BODEGA 244-245-246', '054-3204825225-', '', 'JOSE PATIÑO', '', '', '', '', 1, 'Rionegro', 9, NULL, NULL, NULL, NULL),
+(294, 1, '800241602', ' FUNDACION COLOMBIANA DE CANCEROLOGIA CLINICA VIDA', 'CALLE 7 39 - 197 INT 302', '054-4480016-0', '', 'JUAN CAMILO LOPEZ', '', '', '', '', 1, 'Medellín', 1, NULL, NULL, NULL, NULL),
+(295, 1, '900102268', ' INGENIERIA TRANSPORTE Y MAQUINARIA SAS / INTRAMAQ', 'CR 48 SUR No. 75 BG 161', '054-4483012-', '', 'DIANA ARISTIZABAL', '', '', '', '', 1, 'Envigado', 1, NULL, NULL, NULL, NULL),
+(297, 1, '900864655', ' L.A CONSTRUCTION CENTER', 'CL 51 #52 37', '054-3718719-', '', 'CATALINA R', '', '', '', '', 1, 'Medellín', 6, NULL, NULL, NULL, NULL),
+(298, 1, '890930545', ' MINCIVIL S.A', 'CR 11 No. 98 07 OF 201 ED. PIJAO', '054-4032180-', '', 'OSCAR VERGARA', '', '', '', '', 1, 'Bogotá', 1, NULL, NULL, NULL, NULL),
+(312, 1, '901378171', ' UNION TEMPORAL C Y S ESTRELLA 2020', 'CRA 43 D D 8 - 6', '054-2684800-', '', 'JAIRO VASQUEZ', '', '', '', '', 1, 'Medellín', 2, NULL, NULL, NULL, NULL),
+(314, 1, '900980947', '2 RIOS INGENIERIA SAS', 'CRA 6 # 19-34 OF 303', '034-3116136016-', '', 'JUAN FELIPE CASAS', '', '', '', '', 1, 'Pereira', 8, NULL, NULL, NULL, NULL),
+(346, 1, '1034988081', 'Alejandra Colorado Sánchez', 'TRANV 35A SUR 33A 09', '-3128222277-', '', 'Alejandra Colorado Sánchez', '', '', '', '', 1, 'Medellín', 1, NULL, NULL, NULL, NULL),
+(348, 1, '1016092011', 'ALEJANDRA FRANCO BEDOYA', 'TERMINAL BOGOTA', '604-89161540-', '', 'ALEJANDRA FRANCO BEDOYA', '', '', '', '', 1, 'Bogotá', 4, NULL, NULL, NULL, NULL),
+(351, 1, '1018347954', 'ALEJANDRO ARANGO BARRIENTOS', '', '034--', '', 'ALEJANDRO ARANGO BARRIENTOS', '', '', '', '', 1, 'Medellín', 8, NULL, NULL, NULL, NULL),
+(354, 1, '1035438122', 'ALEJANDRO LONDOÑO ZAPATA', '', '604-8671783-', '', 'ALEJANDRO LONDOÑO ZAPATA', '', '', '', '', 1, 'Fusagasugá', 1, NULL, NULL, NULL, NULL),
+(358, 1, '15349928', 'ALEXANDER VASCO RAMIREZ', 'CL 72 SUR 46 A 35', '034-5965959-', '', 'ALEXANDER VASCO RAMIREZ', '', '', '', '', 1, 'Medellín', 3, NULL, NULL, NULL, NULL),
+(368, 1, '15057891', 'ALIRIO SERRANO', 'CLL 27 81 70', '034-0000000-', '', 'ALIRIO SERRANO', '', '', '', '', 1, 'Medellín', 6, NULL, NULL, NULL, NULL),
+(379, 1, '15487822', 'ALQUIBAR FLOREZ BENITEZ', 'BOLOMBOLO', '604-3135021634-', '', 'ALQUIBAR FLOREZ BENITEZ', '', '', '', '', 1, 'Venecia', 2, NULL, NULL, NULL, NULL),
+(382, 1, '900445030', 'AMBIENTE SOLUCIONES S.A.S BIC', 'CL 50 68 105', '604-4480398-', '', 'AMBIENTE SOLUCIONES S.A.S BIC ', '', '', '', '', 1, 'Medellín', 6, NULL, NULL, NULL, NULL),
+(383, 1, '900746330', 'AMBIENTTES J.C. NAGLES S.A.S', 'MEDELLIN', '034-2585858-', '', 'NN NN', '', '', '', '', 1, 'Medellín', 2, NULL, NULL, NULL, NULL);
+INSERT INTO `terceros` (`id`, `tipo_tercero`, `nit`, `razon_social`, `direccion`, `telefono_fijo`, `celular`, `contacto`, `email`, `observaciones`, `avatar`, `tipo_regimen`, `estado`, `ciudad`, `codigo_verificacion`, `tipo`, `tipo_identificacion`, `documento`, `clave`) VALUES
+(384, 1, '818000140', 'Ambuq Ars', 'Cra. 51 #79', '', '', '', '', '', '', '', 1, 'Barranquilla', 0, NULL, NULL, NULL, NULL),
+(385, 1, '900881079', 'AMPARO AGUIRRE ARENAS -1 SAS', 'CLL 3 SUR 43A 52 INT 1504', '-4482204-', '', 'AMPARO AGUIRRE ARENAS', '', '', '', '', 1, 'Medellín', 5, NULL, NULL, NULL, NULL),
+(387, 1, '900805957', 'ANA CARVAJAL S.A.S.', 'KM 3 DOBLE CALZADA GIRARDOT', '604-3125098731-', '', 'ANA CARVAJAL S.A.S. ', '', '', '', '', 1, 'Ibagué', 3, NULL, NULL, NULL, NULL),
+(388, 1, '1128281514', 'ANA MARIA HENAO RESTREPO', '', '034--', '', 'ANA MARIA HENAO RESTREPO', '', '', '', '', 1, 'Medellín', 4, NULL, NULL, NULL, NULL),
+(389, 1, '43053964', 'ANA MIRIAM CANO RUIZ', 'CR 98 64B 35', '034-5793145-', '', 'ANA MIRIAM CANO RUIZ', '', '', '', '', 1, 'Medellín', 9, NULL, NULL, NULL, NULL),
+(390, 1, '839000495', 'Anas Wayuu', 'Carrera 16 No. 16 - 31', '', '', '', '', '', '', '', 1, 'Riohacha', 0, NULL, NULL, NULL, NULL),
+(391, 1, '1152205082', 'ANDERSON DIAZ', 'Calle 31c crr 89 dd 98', '034-3108496987-', '', 'ANDERSON DIAZ', '', '', '', '', 1, 'Medellín', 8, NULL, NULL, NULL, NULL),
+(392, 1, '52959060', 'ANDREA BOLIVAR SUAREZ', 'Cl. 54 #86A-60', '-3214966549-', '', 'ANDREA BOLIVAR SUAREZ', '', '', '', '', 1, 'Medellín', 8, NULL, NULL, NULL, NULL),
+(393, 1, '1035875917', 'ANDREA MORA VALENCIA', 'CL 59 42  221', '034-3044548023-', '', 'ANDREA MORA VALENCIA', '', '', '', '', 1, 'Medellín', 1, NULL, NULL, NULL, NULL),
+(394, 1, '1020478439', 'ANDRES DAVID RIOS', '', '034--', '', 'ANDRES DAVID RIOS', '', '', '', '', 1, 'Medellín', 5, NULL, NULL, NULL, NULL),
+(395, 1, '71193118', 'ANDRES FELIPE AGUDELO LOPEZ', '', '034--', '', 'ANDRES FELIPE AGUDELO LOPEZ', '', '', '', '', 1, 'Medellín', 6, NULL, NULL, NULL, NULL),
+(396, 1, '1128276416', 'ANDRES FELIPE ESCOBAR VALENCIA', 'CR 65 AA 23 BR VILLA HERMOSA', '604-3235185000-000', '', 'ANDRES FELIPE ESCOBAR VALENCIA', '', '', '', '', 1, 'Medellín', 0, NULL, NULL, NULL, NULL),
+(397, 1, '71786614', 'ANDRES HERNANDO ECHEVERRY QUIMBAYA', '', '034--', '', 'ANDRES HERNANDO ECHEVERRY QUIMBAYA', '', '', '', '', 1, 'Medellín', 3, NULL, NULL, NULL, NULL),
+(398, 1, '22234353', 'ANGELA BEATRIZ GOMEZ', '', '034--', '', 'ANGELA BEATRIZ GOMEZ', '', '', '', '', 1, 'Medellín', 1, NULL, NULL, NULL, NULL),
+(399, 1, '43594007', 'ANGELA MARIA ZAPATA LOPEZ', 'CL 27 81 70', '034-4444444-', '', 'ANGELA MARIA ZAPATA LOPEZ', '', '', '', '', 1, 'Medellín', 6, NULL, NULL, NULL, NULL),
+(400, 1, '1037524432', 'ANGELICA MARIA CASAS URREA', '', '034--', '', 'ANGELA MARIA CASAS URIBE', '', '', '', '', 1, 'Medellín', 3, NULL, NULL, NULL, NULL),
+(401, 1, '32225969', 'ANGELIS MARIA ROLDAN MUÑOZ', 'MEDELLIN', '034-3045202621-', '', 'ANGELIS MARIA ROLDAN MUÑOZ', '', '', '', '', 1, 'Medellín', 4, NULL, NULL, NULL, NULL),
+(402, 1, '1060590638', 'ANGUI LORENA RAMIREZ CARDONA', 'calle principal al llanoo marmato caldas', '604-3225138908-', '', 'ANGUI LORENA RAMIREZ CARDONA', '', '', '', '', 1, 'Caldas', 8, NULL, NULL, NULL, NULL),
+(404, 1, '900405097', 'ANTIOQUEÑA DE LUBRICANTES SGP S.A.S', '', '034--', '', 'ANTIOQUEÑA DE LUBRICANTES SGP S.A.S ', '', '', '', '', 1, 'Medellín', 8, NULL, NULL, NULL, NULL),
+(405, 1, '900147238', 'Aportes en Línea S.A.', 'Carrera 13 No 26 A - 47', '-3078333-', '', '', '', '', '', '', 1, 'Bogotá', 2, NULL, NULL, NULL, NULL),
+(406, 1, '900951977', 'AQUA & GAS COLOMBIA SAS', 'CRA 50C 10 SUR BODEGA 105', '034-3127284320-', '', 'GLADIS AQUA', '', '', '', '', 1, 'Medellín', 5, NULL, NULL, NULL, NULL),
+(407, 1, '900432686', 'ARCE GEOFISICOS', 'CL 12 # 30 - 356', '604-4482950-', '', 'JULIANA ROMERO', '', '', '', '', 1, 'Medellín', 0, NULL, NULL, NULL, NULL),
+(408, 1, '800244387', 'ARCOS DORADOS COLOMBIA S.A.S.', 'MEDELLIN', '034-2585858-', '', 'NN NN', '', '', '', '', 1, 'Medellín', 4, NULL, NULL, NULL, NULL),
+(409, 1, '890504313', 'Area Contable', ' ', '-3122476896-', '', 'ANGELA MARIA PEREZ ARANGO', '', '', '', '', 1, 'Medellín', 8, NULL, NULL, NULL, NULL),
+(410, 1, '890114642', 'ARIS MINING MARMATO S.A.S.', 'CRA 24 62-53 ED PRANHA URBANO OF 201', '606-8819662-', '', 'DAMIAN FAJARDO', '', '', '', '', 1, 'Medellín', 8, NULL, NULL, NULL, NULL),
+(411, 1, '8061527', 'ARLEY STIVEN PEREZ VALLE', 'CR 52 67A 59', '604-3225615692-', '', 'ARLEY STIVEN PEREZ VALLE', '', '', '', '', 1, 'Medellín', 1, NULL, NULL, NULL, NULL),
+(412, 1, '76322733', 'ARNOLD MAHIAN', 'CL 45 A 57 A 53', '604-3017212464-', '', 'ARNOLD MAHIAN', '', '', '', '', 1, 'Medellín', 9, NULL, NULL, NULL, NULL),
+(413, 1, '77151830', 'ARNULFO RAFAEL FONTALVO CHINCHILLA', '', '034--', '', 'ARNULFO RAFAEL FONTALVO CHINCHILLA', '', '', '', '', 1, 'Medellín', 4, NULL, NULL, NULL, NULL),
+(414, 1, '890904815', 'ARQUITECTOS E INGENIEROS ASOCIADOS S.A / AIA S.A', 'CR 35 A 15 B 35 VIA LAS PALMAS PISOS 96', '034-2664400-', '', 'CARLOS VELASQUEZ', '', '', '', '', 1, 'Medellín', 5, NULL, NULL, NULL, NULL),
+(415, 1, '900828645', 'ARQUITECTURA Y VALUACION SAS', 'CR 43 B 14 51 OF 711', '034-2684419-', '', 'MONICA MONICA', '', '', '', '', 1, 'Medellín', 1, NULL, NULL, NULL, NULL),
+(416, 1, '899999107', 'Ars Convida', 'Carrera 58 No. 9-97 ', '', '', '', '', '', '', '', 1, 'Bogotá', 0, NULL, NULL, NULL, NULL),
+(417, 1, '98640863', 'ARTURO LEON HENAO', '', '034--', '', 'ARTURO LEON HENAO', '', '', '', '', 1, 'Medellín', 1, NULL, NULL, NULL, NULL),
+(418, 1, '800042471', 'Arus S.A', 'Cl. 19 #43g-155', '-7424488-', '', '', '', '', '', '', 1, 'Bogotá', 8, NULL, NULL, NULL, NULL),
+(419, 1, '800196002', 'ASC ELECTRONICA S.A', 'Calle 8 # 10 - 30', '036-6340018-', '', 'LINA MARIA', '', '', '', '', 1, 'Pereira', 8, NULL, NULL, NULL, NULL),
+(420, 1, '890907393', 'ASERRIO DE PIEDRA Y MARMOL SAS', '', '034--', '', 'APIMAR SAS ', '', '', '', '', 1, 'Medellín', 2, NULL, NULL, NULL, NULL),
+(421, 1, '901233926', 'ASG  PIRES SAS', 'CRA No. 42 No. 54 a 71 int 138', '054-3738232-', '', 'SANDRA YEPES', '', '', '', '', 1, 'Itagui', 3, NULL, NULL, NULL, NULL),
+(422, 1, '900935126', 'Asmet Salud', 'Cra. 7 #35-23', '', '', '', '', '', '', '', 1, 'Bogotá', 0, NULL, NULL, NULL, NULL),
+(423, 1, '900004330', 'ASOCIACION DE VIGILANCIA COMUNITARIA UVIBELEN', 'CRA 74  29 02', '034-3472226-', '', 'NN NN', '', '', '', '', 1, 'Medellín', 9, NULL, NULL, NULL, NULL),
+(424, 1, '800187500', 'ASOCIACION NAL DE MAESTROS ARTESANOS', 'MEDELLIN', '034-2585858-', '', 'NN NN', '', '', '', '', 1, 'Medellín', 6, NULL, NULL, NULL, NULL),
+(425, 1, '800226061', 'Asofondos de Colombia', 'Cl 72 8-24 Of 901', '', '', '', '', '', '', '', 1, 'Bogotá', 0, NULL, NULL, NULL, NULL),
+(426, 1, '900319291', 'Asopagos S A', 'calle 31 No. 13 51', '-4875111-', '', '', '', '', '', '', 1, 'Bogotá', 2, NULL, NULL, NULL, NULL),
+(427, 1, '43708786', 'ASTRID LORENA GALEANO OSPINA', 'VIA CLADAS-AMAGA', '604-3045783708-', '', 'ASTRID LORENA GALEANO OSPINA', '', '', '', '', 1, 'Medellín', 7, NULL, NULL, NULL, NULL),
+(428, 1, '1127533175', 'ASTRID MONTERO', 'CRA 7 85 23', '604-5235261-000', '', 'ASTRID MONTERO', '', '', '', '', 1, 'Medellín', 1, NULL, NULL, NULL, NULL),
+(429, 1, '900280002', 'AUDIO LUCES LTDA', '', '034--', '', 'NNN ', '', '', '', '', 1, 'Medellín', 1, NULL, NULL, NULL, NULL),
+(430, 1, '1033257059', 'AURA CRISTINA SUAZA RAMIREZ', 'CALLE 17B 102B 07', '-3043606230-', '', 'AURA CRISTINA SUAZA RAMIREZ', '', '', '', '', 1, 'Medellín', 9, NULL, NULL, NULL, NULL),
+(431, 1, '43505770', 'AURA LUCIA ORTIZ CARDONA', 'KL 2', '604-3143565625-', '', 'AURA LUCIA ORTIZ CARDONA', '', '', '', '', 1, 'Boyacá', 8, NULL, NULL, NULL, NULL),
+(432, 1, '901399943', 'AUSCAR S.A.S', 'KM 5', '604-3147554451-', '', 'AUSCAR S.A.S ', '', '', '', '', 1, 'El Santuario', 1, NULL, NULL, NULL, NULL),
+(433, 1, '890600020', 'AUTOFUSA SA', 'Dg 23 69 60', '034-4774223-', '', 'AUTOFUSA AUTOFUSA', '', '', '', '', 1, 'Medellín', 1, NULL, NULL, NULL, NULL),
+(434, 1, '900788548', 'AUTOPISTA RIO MAGDALENA S A S', 'MEDELLIN', '034-2585858-', '', 'NN NN', '', '', '', '', 1, 'Medellín', 0, NULL, NULL, NULL, NULL),
+(435, 1, '900970319', 'AVANCE CONSTRUCTORA SAS', 'MCP EL CARMEN DE VIBORAL BRR LA MARIA ANTES DEL CHORRO HONDO', '034-4482011-', '', 'GLORIA DORIA', '', '', '', '', 1, 'El Carmen De Viboral', 1, NULL, NULL, NULL, NULL),
+(436, 1, '800037800', 'Banco Agrario de Colombia S.A.', 'Cra. 8 No. 15-43', '-5948500-', '', '', '', '', '', '', 1, 'Bogotá', 8, NULL, NULL, NULL, NULL),
+(437, 1, '860007335', 'Banco Caja Social S.A.', 'Cra. 7 No. 77-65', '-3077060-', '', '', '', '', '', '', 1, 'Bogotá', 4, NULL, NULL, NULL, NULL),
+(438, 1, '860051135', 'Banco Citibank', '0', '-6057000-', '', '', '', '', '', '', 1, 'Bogotá', 0, NULL, NULL, NULL, NULL),
+(439, 1, '860035827', 'banco comercial AV Villas s.a.', 'Carrera 86 No. 6 - 37', '-3363199-', '', '', '', '', '', '', 1, 'Bogotá', 5, NULL, NULL, NULL, NULL),
+(440, 1, '890203088', 'Banco Cooperativo Coopcentral', 'Calle 116 No. 23-06', '-7431088-', '', '', '', '', '', '', 1, 'Bogotá', 0, NULL, NULL, NULL, NULL),
+(441, 1, '860002964', 'Banco de bogotá', 'CL 36 No 7 - 47 P 15', '', '', '', '', '', '', '', 1, 'Bogotá', 0, NULL, NULL, NULL, NULL),
+(442, 1, '890300279', 'Banco de occidente', 'Cr 4 7- 61', '', '', '', '', '', '', '', 1, 'Bogotá', 0, NULL, NULL, NULL, NULL),
+(443, 1, '900047981', 'BANCO FALABELLA', 'MEDELLIN', '034-5878787-', '', 'NN NN', '', '', '', '', 1, 'Medellín', 8, NULL, NULL, NULL, NULL),
+(444, 1, '860050750', 'Banco GNB Sudameris S A', 'Cra 99 # 18 - 45', '-2750000-', '', '', '', '', '', '', 1, 'Bogotá', 1, NULL, NULL, NULL, NULL),
+(445, 1, '890200756', 'Banco Pichincha', 'Av. Américas # 42-81', '-6501050-', '', '', '', '', '', '', 1, 'Bogotá', 0, NULL, NULL, NULL, NULL),
+(446, 1, '860007738', 'Banco Popular S.A.', 'Carrera 75C #35-18', '-2040180-', '', '', '', '', '', '', 1, 'Bogotá', 9, NULL, NULL, NULL, NULL),
+(447, 1, '900200960', 'Banco Procredit', 'Cl. 39 #13a16', '-5954040-', '', '', '', '', '', '', 1, 'Bogotá', 0, NULL, NULL, NULL, NULL),
+(448, 1, '900628110', 'Banco Santander', ' Calle 93 A No. 13-24', '-7434301-', '', '', '', '', '', '', 1, 'Bogotá', 0, NULL, NULL, NULL, NULL),
+(449, 1, '890903938', 'Bancolombia', 'Cra 48 N° 26 - 85 Av. Industriales; Medellín; Antioquia', '', '', '', '', '', '', '', 1, 'Bogotá', 0, NULL, NULL, NULL, NULL),
+(450, 1, '1045144340', 'BARCO RUIZ YORLAN ANDRES', 'KM 1 VIA SEGOVIA', '604-3046008435-', '', 'BARCO RUIZ YORLAN ANDRES', '', '', '', '', 1, 'Medellín', 2, NULL, NULL, NULL, NULL),
+(451, 1, '900860284', 'BBI COLOMBIA SAS', 'centro comercial buenos aires km 2.5 via colpapel', '034-6072824-', '', 'BBI COLOMBIA SAS TOSTAO', '', '', '', '', 1, 'Medellín', 9, NULL, NULL, NULL, NULL),
+(452, 1, '860003020', 'BBVA', 'Cra. 8 No. 13 42', '', '', '', '', '', '', '', 1, 'Bogotá', 0, NULL, NULL, NULL, NULL),
+(453, 1, '800147502', 'BBVA Horizonte', '', '', '', '', '', '', '', '', 1, 'Bogotá', 0, NULL, NULL, NULL, NULL),
+(455, 1, '32509363', 'BEATRIZ DEL SOCORRO GARCES DE GARCES', '', '034--', '', 'BEATRIZ DEL SOCORRO GARCES DE GARCES', '', '', '', '', 1, 'Medellín', 1, NULL, NULL, NULL, NULL),
+(456, 1, '51554414', 'BEATRIZ HELENA MADRIGAL EUSE', '', '034--', '', 'BEATRIZ HELENA MADRIGAL EUSE', '', '', '', '', 1, 'Medellín', 9, NULL, NULL, NULL, NULL),
+(457, 1, '890942843', 'BECO- BEBIDAS Y COMIDAS S.A.', '', '034--', '', 'BECO- BEBIDAS Y COMIDAS S.A. ', '', '', '', '', 1, 'Medellín', 3, NULL, NULL, NULL, NULL),
+(460, 1, '15254804', 'BENJUMEA HERNANDEZ NICOLAS DARIO', 'CRA 45 125 SUR 95', '034-3104939725-', '', 'NN NN', '', '', '', '', 1, 'Medellín', 1, NULL, NULL, NULL, NULL),
+(461, 1, '811037075', 'BETANIA S.A', 'SANTA ROSA DE OSOS', '034-222222222-', '', 'NN NN', '', '', '', '', 1, 'Santa Rosa De Osos', 4, NULL, NULL, NULL, NULL),
+(462, 1, '901067920', 'BIGTRONICA S.A.S', 'CRA 53 50 51', '034-5113403-', '', 'NN NN', '', '', '', '', 1, 'Medellín', 8, NULL, NULL, NULL, NULL),
+(463, 1, '901392250', 'BIOESTRUCTURAS', 'CRA 88A  33C 01', '034--', '', 'BIOESTRUCTURAS ', '', '', '', '', 1, 'Medellín', 4, NULL, NULL, NULL, NULL),
+(464, 1, '901095468', 'BKAL S.A.S', 'CRA 70 1 141', '034-2585858-', '', 'NN NN', '', '', '', '', 1, 'Medellín', 9, NULL, NULL, NULL, NULL),
+(465, 1, '43089358', 'BLANCA CECILIA SALAZAR CORREA', 'CL 42 71 A 19', '034-2507962-', '', 'BLANCA CECILIA SALAZAR CORREA', '', '', '', '', 1, 'Medellín', 0, NULL, NULL, NULL, NULL),
+(466, 1, '1000884094', 'BRIAN OSPNA MONTOYA', 'CALLE 98A 65 95', '-3113122686-', '', 'BRIAN OSPNA MONTOYA', '', '', '', '', 1, 'Medellín', 0, NULL, NULL, NULL, NULL),
+(467, 1, '890300327', 'BRILLADORA EL DIAMNATE S.A', 'cl 36 80 64', '054-1-', '', 'JUAN CARLOS LONDOÑO', '', '', '', '', 1, 'Medellín', 1, NULL, NULL, NULL, NULL),
+(468, 1, '890930159', 'CABLES Y ACCESORIOS ELECTRICOS S.A.S.', '', '034--', '', 'CABLES Y ACCESORIOS ELECTRICOS S.A.S. ', '', '', '', '', 1, 'Medellín', 1, NULL, NULL, NULL, NULL),
+(469, 1, '890270275', 'Cafaba ', 'CALLE 49 NRO. 17-14', '', '', '', '', '', '', '', 1, 'Barrancabermeja', 5, NULL, NULL, NULL, NULL),
+(470, 1, '890917141', 'Seguridad Atempi de Colombia Limitada', 'Cl 16 B Sur Cra 42 - 97', '4486110', '3148288903', 'Andres', 'Almacen@atempi.co', '', 'a6d06a8d45fe0e84c035eb060197a4ba.png', 'Jurídico', 1, 'Medellín ', 6, 0, 0, '', NULL),
+(472, 1, '900888228', 'Minerales Camino Real S.A.S', 'Cl 113 No. 7-21 To A P 11 Of 1101', '6585893', '3153052609', 'Luis Puerto', 'lpuerto@mineralescaminoreal.com', '', 'f6152d1798adb99f5f5cd2c4dc8a9770.png', 'Jurídico', 1, 'Bogotá ', 8, 0, 0, '', NULL),
+(473, 1, '900768355', 'Inversiones Entre Rios S.A.S', 'Cl 48 No. 19- 100 Ca 13 A La Castellana', '3137295328', '3165399135', 'Juan Casas', 'gerencia@inversionesentrerios.com', '', '7034cb162ecf72dff4ad832aa2598164.png', 'Jurídico', 1, 'Pereira Risaralda', 0, 0, 0, '', NULL),
+(475, 1, '901401130', 'Consorcio Isla 2020 Puerto Berrio', 'Cra 7 C No. 125-08', '4926970', '3218120347', 'Breiner', 'gestiondocumental@consorcioisla.com', '', 'cb05a6a00b65d54736a7199c2babb6ae.png', 'Jurídico', 1, 'Bogotá ', 9, 0, 0, '', NULL),
+(476, 1, '811007280', 'Seracis LTDA', 'Cl 47 D No. 79-33', '4484518', '3116444816', 'Alejandro  Acosta', 'a.acosta@radioenlacesas.com', '', '49b7d968f83100901198b05c8e8ffb33.png', 'Jurídico', 1, 'Medellín ', 1, 0, 0, '', NULL),
+(478, 1, '901440255', 'Consorcio Isla Caribe', 'Cra 7 C No. 125-08', '4926970', '3176799450', 'Liliana  Montoya', 'liliana.montoya@conislacaribe.com', '', '9510b64de8bf5353ff1c6a1fdd67d4ba.png', 'Jurídico', 1, 'Bogotá ', 7, 0, 0, '', NULL),
+(481, 1, '900356646', 'Ortiz Construcciones y Proyectos S.A Sucursal Colombia', 'Cl 113 No. 7-21 Of 1213 Ed. Teleport Torre A', '9156596', '3208302963', 'Nestor Barajas', 'nestor.barajas@grupoortiz.com', '', '083d30b297eb493274e3e36d7a999c0f.png', 'Jurídico', 1, 'Bogotá ', 7, 0, 0, '', NULL),
+(482, 1, '901019138', 'Consorcio Ruta 40', 'Cl 99 No. 14 -49 P 3 ZN C', '6202166', '3213707349', 'Marcela Ortiz', 'mortiz@via40express.com', '', 'c8f09108311e17955ec8014967d6ac95.png', 'Jurídico', 1, 'Bogotá ', 1, 0, 0, '', NULL),
+(483, 1, '890923681', 'Cimbrados S.A', 'Cr 44 No 46 Sur 50', '3313233', '3045531872', 'Arley Cortez', 'almacen@cimbrados.com', '', '4d7de703235dd5f34cfc0ea752b91d90.png', 'Jurídico', 1, 'Medellín', 6, 0, 0, '', NULL),
+(486, 1, '800010866', 'Expertos Seguridad LTDA', 'CIR 4  No. 69  - 18', '4301000', '2604477', 'Oscar Diaz', 'comprasylogistica@expertoseguridad.com.co', '', '0620bf91ed82cb6b316ee9824de53741.png', 'Jurídico', 1, 'Medellín ', 6, 0, 0, '', NULL),
+(488, 1, '901000005', 'SOLUCIONES INTEGRALES DE SEGURIDAD & VIGILANCIA PRIVADA LIMITADA', 'Cra 83 A 33 B 05', '3223492', '3146382295', 'Mavis Pumarejo', 'administrativa@integralseguridad.co', '', 'de94df122c93219677998861b1c9eece.png', 'Jurídico', 1, 'Medellin', 5, 0, 0, '', NULL),
+(489, 1, '901009478', 'Via 40Express S.A.S', 'Cl 99 No. 14- 49 OF 302 ED EAR', '3257300', '3217407858', 'Hernan Alarcon', 'halarcon@via40express.com', '', 'dd1e982a5fbfc1dc376660b44d5b7189.png', 'Jurídico', 1, 'Bogotá ', 6, 0, 0, '', NULL),
+(492, 1, '900464667', 'Zima Seguridad LTDA', 'Cr 21A No. 29 A 56', '6431311', '3507104616', 'Jorge Vasquez', 'superv.rmagdalena@zimaseguridad.com.co', '', '0a7a8981105f015faeaa4877c3f63486.png', 'Jurídico', 1, 'Cartagena', 8, 0, 0, '', NULL),
+(495, 1, '830069989', 'West Army  Security Limitada', 'Cl 52 A No. 73 - 90', '4047080', '3203743203', 'Alexander', 'operacionesmedellin@was.com.co', '', '1cc2111a5aad56ee033f1415bd41e505.png', 'Jurídico', 1, 'Bogotá', 0, 0, 0, '', NULL),
+(496, 1, '', 'Concesionaria Vial del Pacifico S.A.S', '', '6049300', '3113919797', 'Linea de Atención ', '', '', '3ea653cc6bf2fd80419aa6ab0c679bbe.png', 'Jurídico', 1, '', 0, 0, 0, '', NULL),
+(497, 1, '900899437', 'Consorcio  Antioquia al Mar ', 'CL 18 Cra 35-69 Of 306', '3126355280', '3126355280', 'Alba Marina Sanchez', 'direccion.compras@tuneldeltoyo.com', '', '67d6f97498346e1b930331f4f43e8ba9.png', 'Jurídico', 1, 'Giraldo - Antioquia', 8, 0, 0, '', NULL),
+(499, 1, '900548173', 'Masivo de Occidente S.A.S', 'Cra 67 No. 8 b 94', '4487655', '3114910647', 'Luz Jiménez ', 'luz.jimenez@mdosas.com', '', '02f95aa9987e77110862e846f1270c77.png', 'Jurídico', 1, 'Medellín', 3, 0, 0, '', NULL),
+(501, 1, '901466546', 'En Colombia Tecnología y Comunicaciones S.A.S / Encoltec', 'Cl 50 No. 71- 80 Ap 817 To A ED. el Caribe', '3166403933', '3147463284', 'Jaime Ospina', 'encoltec@gmail.com', '', '37af911e556718e3a5b818af780a2171.png', 'Jurídico', 1, 'Medellín', 8, 0, 0, '', NULL),
+(502, 1, '860037914', 'Coscuez S.A', 'Oficina Principal Otache', '3203916133', '3203916133', 'Jeferson', 'kiran.s@furagems.com', '', 'e6c725044bce8cabe02e0c77f8297169.png', 'Jurídico', 1, 'Medellín ', 7, 0, 0, '', NULL),
+(503, 1, '901380838', 'Consorcio R&S', 'AV CR 20 85 A 21', '4321757', '', 'Juan', '', '', '', '', 1, 'MEDELLIN', 2, 1, 0, '', NULL),
+(505, 1, '830139512', 'Compañia de Vigilancia los Libertadores LTDA', 'CR 14  A No. 82 63 OF 301', '8053335', '3102271328', 'Brayan ', 'gerenciabogotacvl@gmail.com', '', '1979872dbe826583384d3bdbf3948932.png', 'Juridico', 1, 'Bogota', 9, 0, 0, '', NULL),
+(506, 1, '900387546', 'PORTAL RAIZ S.A.S', 'CL 29 41 105 ED SOHO', '(604) 2625832', '', 'Michael Gómez', 'portalraiz18@gmail.com', '', '', 'Común', 1, 'Medellín', 5, 0, 0, '', NULL),
+(507, 1, '800029899', 'Ingeniería y Vías S.A.S  / Ingevias', 'Cl 6 Sur 38-15', '4485587', '3002674582', 'Luisa Vasquez Franco', 'luisa.vasquez@ingevias.com', '', '3fd668025d4111d717882047b802c696.png', 'Juridico', 1, 'Medellin', 2, 0, 0, '', NULL),
+(508, 1, '830095304', 'CRC Comunicaciones S.A.S', 'Cra 28 No. 71-95', '2258650', '3108175023', 'Aurora', 'factura@crccomunicaciones.com', '', 'd7625d75ebeed9297871fbc250532361.png', 'Juridico', 1, 'Bogota', 2, 0, 0, '', NULL),
+(509, 1, '860023264', 'Securitas de Colombia S.A.', 'AC 26 92 32 Conecta Edificio Gold 12', '', '', '', '', '', '', 'Común', 1, 'Bogotá DC ', 7, 0, 0, '', NULL),
+(510, 1, '900411781', 'Fajas MYD PosquirurgIcas S.A.S', 'Cra 50C  No. 10 Sur 120 BG 122', '4443174', '3184459473', 'Anderson Aguilar', 'contador@fajasmyd.com.co', '', '309ee5764a392832a2037a7cdba24017.png', 'Juridico', 1, 'Medellín ', 2, 0, 0, '', NULL),
+(511, 1, '901068528', 'Concretos y Equipos  C&amp;E S.A.S', 'Cl 60 No. 144-360 Vda la Palma san Cristóbal ', '4730861', '3114100864', 'x', 'compras@concretosyequipos.com.co', '', 'f5e39fc07c3902b5dbf8bac8254bc26f.png', 'Juridico', 1, 'Medellin', 8, 0, 0, '', NULL),
+(512, 1, '812000120', 'Obras Arquitectos Constructores S.A.S', 'KM 3 CR 33 Via  a cerromatoso', '7627910', '', '', 'gerencia@obrass.com.co', '', '75e8507da0b9194a709a2f0794cf879f.png', 'Juridico', 1, 'Medellín ', 1, 0, 0, '', NULL),
+(513, 1, '890903436', 'MCM Company S.A.S ', 'Cl 19 A No. 43B 41', '2619100', '30005919154', 'Adrián Guzmán ', '', '', '0a58630922a7c91debbb1ead5d4584fc.png', '', 1, 'Medellín ', 2, 0, 0, '', NULL),
+(514, 1, '890981863', 'Corporacion de Fomento Asistencial del Hospital Universitario San Vicente de Paul', 'CR 52 A No. 39 80', '054 4480550', '3205874140', 'Jerónimo  Montoya', 'jmontoya@corpaul.com', '', 'c2f43e017b4637fb68625719ba77f420.png', 'Juridico', 1, 'Medellín ', 0, 0, 0, '', NULL),
+(515, 1, '900807426', 'Civiltech Ingeniería y Construcción S.A.S', 'Cra 52 A # 123-50 Barrio Batan ', '6364194', '3155660777', 'Nataly Hernandez', 'nhernandez@civiltechic.com', '', '7a3f5bbe6b139d37fb86daad1222ecf0.png', 'Juridico', 1, 'Bogota', 3, 0, 0, '', NULL),
+(516, 1, '900983468', 'Hidroenergia de la Montaña S.A.S E.S.P', 'Cl 3 Sur  No. 43  A 52 Of 1801', '3123618', '3138687387', 'Carlos Torres', 'carlostorres@hidroenergiadelamontana.com', '', '8628fbde375e9744b7ff1997eca7cd9b.png', 'Juridico', 1, 'Medellín ', 5, 0, 0, '', NULL),
+(517, 1, '890917295', 'Colorquimica S.A.S', 'Cl 77 Sur No 53-51 ', '3021717', '', 'Daniel Muñoz', 'amunos@clq.com.co', '', 'b9cc4d47d0d644521006326aa0bded85.png', '', 1, 'Medellín ', 1, 0, 0, '', NULL),
+(518, 1, '830055897', 'Patrimonio Autonomo Fiduciaria Bogota S.A - Vinus', 'CL 67 No. 7 -37 Piso 3', '2585858', '', 'Yuli Uribe', 'yuribe@tuneloriente.com', '', '072db3ffec76857dfb6c018c39ac7f0a.png', 'Juridico', 1, 'Bogota', 7, 0, 0, '', NULL),
+(521, 1, '811000761', 'Minera el Roble ', 'CRA 43A No. 1 A SUR 69 OF 701', '5405330', '3207648126', 'Sebastian Rendon ', 'srendon@miner.com.co', '', 'f6eab358602f4a6ab415bbe678331ee9.png', '', 1, 'Medellín ', 9, 0, 0, '', NULL),
+(522, 1, '9000840799', 'IP Integrales S.A.S', 'Cl 45 G No. 77 AA 16BRR Velodromo', '5575724', '3136589351', 'Jhon Jairo ', 'asistente@ipintegrales.com.co', '', '55886f421579a38f05276241b06d17f8.png', 'Juridico', 1, 'Medellín ', 4, 0, 0, '', NULL),
+(523, 1, '81600141', 'Ingeniería de Sistemas Telemáticos S.A  / Insitel', 'Cl 144 No. 21 - 44 ', '6200177', '6200277', '', 'info@insitel.com', '', '87b0a4243cdda1a4cdb849c294e6375b.png', 'Juridico', 1, 'Bogotá', 6, 0, 0, '', NULL),
+(524, 1, '901608054', 'Unión Temporal CPC 2022', 'CRA 38 # 38 Sur 29 Barrio mesa', '4441327', '3105037474', 'Juan Fernando Garcia', 'compras@csyr.com.co', '', '', 'Juridico', 1, 'Medellín ', 7, 0, 0, '', NULL),
+(526, 1, '901157412', 'Alquiler, Equipo y Construcciones  S.A.S', 'Cra 51 B 4 Sur 14', '3585686', '3104398330', 'Luisa', 'contabilidad@alkiconayc.com', '', '', 'Juridico', 1, 'Medellín ', 4, 0, 0, '', NULL),
+(527, 1, '901574121', 'Consorcio Mega construcciones Occidente ', 'CR 35 A 15 B 35 ED PRISMA OF 817', '3116628', '3157098005', 'Carlos', 'socialviacaicedo@consorciomeca.com', '', '41dc58d2633a306d0f34a5d8e8763037.png', '', 1, 'Medellín ', 4, 0, 0, '', NULL),
+(528, 1, '900284917', 'Constructora Sumas y Restas S.A.S', 'CRA 38 No. 38sur 29', '4441327', '3105047474', 'Juan Fernando ', 'compras@csyr.com.co', '', '96c9711391617c3f9b49f075f3901cde.png', '', 1, '', 1, 0, 0, '', NULL),
+(529, 1, '900680466', 'Corporación Cuenca  Verde ', 'CR 43 A 1 A SUR 29 OF 811 ED COLMENA', '2 6 8 1 4 0 2', '3226190952', 'Sebastián Román ', 'auxiliar.campo2@cuencaverde.org', '', 'ab00b210e419641d9cd7afb4e93afab6.png', 'Juridico', 1, 'Medellín ', 1, 0, 0, '', NULL),
+(530, 1, '811016337', 'Instituto de Deporte Recreación  y  Aprovechamiento del Tiempo Libre Inder Envigado', 'CRA 48 # 46 - 150', '604 4482098', '3136139051', 'Carlos', 'dfernandez@inderenvigado.gov.co', '', '', 'Juridico', 1, 'Envigado', 9, 0, 0, '', NULL),
+(533, 1, '9 0 1 5 8 1 6 9 9', 'Consorcio  I.E.J.F.K 2022', 'CR 38 38 SUR 29', '', '3127792748', 'Juan Fernando García', 'facturacion@csyr.com.co', '', 'b913eba33c1792533cc2101445bf3a7f.png', 'Juridico', 1, 'Medellín ', 8, 0, 0, '', NULL),
+(534, 1, '830027231', 'Rocsa Colombia S.A   /  Improquim', 'Par IND LOGIKA II AUT Medellín Costado Sur KM 5 7 BG 1', '4325136', '3202789768', 'Jorge Improquim', '', '', '0c1dfe0bb3f735190f1248de7cbff79f.png', 'Juridico', 1, 'Medellín ', 3, 0, 0, '', NULL),
+(535, 1, '901252983', 'Edificio Castropol Plaza  - Propiedad Horizontal Portal Raiz', 'CR 42 14 11 Y CL 14 42 24', '4797964', '3117771851', 'Michael   de portal raiz', 'portalraiz18@gmail.com', '', 'ac0d995bf51944cfcc733edc6075e59f.png', '', 1, 'Medellín ', 4, 0, 0, '', NULL),
+(536, 1, '890901110', 'Constructora Conconcreto S.A', 'CRA 43A 18 SUR 135 PISO 4', '4025700', '323 3620141', 'Carlos ', 'conconcretofe@conconcreto.com', '', '2f2a93c29b232967a86022a69658f960.png', '', 1, 'Medellín ', 8, 0, 0, '', NULL),
+(537, 1, '860019021', 'Asociación  para la Enseñanza Aspaen ', 'CL 69 7 A 50', '2177590', '3164280956', 'Sandra Riaza', 'sandra.raiza@aspaen.edu.co', '', '2aa41f0c68829843e5c942fd390db76f.png', '', 1, '', 9, 0, 0, '', NULL),
+(538, 1, '900958259', 'Ingealquipos S.A.S', 'CRA 38 # 38 SUR 29', '4441327', '', '', 'facturacion@ingealquipos.com.co', '', 'f4500b2e792d98ac5b50c268e26af067.png', 'Juridico', 1, 'Medellín ', 7, 0, 0, '', NULL),
+(539, 1, '800256769', 'Patrimonio Autónomo Fiduciaria Corficolombiana S.A / Covipacifico', 'Cl 79 sur 47 E 62 ofi 201', '6013538795', '3157855728', 'Margarita', 'margarita.vasco@covipacifico.co', '', '', '', 1, 'Sabaneta', 6, 0, 0, '', NULL),
+(540, 1, '860066946', 'Seguridad Superior Ltda', 'CRA 50 No. 96 - 09', '230581', '3142130700', 'Jhon', '', '', '00348d3a9618c6af49d63115a94f50cd.png', '', 1, '', 0, 0, 0, '', NULL),
+(541, 1, '901348351', 'Profesionales en Seguridad Industrial de Colombia SAS', 'TV 68 H 38B 14 SUR', '', '3223481576', 'Manuel Duarte', 'jmanuelduarte764@gmail.com', '', '66abad39caf4afed6bf9667e495ea41d.png', 'Juridico', 1, 'Bogotá', 3, 0, 0, '', NULL),
+(543, 1, '900193076', 'Kluane de Colombia S.A.S', 'KM 7 Aut Bogota- Medellín Par Industrial celta trade Park de Funza Dpto de Cundinamarca ', '8966775', '3203418967 - 3503913964', 'Karen Vanegas ', 'karen.vanegas@kluanecolombia.com', '', '1c1bb1c9e54c79e6e48f29b4c1fb8ad8.png', '', 1, 'Cundinamarca', 1, 0, 0, '', NULL),
+(544, 1, '890304099', 'Hoteles Estelar S.A', 'AV Colombia 2 72', '8920470', '3153640762', 'Diana Patricia Cifuentes', 'jhon.marin@hotelesestelar.com', '', '', '', 1, 'cali', 3, 0, 0, '', NULL),
+(545, 1, '900154128', 'Corporacion Parque Arvi', 'Santa Elena vereda piedras blancas sector el tambo a 500 metros subiendo de la cl 86 con la cr 42', '4442979', '3508117107', 'Jeferson Miguel Herazo', 'corporacion@parquearvi.org', '', '6814820051889947623.jpg', 'Persona Juridica', 1, 'MEDELLIN', 1, 0, 0, '', NULL),
+(547, 1, '900098143', 'ORGANIZACION EDYFICA S.A.', 'CL 2 SUR 43 C 83 OF 101', '4448372', '3136849031', 'Andres Quintero', 'gerencia@edyfica.co', '', '917893947403661277.png', 'Regimen común', 1, 'Medellin', 0, 1, 0, '', NULL),
+(548, 1, '890932539', 'MIRO SEGURIDAD LTDA', 'Carrera 42 #14-74', '4481190', '', '', '', '', '21333466912046244679.png', 'Regimen común', 1, 'Medellin', 0, 1, 0, '', NULL),
+(549, 1, '901448827', 'S.A.M SERVICIOS INTEGRALES S.A.S', 'CL 49 32 17', '', '3015543231', 'Diego Giraldo', 'info@samtecnologia.com.co', '', '19051300201034999938.png', 'Regimen común', 1, 'Medellin', 0, 1, 0, '', NULL),
+(550, 1, '42884056', 'Maria Alicia Arango Garcia', 'CL12 30 126 of 101', '3112233', '3116302513', 'alicia arango', '', '', '', 'Persona natural', 1, '', 0, 0, 1, '', NULL),
+(551, 1, '900866992', 'Pactia S.A.S.', 'CR 43 A 18 SUR 135 P 4', '4025700', '', 'Eliana Marcela Lucero', 'rcuentas@pactia.com', '', '1846088284210408286.png', 'Regimen común', 1, '', 0, 1, 1, '', NULL),
+(552, 1, '901479090', 'CONSORCIO ISLA 066-2020', 'CR 7 C 125 08', '4926970', '3176799450', 'Liliana Montoya', 'notificacionesjudiciales@consorcioisla.com', '', '', 'Persona juridica', 1, 'Bogota', 0, 1, 0, '', NULL),
+(554, 1, '901408133', 'VALLEDUPER COLOMBIA SAS', 'CR 11 B 98 08 OF 403', '7043241', '', '', 'alex@jordaocapital.com', '', '', 'Persona Juridica', 1, '', 0, 1, 0, '', NULL),
+(555, 1, '901463092', 'GREEN ROCK GEOLOGICAL SERVICES SAS', 'CL 9 14 96', '3104658994', '3226539398- 314 7843874', 'Jhon Enao', 'mamosquerapa@gmail.com', '', '19612906861079294959.png', 'Persona Juridica', 1, 'Guajira', 0, 1, 0, '', NULL),
+(556, 1, '901447492', 'CONSTRUCTORA AIA S.A.S', 'CR 35 A 15 B 35 AV LAS PALMAS ED CENTRO DE NEGOCIOS PRISMA P 96', '604 4037700', '305 2343395', 'Juan Carlos', 'impuestos@aia.com.co', '', '1747301724179005140.png', 'Persona Juridica', 1, '', 0, 1, 0, '', NULL),
+(557, 1, '805009908', 'REGENCY SERVICES DE COLOMBIA S.A.S', 'CR 100 5 169 OF 315 B BRR OASIS DE UNICENTRO', '323332681', '3137372870', 'Karen Juliet Moncayo', 'admin@regencysa.ne', '', '1166913275282914957.png', 'Regimen común', 1, 'Cali', 0, 1, 0, '', NULL),
+(558, 1, '890984906', 'FONDO DE EMPLEADOS DEL INSTITUTO PARA EL DESARROLLO DE ANTIOQUIA', 'CL 42 52 259', '', '', 'Maritza Santander', 'feidea@idea.gov.co', '', '1321107730966913155.png', 'Persona Juridica', 1, 'Medellin', 0, 1, 0, '', NULL),
+(559, 1, '900793991-0', 'AUTOPISTAS DEL NORDESTE S.A.S.', 'km 21 via zaragosa', '601 7561756', '3124091764', 'Andres Quintero', 'contactenos@autopistadelnoreste.com.co', '', '499476480871009153.png', 'Regimen común', 1, 'Bogota', 0, 1, 0, '', NULL),
+(560, 1, '830054539', 'PATRIMONIOS AUTONOMOS FIDUCIARIA BANCOLOMBIA SA - VIA 40', '', '', '', '', '', '', 'noavatar.png', '', 1, '', 0, 1, 0, '', NULL),
+(561, 1, '900356846', 'ORTIZ CONSTRUCTORES Y PROYECTOS S.A SUCURSAL', '', '', '', '', '', '', 'noavatar.png', '', 1, '', 0, 1, 0, '', NULL),
+(562, 1, '811046900', 'CLÍNICA CARDIO VID', 'cll 78 b 75 21', '3227090', '', 'Cesar Zapata', 'cardiovidfe@vid.org.co', '', '17119214691982592167.png', '', 1, 'Medellín', 0, 1, 0, '', NULL),
+(565, 1, '900359073-4', 'TELECAR COLOMBIA S A S', 'CARR 46 25 SUR 32 CA 10', '6129553', '3125202326', 'Alvaro Cardenas', 'contabilidad@telecar.com.co', '', '17808025341488331184.png', 'Persona Juridica', 1, '', 0, 1, 0, '', NULL),
+(566, 1, '900220423', 'ZONA LOGISTICA S.A.S.', 'Cra 41 32 30', '4443154', '3176387973', 'Elizabeth Bolivar', 'contabilidad@zonalogistica.com.co', '', '485212286538930136.png', 'Persona Juridica', 1, 'Medellin', 0, 1, 0, '', NULL),
+(567, 1, '811038634', 'MEGAPROYECTO VIAL SIGLO XXI SAS', 'CR 35 A 15 B 35 OF 817', '3116628', '3157098005', 'Carlos Restrepo', 'facturacion@megaproyectovial.com', '', '1433177491117751628.png', 'Persona Juridica', 1, 'Medellin', 0, 1, 1, '', NULL),
+(568, 1, '800233881', 'LATINOAMERICANA DE CONSTRUCCIONES S A', 'CL 18 35 69 IN 424', '6040111', '3234836830', 'ELIZABETH', 'info@latincosa.com', '', '5599189201153838531.png', 'Persona Juridica', 1, 'Medellin', 0, 1, 0, '', NULL),
+(569, 1, '901174870', 'BODEGA TECNOLOGICA ONLINE SAS', 'CL 6 B 20 47', '', '3114734438', 'Nestor Congote', 'comercial@bto.com.co', '', '713130395274534684.png', 'Persona Juridica', 1, 'bogota', 0, 1, 0, '', NULL),
+(570, 1, '890911431', 'CONINSA RAMON H. S.A.', 'CL 55 45 55', '5116199', '3005085435', 'Leidy Campo Romero', 'procesoscontables@coninsa.co', '', '20009905622037535949.png', 'Persona Juridica', 1, 'Medellin', 0, 1, 0, '', NULL),
+(572, 1, '900566324', 'SISTEMA ALIMENTADOR ORIENTAL S.A.S.', 'CR 56 A 62 50', '4442661', '3504958827', '', 'sonia.osorio@sao6.com.co', '', '126666828727593470.png', 'Persona Juridica', 1, '', 0, 1, 0, '', NULL),
+(575, 1, '900894966', 'Concesion Ruta al Mar', 'CR 45 125 SUR 180', 'KM 3 MONTERIA PLANETA RICA CLOG SAN JERONIMO BG 4 CL BET 1', '7921920', 'Consorcio Ruta al Mar', 'recepfracondor@elcondor.com', '', '1538595540886070759.png', '', 1, 'MONTERIA', 0, 1, 0, '', NULL),
+(577, 1, '800112380', 'PROEXCOM S.A.S', 'Brr Manga CL 26 17 95 AV JIMENEZ', '6606300', '3183609838', 'LEONARDO BONILLA', '', '', '488883230844368288.png', 'Persona Juridica', 1, 'Cartagena', 0, 1, 0, '', NULL),
+(578, 1, '98380980', 'LUIS FELIPE 	GUERRERO BENAVIDES', 'Carrera 32 No. 6 sur - 45', '', '3106505422', 'LUIS FELIPE 	GUERRERO BENAVIDES', 'l.guerrero@seracis.com', '', 'noavatar.png', 'Persona natural', 1, 'MEDELLIN', 0, 0, 1, '', NULL),
+(579, 1, '901641756', 'CONSORCIO SAN BERNARDO', '', '6014483012', '3023455171', 'MARIA CAMILA', 'ingsanbernardo@gmail.com', '', 'noavatar.png', 'Persona Juridica', 1, 'ENVIGADO', 0, 1, 0, '', NULL),
+(580, 1, '901650583', 'GUATUPAR CONSTRUCTORES S.A.S. ZOMAC', 'GUATUPAR CONSTRUCTORES S.A.S. ZOMAC', '', '3207050789', 'Dario Cantatillo', 'contabilidadguatupar@gmail.com', '', 'noavatar.png', 'Persona Juridica', 1, 'Cesar', 0, 1, 0, '', NULL),
+(581, 1, '890800128', 'CENTRAL HIDROELECTRICA DE CALDAS S.A. E.S.P BENEFICIO E INTERES COLECTIVO', 'Estación Uribe Km 2 Autopista del Café. Manizales Caldas - Colombia', '8899000', '300 4333424', 'Jeasson Andres Restrepo', 'JEASSON.RESTREPO@epm.com.co', '', '12151039871102186720.png', 'Persona Juridica', 1, 'MEDELLIN', 0, 1, 0, '', NULL),
+(582, 1, '811015529', 'SERVICIOS AMBIENTALES Y GEOGRAFICOS S.A.', 'CL 11 B CR 40 A 130 P 4', '5570101', '3146255402', 'Harold Augusto Ochoa Zapata', 'impuestos@sag-sa.com', '', '1692911623967789857.png', 'Persona Juridica', 1, 'Medellin', 0, 1, 0, '', NULL),
+(583, 1, '901725397', 'CONSORCIO ESPACIO PÚBLICO 2023', 'CR 38 38 SUR 29 BRR MESA', '4441327', '310 5037474', 'Juan Fernandovelasquez', 'facturacion@csyr.com.co', '', 'noavatar.png', 'Persona Juridica', 1, 'Medellin', 0, 1, 0, '', NULL),
+(584, 1, '900309576', 'PETROSEISMIC SERVICES S.A', 'CR 23 102 53', '7433650', '3 5 0 6 0 0 3 0 5 1', '', 'alfonso.jimenez@petroseismicservices.com', '', 'noavatar.png', 'Persona juridica', 1, 'BOGOTA', 0, 1, 0, '', NULL),
+(585, 1, '890980040', 'UNIVERSIDAD DE ANTIOQUIA', 'Cl. 67 #53-108', '(604) 2198332', '', '604 2195592', 'admin.grupoglima@udea.edu.co', '', 'noavatar.png', 'Persona Juridica', 1, 'Medellin', 0, 1, 0, '', NULL),
+(586, 1, '890922265', 'HATCH S.A.S.', 'CR 75 48 A 27', '4446166', '3122641474', '', 'marketing.colombia@hatch.com', '', 'noavatar.png', 'Persona Juridica', 1, 'Medellin', 0, 1, 0, '', NULL),
+(587, 1, '900455726', 'EXPLOMIN PERFORACIONES S.A.S.', 'CL 3 SUR 43 A 76 IN 1403', '', '3234666954', 'Sandra', 'claudia.torres@explomin.com', '', 'noavatar.png', 'Persona Juridica', 1, 'Medellin', 0, 1, 0, '', NULL),
+(590, 1, '900497017', 'KINNESIS SOLUTIONS S.A.S.', 'CR 25 1 A SUR 155 IN 1453', '5407890', '3165277974', '', 'info@kinnesis.com', '', '18378846011716170940.png', 'Persona Juridica', 1, 'MEDELLIN', 0, 1, 0, '', NULL),
+(591, 1, '1014179548', 'IVAN MAURICIO  ALAGUNA RAMIREZ', 'Diagonal 89a # 115-50', '', '3118831861', 'IVAN MAURICIO  ALAGUNA RAMIREZ', '', '', 'noavatar.png', 'Persona Natural', 1, 'Bogota', 0, 0, 1, '', NULL),
+(592, 1, '1040748029', 'Juan Fernando Cartagena Restrepo', 'CL 99 SUR 57 81', '3234532027', '3234532027', 'Juan Fernando Cartagena Restrepo', 'uan-fer07@hotmail.com', '', 'noavatar.png', 'persona natural', 1, 'Medellin', 0, 0, 1, '', NULL),
+(593, 1, '811037405', 'CENTRO SUR S.A.', 'CR 48 48 SUR 75 LC 146', '4480648', '316 2895719', 'edison', 'contador@centrosur.co', '', '21402663501444600942.png', 'Persona Juridica', 1, 'Envigado', 0, 1, 0, '', NULL),
+(595, 1, '901581699', 'CONSORCIO I.E.J.F.K 2022', 'CR 38 38 SUR 29', '4441327', '', '', 'facturacion@csyr.com.co', '', 'noavatar.png', 'Persona Juridica', 1, 'Medellin', 0, 1, 0, '', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tipos_documentos`
 --
 
@@ -23239,6 +23791,12 @@ ALTER TABLE `detalle_factura_venta`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `detalle_nota_credito_fv`
+--
+ALTER TABLE `detalle_nota_credito_fv`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `detalle_ordenes`
 --
 ALTER TABLE `detalle_ordenes`
@@ -23324,6 +23882,12 @@ ALTER TABLE `movimientos_inventario`
 -- Indices de la tabla `nomina`
 --
 ALTER TABLE `nomina`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `nota_credito_fv`
+--
+ALTER TABLE `nota_credito_fv`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -23527,6 +24091,12 @@ ALTER TABLE `subcategorias_productos`
 -- Indices de la tabla `task_projects`
 --
 ALTER TABLE `task_projects`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `terceros`
+--
+ALTER TABLE `terceros`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -23805,6 +24375,12 @@ ALTER TABLE `detalle_factura_venta`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
 
 --
+-- AUTO_INCREMENT de la tabla `detalle_nota_credito_fv`
+--
+ALTER TABLE `detalle_nota_credito_fv`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
 -- AUTO_INCREMENT de la tabla `detalle_ordenes`
 --
 ALTER TABLE `detalle_ordenes`
@@ -23887,6 +24463,12 @@ ALTER TABLE `movimientos_inventario`
 --
 ALTER TABLE `nomina`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `nota_credito_fv`
+--
+ALTER TABLE `nota_credito_fv`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `notificaciones_cotizaciones`
@@ -24085,6 +24667,12 @@ ALTER TABLE `subcategorias_productos`
 --
 ALTER TABLE `task_projects`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+
+--
+-- AUTO_INCREMENT de la tabla `terceros`
+--
+ALTER TABLE `terceros`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=597;
 
 --
 -- AUTO_INCREMENT de la tabla `tipos_documentos`

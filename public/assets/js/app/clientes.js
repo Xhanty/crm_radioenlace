@@ -105,14 +105,14 @@ $(document).ready(function () {
             data: formData,
             success: function (data) {
                 if (data.info == 1) {
-                    toastr.success("Cliente agregado correctamente");
+                    toastr.success("Tercero agregado correctamente");
                     setTimeout(function () {
                         window.location.reload();
                     }, 1000);
                 } else {
                     $("#btnAddCliente").attr("disabled", false);
-                    $("#btnAddCliente").html("Agregar Cliente");
-                    toastr.error("Error al agregar cliente");
+                    $("#btnAddCliente").html("Agregar Tercero");
+                    toastr.error("Error al agregar tercero");
                 }
             },
         });
@@ -170,17 +170,17 @@ $(document).ready(function () {
                 if (response.info == 1) {
                     $("#btnModificarCliente1").attr("disabled", false);
                     $("#btnModificarCliente1").html("Modificar Datos Básicos");
-                    toastr.success("Cliente actualizado correctamente");
+                    toastr.success("Tercero actualizado correctamente");
                 } else {
                     $("#btnModificarCliente1").attr("disabled", false);
                     $("#btnModificarCliente1").html("Modificar Datos Básicos");
-                    toastr.error("Error al actualizar cliente");
+                    toastr.error("Error al actualizar tercero");
                 }
             },
             error: function (response) {
                 $("#btnModificarCliente1").attr("disabled", false);
                 $("#btnModificarCliente1").html("Modificar Datos Básicos");
-                toastr.error("Error al actualizar cliente");
+                toastr.error("Error al actualizar tercero");
             },
         });
     });
@@ -221,17 +221,17 @@ $(document).ready(function () {
                 if (response.info == 1) {
                     $("#btnModificarCliente2").attr("disabled", false);
                     $("#btnModificarCliente2").html("Modificar Datos Facturación");
-                    toastr.success("Cliente actualizado correctamente");
+                    toastr.success("Tercero actualizado correctamente");
                 } else {
                     $("#btnModificarCliente2").attr("disabled", false);
                     $("#btnModificarCliente2").html("Modificar Datos Facturación");
-                    toastr.error("Error al actualizar cliente");
+                    toastr.error("Error al actualizar tercero");
                 }
             },
             error: function (response) {
                 $("#btnModificarCliente2").attr("disabled", false);
                 $("#btnModificarCliente2").html("Modificar Datos Facturación");
-                toastr.error("Error al actualizar cliente");
+                toastr.error("Error al actualizar tercero");
             },
         });
     });
@@ -266,17 +266,17 @@ $(document).ready(function () {
                 if (response.info == 1) {
                     $("#btnModificarCliente3").attr("disabled", false);
                     $("#btnModificarCliente3").html("Modificar Datos Técnicos");
-                    toastr.success("Cliente actualizado correctamente");
+                    toastr.success("Tercero actualizado correctamente");
                 } else {
                     $("#btnModificarCliente3").attr("disabled", false);
                     $("#btnModificarCliente3").html("Modificar Datos Técnicos");
-                    toastr.error("Error al actualizar cliente");
+                    toastr.error("Error al actualizar tercero");
                 }
             },
             error: function (response) {
                 $("#btnModificarCliente3").attr("disabled", false);
                 $("#btnModificarCliente3").html("Modificar Datos Técnicos");
-                toastr.error("Error al actualizar cliente");
+                toastr.error("Error al actualizar tercero");
             },
         });
     });
@@ -367,14 +367,14 @@ $(document).ready(function () {
                             $("#table_anexos_edit").DataTable({
                                 order: [],
                             });
-                            toastr.success("Cliente actualizado correctamente");
+                            toastr.success("Tercero actualizado correctamente");
                         } else {
-                            toastr.error("Error al actualizar cliente");
+                            toastr.error("Error al actualizar tercero");
                         }
                     },
                     error: function (error) {
                         console.log(error);
-                        toastr.error("Error al actualizar cliente");
+                        toastr.error("Error al actualizar tercero");
                     },
                 });
             }
@@ -402,17 +402,17 @@ $(document).ready(function () {
                     dataType: "json",
                     success: function (response) {
                         if (response.info == 1) {
-                            toastr.success("Cliente eliminado correctamente");
+                            toastr.success("Tercero eliminado correctamente");
                             setTimeout(function () {
                                 window.location.reload();
                             }, 1000);
                         } else {
-                            toastr.error("Error al eliminar el cliente");
+                            toastr.error("Error al eliminar el tercero");
                         }
                     },
                     error: function (error) {
                         console.log(error);
-                        toastr.error("Error al eliminar el cliente");
+                        toastr.error("Error al eliminar el tercero");
                     },
                 });
             }
@@ -430,7 +430,7 @@ $(document).ready(function () {
         }
 
         Swal.fire({
-            title: "¿Estás seguro de cambiar el estado del cliente?",
+            title: "¿Estás seguro de cambiar el estado del tercero?",
             icon: "warning",
             showCancelButton: true,
             confirmButtonText: "¡Sí, cambiar!",
@@ -447,17 +447,17 @@ $(document).ready(function () {
                     dataType: "json",
                     success: function (response) {
                         if (response.info == 1) {
-                            toastr.success("Cliente actualizado correctamente");
+                            toastr.success("Tercero actualizado correctamente");
                             setTimeout(function () {
                                 window.location.reload();
                             }, 1000);
                         } else {
-                            toastr.error("Error al actualizar el cliente");
+                            toastr.error("Error al actualizar el tercero");
                         }
                     },
                     error: function (error) {
                         console.log(error);
-                        toastr.error("Error al actualizar el cliente");
+                        toastr.error("Error al actualizar el tercero");
                     },
                 });
             }
@@ -558,17 +558,17 @@ $(document).ready(function () {
                     $("#descripcionadd").val("");
                     $("#archivoadd").val("");
                     $("#modalAdd").modal("hide");
-                    toastr.success("Cliente actualizado correctamente");
+                    toastr.success("Tercero actualizado correctamente");
                 } else {
                     $("#btnModificarCliente4").attr("disabled", false);
                     $("#btnModificarCliente4").html("Guardar");
-                    toastr.error("Error al actualizar cliente");
+                    toastr.error("Error al actualizar tercero");
                 }
             },
             error: function (response) {
                 $("#btnModificarCliente4").attr("disabled", false);
                 $("#btnModificarCliente4").html("Guardar");
-                toastr.error("Error al actualizar cliente");
+                toastr.error("Error al actualizar tercero");
             },
         });
     });
