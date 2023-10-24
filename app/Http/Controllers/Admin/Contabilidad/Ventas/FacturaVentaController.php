@@ -454,7 +454,7 @@ class FacturaVentaController extends Controller
                 $query->where('factura_venta.cliente_id', $cliente);
             }
 
-            if ($estado) {
+            if ($estado != null) {
                 $query->where('factura_venta.status', $estado);
             }
 

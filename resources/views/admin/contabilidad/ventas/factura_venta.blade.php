@@ -371,8 +371,10 @@
                                 <div class="dropdown-menu">
                                     <!--<a class="dropdown-item btn_options_factura" data-id="0" data-opcion="4"
                                         href="javascript:void(0)">Ver Contabilización</a>-->
-                                    <!--<a class="dropdown-item btn_options_factura" data-id="0" data-opcion="3"
-                                        href="javascript:void(0)">Aplicar Nota Débito</a>-->
+                                    <!--<a class="dropdown-item btn_options_factura" data-id="0" data-opcion="4"
+                                        href="javascript:void(0)">Borrar</a>-->
+                                    <a class="dropdown-item btn_options_factura btn_option_nota_credito" data-id="0" data-opcion="3"
+                                        href="javascript:void(0)">Aplicar Nota Crédito</a>
                                     <!--<a class="dropdown-item btn_options_factura" data-id="0" data-opcion="2"
                                         href="javascript:void(0)">Anular</a>-->
                                     <a class="dropdown-item btn_options_factura btn_option_duplicar" data-id="0" data-opcion="1"
@@ -856,10 +858,10 @@ reportarse en las centrales de crédito.</textarea>
                                         </div>
                                         <div class="col-lg-1 d-flex" style="justify-content: center">
                                             <a class="center-vertical mg-s-10" href="javascript:void(0)"
-                                                id="new_row_forma"><i class="fa fa-plus"></i></a>
+                                                id="new_row_forma_edit"><i class="fa fa-plus"></i></a>
                                         </div>
                                     </div>
-                                    <div id="list_formas_pago"></div>
+                                    <div id="list_formas_pago_edit"></div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="row row-sm mt-2">
@@ -997,7 +999,7 @@ reportarse en las centrales de crédito.</textarea>
                                 <option value="">Seleccione una opción</option>
                                 <option value="1">Pendiente</option>
                                 <option value="2">Pagada</option>
-                                <!--<option value="0">Anulada</option>-->
+                                <option value="0">Con nota crédito</option>
                             </select>
                         </div>
                     </div>

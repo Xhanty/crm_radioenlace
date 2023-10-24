@@ -427,6 +427,8 @@ $(document).ready(function () {
                     } else {
                         $(".btn_options_factura").addClass("disabled");
                         $(".btn_pago_factura").addClass("disabled");
+
+                        $(".btn_option_nota_credito").addClass("disabled");
                     }
 
                     $(".btn_option_duplicar").removeClass("disabled");
@@ -1555,7 +1557,7 @@ $(document).ready(function () {
         } else if (opcion == 2) {
             anular_factura(id);
         } else if (opcion == 3) {
-            nota_debito_factura(id);
+            nota_credito_factura(id);
         } else if (opcion == 4) {
             contabilizacion_factura(id);
         }
@@ -1831,10 +1833,10 @@ $(document).ready(function () {
         });
     }
 
-    // NOTA DEBITO
-    function nota_debito_factura(id) {
+    // NOTA CRÉDITO
+    function nota_credito_factura(id) {
         Swal.fire({
-            title: '¿Está seguro de generar una nota de débito para esta factura?',
+            title: '¿Está seguro de generar una nota de crédito para esta factura?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -1843,7 +1845,7 @@ $(document).ready(function () {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.open(url_general + 'nota_debito_venta?id=' + id, '_blank');
+                window.open(url_general + 'nota_credito_venta?id=' + id, '_blank');
             }
         });
     }

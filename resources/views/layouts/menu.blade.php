@@ -331,12 +331,12 @@
                                                     <li><a class="sub-side-menu__item"
                                                             href="{{ route('factura_compra') }}">Facturación</a>
                                                     </li>
-                                                <li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
+                                                <!--<li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
                                                         Crédito</a>
                                                 </li>
                                                 <li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
                                                         Débito</a>
-                                                </li>
+                                                </li>-->
                                                 <li><a class="sub-side-menu__item"
                                                         href="{{ route('comprobantes_egresos') }}">Comprobante
                                                         Egreso</a>
@@ -356,7 +356,7 @@
                                                             href="{{ route('factura_venta') }}">Facturación</a>
                                                     </li>
                                                 @endif
-                                                @if (auth()->user()->hasPermissionTo('contabilidad_nota_credito'))
+                                                <!--@if (auth()->user()->hasPermissionTo('contabilidad_nota_credito'))
                                                     <li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
                                                             Crédito</a>
                                                     </li>
@@ -365,7 +365,7 @@
                                                     <li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
                                                             Débito</a>
                                                     </li>
-                                                @endif
+                                                @endif-->
                                                 @if (auth()->user()->hasPermissionTo('contabilidad_recibo_pago'))
                                                     <li><a class="sub-side-menu__item"
                                                             href="{{ route('recibos_pagos') }}">Recibo Caja</a>

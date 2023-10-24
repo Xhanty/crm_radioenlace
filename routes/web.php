@@ -267,7 +267,7 @@ Route::middleware(['auth_user'])->group(function () {
     // CONTABILIDAD
     Route::get('/configuracion_contabilidad', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'index'])->name('configuracion_contabilidad');
     
-    // CONCILIACIÓN BANCARIA
+    // CONCILIACIÓN BANCARIA nota_credito_venta
     Route::get('/conciliacion_bancaria', [App\Http\Controllers\Admin\Contabilidad\ConciliacionBancariaController::class, 'index'])->name('conciliacion_bancaria');
     Route::post('/valid_concil_bancaria', [App\Http\Controllers\Admin\Contabilidad\ConciliacionBancariaController::class, 'valid'])->name('valid_concil_bancaria');
     Route::post('/data_concil_bancaria', [App\Http\Controllers\Admin\Contabilidad\ConciliacionBancariaController::class, 'data'])->name('data_concil_bancaria');
@@ -396,6 +396,10 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/recibos_info_pagos_grupales', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'info_grupales'])->name('recibos_info_pagos_grupales');
     Route::post('/recibos_info_cliente', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'cliente_facturas'])->name('recibos_info_cliente');
     Route::post('/recibo_pago_grupo_add', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'pago_grupo_add'])->name('recibo_pago_grupo_add');
+
+    // NOTA CREDITO VENTA
+    Route::get('/nota_credito_venta', [App\Http\Controllers\Admin\Contabilidad\Ventas\NotaCreditoController::class, 'index'])->name('nota_credito_venta');
+    Route::post('/nota_credito_venta_add', [App\Http\Controllers\Admin\Contabilidad\Ventas\NotaCreditoController::class, 'add'])->name('nota_credito_venta_add');
 
     // CALENDARIO
     Route::get('/calendario', [App\Http\Controllers\CalendarController::class, 'index'])->name('calendario');
