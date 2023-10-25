@@ -248,7 +248,7 @@
                                         </div>
                                         <div class="media-body">
                                             @php
-                                                $fecha_vencimiento = date('Y-m-d', strtotime($factura->fecha_elaboracion . ' + 30 days'));
+                                                $fecha_vencimiento = date('Y-m-d', strtotime($factura->fecha_elaboracion));
                                                 $fecha_actual = date('Y-m-d');
                                                 $color = '';
                                                 // Convierte ambas fechas en objetos DateTime
