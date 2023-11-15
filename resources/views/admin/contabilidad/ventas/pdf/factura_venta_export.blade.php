@@ -72,7 +72,7 @@
                                         www.radioenlacesas.com
                                     </div>
                                     <div class="tm_text_center">
-                                        <img src="{{ asset('icontec.png') }}" width="136px">
+                                        <!--<img src="{{ asset('icontec.png') }}" width="136px">-->
                                     </div>
                                 </div>
                             </div>

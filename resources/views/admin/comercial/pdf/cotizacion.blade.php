@@ -132,8 +132,8 @@
                             </td>
 
                             <td>
-                                <img src="https://crm.radioenlacesas.com/icontec.png"
-                                    style="width:100%; max-width:136px; float:right;">
+                                <!--<img src="https://crm.radioenlacesas.com/icontec.png"
+                                    style="width:100%; max-width:136px; float:right;">-->
                             </td>
                         </tr>
                     </table>
