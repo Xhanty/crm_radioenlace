@@ -87,9 +87,17 @@
                                 </a>
                             </li>
                             <div class="nav nav-item  navbar-nav-right mg-lg-s-auto">
-                                <div class="nav-item full-screen fullscreen-button">
+                                <!--<div class="nav-item full-screen fullscreen-button">
                                     <a class="new nav-link full-screen-link" href="javascript:void(0);"><i
                                             class="fe fe-maximize"></i></span></a>
+                                </div>-->
+                                <div class="nav-item full-screen" style="margin: auto 0;">
+                                    <a class="new nav-link full-screen-link" title="Actas Reuniones"
+                                        href="{{ route('actas_reuniones') }}"><i class="fe fe-file-text"></i></span></a>
+                                </div>
+                                <div class="nav-item full-screen" style="margin: auto 0;">
+                                    <a class="new nav-link full-screen-link" target="_BLANK" title="Calendario"
+                                        href="{{ route('calendario') }}"><i class="fe fe-calendar"></i></span></a>
                                 </div>
                                 <div class="dropdown main-profile-menu nav nav-item nav-link">
                                     <a class="profile-user d-flex" href=""><img
@@ -108,10 +116,6 @@
                                         <a class="dropdown-item btn_logout_sesion" href="javascript:void(0)"><i
                                                 class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
                                     </div>
-                                </div>
-                                <div class="nav-item full-screen" style="margin: auto 0;">
-                                    <a class="new nav-link full-screen-link" target="_BLANK"
-                                        href="{{ route('calendario') }}"><i class="fe fe-calendar"></i></span></a>
                                 </div>
                             </div>
                         </div>

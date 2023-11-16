@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-10-2023 a las 21:18:00
+-- Tiempo de generación: 16-11-2023 a las 23:20:19
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -49,6 +49,55 @@ INSERT INTO `accesorios_reparaciones` (`id`, `accesorio`, `status`, `created_by`
 (9, 'Cargador', 1, 19, '2023-05-26 12:01:21'),
 (10, 'adaptador', 1, 19, '2023-05-26 12:01:40'),
 (11, 'Protector lateral', 1, 19, '2023-08-30 10:56:51');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `actas_reuniones`
+--
+
+CREATE TABLE `actas_reuniones` (
+  `id` int(11) NOT NULL,
+  `token` varchar(255) DEFAULT NULL,
+  `fecha_elaboracion` date DEFAULT NULL,
+  `hora_inicio` time DEFAULT NULL,
+  `hora_fin` time DEFAULT NULL,
+  `area` int(11) DEFAULT NULL,
+  `asunto` varchar(255) DEFAULT NULL,
+  `asistentes` text DEFAULT NULL,
+  `observaciones` text DEFAULT NULL,
+  `adjunto` text DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `actas_reuniones`
+--
+
+INSERT INTO `actas_reuniones` (`id`, `token`, `fecha_elaboracion`, `hora_inicio`, `hora_fin`, `area`, `asunto`, `asistentes`, `observaciones`, `adjunto`, `created_by`, `created_at`) VALUES
+(10, NULL, '2023-11-16', '20:05:00', '22:05:00', 1, 'Ver reunión', '6,8', 'Excelente', NULL, 43, '2023-11-16 17:06:02');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `actas_reuniones_detalles`
+--
+
+CREATE TABLE `actas_reuniones_detalles` (
+  `id` int(11) NOT NULL,
+  `acta_id` int(11) NOT NULL,
+  `compromiso` text NOT NULL,
+  `asistente_id` int(11) NOT NULL,
+  `fecha` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `actas_reuniones_detalles`
+--
+
+INSERT INTO `actas_reuniones_detalles` (`id`, `acta_id`, `compromiso`, `asistente_id`, `fecha`) VALUES
+(2, 10, 'Revisar todo', 6, '2023-11-16');
 
 -- --------------------------------------------------------
 
@@ -23563,6 +23612,18 @@ ALTER TABLE `accesorios_reparaciones`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `actas_reuniones`
+--
+ALTER TABLE `actas_reuniones`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `actas_reuniones_detalles`
+--
+ALTER TABLE `actas_reuniones_detalles`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `actividades_economicas`
 --
 ALTER TABLE `actividades_economicas`
@@ -24145,6 +24206,18 @@ ALTER TABLE `visitas_viaticos`
 --
 ALTER TABLE `accesorios_reparaciones`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT de la tabla `actas_reuniones`
+--
+ALTER TABLE `actas_reuniones`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de la tabla `actas_reuniones_detalles`
+--
+ALTER TABLE `actas_reuniones_detalles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `actividades_economicas`

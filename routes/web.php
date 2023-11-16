@@ -407,6 +407,13 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/schedule_update', [App\Http\Controllers\CalendarController::class, 'update'])->name('schedule_update');
     Route::post('/schedule_delete', [App\Http\Controllers\CalendarController::class, 'delete'])->name('schedule_delete');
 
+    // ACTAS REUNIONES
+    Route::get('/actas_reuniones', [App\Http\Controllers\ActasReunionesController::class, 'index'])->name('actas_reuniones');
+    Route::get('/actas_print', [App\Http\Controllers\ActasReunionesController::class, 'print'])->name('actas_print');
+    Route::post('/add_acta_reunion', [App\Http\Controllers\ActasReunionesController::class, 'add'])->name('add_acta_reunion');
+    Route::post('/edit_acta_reunion', [App\Http\Controllers\ActasReunionesController::class, 'edit'])->name('edit_acta_reunion');
+    Route::post('/delete_acta_reunion', [App\Http\Controllers\ActasReunionesController::class, 'delete'])->name('delete_acta_reunion');
+
     // PERMISOS
     Route::get('/permisos', [App\Http\Controllers\Admin\PermisosController::class, 'index'])->name('permisos');
     Route::post('/permisos_empleado', [App\Http\Controllers\Admin\PermisosController::class, 'data'])->name('permisos_empleado');
