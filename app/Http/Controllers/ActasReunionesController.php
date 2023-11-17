@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class ActasReunionesController extends Controller
 {
@@ -93,7 +94,6 @@ class ActasReunionesController extends Controller
             DB::commit();
 
             return response()->json(['info' => 1, 'mensaje' => 'Acta eliminada correctamente']);
-
         } catch (Exception $ex) {
             DB::rollBack();
             return response()->json(['info' => 0, 'error' => $ex->getMessage()]);
@@ -106,10 +106,24 @@ class ActasReunionesController extends Controller
             return redirect()->route('actas_reuniones');
         }
 
-        $valid = DB::table('actas_reuniones')->where('id', $request->token)->first();
+        $acta = DB::table('actas_reuniones')
+            ->select('actas_reuniones.*', 'empleados.nombre as nombre_empleado')
+            ->join('empleados', 'empleados.id', '=', 'actas_reuniones.created_by')
+            ->where('actas_reuniones.id', $request->token)
+            ->first();
 
-        if (!$valid) {
+        if (!$acta) {
             return redirect()->route('actas_reuniones');
         }
+
+        $detalle = DB::table('actas_reuniones_detalles')
+            ->select('actas_reuniones_detalles.*', 'empleados.nombre as nombre_empleado')
+            ->join('empleados', 'empleados.id', '=', 'actas_reuniones_detalles.asistente_id')
+            ->where('actas_reuniones_detalles.acta_id', $request->token)
+            ->get();
+
+        $pdf = PDF::loadView('actas.pdf', compact('acta', 'detalle'));
+
+        return $pdf->stream('Acta.pdf');
     }
 }
