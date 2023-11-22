@@ -153,6 +153,10 @@
                                 <b>Meltec Comunicaciones S.A<br>
                                     830079015-1<br>
                                     , Colombia</b>
+                                @elseif($remision->id == 238)
+                                <b>Syscom Colombia S.A.S<br>
+                                    901192317<br>
+                                    , Colombia</b>
                                 @else
                                 <b>{{ $remision->razon_social }}<br>
                                     {{ $remision->nit }}-{{ $remision->codigo_verificacion }}<br>
