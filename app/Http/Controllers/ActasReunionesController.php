@@ -18,6 +18,12 @@ class ActasReunionesController extends Controller
         return view('actas.actas_reuniones', compact('usuarios', 'actas'));
     }
 
+    public function generar_codigo()
+    {
+        $codigo = rand(1000000, 9999999);
+        return "RE166" . $codigo;
+    }
+
     public function add(Request $request)
     {
         try {
@@ -31,6 +37,8 @@ class ActasReunionesController extends Controller
             $observaciones = $request->observaciones;
             $adjunto = null;
             $data = json_decode($request->data, true);
+
+            $codigo = $this->generar_codigo();
 
             if ($request->hasFile('adjunto')) {
                 $file = $request->file('adjunto');
@@ -65,10 +73,25 @@ class ActasReunionesController extends Controller
                     'fecha' => $item['fecha'],
                 ]);
 
-                if (!$detalle) {
+                /*$asignacion = DB::table("asignaciones")->insertGetId([
+                    "id_empleado" => $item['asistente'],
+                    "id_cliente" => $cliente,
+                    "asignacion" => $observaciones[$key] ? $observaciones[$key] : "",
+                    "descripcion" => $observacion_general ? $observacion_general : "",
+                    "fecha" => $fecha_inicio,
+                    "fecha_culminacion" => $fecha_fin,
+                    "created_by" => session("user"),
+                    "status" => 0,
+                    "fecha_completada" => null,
+                    "visto_bueno" => 0,
+                    "devuelta" => 0,
+                    "codigo" => $codigo,
+                ]);*/
+
+                /*if (!$detalle) {
                     DB::rollBack();
                     return response()->json(['info' => 0, 'error' => 'Error al crear el detalle del acta']);
-                }
+                }*/
             }
 
             DB::commit();
