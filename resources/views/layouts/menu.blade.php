@@ -93,7 +93,8 @@
                                 </div>-->
                                 <div class="nav-item full-screen" style="margin: auto 0;">
                                     <a class="new nav-link full-screen-link" title="Actas Reuniones"
-                                        href="{{ route('actas_reuniones') }}"><i class="fe fe-file-text"></i></span></a>
+                                        href="{{ route('actas_reuniones') }}"><i
+                                            class="fe fe-file-text"></i></span></a>
                                 </div>
                                 <div class="nav-item full-screen" style="margin: auto 0;">
                                     <a class="new nav-link full-screen-link" target="_BLANK" title="Calendario"
@@ -107,11 +108,13 @@
                                     <div class="dropdown-menu">
                                         <div class="main-header-profile header-img">
                                             <div class="main-img-user"><img alt=""
-                                                    src="{{ asset('images/empleados/' . session('user_img')) }}"></div>
+                                                    src="{{ asset('images/empleados/' . session('user_img')) }}">
+                                            </div>
                                             <h6 class="name_user_val text-center">Petey Cruiser</h6><span
                                                 class="cargo_user_val">Premium Member</span>
                                         </div>
-                                        <a class="dropdown-item" href="javascript:void(0)"><i class="far fa-user"></i>
+                                        <a class="dropdown-item" href="javascript:void(0)"><i
+                                                class="far fa-user"></i>
                                             Mi Perfil</a>
                                         <a class="dropdown-item btn_logout_sesion" href="javascript:void(0)"><i
                                                 class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
@@ -203,6 +206,19 @@
                                         class="side-menu__label">Documentos</span></a>
                             </li>
                         @endif
+
+                        <li class="slide">
+                            <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
+                                    class="side-menu__icon fe fe-file-text"></i><span class="side-menu__label">Gestión
+                                    Calidad</span><i class="angle fe fe-chevron-down"></i></a>
+                            <ul class="slide-menu">
+                                <li><a class="slide-item" href="javascript:void(0);">Dofa</a>
+                                <li><a class="slide-item" href="javascript:void(0);">Normas</a>
+                                <li><a class="slide-item" href="javascript:void(0);">Políticas</a>
+                                <li><a class="slide-item" href="javascript:void(0);">Procesos</a>
+                                </li>
+                            </ul>
+                        </li>
 
                         @if (auth()->user()->hasPermissionTo('solicitud_elementos'))
                             <li class="slide">
@@ -335,16 +351,16 @@
                                                     <li><a class="sub-side-menu__item"
                                                             href="{{ route('factura_compra') }}">Facturación</a>
                                                     </li>
-                                                <!--<li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
+                                                    <!--<li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
                                                         Crédito</a>
                                                 </li>
                                                 <li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
                                                         Débito</a>
                                                 </li>-->
-                                                <li><a class="sub-side-menu__item"
-                                                        href="{{ route('comprobantes_egresos') }}">Comprobante
-                                                        Egreso</a>
-                                                </li>
+                                                    <li><a class="sub-side-menu__item"
+                                                            href="{{ route('comprobantes_egresos') }}">Comprobante
+                                                            Egreso</a>
+                                                    </li>
                                                 @endif
                                             </ul>
                                         </li>
@@ -361,15 +377,15 @@
                                                     </li>
                                                 @endif
                                                 <!--@if (auth()->user()->hasPermissionTo('contabilidad_nota_credito'))
-                                                    <li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
+<li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
                                                             Crédito</a>
                                                     </li>
-                                                @endif
+@endif
                                                 @if (auth()->user()->hasPermissionTo('contabilidad_nota_debito'))
-                                                    <li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
+<li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
                                                             Débito</a>
                                                     </li>
-                                                @endif-->
+@endif-->
                                                 @if (auth()->user()->hasPermissionTo('contabilidad_recibo_pago'))
                                                     <li><a class="sub-side-menu__item"
                                                             href="{{ route('recibos_pagos') }}">Recibo Caja</a>
@@ -494,11 +510,9 @@
                                     class="side-menu__label">Viáticos</span><i
                                     class="angle fe fe-chevron-down"></i></a>
                             <ul class="slide-menu">
-                                <li><a class="slide-item"
-                                        href="{{ route('config_viaticos') }}">Configuración</a>
+                                <li><a class="slide-item" href="{{ route('config_viaticos') }}">Configuración</a>
                                 </li>
-                                <li><a class="slide-item"
-                                        href="{{ route('visitas_viaticos') }}">Visitas</a>
+                                <li><a class="slide-item" href="{{ route('visitas_viaticos') }}">Visitas</a>
                                 </li>
                                 <li><a class="slide-item" href="{{ route('viaticos') }}">Viáticos</a>
                                 </li>
@@ -560,9 +574,9 @@
                                         <li><a class="slide-item" href="{{ route('empleados') }}">Empleados</a></li>
                                     @endif
                                     <!--@if (auth()->user()->hasPermissionTo('ver_proveedores'))
-                                        <li><a class="slide-item" href="{{ route('proveedores') }}">Proveedores</a>
+<li><a class="slide-item" href="{{ route('proveedores') }}">Proveedores</a>
                                         </li>
-                                    @endif-->
+@endif-->
                                 </ul>
                             </li>
                         @endif
