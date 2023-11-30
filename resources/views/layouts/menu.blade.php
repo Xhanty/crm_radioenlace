@@ -212,10 +212,10 @@
                                     class="side-menu__icon fe fe-file-text"></i><span class="side-menu__label">Gestión
                                     Calidad</span><i class="angle fe fe-chevron-down"></i></a>
                             <ul class="slide-menu">
-                                <li><a class="slide-item" href="javascript:void(0);">Dofa</a>
+                                <li><a class="slide-item" href="javascript:void(0);">DOFA</a>
                                 <li><a class="slide-item" href="javascript:void(0);">Normas</a>
                                 <li><a class="slide-item" href="javascript:void(0);">Políticas</a>
-                                <li><a class="slide-item" href="javascript:void(0);">Procesos</a>
+                                <li><a class="slide-item" href="javascript:void(0);">Mapa Procesos</a>
                                 </li>
                             </ul>
                         </li>
