@@ -22,6 +22,7 @@ class ComprasController extends Controller
                 ->join('empleados', 'factura_compra.created_by', '=', 'empleados.id')
                 ->join('proveedores', 'factura_compra.proveedor_id', '=', 'proveedores.id')
                 ->whereYear('factura_compra.created_at', date('Y'))
+                ->whereMonth('factura_compra.created_at', date('m'))
                 ->orderByRaw('CAST(REPLACE(factura_compra.valor_total, ".", "") AS DECIMAL(10,2)) DESC')
                 ->get();
 

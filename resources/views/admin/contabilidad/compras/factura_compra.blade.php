@@ -153,7 +153,7 @@
                             </div>
                             <div class="div-2-tables-header" style="margin-bottom: 13px">
                                 <button class="btn btn-primary" id="btnNew">+</button>
-                                <button class="btn btn-primary" style="margin-right: 10px;" disabled id="btnSiigo">:)</button>
+                                <button class="btn btn-primary" style="margin-right: 10px;" id="btnSiigo">:)</button>
                             </div>
                         </div>
                         <div class="p-0">

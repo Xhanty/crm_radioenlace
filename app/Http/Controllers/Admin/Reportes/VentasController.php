@@ -26,6 +26,7 @@ class VentasController extends Controller
                 ->join('empleados', 'factura_venta.created_by', '=', 'empleados.id')
                 ->join('cliente', 'factura_venta.cliente_id', '=', 'cliente.id')
                 ->whereYear('factura_venta.created_at', date('Y'))
+                ->whereMonth('factura_venta.created_at', date('m'))
                 ->orderByRaw('CAST(REPLACE(factura_venta.valor_total, ".", "") AS DECIMAL(10,2)) DESC')
                 ->get();
 
