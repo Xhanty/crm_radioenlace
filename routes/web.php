@@ -410,6 +410,7 @@ Route::middleware(['auth_user'])->group(function () {
     // ACTAS REUNIONES
     Route::get('/actas_reuniones', [App\Http\Controllers\ActasReunionesController::class, 'index'])->name('actas_reuniones');
     Route::get('/actas_print', [App\Http\Controllers\ActasReunionesController::class, 'print'])->name('actas_print');
+    Route::post('/data_acta_reunion', [App\Http\Controllers\ActasReunionesController::class, 'data'])->name('data_acta_reunion');
     Route::post('/add_acta_reunion', [App\Http\Controllers\ActasReunionesController::class, 'add'])->name('add_acta_reunion');
     Route::post('/edit_acta_reunion', [App\Http\Controllers\ActasReunionesController::class, 'edit'])->name('edit_acta_reunion');
     Route::post('/delete_acta_reunion', [App\Http\Controllers\ActasReunionesController::class, 'delete'])->name('delete_acta_reunion');
