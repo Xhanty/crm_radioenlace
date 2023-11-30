@@ -567,16 +567,16 @@
                                         class="angle fe fe-chevron-down"></i></a>
                                 <ul class="slide-menu">
                                     @if (auth()->user()->hasPermissionTo('ver_clientes'))
-                                        <li><a class="slide-item" href="{{ route('terceros') }}">Terceros</a>
+                                        <li><a class="slide-item" href="{{ route('terceros') }}">Clientes</a>
                                         </li>
                                     @endif
                                     @if (auth()->user()->hasPermissionTo('ver_empleados'))
                                         <li><a class="slide-item" href="{{ route('empleados') }}">Empleados</a></li>
                                     @endif
-                                    <!--@if (auth()->user()->hasPermissionTo('ver_proveedores'))
+                                    @if (auth()->user()->hasPermissionTo('ver_proveedores'))
 <li><a class="slide-item" href="{{ route('proveedores') }}">Proveedores</a>
                                         </li>
-@endif-->
+@endif
                                 </ul>
                             </li>
                         @endif

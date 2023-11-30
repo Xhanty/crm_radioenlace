@@ -25,7 +25,7 @@ class ClientesController extends Controller
     public function clientes_list()
     {
         try {
-            $terceros = DB::table('terceros')->orderBy("id", "DESC")->get();
+            $terceros = DB::table('cliente')->orderBy("id", "DESC")->get();
 
             foreach ($terceros as $key => $value) {
                 if($value->tipo_tercero == 1) {
@@ -44,7 +44,7 @@ class ClientesController extends Controller
     public function clientes_data(Request $request)
     {
         try {
-            $cliente = DB::table('terceros')->where("id", $request->cliente)->first();
+            $cliente = DB::table('cliente')->where("id", $request->cliente)->first();
             $facturacion = []; /*DB::table('datos_facturacion')->where("id_cliente", $request->cliente)->first();*/
             $tecnicos = []; /*DB::table('datos_tecnico')->where("id_cliente", $request->cliente)->first();*/
             $anexos = []; /*DB::table('anexos_clientes')
@@ -72,8 +72,8 @@ class ClientesController extends Controller
                 $archivo = "noavatar.png";
             }
 
-            $cliente = DB::table("terceros")->insertGetId([
-                "tipo_tercero" => 4,
+            $cliente = DB::table("cliente")->insertGetId([
+                //"tipo_tercero" => 4,
                 "tipo" => $request->tipo_cliente ? $request->tipo_cliente : 0,
                 "ciudad" => $request->ciudad ? $request->ciudad : "",
                 "tipo_identificacion" => $request->tipo_documento ? $request->tipo_documento : 0,
@@ -95,7 +95,7 @@ class ClientesController extends Controller
                 "documento" => "",
             ]);
 
-            /*DB::table('datos_facturacion')->insert([
+            DB::table('datos_facturacion')->insert([
                 'nombre' => "",
                 'telefono' => "",
                 'apellido' => "",
@@ -116,7 +116,7 @@ class ClientesController extends Controller
                 'email' => "",
                 'extension' => "",
                 'id_cliente' => $cliente,
-            ]);*/
+            ]);
 
             DB::commit();
             return response()->json(["info" => 1, "success" => "Tercero creado correctamente"]);
