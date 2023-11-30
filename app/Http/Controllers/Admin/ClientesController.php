@@ -27,13 +27,13 @@ class ClientesController extends Controller
         try {
             $terceros = DB::table('cliente')->orderBy("id", "DESC")->get();
 
-            foreach ($terceros as $key => $value) {
+            /*foreach ($terceros as $key => $value) {
                 if($value->tipo_tercero == 1) {
                     $value->avatar = 'proveedores/' . $value->avatar;
                 } else if($value->tipo_tercero == 2) {
                     $value->avatar = 'clientes/' . $value->avatar;
                 }
-            }
+            }*/
 
             return response()->json(["data" => $terceros]);
         } catch (Exception $ex) {
@@ -45,13 +45,13 @@ class ClientesController extends Controller
     {
         try {
             $cliente = DB::table('cliente')->where("id", $request->cliente)->first();
-            $facturacion = []; /*DB::table('datos_facturacion')->where("id_cliente", $request->cliente)->first();*/
-            $tecnicos = []; /*DB::table('datos_tecnico')->where("id_cliente", $request->cliente)->first();*/
-            $anexos = []; /*DB::table('anexos_clientes')
+            $facturacion = DB::table('datos_facturacion')->where("id_cliente", $request->cliente)->first();
+            $tecnicos = DB::table('datos_tecnico')->where("id_cliente", $request->cliente)->first();
+            $anexos = DB::table('anexos_clientes')
                 ->select('anexos_clientes.*', 'empleados.nombre as creador')
                 ->join("empleados", "empleados.id", "=", "anexos_clientes.created_by")
                 ->where("id_cliente", $request->cliente)
-                ->get();*/
+                ->get();
 
             return response()->json(["facturacion" => $facturacion, "tecnicos" => $tecnicos, "anexos" => $anexos, "cliente" => $cliente]);
         } catch (Exception $ex) {
