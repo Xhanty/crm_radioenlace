@@ -108,6 +108,41 @@ class FacturaCompraController extends Controller
             echo json_encode($no_registrados);
             exit;*/
 
+            /*$facturas = DB::table('detalle_factura_compra')
+                ->select('configuracion_puc.code', 'configuracion_puc.nombre', 'detalle_factura_compra.valor_total')
+                ->join('configuracion_puc', 'detalle_factura_compra.cuenta', '=', 'configuracion_puc.id')
+                ->get();
+
+            // Crear un array para almacenar las sumas por 'code'
+            $sumasPorCode = [];
+
+            // Recorrer las facturas y sumar los 'valor_total' por 'code'
+            foreach ($facturas as $factura) {
+                $code = $factura->code;
+                $valorTotal = (float) str_replace(',', '.', str_replace('.', '', $factura->valor_total));
+
+                // Si el 'code' ya existe, sumar el 'valor_total'; de lo contrario, inicializarlo
+                if (isset($sumasPorCode[$code])) {
+                    $sumasPorCode[$code]['valor_total'] += $valorTotal;
+                } else {
+                    $sumasPorCode[$code] = [
+                        "code" => $code,
+                        "nombre" => $factura->nombre,
+                        "valor_total" => $valorTotal
+                    ];
+                }
+            }
+
+            // Aplicar el formato al 'valor_total' en el array resultante
+            $resultadoFinal = array_map(function ($item) {
+                $item['valor_total'] = number_format($item['valor_total'], 2, ',', '.');
+                return $item;
+            }, array_values($sumasPorCode));
+
+            // Imprimir o mostrar el resultado final
+            echo json_encode($resultadoFinal);
+            exit;*/
+
             $almacenes = DB::table('almacenes')->whereNull("parent_id")->get();
 
             if ($almacenes->count() > 0) {
@@ -130,7 +165,7 @@ class FacturaCompraController extends Controller
                 'almacenes'
             ));
         } catch (Exception $ex) {
-            //return $ex->getMessage();
+            return $ex->getMessage();
             return view('errors.500');
         }
     }
