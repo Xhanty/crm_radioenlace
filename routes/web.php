@@ -364,6 +364,8 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/filtrar_facturas_compras', [App\Http\Controllers\Admin\Contabilidad\Compras\FacturaCompraController::class, 'filtro'])->name('filtrar_facturas_compras');
     Route::post('/anular_factura_compra', [App\Http\Controllers\Admin\Contabilidad\Compras\FacturaCompraController::class, 'anular'])->name('anular_factura_compra');
     Route::post('/favorito_factura_compra', [App\Http\Controllers\Admin\Contabilidad\Compras\FacturaCompraController::class, 'favorito'])->name('favorito_factura_compra');
+    Route::post('/pdf_factura_compra_export', [App\Http\Controllers\Admin\Contabilidad\Compras\FacturaCompraController::class, 'pdf_export'])->name('pdf_factura_compra_export');
+    Route::post('/excel_factura_compra', [App\Http\Controllers\Admin\Contabilidad\Compras\FacturaCompraController::class, 'excel'])->name('excel_factura_compra');
 
 
     // COMPROBANTE EGRESO
@@ -518,6 +520,8 @@ Route::group(['middleware' => 'auth'], function () {
     //REPORTES
     Route::get('reporte_compras',  [App\Http\Controllers\Admin\Reportes\ComprasController::class, 'index'])->name('reporte_compras');
     Route::post('reportes_compras_filtro',  [App\Http\Controllers\Admin\Reportes\ComprasController::class, 'filtro'])->name('reportes_compras_filtro');
+    Route::get('reporte_gastos_fijos',  [App\Http\Controllers\Admin\Reportes\GastosFijosController::class, 'index'])->name('reporte_gastos_fijos');
+    Route::get('reporte_gastos_fijos_filtro',  [App\Http\Controllers\Admin\Reportes\GastosFijosController::class, 'filtro'])->name('reporte_gastos_fijos_filtro');
     Route::get('reporte_ventas',  [App\Http\Controllers\Admin\Reportes\VentasController::class, 'index'])->name('reporte_ventas');
     Route::post('reportes_ventas_filtro',  [App\Http\Controllers\Admin\Reportes\VentasController::class, 'filtro'])->name('reportes_ventas_filtro');
 });

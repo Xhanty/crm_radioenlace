@@ -536,6 +536,9 @@
                                                     href="{{ route('reporte_compras') }}">Compras</a>
                                             </li>
                                             <li><a class="sub-side-menu__item"
+                                                    href="{{ route('reporte_gastos_fijos') }}">Gastos Fijos</a>
+                                            </li>
+                                            <li><a class="sub-side-menu__item"
                                                     href="{{ route('reporte_ventas') }}">Ventas</a>
                                             </li>
                                         </ul>
@@ -574,9 +577,9 @@
                                         <li><a class="slide-item" href="{{ route('empleados') }}">Empleados</a></li>
                                     @endif
                                     @if (auth()->user()->hasPermissionTo('ver_proveedores'))
-<li><a class="slide-item" href="{{ route('proveedores') }}">Proveedores</a>
+                                        <li><a class="slide-item" href="{{ route('proveedores') }}">Proveedores</a>
                                         </li>
-@endif
+                                    @endif
                                 </ul>
                             </li>
                         @endif

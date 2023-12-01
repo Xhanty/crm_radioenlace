@@ -535,68 +535,60 @@ class FacturaCompraController extends Controller
     {
         try {
             $proveedor = $request->proveedor;
-            $numero_factura = $request->numero_factura;
-            $serial = $request->serial;
+            $estado = $request->estado;
+            $numero_factura = $request->num_factura;
+            $cons_inicio = $request->cons_inicio;
+            $cons_fin = $request->cons_fin;
             $fecha_inicio = $request->fecha_inicio;
             $fecha_fin = $request->fecha_fin;
+            $mayor_menor_mora = $request->mayor_menor_mora;
+            $dia_mora = $request->dia_mora;
+
+            $query = DB::table('factura_compra')
+                ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion', 'proveedores.ciudad', 'proveedores.telefono_fijo', 'proveedores.direccion')
+                ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
+                ->orderBy('factura_compra.numero', 'desc'); // luego consecutivo
 
             if ($numero_factura) {
-                $factura_id = DB::table('factura_compra')
-                    ->select('id')
-                    ->where('numero', $numero_factura)
-                    ->first();
-
-                return response()->json(['info' => 1, 'token' => $factura_id->id]);
-            }
-
-            if ($serial) {
-                $factura_id = DB::table('detalle_factura_compra')
-                    ->select('factura_id')
-                    ->where('detalle_factura_compra.serial_producto', $serial)
-                    ->first();
-
-                return response()->json(['info' => 1, 'token' => $factura_id->id]);
+                $query->where('factura_compra.numero', $numero_factura);
             }
 
             if ($proveedor) {
-                if ($fecha_inicio && $fecha_fin) {
-                    $facturas = DB::table('factura_compra')
-                        ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion')
-                        ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
-                        ->where('factura_compra.proveedor_id', $proveedor)
-                        ->whereBetween('factura_compra.created_at', [$fecha_inicio, $fecha_fin])
-                        ->orderByDesc('factura_compra.favorito') // ordenar los favoritos primero
-                        ->orderBy('factura_compra.fecha_elaboracion', 'desc') // luego ordenar por fecha
-                        ->orderBy('factura_compra.id', 'desc')
-                        ->get();
-                } else {
-                    $facturas = DB::table('factura_compra')
-                        ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion')
-                        ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
-                        ->where('factura_compra.proveedor_id', $proveedor)
-                        ->orderByDesc('factura_compra.favorito') // ordenar los favoritos primero
-                        ->orderBy('factura_compra.fecha_elaboracion', 'desc') // luego ordenar por fecha
-                        ->orderBy('factura_compra.id', 'desc')
-                        ->get();
-                }
+                $query->where('factura_compra.proveedor_id', $proveedor);
+            }
 
-                return response()->json(['info' => 1, 'facturas' => $facturas]);
+            if ($estado != null) {
+                $query->where('factura_compra.status', $estado);
+            }
+
+            if ($cons_inicio && $cons_fin) {
+                $query->whereBetween('factura_compra.numero', [$cons_inicio, $cons_fin]);
             }
 
             if ($fecha_inicio && $fecha_fin) {
-                $facturas = DB::table('factura_compra')
-                    ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion')
-                    ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
-                    ->whereBetween('factura_compra.fecha_elaboracion', [$fecha_inicio, $fecha_fin])
-                    ->orderByDesc('factura_compra.favorito') // ordenar los favoritos primero
-                    ->orderBy('factura_compra.fecha_elaboracion', 'desc') // luego ordenar por fecha
-                    ->orderBy('factura_compra.id', 'desc')
-                    ->get();
-
-                return response()->json(['info' => 1, 'facturas' => $facturas]);
+                $query->whereBetween('factura_compra.fecha_elaboracion', [$fecha_inicio, $fecha_fin]);
             }
 
-            return response()->json(['info' => 0]);
+            if ($mayor_menor_mora && $dia_mora) {
+                if ($mayor_menor_mora == 1) {
+                    // Si es mayor y mirar cuantos días tiene de mora la factura, y los compare con $dia_mora
+                    $query->whereRaw('DATEDIFF(CURDATE(), factura_compra.fecha_elaboracion) > ' . $dia_mora);
+                } elseif ($mayor_menor_mora == 2) {
+                    // Si es menor y mirar cuantos días tiene de mora la factura, y los compare con $dia_mora
+                    $query->whereRaw('DATEDIFF(CURDATE(), factura_compra.fecha_elaboracion) < ' . $dia_mora);
+                }
+            }
+
+            $facturas = $query->orderBy('factura_compra.numero', 'desc')->get();
+
+            if ($facturas->isEmpty()) {
+                return response()->json(['info' => 1]);
+            }
+
+            // Guardar la consulta en una sesión
+            session()->put('facturas_compra_filtro', $facturas);
+
+            return response()->json(['info' => 1, 'facturas' => $facturas]);
         } catch (Exception $ex) {
             return $ex;
             return response()->json(['info' => 0]);
@@ -633,5 +625,13 @@ class FacturaCompraController extends Controller
             return $ex;
             return response()->json(['info' => 0]);
         }
+    }
+
+    public function pdf_export(Request $request)
+    {
+    }
+
+    public function excel(Request $request)
+    {
     }
 }
