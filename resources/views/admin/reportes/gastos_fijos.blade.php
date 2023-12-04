@@ -44,7 +44,7 @@
                 <h4 class="content-title mb-2">CRM | Radio Enlace</h4>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">Reportes</a></li>
+                        <li class="breadcrumb-item"><a href="gastos_fijos/general.xlsx">Reportes</a></li>
                         <li class="breadcrumb-item active" aria-current="page"> Gastos Fijos</li>
                     </ol>
                 </nav>
@@ -56,33 +56,12 @@
                 <div class="card">
                     <div class="card-body iconfont text-start">
                         <div class="d-flex justify-content-between">
-                            <h4 class="card-title mb-3">Arriendos - Cerros</h4>
+                            <h4 class="card-title mb-3">Gastos Fijos</h4>
                             <i class="mdi mdi-dots-Vertical"></i>
                         </div>
                         <div class="d-flex mb-0">
                             <div class="">
-                                <h4 class="mb-1 font-weight-bold">0</span></h4>
-                            </div>
-                            <div class="card-chart bg-pink-transparent brround ms-auto mt-0">
-                                <i class="typcn typcn-shopping-cart text-pink tx-24"></i>
-                            </div>
-                        </div>
-                        <div class="d-flex mt-2" style="justify-content: center;">
-                            <a href="javascript:void(0);" class="btn btn-primary mt-3">Ver Detalle</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                <div class="card">
-                    <div class="card-body iconfont text-start">
-                        <div class="d-flex justify-content-between">
-                            <h4 class="card-title mb-3">Servicios Públicos</h4>
-                            <i class="mdi mdi-dots-Vertical"></i>
-                        </div>
-                        <div class="d-flex mb-0">
-                            <div class="">
-                                <h4 class="mb-1 font-weight-bold">0</h4>
+                                <h4 class="mb-1 font-weight-bold">62.254.409,00</h4>
                             </div>
                             <div class="card-chart bg-teal-transparent brround ms-auto mt-0 btn_cargos"
                                 style="cursor: pointer;" title="Ver Detalle">
@@ -90,113 +69,7 @@
                             </div>
                         </div>
                         <div class="d-flex mt-2" style="justify-content: center;">
-                            <a href="javascript:void(0);" class="btn btn-primary mt-3">Ver Detalle</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                <div class="card">
-                    <div class="card-body iconfont text-start">
-                        <div class="d-flex justify-content-between">
-                            <h4 class="card-title mb-3">Honorarios</h4>
-                            <i class="mdi mdi-dots-Vertical"></i>
-                        </div>
-                        <div class="d-flex mb-0">
-                            <div class="">
-                                <h4 class="mb-1 font-weight-bold">0</h4>
-                            </div>
-                            <div class="card-chart bg-purple-transparent brround ms-auto mt-0 btn_retenciones"
-                                style="cursor: pointer;" title="Ver Detalle">
-                                <i class="typcn typcn-user-outline text-purple tx-24"></i>
-                            </div>
-                        </div>
-                        <div class="d-flex mt-2" style="justify-content: center;">
-                            <a href="javascript:void(0);" class="btn btn-primary mt-3">Ver Detalle</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                <div class="card">
-                    <div class="card-body iconfont text-start">
-                        <div class="d-flex justify-content-between">
-                            <h4 class="card-title mb-3">Seguros</h4>
-                            <i class="mdi mdi-dots-Vertical"></i>
-                        </div>
-                        <div class="d-flex mb-0">
-                            <div class="">
-                                <h4 class="mb-1 font-weight-bold">0</h4>
-                            </div>
-                            <div class="card-chart bg-purple-transparent brround ms-auto mt-0">
-                                <i class="typcn typcn-time text-purple tx-24"></i>
-                            </div>
-                        </div>
-                        <div class="d-flex mt-2" style="justify-content: center;">
-                            <a href="javascript:void(0);" class="btn btn-primary mt-3">Ver Detalle</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                <div class="card">
-                    <div class="card-body iconfont text-start">
-                        <div class="d-flex justify-content-between">
-                            <h4 class="card-title mb-3">Vehículos</h4>
-                            <i class="mdi mdi-dots-Vertical"></i>
-                        </div>
-                        <div class="d-flex mb-0">
-                            <div class="">
-                                <h4 class="mb-1 font-weight-bold">0</h4>
-                            </div>
-                            <div class="card-chart bg-purple-transparent brround ms-auto mt-0">
-                                <i class="typcn typcn-time text-purple tx-24"></i>
-                            </div>
-                        </div>
-                        <div class="d-flex mt-2" style="justify-content: center;">
-                            <a href="javascript:void(0);" class="btn btn-primary mt-3">Ver Detalle</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                <div class="card">
-                    <div class="card-body iconfont text-start">
-                        <div class="d-flex justify-content-between">
-                            <h4 class="card-title mb-3">Grúas</h4>
-                            <i class="mdi mdi-dots-Vertical"></i>
-                        </div>
-                        <div class="d-flex mb-0">
-                            <div class="">
-                                <h4 class="mb-1 font-weight-bold">0</h4>
-                            </div>
-                            <div class="card-chart bg-purple-transparent brround ms-auto mt-0">
-                                <i class="typcn typcn-time text-purple tx-24"></i>
-                            </div>
-                        </div>
-                        <div class="d-flex mt-2" style="justify-content: center;">
-                            <a href="javascript:void(0);" class="btn btn-primary mt-3">Ver Detalle</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                <div class="card">
-                    <div class="card-body iconfont text-start">
-                        <div class="d-flex justify-content-between">
-                            <h4 class="card-title mb-3">Gastos De Funcionamiento</h4>
-                            <i class="mdi mdi-dots-Vertical"></i>
-                        </div>
-                        <div class="d-flex mb-0">
-                            <div class="">
-                                <h4 class="mb-1 font-weight-bold">0</h4>
-                            </div>
-                            <div class="card-chart bg-purple-transparent brround ms-auto mt-0">
-                                <i class="typcn typcn-time text-purple tx-24"></i>
-                            </div>
-                        </div>
-                        <div class="d-flex mt-2" style="justify-content: center;">
-                            <a href="javascript:void(0);" class="btn btn-primary mt-3">Ver Detalle</a>
+                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
                         </div>
                     </div>
                 </div>
@@ -238,7 +111,7 @@
                             </div>
                         </div>
                         <div class="d-flex mt-2" style="justify-content: center;">
-                            <a href="javascript:void(0);" class="btn btn-primary mt-3">Ver Detalle</a>
+                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
                         </div>
                     </div>
                 </div>
