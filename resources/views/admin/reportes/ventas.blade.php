@@ -400,7 +400,7 @@
                 subtotal = parseInt(subtotal.replaceAll('.', ''));
 
                 if (factura.status > 0) {
-                    totales += total;
+                    totales += subtotal;
                 }
 
                 if (factura.valor_retefuente) {
