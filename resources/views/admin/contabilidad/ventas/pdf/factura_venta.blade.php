@@ -227,7 +227,7 @@
                                                             {{ $item->detalle->marca }} -
                                                         @endif{{ $item->detalle->modelo }})</b>
                                                     <br><p
-                                                        class="descrip-personalizado">{{ $item->detalle->description }}</p>
+                                                        class="descrip-personalizado">{{ $item->description }}</p>
                                                 </td>
                                                 <td class="tm_width_1 tm_accent_border_20 tm_text_center">
                                                     {{ $item->cantidad }}</td>
