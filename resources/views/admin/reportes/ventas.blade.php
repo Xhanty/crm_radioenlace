@@ -376,22 +376,53 @@
 
             facturas.forEach(factura => {
                 let total = factura.valor_total;
+                let subtotal = factura.subtotal;
                 let impuesto_1 = JSON.parse(factura.impuestos_1);
-                let impuesto_2 = JSON.parse(factura.impuestos_2);
+                let impuesto_2 = {
+                    retefuente: 0,
+                    reteica: 0,
+                    reteiva: 0
+                };
+                let iva = 0;
 
                 if (impuesto_1) {
                     impuestos_1.push(impuesto_1[0]);
-                }
-
-                if (impuesto_2) {
-                    impuestos_2.push(impuesto_2[0]);
                 }
 
                 total = total.split(',');
                 total = total[0];
 
                 total = parseInt(total.replaceAll('.', ''));
-                totales += total;
+
+                subtotal = subtotal.split(',');
+                subtotal = subtotal[0];
+
+                subtotal = parseInt(subtotal.replaceAll('.', ''));
+
+                if (factura.status > 0) {
+                    totales += total;
+                }
+
+                if (factura.valor_retefuente) {
+                    let retencion = factura.valor_retefuente * subtotal / 100;
+                    impuesto_2.retefuente += retencion;
+                }
+
+                if (factura.valor_reteica) {
+                    let retencion = factura.valor_reteica * subtotal / 1000;
+                    impuesto_2.reteica += retencion;
+                }
+
+                for (let i = 0; i < impuesto_1.length; i++) {
+                    iva += impuesto_1[i][1];
+                }
+
+                if (factura.valor_reteiva) {
+                    let retencion = factura.valor_reteiva * iva / 100;
+                    impuesto_2.reteiva += retencion;
+                }
+
+                impuestos_2.push(impuesto_2);
 
                 clientes.push(factura.razon_social + ' (' + factura.nit + '-' + factura
                     .codigo_verificacion + ')');
@@ -537,21 +568,6 @@
                 }
             });
 
-            const retenciones_array = {};
-            impuestos_2.forEach(impuesto => {
-                if (impuesto == null) return;
-                let valor_1 = parseInt(impuesto[1]);
-                retenciones += valor_1;
-
-                let nombre = impuesto[0];
-                let valor = parseInt(impuesto[1]);
-                if (retenciones_array[nombre]) {
-                    retenciones_array[nombre] += valor;
-                } else {
-                    retenciones_array[nombre] = valor;
-                }
-            });
-
             for (const [key, value] of Object.entries(cargos_array)) {
                 $("#tbl_impuesto_cargo").append(
                     '<tr>' +
@@ -563,16 +579,47 @@
                 );
             }
 
-            for (const [key, value] of Object.entries(retenciones_array)) {
-                $("#tbl_impuesto_retencion").append(
-                    '<tr>' +
-                    '<td>' + key + '</td>' +
-                    '<td>' + value.toLocaleString('es-ES', {
-                        minimumFractionDigits: 2
-                    }) + '</td>' +
-                    '</tr>'
-                );
-            }
+            // Retenciones
+            let totalImpuestos = {
+                retefuente: 0,
+                reteica: 0,
+                reteiva: 0
+            };
+
+            impuestos_2.forEach(impuesto => {
+                totalImpuestos.retefuente += parseInt(impuesto.retefuente);
+                totalImpuestos.reteica += parseInt(impuesto.reteica);
+                totalImpuestos.reteiva += parseInt(impuesto.reteiva);
+            });
+
+            $("#tbl_impuesto_retencion").append(
+                '<tr>' +
+                '<td>Retefuente</td>' +
+                '<td>' + totalImpuestos.retefuente.toLocaleString('es-ES', {
+                    minimumFractionDigits: 2
+                }) + '</td>' +
+                '</tr>'
+            );
+
+            $("#tbl_impuesto_retencion").append(
+                '<tr>' +
+                '<td>Rete Ica</td>' +
+                '<td>' + totalImpuestos.reteica.toLocaleString('es-ES', {
+                    minimumFractionDigits: 2
+                }) + '</td>' +
+                '</tr>'
+            );
+
+            $("#tbl_impuesto_retencion").append(
+                '<tr>' +
+                '<td>Rete Iva</td>' +
+                '<td>' + totalImpuestos.reteiva.toLocaleString('es-ES', {
+                    minimumFractionDigits: 2
+                }) + '</td>' +
+                '</tr>'
+            );
+
+            retenciones = totalImpuestos.retefuente + totalImpuestos.reteica + totalImpuestos.reteiva;
 
             $('#totales_facturas').html(totales.toLocaleString('es-ES', {
                 minimumFractionDigits: 2

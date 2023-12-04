@@ -210,7 +210,7 @@
                         </div>
                         <div class="d-flex mb-0">
                             <div class="">
-                                <h4 class="mb-1 font-weight-bold">140.907.888,00</h4>
+                                <h4 class="mb-1 font-weight-bold">140.767.188,00</h4>
                             </div>
                             <div class="card-chart bg-purple-transparent brround ms-auto mt-0">
                                 <i class="typcn typcn-time text-purple tx-24"></i>
