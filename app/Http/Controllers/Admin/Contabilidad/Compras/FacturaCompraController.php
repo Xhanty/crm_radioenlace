@@ -545,12 +545,9 @@ class FacturaCompraController extends Controller
             $dia_mora = $request->dia_mora;
 
             $query = DB::table('factura_compra')
-            ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion', 'proveedores.ciudad', 'proveedores.telefono_fijo', 'proveedores.direccion')
-            ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
-            ->orderBy('factura_compra.numero', 'desc'); // Luego consecutivo
-            
-            echo "hola";
-            exit;
+                ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion', 'proveedores.ciudad', 'proveedores.telefono_fijo', 'proveedores.direccion')
+                ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
+                ->orderBy('factura_compra.numero', 'desc'); // luego consecutivo
 
             if ($numero_factura) {
                 $query->where('factura_compra.numero', $numero_factura);
@@ -560,7 +557,7 @@ class FacturaCompraController extends Controller
                 $query->where('factura_compra.proveedor_id', $proveedor);
             }
 
-            if ($estado) {
+            if ($estado != null) {
                 $query->where('factura_compra.status', $estado);
             }
 
@@ -569,7 +566,6 @@ class FacturaCompraController extends Controller
             }
 
             if ($fecha_inicio && $fecha_fin) {
-                echo 1;
                 $query->whereBetween('factura_compra.fecha_elaboracion', [$fecha_inicio, $fecha_fin]);
             }
 
@@ -585,9 +581,6 @@ class FacturaCompraController extends Controller
 
             $facturas = $query->orderBy('factura_compra.numero', 'desc')->get();
 
-            echo json_encode($facturas);
-            exit;
-
             if ($facturas->isEmpty()) {
                 return response()->json(['info' => 1]);
             }
@@ -595,9 +588,7 @@ class FacturaCompraController extends Controller
             // Guardar la consulta en una sesión
             session()->put('facturas_compra_filtro', $facturas);
 
-            
-
-            //return response()->json(['info' => 1, 'facturas' => $facturas]);
+            return response()->json(['info' => 1, 'facturas' => $facturas]);
         } catch (Exception $ex) {
             return $ex;
             return response()->json(['info' => 0]);
