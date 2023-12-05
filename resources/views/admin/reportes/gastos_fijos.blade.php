@@ -56,12 +56,298 @@
                 <div class="card">
                     <div class="card-body iconfont text-start">
                         <div class="d-flex justify-content-between">
-                            <h4 class="card-title mb-3">Gastos Fijos</h4>
+                            <h4 class="card-title mb-3">Gastos De Funcionamiento</h4>
                             <i class="mdi mdi-dots-Vertical"></i>
                         </div>
                         <div class="d-flex mb-0">
                             <div class="">
-                                <h4 class="mb-1 font-weight-bold">62.254.409,00</h4>
+                                <h4 class="mb-1 font-weight-bold">10.037.083,00</h4>
+                            </div>
+                            <div class="card-chart bg-teal-transparent brround ms-auto mt-0 btn_cargos"
+                                style="cursor: pointer;" title="Ver Detalle">
+                                <i class="typcn typcn-chart-bar-outline text-teal tx-20"></i>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-2" style="justify-content: center;">
+                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="card-body iconfont text-start">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="card-title mb-3">Vehículos</h4>
+                            <i class="mdi mdi-dots-Vertical"></i>
+                        </div>
+                        <div class="d-flex mb-0">
+                            <div class="">
+                                <h4 class="mb-1 font-weight-bold">15.603.649,00</h4>
+                            </div>
+                            <div class="card-chart bg-teal-transparent brround ms-auto mt-0 btn_cargos"
+                                style="cursor: pointer;" title="Ver Detalle">
+                                <i class="typcn typcn-chart-bar-outline text-teal tx-20"></i>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-2" style="justify-content: center;">
+                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="card-body iconfont text-start">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="card-title mb-3">Viáticos</h4>
+                            <i class="mdi mdi-dots-Vertical"></i>
+                        </div>
+                        <div class="d-flex mb-0">
+                            <div class="">
+                                <h4 class="mb-1 font-weight-bold">3.812.680,00</h4>
+                            </div>
+                            <div class="card-chart bg-teal-transparent brround ms-auto mt-0 btn_cargos"
+                                style="cursor: pointer;" title="Ver Detalle">
+                                <i class="typcn typcn-chart-bar-outline text-teal tx-20"></i>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-2" style="justify-content: center;">
+                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="card-body iconfont text-start">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="card-title mb-3">Servicios</h4>
+                            <i class="mdi mdi-dots-Vertical"></i>
+                        </div>
+                        <div class="d-flex mb-0">
+                            <div class="">
+                                <h4 class="mb-1 font-weight-bold">5.074.181,00</h4>
+                            </div>
+                            <div class="card-chart bg-teal-transparent brround ms-auto mt-0 btn_cargos"
+                                style="cursor: pointer;" title="Ver Detalle">
+                                <i class="typcn typcn-chart-bar-outline text-teal tx-20"></i>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-2" style="justify-content: center;">
+                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="card-body iconfont text-start">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="card-title mb-3">Seguros</h4>
+                            <i class="mdi mdi-dots-Vertical"></i>
+                        </div>
+                        <div class="d-flex mb-0">
+                            <div class="">
+                                <h4 class="mb-1 font-weight-bold">4.166.131,00</h4>
+                            </div>
+                            <div class="card-chart bg-teal-transparent brround ms-auto mt-0 btn_cargos"
+                                style="cursor: pointer;" title="Ver Detalle">
+                                <i class="typcn typcn-chart-bar-outline text-teal tx-20"></i>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-2" style="justify-content: center;">
+                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="card-body iconfont text-start">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="card-title mb-3">Honorarios</h4>
+                            <i class="mdi mdi-dots-Vertical"></i>
+                        </div>
+                        <div class="d-flex mb-0">
+                            <div class="">
+                                <h4 class="mb-1 font-weight-bold">2.820.000,00</h4>
+                            </div>
+                            <div class="card-chart bg-teal-transparent brround ms-auto mt-0 btn_cargos"
+                                style="cursor: pointer;" title="Ver Detalle">
+                                <i class="typcn typcn-chart-bar-outline text-teal tx-20"></i>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-2" style="justify-content: center;">
+                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="card-body iconfont text-start">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="card-title mb-3">Materiales y respuestos</h4>
+                            <i class="mdi mdi-dots-Vertical"></i>
+                        </div>
+                        <div class="d-flex mb-0">
+                            <div class="">
+                                <h4 class="mb-1 font-weight-bold">800.000,00</h4>
+                            </div>
+                            <div class="card-chart bg-teal-transparent brround ms-auto mt-0 btn_cargos"
+                                style="cursor: pointer;" title="Ver Detalle">
+                                <i class="typcn typcn-chart-bar-outline text-teal tx-20"></i>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-2" style="justify-content: center;">
+                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="card-body iconfont text-start">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="card-title mb-3">Caja General</h4>
+                            <i class="mdi mdi-dots-Vertical"></i>
+                        </div>
+                        <div class="d-flex mb-0">
+                            <div class="">
+                                <h4 class="mb-1 font-weight-bold">863.004,00</h4>
+                            </div>
+                            <div class="card-chart bg-teal-transparent brround ms-auto mt-0 btn_cargos"
+                                style="cursor: pointer;" title="Ver Detalle">
+                                <i class="typcn typcn-chart-bar-outline text-teal tx-20"></i>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-2" style="justify-content: center;">
+                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="card-body iconfont text-start">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="card-title mb-3">Gastos Médicos</h4>
+                            <i class="mdi mdi-dots-Vertical"></i>
+                        </div>
+                        <div class="d-flex mb-0">
+                            <div class="">
+                                <h4 class="mb-1 font-weight-bold">3.729.223,00</h4>
+                            </div>
+                            <div class="card-chart bg-teal-transparent brround ms-auto mt-0 btn_cargos"
+                                style="cursor: pointer;" title="Ver Detalle">
+                                <i class="typcn typcn-chart-bar-outline text-teal tx-20"></i>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-2" style="justify-content: center;">
+                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="card-body iconfont text-start">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="card-title mb-3">Dotación</h4>
+                            <i class="mdi mdi-dots-Vertical"></i>
+                        </div>
+                        <div class="d-flex mb-0">
+                            <div class="">
+                                <h4 class="mb-1 font-weight-bold">898.969,00</h4>
+                            </div>
+                            <div class="card-chart bg-teal-transparent brround ms-auto mt-0 btn_cargos"
+                                style="cursor: pointer;" title="Ver Detalle">
+                                <i class="typcn typcn-chart-bar-outline text-teal tx-20"></i>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-2" style="justify-content: center;">
+                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="card-body iconfont text-start">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="card-title mb-3">Mantenimiento de vehículos</h4>
+                            <i class="mdi mdi-dots-Vertical"></i>
+                        </div>
+                        <div class="d-flex mb-0">
+                            <div class="">
+                                <h4 class="mb-1 font-weight-bold">4.666.666,00</h4>
+                            </div>
+                            <div class="card-chart bg-teal-transparent brround ms-auto mt-0 btn_cargos"
+                                style="cursor: pointer;" title="Ver Detalle">
+                                <i class="typcn typcn-chart-bar-outline text-teal tx-20"></i>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-2" style="justify-content: center;">
+                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="card-body iconfont text-start">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="card-title mb-3">Seguro Empleados</h4>
+                            <i class="mdi mdi-dots-Vertical"></i>
+                        </div>
+                        <div class="d-flex mb-0">
+                            <div class="">
+                                <h4 class="mb-1 font-weight-bold">559.196,00</h4>
+                            </div>
+                            <div class="card-chart bg-teal-transparent brround ms-auto mt-0 btn_cargos"
+                                style="cursor: pointer;" title="Ver Detalle">
+                                <i class="typcn typcn-chart-bar-outline text-teal tx-20"></i>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-2" style="justify-content: center;">
+                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="card-body iconfont text-start">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="card-title mb-3">Arrendamientos</h4>
+                            <i class="mdi mdi-dots-Vertical"></i>
+                        </div>
+                        <div class="d-flex mb-0">
+                            <div class="">
+                                <h4 class="mb-1 font-weight-bold">9.032.260,00</h4>
+                            </div>
+                            <div class="card-chart bg-teal-transparent brround ms-auto mt-0 btn_cargos"
+                                style="cursor: pointer;" title="Ver Detalle">
+                                <i class="typcn typcn-chart-bar-outline text-teal tx-20"></i>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-2" style="justify-content: center;">
+                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="card-body iconfont text-start">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="card-title mb-3">Otros Gastos</h4>
+                            <i class="mdi mdi-dots-Vertical"></i>
+                        </div>
+                        <div class="d-flex mb-0">
+                            <div class="">
+                                <h4 class="mb-1 font-weight-bold">1.791.667,00</h4>
                             </div>
                             <div class="card-chart bg-teal-transparent brround ms-auto mt-0 btn_cargos"
                                 style="cursor: pointer;" title="Ver Detalle">
