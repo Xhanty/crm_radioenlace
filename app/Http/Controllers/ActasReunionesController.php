@@ -88,20 +88,20 @@ class ActasReunionesController extends Controller
                     'fecha' => $item['fecha'],
                 ]);
 
-                /*$asignacion = DB::table("asignaciones")->insertGetId([
+                $asignacion = DB::table("asignaciones")->insertGetId([
                     "id_empleado" => $item['asistente'],
-                    "id_cliente" => $cliente,
-                    "asignacion" => $observaciones[$key] ? $observaciones[$key] : "",
-                    "descripcion" => $observacion_general ? $observacion_general : "",
-                    "fecha" => $fecha_inicio,
-                    "fecha_culminacion" => $fecha_fin,
+                    "id_cliente" => 18,
+                    "asignacion" => $item['compromiso'],
+                    "descripcion" => "Acta de reunión: " . $asunto . " - " . $item['compromiso'],
+                    "fecha" => $item['fecha'],
+                    "fecha_culminacion" => $item['fecha'],
                     "created_by" => session("user"),
                     "status" => 0,
                     "fecha_completada" => null,
                     "visto_bueno" => 0,
                     "devuelta" => 0,
                     "codigo" => $codigo,
-                ]);*/
+                ]);
             }
 
             DB::commit();
