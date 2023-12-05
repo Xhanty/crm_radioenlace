@@ -44,7 +44,7 @@
                 <h4 class="content-title mb-2">CRM | Radio Enlace</h4>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="gastos_fijos/general.xlsx">Reportes</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Reportes</a></li>
                         <li class="breadcrumb-item active" aria-current="page"> Gastos Fijos</li>
                     </ol>
                 </nav>
@@ -69,7 +69,7 @@
                             </div>
                         </div>
                         <div class="d-flex mt-2" style="justify-content: center;">
-                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                            <a href="gastos_fijos/funcionamiento.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
                         </div>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                         </div>
                         <div class="d-flex mb-0">
                             <div class="">
-                                <h4 class="mb-1 font-weight-bold">15.603.649,00</h4>
+                                <h4 class="mb-1 font-weight-bold">16.703.649,00</h4>
                             </div>
                             <div class="card-chart bg-teal-transparent brround ms-auto mt-0 btn_cargos"
                                 style="cursor: pointer;" title="Ver Detalle">
@@ -91,7 +91,7 @@
                             </div>
                         </div>
                         <div class="d-flex mt-2" style="justify-content: center;">
-                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                            <a href="gastos_fijos/vehiculos.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
                         </div>
                     </div>
                 </div>
@@ -113,7 +113,7 @@
                             </div>
                         </div>
                         <div class="d-flex mt-2" style="justify-content: center;">
-                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                            <a href="gastos_fijos/viaticos.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
                         </div>
                     </div>
                 </div>
@@ -135,7 +135,7 @@
                             </div>
                         </div>
                         <div class="d-flex mt-2" style="justify-content: center;">
-                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                            <a href="gastos_fijos/servicios.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
                         </div>
                     </div>
                 </div>
@@ -157,7 +157,7 @@
                             </div>
                         </div>
                         <div class="d-flex mt-2" style="justify-content: center;">
-                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                            <a href="gastos_fijos/seguros.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
                         </div>
                     </div>
                 </div>
@@ -179,7 +179,7 @@
                             </div>
                         </div>
                         <div class="d-flex mt-2" style="justify-content: center;">
-                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                            <a href="gastos_fijos/honorarios.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
                         </div>
                     </div>
                 </div>
@@ -201,7 +201,7 @@
                             </div>
                         </div>
                         <div class="d-flex mt-2" style="justify-content: center;">
-                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                            <a href="gastos_fijos/repuestos_radios.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
                         </div>
                     </div>
                 </div>
@@ -223,7 +223,7 @@
                             </div>
                         </div>
                         <div class="d-flex mt-2" style="justify-content: center;">
-                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                            <a href="gastos_fijos/caja_general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
                         </div>
                     </div>
                 </div>
@@ -245,7 +245,7 @@
                             </div>
                         </div>
                         <div class="d-flex mt-2" style="justify-content: center;">
-                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                            <a href="gastos_fijos/gastos_medicos.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
                         </div>
                     </div>
                 </div>
@@ -267,7 +267,7 @@
                             </div>
                         </div>
                         <div class="d-flex mt-2" style="justify-content: center;">
-                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                            <a href="gastos_fijos/dotacion.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
                         </div>
                     </div>
                 </div>
@@ -289,7 +289,7 @@
                             </div>
                         </div>
                         <div class="d-flex mt-2" style="justify-content: center;">
-                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                            <a href="gastos_fijos/mantenimientos_vehiculos.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
                         </div>
                     </div>
                 </div>
@@ -311,7 +311,7 @@
                             </div>
                         </div>
                         <div class="d-flex mt-2" style="justify-content: center;">
-                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                            <a href="gastos_fijos/seguro_empleados.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
                         </div>
                     </div>
                 </div>
@@ -333,7 +333,7 @@
                             </div>
                         </div>
                         <div class="d-flex mt-2" style="justify-content: center;">
-                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                            <a href="gastos_fijos/arrendamientos.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
                         </div>
                     </div>
                 </div>
@@ -355,7 +355,7 @@
                             </div>
                         </div>
                         <div class="d-flex mt-2" style="justify-content: center;">
-                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
+                            <a href="gastos_fijos/otros.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
                         </div>
                     </div>
                 </div>
@@ -381,27 +381,6 @@
                     </div>
                 </div>
             </div>
-            <!--<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                <div class="card">
-                    <div class="card-body iconfont text-start">
-                        <div class="d-flex justify-content-between">
-                            <h4 class="card-title mb-3">Viáticos</h4>
-                            <i class="mdi mdi-dots-Vertical"></i>
-                        </div>
-                        <div class="d-flex mb-0">
-                            <div class="">
-                                <h4 class="mb-1 font-weight-bold">0</h4>
-                            </div>
-                            <div class="card-chart bg-purple-transparent brround ms-auto mt-0">
-                                <i class="typcn typcn-time text-purple tx-24"></i>
-                            </div>
-                        </div>
-                        <div class="d-flex mt-2" style="justify-content: center;">
-                            <a href="gastos_fijos/general.xlsx" class="btn btn-primary mt-3">Ver Detalle</a>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
         </div>
         <!-- row closed -->
     </div>
