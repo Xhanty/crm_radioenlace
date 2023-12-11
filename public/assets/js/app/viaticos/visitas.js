@@ -14,6 +14,7 @@ $(function () {
         let tecnicos = $("#tecnicos_add").val();
         let salida = $("#salida_add").val();
         let llegada = $("#llegada_add").val();
+        let km_salida = $("#km_salida_add").val();
         let observaciones = $("#observaciones_add").val();
 
         // Validaciones
@@ -57,6 +58,11 @@ $(function () {
             return;
         }
 
+        if (km_salida <= 0) {
+            toastr.error("Falta información: Kilometraje de salida");
+            return;
+        }
+
         $.ajax({
             type: "POST",
             url: "visitas_viaticos_add",
@@ -69,6 +75,7 @@ $(function () {
                 tecnicos: tecnicos,
                 salida: salida,
                 llegada: llegada,
+                km_salida: km_salida,
                 observaciones: observaciones,
             },
             dataType: "json",
@@ -117,6 +124,8 @@ $(function () {
                     .trigger("change");
                 $("#salida_view").val(response.data.fecha_salida);
                 $("#llegada_view").val(response.data.fecha_llegada);
+                $("#km_salida_view").val(response.data.km_salida);
+                $("#km_llegada_view").val(response.data.km_llegada);
                 $("#observaciones_view").val(response.data.observaciones);
 
                 $("#modalView").modal("show");
@@ -156,6 +165,8 @@ $(function () {
                     .trigger("change");
                 $("#salida_edit").val(response.data.fecha_salida);
                 $("#llegada_edit").val(response.data.fecha_llegada);
+                $("#km_salida_edit").val(response.data.km_salida);
+                $("#km_llegada_edit").val(response.data.km_llegada);
                 $("#observaciones_edit").val(response.data.observaciones);
 
                 $("#modalEdit").modal("show");
@@ -256,6 +267,8 @@ $(function () {
         let tecnicos = $("#tecnicos_edit").val();
         let salida = $("#salida_edit").val();
         let llegada = $("#llegada_edit").val();
+        let km_salida = $("#km_salida_edit").val();
+        let km_llegada = $("#km_llegada_edit").val();
         let observaciones = $("#observaciones_edit").val();
 
         // Validaciones
@@ -299,6 +312,11 @@ $(function () {
             return;
         }
 
+        if (km_salida <= 0) {
+            toastr.error("Falta información: Kilometraje de salida");
+            return;
+        }
+
         $.ajax({
             type: "POST",
             url: "visitas_viaticos_edit",
@@ -312,6 +330,8 @@ $(function () {
                 tecnicos: tecnicos,
                 salida: salida,
                 llegada: llegada,
+                km_salida: km_salida,
+                km_llegada: km_llegada,
                 observaciones: observaciones,
             },
             dataType: "json",

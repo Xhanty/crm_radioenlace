@@ -510,8 +510,8 @@
                                     class="side-menu__label">Viáticos</span><i
                                     class="angle fe fe-chevron-down"></i></a>
                             <ul class="slide-menu">
-                                <li><a class="slide-item" href="{{ route('config_viaticos') }}">Configuración</a>
-                                </li>
+                                <!--<li><a class="slide-item" href="{{ route('config_viaticos') }}">Configuración</a>
+                                </li>-->
                                 <li><a class="slide-item" href="{{ route('visitas_viaticos') }}">Visitas</a>
                                 </li>
                                 <li><a class="slide-item" href="{{ route('viaticos') }}">Viáticos</a>

@@ -78,6 +78,7 @@ class VisitasController extends Controller
             'fecha_creacion' => date('Y-m-d H:i:s'),
             'fecha_salida' => $request->input('salida'),
             'fecha_llegada' => $request->input('llegada'),
+            'km_salida' => $request->input('km_salida'),
             'observaciones' => $request->input('observaciones'),
             'status' => 0,
             'created_by' => auth()->user()->id
@@ -105,6 +106,8 @@ class VisitasController extends Controller
                 'tecnicos' => $tecnicos,   // Almacena la cadena JSON serializada
                 'fecha_salida' => $request->input('salida'),
                 'fecha_llegada' => $request->input('llegada'),
+                'km_salida' => $request->input('km_salida'),
+                'km_llegada' => $request->input('km_llegada'), // Se agrega el campo 'km_llegada
                 'observaciones' => $request->input('observaciones'),
             ]);
 

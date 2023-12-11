@@ -237,6 +237,17 @@
                         <br>
                         <div class="row row-sm">
                             <div class="col-lg">
+                                <label for="">KM Salida</label>
+                                <input id="km_salida_add" class="form-control" placeholder="KM Salida" type="number">
+                            </div>
+                            <div class="col-lg">
+                                <label for="">KM Llegada</label>
+                                <input disabled class="form-control" placeholder="KM Llegada" type="number">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
                                 <label for="">Observaciones</label>
                                 <textarea id="observaciones_add" class="form-control" placeholder="Observaciones" rows="3"></textarea>
                             </div>
@@ -339,6 +350,17 @@
                         <br>
                         <div class="row row-sm">
                             <div class="col-lg">
+                                <label for="">KM Salida</label>
+                                <input disabled id="km_salida_view" class="form-control" placeholder="KM Salida" type="number">
+                            </div>
+                            <div class="col-lg">
+                                <label for="">KM Llegada</label>
+                                <input disabled id="km_llegada_view" class="form-control" placeholder="KM Llegada" type="number">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
                                 <label for="">Observaciones</label>
                                 <textarea id="observaciones_view" disabled class="form-control" placeholder="Observaciones" rows="3"></textarea>
                             </div>
@@ -431,6 +453,17 @@
                             <div class="col-lg">
                                 <label for="">Llegada</label>
                                 <input id="llegada_edit" class="form-control" placeholder="Llegada" type="date">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="">KM Salida</label>
+                                <input id="km_salida_edit" class="form-control" placeholder="KM Salida" type="number">
+                            </div>
+                            <div class="col-lg">
+                                <label for="">KM Llegada</label>
+                                <input id="km_llegada_edit" class="form-control" placeholder="KM Llegada" type="number">
                             </div>
                         </div>
                         <br>
