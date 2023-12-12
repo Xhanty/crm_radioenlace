@@ -42,7 +42,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($visitas_pendientes as $value)
+                                    @foreach ($viaticos_pendientes as $value)
                                         <tr>
                                             <td class="text-center">{{ $value->consecutivo }}</td>
                                             <td class="text-center">{{ $value->razon_social }}</td>
@@ -101,7 +101,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($visitas_pendientes as $value)
+                                    @foreach ($viaticos_completados as $value)
                                         <tr>
                                             <td class="text-center">{{ $value->consecutivo }}</td>
                                             <td class="text-center">{{ $value->razon_social }}</td>
@@ -133,6 +133,70 @@
                             data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
+                        <div class="row row-sm">
+                            <label for="">Visita</label>
+                            <select class="form-select" id="visita_id">
+                                <option value="">Seleccione</option>
+                                @foreach ($visitas_pendientes as $value)
+                                    <option value="{{ $value->id }}">{{ $value->consecutivo }} -
+                                        {{ $value->razon_social }} ({{ $value->destino }})</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <label for="">Alimentación</label>
+                            <div class="col-lg" style="display: flex">
+                                <select class="form-select alimentacionadd">
+                                    <option value="">Seleccione</option>
+                                    <option value="1">Desayuno</option>
+                                    <option value="2">Almuerzo</option>
+                                    <option value="3">Comida</option>
+                                </select>
+                                <input class="form-control valoralimentacionadd" placeholder="Valor" type="number"
+                                    style="margin-left: 12px; margin-right: 12px">
+                                <input class="form-control fechaalimentacionadd" placeholder="Fecha" type="date">
+                                <a class="center-vertical mg-s-10" href="javascript:void(0)" id="new_row_alimentacion"><i
+                                        class="fa fa-plus"></i></a>
+                            </div>
+                            <div id="div_list_alimentacion"></div>
+                        </div>
+                        <br>
+                        <hr>
+                        <div class="row row-sm">
+                            <label for="">Movilidad y estadía</label>
+                            <div class="col-lg" style="display: flex">
+                                <select class="form-select movilidadadd">
+                                    <option value="">Seleccione</option>
+                                    <option value="1">Peajes</option>
+                                    <option value="2">Alojamiento</option>
+                                    <option value="3">Combustible</option>
+                                    <option value="4">Bestia</option>
+                                    <option value="5">Taxi</option>
+                                    <option value="6">Bus</option>
+                                </select>
+                                <input class="form-control idamovilidadadd" placeholder="Valor Ida" type="number"
+                                    style="margin-left: 12px; margin-right: 12px">
+                                <input class="form-control vueltamovilidadadd" placeholder="Valor Vuelta" type="number">
+                                <a class="center-vertical mg-s-10" href="javascript:void(0)" id="new_row_movilidad"><i
+                                        class="fa fa-plus"></i></a>
+                            </div>
+                            <div id="div_list_movilidad"></div>
+                        </div>
+                        <br>
+                        <hr>
+                        <div class="row row-sm">
+                            <label for="">Gastos adicionales</label>
+                            <div class="col-lg" style="display: flex">
+                                <input class="form-control referenciagastosadd" placeholder="Referencia" type="text">
+                                <input class="form-control valorgastosadd" placeholder="Valor" type="number"
+                                    style="margin-left: 12px; margin-right: 12px">
+                                <input class="form-control observaciongastosadd" placeholder="Observación" type="text">
+                                <a class="center-vertical mg-s-10" href="javascript:void(0)" id="new_row_gastos"><i
+                                        class="fa fa-plus"></i></a>
+                            </div>
+                            <div id="div_list_gastos"></div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button class="btn ripple btn-primary" id="btnGuardarViatico" type="button">Guardar</button>
@@ -142,16 +206,14 @@
         </div>
 
         <!-- Modal View -->
-        <div class="modal  fade" id="modalView">
+        <div class="modal fade" id="modalView">
             <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
                         <h6 class="modal-title">Ver viático</h6><button aria-label="Close" class="btn-close"
                             data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                     </div>
-                    <div class="modal-body">
-                        
-                    </div>
+                    <div class="modal-body"></div>
                 </div>
             </div>
         </div>
@@ -166,7 +228,6 @@
                     </div>
                     <div class="modal-body">
                         <input type="hidden" id="id_edit">
-                        
                     </div>
                     <div class="modal-footer">
                         <button class="btn ripple btn-primary" id="btnEditViatico" type="button">Modificar</button>
