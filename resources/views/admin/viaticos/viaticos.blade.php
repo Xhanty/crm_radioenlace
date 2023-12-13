@@ -45,9 +45,19 @@
                                     @foreach ($viaticos_pendientes as $value)
                                         <tr>
                                             <td class="text-center">{{ $value->consecutivo }}</td>
-                                            <td class="text-center">{{ $value->razon_social }}</td>
-                                            <td class="text-center">{{ $value->destino }}</td>
-                                            <td class="text-center">{{ $value->encargado }}</td>
+                                            <td class="text-center">
+                                                {{ $value->cs . ' - ' . $value->razon_social . ' (' . $value->destino . ')' }}
+                                            </td>
+                                            <td class="text-center">{{ number_format($value->valor, 0, ',', '.') }}</td>
+                                            <td class="text-center">
+                                                @if ($value->status == 0)
+                                                    <span class="badge bg-warning side-badge">Pendiente</span>
+                                                @elseif($value->status == 1)
+                                                    <span class="badge bg-success side-badge">Aprobado</span>
+                                                @else
+                                                    <span class="badge bg-danger side-badge">Rechazado</span>
+                                                @endif
+                                            </td>
                                             <td class="text-center">
                                                 <button title="Ver" class="btn btn-primary btn-sm btnView"
                                                     data-id="{{ $value->id }}">
@@ -104,9 +114,19 @@
                                     @foreach ($viaticos_completados as $value)
                                         <tr>
                                             <td class="text-center">{{ $value->consecutivo }}</td>
-                                            <td class="text-center">{{ $value->razon_social }}</td>
-                                            <td class="text-center">{{ $value->destino }}</td>
-                                            <td class="text-center">{{ $value->encargado }}</td>
+                                            <td class="text-center">
+                                                {{ $value->cs . ' - ' . $value->razon_social . ' (' . $value->destino . ')' }}
+                                            </td>
+                                            <td class="text-center">{{ number_format($value->valor, 0, ',', '.') }}</td>
+                                            <td class="text-center">
+                                                @if ($value->status == 0)
+                                                    <span class="badge bg-warning side-badge">Pendiente</span>
+                                                @elseif($value->status == 1)
+                                                    <span class="badge bg-success side-badge">Aprobado</span>
+                                                @else
+                                                    <span class="badge bg-danger side-badge">Rechazado</span>
+                                                @endif
+                                            </td>
                                             <td class="text-center">
                                                 <button title="Ver" class="btn btn-primary btn-sm btnView"
                                                     data-id="{{ $value->id }}">
@@ -191,7 +211,8 @@
                                 <input class="form-control referenciagastosadd" placeholder="Referencia" type="text">
                                 <input class="form-control valorgastosadd" placeholder="Valor" type="number"
                                     style="margin-left: 12px; margin-right: 12px">
-                                <input class="form-control observaciongastosadd" placeholder="Observación" type="text">
+                                <input class="form-control observaciongastosadd" placeholder="Observación"
+                                    type="text">
                                 <a class="center-vertical mg-s-10" href="javascript:void(0)" id="new_row_gastos"><i
                                         class="fa fa-plus"></i></a>
                             </div>
@@ -213,7 +234,35 @@
                         <h6 class="modal-title">Ver viático</h6><button aria-label="Close" class="btn-close"
                             data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                     </div>
-                    <div class="modal-body"></div>
+                    <div class="modal-body">
+                        <div class="row row-sm">
+                            <label for="">Visita</label>
+                            <select class="form-select" disabled id="visita_id_view">
+                                <option value="">Seleccione</option>
+                                @foreach ($visitas_pendientes as $value)
+                                    <option value="{{ $value->id }}">{{ $value->consecutivo }} -
+                                        {{ $value->razon_social }} ({{ $value->destino }})</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <label for="">Alimentación</label>
+                            <div id="div_list_alimentacion_view"></div>
+                        </div>
+                        <br>
+                        <hr>
+                        <div class="row row-sm">
+                            <label for="">Movilidad y estadía</label>
+                            <div id="div_list_movilidad_view"></div>
+                        </div>
+                        <br>
+                        <hr>
+                        <div class="row row-sm">
+                            <label for="">Gastos adicionales</label>
+                            <div id="div_list_gastos_view"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -228,6 +277,33 @@
                     </div>
                     <div class="modal-body">
                         <input type="hidden" id="id_edit">
+                        <div class="row row-sm">
+                            <label for="">Visita</label>
+                            <select class="form-select" id="visita_id_edit">
+                                <option value="">Seleccione</option>
+                                @foreach ($visitas_pendientes as $value)
+                                    <option value="{{ $value->id }}">{{ $value->consecutivo }} -
+                                        {{ $value->razon_social }} ({{ $value->destino }})</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <label for="">Alimentación</label>
+                            <div id="div_list_alimentacion_edit"></div>
+                        </div>
+                        <br>
+                        <hr>
+                        <div class="row row-sm">
+                            <label for="">Movilidad y estadía</label>
+                            <div id="div_list_movilidad_edit"></div>
+                        </div>
+                        <br>
+                        <hr>
+                        <div class="row row-sm">
+                            <label for="">Gastos adicionales</label>
+                            <div id="div_list_gastos_edit"></div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button class="btn ripple btn-primary" id="btnEditViatico" type="button">Modificar</button>
