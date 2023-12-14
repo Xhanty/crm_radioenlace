@@ -335,7 +335,10 @@
                                                 href="{{ route('configuracion_contabilidad') }}">Configuración</a>
                                         </li>
                                         <li><a class="slide-item"
-                                                href="{{ route('conciliacion_bancaria') }}">Conciliación Bancaría</a>
+                                            href="{{ route('conciliacion_bancaria') }}">Conciliación Bancaría</a>
+                                        </li>
+                                        <li><a class="slide-item"
+                                            href="{{ route('comprobantes_contables') }}">Comprobantes Contables</a>
                                         </li>
                                     @endif
                                     @if (auth()->user()->hasPermissionToMultiple(
