@@ -38,36 +38,22 @@ class ViaticosController extends Controller
                 ->where('viaticos.status', '>', 0)
                 ->get();
 
-            return view('admin.viaticos.viaticos', compact('visitas_pendientes', 'viaticos_pendientes', 'viaticos_completados'));
+            $formas_pago = DB::table('configuracion_puc')
+                ->select('id', 'code', 'nombre')
+                ->where('status', 1)
+                ->where('forma_pago', 1)
+                ->whereRaw('LENGTH(code) = 8')
+                ->get();
+
+            $empleados = DB::table('empleados')
+                ->select('id', 'nombre')
+                ->where('status', 1)
+                ->get();
+
+            return view('admin.viaticos.viaticos', compact('visitas_pendientes', 'viaticos_pendientes', 'viaticos_completados', 'formas_pago', 'empleados'));
         } catch (Exception $ex) {
             return $ex->getMessage();
             return view('errors.500');
-        }
-    }
-
-    public function aprobar($id)
-    {
-        try {
-            DB::table('viaticos')
-                ->where('id', $id)
-                ->update(['status' => 1]);
-
-            return response()->json(['info' => 1]);
-        } catch (Exception $ex) {
-            return response()->json(['info' => 0]);
-        }
-    }
-
-    public function rechazar($id)
-    {
-        try {
-            DB::table('viaticos')
-                ->where('id', $id)
-                ->update(['status' => 2]);
-
-            return response()->json(['info' => 1]);
-        } catch (Exception $ex) {
-            return response()->json(['info' => 0]);
         }
     }
 
@@ -152,6 +138,43 @@ class ViaticosController extends Controller
             $viatico->otros = json_decode($viatico->otros);
 
             return response()->json(['info' => 1, 'data' => $viatico]);
+        } catch (Exception $ex) {
+            return response()->json(['info' => 0]);
+        }
+    }
+
+    public function accept(Request $request)
+    {
+        try {
+            $data = $request->all();
+
+            $viatico = DB::table('viaticos')
+                ->where('id', $data['id'])
+                ->update([
+                    'status' => 1,
+                    'forma_pago' => $data['forma_pago'],
+                    //'observaciones' => $data['observaciones'],
+                ]);
+
+            return response()->json(['info' => 1]);
+        } catch (Exception $ex) {
+            return response()->json(['info' => 0]);
+        }
+    }
+
+    public function reject(Request $request)
+    {
+        try {
+            $data = $request->all();
+
+            $viatico = DB::table('viaticos')
+                ->where('id', $data['id'])
+                ->update([
+                    'status' => 2,
+                    //'observaciones' => $data['observaciones'],
+                ]);
+
+            return response()->json(['info' => 1]);
         } catch (Exception $ex) {
             return response()->json(['info' => 0]);
         }

@@ -481,12 +481,14 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/visitas_viaticos_edit', [App\Http\Controllers\Admin\Viaticos\VisitasController::class, 'edit'])->name('visitas_viaticos_edit');
     Route::post('/visitas_viaticos_completar', [App\Http\Controllers\Admin\Viaticos\VisitasController::class, 'completar'])->name('visitas_viaticos_completar');
     Route::post('/visitas_viaticos_delete', [App\Http\Controllers\Admin\Viaticos\VisitasController::class, 'delete'])->name('visitas_viaticos_delete');
-
+    
     Route::get('/viaticos', [App\Http\Controllers\Admin\Viaticos\ViaticosController::class, 'index'])->name('viaticos');
     Route::post('/viaticos_add', [App\Http\Controllers\Admin\Viaticos\ViaticosController::class, 'add'])->name('viaticos_add');
     Route::post('/viaticos_data', [App\Http\Controllers\Admin\Viaticos\ViaticosController::class, 'data'])->name('viaticos_data');
     Route::post('/viaticos_edit', [App\Http\Controllers\Admin\Viaticos\ViaticosController::class, 'edit'])->name('viaticos_edit');
     Route::post('/viaticos_delete', [App\Http\Controllers\Admin\Viaticos\ViaticosController::class, 'delete'])->name('viaticos_delete');
+    Route::post('/viaticos_accept', [App\Http\Controllers\Admin\Viaticos\ViaticosController::class, 'accept'])->name('viaticos_accept');
+    Route::post('/viaticos_reject', [App\Http\Controllers\Admin\Viaticos\ViaticosController::class, 'reject'])->name('viaticos_reject');
 });
 
 // RUTAS PARA EL CANVA ASIGNACION DE TAREAS (PROYECTOS)

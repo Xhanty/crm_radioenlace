@@ -36,6 +36,7 @@
                                     <tr>
                                         <th class="text-center">#</th>
                                         <th class="text-center">Visita</th>
+                                        <th class="text-center">Encargado</th>
                                         <th class="text-center">Valor</th>
                                         <th class="text-center">Estado</th>
                                         <th class="text-center">Acciones</th>
@@ -48,6 +49,7 @@
                                             <td class="text-center">
                                                 {{ $value->cs . ' - ' . $value->razon_social . ' (' . $value->destino . ')' }}
                                             </td>
+                                            <td class="text-center">{{ $value->encargado }}</td>
                                             <td class="text-center">{{ number_format($value->valor, 0, ',', '.') }}</td>
                                             <td class="text-center">
                                                 @if ($value->status == 0)
@@ -66,6 +68,15 @@
                                                 <button title="Modificar" class="btn btn-warning btn-sm btnEdit"
                                                     data-id="{{ $value->id }}">
                                                     <i class="fa fa-pencil-alt"></i> Modificar
+                                                </button>
+                                                <br>
+                                                <button title="Aceptar" class="btn btn-success btn-sm btnAceptar mt-1"
+                                                    data-valor="{{ $value->valor }}" data-id="{{ $value->id }}" data-tercero="{{ $value->cretead_by }}">
+                                                    <i class="fa fa-check"></i> Aceptar
+                                                </button>
+                                                <button title="Rechazar" class="btn btn-danger btn-sm btnRechazar mt-1"
+                                                    data-id="{{ $value->id }}">
+                                                    <i class="fa fa-times"></i> Rechazar
                                                 </button>
                                                 <br>
                                                 <button title="Eliminar" class="btn btn-danger btn-sm btnDelete mt-1"
@@ -105,6 +116,7 @@
                                     <tr>
                                         <th class="text-center">#</th>
                                         <th class="text-center">Visita</th>
+                                        <th class="text-center">Encargado</th>
                                         <th class="text-center">Valor</th>
                                         <th class="text-center">Estado</th>
                                         <th class="text-center">Acciones</th>
@@ -117,14 +129,15 @@
                                             <td class="text-center">
                                                 {{ $value->cs . ' - ' . $value->razon_social . ' (' . $value->destino . ')' }}
                                             </td>
+                                            <td class="text-center">{{ $value->encargado }}</td>
                                             <td class="text-center">{{ number_format($value->valor, 0, ',', '.') }}</td>
                                             <td class="text-center">
-                                                @if ($value->status == 0)
+                                                @if ($value->status == 1)
                                                     <span class="badge bg-warning side-badge">Pendiente</span>
-                                                @elseif($value->status == 1)
-                                                    <span class="badge bg-success side-badge">Aprobado</span>
-                                                @else
+                                                @elseif($value->status == 2)
                                                     <span class="badge bg-danger side-badge">Rechazado</span>
+                                                @elseif($value->status == 3)
+                                                    <span class="badge bg-success side-badge">Legalizado</span>
                                                 @endif
                                             </td>
                                             <td class="text-center">
@@ -132,6 +145,12 @@
                                                     data-id="{{ $value->id }}">
                                                     <i class="fa fa-eye"></i> Ver
                                                 </button>
+                                                @if ($value->status == 1)
+                                                    <button title="Legalizar" class="btn btn-success btn-sm btnLegalizar"
+                                                        data-id="{{ $value->id }}">
+                                                        <i class="fa fa-check"></i> Legalizar
+                                                    </button>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -307,6 +326,96 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn ripple btn-primary" id="btnEditViatico" type="button">Modificar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Aceptar -->
+        <div class="modal  fade" id="modalAceptar">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Aceptar viático</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="id_aceptar">
+                        <div class="row row-sm">
+                            <div class="col">
+                                <label for="">Tercero</label>
+                                <select class="form-select" id="tercero_aceptar" disabled>
+                                    <option value="">Seleccione una opción</option>
+                                    @foreach ($empleados as $empleado)
+                                        <option value="{{ $empleado->id }}">{{ $empleado->nombre }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label for="">Valor</label>
+                                <input type="number" class="form-control" id="valor_aceptar" disabled>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <label for="">De donde sale el dinero</label>
+                            <select class="form-select" id="formas_pago_aceptar">
+                                <option value="">Seleccione una opción</option>
+                                @foreach ($formas_pago as $forma_pago)
+                                    <option value="{{ $forma_pago->id }}">{{ $forma_pago->code }} |
+                                        {{ $forma_pago->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" id="btnAceptarViatico" type="button">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Legalizar -->
+        <div class="modal fade" id="modalLegalizar">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Legalizar viático</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="id_legalizar">
+                        <div class="row row-sm">
+                            <label for="">Visita</label>
+                            <select class="form-select" disabled id="visita_id_legalizar">
+                                <option value="">Seleccione</option>
+                                @foreach ($visitas_pendientes as $value)
+                                    <option value="{{ $value->id }}">{{ $value->consecutivo }} -
+                                        {{ $value->razon_social }} ({{ $value->destino }})</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <label for="">Alimentación</label>
+                            <div id="div_list_alimentacion_legalizar"></div>
+                        </div>
+                        <br>
+                        <hr>
+                        <div class="row row-sm">
+                            <label for="">Movilidad y estadía</label>
+                            <div id="div_list_movilidad_legalizar"></div>
+                        </div>
+                        <br>
+                        <hr>
+                        <div class="row row-sm">
+                            <label for="">Gastos adicionales</label>
+                            <div id="div_list_gastos_legalizar"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" id="btnLegalizarViatico" type="button">Legalizar</button>
                     </div>
                 </div>
             </div>
