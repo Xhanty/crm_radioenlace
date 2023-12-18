@@ -539,10 +539,13 @@
                                                     href="{{ route('reporte_compras') }}">Compras</a>
                                             </li>
                                             <li><a class="sub-side-menu__item"
+                                                href="{{ route('reporte_ventas') }}">Ventas</a>
+                                            </li>
+                                            <li><a class="sub-side-menu__item"
                                                     href="{{ route('reporte_gastos_fijos') }}">Gastos Fijos</a>
                                             </li>
                                             <li><a class="sub-side-menu__item"
-                                                    href="{{ route('reporte_ventas') }}">Ventas</a>
+                                                href="{{ route('reporte_resultado_integral') }}">Estado de resultado integral</a>
                                             </li>
                                         </ul>
                                     </li>

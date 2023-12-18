@@ -277,6 +277,8 @@ Route::middleware(['auth_user'])->group(function () {
 
     // COMPROBANTES CONTABLES
     Route::get('/comprobantes_contables', [App\Http\Controllers\Admin\Contabilidad\ComprobantesContablesController::class, 'index'])->name('comprobantes_contables');
+    Route::post('/comprobantes_contables_add', [App\Http\Controllers\Admin\Contabilidad\ComprobantesContablesController::class, 'add'])->name('comprobantes_contables_add');
+    Route::get('/reporte_resultado_integral', [App\Http\Controllers\Admin\Contabilidad\ComprobantesContablesController::class, 'reporte_resultado_integral'])->name('reporte_resultado_integral');
 
     // ORGANIZACIÓN
     Route::post('/edit_organizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_organizacion'])->name('edit_organizacion');

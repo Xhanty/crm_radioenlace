@@ -58,13 +58,13 @@
                 <div class="card">
                     <div class="card-header d-flex-header-table">
                         <div class="div-1-tables-header">
-                            <h3 class="card-title mt-2">Listado de comprobantes contables</h3>
+                            <h3 class="card-title mt-2">Comprobantes contables</h3>
                         </div>
                         <div class="div-2-tables-header">
                             <button class="btn btn-primary" data-bs-target="#modalAdd" data-bs-toggle="modal"
                                 data-bs-effect="effect-scale">Nuevo Comprobante</button>
 
-                            <a href="{{ route('excel_factura_venta') }}" style="margin-right: 10px">
+                            <!--<a href="{{ route('excel_factura_venta') }}" style="margin-right: 10px">
                                 <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="34" height="34"
                                     viewBox="0 0 48 48">
                                     <path fill="#4CAF50"
@@ -99,7 +99,7 @@
                                         <polygon style="fill:#D1D3D3;" points="219.821,50.525 270.346,50.525 219.821,0  " />
                                     </g>
                                 </svg>
-                            </a>
+                            </a>-->
                         </div>
                     </div>
                     <div class="card-body">
@@ -107,15 +107,44 @@
                             <table class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
                                 <thead>
                                     <tr>
-                                        <th class="wd-20p border-bottom-0">Elaborada Por</th>
-                                        <th class="wd-20p border-bottom-0">Mes</th>
-                                        <th class="wd-15p border-bottom-0">Año</th>
-                                        <th class="wd-15p border-bottom-0">Saldo Final</th>
-                                        <th class="wd-15p border-bottom-0">Acciones</th>
+                                        <th class="wd-20p border-bottom-0">Comprobante</th>
+                                        <th class="wd-20p border-bottom-0">Descripción</th>
+                                        <th class="wd-20p border-bottom-0">Fecha</th>
+                                        <th class="wd-15p border-bottom-0">Tercero</th>
+                                        <th class="wd-15p border-bottom-0">Débito</th>
+                                        <th class="wd-15p border-bottom-0">Crédito</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        $total_debito = 0;
+                                        $total_credito = 0;
+                                    @endphp
+                                    @foreach ($comprobantes as $comprobante)
+                                        <tr>
+                                            <td>{{ $comprobante->tipo }} ({{ $comprobante->consecutivo_comprobante }})</td>
+                                            <td>{{ $comprobante->descripcion }}</td>
+                                            <td>{{ date('d-m-Y', strtotime($comprobante->fecha_elaboracion)) }}</td>
+                                            <td>{{ $comprobante->identificacion_tercero }}</td>
+                                            <td>{{ number_format($comprobante->debito, 2, ',', '.') }}</td>
+                                            <td>{{ number_format($comprobante->credito, 2, ',', '.') }}</td>
+                                        </tr>
+                                        @php
+                                            $total_debito += $comprobante->debito;
+                                            $total_credito += $comprobante->credito;
+                                        @endphp
+                                    @endforeach
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th class="wd-20p border-bottom-0"></th>
+                                        <th class="wd-20p border-bottom-0"></th>
+                                        <th class="wd-20p border-bottom-0"></th>
+                                        <th class="wd-15p border-bottom-0"></th>
+                                        <th class="wd-15p border-bottom-0">{{ number_format($total_debito, 2, ',', '.') }}</th>
+                                        <th class="wd-15p border-bottom-0">{{ number_format($total_credito, 2, ',', '.') }}</th>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -124,86 +153,15 @@
         </div>
         <!-- End Row -->
 
-        <div class="row row-sm d-none" id="show_content_excel">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-header d-flex-header-table">
-                        <div class="div-1-tables-header">
-                            <h3 class="card-title mt-2">Listado desde el excel</h3>
-                        </div>
-                        <div class="div-2-tables-header">
-                            <a class="btn btn-primary" id="newRowAdd">Añadir</a>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <!-- basic-datatable-t -->
-                            <table class="table border-top-0 table-bordered text-nowrap border-bottom" id="excelTable">
-                                <thead>
-                                    <tr>
-                                        <th>Fecha</th>
-                                        <th>Descripción</th>
-                                        <th>Debito</th>
-                                        <th>Crédito</th>
-                                        <th>Saldo</th>
-                                        <th>Dcto.</th>
-                                        <th>Nota</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                            <br>
-                            <div class="text-center d-flex">
-                                <div class="col-lg">
-                                    <a class="btn btn-warning" href="{{ route('conciliacion_bancaria') }}">Regresar</a>
-                                </div>
-                                <div class="col-lg">
-                                    <button class="btn btn-primary" id="btnGuardarExcel">Guardar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
         <!-- Modal Add -->
         <div class="modal  fade" id="modalAdd">
             <div class="modal-dialog" role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
-                        <h6 class="modal-title">Nueva Conciliación</h6><button aria-label="Close" class="btn-close"
+                        <h6 class="modal-title">Nuevos Comprobantes</h6><button aria-label="Close" class="btn-close"
                             data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
-                        <div class="row row-sm">
-                            <div class="col-lg">
-                                <label for="">Mes</label>
-                                <select class="form-select" id="mesadd">
-                                    <option value="0">Seleccione</option>
-                                    <option value="1">Enero</option>
-                                    <option value="2">Febrero</option>
-                                    <option value="3">Marzo</option>
-                                    <option value="4">Abril</option>
-                                    <option value="5">Mayo</option>
-                                    <option value="6">Junio</option>
-                                    <option value="7">Julio</option>
-                                    <option value="8" selected>Agosto</option>
-                                    <option value="9">Septiembre</option>
-                                    <option value="10">Octubre</option>
-                                    <option value="11">Noviembre</option>
-                                    <option value="12">Diciembre</option>
-                                </select>
-                            </div>
-                            <div class="col-lg">
-                                <label for="">Año</label>
-                                <input class="form-control" id="anioadd" placeholder="Año de la conciliación"
-                                    type="number" value="2023">
-                            </div>
-                        </div>
-                        <br>
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Documento (.xlsx) - (Opcional)</label>
@@ -212,7 +170,7 @@
                         </div>
                         <br>
                         <div class="text-center">
-                            <a target="_blank" href="{{ asset('FormatoConciliacion.xlsx') }}">Descargar formato</a>
+                            <a target="_blank" href="{{ asset('comprobantes_contables.xlsx') }}">Descargar formato</a>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -272,12 +230,10 @@
         </div>
     </div>
 
-    <a href="javascript:void(0);" class="btn-flotante" data-bs-target="#modalSelectFilter" data-bs-toggle="modal"
-        data-bs-effect="effect-scale">Filtros</a>
+    <!--<a href="javascript:void(0);" class="btn-flotante" data-bs-target="#modalSelectFilter" data-bs-toggle="modal"
+        data-bs-effect="effect-scale">Filtros</a>-->
 @endsection
 
 @section('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.2/xlsx.full.min.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js'></script>
-    <script src="{{ asset('assets/js/app/contabilidad/conciliacion_bancaria.js') }}"></script>
+    <script src="{{ asset('assets/js/app/contabilidad/comprobantes_contables.js') }}"></script>
 @endsection
