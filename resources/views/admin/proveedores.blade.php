@@ -54,7 +54,8 @@
                                 <tbody>
                                     @foreach ($proveedores as $item)
                                         <tr>
-                                            <td class="d-flex" style="justify-content: center;"><img src="{{ asset('images/proveedores/' . $item->avatar) }}" alt="img"
+                                            <td class="d-flex" style="justify-content: center;"><img
+                                                    src="{{ asset('images/proveedores/' . $item->avatar) }}" alt="img"
                                                     class="avatar avatar-lg brround"></td>
                                             <td>{{ $item->razon_social }}</td>
                                             <td>{{ $item->contacto }}</td>
@@ -73,16 +74,23 @@
                                                 <button data-id="{{ $item->id }}"
                                                     class="btn btn-primary btn-sm btnEditar" title="Ver o Editar"><i
                                                         class="fa fa-pencil-alt"></i></button>
-                                                <a href="{{ route('history_proveedores') }}?token={{ $item->id }}" target="_blank"
-                                                        class="btn btn-success btn-sm" title="Ver Observaciones">
-                                                        <i class="fa fa-book"></i>
+                                                <a href="{{ route('history_proveedores') }}?token={{ $item->id }}"
+                                                    target="_blank" class="btn btn-success btn-sm"
+                                                    title="Ver Observaciones">
+                                                    <i class="fa fa-book"></i>
+                                                </a>
+                                                <a href="javascript:void(0);" data-id="{{ $item->id }}"
+                                                    class="btn btn-secondary btn-sm btnEncuesta"
+                                                    title="Encuestas">
+                                                    <i class="fa fa-poll"></i>
                                                 </a>
                                                 @if (auth()->user()->hasPermissionTo('gestionar_proveedores'))
-                                                    <button data-id="{{ $item->id }}" data-status="{{ $item->estado }}"
-                                                        class="btn btn-warning btn-sm btnStatus" title="Cambiar Estado"><i
+                                                    <button data-id="{{ $item->id }}"
+                                                        data-status="{{ $item->estado }}"
+                                                        class="btn btn-warning btn-sm btnStatus mt-1" title="Cambiar Estado"><i
                                                             class="fas fa-times"></i></button>
                                                     <button data-id="{{ $item->id }}"
-                                                        class="btn btn-danger btn-sm btnEliminar" title="Eliminar"><i
+                                                        class="btn btn-danger btn-sm btnEliminar mt-1" title="Eliminar"><i
                                                             class="fa fa-trash"></i></button>
                                                 @endif
                                             </td>
@@ -137,7 +145,8 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Teléfono Fijo</label>
-                                <input class="form-control" id="telefono_add" placeholder="Teléfono Fijo" type="text">
+                                <input class="form-control" id="telefono_add" placeholder="Teléfono Fijo"
+                                    type="text">
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="">Celular</label>
@@ -394,7 +403,47 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn ripple btn-primary" id="btnModificarStatus" type="button">Modificar Status</button>
+                        <button class="btn ripple btn-primary" id="btnModificarStatus" type="button">Modificar
+                            Status</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Encuesta -->
+        <div class="modal  fade" id="modalEncuestas">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Encuestas</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-sm">
+                            <input type="hidden" id="id_cliente_encuesta">
+                            <div class="col-lg">
+                                <label for="">Correo Electrónico</label>
+                                <input class="form-control" id="correo_encuesta" placeholder="Correo Electrónico"
+                                    type="email">
+                            </div>
+                        </div>
+                        <br>
+                        <table class="table border-top-0 table-bordered text-nowrap border-bottom"
+                            id="table_encuestas_clientes">
+                            <thead>
+                                <tr>
+                                    <th class="wd-20p border-bottom-0">Fecha</th>
+                                    <th class="wd-20p border-bottom-0">Promedio</th>
+                                    <th class="wd-10p border-bottom-0">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" id="btnEnviarEncuesta" type="button">Enviar
+                            encuesta</button>
                     </div>
                 </div>
             </div>

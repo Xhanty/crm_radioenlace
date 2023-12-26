@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\EncuestasProveedores;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Exception;
+use Illuminate\Support\Facades\Mail;
 
 class ProveedoresController extends Controller
 {
@@ -277,5 +279,109 @@ class ProveedoresController extends Controller
             return $ex;
             return response()->json(["info" => 0, "data" => []]);
         }
+    }
+
+    public function encuestas_proveedores(Request $request)
+    {
+        $tk = $request->get('tk');
+        $send = $request->get('send');
+        $encuesta_id = $request->get('encuesta_view');
+
+        if ($send && $send == 1) {
+            // Consulta de encuesta
+            $encuesta = DB::table('encuesta_satisfaccion')->where("id", $tk)->first();
+
+            if ($encuesta && $encuesta->promedio == 0) {
+                $send = 1;
+                return view('encuestas.proveedores', compact('encuesta', 'send'));
+            } else {
+                return redirect('https://radioenlacesas.com');
+            }
+        }
+
+        if ($encuesta_id) {
+            // Consulta de encuesta
+            $encuesta = DB::table('encuesta_satisfaccion')->where("id", $encuesta_id)->first();
+
+            if ($encuesta) {
+                $send = 0;
+                return view('encuestas.proveedores', compact('encuesta', 'send'));
+            } else {
+                return redirect('https://radioenlacesas.com');
+            }
+        }
+
+        return redirect('https://radioenlacesas.com');
+    }
+
+    public function encuestas(Request $request)
+    {
+        $id = $request->id;
+
+        $encuestas = DB::table('encuesta_satisfaccion')
+            ->where("proveedor_id", $id)
+            ->get();
+
+        return response()->json(["info" => 1, "encuestas" => $encuestas]);
+    }
+
+    public function encuestas_save(Request $request)
+    {
+        // Obtener que viene en el request
+        $data = $request->all();
+        $encuesta = $data['encuesta_send'];
+
+        // Calcular el promedio de las respuestas
+        $respuestas = [];
+        $sumaRespuestas = 0;
+
+        // Iterar sobre las respuestas y calcular el promedio
+        for ($i = 1; $i <= 16; $i++) {
+            $pregunta = "pregunta" . $i;
+            $respuestas[$pregunta] = $data[$pregunta];
+            $sumaRespuestas += $data[$pregunta];
+        }
+
+        $promedio = $sumaRespuestas / 16; // Dividir por el número de preguntas
+
+        // Agregar las observaciones al array de respuestas
+        $respuestas['pregunta_1'] = $data['pregunta_1'];
+        $respuestas['pregunta_2'] = $data['pregunta_2'];
+        $respuestas['observaciones'] = $data['observaciones'];
+
+        // Actualizar encuesta
+        DB::table('encuesta_satisfaccion')->where('id', $encuesta)->update([
+            'encargado' => $data['encargado_add'],
+            'cargo' => $data['cargo_add'],
+            'promedio' => $promedio,
+            'respuestas' => json_encode($respuestas), // Almacenar las respuestas como JSON
+            'updated_at' => date("Y-m-d H:i:s"),
+        ]);
+
+        return redirect('https://radioenlacesas.com');
+    }
+
+    public function encuestas_send(Request $request)
+    {
+        $id = $request->id;
+        $correo = $request->correo;
+
+        // Registro de encuesta
+        $encuesta = DB::table('encuesta_satisfaccion')->insertGetId([
+            "proveedor_id" => $id,
+            "email" => $correo,
+            "created_at" => date("Y-m-d H:i:s"),
+        ]);
+
+        // Envío de correo
+        $data = array(
+            'encuesta' => $encuesta,
+            'fecha' => date("d/m/Y"),
+            'cliente' => $id,
+        );
+
+        Mail::to($correo)->send(new EncuestasProveedores($data));
+
+        return response()->json(["info" => 1]);
     }
 }

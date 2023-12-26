@@ -533,4 +533,105 @@ $(function () {
             },
         });
     });
+
+    // Encuestas
+    $(document).on("click", ".btnEncuesta", function () {
+        let id = $(this).data("id");
+        $("#id_cliente_encuesta").val(id);
+
+        // Traer las encuestas
+        $.ajax({
+            url: "proveedores_encuestas",
+            type: "POST",
+            data: {
+                id: id,
+            },
+            dataType: "json",
+            success: function (response) {
+                if (response.info == 1) {
+                    let encuestas = response.encuestas;
+
+                    $("#table_encuestas_clientes tbody").empty();
+
+                    //Encuestas
+                    encuestas.forEach((encuesta) => {
+                        var date = new Date(encuesta.created_at);
+                        var promedio = "";
+
+                        if (encuesta.promedio <= 0) {
+                            promedio = "No calificado";
+                        } else if (encuesta.promedio > 0) {
+                            promedio = encuesta.promedio + "/4";
+                        }
+
+                        $("#table_encuestas_clientes").append(
+                            "<tr><td>" +
+                            date.toLocaleString() +
+                            "</td><td>" +
+                            promedio +
+                            "</td>" +
+                            '<td><a target="_BLANK" href="' + url_general + "encuestas_proveedores?encuesta_view=" + encuesta.id +
+                            '"><i class="fa fa-eye"></i>&nbsp;Ver</a>' +
+                            "</td></tr>"
+                        );
+                    });
+
+                    $("#modalEncuestas").modal("show");
+                } else {
+                    toastr.error("Error al traer las encuestas");
+                }
+            },
+            error: function (error) {
+                console.log(error);
+                toastr.error("Error al traer las encuestas");
+            },
+        });
+    });
+
+    // Enviar encuesta
+    $("#btnEnviarEncuesta").click(function () {
+        let id = $("#id_cliente_encuesta").val();
+        let correo = $("#correo_encuesta").val();
+
+        if (correo.trim().length == 0) {
+            toastr.error("Debe ingresar un correo");
+            return false;
+        }
+
+        let formData = new FormData();
+        formData.append("id", id);
+        formData.append("correo", correo);
+
+        $("#btnEnviarEncuesta").attr("disabled", true);
+        $("#btnEnviarEncuesta").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Enviando...'
+        );
+
+        $.ajax({
+            url: "proveedores_encuestas_send",
+            type: "POST",
+            dataType: "JSON",
+            contentType: false,
+            cache: false,
+            processData: false,
+            data: formData,
+            success: function (response) {
+                if (response.info == 1) {
+                    $("#correo_encuesta").val("");
+                    $("#btnEnviarEncuesta").attr("disabled", false);
+                    $("#btnEnviarEncuesta").html("Enviar encuesta");
+                    toastr.success("Encuesta enviada correctamente");
+                } else {
+                    $("#btnEnviarEncuesta").attr("disabled", false);
+                    $("#btnEnviarEncuesta").html("Enviar encuesta");
+                    toastr.error("Error al enviar encuesta");
+                }
+            },
+            error: function (response) {
+                $("#btnEnviarEncuesta").attr("disabled", false);
+                $("#btnEnviarEncuesta").html("Enviar encuesta");
+                toastr.error("Error al enviar encuesta");
+            },
+        });
+    });
 });
