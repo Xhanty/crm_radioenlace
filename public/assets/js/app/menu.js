@@ -291,7 +291,7 @@ $(function () {
                         return (
                             '<img src="' +
                             url_general +
-                            "images/" +
+                            "images/clientes/" +
                             data.avatar +
                             '" class="avatar border rounded-circle">'
                         );
