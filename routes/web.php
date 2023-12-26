@@ -107,7 +107,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/clientes_add', [App\Http\Controllers\Admin\ClientesController::class, 'clientes_add'])->name('clientes_add');
     Route::post('/clientes_delete', [App\Http\Controllers\Admin\ClientesController::class, 'clientes_delete'])->name('clientes_delete');
     Route::post('/clientes_inactivar', [App\Http\Controllers\Admin\ClientesController::class, 'clientes_inactivar'])->name('clientes_inactivar');
-
+    
     // EMPLEADOS
     Route::get('/empleados', [App\Http\Controllers\Admin\EmpleadosController::class, 'index'])->name('empleados');
     Route::get('/empleados_list', [App\Http\Controllers\Admin\EmpleadosController::class, 'empleados_list'])->name('empleados_list');
@@ -534,3 +534,10 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::get('calendario_asignaciones',  [App\Http\Controllers\Admin\AsignacionesController::class, 'calendario'])->name('calendario_asignaciones');
+
+
+// Encuestas Clientes
+Route::get('/encuestas_clientes', [App\Http\Controllers\Admin\ClientesController::class, 'encuestas_clientes'])->name('encuestas_clientes');
+Route::post('/clientes_encuestas', [App\Http\Controllers\Admin\ClientesController::class, 'encuestas'])->name('clientes_encuestas');
+Route::post('/encuesta_clientes_save', [App\Http\Controllers\Admin\ClientesController::class, 'encuestas_save'])->name('encuesta_clientes_save');
+Route::post('/clientes_encuestas_send', [App\Http\Controllers\Admin\ClientesController::class, 'encuestas_send'])->name('clientes_encuestas_send');

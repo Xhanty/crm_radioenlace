@@ -132,39 +132,20 @@
                                     <tr>
                                         <td align="center"
                                             style="font-size:0px;padding:10px 25px;padding-bottom:40px;word-break:break-word;">
-
-                                            @if ($valid_transaction == 1)
-                                                <div
-                                                    style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:38px;font-weight:bold;line-height:1;text-align:center;color:#555;">
-                                                    Nueva Asignación
-                                                </div>
-                                            @else
-                                                <div
-                                                    style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:38px;font-weight:bold;line-height:1;text-align:center;color:#555;">
-                                                    Asignación Culminada
-                                                </div>
-                                            @endif
+                                            <div
+                                                style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:38px;font-weight:bold;line-height:1;text-align:center;color:#555;">
+                                                Encuesta de satisfacción
+                                            </div>
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <td align="center"
                                             style="font-size:0px;padding:10px 25px;padding-bottom:40px;word-break:break-word;">
-                                            @if ($valid_transaction == 1)
-                                                <div
-                                                    style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:18px;line-height:1;text-align:center;color:#555;">
-                                                    Hola. Tienes una nueva asignación con el código
-                                                    <b>{{ $asignacion->codigo }}</b>. Elaborada por el usuario
-                                                    <b>{{ $user->nombre }}</b>.
-                                                </div>
-                                            @else
-                                                <div
-                                                    style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:18px;line-height:1;text-align:center;color:#555;">
-                                                    Hola. Se ha completado la asignación con el código
-                                                    <b>{{ $asignacion->codigo }}</b>. Elaborada por el usuario
-                                                    <b>{{ $user->nombre }}</b>.
-                                                </div>
-                                            @endif
+                                            <div
+                                                style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:18px;line-height:1;text-align:center;color:#555;">
+                                                Hola. Radio Enlace S.A.S te invita a diligenciar la encuesta de satisfacción.
+                                            </div>
                                         </td>
                                     </tr>
 
@@ -177,9 +158,10 @@
                                                 <tbody>
                                                     <tr>
                                                         <td style="width:128px;">
-                                                            <img height="auto" src="{{ asset('emails/img/icon-asignacion.png') }}"
+                                                            <img height="auto"
+                                                                src="https://crm.radioenlacesas.com/emails/img/icon-encuestas.png"
                                                                 style="border:0;display:block;outline:none;text-decoration:none;width:100%;"
-                                                                width="128" />
+                                                                width="64" />
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -197,11 +179,11 @@
                                                     <td align="center" bgcolor="#DA251D" role="presentation"
                                                         style="border:none;border-radius:3px;color:#ffffff;cursor:auto;padding:15px 25px;"
                                                         valign="middle">
-                                                        <a href="https://crm.radioenlacesas.com/home" target="_blank"
+                                                        <a href="https://crm.radioenlacesas.com/encuestas_clientes?tk={{ $data["encuesta"] }}&send=1" target="_blank"
                                                             style="text-decoration: none;">
                                                             <p
                                                                 style="background:#DA251D;color:#ffffff;font-family:'Helvetica Neue',Arial,sans-serif;font-size:15px;font-weight:normal;line-height:120%;Margin:0;text-decoration:none;text-transform:none;">
-                                                                Asignación: {{ $asignacion->codigo }}
+                                                                Diligenciar encuesta
                                                             </p>
                                                         </a>
                                                     </td>
@@ -215,8 +197,7 @@
                                             style="font-size:0px;padding:10px 25px;padding-bottom:40px;word-break:break-word;">
                                             <div
                                                 style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:16px;line-height:20px;text-align:center;color:#7F8FA4;">
-                                                Para ver los detalles de la asignación, recuerda que debes ingresar a la
-                                                plataforma.
+                                                Si tienes alguna duda o inquietud, no dudes en contactarnos.
                                             </div>
                                         </td>
                                     </tr>

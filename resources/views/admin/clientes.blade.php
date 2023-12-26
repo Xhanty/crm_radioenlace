@@ -284,8 +284,9 @@
                                                     <br>
 
                                                     <div class="text-center">
-                                                        <button disabled class="btn ripple btn-primary" id="btnModificarCliente2"
-                                                            type="button">Modificar Datos Facturación</button>
+                                                        <button disabled class="btn ripple btn-primary"
+                                                            id="btnModificarCliente2" type="button">Modificar Datos
+                                                            Facturación</button>
                                                     </div>
                                                 @endif
                                             </div>
@@ -335,8 +336,9 @@
                                                     <br>
 
                                                     <div class="text-center">
-                                                        <button disabled class="btn ripple btn-primary" id="btnModificarCliente3"
-                                                            type="button">Modificar Datos Técnicos</button>
+                                                        <button disabled class="btn ripple btn-primary"
+                                                            id="btnModificarCliente3" type="button">Modificar Datos
+                                                            Técnicos</button>
                                                     </div>
                                                 @endif
                                             </div>
@@ -344,9 +346,10 @@
                                             <div class="tab-pane fade show p-3" id="three_detail">
                                                 @if (auth()->user()->hasPermissionTo('gestionar_clientes'))
                                                     <div class="d-flex justify-content-end">
-                                                        <button disabled class="btn ripple btn-primary" data-bs-target="#modalAdd"
-                                                            data-bs-toggle="modal" data-bs-effect="effect-scale"
-                                                            type="button">Agregar Anexo</button>
+                                                        <button disabled class="btn ripple btn-primary"
+                                                            data-bs-target="#modalAdd" data-bs-toggle="modal"
+                                                            data-bs-effect="effect-scale" type="button">Agregar
+                                                            Anexo</button>
                                                     </div>
                                                     <br>
                                                 @endif
@@ -543,6 +546,45 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn ripple btn-primary" id="btnModificarCliente4" type="button">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Encuesta -->
+        <div class="modal  fade" id="modalEncuestas">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Encuestas</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-sm">
+                            <input type="hidden" id="id_cliente_encuesta">
+                            <div class="col-lg">
+                                <label for="">Correo Electrónico</label>
+                                <input class="form-control" id="correo_encuesta" placeholder="Correo Electrónico"
+                                    type="email">
+                            </div>
+                        </div>
+                        <br>
+                        <table class="table border-top-0 table-bordered text-nowrap border-bottom"
+                            id="table_encuestas_clientes">
+                            <thead>
+                                <tr>
+                                    <th class="wd-20p border-bottom-0">Fecha</th>
+                                    <th class="wd-20p border-bottom-0">Promedio</th>
+                                    <th class="wd-10p border-bottom-0">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" id="btnEnviarEncuesta" type="button">Enviar
+                            encuesta</button>
                     </div>
                 </div>
             </div>

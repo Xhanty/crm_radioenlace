@@ -332,15 +332,19 @@ $(function () {
 
                     if ($("#delete_cliente_admin").val() == 1) {
                         data_return +=
+                            '<button data-id="' +
+                            data.id +
+                            '" class="btn btn-primary btn-sm btnEncuesta" title="Encuestas">' +
+                            '<i class="fas fa-poll"></i></button>&nbsp;' +
                             '<button data-estado="' +
                             data.estado +
                             '" data-id="' +
                             data.id +
-                            '" class="btn btn-primary btn-sm btnInactivar" title="Inactivar">' +
+                            '" class="btn btn-warning btn-sm btnInactivar" title="Inactivar">' +
                             '<i class="fas fa-times"></i></button>&nbsp;' +
                             '<button data-id="' +
                             data.id +
-                            '" class="btn btn-danger btn-sm btnEliminar" title="Eliminar">' +
+                            '" class="btn btn-danger btn-sm btnEliminar mt-1" title="Eliminar">' +
                             '<i class="fa fa-trash"></i></button>';
                     }
 
