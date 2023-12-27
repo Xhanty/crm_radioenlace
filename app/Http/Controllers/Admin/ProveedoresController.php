@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Mail\EncuestasProveedores;
+use App\Mail\SagrilaftProveedoresMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -281,6 +282,7 @@ class ProveedoresController extends Controller
         }
     }
 
+    // Encuestas
     public function encuestas_proveedores(Request $request)
     {
         $tk = $request->get('tk');
@@ -381,6 +383,90 @@ class ProveedoresController extends Controller
         );
 
         Mail::to($correo)->send(new EncuestasProveedores($data));
+
+        return response()->json(["info" => 1]);
+    }
+
+
+    // SAGRILAFT
+    public function sagrilaft_proveedores(Request $request)
+    {
+        $tk = $request->get('tk');
+        $send = $request->get('send');
+        $sagrilaft_id = $request->get('cuestionario_view');
+
+        if ($send && $send == 1) {
+            // Consulta de sagrilaft
+            $sagrilaft = DB::table('sagrilafts')->where("id", $tk)->first();
+
+            if ($sagrilaft) {
+                $send = 1;
+                return view('sagrilafts.proveedores', compact('sagrilaft', 'send'));
+            } else {
+                return redirect('https://radioenlacesas.com');
+            }
+        }
+
+        if ($sagrilaft_id) {
+            // Consulta de sagrilaft
+            $sagrilaft = DB::table('sagrilafts')->where("id", $sagrilaft_id)->first();
+
+            if ($sagrilaft) {
+                $send = 0;
+                return view('sagrilafts.proveedores', compact('sagrilaft', 'send'));
+            } else {
+                return redirect('https://radioenlacesas.com');
+            }
+        }
+
+        return redirect('https://radioenlacesas.com');
+    }
+
+    public function sagrilafts(Request $request)
+    {
+        $id = $request->id;
+
+        $sagrilafts = DB::table('sagrilafts')
+            ->where("proveedor_id", $id)
+            ->get();
+
+        return response()->json(["info" => 1, "sagrilafts" => $sagrilafts]);
+    }
+
+    public function sagrilaft_save(Request $request)
+    {
+        // Obtener que viene en el request
+        $data = $request->all();
+        $sagrilaft = $data['sagrilaft_send'];
+
+        // Actualizar sagrilaft
+        DB::table('sagrilafts')->where('id', $sagrilaft)->update([
+            'updated_at' => date("Y-m-d H:i:s"),
+        ]);
+
+        return redirect('https://radioenlacesas.com');
+    }
+
+    public function sagrilaft_send(Request $request)
+    {
+        $id = $request->id;
+        $correo = $request->correo;
+
+        // Registro de sagrilaft
+        $sagrilaft = DB::table('sagrilafts')->insertGetId([
+            "proveedor_id" => $id,
+            "email" => $correo,
+            "created_at" => date("Y-m-d H:i:s"),
+        ]);
+
+        // Envio de correo
+        $data = array(
+            'cuestionario' => $sagrilaft,
+            'fecha' => date("d/m/Y"),
+            'cliente' => $id,
+        );
+
+        Mail::to($correo)->send(new SagrilaftProveedoresMail($data));
 
         return response()->json(["info" => 1]);
     }

@@ -673,4 +673,103 @@ $(document).ready(function () {
             },
         });
     });
+
+    // Sagrilaft
+    $(document).on("click", ".btnSagrilaf", function () {
+        let id = $(this).data("id");
+        $("#id_cliente_sagrilaft").val(id);
+
+        // Traer los sagrilaft
+        $.ajax({
+            url: "clientes_sagrilaft",
+            type: "POST",
+            data: {
+                id: id,
+            },
+            dataType: "json",
+            success: function (response) {
+                if (response.info == 1) {
+                    let sagrilafts = response.sagrilafts;
+
+                    $("#table_sagrilaft_clientes tbody").empty();
+
+                    //Sagrilaft
+                    sagrilafts.forEach((sagrilaft) => {
+                        var date = new Date(sagrilaft.created_at);
+                        var diligenciado = "No Diligenciado";
+
+                        if (sagrilaft.fecha_diligenciado != null) {
+                            diligenciado = "Diligenciado";
+                        }
+
+                        $("#table_sagrilaft_clientes").append(
+                            "<tr><td>" +
+                            date.toLocaleString() +
+                            "</td><td>" +
+                            diligenciado +
+                            "</td>" +
+                            '<td><a target="_BLANK" href="' + url_general + "sagrilaft_clientes?cuestionario_view=" + sagrilaft.id +
+                            '"><i class="fa fa-eye"></i>&nbsp;Ver</a>' +
+                            "</td></tr>"
+                        );
+                    });
+
+                    $("#modalSagrilaft").modal("show");
+                } else {
+                    toastr.error("Error al traer los resultados");
+                }
+            },
+            error: function (error) {
+                console.log(error);
+                toastr.error("Error al traer los resultados");
+            },
+        });
+    });
+
+    // Enviar Sagrilaft
+    $("#btnEnviarSagrilaft").click(function () {
+        let id = $("#id_cliente_sagrilaft").val();
+        let correo = $("#correo_sagrilaft").val();
+
+        if (correo.trim().length == 0) {
+            toastr.error("Debe ingresar un correo");
+            return false;
+        }
+
+        let formData = new FormData();
+        formData.append("id", id);
+        formData.append("correo", correo);
+
+        $("#btnEnviarSagrilaft").attr("disabled", true);
+        $("#btnEnviarSagrilaft").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Enviando...'
+        );
+
+        $.ajax({
+            url: "clientes_sagrilaft_send",
+            type: "POST",
+            dataType: "JSON",
+            contentType: false,
+            cache: false,
+            processData: false,
+            data: formData,
+            success: function (response) {
+                if (response.info == 1) {
+                    $("#correo_sagrilaft").val("");
+                    $("#btnEnviarSagrilaft").attr("disabled", false);
+                    $("#btnEnviarSagrilaft").html("Enviar Sagrilaft");
+                    toastr.success("Sagrilaft enviado correctamente");
+                } else {
+                    $("#btnEnviarSagrilaft").attr("disabled", false);
+                    $("#btnEnviarSagrilaft").html("Enviar Sagrilaft");
+                    toastr.error("Error al enviar el Sagrilaft");
+                }
+            },
+            error: function (response) {
+                $("#btnEnviarSagrilaft").attr("disabled", false);
+                $("#btnEnviarSagrilaft").html("Enviar Sagrilaft");
+                toastr.error("Error al enviar el Sagrilaft");
+            },
+        });
+    });
 });

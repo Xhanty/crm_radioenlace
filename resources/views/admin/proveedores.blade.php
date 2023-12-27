@@ -84,6 +84,11 @@
                                                     title="Encuestas">
                                                     <i class="fa fa-poll"></i>
                                                 </a>
+                                                <a href="javascript:void(0);" data-id="{{ $item->id }}"
+                                                    class="btn btn-primary btn-sm btnSagrilaf"
+                                                    title="Sagrilaf">
+                                                    <i class="fa fa-file-alt"></i>
+                                                </a>
                                                 @if (auth()->user()->hasPermissionTo('gestionar_proveedores'))
                                                     <button data-id="{{ $item->id }}"
                                                         data-status="{{ $item->estado }}"
@@ -444,6 +449,45 @@
                     <div class="modal-footer">
                         <button class="btn ripple btn-primary" id="btnEnviarEncuesta" type="button">Enviar
                             encuesta</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Sagrilaft -->
+        <div class="modal  fade" id="modalSagrilaft">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Sagrilaft</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-sm">
+                            <input type="hidden" id="id_cliente_sagrilaft">
+                            <div class="col-lg">
+                                <label for="">Correo Electrónico</label>
+                                <input class="form-control" id="correo_sagrilaft" placeholder="Correo Electrónico"
+                                    type="email">
+                            </div>
+                        </div>
+                        <br>
+                        <table class="table border-top-0 table-bordered text-nowrap border-bottom"
+                            id="table_sagrilaft_clientes">
+                            <thead>
+                                <tr>
+                                    <th class="wd-20p border-bottom-0">Fecha</th>
+                                    <th class="wd-20p border-bottom-0">Estado</th>
+                                    <th class="wd-10p border-bottom-0">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" id="btnEnviarSagrilaft" type="button">Enviar
+                            Sagrilaft</button>
                     </div>
                 </div>
             </div>

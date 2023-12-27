@@ -542,8 +542,21 @@ Route::post('/clientes_encuestas', [App\Http\Controllers\Admin\ClientesControlle
 Route::post('/encuesta_clientes_save', [App\Http\Controllers\Admin\ClientesController::class, 'encuestas_save'])->name('encuesta_clientes_save');
 Route::post('/clientes_encuestas_send', [App\Http\Controllers\Admin\ClientesController::class, 'encuestas_send'])->name('clientes_encuestas_send');
 
+// Sagrilaft Clientes
+Route::get('/sagrilaft_clientes', [App\Http\Controllers\Admin\ClientesController::class, 'sagrilaft_clientes'])->name('sagrilaft_clientes');
+Route::post('/clientes_sagrilaft', [App\Http\Controllers\Admin\ClientesController::class, 'sagrilafts'])->name('clientes_sagrilaft');
+Route::post('/sagrilaft_clientes_save', [App\Http\Controllers\Admin\ClientesController::class, 'sagrilaft_save'])->name('sagrilaft_clientes_save');
+Route::post('/clientes_sagrilaft_send', [App\Http\Controllers\Admin\ClientesController::class, 'sagrilaft_send'])->name('clientes_sagrilaft_send');
+
+
 // Encuestas Proveedores
 Route::get('/encuestas_proveedores', [App\Http\Controllers\Admin\ProveedoresController::class, 'encuestas_proveedores'])->name('encuestas_proveedores');
 Route::post('/proveedores_encuestas', [App\Http\Controllers\Admin\ProveedoresController::class, 'encuestas'])->name('proveedores_encuestas');
 Route::post('/encuesta_proveedores_save', [App\Http\Controllers\Admin\ProveedoresController::class, 'encuestas_save'])->name('encuesta_proveedores_save');
 Route::post('/proveedores_encuestas_send', [App\Http\Controllers\Admin\ProveedoresController::class, 'encuestas_send'])->name('proveedores_encuestas_send');
+
+// Sagrilaft Proveedores
+Route::get('/sagrilaft_proveedores', [App\Http\Controllers\Admin\ProveedoresController::class, 'sagrilaft_proveedores'])->name('sagrilaft_proveedores');
+Route::post('/proveedores_sagrilaft', [App\Http\Controllers\Admin\ProveedoresController::class, 'sagrilafts'])->name('proveedores_sagrilaft');
+Route::post('/sagrilaft_proveedores_save', [App\Http\Controllers\Admin\ProveedoresController::class, 'sagrilaft_save'])->name('sagrilaft_proveedores_save');
+Route::post('/proveedores_sagrilaft_send', [App\Http\Controllers\Admin\ProveedoresController::class, 'sagrilaft_send'])->name('proveedores_sagrilaft_send');
