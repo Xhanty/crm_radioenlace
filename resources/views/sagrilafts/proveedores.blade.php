@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!--- Favicon --->
+    <link rel="icon" href="{{ asset('assets/img/brand/favicon.png') }}" type="image/x-icon" />
     <title>Sagrilaft | Proveedores</title>
 </head>
 <style>
@@ -207,6 +209,15 @@
 </style>
 
 <body>
+    @php
+        $view_data = false;
+
+        if ($send == 0) {
+            $view_data = true;
+        } else {
+            $view_data = false;
+        }
+    @endphp
     <div style="padding: 33px">
         <h1>Registro y actualización de información comercial y financiera</h1>
         <div id="multi-step-form-container">
@@ -241,13 +252,15 @@
                 </li>
             </ul>
             <!-- Step Wise Form Content -->
-            <form id="userAccountSetupForm" name="userAccountSetupForm" enctype="multipart/form-data" method="POST">
+            <form enctype="multipart/form-data" method="POST" action="{{ route('sagrilaft_proveedores_save') }}">
+                @csrf
+                <input type="hidden" name="sagrilaft_send" id="sagrilaft_send" value="{{ $sagrilaft->id }}">
                 <!-- Step 1 Content -->
                 <section id="step-1" class="form-step">
                     <h2 class="font-normal">Información Básica</h2>
                     <!-- Step 1 input fields -->
                     <div class="mt-3">
-                        <select name="tipo_persona" id="tipo_persona" class="form-select">
+                        <select name="tipo_persona" id="tipo_persona" class="form-select" required>
                             <option value="0">Tipo de Persona</option>
                             <option value="1">Persona Natural</option>
                             <option value="2">Persona Jurídica</option>
@@ -257,184 +270,226 @@
                         <br>
                         <div class="info_basica_natural d-none">
                             <div class="row">
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Nombre">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="nombre_natural" id="nombre_natural"
+                                        placeholder="Nombre">
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Tipo Documento">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="tipodoc_natural"
+                                        id="tipodoc_natural" placeholder="Tipo Documento">
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="N° de Documento">
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Expedición">
-                                </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Lugar">
-                                </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Fecha Nacimiento">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="documento_natural"
+                                        id="documento_natural" placeholder="N° de Documento">
                                 </div>
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Nacionalidad">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="expedicion_natural"
+                                        id="expedicion_natural" placeholder="Expedición">
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Ocupación">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="lugar_natural" id="lugar_natural"
+                                        placeholder="Lugar">
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Actividad Económica">
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="CIIU">
-                                </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Empresa donde trabaja">
-                                </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Área y cargo">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="date" class="form-control" name="fnacimiento_natural"
+                                        id="fnacimiento_natural" placeholder="Fecha Nacimiento"
+                                        title="Fecha Nacimiento">
                                 </div>
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-4">
-                                    <input type="text" class="form-control"
-                                        placeholder="Ciudad y Dirección de Trabajo">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="nacionalidad_natural"
+                                        id="nacionalidad_natural" placeholder="Nacionalidad">
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Teléfono">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="ocupacion_natural"
+                                        id="ocupacion_natural" placeholder="Ocupación">
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Fax">
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Domicilio">
-                                </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Ciudad">
-                                </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Departamento">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="actividad_natural"
+                                        id="actividad_natural" placeholder="Actividad Económica">
                                 </div>
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Teléfono Fijo y Celular">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="ciiu_natural" id="ciiu_natural"
+                                        placeholder="CIIU">
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="E-mail">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="empresa_natural"
+                                        id="empresa_natural" placeholder="Empresa donde trabaja">
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="E-mail facturación">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="cargo_natural"
+                                        id="cargo_natural" placeholder="Área y cargo">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="ciudadtr_natural"
+                                        id="ciudadtr_natural" placeholder="Ciudad y Dirección de Trabajo">
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="telefono_natural"
+                                        id="telefono_natural" placeholder="Teléfono">
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="fax_natural" id="fax_natural"
+                                        placeholder="Fax">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="domicilio_natural"
+                                        id="domicilio_natural" placeholder="Domicilio">
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="ciudad_natural"
+                                        id="ciudad_natural" placeholder="Ciudad">
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="departamento_natural"
+                                        id="departamento_natural" placeholder="Departamento">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="fijo_natural" id="fijo_natural"
+                                        placeholder="Teléfono Fijo y Celular">
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="email_natural"
+                                        id="email_natural" placeholder="E-mail">
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="emailfact_natural"
+                                        id="emailfact_natural" placeholder="E-mail facturación">
                                 </div>
                             </div>
                         </div>
 
                         <div class="info_basica_juridica d-none">
                             <div class="row">
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Razón Social">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="razonsocial_juridica"
+                                        id="razonsocial_juridica" placeholder="Razón Social">
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Nit">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="nit_juridica" id="nit_juridica"
+                                        placeholder="Nit">
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Clase de Sociedad">
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-4">
-                                    <input type="text" class="form-control"
-                                        placeholder="Escritura de Constitución">
-                                </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Matricula N°">
-                                </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Representante Legal">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="clase_juridica"
+                                        id="clase_juridica" placeholder="Clase de Sociedad">
                                 </div>
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Tipo de Documento">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="escritura_juridica"
+                                        id="escritura_juridica" placeholder="Escritura de Constitución">
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="N° de Documento">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="matricula_juridica"
+                                        id="matricula_juridica" placeholder="Matricula N°">
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Expedición">
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Lugar">
-                                </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Fecha de Nacimiento">
-                                </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control"
-                                        placeholder="Dirección Oficina Principal">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="representante_juridica"
+                                        id="representante_juridica" placeholder="Representante Legal">
                                 </div>
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Ciudad">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="tipodoc_juridica"
+                                        id="tipodoc_juridica" placeholder="Tipo de Documento">
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Departamento">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="documento_juridica"
+                                        id="documento_juridica" placeholder="N° de Documento">
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Fax">
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Tipo de Empresa">
-                                </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="CIIU">
-                                </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Actividad Económica">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="expedicion_juridica"
+                                        id="expedicion_juridica" placeholder="Expedición">
                                 </div>
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="E-mail">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="lugar_juridica"
+                                        id="lugar_juridica" placeholder="Lugar">
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Teléfono">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="fnacimiento_juridica"
+                                        id="fnacimiento_juridica" placeholder="Fecha de Nacimiento">
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Persona Contacto">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="oficina_juridica"
+                                        id="oficina_juridica" placeholder="Dirección Oficina Principal">
                                 </div>
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-6">
-                                    <input type="text" class="form-control" placeholder="Cargo">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="ciudad_juridica"
+                                        id="ciudad_juridica" placeholder="Ciudad">
                                 </div>
-                                <div class="col-6">
-                                    <input type="text" class="form-control" placeholder="E-mail Facturación">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="departamento_juridica"
+                                        id="departamento_juridica" placeholder="Departamento">
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="fax_juridica" id="fax_juridica"
+                                        placeholder="Fax">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="tipoempresa_juridica"
+                                        id="tipoempresa_juridica" placeholder="Tipo de Empresa">
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="ciiu_juridica"
+                                        id="ciiu_juridica" placeholder="CIIU">
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="actividad_juridica"
+                                        id="actividad_juridica" placeholder="Actividad Económica">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="email_juridica"
+                                        id="email_juridica" placeholder="E-mail">
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="telfono_juridica"
+                                        id="telfono_juridica" placeholder="Teléfono">
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="contacto_juridica"
+                                        id="contacto_juridica" placeholder="Persona Contacto">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" name="cargo_juridica"
+                                        id="cargo_juridica" placeholder="Cargo">
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" name="emailfact_juridica"
+                                        id="emailfact_juridica" placeholder="E-mail Facturación">
                                 </div>
                             </div>
                         </div>
@@ -454,40 +509,46 @@
                         <br>
                         <div>
                             <div class="row">
-                                <div class="col-4">
-                                    <input type="text" class="form-control"
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="ingresos" id="ingresos"
                                         placeholder="Ingresos Mensuales (Pesos)">
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control"
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="egresos" id="egresos"
                                         placeholder="Egresos Mensuales (Pesos)">
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Activos (Pesos)">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="activos" id="activos"
+                                        placeholder="Activos (Pesos)">
                                 </div>
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Pasivos (Pesos)">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="pasivos" id="pasivos"
+                                        placeholder="Pasivos (Pesos)">
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Patrimonio (Pesos)">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="patrimonio" id="patrimonio"
+                                        placeholder="Patrimonio (Pesos)">
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Revisoría Fiscal">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="revisor_fiscal"
+                                        id="revisor_fiscal" placeholder="Revisoría Fiscal">
                                 </div>
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Otros Ingresos (Pesos)">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="otros_ingresos"
+                                        id="otros_ingresos" placeholder="Otros Ingresos (Pesos)">
                                 </div>
-                                <div class="col-4">
+                                <div class="col-lg-4 col-md-6">
                                     <input type="text" class="form-control" placeholder="Concepto Otros Ingresos">
                                 </div>
-                                <div class="col-4">
-                                    <select name="" class="form-control" id="">
+                                <div class="col-lg-4 col-md-6">
+                                    <select name="operaciones_internacionales" class="form-control"
+                                        id="operaciones_internacionales">
                                         <option value="">Operaciones Internacionales</option>
                                         <option value="1">Sí</option>
                                         <option value="0">No</option>
@@ -496,11 +557,13 @@
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-6">
-                                    <input type="text" class="form-control" placeholder="Cuál">
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" name="operaciones_cual"
+                                        id="operaciones_cual" placeholder="Cuál">
                                 </div>
-                                <div class="col-6">
-                                    <input type="text" class="form-control"
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" name="mercancia_exportada"
+                                        id="mercancia_exportada"
                                         placeholder="Clase de Mercancías Importadas y/o Exportadas">
                                 </div>
                             </div>
@@ -508,31 +571,36 @@
                             <hr>
                             <br>
                             <div class="row">
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Banco">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="banco" id="banco"
+                                        placeholder="Banco">
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="No de Cuenta">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="num_cuenta" id="num_cuenta"
+                                        placeholder="No de Cuenta">
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Tipo de Cuenta">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="tipo_cuenta" id="tipo_cuenta"
+                                        placeholder="Tipo de Cuenta">
                                 </div>
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-4">
-                                    <select name="" class="form-control" id="">
+                                <div class="col-lg-4 col-md-6">
+                                    <select name="condicion_pago" class="form-control" id="condicion_pago">
                                         <option value="">Condición de pago</option>
-                                        <option value="1">30 días</option>
-                                        <option value="2">60 días</option>
-                                        <option value="3">90 días</option>
+                                        <option value="0">30 días</option>
+                                        <option value="1">60 días</option>
+                                        <option value="2">90 días</option>
                                     </select>
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Email para pagos">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="email_pagos" id="email_pagos"
+                                        placeholder="Email para pagos">
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Email para comunicados">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" name="email_comunicados"
+                                        id="email_comunicados" placeholder="Email para comunicados">
                                 </div>
                             </div>
                         </div>
@@ -554,114 +622,114 @@
                         <br>
                         <div class="info_basica_natural d-none">
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-lg-6">
                                     <label for="">Fotocopia de la Cédula de Ciudadanía</label>
                                     <input type="file" accept="application/pdf,application/vnd.ms-excel"
-                                        class="form-control mt-2">
+                                        name="cc_natural" id="cc_natural" class="form-control mt-2">
                                 </div>
-                                <div class="col-6">
+                                <div class="col-lg-6">
                                     <label for="">Declaración de Renta de los 2 últimos periodos</label>
                                     <input type="file" accept="application/pdf,application/vnd.ms-excel"
-                                        class="form-control mt-2">
+                                        name="renta_natural" id="renta_natural" class="form-control mt-2">
                                 </div>
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-lg-6">
                                     <label for="">Certificado de Ingresos y retenciones del año
                                         inmediatamente anterior</label>
                                     <input type="file" accept="application/pdf,application/vnd.ms-excel"
-                                        class="form-control mt-2">
+                                        name="ingresos_natural" id="ingresos_natural" class="form-control mt-2">
                                 </div>
-                                <div class="col-6">
+                                <div class="col-lg-6">
                                     <label for="">Fotocopia del Registro Único Tributario (RUT)</label>
                                     <input type="file" accept="application/pdf,application/vnd.ms-excel"
-                                        class="form-control mt-2">
+                                        name="rut_natural" id="rut_natural" class="form-control mt-2">
                                 </div>
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col-lg-4 col-md-6">
                                     <label for="">2 Referencias Comerciales</label>
                                     <input type="file" accept="application/pdf,application/vnd.ms-excel"
-                                        class="form-control mt-2">
+                                        name="comercial_natural" id="comercial_natural" class="form-control mt-2">
                                 </div>
-                                <div class="col-4">
+                                <div class="col-lg-4 col-md-6">
                                     <label for="">1 Referencia Bancaria</label>
                                     <input type="file" accept="application/pdf,application/vnd.ms-excel"
-                                        class="form-control mt-2">
+                                        name="bancaria_natural" id="bancaria_natural" class="form-control mt-2">
                                 </div>
-                                <div class="col-4">
+                                <div class="col-lg-4 col-md-6">
                                     <label for="">Portafolio de Servicios</label>
                                     <input type="file" accept="application/pdf,application/vnd.ms-excel"
-                                        class="form-control mt-2">
+                                        name="portafolio_natural" id="portafolio_natural" class="form-control mt-2">
                                 </div>
                             </div>
                         </div>
-
                         <div class="info_basica_juridica d-none">
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-lg-6">
                                     <label for="">Certificado de Existencia y Representación Legal, no mayor de
                                         1 mes</label>
                                     <input type="file" accept="application/pdf,application/vnd.ms-excel"
+                                        name="existencia_juridica" id="existencia_juridica"
                                         class="form-control mt-2">
                                 </div>
-                                <div class="col-6">
+                                <div class="col-lg-6">
                                     <label for="">Fotocopia del Registro Único Tributario (RUT)</label>
                                     <input type="file" accept="application/pdf,application/vnd.ms-excel"
-                                        class="form-control mt-2">
+                                        name="rut_juridica" id="rut_juridica" class="form-control mt-2">
                                 </div>
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-lg-6">
                                     <label for="">Fotocopia de la C.C. del Representante Legal</label>
                                     <input type="file" accept="application/pdf,application/vnd.ms-excel"
-                                        class="form-control mt-2">
+                                        name="cc_juridica" id="cc_juridica" class="form-control mt-2">
                                 </div>
-                                <div class="col-6">
+                                <div class="col-lg-6">
                                     <label for="">Declaración de Renta de los 2 últimos periodos</label>
                                     <input type="file" accept="application/pdf,application/vnd.ms-excel"
-                                        class="form-control mt-2">
+                                        name="renta_juridica" id="renta_juridica" class="form-control mt-2">
                                 </div>
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col-lg-4 col-md-6">
                                     <label for="">Estados de Financieros firmados por el Contador o Revisor
                                         Fiscal</label>
                                     <input type="file" accept="application/pdf,application/vnd.ms-excel"
-                                        class="form-control mt-2">
+                                        name="estados_juridica" id="estados_juridica" class="form-control mt-2">
                                 </div>
-                                <div class="col-4">
+                                <div class="col-lg-4 col-md-6">
                                     <label for="">Certificados de calidad (BASC, ISO. BPM)</label>
                                     <input type="file" accept="application/pdf,application/vnd.ms-excel"
-                                        class="form-control mt-2">
+                                        name="calidad_juridica" id="calidad_juridica" class="form-control mt-2">
                                 </div>
-                                <div class="col-4">
+                                <div class="col-lg-4 col-md-6">
                                     <label for="">Certificación Operador Económico Autorizado</label>
                                     <input type="file" accept="application/pdf,application/vnd.ms-excel"
-                                        class="form-control mt-2">
+                                        name="operador_juridica" id="operador_juridica" class="form-control mt-2">
                                 </div>
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col-lg-4 col-md-6">
                                     <label for="">2 Referencias Comerciales</label>
                                     <input type="file" accept="application/pdf,application/vnd.ms-excel"
-                                        class="form-control mt-2">
+                                        name="comercial_juridica" id="comercial_juridica" class="form-control mt-2">
                                 </div>
-                                <div class="col-4">
+                                <div class="col-lg-4 col-md-6">
                                     <label for="">1 Referencia Bancaria y portafolios de servicios</label>
                                     <input type="file" accept="application/pdf,application/vnd.ms-excel"
-                                        class="form-control mt-2">
+                                        name="bancaria_juridica" id="bancaria_juridica" class="form-control mt-2">
                                 </div>
-                                <div class="col-4">
+                                <div class="col-lg-4 col-md-6">
                                     <label for="">Documento de cumplimiento de requisitos legales
                                         (permisos-licencias)</label>
                                     <input type="file" accept="application/pdf,application/vnd.ms-excel"
-                                        class="form-control mt-2">
+                                        name="licencias_juridica" id="licencias_juridica" class="form-control mt-2">
                                 </div>
                             </div>
                         </div>
@@ -756,20 +824,120 @@
     </script>
     <script>
         $(document).ready(function() {
+            // Preguntar tipo de persona al cargar la página
+            $("#tipo_persona").focus();
+
+            $(".btn-navigate-form-step").attr("disabled", true);
+
+            // Evita que se envíe el formulario al presionar enter
+            $(window).keydown(function(event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+                    return false;
+                }
+            });
+
+            // Oculta o muestra los campos según el tipo de persona
             $("#tipo_persona").change(function() {
                 var tipo_persona = $(this).val();
 
                 if (tipo_persona == 1) {
                     $(".info_basica_natural").removeClass("d-none");
                     $(".info_basica_juridica").addClass("d-none");
+                    $(".btn-navigate-form-step").attr("disabled", false);
                 } else if (tipo_persona == 2) {
                     $(".info_basica_natural").addClass("d-none");
                     $(".info_basica_juridica").removeClass("d-none");
+                    $(".btn-navigate-form-step").attr("disabled", false);
                 } else {
                     $(".info_basica_natural").addClass("d-none");
                     $(".info_basica_juridica").addClass("d-none");
+                    $(".btn-navigate-form-step").attr("disabled", true);
                 }
             });
+
+            if ({{ $view_data }}) {
+                $('input[type="text"]').attr('readonly', true);
+                $('input[type="date"]').attr('readonly', true);
+                $('input[type="file"]').attr('disabled', true);
+                $('select').attr('disabled', true);
+                // Boton submit
+                $('.submit-btn').attr('disabled', true);
+
+                let sagrilaft = @json($sagrilaft);
+
+                console.log(sagrilaft);
+
+                $('#tipo_persona').val(sagrilaft.tipo_persona).trigger('change');
+                
+                if(sagrilaft.tipo_persona == 1) {
+                    // Natura
+                    $('#nombre_natural').val(sagrilaft.naturales.nombre);
+                    $('#tipodoc_natural').val(sagrilaft.naturales.tipo_documento);
+                    $('#documento_natural').val(sagrilaft.naturales.documento);
+                    $('#expedicion_natural').val(sagrilaft.naturales.expedicion);
+                    $('#lugar_natural').val(sagrilaft.naturales.lugar);
+                    $('#fnacimiento_natural').val(sagrilaft.naturales.fecha_nacimiento);
+                    $('#nacionalidad_natural').val(sagrilaft.naturales.nacionalidad);
+                    $('#ocupacion_natural').val(sagrilaft.naturales.ocupacion);
+                    $('#actividad_natural').val(sagrilaft.naturales.actividad_economica);
+                    $('#ciiu_natural').val(sagrilaft.naturales.ciiu);
+                    $('#empresa_natural').val(sagrilaft.naturales.donde_trabaja);
+                    $('#cargo_natural').val(sagrilaft.naturales.cargo);
+                    $('#ciudadtr_natural').val(sagrilaft.naturales.direccion_trabajo);
+                    $('#telefono_natural').val(sagrilaft.naturales.telefono_trabajo);
+                    $('#fax_natural').val(sagrilaft.naturales.fax_trabajo);
+                    $('#domicilio_natural').val(sagrilaft.naturales.domicilio);
+                    $('#ciudad_natural').val(sagrilaft.naturales.ciudad);
+                    $('#departamento_natural').val(sagrilaft.naturales.departamento);
+                    $('#fijo_natural').val(sagrilaft.naturales.telefono);
+                    $('#email_natural').val(sagrilaft.naturales.email);
+                    $('#emailfact_natural').val(sagrilaft.naturales.email_facturacion);
+                } else {
+                    // Juridica
+                    $('#razonsocial_juridica').val(sagrilaft.juridicas.razon_social);
+                    $('#nit_juridica').val(sagrilaft.juridicas.nit);
+                    $('#clase_juridica').val(sagrilaft.juridicas.clase_sociedad);
+                    $('#escritura_juridica').val(sagrilaft.juridicas.constitucion);
+                    $('#matricula_juridica').val(sagrilaft.juridicas.n_matricula);
+                    $('#representante_juridica').val(sagrilaft.juridicas.representante_legal);
+                    $('#tipodoc_juridica').val(sagrilaft.juridicas.tipo_documento);
+                    $('#documento_juridica').val(sagrilaft.juridicas.documento);
+                    $('#expedicion_juridica').val(sagrilaft.juridicas.expedicion);
+                    $('#lugar_juridica').val(sagrilaft.juridicas.lugar);
+                    $('#fnacimiento_juridica').val(sagrilaft.juridicas.fecha_nacimiento);
+                    $('#oficina_juridica').val(sagrilaft.juridicas.direccion_oficina);
+                    $('#ciudad_juridica').val(sagrilaft.juridicas.ciudad);
+                    $('#departamento_juridica').val(sagrilaft.juridicas.departamento);
+                    $('#fax_juridica').val(sagrilaft.juridicas.fax);
+                    $('#tipoempresa_juridica').val(sagrilaft.juridicas.tipo_empresa);
+                    $('#ciiu_juridica').val(sagrilaft.juridicas.ciiu);
+                    $('#actividad_juridica').val(sagrilaft.juridicas.actividad_economica);
+                    $('#email_juridica').val(sagrilaft.juridicas.email);
+                    $('#telfono_juridica').val(sagrilaft.juridicas.telefono);
+                    $('#contacto_juridica').val(sagrilaft.juridicas.persona_contacto);
+                    $('#cargo_juridica').val(sagrilaft.juridicas.cargo);
+                    $('#emailfact_juridica').val(sagrilaft.juridicas.email_factura);
+                }
+
+                $('#ingresos').val(sagrilaft.ingresos_mensuales);
+                $('#egresos').val(sagrilaft.egresos_mensuales);
+                $('#activos').val(sagrilaft.activos);
+                $('#pasivos').val(sagrilaft.pasivos);
+                $('#patrimonio').val(sagrilaft.patrimonio);
+                $('#revisor_fiscal').val(sagrilaft.revisor_fiscal);
+                $('#otros_ingresos').val(sagrilaft.otros_ingresos);
+                $('#operaciones_internacionales').val(sagrilaft.operaciones_internacionales);
+                $('#operaciones_cual').val(sagrilaft.descrip_internacional);
+                $('#mercancia_exportada').val(sagrilaft.mercancia_internacional);
+
+                $('#banco').val(sagrilaft.banco);
+                $('#num_cuenta').val(sagrilaft.n_cuenta);
+                $('#tipo_cuenta').val(sagrilaft.tipo_cuenta);
+                $('#condicion_pago').val(sagrilaft.condicion_pago);
+                $('#email_pagos').val(sagrilaft.email_pagos);
+                $('#email_comunicados').val(sagrilaft.email_comunicados);
+            }
         });
     </script>
 </body>
