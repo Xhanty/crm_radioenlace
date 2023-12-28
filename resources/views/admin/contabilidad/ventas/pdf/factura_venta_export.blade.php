@@ -259,10 +259,10 @@
                                     <p class="tm_m0">Otras cuentas por pagar - Cuota No. 001 vence el
                                         {{ date('d/m/Y', strtotime($factura->fecha_elaboracion . ' +30 days')) }}</p>
                                     <div class="tm_text_left">
-                                        <!--<img src="{{ asset('RadioEnlaceQr.png') }}" width="120px">
-                                    <br>
-                                    <b style="font-size: 13px">CUFE:</b><span
-                                        style="font-size: 12px">dbfecbbd3491e5214fb4f52f75f3ac56fa1e96643b64e85600a4d939558953d9c27b39d646a5e8e020e38ac95a22549b</span>-->
+                                        <img src="{{ asset('RadioEnlaceQr.png') }}" width="120px">
+                                        <br>
+                                        <b style="font-size: 13px">CUFE:</b><span
+                                            style="font-size: 12px">dbfecbbd3491e5214fb4f52f75f3ac56fa1e96643b64e85600a4d939558953d9c27b39d646a5e8e020e38ac95a22549b</span>
                                     </div>
                                 </div>
                                 <div class="tm_right_footer">
@@ -395,7 +395,7 @@
                                 </div>
                             </div>
                             @if ($factura->observaciones != null)
-                                <p class="tm_mb2" style="margin-top: -44px"><b
+                                <p class="tm_mb2" style="margin-top: -22px"><b
                                         class="tm_primary_color">Observaciones:</b></p>
                                 <p class="tm_m0" style="font-size: 13px">{{ $factura->observaciones }}</p>
                             @endif
