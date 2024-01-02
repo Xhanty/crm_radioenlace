@@ -337,8 +337,8 @@
                         </div>
                         <hr>
                         <div style="display: flex; justify-content: center;">
-                            <a class="btn btn-success btn_pago_factura" data-id="0" style="margin-right: 10px;"
-                                href="javascript:void(0);">Recibir Pago</a>
+                            <!--<a class="btn btn-success btn_pago_factura" data-id="0" style="margin-right: 10px;"
+                                href="javascript:void(0);">Recibir Pago</a>-->
 
                             <a class="btn btn-primary btn_imprimir_factura" style="margin-right: 10px;" target="_blank"
                                 href="{{ route('pdf_factura_compra') }}?token=0">Descargar e
@@ -350,14 +350,14 @@
                                     Otras Opciones
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item btn_options_factura" data-id="0" data-opcion="4"
+                                    <!--<a class="dropdown-item btn_options_factura" data-id="0" data-opcion="4"
                                         href="javascript:void(0)">Ver Contabilización</a>
                                     <a class="dropdown-item btn_options_factura" data-id="0" data-opcion="3"
-                                        href="javascript:void(0)">Aplicar Nota Débito</a>
+                                        href="javascript:void(0)">Aplicar Nota Débito</a>-->
                                     <a class="dropdown-item btn_options_factura" data-id="0" data-opcion="2"
                                         href="javascript:void(0)">Anular</a>
-                                    <a class="dropdown-item btn_options_factura" data-id="0" data-opcion="1"
-                                        href="javascript:void(0)">Duplicar</a>
+                                    <!--<a class="dropdown-item btn_options_factura" data-id="0" data-opcion="1"
+                                        href="javascript:void(0)">Duplicar</a>-->
                                     <a class="dropdown-item btn_options_factura" data-id="0" data-opcion="0"
                                         href="javascript:void(0)">Modificar</a>
                                 </div>
@@ -491,7 +491,7 @@
                                                 <th class="text-center">Valor Unitario</th>
                                                 <th class="text-center">Descuento</th>
                                                 <th class="text-center">Impuesto<br>Cargo</th>
-                                                <th class="text-center">Impuesto<br>Retención</th>
+                                                <!--<th class="text-center">Impuesto<br>Retención</th>-->
                                                 <th class="text-center">Valor Total</th>
                                             </tr>
                                         </thead>
@@ -544,14 +544,14 @@
                                                         @endforeach
                                                     </select>
                                                 </td>
-                                                <td class="pad-4">
+                                                <!--<td class="pad-4">
                                                     <select class="form-select retencion_add">
                                                         <option value="">Seleccione una opción</option>
                                                         @foreach ($impuestos_retencion as $impuesto)
                                                             <option data-impuesto="{{ $impuesto->tarifa }}" value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
                                                         @endforeach
                                                     </select>
-                                                </td>
+                                                </td>-->
                                                 <td class="text-center d-flex pad-4">
                                                     <input disabled type="text" placeholder="0.00"
                                                         class="form-control text-end total_add input_dinner"
@@ -836,14 +836,14 @@
                                                         @endforeach
                                                     </select>
                                                 </td>
-                                                <td class="pad-4">
+                                                <!--<td class="pad-4">
                                                     <select class="form-select retencion_edit">
                                                         <option value="">Seleccione una opción</option>
                                                         @foreach ($impuestos_retencion as $impuesto)
                                                             <option data-impuesto="{{ $impuesto->tarifa }}" value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
                                                         @endforeach
                                                     </select>
-                                                </td>
+                                                </td>-->
                                                 <td class="text-center d-flex pad-4">
                                                     <input disabled type="text" placeholder="0.00"
                                                         class="form-control text-end total_edit input_dinner"

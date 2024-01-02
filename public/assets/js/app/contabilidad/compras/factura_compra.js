@@ -157,7 +157,7 @@ $(document).ready(function () {
                 }) +
                 "</select>" +
                 "</td>" +
-                '<td class="pad-4">' +
+                /*'<td class="pad-4">' +
                 '<select class="form-select retencion_add">' +
                 '<option value="">Seleccione una opción</option>' +
                 impuestos_retencion.map((item) => {
@@ -172,7 +172,7 @@ $(document).ready(function () {
                     );
                 }) +
                 "</select>" +
-                "</td>" +
+                "</td>" +*/
                 '<td class="text-center d-flex pad-4">' +
                 '<input disabled type="text" placeholder="0.00" class="form-control text-end total_add input_dinner" style="border: 0">' +
                 '<a class="center-vertical mg-s-10 delete_row" href="javascript:void(0)"><i class="fa fa-trash"></i></a>&nbsp;' +
@@ -250,7 +250,7 @@ $(document).ready(function () {
                 }) +
                 "</select>" +
                 "</td>" +
-                '<td class="pad-4">' +
+                /*'<td class="pad-4">' +
                 '<select class="form-select retencion_edit">' +
                 '<option value="">Seleccione una opción</option>' +
                 impuestos_retencion.map((item) => {
@@ -265,7 +265,7 @@ $(document).ready(function () {
                     );
                 }) +
                 "</select>" +
-                "</td>" +
+                "</td>" + */
                 '<td class="text-center d-flex pad-4">' +
                 '<input disabled type="text" placeholder="0.00" class="form-control text-end total_edit input_dinner" style="border: 0">' +
                 '<a class="center-vertical mg-s-10 delete_row" href="javascript:void(0)"><i class="fa fa-trash"></i></a>&nbsp;' +
@@ -2290,7 +2290,6 @@ $(document).ready(function () {
         if (
             !proveedor &&
             !estado &&
-            !producto &&
             !num_factura &&
             !cons_inicio &&
             !cons_fin &&

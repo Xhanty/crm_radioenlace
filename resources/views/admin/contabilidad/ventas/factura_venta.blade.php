@@ -604,7 +604,7 @@
                                         </div>
                                         <div id="impuestos_1_add" style="padding: 0px;"></div>
                                         <div id="impuestos_2_add" style="padding: 0px;"></div>
-                                        <div class="col-lg-12 d-flex" style="justify-content: end">
+                                        <!--<div class="col-lg-12 d-flex" style="justify-content: end">
                                             <div class="text-end col-2">
                                                 <input id="retefte_add" class="form-control text-end" type="text" title="Rte Fte: (%)" placeholder="Rte Fte: (%)">
                                             </div>
@@ -627,7 +627,7 @@
                                             <div class="text-end col-4">
                                                 <p class="font-20" id="total_reteica_add">0.00</p>
                                             </div>
-                                        </div>
+                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -891,7 +891,7 @@ reportarse en las centrales de crédito.</textarea>
                                         </div>
                                         <div id="impuestos_1_edit" style="padding: 0px;"></div>
                                         <div id="impuestos_2_edit" style="padding: 0px;"></div>
-                                        <div class="col-lg-12 d-flex" style="justify-content: end">
+                                        <!--<div class="col-lg-12 d-flex" style="justify-content: end">
                                             <div class="text-end col-2">
                                                 <input id="retefte_edit" class="form-control text-end" type="text" title="Rte Fte: (%)" placeholder="Rte Fte: (%)">
                                             </div>
@@ -914,7 +914,7 @@ reportarse en las centrales de crédito.</textarea>
                                             <div class="text-end col-4">
                                                 <p class="font-20" id="total_reteica_edit">0.00</p>
                                             </div>
-                                        </div>
+                                        </div>-->
                                     </div>
                                 </div>
                             </div>
