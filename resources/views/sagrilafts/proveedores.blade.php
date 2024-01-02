@@ -826,6 +826,7 @@
         $(document).ready(function() {
             // Preguntar tipo de persona al cargar la página
             $("#tipo_persona").focus();
+            var view_data = "{{ $view_data }}";
 
             $(".btn-navigate-form-step").attr("disabled", true);
 
@@ -856,7 +857,7 @@
                 }
             });
 
-            if ({{ $view_data }}) {
+            if (view_data) {
                 $('input[type="text"]').attr('readonly', true);
                 $('input[type="date"]').attr('readonly', true);
                 $('input[type="file"]').attr('disabled', true);
