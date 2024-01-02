@@ -402,7 +402,10 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/recibos_info_pagos', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'info'])->name('recibos_info_pagos');
     Route::post('/recibos_info_pagos_grupales', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'info_grupales'])->name('recibos_info_pagos_grupales');
     Route::post('/recibos_info_cliente', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'cliente_facturas'])->name('recibos_info_cliente');
+    Route::post('/data_recibos_info', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'data_recibo_info'])->name('data_recibos_info');
+    Route::post('/anular_recibo_caja', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'anular_recibo_caja'])->name('anular_recibo_caja');
     Route::post('/recibo_pago_grupo_add', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'pago_grupo_add'])->name('recibo_pago_grupo_add');
+    Route::post('/recibo_pago_grupo_edit', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'pago_grupo_edit'])->name('recibo_pago_grupo_edit');
 
     // NOTA CREDITO VENTA
     Route::get('/nota_credito_venta', [App\Http\Controllers\Admin\Contabilidad\Ventas\NotaCreditoController::class, 'index'])->name('nota_credito_venta');

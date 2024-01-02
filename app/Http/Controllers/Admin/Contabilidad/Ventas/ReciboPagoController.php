@@ -453,6 +453,48 @@ class ReciboPagoController extends Controller
         return response()->json(['info' => 1, 'facturas' => $facturas]);
     }
 
+    public function data_recibo_info(Request $request)
+    {
+        $recibo_id = $request->id;
+
+        $recibo = DB::table('pagos_ventas')
+            ->where('id', $recibo_id)
+            ->first();
+
+        $cliente = $recibo->cliente_id;
+
+        $facturas = DB::table('factura_venta')
+            ->where('cliente_id', $cliente)
+            ->where('status', 1)
+            ->get();
+
+        // Pagos de la factura
+        foreach ($facturas as $key => $value) {
+            $pagos = DB::table('pagos_ventas')
+                ->where('cliente_id', $cliente)
+                ->where('tipo', 1)
+                ->where('status', 1)
+                ->get();
+
+            $value->pagos = $pagos;
+        }
+
+        return response()->json(['info' => 1, 'facturas' => $facturas, 'recibo' => $recibo]);
+    }
+
+    public function anular_recibo_caja(Request $request)
+    {
+        $id = $request->id;
+        
+        DB::table('pagos_ventas')
+            ->where('id', $id)
+            ->update([
+                'status' => 4,
+            ]);
+        
+        return response()->json(['info' => 1, 'msg' => 'Recibo anulado correctamente']);
+    }
+
     public function pago_grupo_add(Request $request)
     {
         $tipo = $request->tipo;
@@ -535,6 +577,60 @@ class ReciboPagoController extends Controller
                 'created_by' => auth()->user()->id,
                 'created_at' => date('Y-m-d H:i:s')
             ]);*/
+        }
+
+        return response()->json(['info' => 1, 'msg' => 'Pago registrado correctamente']);
+    }
+
+    public function pago_grupo_edit(Request $request)
+    {
+        $id = $request->id;
+        $tipo = $request->tipo;
+        $fecha = $request->fecha;
+        $cliente = $request->cliente;
+        //$numero = $request->numero;
+        $numero_siigo = $request->numero_siigo;
+        //$transaccion = $request->transaccion;
+        $forma_pago = $request->forma_pago;
+        $pagado = $request->pagado;
+        $facturas = json_decode($request->facturas);
+        $observacion = $request->observacion;
+        $archivo = $request->archivo;
+        $adjunto = null;
+
+        if ($request->hasFile('archivo')) {
+            $file = $request->file('archivo');
+            $name = time() . $file->getClientOriginalName();
+            $file->move('images/contabilidad/recibos_caja/', $name);
+            $adjunto = $name;
+        }
+
+        DB::table('pagos_ventas')->where('id', $id)->update([
+            'numero_siigo' => $numero_siigo,
+            'grupo_facturas' => json_encode($facturas),
+            'cliente_id' => $cliente,
+            'fecha_elaboracion' => $fecha,
+            'forma_pago' => $forma_pago,
+            'valor' => $pagado,
+            'status' => 1,
+            'observacion' => $observacion,
+            'adjunto_pdf' => $adjunto ?? null,
+            'created_by' => auth()->user()->id,
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        foreach ($facturas as $key => $value) {
+            $factura = DB::table('factura_venta')
+                ->where('id', $value->id)
+                ->first();
+
+            if ($factura->valor_total == $value->valor) {
+                DB::table('factura_venta')
+                    ->where('id', $value->id)
+                    ->update([
+                        'status' => 2,
+                    ]);
+            }
         }
 
         return response()->json(['info' => 1, 'msg' => 'Pago registrado correctamente']);

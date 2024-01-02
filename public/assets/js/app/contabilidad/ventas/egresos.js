@@ -474,9 +474,9 @@ $(document).ready(function () {
                                     '<select data-total="' + total_pg + '" data-pendiente="' + pendiente + '" data-id="' + factura_id + '" data-subtotal="' + subtotal_num + '" title="Rte Fte: (%)" class="form-select rte_fuente">' +
                                     '<option value="">Selecciona una opción</option>' +
                                     rete_fuentes.map((element) => {
-                                        if(valor_rte_fuente > 0 && element.id == valor_rte_fuente) {
+                                        /*if(valor_rte_fuente > 0 && element.id == valor_rte_fuente) {
                                             return '<option data-id="' + element.id + '" value="' + element.tarifa + '" selected>' + element.nombre + '</option>';
-                                        }
+                                        }*/
                                         return '<option data-id="' + element.id + '" value="' + element.tarifa + '">' + element.nombre + '</option>';
                                     }) +
                                     '</select></div>' +
@@ -486,9 +486,9 @@ $(document).ready(function () {
                                     '<select data-total="' + total_pg + '" data-pendiente="' + pendiente + '" data-id="' + factura_id + '" data-subtotal="' + sum_impuestos_1 + '" title="Rte Iva: (%)" class="form-select rte_iva">' +
                                     '<option value="">Selecciona una opción</option>' +
                                     rete_ivas.map((element) => {
-                                        if(valor_rte_iva > 0 && element.id == valor_rte_iva) {
+                                        /*if(valor_rte_iva > 0 && element.id == valor_rte_iva) {
                                             return '<option data-id="' + element.id + '" value="' + element.tarifa + '" selected>' + element.nombre + '</option>';
-                                        }
+                                        }*/
                                         return '<option data-id="' + element.id + '" value="' + element.tarifa + '">' + element.nombre + '</option>';
                                     }) +
                                     '</select></div>' +
@@ -498,9 +498,9 @@ $(document).ready(function () {
                                     '<select data-total="' + total_pg + '" data-pendiente="' + pendiente + '" data-id="' + factura_id + '" data-subtotal="' + subtotal_num + '" title="Rte Ica: (%)" class="form-select rte_ica">' +
                                     '<option value="">Selecciona una opción</option>' +
                                     rete_icas.map((element) => {
-                                        if(valor_rte_ica > 0 && element.id == valor_rte_ica) {
+                                        /*if(valor_rte_ica > 0 && element.id == valor_rte_ica) {
                                             return '<option data-id="' + element.id + '" value="' + element.tarifa + '" selected>' + element.nombre + '</option>';
-                                        }
+                                        }*/
                                         return '<option data-id="' + element.id + '" value="' + element.tarifa + '">' + element.nombre + '</option>';
                                     }) +
                                     '</select></div>' +
@@ -606,6 +606,25 @@ $(document).ready(function () {
         }
     });
 
+    $(document).on("change", ".check_fc_edit", function () {
+        //Habilitar o deshabilitar el input
+        let check = $(this).prop("checked");
+
+        if (check) {
+            $(this)
+                .closest("tr")
+                .find("input[type=text]")
+                .prop("disabled", false);
+        } else {
+            $(this)
+                .closest("tr")
+                .find("input[type=text]")
+                .prop("disabled", true);
+            $(this).closest("tr").find("input[type=text]").val("");
+            $(".valor_edit").trigger("change");
+        }
+    });
+
     $(document).on("change", ".valor_add", function () {
         // Recorrer los inputs
         let total = 0;
@@ -621,6 +640,28 @@ $(document).ready(function () {
             }
         });
         $("#saldo_pagado").html(
+            total.toLocaleString("de-DE", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            })
+        );
+    });
+
+    $(document).on("change", ".valor_edit", function () {
+        // Recorrer los inputs
+        let total = 0;
+        $(".valor_edit").each(function () {
+            let v = $(this).val();
+            v = v.split(",");
+            v = v[0];
+            v = v.replaceAll(".", "");
+            v = parseInt(v);
+
+            if (v > 0) {
+                total += v;
+            }
+        });
+        $("#saldo_pagado_edit").html(
             total.toLocaleString("de-DE", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
@@ -827,6 +868,475 @@ $(document).ready(function () {
             $(this).closest("tr").find(".saldo_pendiente").html((pendiente - valor_rte_txt).toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
         } else {
             $(this).closest("tr").find(".txt_rte_ica").html("Rte Ica: 0% <b>(0.00)</b>");
+        }
+    });
+
+    $(document).on("click", ".btn_options_factura", function () {
+        let id = $(this).attr("data-id");
+        let opcion = $(this).attr("data-opcion");
+
+        if (opcion == 0) {
+            modificar_pago(id);
+        } else if (opcion == 1) {
+            anular_pago(id);
+        }
+    });
+
+    // ANULAR PAGO
+    function anular_pago(id) {
+        Swal.fire({
+            title: '¿Está seguro de anular este recibo de caja?',
+            text: "Esta acción no se puede revertir",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#dc3545',
+            confirmButtonText: 'Anular',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $("#global-loader").fadeIn('slow');
+                let formData = new FormData();
+                formData.append("id", id);
+
+                $.ajax({
+                    url: "anular_recibo_caja",
+                    type: "POST",
+                    data: formData,
+                    dataType: "JSON",
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response.info == 1) {
+                            toastr.success('Recibo de caja anulado con éxito');
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000);
+                        } else {
+                            toastr.error('Ha ocurrido un error');
+                        }
+                    },
+                    error: function (error) {
+                        toastr.error('Ha ocurrido un error');
+                    }
+                });
+            }
+        });
+    }
+
+    // MODIFICAR PAGO
+    function modificar_pago(id) {
+        $.ajax({
+            url: "data_recibos_info",
+            type: "POST",
+            data: {
+                id: id,
+            },
+            dataType: "json",
+            success: function (response) {
+                if (response.info == 1 && response.facturas.length > 0) {
+                    let facturas = response.facturas;
+                    let recibo = response.recibo;
+                    let cliente = recibo.cliente_id;
+                    let total = 0;
+                    let total_pg = 0;
+                    let total_pendiente = 0;
+
+                    $("#id_edit_pago").val(id);
+                    $("#tipo_edit").val(1).trigger("change");
+                    $("#fecha_edit").val(recibo.fecha_elaboracion);
+                    $("#numero_edit").val(recibo.numero);
+                    $("#numero_siigo_edit").val(recibo.numero_siigo);
+                    $("#transaccion_edit").val(1);
+                    $("#formas_pago_edit").val(recibo.forma_pago).trigger("change");
+                    $("#valor_edit").val(recibo.valor);
+                    $("#observaciones_edit").val(recibo.observacion);
+
+                    $("#tbl_facturas_list_edit").empty();
+                    facturas.forEach((element) => {
+                        let valor = element.valor_total.split(",");
+                        valor = valor[0];
+                        valor = valor.replaceAll(".", "");
+                        total += parseInt(valor);
+                        total_pg = parseInt(valor);
+                        let pendiente = parseInt(valor);
+                        let impuestos_1 = JSON.parse(element.impuestos_1);
+                        let sum_impuestos_1 = 0;
+                        let factura_id = element.id;
+
+                        let subtotal_num = element.subtotal.split(',');
+                        subtotal_num = subtotal_num[0];
+                        subtotal_num = subtotal_num.replaceAll('.', '');
+                        subtotal_num = parseInt(subtotal_num);
+
+                        let retenciones_html = '';
+
+                        if (impuestos_1) {
+                            for (var i = 0; i < impuestos_1.length; i++) {
+                                let valor = parseInt(impuestos_1[i][1]);
+                                sum_impuestos_1 += valor;
+                            }
+                        }
+
+                        let valor_rte_fuente = 0;
+                        let valor_rte_iva = 0;
+                        let valor_rte_ica = 0;
+                        let valor_pago = 0;
+                        
+                        if (element.pagos && element.pagos.length > 0) {
+                            element.pagos.forEach((element) => {
+                                let facturas_json = JSON.parse(element.grupo_facturas);
+                                facturas_json.forEach((element2) => {
+                                    if(element2.id == factura_id) {
+                                        let rte_fuente_val = element2.rte_fuente ?? null;
+                                        let rte_iva_val = element2.rte_iva ?? null;
+                                        let rte_ica_val = element2.rte_ica ?? null;
+                                        let valor = element2.valor.split(",");
+                                        valor = valor[0];
+                                        valor = valor.replaceAll(".", "");
+                                        pendiente = pendiente - parseInt(valor);
+                                        valor_pago = parseInt(valor);
+                                        
+                                        // Buscar los option por data-id y seleccionarlos
+                                        if(rte_fuente_val) {
+                                            valor_rte_fuente = rte_fuente_val;
+                                        }
+
+                                        if(rte_iva_val) {
+                                            valor_rte_iva = rte_iva_val;
+                                        }
+
+                                        if(rte_ica_val) {
+                                            valor_rte_ica = rte_ica_val;
+                                        }
+                                    }
+                                });
+                            });
+                        }
+
+                        retenciones_html += '<div class="row"><div class="col-6">' +
+                                '<select data-total="' + total_pg + '" data-pendiente="' + pendiente + '" data-id="' + factura_id + '" data-subtotal="' + subtotal_num + '" title="Rte Fte: (%)" class="form-select rte_fuente_edit">' +
+                                '<option value="">Selecciona una opción</option>' +
+                                rete_fuentes.map((element) => {
+                                    if(valor_rte_fuente > 0 && element.id == valor_rte_fuente) {
+                                        return '<option data-id="' + element.id + '" value="' + element.tarifa + '" selected>' + element.nombre + '</option>';
+                                    }
+                                    return '<option data-id="' + element.id + '" value="' + element.tarifa + '">' + element.nombre + '</option>';
+                                }) +
+                                '</select></div>' +
+                                '<div class="col-6"><span class="txt_rte_fte_edit">Rte Fte: 0% <b>(0.00)</b></span><br></div></div><br>';
+
+                        retenciones_html += '<div class="row"><div class="col-6">' +
+                                '<select data-total="' + total_pg + '" data-pendiente="' + pendiente + '" data-id="' + factura_id + '" data-subtotal="' + sum_impuestos_1 + '" title="Rte Iva: (%)" class="form-select rte_iva_edit">' +
+                                '<option value="">Selecciona una opción</option>' +
+                                rete_ivas.map((element) => {
+                                    if(valor_rte_iva > 0 && element.id == valor_rte_iva) {
+                                        return '<option data-id="' + element.id + '" value="' + element.tarifa + '" selected>' + element.nombre + '</option>';
+                                    }
+                                    return '<option data-id="' + element.id + '" value="' + element.tarifa + '">' + element.nombre + '</option>';
+                                }) +
+                                '</select></div>' +
+                                '<div class="col-6"><span class="txt_rte_iva_edit">Rte Iva: 0% <b>(0.00)</b></span><br></div></div><br>';
+
+                        retenciones_html += '<div class="row"><div class="col-6">' +
+                                '<select data-total="' + total_pg + '" data-pendiente="' + pendiente + '" data-id="' + factura_id + '" data-subtotal="' + subtotal_num + '" title="Rte Ica: (%)" class="form-select rte_ica_edit">' +
+                                '<option value="">Selecciona una opción</option>' +
+                                rete_icas.map((element) => {
+                                    if(valor_rte_ica > 0 && element.id == valor_rte_ica) {
+                                        return '<option data-id="' + element.id + '" value="' + element.tarifa + '" selected>' + element.nombre + '</option>';
+                                    }
+                                    return '<option data-id="' + element.id + '" value="' + element.tarifa + '">' + element.nombre + '</option>';
+                                }) +
+                                '</select></div>' +
+                                '<div class="col-6"><span class="txt_rte_ica_edit">Rte Ica: 0% <b>(0.00)</b></span><br></div></div><br>';
+
+                        total_pendiente += pendiente;
+
+                        let html_pago = '<td class="text-center pad-4"><input type="text" disabled style="text-align: right"; class="form-control input_dinner valor_edit" placeholder="Ingrese un valor"></td>';
+                        let html_check = '<td class="text-center pad-4"><input data-id="' + element.id + '" type="checkbox" class="check_fc_edit"></td>';
+
+                        if(valor_pago > 0) {
+                            html_pago = '<td class="text-center pad-4"><input type="text" style="text-align: right"; class="form-control input_dinner valor_edit" placeholder="Ingrese un valor" value="' + valor_pago.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '"></td>';
+                        }
+
+                        if(valor_pago > 0) {
+                            html_check = '<td class="text-center pad-4"><input data-id="' + element.id + '" type="checkbox" class="check_fc_edit" checked></td>';
+                        }
+
+                        $("#tbl_facturas_list_edit").append(
+                            "<tr>" +
+                                html_check +
+                                '<td class="text-center pad-4"><a href="' + url_general + 'pdf_factura_venta?token=' + element.id + '" target="_blank">FE-' +
+                                element.numero +
+                                "</a></td>" +
+                                '<td class="text-center pad-4">' +
+                                retenciones_html +
+                                "</td>" +
+                                '<td class="text-center pad-4">' +
+                                element.valor_total +
+                                "</td>" +
+                                '<td class="text-center saldo_total_edit pad-4">' +
+                                element.valor_total +
+                                "</td>" +
+                                '<td class="text-center saldo_pendiente_edit pad-4">' +
+                                pendiente.toLocaleString("de-DE", {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2,
+                                }) +
+                                "</td>" +
+                                html_pago
+                        );
+                    });
+
+                    $("#cliente_edit").val(cliente).trigger("change");
+
+                    $("#valor_facturas_edit").html(
+                        total.toLocaleString("de-DE", {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                        })
+                    );
+
+                    $("#total_saldo_edit").html(
+                        total.toLocaleString("de-DE", {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                        })
+                    );
+
+                    $("#total_saldo_pendiente_edit").html(
+                        total_pendiente.toLocaleString("de-DE", {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                        })
+                    );
+
+                    $("#content_list").addClass("d-none");
+                    $("#content_edit").removeClass("d-none");
+
+                    $(".form-select").each(function () {
+                        $(this).select2({
+                            dropdownParent: $(this).parent(),
+                            placeholder: "Seleccione",
+                            searchInputPlaceholder: "Buscar",
+                            allowClear: true,
+                        });
+                    });
+
+                    $(".rte_fuente_edit").trigger("change");
+                    $(".rte_iva_edit").trigger("change");
+                    $(".rte_ica_edit").trigger("change");
+
+                } else if (
+                    response.info == 1 &&
+                    response.facturas.length < 1
+                ) {
+                    toastr.error("Error al cargar los datos del recibo");
+                } else {
+                    toastr.error("Error al cargar los datos del recibo");
+                }
+            },
+        });
+    }
+
+    $(document).on("change", ".rte_fuente_edit", function () {
+        let valor = $(this).val();
+        let valor_total = $(this).data("subtotal");
+        let total = $(this).data("total");
+        let pendiente = $(this).data("pendiente");
+        pendiente = parseInt(pendiente);
+        total = parseInt(total);
+        valor_total_num = parseInt(valor_total);
+
+        if (valor > 0) {
+            total = total - (valor_total_num * (valor / 100));
+            valor_rte_txt = (valor_total_num * (valor / 100));
+            let valor_rte = (valor_total_num * (valor / 100)).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            $(this).closest("tr").find(".txt_rte_fte_edit").html("Rte Fte: " + valor + "% <b>(" + valor_rte + ")</b>");
+            $(this).closest("tr").find(".saldo_total_edit").html(total.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+            $(this).closest("tr").find(".saldo_pendiente_edit").html((pendiente - valor_rte_txt).toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        } else {
+            $(this).closest("tr").find(".txt_rte_fte_edit").html("Rte Fte: 0% <b>(0.00)</b>");
+        }
+    });
+
+    $(document).on("change", ".rte_iva_edit", function () {
+        let valor = $(this).val();
+        let valor_total = $(this).data("subtotal");
+        let total = $(this).data("total");
+        let pendiente = $(this).data("pendiente");
+        pendiente = parseInt(pendiente);
+        total = parseInt(total);
+        valor_total_num = parseInt(valor_total);
+
+        if (valor > 0) {
+            total = total - (valor_total_num * (valor / 100));
+            valor_rte_txt = (valor_total_num * (valor / 100));
+            let valor_rte = (valor_total_num * (valor / 100)).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            $(this).closest("tr").find(".txt_rte_iva_edit").html("Rte Iva: " + valor + "% <b>(" + valor_rte + ")</b>");
+            $(this).closest("tr").find(".saldo_total_edit").html(total.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+            $(this).closest("tr").find(".saldo_pendiente_edit").html((pendiente - valor_rte_txt).toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        } else {
+            $(this).closest("tr").find(".txt_rte_iva_edit").html("Rte Iva: 0% <b>(0.00)</b>");
+        }
+    });
+
+    $(document).on("change", ".rte_ica_edit", function () {
+        let valor = $(this).val();
+        let valor_total = $(this).data("subtotal");
+        let total = $(this).data("total");
+        let pendiente = $(this).data("pendiente");
+        pendiente = parseInt(pendiente);
+        total = parseInt(total);
+        valor_total_num = parseInt(valor_total);
+
+        if (valor > 0) {
+            total = total - (valor_total_num * valor) / 1000;
+            valor_rte_txt = (valor_total_num * valor) / 1000;
+            let valor_rte = ((valor_total_num * valor) / 1000).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            $(this).closest("tr").find(".txt_rte_ica_edit").html("Rte Ica: " + valor + "% <b>(" + valor_rte + ")</b>");
+            $(this).closest("tr").find(".saldo_total_edit").html(total.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+            $(this).closest("tr").find(".saldo_pendiente_edit").html((pendiente - valor_rte_txt).toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        } else {
+            $(this).closest("tr").find(".txt_rte_ica_edit").html("Rte Ica: 0% <b>(0.00)</b>");
+        }
+    });
+
+    $("#btnEditPago").click(function () {
+        let id = $("#id_edit_pago").val();
+        let cliente = $("#cliente_edit").val();
+        let tipo = $("#tipo_edit").val();
+        let fecha = $("#fecha_edit").val();
+        let numero = $("#numero_edit").val();
+        let numero_siigo = $("#numero_siigo_edit").val();
+        let transaccion = $("#transaccion_edit").val();
+        let forma_pago = $("#formas_pago_edit").val();
+        let pagado = $("#valor_edit").val();
+        let total_pagado = $("#saldo_pagado_edit").html();
+        let observacion = $("#observaciones_edit").val();
+
+        let facturas = [];
+        let validar = 0;
+
+        $(".check_fc_edit").each(function () {
+            if ($(this).prop("checked")) {
+                let id = $(this).data("id");
+                let pendiente = $(this).closest("tr").find("td").eq(2).html();
+                let rte_fuente = $(this).closest("tr").find(".rte_fuente_edit option:selected").data("id");
+                let rte_iva = $(this).closest("tr").find(".rte_iva_edit option:selected").data("id");
+                let rte_ica = $(this).closest("tr").find(".rte_ica_edit option:selected").data("id");
+                let valor = $(this)
+                    .closest("tr")
+                    .find("input[type=text]")
+                    .val();
+
+                pendiente = pendiente.split(",");
+                pendiente = pendiente[0];
+                pendiente = pendiente.replaceAll(".", "");
+                pendiente = parseInt(pendiente);
+
+                if (!valor) {
+                    validar = 1;
+                } else {
+                    valor = valor.split(",");
+                    valor = valor[0];
+                    valor = valor.replaceAll(".", "");
+                    valor = parseInt(valor);
+
+                    if (valor > pendiente) {
+                        validar = 1;
+                    } else {
+                        facturas.push({
+                            id: id,
+                            valor: valor.toLocaleString("de-DE", {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                            }),
+                            rte_fuente: rte_fuente,
+                            rte_iva: rte_iva,
+                            rte_ica: rte_ica,
+                        });
+                    }
+                }
+            }
+        });
+
+        pagado = pagado.split(",");
+        pagado = pagado[0];
+        pagado = pagado.replaceAll(".", "");
+        pagado = parseInt(pagado);
+
+        total_pagado = total_pagado.split(",");
+        total_pagado = total_pagado[0];
+        total_pagado = total_pagado.replaceAll(".", "");
+        total_pagado = parseInt(total_pagado);
+
+        if (tipo == "") {
+            toastr.error("Seleccione un tipo");
+            return false;
+        } else if (numero_siigo < 1) {
+            toastr.error("Ingrese un número siigo");
+            return false;
+        } else if (forma_pago == "") {
+            toastr.error("Seleccione dónde ingresa el dinero");
+            return false;
+        } else if (pagado < 1) {
+            toastr.error("Ingrese un valor a pagar");
+            return false;
+        } else if (validar == 1) {
+            toastr.error("Revisa los valores a pagar");
+            return false;
+        } else if (observacion == "") {
+            toastr.error("Ingrese una observación");
+            return false;
+        } else {
+            let formData = new FormData();
+            formData.append("id", id);
+            formData.append("cliente", cliente);
+            formData.append("tipo", tipo);
+            formData.append("fecha", fecha);
+            formData.append("numero", numero);
+            formData.append("numero_siigo", numero_siigo);
+            formData.append("transaccion", transaccion);
+            formData.append("forma_pago", forma_pago);
+            formData.append(
+                "pagado",
+                pagado.toLocaleString("de-DE", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                })
+            );
+            formData.append("facturas", JSON.stringify(facturas));
+            formData.append("observacion", observacion);
+            formData.append("archivo", $("#factura_edit")[0].files[0]);
+
+            $("#btnEditPago").prop("disabled", true);
+            $("#btnEditPago").html(
+                '<i class="fa fa-spinner fa-spin"></i> Procesando...'
+            );
+            $.ajax({
+                url: "recibo_pago_grupo_edit",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.info == 1) {
+                        toastr.success("Pago guardado correctamente");
+                        window.location.href = url_general + "recibos_pagos";
+                    } else {
+                        toastr.error("Error al guardar el pago");
+                    }
+
+                    $("#btnEditPago").prop("disabled", false);
+                    $("#btnEditPago").html("Guardar Pago");
+                },
+                error: function (error) {
+                    toastr.error("Error al guardar el pago");
+                    $("#btnEditPago").prop("disabled", false);
+                    $("#btnEditPago").html("Guardar Pago");
+                },
+            });
         }
     });
 });

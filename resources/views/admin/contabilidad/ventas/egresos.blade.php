@@ -77,6 +77,35 @@
         .orange {
             color: #FF8000;
         }
+
+        .badge {
+            margin-left: 6px;
+            display: inline-block;
+            padding: 0.25em 0.5em; /* Ajusta el padding según tus preferencias */
+            font-size: 12px; /* Tamaño de fuente */
+            font-weight: bold; /* Peso de la fuente */
+            border-radius: 4px; /* Borde redondeado */
+            background-color: #ffc107; /* Color de fondo */
+            color: #000; /* Color del texto */
+        }
+
+        /* Estilo para el badge de éxito */
+        .badge-success {
+            background-color: #28a745; /* Color de fondo para el éxito */
+            color: #fff; /* Color del texto para el éxito */
+        }
+
+        /* Estilo para el badge de advertencia */
+        .badge-warning {
+            background-color: #ffc107; /* Color de fondo para la advertencia */
+            color: #000; /* Color del texto para la advertencia */
+        }
+
+        /* Estilo para el badge de error */
+        .badge-danger {
+            background-color: #dc3545; /* Color de fondo para el error */
+            color: #fff; /* Color del texto para el error */
+        }
     </style>
 
     <style>
@@ -162,7 +191,20 @@
                             <div class="p-0">
                                 <div class="main-invoice-list" id="mainInvoiceList">
                                     @foreach ($egresos as $key => $comprobante)
-                                        <div class="media comprobante_btn" @if($comprobante->grupo_facturas) data-grupo="1" @endif data-id="{{ $comprobante->id }}">
+                                        @if ($comprobante->status == 0)
+                                            @php
+                                                $bg = 'bg-pending';
+                                            @endphp
+                                        @elseif($comprobante->status == 1)
+                                            @php
+                                                $bg = 'bg-paid';
+                                            @endphp
+                                        @else
+                                            @php
+                                                $bg = 'bg-cancel';
+                                            @endphp
+                                        @endif
+                                        <div class="media comprobante_btn {{ $bg }}" @if($comprobante->grupo_facturas) data-grupo="1" @endif data-id="{{ $comprobante->id }}">
                                             <div class="media-icon">
                                                 <i class="far fa-file-alt"></i>
                                             </div>
@@ -240,22 +282,22 @@
                                             target="_blank" href="{{ route('recibos_pagos_pdf') }}?token=0">Descargar e
                                             Imprimir</a>
 
-                                        <!--<div class="dropdown">
+                                        <div class="dropdown">
                                             <button type="button" class="btn btn-primary dropdown-toggle"
                                                 data-bs-toggle="dropdown" aria-expanded="false">
                                                 Otras Opciones
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item btn_options_factura" data-id="0" data-opcion="4"
+                                                <!--<a class="dropdown-item btn_options_factura" data-id="0" data-opcion="4"
                                                     href="javascript:void(0)">Ver Contabilización</a>
-                                                <a class="dropdown-item btn_options_factura" data-id="0" data-opcion="2"
-                                                    href="javascript:void(0)">Anular</a>
                                                 <a class="dropdown-item btn_options_factura" data-id="0" data-opcion="1"
-                                                    href="javascript:void(0)">Duplicar</a>
+                                                    href="javascript:void(0)">Duplicar</a>-->
                                                 <a class="dropdown-item btn_options_factura" data-id="0" data-opcion="0"
                                                     href="javascript:void(0)">Modificar</a>
+                                                <a class="dropdown-item btn_options_factura" data-id="0" data-opcion="1"
+                                                    href="javascript:void(0)">Anular</a>
                                             </div>
-                                        </div>-->
+                                        </div>
                                     </div>
                                 </div>
                                 <div id="content_loader" class="d-none">
@@ -485,6 +527,144 @@
                                     </div>
                                     <div class="text-center mt-5">
                                         <button class="btn btn-success" id="btnAddPago">Guardar Pago</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit -->
+        <div id="content_edit" class="d-none">
+            <div class="row row-sm">
+                <div class="col-md-12 col-xl-12">
+                    <div class=" main-content-body-invoice">
+                        <div class="card card-invoice">
+                            <div class="card-header ps-3 pe-3 pt-3 pb-0 d-flex-header-table">
+                                <div class="div-1-tables-header">
+                                    <h3 class="card-title">Modificar recibo de pago</h3>
+                                </div>
+                                <div class="div-2-tables-header" style="margin-bottom: 13px">
+                                    <a href="{{ route('recibos_pagos') }}" class="btn btn-primary back_home">x</a>
+                                </div>
+                            </div>
+                            <div class="p-0">
+                                <div class="card-body" style="margin-top: -18px;">
+                                    <input type="hidden" id="id_edit_pago" disabled>
+                                    <div class="row row-sm">
+                                        <div class="col-lg-4">
+                                            <label for="">Tipo</label>
+                                            <select class="form-select" id="tipo_edit">
+                                                <option value="">Seleccione una opción</option>
+                                                <option value="1">(RP-1) Recibo Pago</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label for="">Fecha de pago</label>
+                                            <input class="form-control" value="{{ date('Y-m-d') }}" id="fecha_edit"
+                                                placeholder="Fecha de pago" type="date">
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <label for="">Número</label>
+                                            <input class="form-control text-center" value="{{ $num_egreso }}" disabled
+                                                id="numero_edit" placeholder="Número" type="text">
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <label for="">Número Siigo</label>
+                                            <input class="form-control text-center"
+                                                id="numero_siigo_edit" placeholder="Número Siigo" type="number">
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row row-sm">
+                                        <div class="col-lg-4">
+                                            <label for="">Cliente / otros</label>
+                                            <select class="form-select" id="cliente_edit" disabled>
+                                                <option value="">Seleccione una opción</option>
+                                                @foreach ($clientes as $cliente)
+                                                    <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}
+                                                        ({{ $cliente->nit }})
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <label for="">Realizar un</label>
+                                            <select class="form-select" id="transaccion_edit" disabled>
+                                                <option value="1">Abono a deuda</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <label for="">Dónde ingresa el dinero</label>
+                                            <select class="form-select" id="formas_pago_edit">
+                                                <option value="">Seleccione una opción</option>
+                                                @foreach ($formas_pago as $forma_pago)
+                                                    <option value="{{ $forma_pago->id }}">{{ $forma_pago->code }} |
+                                                        {{ $forma_pago->nombre }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <div class="row row-sm" style="display: flex; justify-content: end">
+                                        <div class="col-lg-3">
+                                            <label for="">Valor Pagado</label>
+                                            <input class="form-control input_dinner" style="text-align: right;"
+                                                value="0.00" id="valor_edit" placeholder="Número" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="row row-sm mt-3">
+                                        <div class="table-responsive">
+                                            <table id="tbl_data_detail"
+                                                class="table border-top-0 table-bordered text-nowrap border-bottom">
+                                                <thead>
+                                                    <tr class="bg-gray">
+                                                        <th class="text-center"><!--<input type="checkbox" checked
+                                                                id="check_all">-->
+                                                        </th>
+                                                        <th class="text-center">Factura</th>
+                                                        <th class="text-center">Retenciones</th>
+                                                        <th class="text-center">Valor Factura</th>
+                                                        <th class="text-center">Saldo Total</th>
+                                                        <th class="text-center">Saldo a Pagar</th>
+                                                        <th class="text-center"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tbl_facturas_list_edit"></tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th colspan="3" class="text-end"></th>
+                                                        <th class="text-center" id="valor_facturas_edit">0.00</th>
+                                                        <th class="text-center" id="total_saldo_edit">0.00</th>
+                                                        <th class="text-center" id="total_saldo_pendiente_edit">0.00</th>
+                                                        <th class="text-end" id="saldo_pagado_edit">0.00</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row row-sm">
+                                        <div class="col-lg">
+                                            <label for="">Observaciones</label>
+                                            <textarea class="form-control" id="observaciones_edit" placeholder="Observaciones" rows="3"
+                                                style="resize: none"></textarea>
+                                        </div>
+
+                                        <div class="col-lg mt-4">
+                                            <label for="">Adjunto</label>
+                                            <input class="form-control" accept="application/pdf" id="factura_edit"
+                                                placeholder="Contacto" type="file">
+                                        </div>
+                                    </div>
+                                    <div class="text-center mt-5">
+                                        <button class="btn btn-success" id="btnEditPago">Guardar Pago</button>
                                     </div>
                                 </div>
                             </div>
