@@ -68,9 +68,26 @@
 
             <!--  Calidad del servicio  -->
             <section class="row">
-                <div class="col-md-12">
+                <div class="col-md-8">
                     <h3>Calidad del servicio.</h3>
                     <p></p>
+                </div>
+                <div class="col-md-4">
+                    <!-- Titulos -->
+                    <div class="row">
+                        <div class="col-md-3">
+                            <b><p>Excelente</p></b>
+                        </div>
+                        <div class="col-md-3">
+                            <b><p>Bueno</p></b>
+                        </div>
+                        <div class="col-md-3">
+                            <b><p>Regular</p></b>
+                        </div>
+                        <div class="col-md-3">
+                            <b><p>Malo</p></b>
+                        </div>
+                    </div>
                 </div>
             </section>
             <!--  PREGUNTA 1  -->
