@@ -58,10 +58,12 @@ $(document).ready(function() {
     $('.select2').select2({
         placeholder: 'Choose one',
         searchInputPlaceholder: 'Search',
-        width:'100%'
+        width:'100%',
+        allowClear: true,
     });
     $('.select2-no-search').select2({
         minimumResultsForSearch: Infinity,
-        placeholder: 'Choose one'
+        placeholder: 'Choose one',
+        allowClear: true,
     });
 });

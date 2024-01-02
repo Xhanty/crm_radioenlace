@@ -356,8 +356,8 @@
                         <hr>
                         <hr>
                         <div style="display: flex; justify-content: center;">
-                            <a class="btn btn-success btn_pago_factura" data-id="0" style="margin-right: 10px;"
-                                href="javascript:void(0);">Recibir Pago</a>
+                            <!--<a class="btn btn-success btn_pago_factura" data-id="0" style="margin-right: 10px;"
+                                href="javascript:void(0);">Recibir Pago</a>-->
 
                             <a class="btn btn-primary btn_imprimir_factura" style="margin-right: 10px;" target="_blank"
                                 href="{{ route('pdf_factura_venta') }}?token=0">Descargar e

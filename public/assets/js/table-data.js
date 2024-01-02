@@ -77,7 +77,8 @@ $(function(e) {
     //______Select2 
 	$('.select2').select2({
 		placeholder: 'Choose one',
-		searchInputPlaceholder: 'Search'
+		searchInputPlaceholder: 'Search',
+        allowClear: true,
 	});
 
 });

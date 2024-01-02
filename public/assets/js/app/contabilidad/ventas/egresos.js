@@ -9,6 +9,10 @@ $(document).ready(function () {
     var host = window.location.host;
     var url_general = protocol + "//" + host + "/";
 
+    var rete_fuentes = JSON.parse(localStorage.getItem("rete_fuentes"));
+    var rete_ivas = JSON.parse(localStorage.getItem("rete_iva"));
+    var rete_icas = JSON.parse(localStorage.getItem("rete_ica"));
+
     $(".open-toggle").trigger("click");
 
     $(document).on("keyup", ".input_dinner", function () {
@@ -403,6 +407,7 @@ $(document).ready(function () {
                     if (response.info == 1 && response.facturas.length > 0) {
                         let facturas = response.facturas;
                         let total = 0;
+                        let total_pg = 0;
                         let total_pendiente = 0;
 
                         $("#tbl_facturas_list").empty();
@@ -411,18 +416,11 @@ $(document).ready(function () {
                             valor = valor[0];
                             valor = valor.replaceAll(".", "");
                             total += parseInt(valor);
+                            total_pg = parseInt(valor);
                             let pendiente = parseInt(valor);
                             let impuestos_1 = JSON.parse(element.impuestos_1);
                             let sum_impuestos_1 = 0;
-
-                            if (element.pagos && element.pagos.length > 0) {
-                                element.pagos.forEach((element) => {
-                                    let valor2 = element.valor.split(",");
-                                    valor2 = valor2[0];
-                                    valor2 = valor2.replaceAll(".", "");
-                                    pendiente = pendiente - parseInt(valor2);
-                                });
-                            }
+                            let factura_id = element.id;
 
                             let subtotal_num = element.subtotal.split(',');
                             subtotal_num = subtotal_num[0];
@@ -438,20 +436,75 @@ $(document).ready(function () {
                                 }
                             }
 
-                            if(element.valor_retefuente) {
-                                let valor = (subtotal_num * (element.valor_retefuente / 100)).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                                retenciones_html += '<span>Rte Fte: ' + element.valor_retefuente + '% <b>(' + valor + ')</b></span><br>';
-                            }
+                            let valor_rte_fuente = 0;
+                            let valor_rte_iva = 0;
+                            let valor_rte_ica = 0;
                             
-                            if (element.valor_reteiva) {
-                                let valor = (sum_impuestos_1 * (element.valor_reteiva / 100)).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                                retenciones_html += '<span>Rte Iva: ' + element.valor_reteiva + '% <b>(' + valor + ')</b></span><br>';
-                            } 
-                            
-                            if (element.valor_reteica) {
-                                let valor = ((subtotal_num *  element.valor_reteica) / 1000).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                                retenciones_html += '<span>Rte Ica: ' + element.valor_reteica + '% <b>(' + valor + ')</b></span><br>';
+                            if (element.pagos && element.pagos.length > 0) {
+                                element.pagos.forEach((element) => {
+                                    let facturas_json = JSON.parse(element.grupo_facturas);
+                                    facturas_json.forEach((element2) => {
+                                        if(element2.id == factura_id) {
+                                            let rte_fuente_val = element2.rte_fuente ?? null;
+                                            let rte_iva_val = element2.rte_iva ?? null;
+                                            let rte_ica_val = element2.rte_ica ?? null;
+                                            let valor = element2.valor.split(",");
+                                            valor = valor[0];
+                                            valor = valor.replaceAll(".", "");
+                                            pendiente = pendiente - parseInt(valor);
+                                            
+                                            // Buscar los option por data-id y seleccionarlos
+                                            if(rte_fuente_val) {
+                                                valor_rte_fuente = rte_fuente_val;
+                                            }
+
+                                            if(rte_iva_val) {
+                                                valor_rte_iva = rte_iva_val;
+                                            }
+
+                                            if(rte_ica_val) {
+                                                valor_rte_ica = rte_ica_val;
+                                            }
+                                        }
+                                    });
+                                });
                             }
+
+                            retenciones_html += '<div class="row"><div class="col-6">' +
+                                    '<select data-total="' + total_pg + '" data-pendiente="' + pendiente + '" data-id="' + factura_id + '" data-subtotal="' + subtotal_num + '" title="Rte Fte: (%)" class="form-select rte_fuente">' +
+                                    '<option value="">Selecciona una opción</option>' +
+                                    rete_fuentes.map((element) => {
+                                        if(valor_rte_fuente > 0 && element.id == valor_rte_fuente) {
+                                            return '<option data-id="' + element.id + '" value="' + element.tarifa + '" selected>' + element.nombre + '</option>';
+                                        }
+                                        return '<option data-id="' + element.id + '" value="' + element.tarifa + '">' + element.nombre + '</option>';
+                                    }) +
+                                    '</select></div>' +
+                                    '<div class="col-6"><span class="txt_rte_fte">Rte Fte: 0% <b>(0.00)</b></span><br></div></div><br>';
+
+                            retenciones_html += '<div class="row"><div class="col-6">' +
+                                    '<select data-total="' + total_pg + '" data-pendiente="' + pendiente + '" data-id="' + factura_id + '" data-subtotal="' + sum_impuestos_1 + '" title="Rte Iva: (%)" class="form-select rte_iva">' +
+                                    '<option value="">Selecciona una opción</option>' +
+                                    rete_ivas.map((element) => {
+                                        if(valor_rte_iva > 0 && element.id == valor_rte_iva) {
+                                            return '<option data-id="' + element.id + '" value="' + element.tarifa + '" selected>' + element.nombre + '</option>';
+                                        }
+                                        return '<option data-id="' + element.id + '" value="' + element.tarifa + '">' + element.nombre + '</option>';
+                                    }) +
+                                    '</select></div>' +
+                                    '<div class="col-6"><span class="txt_rte_iva">Rte Iva: 0% <b>(0.00)</b></span><br></div></div><br>';
+
+                            retenciones_html += '<div class="row"><div class="col-6">' +
+                                    '<select data-total="' + total_pg + '" data-pendiente="' + pendiente + '" data-id="' + factura_id + '" data-subtotal="' + subtotal_num + '" title="Rte Ica: (%)" class="form-select rte_ica">' +
+                                    '<option value="">Selecciona una opción</option>' +
+                                    rete_icas.map((element) => {
+                                        if(valor_rte_ica > 0 && element.id == valor_rte_ica) {
+                                            return '<option data-id="' + element.id + '" value="' + element.tarifa + '" selected>' + element.nombre + '</option>';
+                                        }
+                                        return '<option data-id="' + element.id + '" value="' + element.tarifa + '">' + element.nombre + '</option>';
+                                    }) +
+                                    '</select></div>' +
+                                    '<div class="col-6"><span class="txt_rte_ica">Rte Ica: 0% <b>(0.00)</b></span><br></div></div><br>';
 
                             total_pendiente += pendiente;
                             $("#tbl_facturas_list").append(
@@ -468,7 +521,10 @@ $(document).ready(function () {
                                     '<td class="text-center pad-4">' +
                                     element.valor_total +
                                     "</td>" +
-                                    '<td class="text-center pad-4">' +
+                                    '<td class="text-center saldo_total pad-4">' +
+                                    element.valor_total +
+                                    "</td>" +
+                                    '<td class="text-center saldo_pendiente pad-4">' +
                                     pendiente.toLocaleString("de-DE", {
                                         minimumFractionDigits: 2,
                                         maximumFractionDigits: 2,
@@ -479,6 +535,14 @@ $(document).ready(function () {
                         });
 
                         $("#cliente_add").val(cliente).trigger("change");
+
+                        $("#valor_facturas").html(
+                            total.toLocaleString("de-DE", {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                            })
+                        );
+
                         $("#total_saldo").html(
                             total.toLocaleString("de-DE", {
                                 minimumFractionDigits: 2,
@@ -494,6 +558,20 @@ $(document).ready(function () {
                         $("#content_list").addClass("d-none");
                         $("#content_add").removeClass("d-none");
                         $("#modalCliente").modal("hide");
+
+                        $(".form-select").each(function () {
+                            $(this).select2({
+                                dropdownParent: $(this).parent(),
+                                placeholder: "Seleccione",
+                                searchInputPlaceholder: "Buscar",
+                                allowClear: true,
+                            });
+                        });
+
+                        $(".rte_fuente").trigger("change");
+                        $(".rte_iva").trigger("change");
+                        $(".rte_ica").trigger("change");
+
                     } else if (
                         response.info == 1 &&
                         response.facturas.length < 1
@@ -569,6 +647,9 @@ $(document).ready(function () {
             if ($(this).prop("checked")) {
                 let id = $(this).data("id");
                 let pendiente = $(this).closest("tr").find("td").eq(2).html();
+                let rte_fuente = $(this).closest("tr").find(".rte_fuente option:selected").data("id");
+                let rte_iva = $(this).closest("tr").find(".rte_iva option:selected").data("id");
+                let rte_ica = $(this).closest("tr").find(".rte_ica option:selected").data("id");
                 let valor = $(this)
                     .closest("tr")
                     .find("input[type=text]")
@@ -596,6 +677,9 @@ $(document).ready(function () {
                                 minimumFractionDigits: 2,
                                 maximumFractionDigits: 2,
                             }),
+                            rte_fuente: rte_fuente,
+                            rte_iva: rte_iva,
+                            rte_ica: rte_ica,
                         });
                     }
                 }
@@ -680,6 +764,69 @@ $(document).ready(function () {
                     $("#btnAddPago").html("Guardar Pago");
                 },
             });
+        }
+    });
+    
+    $(document).on("change", ".rte_fuente", function () {
+        let valor = $(this).val();
+        let valor_total = $(this).data("subtotal");
+        let total = $(this).data("total");
+        let pendiente = $(this).data("pendiente");
+        pendiente = parseInt(pendiente);
+        total = parseInt(total);
+        valor_total_num = parseInt(valor_total);
+
+        if (valor > 0) {
+            total = total - (valor_total_num * (valor / 100));
+            valor_rte_txt = (valor_total_num * (valor / 100));
+            let valor_rte = (valor_total_num * (valor / 100)).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            $(this).closest("tr").find(".txt_rte_fte").html("Rte Fte: " + valor + "% <b>(" + valor_rte + ")</b>");
+            $(this).closest("tr").find(".saldo_total").html(total.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+            $(this).closest("tr").find(".saldo_pendiente").html((pendiente - valor_rte_txt).toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        } else {
+            $(this).closest("tr").find(".txt_rte_fte").html("Rte Fte: 0% <b>(0.00)</b>");
+        }
+    });
+
+    $(document).on("change", ".rte_iva", function () {
+        let valor = $(this).val();
+        let valor_total = $(this).data("subtotal");
+        let total = $(this).data("total");
+        let pendiente = $(this).data("pendiente");
+        pendiente = parseInt(pendiente);
+        total = parseInt(total);
+        valor_total_num = parseInt(valor_total);
+
+        if (valor > 0) {
+            total = total - (valor_total_num * (valor / 100));
+            valor_rte_txt = (valor_total_num * (valor / 100));
+            let valor_rte = (valor_total_num * (valor / 100)).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            $(this).closest("tr").find(".txt_rte_iva").html("Rte Iva: " + valor + "% <b>(" + valor_rte + ")</b>");
+            $(this).closest("tr").find(".saldo_total").html(total.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+            $(this).closest("tr").find(".saldo_pendiente").html((pendiente - valor_rte_txt).toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        } else {
+            $(this).closest("tr").find(".txt_rte_iva").html("Rte Iva: 0% <b>(0.00)</b>");
+        }
+    });
+
+    $(document).on("change", ".rte_ica", function () {
+        let valor = $(this).val();
+        let valor_total = $(this).data("subtotal");
+        let total = $(this).data("total");
+        let pendiente = $(this).data("pendiente");
+        pendiente = parseInt(pendiente);
+        total = parseInt(total);
+        valor_total_num = parseInt(valor_total);
+
+        if (valor > 0) {
+            total = total - (valor_total_num * valor) / 1000;
+            valor_rte_txt = (valor_total_num * valor) / 1000;
+            let valor_rte = ((valor_total_num * valor) / 1000).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            $(this).closest("tr").find(".txt_rte_ica").html("Rte Ica: " + valor + "% <b>(" + valor_rte + ")</b>");
+            $(this).closest("tr").find(".saldo_total").html(total.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+            $(this).closest("tr").find(".saldo_pendiente").html((pendiente - valor_rte_txt).toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        } else {
+            $(this).closest("tr").find(".txt_rte_ica").html("Rte Ica: 0% <b>(0.00)</b>");
         }
     });
 });

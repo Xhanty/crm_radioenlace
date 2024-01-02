@@ -35,8 +35,8 @@
                                             <th class="text-center">Tipo<br>Impuesto</th>
                                             <th class="text-center">Valor</th>
                                             <th class="text-center">Tarifa</th>
-                                            <th class="text-center">Ventas</th>
                                             <th class="text-center">Compras</th>
+                                            <th class="text-center">Ventas</th>
                                             <th class="text-center">Devolución<br>Ventas</th>
                                             <th class="text-center">Devolución<br>Compras</th>
                                             <th class="text-center"></th>

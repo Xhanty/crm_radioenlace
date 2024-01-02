@@ -28,6 +28,7 @@ $(function () {
                 dropdownParent: $(this).parent(),
                 placeholder: "Seleccione",
                 searchInputPlaceholder: "Buscar",
+                allowClear: true,
             });
         });
     });
@@ -57,6 +58,7 @@ $(function () {
                 dropdownParent: $(this).parent(),
                 placeholder: "Seleccione",
                 searchInputPlaceholder: "Buscar",
+                allowClear: true,
             });
         });
     });
@@ -97,6 +99,7 @@ $(function () {
                 dropdownParent: $(this).parent(),
                 placeholder: "Seleccione",
                 searchInputPlaceholder: "Buscar",
+                allowClear: true,
             });
         });
     });
@@ -126,6 +129,7 @@ $(function () {
                 dropdownParent: $(this).parent(),
                 placeholder: "Seleccione",
                 searchInputPlaceholder: "Buscar",
+                allowClear: true,
             });
         });
     });
@@ -418,6 +422,7 @@ $(function () {
                             dropdownParent: $(this).parent(),
                             placeholder: "Seleccione",
                             searchInputPlaceholder: "Buscar",
+                            allowClear: true,
                         });
                     });
                 }
@@ -664,6 +669,7 @@ $(function () {
                             dropdownParent: $(this).parent(),
                             placeholder: "Seleccione",
                             searchInputPlaceholder: "Buscar",
+                            allowClear: true,
                         });
                     });
                 }
@@ -1090,6 +1096,7 @@ $(function () {
                             dropdownParent: $(this).parent(),
                             placeholder: "Seleccione",
                             searchInputPlaceholder: "Buscar",
+                            allowClear: true,
                         });
                     });
                 }

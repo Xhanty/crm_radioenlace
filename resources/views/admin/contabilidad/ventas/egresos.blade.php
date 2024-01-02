@@ -365,7 +365,7 @@
                         <div class="card card-invoice">
                             <div class="card-header ps-3 pe-3 pt-3 pb-0 d-flex-header-table">
                                 <div class="div-1-tables-header">
-                                    <h3 class="card-title">Nueva recibo de pago</h3>
+                                    <h3 class="card-title">Nuevo recibo de pago</h3>
                                 </div>
                                 <div class="div-2-tables-header" style="margin-bottom: 13px">
                                     <a href="{{ route('recibos_pagos') }}" class="btn btn-primary back_home">x</a>
@@ -450,6 +450,7 @@
                                                         </th>
                                                         <th class="text-center">Factura</th>
                                                         <th class="text-center">Retenciones</th>
+                                                        <th class="text-center">Valor Factura</th>
                                                         <th class="text-center">Saldo Total</th>
                                                         <th class="text-center">Saldo a Pagar</th>
                                                         <th class="text-center"></th>
@@ -459,6 +460,7 @@
                                                 <tfoot>
                                                     <tr>
                                                         <th colspan="3" class="text-end"></th>
+                                                        <th class="text-center" id="valor_facturas">0.00</th>
                                                         <th class="text-center" id="total_saldo">0.00</th>
                                                         <th class="text-center" id="total_saldo_pendiente">0.00</th>
                                                         <th class="text-end" id="saldo_pagado">0.00</th>
@@ -498,5 +500,17 @@
 @endsection
 
 @section('scripts')
+    <script>
+        $(document).ready(function() {
+            let rete_fuentes = @json($rete_fuentes);
+            let rete_iva = @json($rete_iva);
+            let rete_ica = @json($rete_ica);
+
+
+            localStorage.setItem('rete_fuentes', JSON.stringify(rete_fuentes));
+            localStorage.setItem('rete_iva', JSON.stringify(rete_iva));
+            localStorage.setItem('rete_ica', JSON.stringify(rete_ica));
+        });
+    </script>
     <script src="{{ asset('assets/js/app/contabilidad/ventas/egresos.js') }}"></script>
 @endsection

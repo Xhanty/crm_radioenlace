@@ -23,7 +23,7 @@
                     <div class="card card-invoice">
                         <div class="card-header ps-3 pe-3 pt-3 pb-0 d-flex-header-table">
                             <div class="div-1-tables-header">
-                                <h3 class="card-title">Nueva recibo de pago</h3>
+                                <h3 class="card-title">Nuevo recibo de pago</h3>
                             </div>
                             <div class="div-2-tables-header" style="margin-bottom: 13px">
                                 <a href="{{ route('factura_venta') }}" class="btn btn-primary back_home">x</a>
@@ -162,7 +162,6 @@
                                                                 $retenciones_html .= '<span>Rte Ica: ' . $factura->valor_reteica . '% <b>(' . $valor . ')</b></span><br>';
                                                             }
                                                         @endphp
-
                                                         {!! $retenciones_html !!}
                                                     </td>
                                                     <td class="text-center pad-4" id="cuota_pagar">1</td>

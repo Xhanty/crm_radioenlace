@@ -50,6 +50,18 @@ class ReciboPagoController extends Controller
                 ->orderBy('pagos_ventas.numero', 'desc')
                 ->get();
 
+            $rete_fuentes = DB::table('configuracion_impuestos')
+                ->where('tipo_impuesto', 2)
+                ->get();
+
+            $rete_iva = DB::table('configuracion_impuestos')
+                ->where('tipo_impuesto', 3)
+                ->get();
+
+            $rete_ica = DB::table('configuracion_impuestos')
+                ->where('tipo_impuesto', 4)
+                ->get();
+
             //Ordenar los egresos por numero
 
             $egresos = $egresos_simples->merge($egresos_grupales)->sortByDesc('numero');
@@ -59,7 +71,7 @@ class ReciboPagoController extends Controller
                 ->where('estado', 1)
                 ->get();
 
-            return view('admin.contabilidad.ventas.egresos', compact('egresos', 'clientes', 'num_egreso', 'formas_pago'));
+            return view('admin.contabilidad.ventas.egresos', compact('egresos', 'clientes', 'num_egreso', 'formas_pago', 'rete_fuentes', 'rete_iva', 'rete_ica'));
         } catch (Exception $ex) {
             return $ex->getMessage();
             return view('errors.500');
@@ -126,7 +138,19 @@ class ReciboPagoController extends Controller
                 ->orderBy('id', 'asc')
                 ->get();
 
-            return view('admin.contabilidad.ventas.recibo_pago', compact('factura', 'num_egreso', 'centros_costos', 'clientes', 'formas_pago', 'pagos'));
+            $rete_fuentes = DB::table('configuracion_impuestos')
+                ->where('tipo_impuesto', 2)
+                ->get();
+
+            $rete_iva = DB::table('configuracion_impuestos')
+                ->where('tipo_impuesto', 3)
+                ->get();
+
+            $rete_ica = DB::table('configuracion_impuestos')
+                ->where('tipo_impuesto', 4)
+                ->get();
+
+            return view('admin.contabilidad.ventas.recibo_pago', compact('factura', 'num_egreso', 'centros_costos', 'clientes', 'formas_pago', 'pagos', 'rete_fuentes', 'rete_iva', 'rete_ica'));
         } catch (Exception $ex) {
             return view('errors.500');
         }
@@ -418,7 +442,7 @@ class ReciboPagoController extends Controller
         // Pagos de la factura
         foreach ($facturas as $key => $value) {
             $pagos = DB::table('pagos_ventas')
-                ->where('factura_id', $value->id)
+                ->where('cliente_id', $cliente)
                 ->where('tipo', 1)
                 ->where('status', 1)
                 ->get();
@@ -493,7 +517,7 @@ class ReciboPagoController extends Controller
                     ]);
             }
 
-            DB::table('pagos_ventas')->insert([
+            /*DB::table('pagos_ventas')->insert([
                 'numero' => $numero,
                 'tipo' => 1,
                 'factura_id' => $value->id,
@@ -501,13 +525,16 @@ class ReciboPagoController extends Controller
                 'cliente_id' => $cliente,
                 'fecha_elaboracion' => $fecha,
                 'forma_pago' => $forma_pago,
+                'valor_retefuente' => $value->rte_fuente ?? null,
+                'valor_reteica' => $value->rte_ica ?? null,
+                'valor_reteiva' => $value->rte_iva ?? null,
                 'valor' => $value->valor,
                 'status' => 3, // Pago grupal
                 'observacion' => $observacion,
                 'adjunto_pdf' => $adjunto ?? null,
                 'created_by' => auth()->user()->id,
                 'created_at' => date('Y-m-d H:i:s')
-            ]);
+            ]);*/
         }
 
         return response()->json(['info' => 1, 'msg' => 'Pago registrado correctamente']);

@@ -67,11 +67,13 @@ $(function() {
 	$(document).ready(function() {
 		$('.select2').select2({
 			placeholder: 'Choose one',
-			searchInputPlaceholder: 'Search'
+			searchInputPlaceholder: 'Search',
+			allowClear: true,
 		});
 		$('.select2-no-search').select2({
 			minimumResultsForSearch: Infinity,
-			placeholder: 'Choose one'
+			placeholder: 'Choose one',
+			allowClear: true,
 		});
 	});
 });

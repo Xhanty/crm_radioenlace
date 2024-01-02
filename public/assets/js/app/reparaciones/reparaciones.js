@@ -77,6 +77,7 @@ $(document).ready(function () {
                 dropdownParent: $(this).parent(),
                 placeholder: "Seleccione una opción",
                 searchInputPlaceholder: "Buscar",
+                allowClear: true,
             });
         });
     });
@@ -147,6 +148,7 @@ $(document).ready(function () {
                 dropdownParent: $(this).parent(),
                 placeholder: "Seleccione una opción",
                 searchInputPlaceholder: "Buscar",
+                allowClear: true,
             });
         });
     });
@@ -417,6 +419,7 @@ $(document).ready(function () {
                             dropdownParent: $(this).parent(),
                             placeholder: "Seleccione una opción",
                             searchInputPlaceholder: "Buscar",
+                            allowClear: true,
                         });
                     });
 
@@ -543,6 +546,7 @@ $(document).ready(function () {
                             dropdownParent: $(this).parent(),
                             placeholder: "Seleccione una opción",
                             searchInputPlaceholder: "Buscar",
+                            allowClear: true,
                         });
                     });
 
