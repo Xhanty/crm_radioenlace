@@ -159,8 +159,6 @@
 
 @section('content')
     <div class="main-container container-fluid">
-
-
         <!-- breadcrumb -->
         <div class="breadcrumb-header justify-content-between">
             <div>

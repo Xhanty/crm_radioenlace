@@ -558,25 +558,6 @@ class ReciboPagoController extends Controller
                         'status' => 2,
                     ]);
             }
-
-            /*DB::table('pagos_ventas')->insert([
-                'numero' => $numero,
-                'tipo' => 1,
-                'factura_id' => $value->id,
-                'grupo_facturas' => json_encode($facturas),
-                'cliente_id' => $cliente,
-                'fecha_elaboracion' => $fecha,
-                'forma_pago' => $forma_pago,
-                'valor_retefuente' => $value->rte_fuente ?? null,
-                'valor_reteica' => $value->rte_ica ?? null,
-                'valor_reteiva' => $value->rte_iva ?? null,
-                'valor' => $value->valor,
-                'status' => 3, // Pago grupal
-                'observacion' => $observacion,
-                'adjunto_pdf' => $adjunto ?? null,
-                'created_by' => auth()->user()->id,
-                'created_at' => date('Y-m-d H:i:s')
-            ]);*/
         }
 
         return response()->json(['info' => 1, 'msg' => 'Pago registrado correctamente']);

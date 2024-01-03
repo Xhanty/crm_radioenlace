@@ -61,6 +61,7 @@ class FacturaCompraController extends Controller
 
             $impuestos_cargos = DB::table('configuracion_impuestos')
                 ->where('en_uso', 1)
+                ->where('nombre', 'like', '%iva %')
                 ->get();
 
             $impuestos_retencion = DB::table('configuracion_autoretencion')

@@ -17,164 +17,6 @@ $(document).ready(function () {
 
     $(document).on("click", ".comprobante_btn", function () {
         let id = $(this).data("id");
-        $("#content_loader").removeClass("d-none");
-        $("#content_factura").addClass("d-none");
-
-        $(".comprobante_btn").removeClass("selected");
-        $(this).addClass("selected");
-
-        $.ajax({
-            url: "compras_info_pago",
-            type: "POST",
-            data: {
-                id: id,
-            },
-            dataType: "json",
-            success: function (response) {
-                if (response.info == 1) {
-                    let data = response.data;
-                    let lleva = response.cuotas;
-                    let total_final = 0;
-                    let valor_1 = data.valor_factura;
-                    let valor_2 = data.valor;
-
-                    valor_1 = valor_1.split(',');
-                    valor_1 = valor_1[0];
-                    valor_1 = valor_1.replaceAll('.', '');
-                    valor_1 = parseInt(valor_1);
-
-                    valor_2 = valor_2.split(',');
-                    valor_2 = valor_2[0];
-                    valor_2 = valor_2.replaceAll('.', '');
-                    valor_2 = parseInt(valor_2);
-
-
-                    total_final = valor_1 - valor_2;
-
-                    var fecha_compra = new Date(data.fecha_elaboracion);
-                    $("#proveedor_view").html(data.proveedor);
-                    $("#nit_view").html(data.nit + '-' + data.codigo_verificacion + "<br>" + data.telefono_fijo + "<br>" + data.ciudad + ' - Colombia');
-
-                    $("#num_fact_view").html(data.numero);
-                    $("#compra_view").html(fecha_compra.getDate() + "/" + (fecha_compra.getMonth() + 1) + "/" + fecha_compra.getFullYear());
-                    $("#vencimiento_view").html(data.forma_pago);
-                    $("#pagar_view").html(data.valor);
-                    $(".btn_imprimir_factura").attr("href", "comprobante_egreso_pdf?token=" + data.id);
-
-                    $(".btn_options_factura").attr("data-id", data.id);
-
-                    $("#title_factura").html("COMPROBANTE EGRESO");
-                    $("#factura_tlt_2").html("Comprobante No.");
-
-                    $("#productos_view").empty();
-
-                    if (lleva) {
-                        lleva.forEach(element => {
-                            let valor = element.valor;
-                            valor = valor.split(',');
-                            valor = valor[0];
-                            valor = valor.replaceAll('.', '');
-                            valor = parseInt(valor);
-
-                            valor_1 = valor_1 - valor;
-                            total_final = total_final - valor;
-                        });
-                    }
-
-                    $("#productos_view").append(
-                        '<tr>' +
-                        '<td colspan="5">' +
-                        '<span>Abono' + '</span>' +
-                        '<span style="margin-left:111px">' + data.factura_proveedor + '-' + data.num_factura_proveedor + '</span>' +
-                        '<span style="margin-left:60px">Cuota ' + response.cuota + '</span>' +
-                        '<span style="margin-left:22px">' + fecha_compra.getDate() + "/" + (fecha_compra.getMonth() + 1) + "/" + fecha_compra.getFullYear() + '</span>' +
-                        '<br>' +
-                        '<br>' +
-                        data.forma_pago +
-                        '</td>' +
-                        '<td style="text-align: right;">' +
-                        valor_1.toLocaleString('de-DE', {
-                            minimumFractionDigits: 2, maximumFractionDigits: 2
-                        }) +
-                        '<br>' +
-                        '<b>-' + data.valor + '</b>' +
-                        '<br>' +
-                        '<b>Total COP:</b>&nbsp&nbsp&nbsp&nbsp&nbsp' + total_final.toLocaleString('de-DE', {
-                            minimumFractionDigits: 2, maximumFractionDigits: 2
-                        }) + '' +
-                        '</td>' +
-                        '</tr>'
-                    );
-
-                    if (data.observacion) {
-                        data.observacion = '<label class="main-content-label tx-13">Observaciones</label>' +
-                            '<p>' + data.observacion + '</p>';
-                    } else {
-                        data.observacion = '';
-                    }
-
-                    if (data.adjunto_pdf) {
-                        data.adjunto_pdf = '<label class="main-content-label tx-13">Adjunto</label><br>' +
-                            '<a href="' + url_general + 'images/contabilidad/comprobantes_egreso/' + data.adjunto_pdf + '" target="_blank">Visualizar</a>';
-                    } else {
-                        data.adjunto_pdf = '';
-                    }
-
-                    $("#productos_view").append(
-                        '<tr>' +
-                        '<td class="valign-middle" colspan="4" rowspan="2">' +
-                        '<div class="invoice-notes">' +
-                        data.observacion +
-                        '<br>' +
-                        data.adjunto_pdf +
-                        '</div>' +
-                        '</td>' +
-                        '</tr>'
-                    );
-
-                    $("#content_loader").addClass("d-none");
-                    $("#content_factura").removeClass("d-none");
-                } else {
-                    toastr.error("Error al cargar los datos de la factura");
-                }
-            },
-            error: function (data) {
-                toastr.error("Error al cargar los datos de la factura");
-            },
-        });
-    });
-
-    $(document).on("keyup", ".input_dinner", function () {
-        let v = $(this).val().replace(/\D+/g, "");
-        if (v.length > 14) v = v.slice(0, 14);
-        $(this).val(
-            v
-                .replace(/(\d)(\d\d)$/, "$1,$2")
-                .replace(/(^\d{1,3}|\d{3})(?=(?:\d{3})+(?:,|$))/g, "$1.")
-        );
-    });
-
-    $(document).on("keyup", ".input_dinner_valor", function () {
-        $(this).val(function (index, value) {
-            return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        });
-    });
-
-    $(document).on("change", ".input_dinner_valor", function () {
-        let valor = $(this).val();
-        valor = valor.replaceAll('.', '');
-        valor = parseInt(valor);
-        valor = valor + "00";
-
-        let v = valor.replace(/\D+/g, '');
-        if (v.length > 14) v = v.slice(0, 14);
-        $(this).val(
-            v.replace(/(\d)(\d\d)$/, "$1,$2")
-                .replace(/(^\d{1,3}|\d{3})(?=(?:\d{3})+(?:,|$))/g, '$1.'));
-    });
-
-    $(document).on("click", ".comprobante_btn", function () {
-        let id = $(this).data("id");
         let grupo = $(this).data("grupo");
         $("#content_loader").removeClass("d-none");
         $("#content_factura").addClass("d-none");
@@ -184,7 +26,7 @@ $(document).ready(function () {
 
         if (grupo == 1) {
             $.ajax({
-                url: "recibos_info_pagos_grupales",
+                url: "egresos_info_pagos_grupales",
                 type: "POST",
                 data: {
                     id: id,
@@ -203,7 +45,7 @@ $(document).ready(function () {
 
                         total_final = valor;
                         var fecha_compra = new Date(data.fecha_elaboracion);
-                        $("#proveedor_view").html(data.cliente);
+                        $("#proveedor_view").html(data.proveedor);
                         $("#nit_view").html(
                             data.nit +
                                 "-" +
@@ -228,13 +70,13 @@ $(document).ready(function () {
                         $("#pagar_view").html(data.valor);
                         $(".btn_imprimir_factura").attr(
                             "href",
-                            "recibos_pagos_pdf?token=" + data.id + "&grupal=1"
+                            "comprobante_egreso_pdf?token=" + data.id + "&grupal=1"
                         );
 
                         $(".btn_options_factura").attr("data-id", data.id);
 
-                        $("#title_factura").html("RECIBO CAJA");
-                        $("#factura_tlt_2").html("Recibo No.");
+                        $("#title_factura").html("COMPROBANTE EGRESO");
+                        $("#factura_tlt_2").html("Egreso No.");
 
                         $("#productos_view").empty();
                         
@@ -283,7 +125,7 @@ $(document).ready(function () {
                                 '<label class="main-content-label tx-13">Adjunto</label><br>' +
                                 '<a href="' +
                                 url_general +
-                                "images/contabilidad/recibos_caja/" +
+                                "images/contabilidad/egresos/" +
                                 data.adjunto_pdf +
                                 '" target="_blank">Visualizar</a>';
                         } else {
@@ -314,7 +156,7 @@ $(document).ready(function () {
             });
         } else {
             $.ajax({
-                url: "recibos_info_pagos",
+                url: "egresos_info_pagos",
                 type: "POST",
                 data: {
                     id: id,
@@ -377,7 +219,7 @@ $(document).ready(function () {
 
 
                         var fecha_compra = new Date(data.fecha_elaboracion);
-                        $("#proveedor_view").html(data.cliente);
+                        $("#proveedor_view").html(data.proveedor);
                         $("#nit_view").html(
                             data.nit +
                                 "-" +
@@ -402,13 +244,13 @@ $(document).ready(function () {
                         $("#pagar_view").html(data.valor);
                         $(".btn_imprimir_factura").attr(
                             "href",
-                            "recibos_pagos_pdf?token=" + data.id
+                            "comprobante_egreso_pdf?token=" + data.id
                         );
 
                         $(".btn_options_factura").attr("data-id", data.id);
 
-                        $("#title_factura").html("RECIBO CAJA");
-                        $("#factura_tlt_2").html("Recibo No.");
+                        $("#title_factura").html("COMPROBANTE EGRESO");
+                        $("#factura_tlt_2").html("Egreso No.");
 
                         $("#productos_view").empty();
 
@@ -482,7 +324,377 @@ $(document).ready(function () {
                                 '<label class="main-content-label tx-13">Adjunto</label><br>' +
                                 '<a href="' +
                                 url_general +
-                                "images/contabilidad/recibos_caja/" +
+                                "images/contabilidad/egresos/" +
+                                data.adjunto_pdf +
+                                '" target="_blank">Visualizar</a>';
+                        } else {
+                            data.adjunto_pdf = "";
+                        }
+
+                        $("#productos_view").append(
+                            "<tr>" +
+                                '<td class="valign-middle" colspan="4" rowspan="2">' +
+                                '<div class="invoice-notes">' +
+                                data.observacion +
+                                "<br>" +
+                                data.adjunto_pdf +
+                                "</div>" +
+                                "</td>" +
+                                "</tr>"
+                        );
+
+                        $("#content_loader").addClass("d-none");
+                        $("#content_factura").removeClass("d-none");
+                    } else {
+                        toastr.error("Error al cargar los datos de la factura");
+                    }
+                },
+                error: function (data) {
+                    toastr.error("Error al cargar los datos de la factura");
+                },
+            });
+        }
+    });
+
+    $(document).on("keyup", ".input_dinner", function () {
+        let v = $(this).val().replace(/\D+/g, "");
+        if (v.length > 14) v = v.slice(0, 14);
+        $(this).val(
+            v
+                .replace(/(\d)(\d\d)$/, "$1,$2")
+                .replace(/(^\d{1,3}|\d{3})(?=(?:\d{3})+(?:,|$))/g, "$1.")
+        );
+    });
+
+    $(document).on("keyup", ".input_dinner_valor", function () {
+        $(this).val(function (index, value) {
+            return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        });
+    });
+
+    $(document).on("change", ".input_dinner_valor", function () {
+        let valor = $(this).val();
+        valor = valor.replaceAll('.', '');
+        valor = parseInt(valor);
+        valor = valor + "00";
+
+        let v = valor.replace(/\D+/g, '');
+        if (v.length > 14) v = v.slice(0, 14);
+        $(this).val(
+            v.replace(/(\d)(\d\d)$/, "$1,$2")
+                .replace(/(^\d{1,3}|\d{3})(?=(?:\d{3})+(?:,|$))/g, '$1.'));
+    });
+
+    $(document).on("click", ".comprobante_btn", function () {
+        let id = $(this).data("id");
+        let grupo = $(this).data("grupo");
+        $("#content_loader").removeClass("d-none");
+        $("#content_factura").addClass("d-none");
+
+        $(".comprobante_btn").removeClass("selected");
+        $(this).addClass("selected");
+
+        if (grupo == 1) {
+            $.ajax({
+                url: "egresos_info_pagos_grupales",
+                type: "POST",
+                data: {
+                    id: id,
+                },
+                dataType: "json",
+                success: function (response) {
+                    if (response.info == 1) {
+                        let data = response.data;
+                        let total_final = 0;
+                        let valor = data.valor;
+
+                        valor = valor.split(",");
+                        valor = valor[0];
+                        valor = valor.replaceAll(".", "");
+                        valor = parseInt(valor);
+
+                        total_final = valor;
+                        var fecha_compra = new Date(data.fecha_elaboracion);
+                        $("#proveedor_view").html(data.proveedor);
+                        $("#nit_view").html(
+                            data.nit +
+                                "-" +
+                                data.codigo_verificacion +
+                                "<br>" +
+                                data.telefono_fijo +
+                                "<br>" +
+                                data.ciudad +
+                                " - Colombia"
+                        );
+
+                        $("#num_fact_view").html(data.numero);
+                        $("#num_fact_view_siigo").html(data.numero_siigo);
+                        $("#compra_view").html(
+                            fecha_compra.getDate() +
+                                "/" +
+                                (fecha_compra.getMonth() + 1) +
+                                "/" +
+                                fecha_compra.getFullYear()
+                        );
+                        $("#vencimiento_view").html(data.forma_pago);
+                        $("#pagar_view").html(data.valor);
+                        $(".btn_imprimir_factura").attr(
+                            "href",
+                            "comprobante_egreso_pdf?token=" + data.id + "&grupal=1"
+                        );
+
+                        $(".btn_options_factura").attr("data-id", data.id);
+
+                        $("#title_factura").html("COMPROBANTE EGRESO");
+                        $("#factura_tlt_2").html("Egreso No.");
+
+                        $("#productos_view").empty();
+                        
+                        let append_facturas = "";
+                        let count = 0;
+                        data.facturas.forEach((element) => {
+                            if (count > 0) {
+                                append_facturas += "<br>";
+                            }
+
+                            append_facturas += "<span>Abono" + "</span>" + '<span style="margin-left:111px">FC-' + element.factura.numero + "</span> <span style='margin-left:60px'>Valor: " + element.valor + "</span>";
+                            count++;
+                        });
+
+                        $("#productos_view").append(
+                            "<tr>" +
+                                '<td colspan="5">' +
+                                append_facturas +                                
+                                "<br>" +
+                                "<br>" +
+                                data.forma_pago +
+                                "</td>" +
+                                '<td style="text-align: right;">' +
+                                "<br>" +
+                                "<b>Total COP:</b>&nbsp&nbsp&nbsp&nbsp&nbsp" +
+                                total_final.toLocaleString("es-ES", {
+                                    minimumFractionDigits: 2,
+                                }) +
+                                "" +
+                                "</td>" +
+                                "</tr>"
+                        );
+
+                        if (data.observacion) {
+                            data.observacion =
+                                '<label class="main-content-label tx-13">Observaciones</label>' +
+                                "<p>" +
+                                data.observacion +
+                                "</p>";
+                        } else {
+                            data.observacion = "";
+                        }
+
+                        if (data.adjunto_pdf) {
+                            data.adjunto_pdf =
+                                '<label class="main-content-label tx-13">Adjunto</label><br>' +
+                                '<a href="' +
+                                url_general +
+                                "images/contabilidad/egresos/" +
+                                data.adjunto_pdf +
+                                '" target="_blank">Visualizar</a>';
+                        } else {
+                            data.adjunto_pdf = "";
+                        }
+
+                        $("#productos_view").append(
+                            "<tr>" +
+                                '<td class="valign-middle" colspan="4" rowspan="2">' +
+                                '<div class="invoice-notes">' +
+                                data.observacion +
+                                "<br>" +
+                                data.adjunto_pdf +
+                                "</div>" +
+                                "</td>" +
+                                "</tr>"
+                        );
+
+                        $("#content_loader").addClass("d-none");
+                        $("#content_factura").removeClass("d-none");
+                    } else {
+                        toastr.error("Error al cargar los datos de la factura");
+                    }
+                },
+                error: function (data) {
+                    toastr.error("Error al cargar los datos de la factura");
+                },
+            });
+        } else {
+            $.ajax({
+                url: "egresos_info_pagos",
+                type: "POST",
+                data: {
+                    id: id,
+                },
+                dataType: "json",
+                success: function (response) {
+                    if (response.info == 1) {
+                        let data = response.data;
+                        let lleva = response.cuotas;
+                        let total_final = 0;
+                        let valor_1 = data.valor_factura;
+                        let valor_2 = data.valor;
+                        
+                        let factura = response.data.factura;
+                        let impuestos_1 = JSON.parse(factura.impuestos_1);
+                        let sum_impuestos_1 = 0;
+
+                        let subtotal_num = factura.subtotal.split(',');
+                        subtotal_num = subtotal_num[0];
+                        subtotal_num = subtotal_num.replaceAll('.', '');
+                        subtotal_num = parseInt(subtotal_num);
+
+                        let retenciones_html = '';
+
+                        if (impuestos_1) {
+                            for (var i = 0; i < impuestos_1.length; i++) {
+                                let valor = parseInt(impuestos_1[i][1]);
+                                sum_impuestos_1 += valor;
+                            }
+                        }
+
+                        if(factura.valor_retefuente) {
+                            let valor = (subtotal_num * (factura.valor_retefuente / 100)).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                            retenciones_html += '<span>Rte Fte: ' + factura.valor_retefuente + '% <b>(' + valor + ')</b></span><br>';
+                        }
+                        
+                        if (factura.valor_reteiva) {
+                            let valor = (sum_impuestos_1 * (factura.valor_reteiva / 100)).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                            retenciones_html += '<span>Rte Iva: ' + factura.valor_reteiva + '% <b>(' + valor + ')</b></span><br>';
+                        } 
+                        
+                        if (factura.valor_reteica) {
+                            let valor = ((subtotal_num *  factura.valor_reteica) / 1000).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                            retenciones_html += '<span>Rte Ica: ' + factura.valor_reteica + '% <b>(' + valor + ')</b></span><br>';
+                        }
+
+                        valor_1 = valor_1.split(",");
+                        valor_1 = valor_1[0];
+                        valor_1 = valor_1.replaceAll(".", "");
+                        valor_1 = parseInt(valor_1);
+
+                        valor_2 = valor_2.split(",");
+                        valor_2 = valor_2[0];
+                        valor_2 = valor_2.replaceAll(".", "");
+                        valor_2 = parseInt(valor_2);
+
+                        total_final = valor_1 - valor_2;
+
+                        console.log(factura);
+
+
+                        var fecha_compra = new Date(data.fecha_elaboracion);
+                        $("#proveedor_view").html(data.proveedor);
+                        $("#nit_view").html(
+                            data.nit +
+                                "-" +
+                                data.codigo_verificacion +
+                                "<br>" +
+                                data.telefono_fijo +
+                                "<br>" +
+                                data.ciudad +
+                                " - Colombia"
+                        );
+
+                        $("#num_fact_view").html(data.numero);
+                        $("#num_fact_view_siigo").html(data.numero_siigo);
+                        $("#compra_view").html(
+                            fecha_compra.getDate() +
+                                "/" +
+                                (fecha_compra.getMonth() + 1) +
+                                "/" +
+                                fecha_compra.getFullYear()
+                        );
+                        $("#vencimiento_view").html(data.forma_pago);
+                        $("#pagar_view").html(data.valor);
+                        $(".btn_imprimir_factura").attr(
+                            "href",
+                            "comprobante_egreso_pdf?token=" + data.id
+                        );
+
+                        $(".btn_options_factura").attr("data-id", data.id);
+
+                        $("#title_factura").html("COMPROBANTE EGRESO");
+                        $("#factura_tlt_2").html("Egreso No.");
+
+                        $("#productos_view").empty();
+
+                        if (lleva) {
+                            lleva.forEach((element) => {
+                                let valor = element.valor;
+                                valor = valor.split(",");
+                                valor = valor[0];
+                                valor = valor.replaceAll(".", "");
+                                valor = parseInt(valor);
+
+                                valor_1 = valor_1 - valor;
+                                total_final = total_final - valor;
+                            });
+                        }
+
+                        $("#productos_view").append(
+                            "<tr>" +
+                                '<td colspan="5">' +
+                                "<span>Abono" +
+                                "</span>" +
+                                '<span style="margin-left:111px">FCE-' +
+                                data.numero_factura +
+                                "</span>" +
+                                '<span style="margin-left:60px">Cuota ' +
+                                response.cuota +
+                                "</span>" +
+                                '<span style="margin-left:22px">' +
+                                fecha_compra.getDate() +
+                                "/" +
+                                (fecha_compra.getMonth() + 1) +
+                                "/" +
+                                fecha_compra.getFullYear() +
+                                "</span>" +
+                                //"<br>" +
+                                //retenciones_html +
+                                "<br>" +
+                                "<br>" +
+                                data.forma_pago +
+                                "</td>" +
+                                '<td style="text-align: right;">' +
+                                valor_1.toLocaleString("es-ES", {
+                                    minimumFractionDigits: 2,
+                                }) +
+                                "<br>" +
+                                "<b>-" +
+                                data.valor +
+                                "</b>" +
+                                "<br>" +
+                                "<b>Total COP:</b>&nbsp&nbsp&nbsp&nbsp&nbsp" +
+                                total_final.toLocaleString("es-ES", {
+                                    minimumFractionDigits: 2,
+                                }) +
+                                "" +
+                                "</td>" +
+                                "</tr>"
+                        );
+
+                        if (data.observacion) {
+                            data.observacion =
+                                '<label class="main-content-label tx-13">Observaciones</label>' +
+                                "<p>" +
+                                data.observacion +
+                                "</p>";
+                        } else {
+                            data.observacion = "";
+                        }
+
+                        if (data.adjunto_pdf) {
+                            data.adjunto_pdf =
+                                '<label class="main-content-label tx-13">Adjunto</label><br>' +
+                                '<a href="' +
+                                url_general +
+                                "images/contabilidad/egresos/" +
                                 data.adjunto_pdf +
                                 '" target="_blank">Visualizar</a>';
                         } else {
@@ -523,10 +735,10 @@ $(document).ready(function () {
         let cliente = $("#cliente_select_add").val();
 
         if (!cliente || cliente < 1) {
-            toastr.error("Debe seleccionar un cliente");
+            toastr.error("Debe seleccionar un proveedor");
         } else {
             $.ajax({
-                url: "recibos_info_cliente",
+                url: "egresos_info_cliente",
                 type: "POST",
                 data: {
                     cliente: cliente,
@@ -641,7 +853,7 @@ $(document).ready(function () {
                                     '<td class="text-center pad-4"><input data-id="' +
                                     element.id +
                                     '" type="checkbox" class="check_fc_add"></td>' +
-                                    '<td class="text-center pad-4"><a href="' + url_general + 'pdf_factura_venta?token=' + element.id + '" target="_blank">FE-' +
+                                    '<td class="text-center pad-4"><a href="' + url_general + 'pdf_factura_venta?token=' + element.id + '" target="_blank">FC-' +
                                     element.numero +
                                     "</a></td>" +
                                     '<td class="text-center pad-4">' +
@@ -912,7 +1124,7 @@ $(document).ready(function () {
                 '<i class="fa fa-spinner fa-spin"></i> Procesando...'
             );
             $.ajax({
-                url: "recibo_pago_grupo_add",
+                url: "egreso_grupo_add",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -920,7 +1132,7 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response.info == 1) {
                         toastr.success("Pago guardado correctamente");
-                        window.location.href = url_general + "recibos_pagos";
+                        window.location.href = url_general + "comprobantes_egresos";
                     } else {
                         toastr.error("Error al guardar el pago");
                     }
@@ -1014,7 +1226,7 @@ $(document).ready(function () {
     // ANULAR PAGO
     function anular_pago(id) {
         Swal.fire({
-            title: '¿Está seguro de anular este recibo de caja?',
+            title: '¿Está seguro de anular este egreso?',
             text: "Esta acción no se puede revertir",
             icon: 'warning',
             showCancelButton: true,
@@ -1029,7 +1241,7 @@ $(document).ready(function () {
                 formData.append("id", id);
 
                 $.ajax({
-                    url: "anular_recibo_caja",
+                    url: "anular_egreso",
                     type: "POST",
                     data: formData,
                     dataType: "JSON",
@@ -1037,7 +1249,7 @@ $(document).ready(function () {
                     processData: false,
                     success: function (response) {
                         if (response.info == 1) {
-                            toastr.success('Recibo de caja anulado con éxito');
+                            toastr.success('Egreso anulado con éxito');
                             setTimeout(function () {
                                 location.reload();
                             }, 1000);
@@ -1056,7 +1268,7 @@ $(document).ready(function () {
     // MODIFICAR PAGO
     function modificar_pago(id) {
         $.ajax({
-            url: "data_recibos_info",
+            url: "data_egresos_info",
             type: "POST",
             data: {
                 id: id,
@@ -1066,7 +1278,7 @@ $(document).ready(function () {
                 if (response.info == 1 && response.facturas.length > 0) {
                     let facturas = response.facturas;
                     let recibo = response.recibo;
-                    let cliente = recibo.cliente_id;
+                    let cliente = recibo.proveedor_id;
                     let total = 0;
                     let total_pg = 0;
                     let total_pendiente = 0;
@@ -1195,7 +1407,7 @@ $(document).ready(function () {
                         $("#tbl_facturas_list_edit").append(
                             "<tr>" +
                                 html_check +
-                                '<td class="text-center pad-4"><a href="' + url_general + 'pdf_factura_venta?token=' + element.id + '" target="_blank">FE-' +
+                                '<td class="text-center pad-4"><a href="' + url_general + 'pdf_factura_venta?token=' + element.id + '" target="_blank">FC-' +
                                 element.numero +
                                 "</a></td>" +
                                 '<td class="text-center pad-4">' +
@@ -1444,7 +1656,7 @@ $(document).ready(function () {
                 '<i class="fa fa-spinner fa-spin"></i> Procesando...'
             );
             $.ajax({
-                url: "recibo_pago_grupo_edit",
+                url: "egreso_grupo_edit",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -1452,7 +1664,7 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response.info == 1) {
                         toastr.success("Pago guardado correctamente");
-                        window.location.href = url_general + "recibos_pagos";
+                        window.location.href = url_general + "comprobantes_egresos";
                     } else {
                         toastr.error("Error al guardar el pago");
                     }

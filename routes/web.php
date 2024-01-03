@@ -374,11 +374,17 @@ Route::middleware(['auth_user'])->group(function () {
 
 
     // COMPROBANTE EGRESO
+    Route::get('/comprobante_egreso', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'index'])->name('comprobante_egreso');
     Route::get('/comprobantes_egresos', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'comprobantes'])->name('comprobantes_egresos');
     Route::get('/comprobante_egreso_pdf', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'pdf'])->name('comprobante_egreso_pdf');
-    Route::get('/comprobante_egreso', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'index'])->name('comprobante_egreso');
-    Route::post('/compras_info_pago', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'info'])->name('compras_info_pago');
     Route::post('/compras_add_pago', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'add'])->name('compras_add_pago');
+    Route::post('/egresos_info_pagos', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'info'])->name('egresos_info_pagos');
+    Route::post('/egresos_info_pagos_grupales', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'info_grupales'])->name('egresos_info_pagos_grupales');
+    Route::post('/egresos_info_cliente', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'proveedor_facturas'])->name('egresos_info_cliente');
+    Route::post('/data_egresos_info', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'data_egreso_info'])->name('data_egresos_info');
+    Route::post('/anular_egreso', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'anular_egreso'])->name('anular_egreso');
+    Route::post('/egreso_grupo_add', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'pago_grupo_add'])->name('egreso_grupo_add');
+    Route::post('/egreso_grupo_edit', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'pago_grupo_edit'])->name('egreso_grupo_edit');
 
 
     // FACTURA VENTA

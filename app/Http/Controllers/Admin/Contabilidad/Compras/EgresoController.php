@@ -12,24 +12,28 @@ class EgresoController extends Controller
     public function comprobantes()
     {
         try {
-            /*$facturas = DB::table('factura_venta')->get();
+            $last_number = DB::table('pagos_compras')
+                ->select('numero')
+                ->where('tipo', 1)
+                ->orderBy('numero', 'desc')
+                ->first();
 
-            foreach ($facturas as $key => $value) {
-                DB::table('pagos_ventas')->insert([
-                    'numero' => 0,
-                    'tipo' => 0,
-                    'factura_id' => $value->id,
-                    'valor' => $value->valor_total,
-                    'status' => 1,
-                    'created_by' => auth()->user()->id,
-                    'created_at' => date('Y-m-d H:i:s')
-                ]);
-            }*/
+            if (!$last_number) {
+                $num_egreso = 1;
+            } else {
+                $num_egreso = $last_number->numero + 1;
+            }
 
-            $comprobantes = DB::table('pagos_compras')
+            $formas_pago = DB::table('configuracion_puc')
+                ->select('id', 'code', 'nombre')
+                ->where('status', 1)
+                ->where('forma_pago', 1)
+                ->whereRaw('LENGTH(code) = 8')
+                ->get();
+
+            $egresos= DB::table('pagos_compras')
                 ->select('pagos_compras.*', 'proveedores.razon_social as proveedor', 'proveedores.nit', 'proveedores.codigo_verificacion', 'proveedores.ciudad', 'proveedores.telefono_fijo')
-                ->join('factura_compra', 'factura_compra.id', '=', 'pagos_compras.factura_id')
-                ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
+                ->join('proveedores', 'proveedores.id', '=', 'pagos_compras.proveedor_id')
                 ->where('pagos_compras.tipo', 1)
                 ->whereYear('pagos_compras.fecha_elaboracion', '=', date('Y'))
                 ->orderBy('pagos_compras.numero', 'desc')
@@ -40,7 +44,24 @@ class EgresoController extends Controller
                 ->where('estado', 1)
                 ->get();
 
-            return view('admin.contabilidad.compras.egresos', compact('comprobantes', 'proveedores'));
+            $rete_fuentes = DB::table('configuracion_impuestos')
+                ->where('tipo_impuesto', 2)
+                ->get();
+
+            $rete_iva = DB::table('configuracion_impuestos')
+                ->where('tipo_impuesto', 3)
+                ->get();
+
+            $rete_ica = DB::table('configuracion_impuestos')
+                ->where('tipo_impuesto', 4)
+                ->get();
+
+            $proveedores = DB::table('proveedores')
+                ->select('id', 'razon_social', 'nit')
+                ->where('estado', 1)
+                ->get();
+
+            return view('admin.contabilidad.compras.egresos', compact('num_egreso', 'formas_pago', 'egresos', 'proveedores', 'rete_fuentes', 'rete_iva', 'rete_ica'));
         } catch (Exception $ex) {
             return $ex->getMessage();
             return view('errors.500');
@@ -104,6 +125,18 @@ class EgresoController extends Controller
                 ->orderBy('id', 'asc')
                 ->get();
 
+            $rete_fuentes = DB::table('configuracion_impuestos')
+                ->where('tipo_impuesto', 2)
+                ->get();
+
+            $rete_iva = DB::table('configuracion_impuestos')
+                ->where('tipo_impuesto', 3)
+                ->get();
+
+            $rete_ica = DB::table('configuracion_impuestos')
+                ->where('tipo_impuesto', 4)
+                ->get();
+
             return view('admin.contabilidad.compras.egreso', compact('factura', 'num_egreso', 'centros_costos', 'proveedores', 'formas_pago', 'pagos'));
         } catch (Exception $ex) {
             return view('errors.500');
@@ -138,6 +171,13 @@ class EgresoController extends Controller
                 return response()->json(['error' => 'No se encontraron datos', 'info' => 0]);
             }
 
+            //Consultar factura
+            $factura = DB::table('factura_compra')
+                ->where('id', $data->factura_id)
+                ->first();
+
+            $data->factura = $factura;
+
             $cuotas = DB::table('pagos_compras')
                 ->where('factura_id', $data->factura_id)
                 ->where('tipo', 1)
@@ -163,6 +203,49 @@ class EgresoController extends Controller
         }
     }
 
+    public function info_grupales(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $data = DB::table('pagos_compras')
+                ->select(
+                    'pagos_compras.*',
+                    'configuracion_puc.nombre as forma_pago',
+                    'proveedores.razon_social as proveedor',
+                    'proveedores.nit',
+                    'proveedores.codigo_verificacion',
+                    'proveedores.ciudad',
+                    'proveedores.telefono_fijo',
+                )
+                ->join('configuracion_puc', 'configuracion_puc.id', '=', 'pagos_compras.forma_pago')
+                ->join('proveedores', 'proveedores.id', '=', 'pagos_compras.proveedor_id')
+                ->where('pagos_compras.id', $id)
+                ->first();
+
+            //Facturas
+            $js_facturas = json_decode($data->grupo_facturas);
+            foreach ($js_facturas as $key => $value) {
+                $factura = DB::table('factura_compra')
+                    ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion', 'proveedores.ciudad', 'proveedores.telefono_fijo')
+                    ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
+                    ->where('factura_compra.id', $value->id)
+                    ->first();
+
+                $js_facturas[$key]->factura = $factura;
+            }
+
+            $data->facturas = $js_facturas;
+
+            if (!$data) {
+                return response()->json(['error' => 'No se encontraron datos', 'info' => 0]);
+            }
+
+            return response()->json(['data' => $data, 'info' => 1]);
+        } catch (Exception $ex) {
+            return response()->json(['error' => $ex->getMessage(), 'info' => 0]);
+        }
+    }
+
     public function add(Request $request)
     {
         try {
@@ -177,6 +260,7 @@ class EgresoController extends Controller
             //$total = $request->total;
             $pagado = $request->pagado;
             $terminado = $request->terminado;
+            $numero_siigo = $request->numero_siigo;
             $observacion = $request->observacion;
 
             $last_number = DB::table('pagos_compras')
@@ -192,16 +276,25 @@ class EgresoController extends Controller
                 $numero = $last_number->numero + 1;
             }
 
+            if ($request->hasFile('archivo')) {
+                $file = $request->file('archivo');
+                $name = time() . $file->getClientOriginalName();
+                $file->move('images/contabilidad/egresos/', $name);
+                $adjunto = $name;
+            }
+
             DB::table('pagos_compras')->insert([
                 'numero' => $numero,
+                'numero_siigo' => $numero_siigo,
                 'tipo' => 1,
                 'factura_id' => $factura_id,
-                'centro_costo' => $centro,
                 'fecha_elaboracion' => $fecha,
+                'centro_costo' => $centro,
                 'forma_pago' => $forma_pago,
                 'valor' => $pagado,
                 'status' => 1,
                 'observacion' => $observacion,
+                'adjunto_pdf' => $adjunto ?? null,
                 'created_by' => auth()->user()->id,
                 'created_at' => date('Y-m-d H:i:s')
             ]);
@@ -232,9 +325,43 @@ class EgresoController extends Controller
     {
         try {
             $id = $request->get('token');
+            $grupal = $request->get('grupal');
 
             if (!$id) {
                 return view('errors.500');
+            }
+
+            if ($grupal == 1) {
+                $data = DB::table('pagos_compras')
+                    ->select(
+                        'pagos_compras.*',
+                        'configuracion_puc.nombre as forma_pago',
+                        'proveedores.razon_social as proveedor',
+                        'proveedores.nit',
+                        'proveedores.codigo_verificacion',
+                        'proveedores.ciudad',
+                        'proveedores.direccion',
+                        'proveedores.telefono_fijo',
+                    )
+                    ->join('configuracion_puc', 'configuracion_puc.id', '=', 'pagos_compras.forma_pago')
+                    ->join('proveedores', 'proveedores.id', '=', 'pagos_compras.proveedor_id')
+                    ->where('pagos_compras.id', $id)
+                    ->first();
+
+                //Facturas
+                $js_facturas = json_decode($data->grupo_facturas);
+                foreach ($js_facturas as $key => $value) {
+                    $factura = DB::table('factura_compra')
+                        ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion', 'proveedores.ciudad', 'proveedores.telefono_fijo')
+                        ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
+                        ->where('factura_compra.id', $value->id)
+                        ->first();
+
+                    $js_facturas[$key]->factura = $factura;
+                }
+
+                $data->facturas = $js_facturas;
+                return view('admin.contabilidad.compras.pdf.egreso_grupal', compact('data'));
             }
 
             $cuota = 0;
@@ -281,9 +408,202 @@ class EgresoController extends Controller
                 }
             }
 
-            return view('admin.contabilidad.compras.pdf.egreso', compact('data', 'cuota', 'lleva'));
+            $factura = DB::table('factura_compra')
+                ->where('id', $data->factura_id)
+                ->first();
+
+            return view('admin.contabilidad.compras.pdf.egreso', compact('data', 'cuota', 'lleva', 'factura'));
         } catch (Exception $ex) {
             return view('errors.500');
         }
+    }
+
+    public function proveedor_facturas(Request $request)
+    {
+        $cliente = $request->cliente;
+
+        $facturas = DB::table('factura_compra')
+            ->where('proveedor_id', $cliente)
+            ->where('status', 1)
+            ->get();
+
+        // Pagos de la factura
+        foreach ($facturas as $key => $value) {
+            $pagos = DB::table('pagos_compras')
+                ->where('proveedor_id', $cliente)
+                ->where('tipo', 1)
+                ->where('status', 1)
+                ->get();
+
+            $value->pagos = $pagos;
+        }
+
+        return response()->json(['info' => 1, 'facturas' => $facturas]);
+    }
+
+    public function data_egreso_info(Request $request)
+    {
+        $recibo_id = $request->id;
+
+        $recibo = DB::table('pagos_compras')
+            ->where('id', $recibo_id)
+            ->first();
+
+        $cliente = $recibo->proveedor_id;
+
+        $facturas = DB::table('factura_compra')
+            ->where('proveedor_id', $cliente)
+            ->where('status', 1)
+            ->get();
+
+        // Pagos de la factura
+        foreach ($facturas as $key => $value) {
+            $pagos = DB::table('pagos_compras')
+                ->where('proveedor_id', $cliente)
+                ->where('tipo', 1)
+                ->where('status', 1)
+                ->get();
+
+            $value->pagos = $pagos;
+        }
+
+        return response()->json(['info' => 1, 'facturas' => $facturas, 'recibo' => $recibo]);
+    }
+
+    public function anular_egreso(Request $request)
+    {
+        $id = $request->id;
+        
+        DB::table('pagos_compras')
+            ->where('id', $id)
+            ->update([
+                'status' => 4,
+            ]);
+        
+        return response()->json(['info' => 1, 'msg' => 'Egreso anulado correctamente']);
+    }
+
+    public function pago_grupo_add(Request $request)
+    {
+        $tipo = $request->tipo;
+        $fecha = $request->fecha;
+        $cliente = $request->cliente;
+        $centro_costo = $request->centro_costo;
+        //$numero = $request->numero;
+        $numero_siigo = $request->numero_siigo;
+        //$transaccion = $request->transaccion;
+        $forma_pago = $request->forma_pago;
+        $pagado = $request->pagado;
+        $facturas = json_decode($request->facturas);
+        $observacion = $request->observacion;
+        $archivo = $request->archivo;
+        $adjunto = null;
+
+        if ($request->hasFile('archivo')) {
+            $file = $request->file('archivo');
+            $name = time() . $file->getClientOriginalName();
+            $file->move('images/contabilidad/egresos/', $name);
+            $adjunto = $name;
+        }
+
+        $last_number = DB::table('pagos_compras')
+            ->select('numero')
+            ->where('tipo', 1)
+            ->orderBy('numero', 'desc')
+            ->first();
+
+        if (!$last_number) {
+            $numero = 1;
+        } else {
+            $numero = $last_number->numero + 1;
+        }
+
+        DB::table('pagos_compras')->insert([
+            'numero' => $numero,
+            'numero_siigo' => $numero_siigo,
+            'tipo' => 1,
+            //'factura_id' => $factura_id,
+            'grupo_facturas' => json_encode($facturas),
+            'proveedor_id' => $cliente,
+            'fecha_elaboracion' => $fecha,
+            'forma_pago' => $forma_pago,
+            'valor' => $pagado,
+            'status' => 1,
+            'observacion' => $observacion,
+            'adjunto_pdf' => $adjunto ?? null,
+            'created_by' => auth()->user()->id,
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        foreach ($facturas as $key => $value) {
+            $factura = DB::table('factura_compra')
+                ->where('id', $value->id)
+                ->first();
+
+            if ($factura->valor_total == $value->valor) {
+                DB::table('factura_compra')
+                    ->where('id', $value->id)
+                    ->update([
+                        'status' => 2,
+                    ]);
+            }
+        }
+
+        return response()->json(['info' => 1, 'msg' => 'Pago registrado correctamente']);
+    }
+
+    public function pago_grupo_edit(Request $request)
+    {
+        $id = $request->id;
+        $tipo = $request->tipo;
+        $fecha = $request->fecha;
+        $cliente = $request->cliente;
+        $centro_costo = $request->centro_costo;
+        //$numero = $request->numero;
+        $numero_siigo = $request->numero_siigo;
+        //$transaccion = $request->transaccion;
+        $forma_pago = $request->forma_pago;
+        $pagado = $request->pagado;
+        $facturas = json_decode($request->facturas);
+        $observacion = $request->observacion;
+        $archivo = $request->archivo;
+        $adjunto = null;
+
+        if ($request->hasFile('archivo')) {
+            $file = $request->file('archivo');
+            $name = time() . $file->getClientOriginalName();
+            $file->move('images/contabilidad/egresos/', $name);
+            $adjunto = $name;
+        }
+
+        DB::table('pagos_compras')->where('id', $id)->update([
+            'numero_siigo' => $numero_siigo,
+            'grupo_facturas' => json_encode($facturas),
+            'proveedor_id' => $cliente,
+            'fecha_elaboracion' => $fecha,
+            'forma_pago' => $forma_pago,
+            'valor' => $pagado,
+            'status' => 1,
+            'observacion' => $observacion,
+            'adjunto_pdf' => $adjunto ?? null,
+            'created_by' => auth()->user()->id,
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        foreach ($facturas as $key => $value) {
+            $factura = DB::table('factura_compra')
+                ->where('id', $value->id)
+                ->first();
+
+            if ($factura->valor_total == $value->valor) {
+                DB::table('factura_compra')
+                    ->where('id', $value->id)
+                    ->update([
+                        'status' => 2,
+                    ]);
+            }
+        }
+
+        return response()->json(['info' => 1, 'msg' => 'Pago registrado correctamente']);
     }
 }
