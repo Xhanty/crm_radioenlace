@@ -503,6 +503,19 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/viaticos_delete', [App\Http\Controllers\Admin\Viaticos\ViaticosController::class, 'delete'])->name('viaticos_delete');
     Route::post('/viaticos_accept', [App\Http\Controllers\Admin\Viaticos\ViaticosController::class, 'accept'])->name('viaticos_accept');
     Route::post('/viaticos_reject', [App\Http\Controllers\Admin\Viaticos\ViaticosController::class, 'reject'])->name('viaticos_reject');
+
+    // ISO PQRS
+    Route::get('/pqrs', [App\Http\Controllers\Iso\PqrController::class, 'index'])->name('pqrs');
+    Route::get('/pqr_excel', [App\Http\Controllers\Iso\PqrController::class, 'excel'])->name('pqr_excel');
+    Route::post('/pqr_get', [App\Http\Controllers\Iso\PqrController::class, 'data'])->name('pqr_get');
+    Route::post('/pqr_add', [App\Http\Controllers\Iso\PqrController::class, 'add'])->name('pqr_add');
+    Route::post('/pqr_edit', [App\Http\Controllers\Iso\PqrController::class, 'edit'])->name('pqr_edit');
+    Route::post('/pqr_tratamiento_update', [App\Http\Controllers\Iso\PqrController::class, 'tratamiento_update'])->name('pqr_tratamiento_update');
+    Route::post('/pqr_evidencia_update', [App\Http\Controllers\Iso\PqrController::class, 'evidencia_update'])->name('pqr_evidencia_update');
+    Route::post('/pqr_seguimiento_update', [App\Http\Controllers\Iso\PqrController::class, 'seguimiento_update'])->name('pqr_seguimiento_update');
+    Route::post('/pqr_correcion_update', [App\Http\Controllers\Iso\PqrController::class, 'correcion_update'])->name('pqr_correcion_update');
+    Route::post('/pqr_status', [App\Http\Controllers\Iso\PqrController::class, 'status_update'])->name('pqr_status');
+    Route::post('/pqr_delete', [App\Http\Controllers\Iso\PqrController::class, 'delete'])->name('pqr_delete');
 });
 
 // RUTAS PARA EL CANVA ASIGNACION DE TAREAS (PROYECTOS)

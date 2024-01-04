@@ -211,12 +211,12 @@
                             <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
                                     class="side-menu__icon fe fe-file-text"></i><span class="side-menu__label">Gestión
                                     Calidad</span><i class="angle fe fe-chevron-down"></i></a>
-                            <ul class="slide-menu">
+                                    <ul class="slide-menu">
+                                <li><a class="slide-item" href="{{ route('pqrs') }}">PQR</a></li>
                                 <li><a download class="slide-item" href="{{ asset('iso/dofa.xlsx') }}">DOFA</a>
                                 <li><a download class="slide-item" href="{{ asset('iso/normas.pdf') }}">Normas</a>
                                 <li><a download class="slide-item" href="{{ asset('iso/politicas.pdf') }}">Políticas</a>
-                                <li><a download class="slide-item" href="{{ asset('iso/procesos.pptx') }}">Mapa Procesos</a>
-                                </li>
+                                <li><a download class="slide-item" href="{{ asset('iso/procesos.pptx') }}">Mapa Procesos</a></li>
                             </ul>
                         </li>
 
