@@ -472,9 +472,6 @@ $(document).ready(function () {
                                     '<td style="text-align: center;">' +
                                     item.impuesto_cargo +
                                     '%</td>' +
-                                    '<td style="text-align: center;">' +
-                                    item.impuesto_retencion +
-                                    '%</td>' +
                                     '<td style="text-align: right;">' +
                                     item.valor_total +
                                     '</td>' +
@@ -600,7 +597,7 @@ $(document).ready(function () {
                             '<td class="tx-right" colspan="2">' + subtotal + '</td>' +
                             '</tr>' +
                             impuestos_1_total +
-                            impuestos_2_total +
+                            /*impuestos_2_total +*/
                             retefuente +
                             reteiva +
                             reteica +

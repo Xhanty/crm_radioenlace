@@ -346,7 +346,6 @@
                                         <th class="wd-40p">Descripción</th>
                                         <th class="tx-center">Cantidad</th>
                                         <th class="tx-center">Impuesto<br>Cargo</th>
-                                        <th class="tx-center">Impuesto<br>Rete.</th>
                                         <th class="tx-right">Valor Total</th>
                                     </tr>
                                 </thead>

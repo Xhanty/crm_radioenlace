@@ -569,9 +569,6 @@ $(document).ready(function () {
                                         '<td style="text-align: center;">' +
                                         item.tarifa_cargo +
                                         "%</td>" +
-                                        '<td style="text-align: center;">' +
-                                        item.tarifa_retencion +
-                                        "%</td>" +
                                         '<td style="text-align: right;">' +
                                         item.valor_total +
                                         "</td>" +
@@ -593,9 +590,6 @@ $(document).ready(function () {
                                         "</td>" +
                                         '<td style="text-align: center;">' +
                                         item.tarifa_cargo +
-                                        "%</td>" +
-                                        '<td style="text-align: center;">' +
-                                        item.tarifa_retencion +
                                         "%</td>" +
                                         '<td style="text-align: right;">' +
                                         item.valor_total +
@@ -710,7 +704,7 @@ $(document).ready(function () {
                                 "</td>" +
                                 "</tr>" +
                                 impuestos_1_total +
-                                impuestos_2_total +
+                                /*impuestos_2_total +*/
                                 "<tr>" +
                                 '<td class="tx-right tx-uppercase tx-bold tx-inverse">Total Neto</td>' +
                                 '<td class="tx-right" colspan="2">' +
