@@ -433,6 +433,13 @@
 @endsection
 
 @section('scripts')
+    <script>
+        $(document).ready(function() {
+            let productos = @json($productos);
+
+            localStorage.setItem('productos', JSON.stringify(productos));
+        });
+    </script>
     <script src="{{ asset('assets/js/app/inventario/solicitud_inventario.js') }}"></script>
     <script src="{{ asset('assets/plugins/treeview/treeview.js') }}"></script>
 @endsection
