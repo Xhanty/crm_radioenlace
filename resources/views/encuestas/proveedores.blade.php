@@ -26,10 +26,8 @@
             <div class="col-md-12">
                 <h1 class="text-center">Encuesta de Satisfacción</h1>
                 <br>
-                <p class="text-center">Estimado Cliente, esta encuesta se realizara para conocer su grado de
-                    satisfacción en la utilización de nuestros servicios. Su opinión es muy importante para RADIO ENLACE
-                    S.A.S. Agradecemos de antemano su atención, tiempo y colaboración. A continuación se indica como se
-                    debe diligenciar: Marque uno de los cuatro (4) círculos que aparecen con la letra 4: Excelente, 3:
+                <p class="text-center">Estimado Proveedor, esta encuesta se realizará para conocer el grado de
+                    satisfacción de RADIO ENLACE S.A.S. hacía usted por los servicios prestados. <br>4: Excelente, 3:
                     Bueno, 2: Regular, 1: Malo, según sea el caso.</p>
             </div>
         </section>
@@ -76,16 +74,24 @@
                     <!-- Titulos -->
                     <div class="row">
                         <div class="col-md-3">
-                            <b><p>Excelente</p></b>
+                            <b>
+                                <p>Excelente</p>
+                            </b>
                         </div>
                         <div class="col-md-3">
-                            <b><p>Bueno</p></b>
+                            <b>
+                                <p>Bueno</p>
+                            </b>
                         </div>
                         <div class="col-md-3">
-                            <b><p>Regular</p></b>
+                            <b>
+                                <p>Regular</p>
+                            </b>
                         </div>
                         <div class="col-md-3">
-                            <b><p>Malo</p></b>
+                            <b>
+                                <p>Malo</p>
+                            </b>
                         </div>
                     </div>
                 </div>
@@ -93,7 +99,7 @@
             <!--  PREGUNTA 1  -->
             <section class="row">
                 <div class="col-md-8">
-                    <p>1- Como califica el servicio que RADIO ENLACE le ha ofrecido</p>
+                    <p>1- ¿Cómo calificarías la percepción general de la calidad del servicio?</p>
                 </div>
                 <div class="col-md-1">
                     <label class="radio">
@@ -119,8 +125,7 @@
             <!--  PREGUNTA 2  -->
             <section class="row">
                 <div class="col-md-8">
-                    <p>2- Como califica el proceso de analisis de la solicitud del servicio y demas documentos para la
-                        cotizacion realizado por RADIO ENLACE</p>
+                    <p>2- ¿Cómo valorarías la capacidad del proveedor para cumplir con las expectativas en términos de calidad del servicio?</p>
                 </div>
                 <div class="col-md-1">
                     <label class="radio">
@@ -146,7 +151,7 @@
             <!--  PREGUNTA 3  -->
             <section class="row">
                 <div class="col-md-8">
-                    <p>3- Como califica el seguimiento de la prestacion del servicio que RADIO ENLACE le presta </p>
+                    <p>3- ¿Qué puntuación asignarías a la respuesta y resolución de problemas?</p>
                 </div>
                 <div class="col-md-1">
                     <label class="radio">
@@ -169,86 +174,6 @@
                     </label>
                 </div>
             </section>
-            <!--  PREGUNTA 4  -->
-            <section class="row">
-                <div class="col-md-8">
-                    <p>4- Como califica el seguimiento de Logistica durante la prestacion del servicio: es clara, veraz
-                        y
-                        oportuna</p>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta4" value="4" required> 4
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta4" value="3" required> 3
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta4" value="2" required> 2
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta4" value="1" required> 1
-                    </label>
-                </div>
-            </section>
-            <!-- PREGUNTA 5  -->
-            <section class="row">
-                <div class="col-md-8">
-                    <p>5- Como califica la competencia del personal operativo y administrativo de RADIO ENLACE</p>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta5" value="4" required> 4
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta5" value="3" required> 3
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta5" value="2" required> 2
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta5" value="1" required> 1
-                    </label>
-                </div>
-            </section>
-            <!-- PREGUNTA 6  -->
-            <section class="row">
-                <div class="col-md-8">
-                    <p>6- Como califica el tiempo en la ejecucuion del servico prestado que realiza RADIO ENLACE</p>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta6" value="4" required> 4
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta6" value="3" required> 3
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta6" value="2" required> 2
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta6" value="1" required> 1
-                    </label>
-                </div>
-            </section>
             <br>
             <hr>
             <!--  Control y seguridad  -->
@@ -261,7 +186,7 @@
             <!--  PREGUNTA 7  -->
             <section class="row">
                 <div class="col-md-8">
-                    <p>7- Como percibe las medidas de seguridad que RADIO ENLACE toma para proteger su mercancía</p>
+                    <p>7- ¿Cómo calificarías la efectividad de los protocolos de seguridad implementados?</p>
                 </div>
                 <div class="col-md-1">
                     <label class="radio">
@@ -287,9 +212,7 @@
             <!--  PREGUNTA 8  -->
             <section class="row">
                 <div class="col-md-8">
-                    <p>8- Como califica la atención de RADIO ENLACE a sus sugerencias u observaciones acerca del
-                        servicio
-                        que se le ha prestado
+                    <p>8- ¿Cómo evaluarías la gestión y control de acceso a datos confidenciales durante el servicio prestado?
                     </p>
                 </div>
                 <div class="col-md-1">
@@ -316,9 +239,7 @@
             <!--  PREGUNTA 9  -->
             <section class="row">
                 <div class="col-md-8">
-                    <p>9- La solución que RADIO ENLACE da a los inconvenientes, dificultades, quejas y reclamos
-                        presentados
-                        durante la prestación del servicio es</p>
+                    <p>9- ¿Qué calificación asignarías a la capacidad del proveedor para manejar y mitigar riesgos de seguridad de manera efectiva?</p>
                 </div>
                 <div class="col-md-1">
                     <label class="radio">
@@ -341,60 +262,7 @@
                     </label>
                 </div>
             </section>
-            <!--  PREGUNTA 10  -->
-            <section class="row">
-                <div class="col-md-8">
-                    <p>10- La posición de liderazgo de RADIO ENLACE frente a sus competidores es</p>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta10" value="4" required> 4
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta10" value="3" required> 3
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta10" value="2" required> 2
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta10" value="1" required> 1
-                    </label>
-                </div>
-            </section>
-            <!--  PREGUNTA 11  -->
-            <section class="row">
-                <div class="col-md-8">
-                    <p>11- Los medios de comunicación utilizados por RADIO ENLACE para la prestación de los servicios
-                        son
-                    </p>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta11" value="4" required> 4
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta11" value="3" required> 3
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta11" value="2" required> 2
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta11" value="1" required> 1
-                    </label>
-                </div>
-            </section><br />
+            <br />
             <hr />
             <!-- Cumplimiento de la organización -->
             <section class="row">
@@ -406,7 +274,7 @@
             <!--  PREGUNTA 12  -->
             <section class="row">
                 <div class="col-md-8">
-                    <p>12- Las tarifas de RADIO ENLACE para la prestación de los servicios son </p>
+                    <p>12- ¿En tu experiencia, cumple con todas las regulaciones y normativas pertinentes?</p>
                 </div>
                 <div class="col-md-1">
                     <label class="radio">
@@ -432,9 +300,7 @@
             <!--  PREGUNTA 13  -->
             <section class="row">
                 <div class="col-md-8">
-                    <p>13- Como califica el cumplimiento de las condiciones pactadas con RADIO ENLACE para la prestación
-                        del
-                        servicio </p>
+                    <p>13- ¿Qué puntuación darías al sistema de gestión de la calidad implementado?</p>
                 </div>
                 <div class="col-md-1">
                     <label class="radio">
@@ -460,7 +326,7 @@
             <!--  PREGUNTA 14  -->
             <section class="row">
                 <div class="col-md-8">
-                    <p>14- Como califica el cumplimiento de las condiciones de facturación pactadas con RADIO ENLACE</p>
+                    <p>14- ¿Cómo calificarías la capacidad del proveedor para implementar mejoras?</p>
                 </div>
                 <div class="col-md-1">
                     <label class="radio">
@@ -483,69 +349,188 @@
                     </label>
                 </div>
             </section>
-            <!--  PREGUNTA 15  -->
-            <section class="row">
-                <div class="col-md-8">
-                    <p>15- Como califica La atención en la Oficina Principal</p>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta15" value="4" required> 4
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta15" value="3" required> 3
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta15" value="2" required> 2
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta15" value="1" required> 1
-                    </label>
-                </div>
-            </section>
-            <!--  PREGUNTA 16  -->
-            <section class="row">
-                <div class="col-md-8">
-                    <p>16- Comparando los productos y servicios con otras compañias como consideras nuetro servicio</p>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta16" value="4" required> 4
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta16" value="3" required> 3
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta16" value="2" required> 2
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta16" value="1" required> 1
-                    </label>
-                </div>
-            </section>
-
             <br />
+            <hr>
+            <section class="row">
+                <div class="col-md-12">
+                    <h3>Aspectos económicos.</h3>
+                    <p></p>
+                </div>
+            </section>
+            <!--  PREGUNTA 12  -->
+            <section class="row">
+                <div class="col-md-8">
+                    <p>12- ¿Cómo evaluarías la transparencia y claridad en la estructuración de los costos asociados con los servicios recibidos?</p>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta12" value="4" required> 4
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta12" value="3" required> 3
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta12" value="2" required> 2
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta12" value="1" required> 1
+                    </label>
+                </div>
+            </section>
+            <!--  PREGUNTA 13  -->
+            <section class="row">
+                <div class="col-md-8">
+                    <p>13- ¿Qué calificación merece la flexibilidad en opciones de pago y descuentos proporcionada por el proveedor?</p>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta13" value="4" required> 4
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta13" value="3" required> 3
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta13" value="2" required> 2
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta13" value="1" required> 1
+                    </label>
+                </div>
+            </section>
+            <!--  PREGUNTA 14  -->
+            <section class="row">
+                <div class="col-md-8">
+                    <p>14- ¿Qué puntuación asignarías a la capacidad del proveedor para gestionar aumentos de costos o cambios en la estructura de precios?</p>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta14" value="4" required> 4
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta14" value="3" required> 3
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta14" value="2" required> 2
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta14" value="1" required> 1
+                    </label>
+                </div>
+            </section>
+            <br>
+            <hr>
+            <section class="row">
+                <div class="col-md-12">
+                    <h3>Aspectos estratégicos.</h3>
+                    <p></p>
+                </div>
+            </section>
+            <!--  PREGUNTA 12  -->
+            <section class="row">
+                <div class="col-md-8">
+                    <p>12- ¿Cómo calificarías la visión general de la estrategia a largo plazo proporcionada por el proveedor en la prestación de servicios?</p>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta12" value="4" required> 4
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta12" value="3" required> 3
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta12" value="2" required> 2
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta12" value="1" required> 1
+                    </label>
+                </div>
+            </section>
+            <!--  PREGUNTA 13  -->
+            <section class="row">
+                <div class="col-md-8">
+                    <p>13- ¿Cómo evaluarías la adaptabilidad de los servicios a las cambiantes necesidades del mercado y las tendencias industriales?</p>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta13" value="4" required> 4
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta13" value="3" required> 3
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta13" value="2" required> 2
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta13" value="1" required> 1
+                    </label>
+                </div>
+            </section>
+            <!--  PREGUNTA 14  -->
+            <section class="row">
+                <div class="col-md-8">
+                    <p>14- ¿Qué calificación asignarías a la capacidad del proveedor para innovar y mejorar continuamente la oferta de servicios?</p>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta14" value="4" required> 4
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta14" value="3" required> 3
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta14" value="2" required> 2
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta14" value="1" required> 1
+                    </label>
+                </div>
+            </section>
+            <br>
 
             <!--  Preguntas  -->
-            <section class="row">
+            <section class="row" style="display: none">
                 <div class="col-md-12">
                     <h3>Preguntas</h3>
                     <p></p>
                 </div>
             </section>
-            <section class="row">
+            <section class="row" style="display: none">
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="comment">Que es lo que te gusta de nuetros productos y servicios?</label>
@@ -553,7 +538,7 @@
                     </div>
                 </div>
             </section>
-            <section class="row">
+            <section class="row" style="display: none">
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="comment">Que es lo que no te gusta de nuestros productos y servicios y que crees
@@ -562,7 +547,7 @@
                     </div>
                 </div>
             </section>
-            <section class="row">
+            <section class="row" style="display: none">
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="comment">Observaciones y Recomendaciones:</label>
@@ -602,10 +587,12 @@
                 for (let i = 1; i <= 16; i++) {
                     $('input[name="pregunta' + i + '"][value="' + respuestas['pregunta' + i] + '"]').prop(
                         'checked', true);
-                    
+
                     // accent-color
-                    $('input[name="pregunta' + i + '"][value="' + respuestas['pregunta' + i] + '"]').parent().css('color', 'rgb(218, 37, 29)');
-                    $('input[name="pregunta' + i + '"][value="' + respuestas['pregunta' + i] + '"]').parent().css('font-weight', 'bold');
+                    $('input[name="pregunta' + i + '"][value="' + respuestas['pregunta' + i] + '"]').parent().css(
+                        'color', 'rgb(218, 37, 29)');
+                    $('input[name="pregunta' + i + '"][value="' + respuestas['pregunta' + i] + '"]').parent().css(
+                        'font-weight', 'bold');
                 }
 
                 $('#pregunta_1').val(respuestas.pregunta_1);
