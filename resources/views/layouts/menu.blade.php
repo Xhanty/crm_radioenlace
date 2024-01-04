@@ -211,12 +211,16 @@
                             <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
                                     class="side-menu__icon fe fe-file-text"></i><span class="side-menu__label">Gestión
                                     Calidad</span><i class="angle fe fe-chevron-down"></i></a>
-                                    <ul class="slide-menu">
-                                <li><a class="slide-item" href="{{ route('pqrs') }}">PQR</a></li>
+                            <ul class="slide-menu">
+                                @if (auth()->user()->hasPermissionTo('gestion_pqr'))
+                                    <li><a class="slide-item" href="{{ route('pqrs') }}">PQR</a></li>
+                                @endif
                                 <li><a download class="slide-item" href="{{ asset('iso/dofa.xlsx') }}">DOFA</a>
                                 <li><a download class="slide-item" href="{{ asset('iso/normas.pdf') }}">Normas</a>
-                                <li><a download class="slide-item" href="{{ asset('iso/politicas.pdf') }}">Políticas</a>
-                                <li><a download class="slide-item" href="{{ asset('iso/procesos.pptx') }}">Mapa Procesos</a></li>
+                                <li><a download class="slide-item"
+                                        href="{{ asset('iso/politicas.pdf') }}">Políticas</a>
+                                <li><a download class="slide-item" href="{{ asset('iso/procesos.pptx') }}">Mapa
+                                        Procesos</a></li>
                             </ul>
                         </li>
 
@@ -335,10 +339,11 @@
                                                 href="{{ route('configuracion_contabilidad') }}">Configuración</a>
                                         </li>
                                         <li><a class="slide-item"
-                                            href="{{ route('conciliacion_bancaria') }}">Conciliación Bancaría</a>
+                                                href="{{ route('conciliacion_bancaria') }}">Conciliación Bancaría</a>
                                         </li>
                                         <li><a class="slide-item"
-                                            href="{{ route('comprobantes_contables') }}">Comprobantes Contables</a>
+                                                href="{{ route('comprobantes_contables') }}">Comprobantes
+                                                Contables</a>
                                         </li>
                                     @endif
                                     @if (auth()->user()->hasPermissionToMultiple(
@@ -539,13 +544,14 @@
                                                     href="{{ route('reporte_compras') }}">Compras</a>
                                             </li>
                                             <li><a class="sub-side-menu__item"
-                                                href="{{ route('reporte_ventas') }}">Ventas</a>
+                                                    href="{{ route('reporte_ventas') }}">Ventas</a>
                                             </li>
                                             <li><a class="sub-side-menu__item"
                                                     href="{{ route('reporte_gastos_fijos') }}">Gastos Fijos</a>
                                             </li>
                                             <li><a class="sub-side-menu__item"
-                                                href="{{ route('reporte_resultado_integral') }}">Estado de resultado integral</a>
+                                                    href="{{ route('reporte_resultado_integral') }}">Estado de
+                                                    resultado integral</a>
                                             </li>
                                         </ul>
                                     </li>

@@ -171,6 +171,19 @@ $(function () {
         }
     });
 
+    $(".check-calidad-0").on("change", function () {
+        let check = $(this).prop("checked");
+        let cantidad = 1;
+
+        for (let i = 1; i <= cantidad; i++) {
+            if (check) {
+                $(".check-calidad-" + i).prop("checked", true);
+            } else {
+                $(".check-calidad-" + i).prop("checked", false);
+            }
+        }
+    });
+
     // BTNS
     $("#btn_asignaciones").on("click", function () {
         $(".select_div").removeClass("active");
@@ -239,6 +252,13 @@ $(function () {
         $(".select_div").removeClass("active");
         $(".div-list-ocult").hide();
         $("#comercial_div").show();
+        $(this).addClass("active");
+    });
+
+    $("#btn_calidad").on("click", function () {
+        $(".select_div").removeClass("active");
+        $(".div-list-ocult").hide();
+        $("#calidad_div").show();
         $(this).addClass("active");
     });
 

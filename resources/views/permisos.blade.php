@@ -65,6 +65,10 @@
                                     href="javascript:void(0);">
                                     <i class="fe fe-folder"></i> Documentos
                                 </a>
+                                <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_calidad"
+                                    href="javascript:void(0);">
+                                    <i class="fe fe-clipboard"></i> Calidad
+                                </a>
                                 <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_solicitudes"
                                     href="javascript:void(0);">
                                     <i class="fe fe-sliders"></i> Solicitudes Inventario
@@ -127,6 +131,7 @@
             @include('permisos.proyectos')
             @include('permisos.reparaciones')
             @include('permisos.documentos')
+            @include('permisos.calidad')
             @include('permisos.comercial')
             @include('permisos.contabilidad')
             @include('permisos.configuracion')
