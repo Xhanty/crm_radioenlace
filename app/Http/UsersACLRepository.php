@@ -12,6 +12,7 @@ class UsersACLRepository implements ACLRepository
      *
      * @return mixed
      */
+
     public function getUserID()
     {
         return Auth::id();
@@ -24,68 +25,44 @@ class UsersACLRepository implements ACLRepository
      */
     public function getRules(): array
     {
-        if (Auth::id() === 6 || Auth::id() === 43 || Auth::id() === 32) {
-            return [
-                ['disk' => 'public', 'path' => '*', 'access' => 2],
-            ];
-        }
-
-        if(Auth::id() === 9) {
+        if(auth()->user()->hasPermissionTo('gestion_documentos_gerencia')) {
             return [
                 ['disk' => 'public', 'path' => '/', 'access' => 1], // main folder - read
                 ['disk' => 'public', 'path' => '', 'access' => 1], // only read
-                ['disk' => 'public', 'path' => Auth::user()->nombre, 'access' => 1], // only read
-                ['disk' => 'public', 'path' => Auth::user()->nombre . '/*', 'access' => 2], // read and write
-                ['disk' => 'public', 'path' => 'Vehículos', 'access' => 1], // main folder - read
-                ['disk' => 'public', 'path' => 'Vehículos/*', 'access' => 2], // read and write
-                ['disk' => 'public', 'path' => 'Documentos RH', 'access' => 1], // main folder - read
-                ['disk' => 'public', 'path' => 'Documentos RH/*', 'access' => 2], // read and write
+                ['disk' => 'public', 'path' => 'Dcto Gerencia', 'access' => 1], // main folder - read
+                ['disk' => 'public', 'path' => 'Dcto Gerencia/*', 'access' => 2], // read and write
+                ['disk' => 'public', 'path' => 'Documentos', 'access' => 1], // main folder - read
+                ['disk' => 'public', 'path' => 'Documentos/*', 'access' => 2], // read and write
             ];
-        }
-
-        if (Auth::id() === 39) {
+        } else {
+            if (Auth::id() === 6 || Auth::id() === 43 || Auth::id() === 8) {
+                return [
+                    ['disk' => 'public', 'path' => '/', 'access' => 1], // main folder - read
+                    ['disk' => 'public', 'path' => '', 'access' => 1], // only read
+                    ['disk' => 'public', 'path' => 'Documentos', 'access' => 1], // main folder - read
+                    ['disk' => 'public', 'path' => 'Documentos/*', 'access' => 2], // read and write
+                ];
+            }
+    
+            if (Auth::id() === 9) {
+                return [
+                    ['disk' => 'public', 'path' => '/', 'access' => 1], // main folder - read
+                    ['disk' => 'public', 'path' => '', 'access' => 1], // only read
+                    ['disk' => 'public', 'path' => 'Documentos/' . Auth::user()->nombre, 'access' => 1], // only read
+                    ['disk' => 'public', 'path' => 'Documentos/' . Auth::user()->nombre . '/*', 'access' => 2], // read and write
+                    ['disk' => 'public', 'path' => 'Documentos/Vehículos', 'access' => 1], // main folder - read
+                    ['disk' => 'public', 'path' => 'Documentos/Vehículos/*', 'access' => 2], // read and write
+                    ['disk' => 'public', 'path' => 'Documentos/Documentos RH', 'access' => 1], // main folder - read
+                    ['disk' => 'public', 'path' => 'Documentos/Documentos RH/*', 'access' => 2], // read and write
+                ];
+            }
+    
             return [
                 ['disk' => 'public', 'path' => '/', 'access' => 1], // main folder - read
                 ['disk' => 'public', 'path' => '', 'access' => 1], // only read
-                //['disk' => 'public', 'path' => Auth::user()->nombre, 'access' => 1], // only read
-                //['disk' => 'public', 'path' => Auth::user()->nombre . '/*', 'access' => 2], // read and write
-                ['disk' => 'public', 'path' => 'Mintic', 'access' => 1], // main folder - read
-                ['disk' => 'public', 'path' => 'Mintic/*', 'access' => 2], // read and write
-                ['disk' => 'public', 'path' => 'Área Comercial', 'access' => 1], // main folder - read
-                ['disk' => 'public', 'path' => 'Área Comercial/*', 'access' => 2], // read and write
+                ['disk' => 'public', 'path' => 'Documentos/' . Auth::user()->nombre, 'access' => 1], // only read
+                ['disk' => 'public', 'path' => 'Documentos/' . Auth::user()->nombre . '/*', 'access' => 2], // read and write
             ];
         }
-
-        if (Auth::id() === 49) {
-            return [
-                ['disk' => 'public', 'path' => '/', 'access' => 1], // main folder - read
-                ['disk' => 'public', 'path' => '', 'access' => 1], // only read
-                //['disk' => 'public', 'path' => Auth::user()->nombre, 'access' => 1], // only read
-                //['disk' => 'public', 'path' => Auth::user()->nombre . '/*', 'access' => 2], // read and write
-                ['disk' => 'public', 'path' => 'Gestión de calidad', 'access' => 1], // main folder - read
-                ['disk' => 'public', 'path' => 'Gestión de calidad/*', 'access' => 2], // read and write
-                ['disk' => 'public', 'path' => 'Área Comercial', 'access' => 1], // main folder - read
-                ['disk' => 'public', 'path' => 'Área Comercial/*', 'access' => 2], // read and write
-                ['disk' => 'public', 'path' => 'Área Contable', 'access' => 1], // main folder - read
-                ['disk' => 'public', 'path' => 'Área Contable/*', 'access' => 2], // read and write
-            ];
-        }
-
-        if (Auth::id() === 38) {
-            return [
-                ['disk' => 'public', 'path' => '/', 'access' => 1], // main folder - read
-                ['disk' => 'public', 'path' => '', 'access' => 1], // only read
-                ['disk' => 'public', 'path' => 'Sirley Tatiana Murillo Gómez', 'access' => 1], // only read
-                ['disk' => 'public', 'path' => 'Sirley Tatiana Murillo Gómez/SG-SST', 'access' => 1], // only read
-                ['disk' => 'public', 'path' => 'Sirley Tatiana Murillo Gómez/SG-SST/*', 'access' => 2], // only read
-            ];
-        }
-
-        return [
-            ['disk' => 'public', 'path' => '/', 'access' => 1], // main folder - read
-            ['disk' => 'public', 'path' => '', 'access' => 1], // only read
-            ['disk' => 'public', 'path' => Auth::user()->nombre, 'access' => 1], // only read
-            ['disk' => 'public', 'path' => Auth::user()->nombre . '/*', 'access' => 2], // read and write
-        ];
     }
 }

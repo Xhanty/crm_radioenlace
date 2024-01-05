@@ -121,7 +121,7 @@ $(function () {
 
     $(".check-doc-0").on("change", function () {
         let check = $(this).prop("checked");
-        let cantidad = 1;
+        let cantidad = 2;
 
         for (let i = 1; i <= cantidad; i++) {
             if (check) {

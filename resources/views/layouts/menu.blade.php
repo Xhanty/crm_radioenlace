@@ -207,6 +207,14 @@
                             </li>
                         @endif
 
+                        @if (auth()->user()->hasPermissionTo('gestion_documentos_gerencia'))
+                            <!--<li class="slide">
+                                <a class="side-menu__item" href="{{ route('documentos_gerencia') }}"><i
+                                        class="side-menu__icon fe fe-folder"></i><span
+                                        class="side-menu__label">Dcto Gerencia</span></a>
+                            </li>-->
+                        @endif
+
                         <li class="slide">
                             <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
                                     class="side-menu__icon fe fe-file-text"></i><span class="side-menu__label">Gestión

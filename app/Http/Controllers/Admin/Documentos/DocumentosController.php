@@ -20,4 +20,17 @@ class DocumentosController extends Controller
             return view('errors.500');
         }
     }
+
+    public function documentos_gerencia()
+    {
+        try {
+            if (!auth()->user()->hasPermissionTo('gestion_documentos_gerencia')) {
+                return redirect()->route('home');
+            }
+
+            return view('admin.documentos.documentos_gerencia');
+        } catch (Exception $ex) {
+            return view('errors.500');
+        }
+    }
 }

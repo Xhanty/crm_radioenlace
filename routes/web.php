@@ -216,6 +216,9 @@ Route::middleware(['auth_user'])->group(function () {
     // DOCUMENTOS
     Route::get('/documentos', [App\Http\Controllers\Admin\Documentos\DocumentosController::class, 'index'])->name('documentos');
 
+    // DOCUMENTOS GERENCIA
+    Route::get('/documentos_gerencia', [App\Http\Controllers\Admin\Documentos\DocumentosController::class, 'documentos_gerencia'])->name('documentos_gerencia');
+
     // COMERCIAL
     Route::get('/ordenes_compra', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'index'])->name('ordenes_compra');
     Route::post('/orden_compra_create', [App\Http\Controllers\Admin\Comercial\OrdenCompraController::class, 'create'])->name('orden_compra_create');
