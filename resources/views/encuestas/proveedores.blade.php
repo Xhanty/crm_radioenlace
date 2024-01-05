@@ -24,7 +24,7 @@
     <div class="container">
         <section class="row">
             <div class="col-md-12">
-                <h1 class="text-center">Encuesta de Satisfacción</h1>
+                <h1 class="text-center">Encuesta de Satisfacción | {{ $proveedor->razon_social }}</h1>
                 <br>
                 <p class="text-center">Estimado Proveedor, esta encuesta se realizará para conocer el grado de
                     satisfacción de RADIO ENLACE S.A.S. hacía usted por los servicios prestados. <br>4: Excelente, 3:

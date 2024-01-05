@@ -24,7 +24,7 @@
     <div class="container">
         <section class="row">
             <div class="col-md-12">
-                <h1 class="text-center">Encuesta de Satisfacción</h1>
+                <h1 class="text-center">Encuesta de Satisfacción | {{ $cliente->razon_social }}</h1>
                 <br>
                 <p class="text-center">Estimado Cliente, esta encuesta se realizara para conocer su grado de
                     satisfacción en la utilización de nuestros servicios. Su opinión es muy importante para RADIO ENLACE

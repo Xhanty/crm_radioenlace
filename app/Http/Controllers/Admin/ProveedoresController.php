@@ -292,10 +292,11 @@ class ProveedoresController extends Controller
         if ($send && $send == 1) {
             // Consulta de encuesta
             $encuesta = DB::table('encuesta_satisfaccion')->where("id", $tk)->first();
+            $proveedor = DB::table('proveedores')->where("id", $encuesta->proveedor_id)->first();
 
             if ($encuesta && $encuesta->promedio == 0) {
                 $send = 1;
-                return view('encuestas.proveedores', compact('encuesta', 'send'));
+                return view('encuestas.proveedores', compact('encuesta', 'send', 'proveedor'));
             } else {
                 return redirect('https://radioenlacesas.com');
             }
@@ -304,10 +305,11 @@ class ProveedoresController extends Controller
         if ($encuesta_id) {
             // Consulta de encuesta
             $encuesta = DB::table('encuesta_satisfaccion')->where("id", $encuesta_id)->first();
+            $proveedor = DB::table('proveedores')->where("id", $encuesta->proveedor_id)->first();
 
             if ($encuesta) {
                 $send = 0;
-                return view('encuestas.proveedores', compact('encuesta', 'send'));
+                return view('encuestas.proveedores', compact('encuesta', 'send', 'proveedor'));
             } else {
                 return redirect('https://radioenlacesas.com');
             }
@@ -324,7 +326,10 @@ class ProveedoresController extends Controller
             ->where("proveedor_id", $id)
             ->get();
 
-        return response()->json(["info" => 1, "encuestas" => $encuestas]);
+
+        $proveedor = DB::table('proveedores')->where("id", $id)->first();
+
+        return response()->json(["info" => 1, "encuestas" => $encuestas, "proveedor" => $proveedor]);
     }
 
     public function encuestas_save(Request $request)

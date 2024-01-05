@@ -339,10 +339,11 @@ class ClientesController extends Controller
         if ($send && $send == 1) {
             // Consulta de encuesta
             $encuesta = DB::table('encuesta_satisfaccion')->where("id", $tk)->first();
+            $cliente = DB::table('cliente')->where("id", $encuesta->cliente_id)->first();
 
             if ($encuesta && $encuesta->promedio == 0) {
                 $send = 1;
-                return view('encuestas.clientes', compact('encuesta', 'send'));
+                return view('encuestas.clientes', compact('encuesta', 'send', "cliente"));
             } else {
                 return redirect('https://radioenlacesas.com');
             }
@@ -351,10 +352,11 @@ class ClientesController extends Controller
         if ($encuesta_id) {
             // Consulta de encuesta
             $encuesta = DB::table('encuesta_satisfaccion')->where("id", $encuesta_id)->first();
+            $cliente = DB::table('cliente')->where("id", $encuesta->cliente_id)->first();
 
             if ($encuesta) {
                 $send = 0;
-                return view('encuestas.clientes', compact('encuesta', 'send'));
+                return view('encuestas.clientes', compact('encuesta', 'send', "cliente"));
             } else {
                 return redirect('https://radioenlacesas.com');
             }
@@ -372,7 +374,9 @@ class ClientesController extends Controller
             ->where("cliente_id", $id)
             ->get();
 
-        return response()->json(["info" => 1, "encuestas" => $encuestas]);
+        $cliente = DB::table('cliente')->where("id", $encuestas->cliente_id)->first();
+
+        return response()->json(["info" => 1, "encuestas" => $encuestas, "cliente" => $cliente]);
     }
 
     public function encuestas_save(Request $request)
