@@ -326,10 +326,7 @@ class ProveedoresController extends Controller
             ->where("proveedor_id", $id)
             ->get();
 
-
-        $proveedor = DB::table('proveedores')->where("id", $id)->first();
-
-        return response()->json(["info" => 1, "encuestas" => $encuestas, "proveedor" => $proveedor]);
+        return response()->json(["info" => 1, "encuestas" => $encuestas]);
     }
 
     public function encuestas_save(Request $request)

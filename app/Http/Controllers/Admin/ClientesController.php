@@ -374,9 +374,7 @@ class ClientesController extends Controller
             ->where("cliente_id", $id)
             ->get();
 
-        $cliente = DB::table('cliente')->where("id", $encuestas->cliente_id)->first();
-
-        return response()->json(["info" => 1, "encuestas" => $encuestas, "cliente" => $cliente]);
+        return response()->json(["info" => 1, "encuestas" => $encuestas]);
     }
 
     public function encuestas_save(Request $request)
