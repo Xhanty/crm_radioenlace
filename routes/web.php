@@ -560,6 +560,7 @@ Route::get('calendario_asignaciones',  [App\Http\Controllers\Admin\AsignacionesC
 
 // Encuestas Clientes
 Route::get('/encuestas_clientes', [App\Http\Controllers\Admin\ClientesController::class, 'encuestas_clientes'])->name('encuestas_clientes');
+Route::get('/encuestas_clientes_grafica', [App\Http\Controllers\Admin\ClientesController::class, 'encuestas_grafica'])->name('encuestas_clientes_grafica');
 Route::post('/clientes_encuestas', [App\Http\Controllers\Admin\ClientesController::class, 'encuestas'])->name('clientes_encuestas');
 Route::post('/encuesta_clientes_save', [App\Http\Controllers\Admin\ClientesController::class, 'encuestas_save'])->name('encuesta_clientes_save');
 Route::post('/clientes_encuestas_send', [App\Http\Controllers\Admin\ClientesController::class, 'encuestas_send'])->name('clientes_encuestas_send');
@@ -573,6 +574,7 @@ Route::post('/clientes_sagrilaft_send', [App\Http\Controllers\Admin\ClientesCont
 
 // Encuestas Proveedores
 Route::get('/encuestas_proveedores', [App\Http\Controllers\Admin\ProveedoresController::class, 'encuestas_proveedores'])->name('encuestas_proveedores');
+Route::get('/encuestas_proveedores_grafica', [App\Http\Controllers\Admin\ProveedoresController::class, 'encuestas_grafica'])->name('encuestas_proveedores_grafica');
 Route::post('/proveedores_encuestas', [App\Http\Controllers\Admin\ProveedoresController::class, 'encuestas'])->name('proveedores_encuestas');
 Route::post('/encuesta_proveedores_save', [App\Http\Controllers\Admin\ProveedoresController::class, 'encuestas_save'])->name('encuesta_proveedores_save');
 Route::post('/proveedores_encuestas_send', [App\Http\Controllers\Admin\ProveedoresController::class, 'encuestas_send'])->name('proveedores_encuestas_send');

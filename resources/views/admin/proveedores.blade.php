@@ -33,7 +33,8 @@
                         </div>
                         @if (auth()->user()->hasPermissionTo('gestionar_proveedores'))
                             <div class="div-2-tables-header">
-                                <button class="btn btn-primary" id="btnNewProveedor">Registrar Proveedor</button>
+                                <button class="btn btn-primary" id="btnNewProveedor" style="margin-left: 8px">Registrar Proveedor</button>
+                                <a href="{{ route('encuestas_proveedores_grafica') }}" class="btn btn-success">Satisfacción</a>
                             </div>
                         @endif
                     </div>

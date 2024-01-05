@@ -183,10 +183,98 @@
                     <p></p>
                 </div>
             </section>
+            <!--  PREGUNTA 4  -->
+            <section class="row">
+                <div class="col-md-8">
+                    <p>4- ¿Cómo calificarías la efectividad de los protocolos de seguridad implementados?</p>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta4" value="4" required> 4
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta4" value="3" required> 3
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta4" value="2" required> 2
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta4" value="1" required> 1
+                    </label>
+                </div>
+            </section>
+            <!--  PREGUNTA 5  -->
+            <section class="row">
+                <div class="col-md-8">
+                    <p>5- ¿Cómo evaluarías la gestión y control de acceso a datos confidenciales durante el servicio prestado?
+                    </p>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta5" value="4" required> 4
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta5" value="3" required> 3
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta5" value="2" required> 2
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta5" value="1" required> 1
+                    </label>
+                </div>
+            </section>
+            <!--  PREGUNTA 6  -->
+            <section class="row">
+                <div class="col-md-8">
+                    <p>6- ¿Qué calificación asignarías a la capacidad del proveedor para manejar y mitigar riesgos de seguridad de manera efectiva?</p>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta6" value="4" required> 4
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta6" value="3" required> 3
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta6" value="2" required> 2
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta6" value="1" required> 1
+                    </label>
+                </div>
+            </section>
+            <br />
+            <hr />
+            <!-- Cumplimiento de la organización -->
+            <section class="row">
+                <div class="col-md-12">
+                    <h3>Cumplimiento de la organización.</h3>
+                    <p></p>
+                </div>
+            </section>
             <!--  PREGUNTA 7  -->
             <section class="row">
                 <div class="col-md-8">
-                    <p>7- ¿Cómo calificarías la efectividad de los protocolos de seguridad implementados?</p>
+                    <p>7- ¿En tu experiencia, cumple con todas las regulaciones y normativas pertinentes?</p>
                 </div>
                 <div class="col-md-1">
                     <label class="radio">
@@ -212,8 +300,7 @@
             <!--  PREGUNTA 8  -->
             <section class="row">
                 <div class="col-md-8">
-                    <p>8- ¿Cómo evaluarías la gestión y control de acceso a datos confidenciales durante el servicio prestado?
-                    </p>
+                    <p>8- ¿Qué puntuación darías al sistema de gestión de la calidad implementado?</p>
                 </div>
                 <div class="col-md-1">
                     <label class="radio">
@@ -239,7 +326,7 @@
             <!--  PREGUNTA 9  -->
             <section class="row">
                 <div class="col-md-8">
-                    <p>9- ¿Qué calificación asignarías a la capacidad del proveedor para manejar y mitigar riesgos de seguridad de manera efectiva?</p>
+                    <p>9- ¿Cómo calificarías la capacidad del proveedor para implementar mejoras?</p>
                 </div>
                 <div class="col-md-1">
                     <label class="radio">
@@ -263,93 +350,6 @@
                 </div>
             </section>
             <br />
-            <hr />
-            <!-- Cumplimiento de la organización -->
-            <section class="row">
-                <div class="col-md-12">
-                    <h3>Cumplimiento de la organización.</h3>
-                    <p></p>
-                </div>
-            </section>
-            <!--  PREGUNTA 12  -->
-            <section class="row">
-                <div class="col-md-8">
-                    <p>12- ¿En tu experiencia, cumple con todas las regulaciones y normativas pertinentes?</p>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta12" value="4" required> 4
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta12" value="3" required> 3
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta12" value="2" required> 2
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta12" value="1" required> 1
-                    </label>
-                </div>
-            </section>
-            <!--  PREGUNTA 13  -->
-            <section class="row">
-                <div class="col-md-8">
-                    <p>13- ¿Qué puntuación darías al sistema de gestión de la calidad implementado?</p>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta13" value="4" required> 4
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta13" value="3" required> 3
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta13" value="2" required> 2
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta13" value="1" required> 1
-                    </label>
-                </div>
-            </section>
-            <!--  PREGUNTA 14  -->
-            <section class="row">
-                <div class="col-md-8">
-                    <p>14- ¿Cómo calificarías la capacidad del proveedor para implementar mejoras?</p>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta14" value="4" required> 4
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta14" value="3" required> 3
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta14" value="2" required> 2
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta14" value="1" required> 1
-                    </label>
-                </div>
-            </section>
-            <br />
             <hr>
             <section class="row">
                 <div class="col-md-12">
@@ -357,10 +357,62 @@
                     <p></p>
                 </div>
             </section>
+            <!--  PREGUNTA 10  -->
+            <section class="row">
+                <div class="col-md-8">
+                    <p>10- ¿Cómo evaluarías la transparencia y claridad en la estructuración de los costos asociados con los servicios recibidos?</p>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta10" value="4" required> 4
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta10" value="3" required> 3
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta10" value="2" required> 2
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta10" value="1" required> 1
+                    </label>
+                </div>
+            </section>
+            <!--  PREGUNTA 11  -->
+            <section class="row">
+                <div class="col-md-8">
+                    <p>11- ¿Qué calificación merece la flexibilidad en opciones de pago y descuentos proporcionada por el proveedor?</p>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta11" value="4" required> 4
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta11" value="3" required> 3
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta11" value="2" required> 2
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta11" value="1" required> 1
+                    </label>
+                </div>
+            </section>
             <!--  PREGUNTA 12  -->
             <section class="row">
                 <div class="col-md-8">
-                    <p>12- ¿Cómo evaluarías la transparencia y claridad en la estructuración de los costos asociados con los servicios recibidos?</p>
+                    <p>12- ¿Qué puntuación asignarías a la capacidad del proveedor para gestionar aumentos de costos o cambios en la estructura de precios?</p>
                 </div>
                 <div class="col-md-1">
                     <label class="radio">
@@ -380,58 +432,6 @@
                 <div class="col-md-1">
                     <label class="radio">
                         <input type="radio" name="pregunta12" value="1" required> 1
-                    </label>
-                </div>
-            </section>
-            <!--  PREGUNTA 13  -->
-            <section class="row">
-                <div class="col-md-8">
-                    <p>13- ¿Qué calificación merece la flexibilidad en opciones de pago y descuentos proporcionada por el proveedor?</p>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta13" value="4" required> 4
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta13" value="3" required> 3
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta13" value="2" required> 2
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta13" value="1" required> 1
-                    </label>
-                </div>
-            </section>
-            <!--  PREGUNTA 14  -->
-            <section class="row">
-                <div class="col-md-8">
-                    <p>14- ¿Qué puntuación asignarías a la capacidad del proveedor para gestionar aumentos de costos o cambios en la estructura de precios?</p>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta14" value="4" required> 4
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta14" value="3" required> 3
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta14" value="2" required> 2
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta14" value="1" required> 1
                     </label>
                 </div>
             </section>
@@ -443,36 +443,10 @@
                     <p></p>
                 </div>
             </section>
-            <!--  PREGUNTA 12  -->
-            <section class="row">
-                <div class="col-md-8">
-                    <p>12- ¿Cómo calificarías la visión general de la estrategia a largo plazo proporcionada por el proveedor en la prestación de servicios?</p>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta12" value="4" required> 4
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta12" value="3" required> 3
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta12" value="2" required> 2
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label class="radio">
-                        <input type="radio" name="pregunta12" value="1" required> 1
-                    </label>
-                </div>
-            </section>
             <!--  PREGUNTA 13  -->
             <section class="row">
                 <div class="col-md-8">
-                    <p>13- ¿Cómo evaluarías la adaptabilidad de los servicios a las cambiantes necesidades del mercado y las tendencias industriales?</p>
+                    <p>13- ¿Cómo calificarías la visión general de la estrategia a largo plazo proporcionada por el proveedor en la prestación de servicios?</p>
                 </div>
                 <div class="col-md-1">
                     <label class="radio">
@@ -498,7 +472,7 @@
             <!--  PREGUNTA 14  -->
             <section class="row">
                 <div class="col-md-8">
-                    <p>14- ¿Qué calificación asignarías a la capacidad del proveedor para innovar y mejorar continuamente la oferta de servicios?</p>
+                    <p>14- ¿Cómo evaluarías la adaptabilidad de los servicios a las cambiantes necesidades del mercado y las tendencias industriales?</p>
                 </div>
                 <div class="col-md-1">
                     <label class="radio">
@@ -518,6 +492,32 @@
                 <div class="col-md-1">
                     <label class="radio">
                         <input type="radio" name="pregunta14" value="1" required> 1
+                    </label>
+                </div>
+            </section>
+            <!--  PREGUNTA 15  -->
+            <section class="row">
+                <div class="col-md-8">
+                    <p>15- ¿Qué calificación asignarías a la capacidad del proveedor para innovar y mejorar continuamente la oferta de servicios?</p>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta15" value="4" required> 4
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta15" value="3" required> 3
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta15" value="2" required> 2
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <label class="radio">
+                        <input type="radio" name="pregunta15" value="1" required> 1
                     </label>
                 </div>
             </section>
@@ -584,7 +584,7 @@
 
                 let respuestas = JSON.parse('{!! $encuesta->respuestas !!}');
 
-                for (let i = 1; i <= 16; i++) {
+                for (let i = 1; i <= 15; i++) {
                     $('input[name="pregunta' + i + '"][value="' + respuestas['pregunta' + i] + '"]').prop(
                         'checked', true);
 

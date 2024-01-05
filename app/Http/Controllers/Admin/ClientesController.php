@@ -438,6 +438,18 @@ class ClientesController extends Controller
         return response()->json(["info" => 1]);
     }
 
+    public function encuestas_grafica()
+    {
+        $encuestas = DB::table('encuesta_satisfaccion')
+            ->select("cliente.razon_social", "cliente.nit", "encuesta_satisfaccion.*")
+            ->join("cliente", "cliente.id", "=", "encuesta_satisfaccion.cliente_id")
+            ->whereNotNull("cliente_id")
+            ->where("promedio", ">", 0)
+            ->get();
+
+        return view('encuestas.grafica_cliente', compact('encuestas'));
+    }
+
 
     // SAGRILAFT
     public function sagrilaft_clientes(Request $request)
@@ -495,7 +507,7 @@ class ClientesController extends Controller
     {
         // Obtener que viene en el request
         $data = $request->all();
-        
+
         $sagrilaft = $data['sagrilaft_send'];
         $tipo_persona = $data['tipo_persona'];
 
@@ -527,7 +539,7 @@ class ClientesController extends Controller
                 'origen_bienes' => $data['origen_bienes'],
                 'origen_bienes_text' => $data['origen_bienes_text'],
                 'objeto_social' => $data['objeto_social'],*/
-                
+
                 //'firma' => $data['firma'],
                 //'huella' => $data['huella'],
                 'fecha_diligenciado' => date("Y-m-d H:i:s"),
@@ -640,7 +652,7 @@ class ClientesController extends Controller
                 'origen_bienes' => $data['origen_bienes'],
                 'origen_bienes_text' => $data['origen_bienes_text'],
                 'objeto_social' => $data['objeto_social'],*/
-                
+
                 //'firma' => $data['firma'],
                 //'huella' => $data['huella'],
                 'fecha_diligenciado' => date("Y-m-d H:i:s"),

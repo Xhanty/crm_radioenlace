@@ -340,13 +340,13 @@ class ProveedoresController extends Controller
         $sumaRespuestas = 0;
 
         // Iterar sobre las respuestas y calcular el promedio
-        for ($i = 1; $i <= 16; $i++) {
+        for ($i = 1; $i <= 15; $i++) {
             $pregunta = "pregunta" . $i;
             $respuestas[$pregunta] = $data[$pregunta];
             $sumaRespuestas += $data[$pregunta];
         }
 
-        $promedio = $sumaRespuestas / 16; // Dividir por el número de preguntas
+        $promedio = $sumaRespuestas / 15; // Dividir por el número de preguntas
 
         // Agregar las observaciones al array de respuestas
         $respuestas['pregunta_1'] = $data['pregunta_1'];
@@ -387,6 +387,18 @@ class ProveedoresController extends Controller
         Mail::to($correo)->send(new EncuestasProveedores($data));
 
         return response()->json(["info" => 1]);
+    }
+
+    public function encuestas_grafica()
+    {
+        $encuestas = DB::table('encuesta_satisfaccion')
+            ->select("proveedores.razon_social", "proveedores.nit", "encuesta_satisfaccion.*")
+            ->join("proveedores", "proveedores.id", "=", "encuesta_satisfaccion.proveedor_id")
+            ->whereNotNull("proveedor_id")
+            ->where("promedio", ">", 0)
+            ->get();
+
+        return view('encuestas.grafica_proveedor', compact('encuestas'));
     }
 
 

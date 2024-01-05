@@ -41,7 +41,8 @@
                         </div>
                         @if (auth()->user()->hasPermissionTo('gestionar_clientes'))
                             <div class="div-2-tables-header">
-                                <button class="btn btn-primary" id="btnNewCliente">Registrar Tercero</button>
+                                <button class="btn btn-primary" id="btnNewCliente" style="margin-left: 8px">Registrar Tercero</button>
+                                <a href="{{ route('encuestas_clientes_grafica') }}" class="btn btn-success">Satisfacción</a>
                             </div>
                         @endif
                     </div>
