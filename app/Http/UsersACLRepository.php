@@ -48,6 +48,7 @@ class UsersACLRepository implements ACLRepository
                 return [
                     ['disk' => 'public', 'path' => '/', 'access' => 1], // main folder - read
                     ['disk' => 'public', 'path' => '', 'access' => 1], // only read
+                    ['disk' => 'public', 'path' => 'Documentos', 'access' => 1], // only read
                     ['disk' => 'public', 'path' => 'Documentos/' . Auth::user()->nombre, 'access' => 1], // only read
                     ['disk' => 'public', 'path' => 'Documentos/' . Auth::user()->nombre . '/*', 'access' => 2], // read and write
                     ['disk' => 'public', 'path' => 'Documentos/Vehículos', 'access' => 1], // main folder - read
@@ -60,6 +61,7 @@ class UsersACLRepository implements ACLRepository
             return [
                 ['disk' => 'public', 'path' => '/', 'access' => 1], // main folder - read
                 ['disk' => 'public', 'path' => '', 'access' => 1], // only read
+                ['disk' => 'public', 'path' => 'Documentos', 'access' => 1], // only read
                 ['disk' => 'public', 'path' => 'Documentos/' . Auth::user()->nombre, 'access' => 1], // only read
                 ['disk' => 'public', 'path' => 'Documentos/' . Auth::user()->nombre . '/*', 'access' => 2], // read and write
             ];
