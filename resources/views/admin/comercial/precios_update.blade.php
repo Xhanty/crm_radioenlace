@@ -41,6 +41,25 @@
             text-align: right;
             padding-right: 20px;
         }
+
+        .mensaje-alert {
+            display: none;
+            background: linear-gradient(45deg, rgb(53, 53, 53), #DA251D) !important;
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
+    </style>
+    <style>
+        @media screen and (max-width: 992px) {
+            .limiter {
+                display: none;
+            }
+
+            .mensaje-alert {
+                display: block;
+            }
+        }
     </style>
     <div class="limiter d-none">
         <div class="container-table100">
@@ -156,6 +175,16 @@
                     <button class="btn btn-primary" id="btnSave">Actualizar Precios</button>
                 @endif
             </div>
+        </div>
+    </div>
+    <!-- Mensaje que ingrese desde una pantalla más grande -->
+    <div class="mensaje-alert">
+        <!-- Alerta -->
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">¡Atención!</h4>
+            <p>Esta página solo puede ser visualizada desde una pantalla más grande.</p>
+            <hr>
+            <p class="mb-0">Por favor, ingrese desde un computador o una tablet.</p>
         </div>
     </div>
 
