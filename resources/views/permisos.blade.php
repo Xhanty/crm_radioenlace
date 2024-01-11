@@ -67,7 +67,11 @@
                                 </a>
                                 <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_calidad"
                                     href="javascript:void(0);">
-                                    <i class="fe fe-clipboard"></i> Calidad
+                                    <i class="fe fe-clipboard"></i> Gestión Calidad
+                                </a>
+                                <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_humana"
+                                    href="javascript:void(0);">
+                                    <i class="fe fe-user-check"></i> Gestión Humana
                                 </a>
                                 <a class="nav-link border-top-0 thumb mb-1 select_div" id="btn_solicitudes"
                                     href="javascript:void(0);">
@@ -132,6 +136,7 @@
             @include('permisos.reparaciones')
             @include('permisos.documentos')
             @include('permisos.calidad')
+            @include('permisos.gestion_humana')
             @include('permisos.comercial')
             @include('permisos.contabilidad')
             @include('permisos.configuracion')

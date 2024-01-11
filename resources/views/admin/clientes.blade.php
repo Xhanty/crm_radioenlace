@@ -285,7 +285,7 @@
                                                     <br>
 
                                                     <div class="text-center">
-                                                        <button disabled class="btn ripple btn-primary"
+                                                        <button class="btn ripple btn-primary"
                                                             id="btnModificarCliente2" type="button">Modificar Datos
                                                             Facturación</button>
                                                     </div>
@@ -337,7 +337,7 @@
                                                     <br>
 
                                                     <div class="text-center">
-                                                        <button disabled class="btn ripple btn-primary"
+                                                        <button class="btn ripple btn-primary"
                                                             id="btnModificarCliente3" type="button">Modificar Datos
                                                             Técnicos</button>
                                                     </div>
@@ -347,7 +347,7 @@
                                             <div class="tab-pane fade show p-3" id="three_detail">
                                                 @if (auth()->user()->hasPermissionTo('gestionar_clientes'))
                                                     <div class="d-flex justify-content-end">
-                                                        <button disabled class="btn ripple btn-primary"
+                                                        <button class="btn ripple btn-primary"
                                                             data-bs-target="#modalAdd" data-bs-toggle="modal"
                                                             data-bs-effect="effect-scale" type="button">Agregar
                                                             Anexo</button>

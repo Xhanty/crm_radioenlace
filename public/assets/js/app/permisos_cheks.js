@@ -132,6 +132,19 @@ $(function () {
         }
     });
 
+    $(".check-humana-0").on("change", function () {
+        let check = $(this).prop("checked");
+        let cantidad = 3;
+
+        for (let i = 1; i <= cantidad; i++) {
+            if (check) {
+                $(".check-humana-" + i).prop("checked", true);
+            } else {
+                $(".check-humana-" + i).prop("checked", false);
+            }
+        }
+    });
+
     $(".check-com-0").on("change", function () {
         let check = $(this).prop("checked");
         let cantidad = 24;
@@ -224,6 +237,13 @@ $(function () {
         $(".select_div").removeClass("active");
         $(".div-list-ocult").hide();
         $("#solicitudes_div").show();
+        $(this).addClass("active");
+    });
+
+    $("#btn_humana").on("click", function () {
+        $(".select_div").removeClass("active");
+        $(".div-list-ocult").hide();
+        $("#humana_div").show();
         $(this).addClass("active");
     });
 

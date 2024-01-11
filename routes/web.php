@@ -519,6 +519,9 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/pqr_correcion_update', [App\Http\Controllers\Iso\PqrController::class, 'correcion_update'])->name('pqr_correcion_update');
     Route::post('/pqr_status', [App\Http\Controllers\Iso\PqrController::class, 'status_update'])->name('pqr_status');
     Route::post('/pqr_delete', [App\Http\Controllers\Iso\PqrController::class, 'delete'])->name('pqr_delete');
+
+    // Formularios
+    Route::get('/gestion_humana', [App\Http\Controllers\Admin\GestionHumanaController::class, 'index'])->name('gestion_humana');
 });
 
 // RUTAS PARA EL CANVA ASIGNACION DE TAREAS (PROYECTOS)

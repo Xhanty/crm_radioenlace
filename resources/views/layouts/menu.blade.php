@@ -224,13 +224,22 @@
                                     <li><a class="slide-item" href="{{ route('pqrs') }}">PQR</a></li>
                                 @endif
                                 <li><a download class="slide-item" href="{{ asset('iso/dofa.xlsx') }}">DOFA</a>
-                                <li><a download class="slide-item" href="{{ asset('iso/normas.pdf') }}">Normas</a>
-                                <li><a download class="slide-item"
-                                        href="{{ asset('iso/politicas.pdf') }}">Políticas</a>
+                                <li><a target="_blank" class="slide-item"
+                                        href="{{ asset('iso/normas.pdf') }}">Normas</a>
+                                <li><a target="_blank"
+                                        class="slide-item"href="{{ asset('iso/politicas.pdf') }}">Políticas</a>
                                 <li><a download class="slide-item" href="{{ asset('iso/procesos.pptx') }}">Mapa
                                         Procesos</a></li>
                             </ul>
                         </li>
+
+                        @if (auth()->user()->hasPermissionTo('ver_gestion_humana'))
+                            <li class="slide">
+                                <a class="side-menu__item" href="{{ route('gestion_humana') }}"><i
+                                        class="side-menu__icon fe fe-user-check"></i><span
+                                        class="side-menu__label">Gestión Humana</span></a>
+                            </li>
+                        @endif
 
                         @if (auth()->user()->hasPermissionTo('solicitud_elementos'))
                             <li class="slide">
