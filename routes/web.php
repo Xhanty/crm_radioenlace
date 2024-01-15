@@ -246,6 +246,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::get('/precios_proveedores', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'index'])->name('precios_proveedores');
     Route::post('/precios_proveedores_add', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'add'])->name('precios_proveedores_add');
     Route::post('/precios_proveedores_delete', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'delete'])->name('precios_proveedores_delete');
+    Route::post('/precios_proveedores_duplicar', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'duplicar'])->name('precios_proveedores_duplicar');
     Route::post('/precios_proveedores_send_email', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'send_email'])->name('precios_proveedores_send_email');
     Route::post('/precios_proveedores_data', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'data_precios'])->name('precios_proveedores_data');
     Route::post('/precios_proveedores_edit', [App\Http\Controllers\Admin\Comercial\PreciosController::class, 'edit'])->name('precios_proveedores_edit');

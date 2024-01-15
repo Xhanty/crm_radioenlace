@@ -63,6 +63,10 @@
                                                     data-id="{{ $pendiente->id }}">
                                                     <i class="fa fa-envelope"></i>
                                                 </a>
+                                                <a title="Duplicar" href="javascript:void(0)" class="btn btn-secondary btn-sm btnDuplicar"
+                                                    data-id="{{ $pendiente->id }}">
+                                                    <i class="fa fa-copy"></i>
+                                                </a>
                                                 <a href="javascript:void(0)" class="btn btn-danger btn-sm btnDelete"
                                                     data-id="{{ $pendiente->id }}">
                                                     <i class="fa fa-trash"></i>

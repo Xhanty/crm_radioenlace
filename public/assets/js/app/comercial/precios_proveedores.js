@@ -130,6 +130,43 @@ $(document).ready(function () {
         });
     });
 
+    $(document).on("click", ".btnDuplicar", function () {
+        let id = $(this).attr("data-id");
+        Swal.fire({
+            title: "¿Está seguro?",
+            text: "¡Esto duplicará la solicitud de precios!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "¡Sí, duplicar!",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "precios_proveedores_duplicar",
+                    type: "POST",
+                    data: {
+                        id: id,
+                    },
+                    success: function (data) {
+                        if (data.info == 1) {
+                            toastr.success("Duplicado con éxito");
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000);
+                        } else {
+                            toastr.error("Error al duplicar el registro.");
+                        }
+                    },
+                    error: function (data) {
+                        toastr.error("Error al duplicar el registro.");
+                    }
+                });
+            }
+        });
+    });
+
     $(document).on("click", ".btnEmail", function () {
         let id = $(this).attr("data-id");
         $("#id_precio_email").val(id);

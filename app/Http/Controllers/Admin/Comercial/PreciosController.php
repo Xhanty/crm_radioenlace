@@ -143,6 +143,43 @@ class PreciosController extends Controller
         }
     }
 
+    public function duplicar(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $id = $request->id;
+
+            $precio = DB::table('precio_proveedores')->where('id', $id)->first();
+
+            $precio_id = DB::table('precio_proveedores')->insertGetId([
+                'code' => 'PR-' . Str::upper(Str::random(6)),
+                'proveedor_id' => $precio->proveedor_id,
+                'moneda' => $precio->moneda,
+                'fecha_limite' => $precio->fecha_limite,
+                'created_by' => auth()->user()->id,
+                'created_at' => date('Y-m-d H:i:s')
+            ]);
+
+            $productos = DB::table('detalle_precios')->where('precio_id', $id)->get();
+
+            foreach ($productos as $producto) {
+                DB::table('detalle_precios')->insert([
+                    'precio_id' => $precio_id,
+                    'producto_id' => $producto->producto_id,
+                    'cantidad_requerida' => $producto->cantidad_requerida,
+                    'nota' => $producto->nota,
+                ]);
+            }
+
+            DB::commit();
+            return response()->json(['info' => 1, 'message' => 'Precio duplicado correctamente.']);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return $ex->getMessage();
+            return response()->json(['info' => 0, 'message' => 'Error al duplicar el precio.']);
+        }
+    }
+
     public function send_email(Request $request)
     {
         try {
