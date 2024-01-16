@@ -384,7 +384,7 @@
 
                         if (email != null && email.trim().length > 1) {
                             $("#btnSave").prop("disabled", true);
-                            $("#btnSave").hmtl("Cargando...");
+                            $("#btnSave").html("Cargando...");
                             let formData = new FormData();
                             formData.append('fecha_entrega', fecha_entrega);
                             formData.append('condicion_entrega', condicion_entrega);
@@ -408,13 +408,13 @@
                                     } else {
                                         alert("Error al actualizar los precios");
                                         $("#btnSave").prop("disabled", false);
-                                        $("#btnSave").hmtl("Actualizar Precios");
+                                        $("#btnSave").html("Actualizar Precios");
                                     }
                                 },
                                 error: function(response) {
                                     alert("Error al actualizar los precios");
                                     $("#btnSave").prop("disabled", false);
-                                    $("#btnSave").hmtl("Actualizar Precios");
+                                    $("#btnSave").html("Actualizar Precios");
                                 }
                             });
                         } else {
