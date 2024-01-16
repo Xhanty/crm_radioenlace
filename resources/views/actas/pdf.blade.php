@@ -9,8 +9,15 @@
 </head>
 
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,100&display=swap');
+
+
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+
     th {
-        border: 1px solid black;
+        border: 1px solid #969696;
     }
 
     h3 {
@@ -30,56 +37,128 @@
         <table style="width: 100%;">
             <thead>
                 <tr>
-                    <th>
+                    <th style="width: 27%; border-right: 0;">
                         <img src="https://radioenlacesas.com/wp-content/uploads/2017/08/cropped-logoradioenlace-2.png"
                             alt="Logo" width="100" height="100" style="margin: 11px">
                     </th>
                     <th>
-                        <h3 style="margin-left: 50px; margin-right: 50px">FORMATO DE ACTA PARA<br>REUNIONES</h3>
+                        <h3 style="margin-left: 100px; margin-right: 100px">ACTA DE<br>REUNIONES</h3>
                     </th>
-                    <th>
-                        <div style="margin-left: 30px; margin-right: 30px; text-align: end">
-                            <p>CÓDIGO: SST-124</p>
-                            <p>VERSION: 1</p>
-                            <p>FECHA: 26/04/2020</p>
+                    <th style="width: 33%; border-left: 0;">
+                        <div>
+                            <p>CÓDIGO: SST-AC-01</p>
+                            <p>VERSION: 00</p>
+                            <p>FECHA: 02/01/2021</p>
                         </div>
                     </th>
                 </tr>
             </thead>
         </table>
 
-        <table style="margin-top: 55px; width: 100%;">
+        <table style="margin-top: 33px; width: 100%;">
+            <thead>
+                <tr>
+                    <th style="width: 30%; text-align: left; background: #e6e6e6; font-size: 17px">
+                        <p>&nbsp;Propósito de la reunión: </p>
+                    </th>
+                    <th style="text-align: left; border-left: 0">
+                        <p style="font-weight: 400">&nbsp; {{ $acta->asunto }}</p>
+                    </th>
+                </tr>
+
+                <tr>
+                    <th style="text-align: left; background: #e6e6e6; font-size: 17px">
+                        <p>&nbsp;Fecha: </p>
+                    </th>
+                    <th style="text-align: left; border-left: 0">
+                        <p style="font-weight: 400">&nbsp; {{ date('d/m/Y', strtotime($acta->fecha_elaboracion)) }}</p>
+                    </th>
+                </tr>
+
+                <tr>
+                    <th style="text-align: left; background: #e6e6e6; font-size: 17px">
+                        <p>&nbsp;Hora: </p>
+                    </th>
+                    <th style="text-align: left; border-left: 0">
+                        <p style="font-weight: 400">&nbsp; {{ $acta->hora_inicio }} - {{ $acta->hora_fin }}</p>
+                    </th>
+                </tr>
+
+                <tr>
+                    <th style="text-align: left; background: #e6e6e6; font-size: 17px">
+                        <p>&nbsp;Área: </p>
+                    </th>
+                    <th style="text-align: left; border-left: 0">
+                        <p style="font-weight: 400">
+                            @if ($acta->area == 1)
+                                &nbsp; Administración
+                            @elseif ($acta->area == 2)
+                                &nbsp; Comercial
+                            @elseif ($acta->area == 3)
+                                &nbsp; Contabilidad
+                            @elseif ($acta->area == 4)
+                                &nbsp; Gerencia
+                            @elseif ($acta->area == 5)
+                                &nbsp; Operaciones
+                            @elseif ($acta->area == 6)
+                                &nbsp; Tecnología
+                            @endif
+                        </p>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+
+        <table style="margin-top: 33px; width: 100%;">
             <thead>
                 <tr>
                     <th colspan="2" style="text-align: center;">
-                        <h3>ACTA DE REUNIÓN</h3>
+                        <h3>Asistentes</h3>
                     </th>
                 </tr>
+                @foreach ($asistentes as $key => $item)
+                    <tr>
+                        <th colspan="2" style="text-align: center; border-top: 0">
+                            <p style="font-weight: 400">{{ $item->nombre }}</p>
+                        </th>
+                    </tr>
+                @endforeach
+            </thead>
+        </table>
 
+        <table style="margin-top: 33px; width: 100%;">
+            <thead>
                 <tr>
-                    <th style="text-align: left;">
-                        <p>Fecha: </p>
-                    </th>
-                    <th style="text-align: left;">
-                        <p>Acta No: </p>
+                    <th colspan="2" style="text-align: center;">
+                        <h3>Compromisos</h3>
                     </th>
                 </tr>
+                @foreach ($detalle as $key => $item)
+                    <tr>
+                        <th colspan="2" style="text-align: center; border-top: 0; padding: 10px">
+                            <p style="font-weight: 400; text-align: justify">{{ $item->compromiso }}</p>
+                            <br>
+                            <div style="display: flex; justify-content: flex-end">
+                                <strong>{{ $item->nombre_empleado }}</strong>
+                                <strong> - {{ date('d/m/Y', strtotime($item->fecha)) }}</strong>
+                            </div>
+                        </th>
+                    </tr>
+                @endforeach
 
+            </thead>
+        </table>
+
+        <table style="margin-top: 33px; width: 100%;">
+            <thead>
                 <tr>
-                    <th style="text-align: left;">
-                        <p>Hora Inicio: </p>
-                    </th>
-                    <th style="text-align: left;">
-                        <p>Hora Final: </p>
+                    <th colspan="2" style="text-align: center;">
+                        <h3>Observaciones</h3>
                     </th>
                 </tr>
-                
                 <tr>
-                    <th style="text-align: left;">
-                        <p>Asunto: </p>
-                    </th>
-                    <th style="text-align: left;">
-                        <p>Area: </p>
+                    <th colspan="2" style="text-align: center; border-top: 0; padding: 10px">
+                        <p style="font-weight: 400; text-align: justify">{{ $acta->observaciones }}</p>
                     </th>
                 </tr>
             </thead>

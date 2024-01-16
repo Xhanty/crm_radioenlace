@@ -50,7 +50,21 @@
                                         @endphp
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
-                                            <td>{{ $item->area }}</td>
+                                            <td>
+                                                @if ($item->area == 1)
+                                                    Administración
+                                                @elseif ($item->area == 2)
+                                                    Comercial
+                                                @elseif ($item->area == 3)
+                                                    Contabilidad
+                                                @elseif ($item->area == 4)
+                                                    Gerencia
+                                                @elseif ($item->area == 5)
+                                                    Operaciones
+                                                @elseif ($item->area == 6)
+                                                    Tecnología
+                                                @endif
+                                            </td>
                                             <td>{{ $item->asunto }}</td>
                                             <td>{{ $asistentes }}</td>
                                             <td>{{ date('d-m-Y', strtotime($item->fecha_elaboracion)) }}</td>
@@ -62,9 +76,8 @@
                                                 <a href="javascript:void(0)" title="Modificar" data-id="{{ $item->id }}"
                                                     class="btn btn-warning btn-sm btnEdit"><i
                                                         class="fa fa-pencil-alt"></i></a>
-                                                <a href="javascript:void(0)" title="Eliminar"
-                                                    data-id="{{ $item->id }}" class="btn btn-danger btn-sm btnDelete"><i
-                                                        class="fa fa-trash"></i></a>
+                                                <a href="javascript:void(0)" title="Eliminar" data-id="{{ $item->id }}"
+                                                    class="btn btn-danger btn-sm btnDelete"><i class="fa fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -228,7 +241,8 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <label for="">Hora Fin</label>
-                                        <input class="form-control" id="hora_fin_edit" placeholder="Hora Fin" type="time">
+                                        <input class="form-control" id="hora_fin_edit" placeholder="Hora Fin"
+                                            type="time">
                                     </div>
                                 </div>
                                 <br>
@@ -247,7 +261,8 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <label for="">Asunto</label>
-                                        <input class="form-control" id="asunto_edit" placeholder="Asunto" type="text">
+                                        <input class="form-control" id="asunto_edit" placeholder="Asunto"
+                                            type="text">
                                     </div>
                                     <div class="col-lg-4">
                                         <label for="">Asistentes</label>

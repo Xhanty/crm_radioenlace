@@ -33,7 +33,7 @@ class ActasReunionesController extends Controller
         $detalle = DB::table('actas_reuniones_detalles')
             ->where('actas_reuniones_detalles.acta_id', $request->id)
             ->get();
-        
+
         $acta->detalle = $detalle;
 
         return response()->json(['info' => 1, 'data' => $acta]);
@@ -218,7 +218,14 @@ class ActasReunionesController extends Controller
             ->where('actas_reuniones_detalles.acta_id', $request->token)
             ->get();
 
-        $pdf = PDF::loadView('actas.pdf', compact('acta', 'detalle'));
+        $personas = $acta->asistentes;
+
+        // Consulta para obtener los datos de los asistentes
+        $asistentes = DB::table('empleados')
+            ->whereIn('empleados.id', explode(',', $personas))
+            ->get();
+
+        $pdf = PDF::loadView('actas.pdf', compact('acta', 'detalle', 'asistentes'));
 
         return $pdf->stream('Acta.pdf');
     }
