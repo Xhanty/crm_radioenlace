@@ -68,8 +68,8 @@ $(function () {
         });
 
         let formData = new FormData();
-        formData.append("empleados", empleados);
-        formData.append("observaciones", observaciones);
+        formData.append("empleados", JSON.stringify(empleados));
+        formData.append("observaciones", JSON.stringify(observaciones));
         formData.append("observacion_general", observacion_general);
         formData.append("fecha_inicio", fecha_inicio);
         formData.append("fecha_fin", fecha_fin);

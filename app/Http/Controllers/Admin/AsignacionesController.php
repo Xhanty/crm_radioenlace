@@ -157,8 +157,8 @@ class AsignacionesController extends Controller
     {
         try {
             //DB::beginTransaction();
-            $empleados = explode(',', $request->empleados);
-            $observaciones = explode(',', $request->observaciones);
+            $empleados = json_decode($request->empleados);
+            $observaciones = json_decode($request->observaciones);
             $observacion_general = $request->observacion_general;
             $fecha_inicio = $request->fecha_inicio;
             $fecha_fin = $request->fecha_fin;
