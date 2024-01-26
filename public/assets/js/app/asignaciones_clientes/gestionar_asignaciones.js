@@ -26,8 +26,8 @@ $(function () {
         "</select>" +
         "</div>" +
         '<div class="col-lg mg-t-10" style="display: flex">' +
-        '<textarea class="form-control observacionesadd" placeholder="Asignación individual de este empleado" rows="2"' +
-        'style="height: 50px; resize: none"></textarea>' +
+        '<textarea class="form-control observacionesadd" placeholder="Asignación individual de este empleado" rows="4"' +
+        'style="height: 100px; resize: none"></textarea>' +
         '<a class="center-vertical mg-s-10 delete_row_empleado" href="#"><i class="fa fa-trash"></i></a>' +
         "</div>" +
         "</div>";

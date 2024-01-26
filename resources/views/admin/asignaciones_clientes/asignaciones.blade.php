@@ -220,7 +220,7 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Descripción</label>
-                                <textarea id="descripcion_add" class="form-control" rows="2"></textarea>
+                                <textarea id="descripcion_add" class="form-control" rows="6"></textarea>
                             </div>
                         </div>
                         <br>
@@ -323,8 +323,8 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Descripción de la asignación</label>
-                                <textarea class="form-control" placeholder="Descripción de la asignación" disabled rows="3"
-                                    id="observacion_show" style="height: 90px; resize: none"></textarea>
+                                <textarea class="form-control" placeholder="Descripción de la asignación" disabled rows="6"
+                                    id="observacion_show" style="height: 180px; resize: none"></textarea>
                             </div>
                         </div>
                         <br>
