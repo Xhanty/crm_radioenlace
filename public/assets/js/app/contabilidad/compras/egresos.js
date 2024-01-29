@@ -933,10 +933,14 @@ $(document).ready(function () {
         let check = $(this).prop("checked");
 
         if (check) {
+            let valor_pagar = $(this).closest("tr").find("td").eq(5).html();
             $(this)
                 .closest("tr")
                 .find("input[type=text]")
                 .prop("disabled", false);
+
+            $(this).closest("tr").find("input[type=text]").val(valor_pagar);
+            $(".valor_add").trigger("change");
         } else {
             $(this)
                 .closest("tr")
@@ -1081,10 +1085,10 @@ $(document).ready(function () {
         if (tipo == "") {
             toastr.error("Seleccione un tipo");
             return false;
-        } else if (numero_siigo < 1) {
+        }/* else if (numero_siigo < 1) {
             toastr.error("Ingrese un número siigo");
             return false;
-        } else if (forma_pago == "") {
+        }*/ else if (forma_pago == "") {
             toastr.error("Seleccione dónde ingresa el dinero");
             return false;
         } else if (pagado < 1) {
@@ -1096,10 +1100,10 @@ $(document).ready(function () {
         } else if (validar == 1) {
             toastr.error("Revisa los valores a pagar");
             return false;
-        } else if (observacion == "") {
+        } /*else if (observacion == "") {
             toastr.error("Ingrese una observación");
             return false;
-        } else {
+        }*/ else {
             let formData = new FormData();
             formData.append("cliente", cliente);
             formData.append("tipo", tipo);
@@ -1615,10 +1619,10 @@ $(document).ready(function () {
         if (tipo == "") {
             toastr.error("Seleccione un tipo");
             return false;
-        } else if (numero_siigo < 1) {
+        }/* else if (numero_siigo < 1) {
             toastr.error("Ingrese un número siigo");
             return false;
-        } else if (forma_pago == "") {
+        }*/ else if (forma_pago == "") {
             toastr.error("Seleccione dónde ingresa el dinero");
             return false;
         } else if (pagado < 1) {
@@ -1627,10 +1631,10 @@ $(document).ready(function () {
         } else if (validar == 1) {
             toastr.error("Revisa los valores a pagar");
             return false;
-        } else if (observacion == "") {
+        } /*else if (observacion == "") {
             toastr.error("Ingrese una observación");
             return false;
-        } else {
+        }*/ else {
             let formData = new FormData();
             formData.append("id", id);
             formData.append("cliente", cliente);
@@ -1680,4 +1684,40 @@ $(document).ready(function () {
             });
         }
     });
+});
+
+$("#btn_filtrar").click(function () {
+    let proveedor = $("#proveedor_select").val();
+    let fecha_inicio = $("#inicio_select").val();
+    let fecha_fin = $("#fin_select").val();
+
+    // Validar si todos los campos están vacíos
+    if (!proveedor && !fecha_inicio && !fecha_fin) {
+        toastr.error('Debe ingresar al menos un filtro');
+        return false;
+    }
+
+    if(fecha_inicio && !fecha_fin){
+        toastr.error('Debe ingresar la fecha final');
+        return false;
+    }
+
+    if(!fecha_inicio && fecha_fin){
+        toastr.error('Debe ingresar la fecha inicial');
+        return false;
+    }
+
+    // Validar que la fecha de inicio no sea mayor a la fecha de fin
+    if (fecha_inicio && fecha_fin) {
+        let fecha_inicio = new Date($("#inicio_select").val());
+        let fecha_fin = new Date($("#fin_select").val());
+
+        if (fecha_inicio > fecha_fin) {
+            toastr.error("La fecha de inicio no puede ser mayor a la fecha de fin");
+            return false;
+        }
+    }
+
+    $("#modalSelect").modal('hide');
+    $("#global-loader").fadeIn('slow');
 });
