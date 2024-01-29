@@ -1406,13 +1406,13 @@ $("#btn_filtrar").click(function () {
                     facturas.forEach(function (factura) {
                         let bg = "";
 
-                        /*if (factura.status == 0) {
+                        if (factura.status == 0) {
                             bg = "bg-pending";
                         } else if (factura.status == 1) {
                             bg = "bg-paid";
                         } else {
                             bg = "bg-cancel";
-                        }*/
+                        }
 
                         let html = '<div class="media comprobante_btn ' + bg + '" data-grupo="1" data-id="' + factura.id + '">' +
                             '<div class="media-icon">' +
