@@ -356,16 +356,19 @@
                                                 href="{{ route('configuracion_contabilidad') }}">Configuración</a>
                                         </li>
                                         <li><a class="slide-item"
+                                                href="{{ route('contabilidad_vista') }}">Contabilidad</a>
+                                        </li>
+                                        <!--<li><a class="slide-item"
                                                 href="{{ route('conciliacion_bancaria') }}">Conciliación Bancaría</a>
                                         </li>
                                         <li><a class="slide-item"
                                                 href="{{ route('comprobantes_contables') }}">Comprobantes
                                                 Contables</a>
-                                        </li>
+                                        </li>-->
                                     @endif
                                     @if (auth()->user()->hasPermissionToMultiple(
                                                 'contabilidad_factura_compra|contabilidad_factura_venta|contabilidad_nota_credito|contabilidad_nota_debito|contabilidad_recibo_pago'))
-                                        <li class="sub-slide">
+                                        <!--<li class="sub-slide">
                                             <a class="slide-item" data-bs-toggle="sub-slide"
                                                 href="javascript:void(0);"><span
                                                     class="sub-side-menu__label">Compras</span><i
@@ -373,23 +376,23 @@
                                             <ul class="sub-slide-menu" style="display: none;"
                                                 id="2_1_otro_asignaciones">
                                                 @if (auth()->user()->hasPermissionTo('contabilidad_factura_compra'))
-                                                    <li><a class="sub-side-menu__item"
+<li><a class="sub-side-menu__item"
                                                             href="{{ route('factura_compra') }}">Facturación</a>
                                                     </li>
-                                                    <!--<li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
+                                                    <li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
                                                         Crédito</a>
                                                 </li>
                                                 <li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
                                                         Débito</a>
-                                                </li>-->
+                                                </li>
                                                     <li><a class="sub-side-menu__item"
                                                             href="{{ route('comprobantes_egresos') }}">Comprobante
                                                             Egreso</a>
                                                     </li>
-                                                @endif
+@endif
                                             </ul>
-                                        </li>
-                                        <li class="sub-slide">
+                                        </li>-->
+                                        <!--<li class="sub-slide">
                                             <a class="slide-item" data-bs-toggle="sub-slide"
                                                 href="javascript:void(0);"><span
                                                     class="sub-side-menu__label">Ventas</span><i
@@ -401,23 +404,23 @@
                                                             href="{{ route('factura_venta') }}">Facturación</a>
                                                     </li>
                                                 @endif
-                                                <!--@if (auth()->user()->hasPermissionTo('contabilidad_nota_credito'))
-<li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
+                                                @if (auth()->user()->hasPermissionTo('contabilidad_nota_credito'))
+                                                    <li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
                                                             Crédito</a>
                                                     </li>
-@endif
+                                                @endif
                                                 @if (auth()->user()->hasPermissionTo('contabilidad_nota_debito'))
-<li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
+                                                    <li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
                                                             Débito</a>
                                                     </li>
-@endif-->
+                                                @endif
                                                 @if (auth()->user()->hasPermissionTo('contabilidad_recibo_pago'))
                                                     <li><a class="sub-side-menu__item"
                                                             href="{{ route('recibos_pagos') }}">Recibo Caja</a>
                                                     </li>
                                                 @endif
                                             </ul>
-                                        </li>
+                                        </li>-->
                                     @endif
                                     <!--<li><a class="slide-item" href="{{ route('config_nomina') }}">Configuración Nómina</a></li>-->
                                 </ul>

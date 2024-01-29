@@ -1428,4 +1428,9 @@ class ConfiguracionController extends Controller
             ]);
         }
     }
+
+    public function contabilidad_vista()
+    {
+        return view('admin.contabilidad.vista');
+    }
 }

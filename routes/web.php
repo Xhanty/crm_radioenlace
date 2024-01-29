@@ -270,6 +270,7 @@ Route::middleware(['auth_user'])->group(function () {
 
     // CONTABILIDAD
     Route::get('/configuracion_contabilidad', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'index'])->name('configuracion_contabilidad');
+    Route::get('/contabilidad_vista', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'contabilidad_vista'])->name('contabilidad_vista');
     
     // CONCILIACIÓN BANCARIA
     Route::get('/conciliacion_bancaria', [App\Http\Controllers\Admin\Contabilidad\ConciliacionBancariaController::class, 'index'])->name('conciliacion_bancaria');
