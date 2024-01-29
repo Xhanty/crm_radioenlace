@@ -105,7 +105,7 @@ class FacturaVentaController extends Controller
             if ($resolucion_fv) {
                 $last_numero = $num_factura - 1;
 
-                if (($resolucion_fv->numero - $last_numero) <= 10) {
+                if (($resolucion_fv->numero - $last_numero) <= 50) {
                     if (($resolucion_fv->numero - $last_numero) <= 1) {
                         $disabled_fv = 1;
                     }
@@ -115,7 +115,7 @@ class FacturaVentaController extends Controller
                 $fecha_actual = date('Y-m-d');
                 $fecha_vencimiento = $resolucion_fv->fecha;
                 $dias = (strtotime($fecha_vencimiento) - strtotime($fecha_actual)) / 86400;
-                if ($dias <= 30) {
+                if ($dias <= 15) {
                     if ($dias <= 1) {
                         $disabled_fv = 1;
                     }
