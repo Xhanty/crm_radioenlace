@@ -336,7 +336,7 @@
                             </div>
                         </div>
                         <br>
-                        <div class="row row-sm">
+                        <!--<div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Número Factura</label>
                                 <input type="number" placeholder="Número Factura" class="form-control"
@@ -348,7 +348,7 @@
                                     id="serial_factura_select">
                             </div>
                         </div>
-                        <br>
+                        <br>-->
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="">Fecha Inicio</label>

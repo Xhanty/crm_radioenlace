@@ -592,10 +592,15 @@ $(document).ready(function () {
         let check = $(this).prop("checked");
 
         if (check) {
+            let valor_pagar = $(this).closest("tr").find("td").eq(5).html();
+            console.log(valor_pagar);
             $(this)
                 .closest("tr")
                 .find("input[type=text]")
                 .prop("disabled", false);
+
+            $(this).closest("tr").find("input[type=text]").val(valor_pagar);
+            $(".valor_add").trigger("change");
         } else {
             $(this)
                 .closest("tr")
@@ -740,10 +745,10 @@ $(document).ready(function () {
         if (tipo == "") {
             toastr.error("Seleccione un tipo");
             return false;
-        } else if (numero_siigo < 1) {
+        }/* else if (numero_siigo < 1) {
             toastr.error("Ingrese un número siigo");
             return false;
-        } else if (forma_pago == "") {
+        }*/ else if (forma_pago == "") {
             toastr.error("Seleccione dónde ingresa el dinero");
             return false;
         } else if (pagado < 1) {
@@ -755,10 +760,10 @@ $(document).ready(function () {
         } else if (validar == 1) {
             toastr.error("Revisa los valores a pagar");
             return false;
-        } else if (observacion == "") {
+        } /*else if (observacion == "") {
             toastr.error("Ingrese una observación");
             return false;
-        } else {
+        }*/ else {
             let formData = new FormData();
             formData.append("cliente", cliente);
             formData.append("tipo", tipo);
@@ -1274,10 +1279,10 @@ $(document).ready(function () {
         if (tipo == "") {
             toastr.error("Seleccione un tipo");
             return false;
-        } else if (numero_siigo < 1) {
+        }/* else if (numero_siigo < 1) {
             toastr.error("Ingrese un número siigo");
             return false;
-        } else if (forma_pago == "") {
+        }*/ else if (forma_pago == "") {
             toastr.error("Seleccione dónde ingresa el dinero");
             return false;
         } else if (pagado < 1) {
@@ -1286,10 +1291,10 @@ $(document).ready(function () {
         } else if (validar == 1) {
             toastr.error("Revisa los valores a pagar");
             return false;
-        } else if (observacion == "") {
+        }/* else if (observacion == "") {
             toastr.error("Ingrese una observación");
             return false;
-        } else {
+        }*/ else {
             let formData = new FormData();
             formData.append("id", id);
             formData.append("cliente", cliente);
@@ -1337,6 +1342,133 @@ $(document).ready(function () {
                     $("#btnEditPago").html("Guardar Pago");
                 },
             });
+        }
+    });
+});
+
+$("#btn_filtrar").click(function () {
+    let cliente = $("#cliente_select").val();
+    let fecha_inicio = $("#inicio_select").val();
+    let fecha_fin = $("#fin_select").val();
+
+    // Validar si todos los campos están vacíos
+    if (!cliente && !fecha_inicio && !fecha_fin) {
+        toastr.error('Debe ingresar al menos un filtro');
+        return false;
+    }
+
+    if(fecha_inicio && !fecha_fin){
+        toastr.error('Debe ingresar la fecha final');
+        return false;
+    }
+
+    if(!fecha_inicio && fecha_fin){
+        toastr.error('Debe ingresar la fecha inicial');
+        return false;
+    }
+
+    // Validar que la fecha de inicio no sea mayor a la fecha de fin
+    if (fecha_inicio && fecha_fin) {
+        let fecha_inicio = new Date($("#inicio_select").val());
+        let fecha_fin = new Date($("#fin_select").val());
+
+        if (fecha_inicio > fecha_fin) {
+            toastr.error("La fecha de inicio no puede ser mayor a la fecha de fin");
+            return false;
+        }
+    }
+
+    $("#modalSelect").modal('hide');
+    $("#global-loader").fadeIn('slow');
+
+    $.ajax({
+        url: "filtrar_facturas_ventas",
+        type: "POST",
+        data: {
+            cliente: cliente,
+            fecha_inicio: fecha_inicio,
+            fecha_fin: fecha_fin,
+        },
+        dataType: "JSON",
+        success: function (response) {
+            $("#global-loader").fadeOut('slow');
+            $("#modalSelectFilter").modal('show');
+            if (response.info == 1) {
+                let facturas = response.facturas;
+
+                if (!facturas) {
+                    toastr.error('No se encontraron recibos de caja');
+                } else {
+                    console.log(facturas);
+                    $("#mainInvoiceList").html("");
+                    $("#cant_facturas").html(facturas.length);
+
+                    facturas.forEach(function (factura) {
+                        let bg = "";
+                        let favorito = "";
+                        let tipo = "FE-";
+                        let mora_html = "";
+
+                        let fechaVencimiento = new Date(factura.fecha_elaboracion);
+                        let fechaActual = new Date();
+                        let diasPasados = Math.floor((fechaActual - fechaVencimiento) / (1000 * 60 * 60 * 24));
+
+                        let color = "";
+                        if (diasPasados < 20) {
+                            color = "badge-success";
+                        } else if (diasPasados < 28) {
+                            color = "badge-warning";
+                        } else {
+                            color = "badge-danger";
+                        }
+
+                        if (factura.status == 0) {
+                            bg = "bg-cancel";
+                        } else if (factura.status == 2) {
+                            bg = "bg-paid";
+                        } else {
+                            bg = "bg-pending";
+                            mora_html = '<span style="color: white" class="badge ' + color + '">' + diasPasados + '</span>';
+                        }
+
+                        if (factura.favorito == 1) {
+                            favorito = "fas fa-star orange";
+                        } else {
+                            favorito = "far fa-star";
+                        }
+
+                        let html = '<div class="media factura_btn ' + bg + '" data-id="' + factura.id + '">' +
+                            '<div class="media-icon">' +
+                            '<i class="far fa-file-alt"></i>' +
+                            '</div>' +
+                            '<div class="media-body">' +
+                            '<h6><span>' + tipo + factura.numero + mora_html + '</span>' +
+                            '<span>' + factura.valor_total +
+                            '<i data-id="' + factura.id + '" class="' + favorito + ' btn_favorite"></i></span>' +
+                            '</h6>' +
+                            '<div>' +
+                            '<p><span>Fecha:</span>' + factura.fecha_elaboracion + '</p>' +
+                            '<p>' + factura.razon_social + '(NIT: ' + factura.nit + '-' + factura.codigo_verificacion + ')</p>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+
+                        $("#mainInvoiceList").append(html);
+                    });
+
+                    //$(".center-div .pagination").remove();
+                    //paginacionFacturas();
+                    $("#content_factura").addClass("d-none");
+                    $("#modalSelectFilter").modal('hide');
+                }
+            } else {
+                toastr.error('Ha ocurrido un error');
+            }
+        },
+        error: function (error) {
+            $("#global-loader").fadeOut('slow');
+            toastr.error('Ha ocurrido un error');
+            $("#modalSelect").modal('show');
         }
     });
 });

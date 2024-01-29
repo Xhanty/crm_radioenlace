@@ -74,10 +74,10 @@ $(document).ready(function () {
         } else if (pagado > total) {
             toastr.error("El valor a pagar no puede ser mayor al valor total");
             return false;
-        } else if (observacion == "") {
+        } /*else if (observacion == "") {
             toastr.error("Ingrese una observación");
             return false;
-        } else {
+        }*/ else {
             let terminado = 0;
             if (pagado == total) {
                 terminado = 1;
