@@ -168,7 +168,7 @@
 
     <!-- Modal Add -->
     <div class="modal  fade" id="modalAdd">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content modal-content-demo">
                 <div class="modal-header">
                     <h6 class="modal-title">Crear una asignación</h6><button aria-label="Close" class="btn-close"
@@ -196,8 +196,8 @@
                             </select>
                         </div>
                         <div class="col-lg mg-t-10 mg-lg-t-0" style="display: flex">
-                            <textarea class="form-control observacionesadd" placeholder="Asignación individual de este empleado" rows="2"
-                                style="height: 50px; resize: none"></textarea>
+                            <textarea class="form-control observacionesadd" placeholder="Asignación individual de este empleado" rows="4"
+                                style="height: 100px; resize: none"></textarea>
                             <a class="center-vertical mg-s-10" href="javascript:void(0);" id="new_row_empleado"><i
                                     class="fa fa-plus"></i></a>
                         </div>
@@ -207,8 +207,8 @@
                     <div class="row row-sm">
                         <div class="col-lg">
                             <label for="">Descripción de la asignación</label>
-                            <textarea class="form-control" placeholder="Descripción de la asignación" rows="3" id="observacion_generaladd"
-                                style="height: 90px; resize: none"></textarea>
+                            <textarea class="form-control" placeholder="Descripción de la asignación" rows="6" id="observacion_generaladd"
+                                style="height: 180px; resize: none"></textarea>
                         </div>
                     </div>
                     <br>
@@ -268,16 +268,16 @@
                             </select>
                         </div>
                         <div class="col-8 mg-t-10 mg-lg-t-0" style="display: flex">
-                            <textarea class="form-control" placeholder="Asignación individual de este empleado" rows="3"
-                                style="height: 90px; resize: none" id="observacionesedit"></textarea>
+                            <textarea class="form-control" placeholder="Asignación individual de este empleado" rows="5"
+                                style="height: 120px; resize: none" id="observacionesedit"></textarea>
                         </div>
                     </div>
                     <br>
                     <div class="row row-sm">
                         <div class="col-lg">
                             <label for="">Descripción de la asignación</label>
-                            <textarea class="form-control" placeholder="Descripción de la asignación" rows="3"
-                                id="observacion_generaledit" style="height: 90px; resize: none"></textarea>
+                            <textarea class="form-control" placeholder="Descripción de la asignación" rows="6"
+                                id="observacion_generaledit" style="height: 180px; resize: none"></textarea>
                         </div>
                     </div>
                     <br>
@@ -375,8 +375,8 @@
                     <div class="row row-sm">
                         <div class="col-lg">
                             <label for="">Descripción de la asignación</label>
-                            <textarea class="form-control" placeholder="Descripción de la asignación" disabled rows="3"
-                                id="observacion_show" style="height: 90px; resize: none"></textarea>
+                            <textarea class="form-control" placeholder="Descripción de la asignación" disabled rows="6"
+                                id="observacion_show" style="height: 180px; resize: none"></textarea>
                         </div>
                     </div>
                     <br>
