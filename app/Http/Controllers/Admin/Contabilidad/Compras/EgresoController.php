@@ -31,7 +31,7 @@ class EgresoController extends Controller
                 ->whereRaw('LENGTH(code) = 8')
                 ->get();
 
-            $egresos= DB::table('pagos_compras')
+            $egresos = DB::table('pagos_compras')
                 ->select('pagos_compras.*', 'proveedores.razon_social as proveedor', 'proveedores.nit', 'proveedores.codigo_verificacion', 'proveedores.ciudad', 'proveedores.telefono_fijo')
                 ->join('proveedores', 'proveedores.id', '=', 'pagos_compras.proveedor_id')
                 ->where('pagos_compras.tipo', 1)
@@ -473,13 +473,13 @@ class EgresoController extends Controller
     public function anular_egreso(Request $request)
     {
         $id = $request->id;
-        
+
         DB::table('pagos_compras')
             ->where('id', $id)
             ->update([
                 'status' => 4,
             ]);
-        
+
         return response()->json(['info' => 1, 'msg' => 'Egreso anulado correctamente']);
     }
 
@@ -605,5 +605,34 @@ class EgresoController extends Controller
         }
 
         return response()->json(['info' => 1, 'msg' => 'Pago registrado correctamente']);
+    }
+
+    public function filtrar_egresos(Request $request)
+    {
+        $proveedor = $request->proveedor;
+        $fecha_inicio = $request->fecha_inicio;
+        $fecha_fin = $request->fecha_fin;
+
+        $egresos = DB::table('pagos_compras')
+            ->select('pagos_compras.*', 'proveedores.razon_social as proveedor', 'proveedores.nit', 'proveedores.codigo_verificacion', 'proveedores.ciudad', 'proveedores.telefono_fijo')
+            ->join('proveedores', 'proveedores.id', '=', 'pagos_compras.proveedor_id')
+            ->where('pagos_compras.tipo', 1);
+
+        if ($proveedor != 0) {
+            $egresos = $egresos->where('pagos_compras.proveedor_id', $proveedor);
+        }
+
+        if ($fecha_inicio != '') {
+            $egresos = $egresos->where('pagos_compras.fecha_elaboracion', '>=', $fecha_inicio);
+        }
+
+        if ($fecha_fin != '') {
+            $egresos = $egresos->where('pagos_compras.fecha_elaboracion', '<=', $fecha_fin);
+        }
+
+        $egresos = $egresos->orderBy('pagos_compras.numero', 'desc')
+            ->get();
+
+        return response()->json(['info' => 1, 'facturas' => $egresos]);
     }
 }

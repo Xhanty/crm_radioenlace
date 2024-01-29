@@ -1720,4 +1720,71 @@ $("#btn_filtrar").click(function () {
 
     $("#modalSelect").modal('hide');
     $("#global-loader").fadeIn('slow');
+
+    $.ajax({
+        url: "filtrar_egresos",
+        type: "POST",
+        data: {
+            proveedor: proveedor,
+            fecha_inicio: fecha_inicio,
+            fecha_fin: fecha_fin,
+        },
+        dataType: "JSON",
+        success: function (response) {
+            $("#global-loader").fadeOut('slow');
+            $("#modalSelect").modal('show');
+            if (response.info == 1) {
+                let facturas = response.facturas;
+
+                if (!facturas || facturas.length < 1) {
+                    toastr.error('No se encontraron egresos');
+                } else {
+                    console.log(facturas);
+                    $("#mainInvoiceList").html("");
+                    //$("#cant_facturas").html(facturas.length);
+
+                    facturas.forEach(function (factura) {
+                        let bg = "";
+
+                        /*if (factura.status == 0) {
+                            bg = "bg-pending";
+                        } else if (factura.status == 1) {
+                            bg = "bg-paid";
+                        } else {
+                            bg = "bg-cancel";
+                        }*/
+
+                        let html = '<div class="media comprobante_btn ' + bg + '" data-grupo="1" data-id="' + factura.id + '">' +
+                            '<div class="media-icon">' +
+                            '<i class="far fa-file-alt"></i>' +
+                            '</div>' +
+                            '<div class="media-body">' +
+                            '<h6><span>Comprobante No. ' + factura.numero + '</span>' +
+                            '<span>' + factura.valor + '</span>' +
+                            '</h6>' +
+                            '<div>' +
+                            '<p><span>Fecha:</span>' + factura.fecha_elaboracion + '</p>' +
+                            '<p>' + factura.proveedor + '(NIT: ' + factura.nit + '-' + factura.codigo_verificacion + ')</p>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+
+                        $("#mainInvoiceList").append(html);
+                    });
+
+                    //$(".center-div .pagination").remove();
+                    //paginacionFacturas();
+                    $("#content_factura").addClass("d-none");
+                    $("#modalSelect").modal('hide');
+                }
+            } else {
+                toastr.error('Ha ocurrido un error');
+            }
+        },
+        error: function (error) {
+            $("#global-loader").fadeOut('slow');
+            toastr.error('Ha ocurrido un error');
+            $("#modalSelect").modal('show');
+        }
+    });
 });

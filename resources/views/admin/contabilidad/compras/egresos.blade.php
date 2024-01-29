@@ -213,7 +213,7 @@
                                                 $bg = 'bg-cancel';
                                             @endphp
                                         @endif
-                                        <div class="media comprobante_btn {{ $bg }}" @if($comprobante->grupo_facturas) data-grupo="1" @endif data-id="{{ $comprobante->id }}">
+                                        <div class="media comprobante_btn" @if($comprobante->grupo_facturas) data-grupo="1" @endif data-id="{{ $comprobante->id }}">
                                             <div class="media-icon">
                                                 <i class="far fa-file-alt"></i>
                                             </div>

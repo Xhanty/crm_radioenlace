@@ -485,13 +485,13 @@ class ReciboPagoController extends Controller
     public function anular_recibo_caja(Request $request)
     {
         $id = $request->id;
-        
+
         DB::table('pagos_ventas')
             ->where('id', $id)
             ->update([
                 'status' => 4,
             ]);
-        
+
         return response()->json(['info' => 1, 'msg' => 'Recibo anulado correctamente']);
     }
 
@@ -615,5 +615,35 @@ class ReciboPagoController extends Controller
         }
 
         return response()->json(['info' => 1, 'msg' => 'Pago registrado correctamente']);
+    }
+
+    public function filtrar_recibos_caja(Request $request)
+    {
+        $cliente = $request->cliente;
+        $fecha_inicio = $request->fecha_inicio;
+        $fecha_fin = $request->fecha_fin;
+        
+        $egresos_grupales = DB::table('pagos_ventas')
+            ->select('pagos_ventas.*', 'cliente.razon_social as cliente', 'cliente.nit', 'cliente.codigo_verificacion', 'cliente.ciudad', 'cliente.telefono_fijo')
+            ->join('cliente', 'cliente.id', '=', 'pagos_ventas.cliente_id')
+            ->where('pagos_ventas.tipo', 1)
+            ->whereNull('pagos_ventas.factura_id');
+
+        if ($cliente) {
+            $egresos_grupales = $egresos_grupales->where('cliente_id', $cliente);
+        }
+
+        if ($fecha_inicio) {
+            $egresos_grupales = $egresos_grupales->where('fecha_elaboracion', '>=', $fecha_inicio);
+        }
+
+        if ($fecha_fin) {
+            $egresos_grupales = $egresos_grupales->where('fecha_elaboracion', '<=', $fecha_fin);
+        }
+
+        $egresos_grupales = $egresos_grupales->orderBy('pagos_ventas.numero', 'desc')
+            ->get();
+
+        return response()->json(['info' => 1, 'facturas' => $egresos_grupales]);
     }
 }

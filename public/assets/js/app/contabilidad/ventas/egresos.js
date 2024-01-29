@@ -1382,7 +1382,7 @@ $("#btn_filtrar").click(function () {
     $("#global-loader").fadeIn('slow');
 
     $.ajax({
-        url: "filtrar_facturas_ventas",
+        url: "filtrar_recibos_caja",
         type: "POST",
         data: {
             cliente: cliente,
@@ -1392,63 +1392,39 @@ $("#btn_filtrar").click(function () {
         dataType: "JSON",
         success: function (response) {
             $("#global-loader").fadeOut('slow');
-            $("#modalSelectFilter").modal('show');
+            $("#modalSelect").modal('show');
             if (response.info == 1) {
                 let facturas = response.facturas;
 
-                if (!facturas) {
+                if (!facturas || facturas.length < 1) {
                     toastr.error('No se encontraron recibos de caja');
                 } else {
                     console.log(facturas);
                     $("#mainInvoiceList").html("");
-                    $("#cant_facturas").html(facturas.length);
+                    //$("#cant_facturas").html(facturas.length);
 
                     facturas.forEach(function (factura) {
                         let bg = "";
-                        let favorito = "";
-                        let tipo = "FE-";
-                        let mora_html = "";
 
-                        let fechaVencimiento = new Date(factura.fecha_elaboracion);
-                        let fechaActual = new Date();
-                        let diasPasados = Math.floor((fechaActual - fechaVencimiento) / (1000 * 60 * 60 * 24));
-
-                        let color = "";
-                        if (diasPasados < 20) {
-                            color = "badge-success";
-                        } else if (diasPasados < 28) {
-                            color = "badge-warning";
-                        } else {
-                            color = "badge-danger";
-                        }
-
-                        if (factura.status == 0) {
-                            bg = "bg-cancel";
-                        } else if (factura.status == 2) {
+                        /*if (factura.status == 0) {
+                            bg = "bg-pending";
+                        } else if (factura.status == 1) {
                             bg = "bg-paid";
                         } else {
-                            bg = "bg-pending";
-                            mora_html = '<span style="color: white" class="badge ' + color + '">' + diasPasados + '</span>';
-                        }
+                            bg = "bg-cancel";
+                        }*/
 
-                        if (factura.favorito == 1) {
-                            favorito = "fas fa-star orange";
-                        } else {
-                            favorito = "far fa-star";
-                        }
-
-                        let html = '<div class="media factura_btn ' + bg + '" data-id="' + factura.id + '">' +
+                        let html = '<div class="media comprobante_btn ' + bg + '" data-grupo="1" data-id="' + factura.id + '">' +
                             '<div class="media-icon">' +
                             '<i class="far fa-file-alt"></i>' +
                             '</div>' +
                             '<div class="media-body">' +
-                            '<h6><span>' + tipo + factura.numero + mora_html + '</span>' +
-                            '<span>' + factura.valor_total +
-                            '<i data-id="' + factura.id + '" class="' + favorito + ' btn_favorite"></i></span>' +
+                            '<h6><span>Recibo Caja No. ' + factura.numero + '</span>' +
+                            '<span>' + factura.valor + '</span>' +
                             '</h6>' +
                             '<div>' +
                             '<p><span>Fecha:</span>' + factura.fecha_elaboracion + '</p>' +
-                            '<p>' + factura.razon_social + '(NIT: ' + factura.nit + '-' + factura.codigo_verificacion + ')</p>' +
+                            '<p>' + factura.cliente + '(NIT: ' + factura.nit + '-' + factura.codigo_verificacion + ')</p>' +
                             '</div>' +
                             '</div>' +
                             '</div>';
@@ -1459,7 +1435,7 @@ $("#btn_filtrar").click(function () {
                     //$(".center-div .pagination").remove();
                     //paginacionFacturas();
                     $("#content_factura").addClass("d-none");
-                    $("#modalSelectFilter").modal('hide');
+                    $("#modalSelect").modal('hide');
                 }
             } else {
                 toastr.error('Ha ocurrido un error');

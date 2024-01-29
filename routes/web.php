@@ -382,6 +382,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::get('/comprobantes_egresos', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'comprobantes'])->name('comprobantes_egresos');
     Route::get('/comprobante_egreso_pdf', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'pdf'])->name('comprobante_egreso_pdf');
     Route::post('/compras_add_pago', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'add'])->name('compras_add_pago');
+    Route::post('/filtrar_egresos', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'filtrar_egresos'])->name('filtrar_egresos');
     Route::post('/egresos_info_pagos', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'info'])->name('egresos_info_pagos');
     Route::post('/egresos_info_pagos_grupales', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'info_grupales'])->name('egresos_info_pagos_grupales');
     Route::post('/egresos_info_cliente', [App\Http\Controllers\Admin\Contabilidad\Compras\EgresoController::class, 'proveedor_facturas'])->name('egresos_info_cliente');
@@ -416,6 +417,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/anular_recibo_caja', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'anular_recibo_caja'])->name('anular_recibo_caja');
     Route::post('/recibo_pago_grupo_add', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'pago_grupo_add'])->name('recibo_pago_grupo_add');
     Route::post('/recibo_pago_grupo_edit', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'pago_grupo_edit'])->name('recibo_pago_grupo_edit');
+    Route::post('/filtrar_recibos_caja', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'filtrar_recibos_caja'])->name('filtrar_recibos_caja');
 
     // NOTA CREDITO VENTA
     Route::get('/nota_credito_venta', [App\Http\Controllers\Admin\Contabilidad\Ventas\NotaCreditoController::class, 'index'])->name('nota_credito_venta');
