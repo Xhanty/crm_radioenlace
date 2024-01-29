@@ -291,6 +291,15 @@
                                 <input type="number" placeholder="Número Factura" class="form-control"
                                     id="factura_select">
                             </div>
+                            <div class="col-lg">
+                                <label for="">Estado</label>
+                                <select class="form-select" id="estado_select">
+                                    <option value="">Seleccione un estado</option>
+                                    <option value="1">Pendiente</option>
+                                    <option value="2">Pagada</option>
+                                    <!--<option value="0">Reversado</option>-->
+                                </select>
+                            </div>
                         </div>
                         <br>
                         <div class="row row-sm">

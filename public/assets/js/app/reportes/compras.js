@@ -36,13 +36,14 @@ $(document).ready(function () {
 
     $("#btn_filtrar").click(function () {
         let factura = $("#factura_select").val();
+        let estado = $("#estado_select").val();
         let proveedor = $("#proveedor_select").val();
         let empleado = $("#empleado_select").val();
         let fecha_inicio = $("#inicio_select").val();
         let fecha_fin = $("#fin_select").val();
 
         // Validar que se ingrese al menos un filtro
-        if (factura == '' && proveedor == '' && empleado == '' && fecha_inicio == '' && fecha_fin == '') {
+        if (factura == '' && proveedor == '' && empleado == '' && fecha_inicio == '' && fecha_fin == '' && estado == '') {
             toastr.error("Debe ingresar al menos un filtro");
             return;
         }
@@ -67,6 +68,7 @@ $(document).ready(function () {
             type: "POST",
             data: {
                 factura: factura,
+                estado: estado,
                 proveedor: proveedor,
                 empleado: empleado,
                 fecha_inicio: fecha_inicio,

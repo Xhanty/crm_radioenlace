@@ -47,6 +47,7 @@ class ComprasController extends Controller
     {
         try {
             $factura = $request->factura;
+            $estado = $request->estado;
             $proveedor = $request->proveedor;
             $empleado = $request->empleado;
             $fecha_inicio = $request->fecha_inicio;
@@ -64,6 +65,11 @@ class ComprasController extends Controller
                 ->where(function ($query) use ($proveedor) {
                     if ($proveedor != '') {
                         $query->where('factura_compra.proveedor_id', $proveedor);
+                    }
+                })
+                ->where(function ($query) use ($estado) {
+                    if ($estado != '') {
+                        $query->where('factura_compra.status', $estado);
                     }
                 })
                 ->where(function ($query) use ($empleado) {
