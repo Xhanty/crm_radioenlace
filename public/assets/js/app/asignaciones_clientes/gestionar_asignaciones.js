@@ -80,7 +80,7 @@ $(function () {
         }
 
         if (observacion_general == "") {
-            toastr.warning("Debe agregar una observación general");
+            toastr.warning("Debe agregar una descripción de la asignación");
             return false;
         } else if (fecha_inicio == "") {
             toastr.warning("Debe agregar una fecha de inicio");
@@ -381,7 +381,7 @@ $(function () {
         }
 
         if (observacion_general == "") {
-            toastr.warning("Debe agregar una observación general");
+            toastr.warning("Debe agregar una descripción de la asignación");
             return false;
         } else if (fecha_inicio == "") {
             toastr.warning("Debe agregar una fecha de inicio");
