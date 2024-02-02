@@ -77,6 +77,17 @@ class FacturaCompraController extends Controller
                 ->orderBy('factura_compra.numero', 'desc') // luego ordenar por fecha
                 ->get();
 
+            $facturas_by_nit = DB::table('factura_compra')
+                ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion')
+                //->leftJoin('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
+                ->join('proveedores', 'proveedores.nit', '=', 'factura_compra.proveedor_id')
+                ->whereYear('factura_compra.fecha_elaboracion', '=', date('Y'))
+                ->orderByDesc('factura_compra.favorito') // ordenar los favoritos primero
+                ->orderBy('factura_compra.numero', 'desc') // luego ordenar por fecha
+                ->get();
+
+            $facturas = $facturas->merge($facturas_by_nit);
+
             /*$facturas = DB::table('factura_compra')
                 ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion')
                 ->leftJoin('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
@@ -545,7 +556,23 @@ class FacturaCompraController extends Controller
             $mayor_menor_mora = $request->mayor_menor_mora;
             $dia_mora = $request->dia_mora;
 
+            $facturas_by_nit = DB::table('factura_compra')
+                ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion')
+                //->leftJoin('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
+                ->join('proveedores', 'proveedores.nit', '=', 'factura_compra.proveedor_id')
+                ->whereYear('factura_compra.fecha_elaboracion', '=', date('Y'))
+                ->orderByDesc('factura_compra.favorito') // ordenar los favoritos primero
+                ->orderBy('factura_compra.numero', 'desc') // luego ordenar por fecha
+                ->get();
+
+            
+
             $query = DB::table('factura_compra')
+                ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion', 'proveedores.ciudad', 'proveedores.telefono_fijo', 'proveedores.direccion')
+                ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
+                ->orderBy('factura_compra.numero', 'desc'); // luego consecutivo
+
+            $query_nit = DB::table('factura_compra')
                 ->select('factura_compra.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion', 'proveedores.ciudad', 'proveedores.telefono_fijo', 'proveedores.direccion')
                 ->join('proveedores', 'proveedores.id', '=', 'factura_compra.proveedor_id')
                 ->orderBy('factura_compra.numero', 'desc'); // luego consecutivo
@@ -585,6 +612,8 @@ class FacturaCompraController extends Controller
             if ($facturas->isEmpty()) {
                 return response()->json(['info' => 1]);
             }
+
+            $facturas = $facturas->merge($facturas_by_nit);
 
             // Guardar la consulta en una sesión
             session()->put('facturas_compra_filtro', $facturas);
