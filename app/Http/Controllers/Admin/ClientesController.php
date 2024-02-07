@@ -596,6 +596,7 @@ class ClientesController extends Controller
             }
 
             DB::table('sagrilaft_naturales')->insert([
+                'tipo_persona' => $data['tipo_persona'],
                 'sagrilaft_id' => $sagrilaft,
                 'nombre' => $data['nombre_natural'],
                 'tipo_documento' => $data['tipodoc_natural'],
@@ -671,6 +672,7 @@ class ClientesController extends Controller
             $adjunto_licensias = null;
 
             DB::table('sagrilaft_juridicos')->insert([
+                'tipo_persona' => $data['tipo_persona'],
                 'sagrilaft_id' => $sagrilaft,
                 'razon_social' => $data['razonsocial_juridica'],
                 'nit' => $data['nit_juridica'],
