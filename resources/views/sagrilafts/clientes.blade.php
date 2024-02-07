@@ -832,9 +832,9 @@
 
                 console.log(sagrilaft);
 
-                $('#tipo_persona').val(sagrilaft.tipo_persona).trigger('change');
                 
                 if(sagrilaft.tipo_persona == 1) {
+                    $('#tipo_persona').val(1).trigger('change');
                     // Natura
                     $('#nombre_natural').val(sagrilaft.naturales.nombre);
                     $('#tipodoc_natural').val(sagrilaft.naturales.tipo_documento);
@@ -858,30 +858,31 @@
                     $('#email_natural').val(sagrilaft.naturales.email);
                     $('#emailfact_natural').val(sagrilaft.naturales.email_facturacion);
                 } else {
+                    $('#tipo_persona').val(2).trigger('change');
                     // Juridica
-                    $('#razonsocial_juridica').val(sagrilaft.juridicas.razon_social);
-                    $('#nit_juridica').val(sagrilaft.juridicas.nit);
-                    $('#clase_juridica').val(sagrilaft.juridicas.clase_sociedad);
-                    $('#escritura_juridica').val(sagrilaft.juridicas.constitucion);
-                    $('#matricula_juridica').val(sagrilaft.juridicas.n_matricula);
-                    $('#representante_juridica').val(sagrilaft.juridicas.representante_legal);
-                    $('#tipodoc_juridica').val(sagrilaft.juridicas.tipo_documento);
-                    $('#documento_juridica').val(sagrilaft.juridicas.documento);
-                    $('#expedicion_juridica').val(sagrilaft.juridicas.expedicion);
-                    $('#lugar_juridica').val(sagrilaft.juridicas.lugar);
-                    $('#fnacimiento_juridica').val(sagrilaft.juridicas.fecha_nacimiento);
-                    $('#oficina_juridica').val(sagrilaft.juridicas.direccion_oficina);
-                    $('#ciudad_juridica').val(sagrilaft.juridicas.ciudad);
-                    $('#departamento_juridica').val(sagrilaft.juridicas.departamento);
-                    $('#fax_juridica').val(sagrilaft.juridicas.fax);
-                    $('#tipoempresa_juridica').val(sagrilaft.juridicas.tipo_empresa);
-                    $('#ciiu_juridica').val(sagrilaft.juridicas.ciiu);
-                    $('#actividad_juridica').val(sagrilaft.juridicas.actividad_economica);
-                    $('#email_juridica').val(sagrilaft.juridicas.email);
-                    $('#telfono_juridica').val(sagrilaft.juridicas.telefono);
-                    $('#contacto_juridica').val(sagrilaft.juridicas.persona_contacto);
-                    $('#cargo_juridica').val(sagrilaft.juridicas.cargo);
-                    $('#emailfact_juridica').val(sagrilaft.juridicas.email_factura);
+                    $('#razonsocial_juridica').val(sagrilaft.juridicos.razon_social);
+                    $('#nit_juridica').val(sagrilaft.juridicos.nit);
+                    $('#clase_juridica').val(sagrilaft.juridicos.clase_sociedad);
+                    $('#escritura_juridica').val(sagrilaft.juridicos.constitucion);
+                    $('#matricula_juridica').val(sagrilaft.juridicos.n_matricula);
+                    $('#representante_juridica').val(sagrilaft.juridicos.representante_legal);
+                    $('#tipodoc_juridica').val(sagrilaft.juridicos.tipo_documento);
+                    $('#documento_juridica').val(sagrilaft.juridicos.documento);
+                    $('#expedicion_juridica').val(sagrilaft.juridicos.expedicion);
+                    $('#lugar_juridica').val(sagrilaft.juridicos.lugar);
+                    $('#fnacimiento_juridica').val(sagrilaft.juridicos.fecha_nacimiento);
+                    $('#oficina_juridica').val(sagrilaft.juridicos.direccion_oficina);
+                    $('#ciudad_juridica').val(sagrilaft.juridicos.ciudad);
+                    $('#departamento_juridica').val(sagrilaft.juridicos.departamento);
+                    $('#fax_juridica').val(sagrilaft.juridicos.fax);
+                    $('#tipoempresa_juridica').val(sagrilaft.juridicos.tipo_empresa);
+                    $('#ciiu_juridica').val(sagrilaft.juridicos.ciiu);
+                    $('#actividad_juridica').val(sagrilaft.juridicos.actividad_economica);
+                    $('#email_juridica').val(sagrilaft.juridicos.email);
+                    $('#telfono_juridica').val(sagrilaft.juridicos.telefono);
+                    $('#contacto_juridica').val(sagrilaft.juridicos.persona_contacto);
+                    $('#cargo_juridica').val(sagrilaft.juridicos.cargo);
+                    $('#emailfact_juridica').val(sagrilaft.juridicos.email_factura);
                 }
 
                 $('#ingresos').val(sagrilaft.ingresos_mensuales);
