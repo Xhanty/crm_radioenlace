@@ -230,8 +230,9 @@ class GestionController extends Controller
             
             if ($tipo == 1 && $movimiento == 1) {
                 if($other == 1) {
+                    // Cuando es un reingreso de un producto que estaba por fuera del inventario
                     DB::table('inventario')->where("id", $serial)->update([
-                        'cantidad' => $data_inventario->cantidad,
+                        'cantidad' => $data_inventario->cantidad + $cantidad,
                         'status' => 1,
                     ]);
 
@@ -245,6 +246,7 @@ class GestionController extends Controller
                         'created_at' => date('Y-m-d H:i:s'),
                     ]);
                 } else {
+                    // Cuando es un reingreso de un producto disponible
                     DB::table('inventario')->where("id", $data_inventario->id)->update([
                         'cantidad' => $data_inventario->cantidad,
                         'status' => 1,
