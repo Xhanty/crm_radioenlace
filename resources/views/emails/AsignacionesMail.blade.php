@@ -138,6 +138,11 @@
                                                     style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:38px;font-weight:bold;line-height:1;text-align:center;color:#555;">
                                                     Nueva Asignación
                                                 </div>
+                                            @elseif ($valid_transaction == 10)
+                                                <div
+                                                    style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:38px;font-weight:bold;line-height:1;text-align:center;color:#555;">
+                                                    Avance de Asignación
+                                                </div>
                                             @else
                                                 <div
                                                     style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:38px;font-weight:bold;line-height:1;text-align:center;color:#555;">
@@ -200,11 +205,10 @@
                                             <table align="center" border="0" cellpadding="0" cellspacing="0"
                                                 role="presentation" style="border-collapse:separate;line-height:100%;">
                                                 <tr>
-
                                                     <td align="center" bgcolor="#DA251D" role="presentation"
                                                         style="border:none;border-radius:3px;color:#ffffff;cursor:auto;padding:15px 25px;"
                                                         valign="middle">
-                                                        <a href="https://crm.radioenlacesas.com/home" target="_blank"
+                                                        <a href="https://crm.radioenlacesas.com/gestionar_asignaciones_clientes?asignacion={{ $asignacion->codigo }}"
                                                             style="text-decoration: none;">
                                                             <p
                                                                 style="background:#DA251D;color:#ffffff;font-family:'Helvetica Neue',Arial,sans-serif;font-size:15px;font-weight:normal;line-height:120%;Margin:0;text-decoration:none;text-transform:none;">

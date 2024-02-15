@@ -33,7 +33,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
+                            <table id="table_asignaciones_pendientes" class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
                                 <thead>
                                     <tr>
                                         <th class="wd-10p border-bottom-0">Código</th>
@@ -68,8 +68,7 @@
                                                             class="fa fa-times"></i>&nbsp;Rechazar</a>
                                                 @endif
                                                 <a class="d-flex btn_openDetalles" data-id="{{ $value->id }}"
-                                                    href="javascript:void(0);"><i
-                                                        class="fa fa-eye"></i>&nbsp;Ver</a>
+                                                    href="javascript:void(0);"><i class="fa fa-eye"></i>&nbsp;Ver</a>
                                                 <a class="d-flex btn_editar" data-id="{{ $value->id }}"
                                                     href="javascript:void(0);"><i
                                                         class="fa fa-pencil-alt"></i>&nbsp;Editar</a>
@@ -109,7 +108,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
+                            <table id="table_asignaciones_completadas" class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
                                 <thead>
                                     <tr>
                                         <th class="wd-10p border-bottom-0">Código</th>
@@ -136,8 +135,7 @@
                                             <td>{{ $value->creador }}</td>
                                             <td>
                                                 <a class="d-flex btn_openDetalles" data-id="{{ $value->id }}"
-                                                    href="javascript:void(0);"><i
-                                                        class="fa fa-eye"></i>&nbsp;Ver</a>
+                                                    href="javascript:void(0);"><i class="fa fa-eye"></i>&nbsp;Ver</a>
                                                 <a class="d-flex btn_avances" data-id="{{ $value->id }}"
                                                     href="javascript:void(0);"><i class="fa fa-file"></i>&nbsp;Ver
                                                     Avances</a>
@@ -147,7 +145,8 @@
                                                             class="fa fa-times"></i>&nbsp;Rechazar</a>
                                                 @endif
                                                 <a class="d-flex btn_eliminar" data-id="{{ $value->id }}"
-                                                    href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>
+                                                    href="javascript:void(0);"><i
+                                                        class="fa fa-trash"></i>&nbsp;Eliminar</a>
                                             </td>
                                             <td class="text-center">
                                                 <input data-id="{{ $value->id }}" class="visto_bueno_check"
@@ -351,9 +350,8 @@
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content modal-content-demo">
                 <div class="modal-header">
-                    <h6 class="modal-title">Detalles de la asignación</h6><button aria-label="Close"
-                        class="btn-close" data-bs-dismiss="modal" type="button"><span
-                            aria-hidden="true">&times;</span></button>
+                    <h6 class="modal-title">Detalles de la asignación</h6><button aria-label="Close" class="btn-close"
+                        data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
                     <div class="row row-sm">
@@ -409,5 +407,23 @@
 @endsection
 
 @section('scripts')
+    <script>
+        setTimeout(() => {
+            // Obtener la URL de la página actual
+            var url = new URL(window.location.href);
+
+            // Obtener el valor del parámetro 'pr'
+            var prParam = url.searchParams.get("asignacion");
+
+            // Validar si 'pr' está presente
+            if (prParam !== null) {
+                console.log("El parámetro 'pr' está presente con el valor: " + prParam);
+                $("#table_asignaciones_pendientes_wrapper input").val(prParam).trigger("keyup");
+                $("#table_asignaciones_completadas_wrapper input").val(prParam).trigger("keyup");
+            } else {
+                console.log("El parámetro 'pr' no está presente en la URL.");
+            }
+        }, 2000);
+    </script>
     <script src="{{ asset('assets/js/app/asignaciones_clientes/gestionar_asignaciones.js') }}"></script>
 @endsection

@@ -307,6 +307,12 @@ $(document).ready(function () {
                                 '<option value="0">Ninguno</option>'
                             );
                             inventario.forEach((element) => {
+                                let observaciones = '';
+
+                                if (element.observaciones) {
+                                    observaciones = ' - ' + element.observaciones;
+                                }
+
                                 $("#serialexistente_compra").append(
                                     "<option value='" +
                                     element.id +
@@ -315,6 +321,7 @@ $(document).ready(function () {
                                     " (Cantidad: " +
                                     element.cantidad +
                                     ")" +
+                                    observaciones +
                                     "</option>"
                                 );
                             });
@@ -625,6 +632,12 @@ $(document).ready(function () {
                             $("#serial_alquiler").empty();
 
                             inventario.forEach((element) => {
+                                let observaciones = '';
+
+                                if (element.observaciones) {
+                                    observaciones = ' - ' + element.observaciones;
+                                }
+
                                 if (element.cantidad > 0) {
                                     $("#serial_alquiler").append(
                                         "<option data-cantidad='" +
@@ -636,6 +649,7 @@ $(document).ready(function () {
                                         " (Cantidad: " +
                                         element.cantidad +
                                         ")" +
+                                        observaciones +
                                         "</option>"
                                     );
                                 }
@@ -679,6 +693,12 @@ $(document).ready(function () {
                             $("#serial_asignado").empty();
 
                             inventario.forEach((element) => {
+                                let observaciones = '';
+
+                                if (element.observaciones) {
+                                    observaciones = ' - ' + element.observaciones;
+                                }
+
                                 if (element.cantidad > 0) {
                                     $("#serial_asignado").append(
                                         "<option data-cantidad='" +
@@ -690,6 +710,7 @@ $(document).ready(function () {
                                         " (Cantidad: " +
                                         element.cantidad +
                                         ")" +
+                                        observaciones +
                                         "</option>"
                                     );
                                 }
@@ -733,6 +754,12 @@ $(document).ready(function () {
                             $("#serial_prestamo").empty();
 
                             inventario.forEach((element) => {
+                                let observaciones = '';
+
+                                if (element.observaciones) {
+                                    observaciones = ' - ' + element.observaciones;
+                                }
+
                                 if (element.cantidad > 0) {
                                     $("#serial_prestamo").append(
                                         "<option data-cantidad='" +
@@ -744,6 +771,7 @@ $(document).ready(function () {
                                         " (Cantidad: " +
                                         element.cantidad +
                                         ")" +
+                                        observaciones +
                                         "</option>"
                                     );
                                 }
@@ -787,6 +815,12 @@ $(document).ready(function () {
                             $("#serial_instalar").empty();
 
                             inventario.forEach((element) => {
+                                let observaciones = '';
+
+                                if (element.observaciones) {
+                                    observaciones = ' - ' + element.observaciones;
+                                }
+
                                 if (element.cantidad > 0) {
                                     $("#serial_instalar").append(
                                         "<option data-cantidad='" +
@@ -798,6 +832,7 @@ $(document).ready(function () {
                                         " (Cantidad: " +
                                         element.cantidad +
                                         ")" +
+                                        observaciones +
                                         "</option>"
                                     );
                                 }
@@ -841,6 +876,12 @@ $(document).ready(function () {
                             $("#serial_vender").empty();
 
                             inventario.forEach((element) => {
+                                let observaciones = '';
+
+                                if (element.observaciones) {
+                                    observaciones = ' - ' + element.observaciones;
+                                }
+
                                 if (element.cantidad > 0) {
                                     $("#serial_vender").append(
                                         "<option data-cantidad='" +
@@ -852,6 +893,7 @@ $(document).ready(function () {
                                         " (Cantidad: " +
                                         element.cantidad +
                                         ")" +
+                                        observaciones +
                                         "</option>"
                                     );
                                 }
@@ -895,6 +937,12 @@ $(document).ready(function () {
                             $("#serial_danado").empty();
 
                             inventario.forEach((element) => {
+                                let observaciones = '';
+
+                                if (element.observaciones) {
+                                    observaciones = ' - ' + element.observaciones;
+                                }
+
                                 if (element.cantidad > 0) {
                                     $("#serial_danado").append(
                                         "<option data-cantidad='" +
@@ -906,6 +954,7 @@ $(document).ready(function () {
                                         " (Cantidad: " +
                                         element.cantidad +
                                         ")" +
+                                        observaciones +
                                         "</option>"
                                     );
                                 }
