@@ -342,6 +342,11 @@ class AsignacionesController extends Controller
                 $recargar = 1;
             }
 
+            // Enviar Email
+            $asignacion = DB::table("asignaciones")->where("id", $id)->first();
+            $empleado = DB::table("empleados")->where("id", $asignacion->created_by)->first();
+
+            Mail::to($empleado->email)->send(new AsignacionesMail($empleado, $asignacion, 10));
             DB::commit();
             return response()->json(['info' => 1, 'success' => 'Avance creado correctamente.', 'recargar' => $recargar]);
         } catch (Exception $ex) {

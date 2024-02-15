@@ -154,15 +154,21 @@
                                                 <div
                                                     style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:18px;line-height:1;text-align:center;color:#555;">
                                                     Hola. Tienes una nueva asignación con el código
-                                                    <b>{{ $asignacion->codigo }}</b>. Elaborada por el usuario
-                                                    <b>{{ $user->nombre }}</b>.
+                                                    <b>{{ $asignacion->codigo }}</b>. <!--Elaborada por el usuario
+                                                    <b>{{ $user->nombre }}</b>.-->
+                                                </div>
+                                            @elseif ($valid_transaction == 10)
+                                                <div
+                                                    style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:18px;line-height:1;text-align:center;color:#555;">
+                                                    Hola. Hay un cambio en la asignación con el código
+                                                    <b>{{ $asignacion->codigo }}</b>.
                                                 </div>
                                             @else
                                                 <div
                                                     style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:18px;line-height:1;text-align:center;color:#555;">
                                                     Hola. Se ha completado la asignación con el código
-                                                    <b>{{ $asignacion->codigo }}</b>. Elaborada por el usuario
-                                                    <b>{{ $user->nombre }}</b>.
+                                                    <b>{{ $asignacion->codigo }}</b>. <!--Elaborada por el usuario
+                                                    <b>{{ $user->nombre }}</b>.-->
                                                 </div>
                                             @endif
                                         </td>
@@ -177,7 +183,8 @@
                                                 <tbody>
                                                     <tr>
                                                         <td style="width:128px;">
-                                                            <img height="auto" src="{{ asset('emails/img/icon-asignacion.png') }}"
+                                                            <img height="auto"
+                                                                src="{{ asset('emails/img/icon-asignacion.png') }}"
                                                                 style="border:0;display:block;outline:none;text-decoration:none;width:100%;"
                                                                 width="128" />
                                                         </td>

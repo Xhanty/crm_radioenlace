@@ -28,6 +28,10 @@ class AsignacionesMail extends Mailable
     {
         $subject = 'Nueva asignación. Código ' . $this->asignacion->codigo;
 
+        if ($this->valid_transaction == 10) {
+            $subject = 'Hay un avance en la asignación. Código ' . $this->asignacion->codigo;
+        }
+
         if ($this->valid_transaction != 1) {
             $subject = 'Asignación gestionada. Código ' . $this->asignacion->codigo;
         }
