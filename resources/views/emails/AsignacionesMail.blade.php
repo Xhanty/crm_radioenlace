@@ -161,6 +161,8 @@
                                                     Hola. Tienes una nueva asignación con el código
                                                     <b>{{ $asignacion->codigo }}</b>. <!--Elaborada por el usuario
                                                     <b>{{ $user->nombre }}</b>.-->
+                                                    Elaborada por el usuario
+                                                    <b>{{ $user->nombre }}</b>.
                                                 </div>
                                             @elseif ($valid_transaction == 10)
                                                 <div
