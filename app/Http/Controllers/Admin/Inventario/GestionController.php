@@ -428,8 +428,8 @@ class GestionController extends Controller
 
             if ($tipo == 2) {
                 DB::table('inventario')->where("id", $serial)->update([
-                    'cantidad' => $cantidad_old->cantidad - 0,
-                    'status' => 1,
+                    'cantidad' => $cantidad_old->cantidad - $cantidad,
+                    'status' => $status,
                 ]);
             } else {
                 DB::table('inventario')->where("id", $serial)->update([

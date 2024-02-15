@@ -201,10 +201,11 @@ class AsignacionesController extends Controller
                     }
                 }
 
-                $data_empleado = DB::table("empleados")->where("id", $empleado)->first();
                 $data_asignacion = DB::table("asignaciones")->where("id", $asignacion)->first();
+                $data_empleado = DB::table("empleados")->where("id", $empleado)->first();
+                $data_creador = DB::table("empleados")->where("id", $data_asignacion->created_by)->first();
 
-                Mail::to($data_empleado->email)->send(new AsignacionesMail($data_empleado, $data_asignacion, 1));
+                Mail::to($data_empleado->email)->send(new AsignacionesMail($data_creador, $data_asignacion, 1));
             }
             //DB::commit();
 
@@ -240,9 +241,10 @@ class AsignacionesController extends Controller
                 ]);
 
                 $data_asignacion = DB::table("asignaciones")->where("id", $id)->first();
+                $usuario = DB::table("empleados")->where("id", $data_asignacion->id_empleado)->first();
                 $creador = DB::table("empleados")->where("id", $data_asignacion->created_by)->first();
 
-                Mail::to($creador->email)->send(new AsignacionesMail($creador, $data_asignacion, 0));
+                Mail::to($creador->email)->send(new AsignacionesMail($usuario, $data_asignacion, 0));
             } else {
                 DB::table("asignaciones")->where("id", $id)->update([
                     "status" => $status,

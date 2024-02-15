@@ -159,23 +159,26 @@
                                                 <div
                                                     style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:18px;line-height:1;text-align:center;color:#555;">
                                                     Hola. Tienes una nueva asignación con el código
-                                                    <b>{{ $asignacion->codigo }}</b>. <!--Elaborada por el usuario
-                                                    <b>{{ $user->nombre }}</b>.-->
+                                                    <b>{{ $asignacion->codigo }}</b>.<br>
                                                     Elaborada por el usuario
                                                     <b>{{ $user->nombre }}</b>.
+
                                                 </div>
                                             @elseif ($valid_transaction == 10)
                                                 <div
                                                     style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:18px;line-height:1;text-align:center;color:#555;">
                                                     Hola. Hay un cambio en la asignación con el código
-                                                    <b>{{ $asignacion->codigo }}</b>.
+                                                    <b>{{ $asignacion->codigo }}</b>.<br>
+                                                    Elaborado por el usuario
+                                                    <b>{{ $user->nombre }}</b>.
                                                 </div>
                                             @else
                                                 <div
                                                     style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:18px;line-height:1;text-align:center;color:#555;">
                                                     Hola. Se ha completado la asignación con el código
-                                                    <b>{{ $asignacion->codigo }}</b>. <!--Elaborada por el usuario
-                                                    <b>{{ $user->nombre }}</b>.-->
+                                                    <b>{{ $asignacion->codigo }}</b>.<br>
+                                                    Completada por el usuario
+                                                    <b>{{ $user->nombre }}</b>.
                                                 </div>
                                             @endif
                                         </td>
