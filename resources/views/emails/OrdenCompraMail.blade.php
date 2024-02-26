@@ -21,7 +21,7 @@
             <table cellpadding="0" style="border-collapse: collapse; font-size: 16px;">
                 <tr>
                     <td valign="top">
-                        <img src="http://radioenlacesas.com/wp-content/uploads/2017/08/cropped-logoradioenlace-2.png"
+                        <img src="https://crm.radioenlacesas.com/logo-re.png"
                             width="120" style="display: block; margin-right: 20px">
                     </td>
                     <td valign="top"

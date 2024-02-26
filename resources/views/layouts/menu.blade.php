@@ -759,7 +759,7 @@
         if (!notification_bienvenida) {
             Push.create("CRM", {
                 body: "Bienvenido(a), recuerda revisar las asignaciones",
-                icon: 'http://radioenlacesas.com/wp-content/uploads/2017/08/cropped-logoradioenlace-2.png',
+                icon: 'https://crm.radioenlacesas.com/logo-re.png',
                 timeout: 8000,
                 vibrate: [100, 100, 100],
                 onClick: function() {

@@ -20,7 +20,7 @@
             font-size: 16px;
             font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
             color: #555;
-            background-image: url("http://radioenlacesas.com/wp-content/uploads/2017/08/cropped-logoradioenlace-2.png");
+            background-image: url("https://crm.radioenlacesas.com/logo-re.png");
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-position: center center;
@@ -123,7 +123,7 @@
                     <table>
                         <tr>
                             <td class="title">
-                                <img src="http://radioenlacesas.com/wp-content/uploads/2017/08/cropped-logoradioenlace-2.png"
+                                <img src="https://crm.radioenlacesas.com/logo-re.png"
                                     style="width:100%; max-width:80px;">
                             </td>
 
@@ -305,7 +305,7 @@
                             <table cellpadding="0" style="border-collapse: collapse; font-size: 17px;">
                                 <tr>
                                     <td valign="top">
-                                        <img src="http://radioenlacesas.com/wp-content/uploads/2017/08/cropped-logoradioenlace-2.png" width="120" style="display: block;">
+                                        <img src="https://crm.radioenlacesas.com/logo-re.png" width="120" style="display: block;">
                                     </td>
                                     <td valign="top" style="border-left: 1px solid rgb(176, 70, 70); margin: 0.1px; padding: 0px 0px 0px 12px; color: rgb(124, 124, 124);">
                                         <table cellpadding="0" style="border-collapse: collapse;">
