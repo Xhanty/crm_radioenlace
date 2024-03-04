@@ -154,6 +154,27 @@
                                 <div class="user-info">
                                     <h6 class=" mb-0 text-dark name_user_val">Petey Cruiser</h6>
                                 </div>
+                                <a href="{{ route('asignaciones_clientes') }}"
+                                    class="btn btn-primary btn-sm position-relative mt-2 mb-2">
+                                    Asignaciones
+                                    <span
+                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                        id="count_asignaciones_pendientes">
+                                        @php
+                                            $asignaciones_pendientes = 0;
+                                            DB::table('asignaciones')
+                                                ->where('revision', 0)
+                                                ->where('status', 0)
+                                                ->where('id_empleado', session('user'))
+                                                ->get()
+                                                ->each(function ($asignacion) use (&$asignaciones_pendientes) {
+                                                    $asignaciones_pendientes++;
+                                                });
+                                            echo $asignaciones_pendientes;
+                                        @endphp
+                                        <span class="visually-hidden">Asignaciones pendientes</span>
+                                    </span>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -310,8 +331,7 @@
                                         <li><a class="slide-item" href="{{ route('cotizaciones') }}">Cotizaciones</a>
                                         </li>
                                     @endif
-                                    @if (auth()->user()->hasPermissionTo('gestionar_remisiones') ||
-                                            auth()->user()->hasPermissionTo('ver_remisiones'))
+                                    @if (auth()->user()->hasPermissionTo('gestionar_remisiones') || auth()->user()->hasPermissionTo('ver_remisiones'))
                                         <li><a class="slide-item" href="{{ route('remisiones') }}">Remisiones</a>
                                         </li>
                                     @endif
@@ -400,25 +420,25 @@
                                             <ul class="sub-slide-menu" style="display: none;"
                                                 id="2_1_otro_asignaciones">
                                                 @if (auth()->user()->hasPermissionTo('contabilidad_factura_venta'))
-                                                    <li><a class="sub-side-menu__item"
+<li><a class="sub-side-menu__item"
                                                             href="{{ route('factura_venta') }}">Facturación</a>
                                                     </li>
-                                                @endif
+@endif
                                                 @if (auth()->user()->hasPermissionTo('contabilidad_nota_credito'))
-                                                    <li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
+<li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
                                                             Crédito</a>
                                                     </li>
-                                                @endif
+@endif
                                                 @if (auth()->user()->hasPermissionTo('contabilidad_nota_debito'))
-                                                    <li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
+<li><a class="sub-side-menu__item" href="javascript:void(0);">Nota
                                                             Débito</a>
                                                     </li>
-                                                @endif
+@endif
                                                 @if (auth()->user()->hasPermissionTo('contabilidad_recibo_pago'))
-                                                    <li><a class="sub-side-menu__item"
+<li><a class="sub-side-menu__item"
                                                             href="{{ route('recibos_pagos') }}">Recibo Caja</a>
                                                     </li>
-                                                @endif
+@endif
                                             </ul>
                                         </li>-->
                                     @endif
