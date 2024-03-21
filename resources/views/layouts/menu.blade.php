@@ -372,9 +372,9 @@
                                 <ul class="slide-menu">
                                     @if (auth()->user()->hasPermissionToMultiple(
                                                 'contabilidad_config_administrativa|contabilidad_config_general|contabilidad_config_catalogos|contabilidad_config_otros'))
-                                        <li><a class="slide-item"
+                                        <!--<li><a class="slide-item"
                                                 href="{{ route('configuracion_contabilidad') }}">Configuración</a>
-                                        </li>
+                                        </li>-->
                                         <li><a class="slide-item"
                                                 href="{{ route('contabilidad_vista') }}">Contabilidad</a>
                                         </li>
