@@ -2,27 +2,33 @@
 
 @section('css')
     <style>
-        .box a {
-            font-size: 16px;
-            color: hsl(229, 6%, 66%);
-            text-decoration: none;
-        }
-
-        .box h2 {
-            font-size: 1.45rem;
-            font-weight: 700;
-            color: hsl(229, 31%, 21%);
+        .bg-info {
+            background: linear-gradient(45deg, rgb(156, 156, 156), #DA251D) !important;
         }
 
         .box {
-            border-radius: 5px;
-            background-color: white;
-            box-shadow: 0px 30px 40px -20px hsl(229, 6%, 66%);
-            padding: 30px;
-            margin: 20px;
-            -webkit-transition: 1s linear;
-            transition: 1s linear;
-            animation: 1s ease-in-out 0s 1 slideInFromTop;
+            margin-top: 20px;
+        }
+
+        .box:hover {
+            box-shadow: 0px 30px 40px -20px hsl(229, 31%, 21%);
+            transform: scale(1.05);
+            /* Escala ligeramente el elemento al hacer hover */
+            transition: transform 0.3s ease;
+            /* Agrega una transición suave */
+        }
+
+        /* También puedes aplicar animaciones específicas a elementos dentro del card en hover, por ejemplo: */
+
+        .box:hover img {
+            transform: rotate(10deg);
+            /* Rota la imagen 10 grados al hacer hover */
+            transition: transform 0.3s ease;
+            /* Agrega una transición suave */
+        }
+
+        .rounded {
+            border-radius: 22px !important;
         }
 
         @keyframes slideInFromTop {
@@ -75,6 +81,40 @@
 
             }
         }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Para las imágenes */
+        .img-cards {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Para los contenedores de texto */
+        .h3-cards {
+            animation: slideIn 1s ease-in-out;
+        }
     </style>
 @endsection
 
@@ -94,49 +134,74 @@
         </div>
         <!-- /breadcrumb -->
 
-        <div class="row row-sm" id="div_general">
-            <div class="row1-container">
-                <div class="box box-down cyan" style="border-top: 14px solid hsl(180, 62%, 55%)">
-                    <h2 style="margin-top: -8px">Nómina</h2>
-                    <ul>
-                        <li><a href="javascript:void(0);" id="btnImpuestos">Facturación</a></li>
-                        <li><a href="javascript:void(0);" id="btnComprobantes">Reportes</a></li>
-                    </ul>
-                    <img style="float:right; width: 40px;" src="https://assets.codepen.io/2301174/icon-team-builder.svg"
-                        alt="Terceros">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box">
+                    <div class="col-12 rounded bg-info p-3 text-center">
+                        <img src="{{ asset('assets/img/contabilidad/compras.png') }}" width="100px" alt=""
+                            class="img-cards">
+                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Compras y Gastos</a></h3>
+                    </div>
                 </div>
-
-                <div class="box red" style="border-top: 14px solid hsl(0, 78%, 62%)">
-                    <h2 style="margin-top: -8px">Ventas</h2>
-                    <ul>
-                        <li><a href="{{ route('factura_venta') }}">Facturación</a></li>
-                        <li><a href="{{ route('recibos_pagos') }}">Recibos de caja</a></li>
-                        <li><a href="{{ route('reporte_ventas') }}">Reportes</a></li>
-                    </ul>
-                    <img style="float:right; width: 40px;" src="https://assets.codepen.io/2301174/icon-supervisor.svg"
-                        alt="General">
+                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box">
+                    <div class="col-12 rounded bg-info p-3 text-center">
+                        <img src="{{ asset('assets/img/contabilidad/ventas.png') }}" width="100px" alt=""
+                            class="img-cards">
+                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Ventas</a></h3>
+                    </div>
                 </div>
-
-                <div class="box box-down blue" style="border-top: 14px solid hsl(212, 86%, 64%)">
-                    <h2 style="margin-top: -8px">Otros Comprobantes</h2>
-                    <ul>
-                        <li><a href="javascript:void(0);" id="">Otros Comprobantes</a></li>
-                    </ul>
-                    <img style="float:right; width: 40px;" src="https://assets.codepen.io/2301174/icon-karma.svg"
-                        alt="Catálogo">
+                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box">
+                    <div class="col-12 rounded bg-info p-3 text-center">
+                        <img src="{{ asset('assets/img/contabilidad/nomina.png') }}" width="100px" alt=""
+                            class="img-cards">
+                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Nómina</a></h3>
+                    </div>
                 </div>
             </div>
-            <div class="row2-container">
-                <div class="box orange" style="border-top: 14px solid hsl(34, 97%, 64%)">
-                    <h2 style="margin-top: -8px">Compras</h2>
-                    <ul>
-                        <li><a href="{{ route('factura_compra') }}" id="btnAdminCiudades">Facturación</a></li>
-                        <li><a href="{{ route('comprobantes_egresos') }}" id="btnFormasPago">Egresos</a></li>
-                        <li><a href="javascript:void(0);" id="btnFormasPago">Radian</a></li>
-                        <li><a href="{{ route('reporte_compras') }}" id="btnAdminTipoEmpresa">Reportes</a></li>
-                    </ul>
-                    <img style="float:right; width: 40px;" src="https://assets.codepen.io/2301174/icon-calculator.svg"
-                        alt="Opción">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box">
+                    <div class="col-12 rounded bg-info p-3 text-center">
+                        <img src="{{ asset('assets/img/contabilidad/contabilidad.png') }}" width="100px" alt=""
+                            class="img-cards">
+                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Contabilidad</a></h3>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box">
+                    <div class="col-12 rounded bg-info p-3 text-center">
+                        <img src="{{ asset('assets/img/contabilidad/inventario.png') }}" width="100px" alt=""
+                            class="img-cards">
+                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Productos y Servicios</a></h3>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box">
+                    <div class="col-12 rounded bg-info p-3 text-center">
+                        <img src="{{ asset('assets/img/contabilidad/habilitacion.png') }}" width="100px" alt=""
+                            class="img-cards">
+                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Habilitación Electrónica</a></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box">
+                    <div class="col-12 rounded bg-info p-3 text-center">
+                        <img src="{{ asset('assets/img/contabilidad/indicadores.png') }}" width="100px" alt=""
+                            class="img-cards">
+                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Indicadores</a></h3>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box">
+                    <div class="col-12 rounded bg-info p-3 text-center">
+                        <img src="{{ asset('assets/img/contabilidad/reportes.png') }}" width="100px" alt=""
+                            class="img-cards">
+                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Reportes</a></h3>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box">
+                    <div class="col-12 rounded bg-info p-3 text-center">
+                        <img src="{{ asset('assets/img/contabilidad/reportes_nomina.png') }}" width="100px" alt=""
+                            class="img-cards">
+                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Reportes de Nómina</a></h3>
+                    </div>
                 </div>
             </div>
         </div>
