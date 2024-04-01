@@ -299,9 +299,9 @@
                                         <li><a class="sub-side-menu__item"
                                                 href="{{ route('asignaciones') }}">Asignaciones</a></li>
                                         @if (auth()->user()->hasPermissionTo('gestion_asignaciones_proyectos'))
-                                            <li><a class="sub-side-menu__item"
+                                            <!--<li><a class="sub-side-menu__item"
                                                     href="{{ route('gestionar_asignaciones') }}">Gestionar
-                                                    Asignaciones</a></li>
+                                                    Asignaciones</a></li>-->
                                         @endif
                                     </ul>
                                 </li>

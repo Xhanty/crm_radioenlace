@@ -1,8 +1,64 @@
 @extends('layouts.menu')
 
 @section('content')
-    <div class="main-container container-fluid">
+    <style>
+        .cards tbody tr {
+            float: right;
+            width: 32%;
+            margin: 0.5rem;
+            border: 0.0625rem solid rgba(0, 0, 0, 0.125);
+            border-radius: 0.25rem;
+            box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
+        }
 
+        @media (max-width: 768px) {
+            .cards tbody tr {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 1526px) {
+            .cards tbody tr {
+                width: 44%;
+            }
+        }
+
+        .card {
+            border: none;
+        }
+
+        .cards tbody td {
+            display: block;
+            border: none;
+            text-align: right;
+        }
+
+        .cards thead {
+            display: none;
+        }
+
+        .cards td:before {
+            content: attr(data-label);
+            position: relative;
+            color: #808080;
+            min-width: 4rem;
+            text-align: right;
+        }
+
+        tr.selected td:before {
+            color: #ccc;
+        }
+
+        .dt-buttons {
+            display: none !important;
+        }
+
+        .number-section {
+            margin: 1rem 0;
+        }
+    </style>
+
+    <div class="main-container container-fluid">
         <!-- breadcrumb -->
         <div class="breadcrumb-header justify-content-between">
             <div>
@@ -33,54 +89,75 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="table_asignaciones_pendientes" class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
+                            <table id="table_asignaciones_pendientes"
+                                class="table border-top-0 table-bordered text-nowrap border-bottom cards basic-datatable-t">
                                 <thead>
                                     <tr>
-                                        <th class="wd-10p border-bottom-0">Código</th>
-                                        <th class="wd-15p border-bottom-0">Empleado</th>
-                                        <th class="wd-15p border-bottom-0">Cliente</th>
-                                        <th class="wd-20p border-bottom-0">Asignación</th>
-                                        <th class="wd-10p border-bottom-0">Fecha Inicio</th>
-                                        <th class="wd-10p border-bottom-0">Fecha Fin</th>
-                                        <th class="wd-15p border-bottom-0">Creada por</th>
-                                        <th class="wd-15p border-bottom-0">Acciones</th>
-                                        <th class="wd-10p border-bottom-0">Visto<br>Bueno</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                     @foreach ($asignaciones_pendientes as $value)
                                         <tr>
-                                            <td>{{ $value->codigo }}</td>
-                                            <td>{{ $value->nombre }}</td>
-                                            <td>{{ $value->cliente }}</td>
-                                            <td>{{ $value->asignacion }}</td>
-                                            <td>{{ date('d-m-Y g:i A', strtotime($value->fecha)) }}</td>
-                                            <td>{{ date('d-m-Y g:i A', strtotime($value->fecha_culminacion)) }}</td>
-                                            <td>{{ $value->creador }}</td>
                                             <td>
-                                                @if ($value->revision == 1)
-                                                    <a class="d-flex btn_completar" data-id="{{ $value->id }}"
-                                                        href="javascript:void(0);"><i
-                                                            class="fa fa-check"></i>&nbsp;Completar</a>
-                                                    <a class="d-flex btn_rechazar" data-id="{{ $value->id }}"
-                                                        href="javascript:void(0);"><i
-                                                            class="fa fa-times"></i>&nbsp;Rechazar</a>
-                                                @endif
-                                                <a class="d-flex btn_openDetalles" data-id="{{ $value->id }}"
-                                                    href="javascript:void(0);"><i class="fa fa-eye"></i>&nbsp;Ver</a>
-                                                <a class="d-flex btn_editar" data-id="{{ $value->id }}"
-                                                    href="javascript:void(0);"><i
-                                                        class="fa fa-pencil-alt"></i>&nbsp;Editar</a>
-                                                <a class="d-flex btn_avances" data-id="{{ $value->id }}"
-                                                    href="javascript:void(0);"><i class="fa fa-file"></i>&nbsp;Ver
-                                                    Avances</a>
-                                                <a class="d-flex btn_eliminar" data-id="{{ $value->id }}"
-                                                    href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>
-                                            </td>
-                                            <td class="text-center">
-                                                <input data-id="{{ $value->id }}" class="visto_bueno_check"
-                                                    @if ($value->visto_bueno == 1) { checked } @endif type="checkbox">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="separator mx-3"></div>
+                                                        <div class="d-flex flex-row justify-content-between px-3">
+                                                            <span class="text-muted">Código</span>
+                                                            <h6>{{ $value->codigo }}</h6>
+                                                        </div>
+                                                        <hr class=" mx-3">
+                                                        <div class="d-flex flex-row justify-content-between px-3 pb-1">
+                                                            <span class="text-muted">Empleado</span>
+                                                            <h6 class="mb-0">{{ $value->nombre }}</h6>
+                                                        </div>
+                                                        <hr class=" mx-3">
+                                                        <div class="d-flex flex-row justify-content-between px-3 pb-1">
+                                                            <span class="text-muted">Cliente</span>
+                                                            <h6 class="mb-0">{{ $value->cliente }}</h6>
+                                                        </div>
+                                                        <hr class=" mx-3">
+                                                        <div class="d-flex flex-row justify-content-between px-3 pb-1">
+                                                            <span class="text-muted">Fecha Inicio</span>
+                                                            <h6 class="mb-0">
+                                                                {{ date('d-m-Y g:i A', strtotime($value->fecha)) }}</h6>
+                                                        </div>
+                                                        <hr class=" mx-3">
+                                                        <div class="d-flex flex-row justify-content-between px-3 pb-1">
+                                                            <span class="text-muted">Fecha Fin</span>
+                                                            <h6 class="mb-0">
+                                                                {{ date('d-m-Y g:i A', strtotime($value->fecha_culminacion)) }}
+                                                            </h6>
+                                                        </div>
+                                                        <hr class=" mx-3">
+                                                        <div class="text-center"
+                                                            style="display: grid; justify-content: center">
+                                                            @if ($value->revision == 1)
+                                                                <a class="d-flex btn_completar"
+                                                                    data-id="{{ $value->id }}"
+                                                                    href="javascript:void(0);"><i
+                                                                        class="fa fa-check"></i>&nbsp;Completar</a>
+                                                                <a class="d-flex btn_rechazar" data-id="{{ $value->id }}"
+                                                                    href="javascript:void(0);"><i
+                                                                        class="fa fa-times"></i>&nbsp;Rechazar</a>
+                                                            @endif
+                                                            <a class="d-flex btn_openDetalles" data-id="{{ $value->id }}"
+                                                                href="javascript:void(0);"><i
+                                                                    class="fa fa-eye"></i>&nbsp;Ver</a>
+                                                            <a class="d-flex btn_editar" data-id="{{ $value->id }}"
+                                                                href="javascript:void(0);"><i
+                                                                    class="fa fa-pencil-alt"></i>&nbsp;Editar</a>
+                                                            <a class="d-flex btn_avances" data-id="{{ $value->id }}"
+                                                                href="javascript:void(0);"><i
+                                                                    class="fa fa-file"></i>&nbsp;Ver
+                                                                Avances</a>
+                                                            <a class="d-flex btn_eliminar" data-id="{{ $value->id }}"
+                                                                href="javascript:void(0);"><i
+                                                                    class="fa fa-trash"></i>&nbsp;Eliminar</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -103,55 +180,76 @@
                         </div>
                         <div class="div-2-tables-header">
                             <!-- Excel -->
-                            <a href="{{ route('asignaciones_clientes_excel') }}" class="btn btn-primary">Generar Excel</a>
+                            <a href="{{ route('asignaciones_clientes_excel') }}" class="btn btn-primary">Generar
+                                Excel</a>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="table_asignaciones_completadas" class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
+                            <table id="table_asignaciones_completadas"
+                                class="table border-top-0 table-bordered text-nowrap border-bottom cards basic-datatable-t">
                                 <thead>
                                     <tr>
-                                        <th class="wd-10p border-bottom-0">Código</th>
-                                        <th class="wd-15p border-bottom-0">Empleado</th>
-                                        <th class="wd-15p border-bottom-0">Cliente</th>
-                                        <th class="wd-20p border-bottom-0">Asignación</th>
-                                        <th class="wd-10p border-bottom-0">Fecha Inicio</th>
-                                        <th class="wd-10p border-bottom-0">Fecha Fin</th>
-                                        <th class="wd-15p border-bottom-0">Creada por</th>
-                                        <th class="wd-15p border-bottom-0">Acciones</th>
-                                        <th class="wd-15p border-bottom-0">Visto<br>Bueno</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                     @foreach ($asignaciones_completadas as $value)
                                         <tr>
-                                            <td>{{ $value->codigo }}</td>
-                                            <td>{{ $value->nombre }}</td>
-                                            <td>{{ $value->cliente }}</td>
-                                            <td>{{ $value->asignacion }}</td>
-                                            <td>{{ date('d-m-Y g:i A', strtotime($value->fecha)) }}</td>
-                                            <td>{{ date('d-m-Y g:i A', strtotime($value->fecha_culminacion)) }}</td>
-                                            <td>{{ $value->creador }}</td>
                                             <td>
-                                                <a class="d-flex btn_openDetalles" data-id="{{ $value->id }}"
-                                                    href="javascript:void(0);"><i class="fa fa-eye"></i>&nbsp;Ver</a>
-                                                <a class="d-flex btn_avances" data-id="{{ $value->id }}"
-                                                    href="javascript:void(0);"><i class="fa fa-file"></i>&nbsp;Ver
-                                                    Avances</a>
-                                                @if ($value->revision == 2)
-                                                    <a class="d-flex btn_rechazar" data-id="{{ $value->id }}"
-                                                        href="javascript:void(0);"><i
-                                                            class="fa fa-times"></i>&nbsp;Rechazar</a>
-                                                @endif
-                                                <a class="d-flex btn_eliminar" data-id="{{ $value->id }}"
-                                                    href="javascript:void(0);"><i
-                                                        class="fa fa-trash"></i>&nbsp;Eliminar</a>
-                                            </td>
-                                            <td class="text-center">
-                                                <input data-id="{{ $value->id }}" class="visto_bueno_check"
-                                                    @if ($value->visto_bueno == 1) { @checked(true) } @endif
-                                                    type="checkbox">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="separator mx-3"></div>
+                                                        <div class="d-flex flex-row justify-content-between px-3">
+                                                            <span class="text-muted">Código</span>
+                                                            <h6>{{ $value->codigo }}</h6>
+                                                        </div>
+                                                        <hr class=" mx-3">
+                                                        <div class="d-flex flex-row justify-content-between px-3 pb-1">
+                                                            <span class="text-muted">Empleado</span>
+                                                            <h6 class="mb-0">{{ $value->nombre }}</h6>
+                                                        </div>
+                                                        <hr class=" mx-3">
+                                                        <div class="d-flex flex-row justify-content-between px-3 pb-1">
+                                                            <span class="text-muted">Cliente</span>
+                                                            <h6 class="mb-0">{{ $value->cliente }}</h6>
+                                                        </div>
+                                                        <hr class=" mx-3">
+                                                        <div class="d-flex flex-row justify-content-between px-3 pb-1">
+                                                            <span class="text-muted">Fecha Inicio</span>
+                                                            <h6 class="mb-0">
+                                                                {{ date('d-m-Y g:i A', strtotime($value->fecha)) }}</h6>
+                                                        </div>
+                                                        <hr class=" mx-3">
+                                                        <div class="d-flex flex-row justify-content-between px-3 pb-1">
+                                                            <span class="text-muted">Fecha Fin</span>
+                                                            <h6 class="mb-0">
+                                                                {{ date('d-m-Y g:i A', strtotime($value->fecha_culminacion)) }}
+                                                            </h6>
+                                                        </div>
+                                                        <hr class=" mx-3">
+                                                        <div class="text-center"
+                                                            style="display: grid; justify-content: center">
+                                                            <a class="d-flex btn_openDetalles"
+                                                                data-id="{{ $value->id }}"
+                                                                href="javascript:void(0);"><i
+                                                                    class="fa fa-eye"></i>&nbsp;Ver</a>
+                                                            <a class="d-flex btn_avances" data-id="{{ $value->id }}"
+                                                                href="javascript:void(0);"><i
+                                                                    class="fa fa-file"></i>&nbsp;Ver
+                                                                Avances</a>
+                                                            @if ($value->revision == 2)
+                                                                <a class="d-flex btn_rechazar"
+                                                                    data-id="{{ $value->id }}"
+                                                                    href="javascript:void(0);"><i
+                                                                        class="fa fa-times"></i>&nbsp;Rechazar</a>
+                                                            @endif
+                                                            <a class="d-flex btn_eliminar" data-id="{{ $value->id }}"
+                                                                href="javascript:void(0);"><i
+                                                                    class="fa fa-trash"></i>&nbsp;Eliminar</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach

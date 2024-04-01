@@ -106,6 +106,8 @@ $(function () {
         responsive: true,
         language: language,
         order: [],
+        lengthMenu: [ [12, 25, 50, -1], [12, 25, 50, "All"] ], // Display options for number of rows per page
+    pageLength: 12 // Default number of rows per page
     });
 
     $("#table_vehiculos_img").DataTable({
