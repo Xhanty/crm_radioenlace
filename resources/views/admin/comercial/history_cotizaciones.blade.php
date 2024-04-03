@@ -111,7 +111,17 @@
                                                                 style="margin-left: 0px !important;">
                                                             <label class="form-check label bold"
                                                                 style="margin-left: 16px !important">Aprobación
-                                                                Contable</label>
+                                                                Contable (Facturación)</label>
+                                                        </div>
+                                                        <div class="form-checkbox form-checkbox-primary">
+                                                            <input type="checkbox" class="form-check-input checkAprobados"
+                                                                data-id="{{ $value->id }}" data-tipo="pago"
+                                                                @if ($value->check_pago == 1) checked @endif
+                                                                @if (!auth()->user()->hasPermissionTo('aprobacion_pago_cotizacion')) disabled @endif
+                                                                style="margin-left: 0px !important;">
+                                                            <label class="form-check label bold"
+                                                                style="margin-left: 16px !important">Aprobación
+                                                                Pago (Pago Recibido)</label>
                                                         </div>
                                                     @endif
                                                 </p>
@@ -193,7 +203,17 @@
                                                                 style="margin-left: 0px !important;">
                                                             <label class="form-check label bold"
                                                                 style="margin-left: 16px !important">Aprobación
-                                                                Contable</label>
+                                                                Contable (Facturación)</label>
+                                                        </div>
+                                                        <div class="form-checkbox form-checkbox-primary">
+                                                            <input type="checkbox" class="form-check-input checkAprobados"
+                                                                data-id="{{ $value->id }}" data-tipo="pago"
+                                                                @if ($value->check_pago == 1) checked @endif
+                                                                @if (!auth()->user()->hasPermissionTo('aprobacion_pago_cotizacion')) disabled @endif
+                                                                style="margin-left: 0px !important;">
+                                                            <label class="form-check label bold"
+                                                                style="margin-left: 16px !important">Aprobación
+                                                                Pago (Pago Recibido)</label>
                                                         </div>
                                                     @endif
                                                 </p>

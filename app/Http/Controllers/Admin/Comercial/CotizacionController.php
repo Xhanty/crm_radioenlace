@@ -584,6 +584,10 @@ class CotizacionController extends Controller
                 DB::table("history_cotizaciones")->where('id', $id)->update([
                     'check_contable' => $check,
                 ]);
+            } else if ($tipo == 'pago') {
+                DB::table("history_cotizaciones")->where('id', $id)->update([
+                    'check_pago' => $check,
+                ]);
             }
 
             return response()->json([

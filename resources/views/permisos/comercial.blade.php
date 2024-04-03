@@ -722,6 +722,31 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-6 col-xl-3 col-md-12 col-sm-12 p-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="d-flex">
+                                        <div class="settings-main-icon me-4 mt-1"><i class="fa fa-laptop"></i>
+                                        </div>
+                                        <div>
+                                            <p class="tx-20 font-weight-semibold d-flex mb-0">Aprobación Pago</p>
+                                            <p class="tx-13 text-muted mb-0">Permite aprobar por parte del área de pagos</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer p-3">
+                            <label class="form-switch float-end mb-0">
+                                <input type="checkbox" value="aprobacion_pago_cotizacion"
+                                    class="form-switch-input check-com-29">
+                                <span class="form-switch-indicator custom-radius"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
