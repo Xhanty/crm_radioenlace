@@ -37,7 +37,7 @@
                                     } elseif ($value->tipo == 2) {
                                         $tipo = 'Cotización Proveedor';
                                     } elseif ($value->tipo == 3) {
-                                        $tipo = 'Orden de Compra';
+                                        $tipo = 'Órden de Compra';
                                     }
                                 @endphp
                                 @if ($key % 2 === 0)
@@ -71,7 +71,7 @@
                                                     <br>
                                                     <strong>Usuario:</strong> {{ $value->creador }}
 
-                                                    @if ($value->tipo != 1)
+                                                    @if ($value->tipo == 3)
                                                         <br>
                                                         <!-- Aprobar Cotización -->
                                                         <div class="form-checkbox form-checkbox-primary">
@@ -93,6 +93,15 @@
                                                             <label class="form-check label bold"
                                                                 style="margin-left: 16px !important">Aprobación
                                                                 Gerencia</label>
+                                                        </div>
+                                                        <div class="form-checkbox form-checkbox-primary">
+                                                            <input type="checkbox" class="form-check-input checkAprobados"
+                                                                data-id="{{ $value->id }}" data-tipo="tesoreria"
+                                                                @if ($value->check_tesoreria == 1) checked @endif
+                                                                @if (!auth()->user()->hasPermissionTo('aprobacion_tesoreria_cotizacion')) disabled @endif
+                                                                style="margin-left: 0px !important;">
+                                                            <label class="form-check label bold"
+                                                                style="margin-left: 16px !important">Aprobación Tesorería</label>
                                                         </div>
                                                         <div class="form-checkbox form-checkbox-primary">
                                                             <input type="checkbox" class="form-check-input checkAprobados"
@@ -144,7 +153,7 @@
                                                     @endif
                                                     <br>
                                                     <strong>Usuario:</strong> {{ $value->creador }}
-                                                    @if ($value->tipo != 1)
+                                                    @if ($value->tipo == 3)
                                                         <br>
                                                         <!-- Aprobar Cotización -->
                                                         <div class="form-checkbox form-checkbox-primary">
@@ -166,6 +175,15 @@
                                                             <label class="form-check label bold"
                                                                 style="margin-left: 16px !important">Aprobación
                                                                 Gerencia</label>
+                                                        </div>
+                                                        <div class="form-checkbox form-checkbox-primary">
+                                                            <input type="checkbox" class="form-check-input checkAprobados"
+                                                                data-id="{{ $value->id }}" data-tipo="tesoreria"
+                                                                @if ($value->check_tesoreria == 1) checked @endif
+                                                                @if (!auth()->user()->hasPermissionTo('aprobacion_tesoreria_cotizacion')) disabled @endif
+                                                                style="margin-left: 0px !important;">
+                                                            <label class="form-check label bold"
+                                                                style="margin-left: 16px !important">Aprobación Tesorería</label>
                                                         </div>
                                                         <div class="form-checkbox form-checkbox-primary">
                                                             <input type="checkbox" class="form-check-input checkAprobados"
@@ -209,7 +227,7 @@
                                 <select id="tipo_observacion" class="form-select">
                                     <option value="1">Observación</option>
                                     <option value="2">Cotización Proveedor</option>
-                                    <option value="3">Orden de Compra</option>
+                                    <option value="3">Órden de Compra</option>
                                 </select>
                             </div>
                         </div>
