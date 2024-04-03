@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Reparaciones;
 
 use App\Exports\ReparacionesExport;
+use App\Exports\ReparacionesPendientesExport;
 use App\Http\Controllers\Controller;
 use App\Mail\ReparacionesMail;
 use Exception;
@@ -341,6 +342,27 @@ class ReparacionesController extends Controller
             ->get();
 
         return Excel::download(new ReparacionesExport($finalizadas), 'reparaciones_completadas.xlsx');
+    }
+
+    public function excel_pendientes()
+    {
+        // Generar excel con las reparaciones finalizadas
+        $finalizadas
+            = DB::table('reparaciones')
+            ->select(
+                'reparaciones.token as codigo',
+                'reparaciones.created_at as fecha_entrega',
+                'reparaciones.fecha_terminado',
+                'cliente.razon_social as cliente',
+                'cliente.nit',
+                'empleados.nombre as tecnico'
+            )
+            ->join('cliente', 'cliente.id', '=', 'reparaciones.cliente_id')
+            ->leftJoin('empleados', 'empleados.id', '=', 'reparaciones.tecnico_id')
+            ->where('reparaciones.status', 0)
+            ->get();
+
+        return Excel::download(new ReparacionesPendientesExport($finalizadas), 'reparaciones_pendientes.xlsx');
     }
 
     public function mis_reparaciones(Request $request)

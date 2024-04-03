@@ -134,9 +134,9 @@
         </div>
         <!-- /breadcrumb -->
 
-        <div class="container" id="content_list_options" style="display: block">
+        <div class="container" id="content_list_options" style="display: block; cursor: pointer">
             <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box">
+                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box" id="btnCompras">
                     <div class="col-12 rounded bg-info p-3 text-center">
                         <img src="{{ asset('assets/img/contabilidad/compras.png') }}" width="100px" alt=""
                             class="img-cards">
@@ -144,14 +144,14 @@
                                 Gastos</a></h3>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box">
+                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box" id="btnVentas">
                     <div class="col-12 rounded bg-info p-3 text-center">
                         <img src="{{ asset('assets/img/contabilidad/ventas.png') }}" width="100px" alt=""
                             class="img-cards">
                         <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Ventas</a></h3>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box">
+                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box" id="btnNomina">
                     <div class="col-12 rounded bg-info p-3 text-center">
                         <img src="{{ asset('assets/img/contabilidad/nomina.png') }}" width="100px" alt=""
                             class="img-cards">
@@ -160,7 +160,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box">
+                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box" id="btnContabilidad">
                     <div class="col-12 rounded bg-info p-3 text-center">
                         <img src="{{ asset('assets/img/contabilidad/contabilidad.png') }}" width="100px" alt=""
                             class="img-cards">
@@ -168,7 +168,7 @@
                                 style="color: white">Contabilidad</a></h3>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box">
+                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box" id="btnProductos">
                     <div class="col-12 rounded bg-info p-3 text-center">
                         <img src="{{ asset('assets/img/contabilidad/inventario.png') }}" width="100px" alt=""
                             class="img-cards">
@@ -176,7 +176,7 @@
                                 Servicios</a></h3>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box">
+                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box" id="btnHabilitacion">
                     <div class="col-12 rounded bg-info p-3 text-center">
                         <img src="{{ asset('assets/img/contabilidad/habilitacion.png') }}" width="100px" alt=""
                             class="img-cards">
@@ -186,7 +186,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box">
+                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box" id="btnIndicadores">
                     <div class="col-12 rounded bg-info p-3 text-center">
                         <img src="{{ asset('assets/img/contabilidad/indicadores.png') }}" width="100px" alt=""
                             class="img-cards">
@@ -194,7 +194,7 @@
                         </h3>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box">
+                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box" id="btnReportes">
                     <div class="col-12 rounded bg-info p-3 text-center">
                         <img src="{{ asset('assets/img/contabilidad/reportes.png') }}" width="100px" alt=""
                             class="img-cards">
@@ -202,7 +202,7 @@
                         </h3>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box">
+                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box" id="btnReportesNomina">
                     <div class="col-12 rounded bg-info p-3 text-center">
                         <img src="{{ asset('assets/img/contabilidad/reportes_nomina.png') }}" width="100px" alt=""
                             class="img-cards">
@@ -219,34 +219,176 @@
                     <div class="div-1-tables-header">
                         <ul class="nav nav-pills" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#home"
-                                    type="button" role="tab" aria-controls="home"
-                                    aria-selected="true">Home</button>
+                                <button class="nav-link active" data-toggle="tab" data-target="#compras"
+                                    type="button" role="tab" aria-controls="compras" aria-selected="true">Compras y
+                                    Gastos</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#profile"
-                                    type="button" role="tab" aria-controls="profile"
-                                    aria-selected="false">Profile</button>
+                                <button class="nav-link" data-toggle="tab" data-target="#nc_compras"
+                                    type="button" role="tab" aria-controls="nc_compras" aria-selected="false">Notas
+                                    Crédito</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="contact-tab" data-toggle="tab" data-target="#contact"
-                                    type="button" role="tab" aria-controls="contact"
-                                    aria-selected="false">Contact</button>
+                                <button class="nav-link" data-toggle="tab" data-target="#nd_compras"
+                                    type="button" role="tab" aria-controls="nd_compras" aria-selected="false">Notas
+                                    Débito</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" data-toggle="tab" data-target="#report_compras"
+                                    type="button" role="tab" aria-controls="report_compras"
+                                    aria-selected="false">Reportes</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" data-toggle="tab" data-target="#ajust_compras"
+                                    type="button" role="tab" aria-controls="ajust_compras"
+                                    aria-selected="false">Ajustes</button>
                             </li>
                         </ul>
                     </div>
                     <div class="div-2-tables-header">
-                        <button class="btn btn-primary" id="back">Regresar</button>
+                        <button class="btn btn-primary btnBack">Regresar</button>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="home" role="tabpanel"
-                            aria-labelledby="home-tab">...</div>
-                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...
-                        </div>
-                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...
-                        </div>
+                        <div class="tab-pane fade show active" id="compras" role="tabpanel"></div>
+                        <div class="tab-pane fade" id="nc_compras" role="tabpanel"></div>
+                        <div class="tab-pane fade" id="nd_compras" role="tabpanel"></div>
+                        <div class="tab-pane fade" id="report_compras" role="tabpanel"></div>
+                        <div class="tab-pane fade" id="ajust_compras" role="tabpanel"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content_list_ventas" style="display: none">
+            <div class="card">
+                <div class="card-header d-flex-header-table" style="border-radius: 4px">
+                    <div class="div-1-tables-header">
+                        <ul class="nav nav-pills" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" data-toggle="tab" data-target="#ventas"
+                                    type="button" role="tab" aria-controls="ventas" aria-selected="true">Ventas</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" data-toggle="tab" data-target="#nc_ventas"
+                                    type="button" role="tab" aria-controls="nc_ventas" aria-selected="false">Notas
+                                    Crédito</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" data-toggle="tab" data-target="#nd_ventas"
+                                    type="button" role="tab" aria-controls="nd_ventas" aria-selected="false">Notas
+                                    Débito</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" data-toggle="tab" data-target="#report_ventas"
+                                    type="button" role="tab" aria-controls="report_ventas"
+                                    aria-selected="false">Reportes</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" data-toggle="tab" data-target="#ajust_ventas"
+                                    type="button" role="tab" aria-controls="ajust_ventas"
+                                    aria-selected="false">Ajustes</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="div-2-tables-header">
+                        <button class="btn btn-primary btnBack">Regresar</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="ventas" role="tabpanel"></div>
+                        <div class="tab-pane fade" id="nc_ventas" role="tabpanel"></div>
+                        <div class="tab-pane fade" id="nd_ventas" role="tabpanel"></div>
+                        <div class="tab-pane fade" id="report_ventas" role="tabpanel"></div>
+                        <div class="tab-pane fade" id="ajust_ventas" role="tabpanel"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content_list_nomina" style="display: none">
+            <div class="card">
+                <div class="card-header d-flex-header-table" style="border-radius: 4px">
+                    <div class="div-1-tables-header">
+                        <ul class="nav nav-pills" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" data-toggle="tab" data-target="#nomina"
+                                    type="button" role="tab" aria-controls="nomina" aria-selected="true">Nómina</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" data-toggle="tab" data-target="#mas_nomina"
+                                    type="button" role="tab" aria-controls="mas_nomina" aria-selected="false">Más Procesos</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" data-toggle="tab" data-target="#report_nomina"
+                                    type="button" role="tab" aria-controls="report_nomina"
+                                    aria-selected="false">Reportes</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" data-toggle="tab" data-target="#ajust_nomina"
+                                    type="button" role="tab" aria-controls="ajust_nomina"
+                                    aria-selected="false">Ajustes</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="div-2-tables-header">
+                        <button class="btn btn-primary btnBack">Regresar</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="nomina" role="tabpanel"></div>
+                        <div class="tab-pane fade" id="mas_nomina" role="tabpanel"></div>
+                        <div class="tab-pane fade" id="report_nomina" role="tabpanel"></div>
+                        <div class="tab-pane fade" id="ajust_nomina" role="tabpanel"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content_list_contabilidad" style="display: none">
+            <div class="card">
+                <div class="card-header d-flex-header-table" style="border-radius: 4px">
+                    <div class="div-1-tables-header">
+                        <ul class="nav nav-pills" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" data-toggle="tab" data-target="#contabilidad"
+                                    type="button" role="tab" aria-controls="contabilidad" aria-selected="true">Movimientos Contables</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" data-toggle="tab" data-target="#ajustcartera_contabilidad"
+                                    type="button" role="tab" aria-controls="ajustcartera_contabilidad" aria-selected="false">Ajustes de Cartera</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" data-toggle="tab" data-target="#mas_contabilidad"
+                                    type="button" role="tab" aria-controls="mas_contabilidad"
+                                    aria-selected="false">Más Procesos</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" data-toggle="tab" data-target="#report_contabilidad"
+                                    type="button" role="tab" aria-controls="report_contabilidad"
+                                    aria-selected="false">Reportes</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" data-toggle="tab" data-target="#ajust_contabilidad"
+                                    type="button" role="tab" aria-controls="ajust_contabilidad"
+                                    aria-selected="false">Ajustes</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="div-2-tables-header">
+                        <button class="btn btn-primary btnBack">Regresar</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="contabilidad" role="tabpanel"></div>
+                        <div class="tab-pane fade" id="ajustcartera_contabilidad" role="tabpanel"></div>
+                        <div class="tab-pane fade" id="mas_contabilidad" role="tabpanel"></div>
+                        <div class="tab-pane fade" id="report_contabilidad" role="tabpanel"></div>
+                        <div class="tab-pane fade" id="ajust_contabilidad" role="tabpanel"></div>
                     </div>
                 </div>
             </div>
@@ -257,14 +399,32 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-            $('.box').click(function() {
+            $('#btnCompras').click(function() {
                 $('#content_list_options').hide();
                 $('#content_list_compras').show();
             });
 
-            $('#back').click(function() {
+            $('#btnVentas').click(function() {
+                $('#content_list_options').hide();
+                $('#content_list_ventas').show();
+            });
+
+            $('#btnNomina').click(function() {
+                $('#content_list_options').hide();
+                $('#content_list_nomina').show();
+            });
+
+            $('#btnContabilidad').click(function() {
+                $('#content_list_options').hide();
+                $('#content_list_contabilidad').show();
+            });
+
+            $('.btnBack').click(function() {
                 $('#content_list_options').show();
                 $('#content_list_compras').hide();
+                $('#content_list_ventas').hide();
+                $('#content_list_nomina').hide();
+                $('#content_list_contabilidad').hide();
             });
         });
     </script>

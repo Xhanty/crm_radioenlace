@@ -36,7 +36,7 @@ $(document).ready(function () {
                     error: function (error) {
                         toastr.error("Error al eliminar la observación");
                         console.log(error);
-                    }
+                    },
                 });
             }
         });
@@ -53,39 +53,62 @@ $(document).ready(function () {
 
     $("#btnGuardar").click(function () {
         let id = $("#cotizacion_id").val();
+        let tipo = $("#tipo_observacion").val();
         let observacion = $("#observacion_add").val();
+        let adjunto = $("#adjunto_add")[0].files[0];
+        let valid = true;
 
-        if (observacion == "") {
-            toastr.error("Debe ingresar una observación");
-        } else {
-            $("#btnGuardar").attr("disabled", true);
-            $("#btnGuardar").html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
-            );
-            $.ajax({
-                url: "history_cotizaciones_add",
-                data: { id: id, observacion: observacion },
-                type: "POST",
-                success: function (response) {
-                    if (response.info == 1) {
-                        toastr.success("Observación guardada con éxito");
-                        setTimeout(function () {
-                            location.reload();
-                        }, 1000);
-                    } else {
-                        $("#btnGuardar").attr("disabled", false);
-                        $("#btnGuardar").html("Guardar");
-                        toastr.error("Error al guardar la observación");
-                    }
-                },
-                error: function (error) {
+        if (tipo == 1) {
+            if (observacion == "") {
+                valid = false;
+                toastr.error("Debe ingresar una observación");
+            }
+        }
+
+        if (tipo != 1) {
+            if (adjunto == undefined) {
+                valid = false;
+                toastr.error("Debe seleccionar un archivo");
+            }
+        }
+
+        if (!valid) return false;
+
+        let formData = new FormData();
+        formData.append("id", id);
+        formData.append("tipo", tipo);
+        formData.append("observacion", observacion);
+        formData.append("adjunto", adjunto);
+
+        $("#btnGuardar").attr("disabled", true);
+        $("#btnGuardar").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+        );
+        $.ajax({
+            url: "history_cotizaciones_add",
+            data: formData,
+            contentType: false,
+            processData: false,
+            type: "POST",
+            success: function (response) {
+                if (response.info == 1) {
+                    toastr.success("Observación guardada con éxito");
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1000);
+                } else {
                     $("#btnGuardar").attr("disabled", false);
                     $("#btnGuardar").html("Guardar");
                     toastr.error("Error al guardar la observación");
-                    console.log(error);
                 }
-            });
-        }
+            },
+            error: function (error) {
+                $("#btnGuardar").attr("disabled", false);
+                $("#btnGuardar").html("Guardar");
+                toastr.error("Error al guardar la observación");
+                console.log(error);
+            },
+        });
     });
 
     $("#btnGuardarEdit").click(function () {
@@ -120,7 +143,7 @@ $(document).ready(function () {
                     $("#btnGuardarEdit").html("Guardar");
                     toastr.error("Error al editar la observación");
                     console.log(error);
-                }
+                },
             });
         }
     });
@@ -134,8 +157,37 @@ $(document).ready(function () {
 
         if (tipo == 1) {
             $("#content_adjunto_add").hide();
+            $("#content_observacion_add").show();
         } else {
             $("#content_adjunto_add").show();
+            $("#content_observacion_add").hide();
         }
+    });
+
+    $(document).on("change", ".checkAprobados", function () {
+        let id = $(this).data("id");
+        let tipo = $(this).data("tipo");
+        let check = $(this).prop("checked") ? 1 : 0;
+
+        $.ajax({
+            url: "history_cotizaciones_contable",
+            data: {
+                id: id,
+                tipo: tipo,
+                check: check,
+            },
+            type: "POST",
+            success: function (response) {
+                if (response.info == 1) {
+                    toastr.success("Modificación realizada con éxito");
+                } else {
+                    toastr.error("Error al modificar");
+                }
+            },
+            error: function (error) {
+                toastr.error("Error al modificar");
+                console.log(error);
+            },
+        });
     });
 });

@@ -25,8 +25,10 @@
                             <h3 class="card-title mt-2">Lista de Equipos en Reparación</h3>
                         </div>
                         <div class="div-2-tables-header">
-                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAdd">Registrar
+                            <!-- Excel -->
+                            <button class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#modalAdd">Registrar
                                 Recepción</button>
+                            <a href="{{ route('reparaciones_pendientes_excel') }}" class="btn btn-primary">Generar Excel</a>
                         </div>
                     </div>
                     <div class="card-body">

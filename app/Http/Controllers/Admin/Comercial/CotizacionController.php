@@ -453,7 +453,7 @@ class CotizacionController extends Controller
                 'created_by' => auth()->user()->id,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
-            
+
             return response()->json(['info' => 1, 'message' => 'Cotización enviada correctamente']);
         } catch (Exception $ex) {
             return $ex->getMessage();
@@ -536,11 +536,20 @@ class CotizacionController extends Controller
     {
         try {
             $cotizacion = $request->id;
+            $tipo = $request->tipo;
             $observacion = $request->observacion;
+            $new_name = null;
+
+            if ($anexo = $request->file('adjunto')) {
+                $new_name = rand() . rand() . '.' . $anexo->getClientOriginalExtension();
+                $anexo->move('images/cotizaciones', $new_name);
+            }
 
             DB::table("history_cotizaciones")->insert([
                 'cotizacion_id' => $cotizacion,
+                'tipo' => $tipo,
                 'observacion' => $observacion,
+                'adjunto' => $new_name,
                 'created_by' => auth()->user()->id,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
@@ -549,6 +558,37 @@ class CotizacionController extends Controller
         } catch (Exception $ex) {
             return $ex->getMessage();
             return response()->json(['info' => 0, 'error' => 'Error al agregar la observación']);
+        }
+    }
+
+    public function history_contable(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $tipo = $request->tipo;
+            $check = $request->check;
+
+            if ($tipo == 'comercial') {
+                DB::table("history_cotizaciones")->where('id', $id)->update([
+                    'check_comercial' => $check,
+                ]);
+            } else if ($tipo == 'gerencia') {
+                DB::table("history_cotizaciones")->where('id', $id)->update([
+                    'check_gerencia' => $check,
+                ]);
+            } else if ($tipo == 'contable') {
+                DB::table("history_cotizaciones")->where('id', $id)->update([
+                    'check_contable' => $check,
+                ]);
+            }
+
+            return response()->json([
+                'info' => 1,
+            ]);
+        } catch (Exception $ex) {
+            return response()->json([
+                'error' => $ex->getMessage(),
+            ]);
         }
     }
 

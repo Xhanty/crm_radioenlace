@@ -30,12 +30,22 @@
                     <div class="card-body">
                         <div class="vtimeline">
                             @foreach ($cotizacion->observaciones as $key => $value)
+                                @php
+                                    $tipo = '';
+                                    if ($value->tipo == 1) {
+                                        $tipo = 'Observación';
+                                    } elseif ($value->tipo == 2) {
+                                        $tipo = 'Cotización Proveedor';
+                                    } elseif ($value->tipo == 3) {
+                                        $tipo = 'Orden de Compra';
+                                    }
+                                @endphp
                                 @if ($key % 2 === 0)
                                     <div class="timeline-wrapper timeline-wrapper-primary">
                                         <div class="timeline-badge"></div>
                                         <div class="timeline-panel">
                                             <div class="timeline-heading" style="text-align: right">
-                                                @if ($value->adjunto == null)
+                                                @if ($value->tipo == 1)
                                                     <a href="javascript:void(0);" class="btnEdit"
                                                         data-id="{{ $value->id }}"
                                                         data-mensaje="{{ $value->observacion }}">
@@ -49,9 +59,52 @@
                                             </div>
                                             <div class="timeline-body">
                                                 <p>
-                                                    <strong>Observación:</strong> {{ $value->observacion }}
+                                                    <strong>Tipo:</strong> {{ $tipo }}
+                                                    <br>
+                                                    @if ($value->tipo == 1)
+                                                        <strong>Observación:</strong> {{ $value->observacion }}
+                                                    @else
+                                                        <strong>Archivo:</strong> <a
+                                                            href="{{ asset('images/cotizaciones/' . $value->adjunto) }}"
+                                                            target="_blank">Ver Archivo</a>
+                                                    @endif
                                                     <br>
                                                     <strong>Usuario:</strong> {{ $value->creador }}
+
+                                                    @if ($value->tipo != 1)
+                                                        <br>
+                                                        <!-- Aprobar Cotización -->
+                                                        <div class="form-checkbox form-checkbox-primary">
+                                                            <input type="checkbox" class="form-check-input checkAprobados"
+                                                                @if ($value->check_comercial == 1) checked @endif
+                                                                @if (!auth()->user()->hasPermissionTo('aprobacion_comercial_cotizacion')) disabled @endif
+                                                                data-tipo="comercial" data-id="{{ $value->id }}"
+                                                                style="margin-left: 0px !important;">
+                                                            <label class="form-check label bold"
+                                                                style="margin-left: 16px !important">Aprobación
+                                                                Comercial</label>
+                                                        </div>
+                                                        <div class="form-checkbox form-checkbox-primary">
+                                                            <input type="checkbox" class="form-check-input checkAprobados"
+                                                                data-id="{{ $value->id }}" data-tipo="gerencia"
+                                                                @if ($value->check_gerencia == 1) checked @endif
+                                                                @if (!auth()->user()->hasPermissionTo('aprobacion_gerencia_cotizacion')) disabled @endif
+                                                                style="margin-left: 0px !important;">
+                                                            <label class="form-check label bold"
+                                                                style="margin-left: 16px !important">Aprobación
+                                                                Gerencia</label>
+                                                        </div>
+                                                        <div class="form-checkbox form-checkbox-primary">
+                                                            <input type="checkbox" class="form-check-input checkAprobados"
+                                                                data-id="{{ $value->id }}" data-tipo="contable"
+                                                                @if ($value->check_contable == 1) checked @endif
+                                                                @if (!auth()->user()->hasPermissionTo('aprobacion_contable_cotizacion')) disabled @endif
+                                                                style="margin-left: 0px !important;">
+                                                            <label class="form-check label bold"
+                                                                style="margin-left: 16px !important">Aprobación
+                                                                Contable</label>
+                                                        </div>
+                                                    @endif
                                                 </p>
                                             </div>
                                             <div class="timeline-footer d-flex align-items-center flex-wrap">
@@ -65,7 +118,7 @@
                                         <div class="timeline-badge"></div>
                                         <div class="timeline-panel">
                                             <div class="timeline-heading" style="text-align: right">
-                                                @if ($value->adjunto == null)
+                                                @if ($value->tipo == 1)
                                                     <a href="javascript:void(0);" class="btnEdit"
                                                         data-id="{{ $value->id }}"
                                                         data-mensaje="{{ $value->observacion }}">
@@ -80,9 +133,51 @@
                                             </div>
                                             <div class="timeline-body">
                                                 <p>
-                                                    <strong>Observación:</strong> {{ $value->observacion }}
+                                                    <strong>Tipo:</strong> {{ $tipo }}
+                                                    <br>
+                                                    @if ($value->tipo == 1)
+                                                        <strong>Observación:</strong> {{ $value->observacion }}
+                                                    @else
+                                                        <strong>Archivo:</strong> <a
+                                                            href="{{ asset('images/cotizaciones/' . $value->adjunto) }}"
+                                                            target="_blank">Ver Archivo</a>
+                                                    @endif
                                                     <br>
                                                     <strong>Usuario:</strong> {{ $value->creador }}
+                                                    @if ($value->tipo != 1)
+                                                        <br>
+                                                        <!-- Aprobar Cotización -->
+                                                        <div class="form-checkbox form-checkbox-primary">
+                                                            <input type="checkbox" class="form-check-input checkAprobados"
+                                                                data-id="{{ $value->id }}" data-tipo="comercial"
+                                                                @if ($value->check_comercial == 1) checked @endif
+                                                                @if (!auth()->user()->hasPermissionTo('aprobacion_comercial_cotizacion')) disabled @endif
+                                                                style="margin-left: 0px !important;">
+                                                            <label class="form-check label bold"
+                                                                style="margin-left: 16px !important">Aprobación
+                                                                Comercial</label>
+                                                        </div>
+                                                        <div class="form-checkbox form-checkbox-primary">
+                                                            <input type="checkbox" class="form-check-input checkAprobados"
+                                                                data-id="{{ $value->id }}" data-tipo="gerencia"
+                                                                @if ($value->check_gerencia == 1) checked @endif
+                                                                @if (!auth()->user()->hasPermissionTo('aprobacion_gerencia_cotizacion')) disabled @endif
+                                                                style="margin-left: 0px !important;">
+                                                            <label class="form-check label bold"
+                                                                style="margin-left: 16px !important">Aprobación
+                                                                Gerencia</label>
+                                                        </div>
+                                                        <div class="form-checkbox form-checkbox-primary">
+                                                            <input type="checkbox" class="form-check-input checkAprobados"
+                                                                data-id="{{ $value->id }}" data-tipo="contable"
+                                                                @if ($value->check_contable == 1) checked @endif
+                                                                @if (!auth()->user()->hasPermissionTo('aprobacion_contable_cotizacion')) disabled @endif
+                                                                style="margin-left: 0px !important;">
+                                                            <label class="form-check label bold"
+                                                                style="margin-left: 16px !important">Aprobación
+                                                                Contable</label>
+                                                        </div>
+                                                    @endif
                                                 </p>
                                             </div>
                                             <div class="timeline-footer d-flex align-items-center flex-wrap">
@@ -118,12 +213,14 @@
                                 </select>
                             </div>
                         </div>
-                        <br>
-                        <div class="row row-sm">
-                            <div class="col-lg">
-                                <label for="">Observación</label>
-                                <textarea class="form-control" placeholder="Observaciones" rows="4" id="observacion_add"
-                                    style="height: 120px; resize: none"></textarea>
+                        <div id="content_observacion_add" style="display: block">
+                            <br>
+                            <div class="row row-sm">
+                                <div class="col-lg">
+                                    <label for="">Observación</label>
+                                    <textarea class="form-control" placeholder="Observaciones" rows="4" id="observacion_add"
+                                        style="height: 120px; resize: none"></textarea>
+                                </div>
                             </div>
                         </div>
                         <div id="content_adjunto_add" style="display: none">
