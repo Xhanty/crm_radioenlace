@@ -168,7 +168,7 @@
                                                         class="fa fa-print"></i></a>
                                                 <a target="_BLANK"
                                                     href="{{ route('history_cotizaciones') }}?token={{ $cotizacion->id }}"
-                                                    title="Observaciones/Avances"
+                                                    title="Avances y/o Anexos"
                                                     class="btn btn-success btn-sm btnHistory"><i
                                                         class="fa fa-book"></i></a>
                                             </td>

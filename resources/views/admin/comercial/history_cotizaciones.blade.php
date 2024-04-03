@@ -21,9 +21,11 @@
             <div class="col-lg-12">
                 <div class="card custom-card">
                     <div style="text-align: right">
-                        <i title="Agregar Observación" data-bs-toggle="modal" data-bs-target="#modalAdd" class="fa fa-plus-circle"
+                        <i title="Agregar Observación" data-bs-toggle="modal" data-bs-target="#modalAdd"
+                            class="fa fa-plus-circle"
                             style="font-size: 30px; color: #0d6efd; cursor: pointer; margin: 10px;"></i>
-                        <i id="btnCloseVista" title="Cerrar" class="fa fa-times-circle" style="font-size: 30px; color: #0d6efd; cursor: pointer; margin-right: 10px;"></i>
+                        <i id="btnCloseVista" title="Cerrar" class="fa fa-times-circle"
+                            style="font-size: 30px; color: #0d6efd; cursor: pointer; margin-right: 10px;"></i>
                     </div>
                     <div class="card-body">
                         <div class="vtimeline">
@@ -33,10 +35,13 @@
                                         <div class="timeline-badge"></div>
                                         <div class="timeline-panel">
                                             <div class="timeline-heading" style="text-align: right">
-                                                <a href="javascript:void(0);" class="btnEdit" data-id="{{ $value->id }}"
-                                                    data-mensaje="{{ $value->observacion }}">
-                                                    <i class="fa fa-pencil-alt text-muted me-1"></i>
-                                                </a>
+                                                @if ($value->adjunto == null)
+                                                    <a href="javascript:void(0);" class="btnEdit"
+                                                        data-id="{{ $value->id }}"
+                                                        data-mensaje="{{ $value->observacion }}">
+                                                        <i class="fa fa-pencil-alt text-muted me-1"></i>
+                                                    </a>
+                                                @endif
                                                 <a href="javascript:void(0);" class="btnDelete"
                                                     data-id="{{ $value->id }}" data-mensaje="{{ $value->observacion }}">
                                                     <i class="fa fa-trash text-muted me-1"></i>
@@ -60,10 +65,13 @@
                                         <div class="timeline-badge"></div>
                                         <div class="timeline-panel">
                                             <div class="timeline-heading" style="text-align: right">
-                                                <a href="javascript:void(0);" class="btnEdit" data-id="{{ $value->id }}"
-                                                    data-mensaje="{{ $value->observacion }}">
-                                                    <i class="fa fa-pencil-alt text-muted me-1"></i>
-                                                </a>
+                                                @if ($value->adjunto == null)
+                                                    <a href="javascript:void(0);" class="btnEdit"
+                                                        data-id="{{ $value->id }}"
+                                                        data-mensaje="{{ $value->observacion }}">
+                                                        <i class="fa fa-pencil-alt text-muted me-1"></i>
+                                                    </a>
+                                                @endif
                                                 <a href="javascript:void(0);" class="btnDelete"
                                                     data-id="{{ $value->id }}"
                                                     data-mensaje="{{ $value->observacion }}">
@@ -102,9 +110,29 @@
                     <div class="modal-body">
                         <div class="row row-sm">
                             <div class="col-lg">
+                                <label for="">Tipo</label>
+                                <select id="tipo_observacion" class="form-select">
+                                    <option value="1">Observación</option>
+                                    <option value="2">Cotización Proveedor</option>
+                                    <option value="3">Orden de Compra</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
                                 <label for="">Observación</label>
                                 <textarea class="form-control" placeholder="Observaciones" rows="4" id="observacion_add"
                                     style="height: 120px; resize: none"></textarea>
+                            </div>
+                        </div>
+                        <div id="content_adjunto_add" style="display: none">
+                            <br>
+                            <div class="row row-sm">
+                                <div class="col-lg">
+                                    <label for="">Adjunto</label>
+                                    <input type="file" class="form-control" id="adjunto_add"></input>
+                                </div>
                             </div>
                         </div>
                     </div>

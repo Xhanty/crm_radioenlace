@@ -128,4 +128,14 @@ $(document).ready(function () {
     $("#btnCloseVista").click(function () {
         window.close();
     });
+
+    $("#tipo_observacion").change(function () {
+        let tipo = $(this).val();
+
+        if (tipo == 1) {
+            $("#content_adjunto_add").hide();
+        } else {
+            $("#content_adjunto_add").show();
+        }
+    });
 });

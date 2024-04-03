@@ -134,13 +134,14 @@
         </div>
         <!-- /breadcrumb -->
 
-        <div class="container">
+        <div class="container" id="content_list_options" style="display: block">
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box">
                     <div class="col-12 rounded bg-info p-3 text-center">
                         <img src="{{ asset('assets/img/contabilidad/compras.png') }}" width="100px" alt=""
                             class="img-cards">
-                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Compras y Gastos</a></h3>
+                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Compras y
+                                Gastos</a></h3>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box">
@@ -163,21 +164,24 @@
                     <div class="col-12 rounded bg-info p-3 text-center">
                         <img src="{{ asset('assets/img/contabilidad/contabilidad.png') }}" width="100px" alt=""
                             class="img-cards">
-                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Contabilidad</a></h3>
+                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);"
+                                style="color: white">Contabilidad</a></h3>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box">
                     <div class="col-12 rounded bg-info p-3 text-center">
                         <img src="{{ asset('assets/img/contabilidad/inventario.png') }}" width="100px" alt=""
                             class="img-cards">
-                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Productos y Servicios</a></h3>
+                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Productos y
+                                Servicios</a></h3>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box">
                     <div class="col-12 rounded bg-info p-3 text-center">
                         <img src="{{ asset('assets/img/contabilidad/habilitacion.png') }}" width="100px" alt=""
                             class="img-cards">
-                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Habilitación Electrónica</a></h3>
+                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Habilitación
+                                Electrónica</a></h3>
                     </div>
                 </div>
             </div>
@@ -186,21 +190,63 @@
                     <div class="col-12 rounded bg-info p-3 text-center">
                         <img src="{{ asset('assets/img/contabilidad/indicadores.png') }}" width="100px" alt=""
                             class="img-cards">
-                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Indicadores</a></h3>
+                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Indicadores</a>
+                        </h3>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box">
                     <div class="col-12 rounded bg-info p-3 text-center">
                         <img src="{{ asset('assets/img/contabilidad/reportes.png') }}" width="100px" alt=""
                             class="img-cards">
-                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Reportes</a></h3>
+                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Reportes</a>
+                        </h3>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box">
                     <div class="col-12 rounded bg-info p-3 text-center">
                         <img src="{{ asset('assets/img/contabilidad/reportes_nomina.png') }}" width="100px" alt=""
                             class="img-cards">
-                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Reportes de Nómina</a></h3>
+                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Reportes de
+                                Nómina</a></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content_list_compras" style="display: none">
+            <div class="card">
+                <div class="card-header d-flex-header-table" style="border-radius: 4px">
+                    <div class="div-1-tables-header">
+                        <ul class="nav nav-pills" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#home"
+                                    type="button" role="tab" aria-controls="home"
+                                    aria-selected="true">Home</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#profile"
+                                    type="button" role="tab" aria-controls="profile"
+                                    aria-selected="false">Profile</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="contact-tab" data-toggle="tab" data-target="#contact"
+                                    type="button" role="tab" aria-controls="contact"
+                                    aria-selected="false">Contact</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="div-2-tables-header">
+                        <button class="btn btn-primary" id="back">Regresar</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel"
+                            aria-labelledby="home-tab">...</div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...
+                        </div>
+                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...
+                        </div>
                     </div>
                 </div>
             </div>
@@ -210,6 +256,16 @@
 
 @section('scripts')
     <script>
-        $(document).ready(function() {});
+        $(document).ready(function() {
+            $('.box').click(function() {
+                $('#content_list_options').hide();
+                $('#content_list_compras').show();
+            });
+
+            $('#back').click(function() {
+                $('#content_list_options').show();
+                $('#content_list_compras').hide();
+            });
+        });
     </script>
 @endsection
