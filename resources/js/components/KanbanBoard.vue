@@ -193,22 +193,22 @@
                                                             </div>
                                                             <div class="flex-1 min-w-0">
                                                                 <p
-                                                                    class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                                                    class="text-sm font-medium text-gray-900 dark:text-white">
                                                                     {{ avance.empleado }}
                                                                 </p>
                                                                 <p v-if="avance.avance"
-                                                                    class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                                    class="text-sm text-gray-500 dark:text-gray-400">
                                                                     {{ avance.avance }}
                                                                 </p>
                                                                 <p v-if="avance.file"
-                                                                    class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                                    class="text-sm text-gray-500 dark:text-gray-400">
                                                                     <a :href="'/images/anexos_tasks_projects/' + avance.file"
                                                                         target="_blank" class="text-blue-700">
                                                                         {{ avance.name_file }}
                                                                     </a>
                                                                 </p>
                                                                 <p
-                                                                    class="text-sm font-medium text-gray-500 truncate dark:text-gray-400">
+                                                                    class="text-sm font-medium text-gray-500 dark:text-gray-400">
                                                                     {{ avance.fecha }}
                                                                 </p>
                                                             </div>

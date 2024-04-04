@@ -3039,11 +3039,11 @@ var render = function render() {
     })]), _vm._v(" "), _c("div", {
       staticClass: "flex-1 min-w-0"
     }, [_c("p", {
-      staticClass: "text-sm font-medium text-gray-900 truncate dark:text-white"
+      staticClass: "text-sm font-medium text-gray-900 dark:text-white"
     }, [_vm._v("\n                                                                " + _vm._s(avance.empleado) + "\n                                                            ")]), _vm._v(" "), avance.avance ? _c("p", {
-      staticClass: "text-sm text-gray-500 truncate dark:text-gray-400"
+      staticClass: "text-sm text-gray-500 dark:text-gray-400"
     }, [_vm._v("\n                                                                " + _vm._s(avance.avance) + "\n                                                            ")]) : _vm._e(), _vm._v(" "), avance.file ? _c("p", {
-      staticClass: "text-sm text-gray-500 truncate dark:text-gray-400"
+      staticClass: "text-sm text-gray-500 dark:text-gray-400"
     }, [_c("a", {
       staticClass: "text-blue-700",
       attrs: {
