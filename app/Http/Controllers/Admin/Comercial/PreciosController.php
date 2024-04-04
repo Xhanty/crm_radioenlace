@@ -24,12 +24,14 @@ class PreciosController extends Controller
                 ->select('precio_proveedores.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion')
                 ->join('proveedores', 'proveedores.id', '=', 'precio_proveedores.proveedor_id')
                 ->where('precio_proveedores.status', 0)
+                ->orderBy('precio_proveedores.created_at', 'desc')
                 ->get();
 
             $aprobados = DB::table('precio_proveedores')
                 ->select('precio_proveedores.*', 'proveedores.razon_social', 'proveedores.nit', 'proveedores.codigo_verificacion')
                 ->join('proveedores', 'proveedores.id', '=', 'precio_proveedores.proveedor_id')
                 ->where('precio_proveedores.status', 1)
+                ->orderBy('precio_proveedores.created_at', 'desc')
                 ->get();
 
             $proveedores = DB::table('proveedores')

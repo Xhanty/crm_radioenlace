@@ -91,7 +91,7 @@ class CotizacionController extends Controller
                 ->where('cotizaciones.status', 1)
                 ->whereNull('detalle_cotizaciones.titulo')
                 ->whereIn('cotizaciones.created_by', $usuarios_cotizaciones)
-                ->orderBy('cotizaciones.id', 'desc')
+                ->orderBy('cotizaciones.aprobado', 'asc')
                 ->groupBy('cotizaciones.id', 'cotizaciones.code', 'cotizaciones.created_at', 'cotizaciones.descripcion', 'cotizaciones.status', 'cotizaciones.fecha_revision', 'cotizaciones.aprobado', 'cliente.razon_social', 'empleados.nombre')
                 ->orderBy('cotizaciones.id', 'desc')
                 ->get();

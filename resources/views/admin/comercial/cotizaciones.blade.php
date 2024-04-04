@@ -141,10 +141,10 @@
                                                     <option value="0"
                                                         {{ $cotizacion->aprobado == 0 ? 'selected' : '' }}>Pendiente
                                                     </option>
-                                                    <option value="1"
-                                                        {{ $cotizacion->aprobado == 1 ? 'selected' : '' }}>Sí</option>
                                                     <option value="2"
                                                         {{ $cotizacion->aprobado == 2 ? 'selected' : '' }}>No</option>
+                                                    <option value="1" disabled
+                                                        {{ $cotizacion->aprobado == 1 ? 'selected' : '' }}>Sí</option>
                                                 </select>
                                             </td>
                                             <td class="text-center">
