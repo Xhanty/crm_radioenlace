@@ -315,7 +315,7 @@ class PreciosController extends Controller
             
 
             if ($file != null && $file != 'null' && $file != 'undefined') {
-                $name = time() . $file->getClientOriginalName();
+                $name = time() . '.' . $file->getClientOriginalExtension();
                 $file->move('images/precios_proveedores/', $name);
             }
 
