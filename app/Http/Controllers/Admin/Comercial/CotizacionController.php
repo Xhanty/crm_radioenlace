@@ -64,11 +64,42 @@ class CotizacionController extends Controller
                 ->join('detalle_cotizaciones', 'cotizaciones.id', '=', 'detalle_cotizaciones.cotizacion_id')
                 ->join('cliente', 'cotizaciones.cliente_id', '=', 'cliente.id')
                 ->join('empleados', 'cotizaciones.created_by', '=', 'empleados.id')
-                ->where('cotizaciones.status', 0)
+                ->where('cotizaciones.aprobado', 0)
                 ->whereIn('cotizaciones.created_by', $usuarios_cotizaciones)
                 ->whereNull('detalle_cotizaciones.titulo')
+                ->whereNotExists(function ($query) {
+                    $query->select(DB::raw(1))
+                        ->from('history_cotizaciones')
+                        ->whereRaw('history_cotizaciones.cotizacion_id = cotizaciones.id')
+                        ->where('history_cotizaciones.tipo', 3);
+                })
                 ->orderBy('cotizaciones.id', 'desc')
                 ->groupBy('cotizaciones.id', 'cotizaciones.code', 'cotizaciones.created_at', 'cotizaciones.descripcion', 'cotizaciones.status', 'cotizaciones.fecha_revision', 'cliente.razon_social', 'empleados.nombre')
+                ->orderBy('cotizaciones.id', 'desc')
+                ->get();
+
+            $cotizaciones_para_aprobar = DB::table('cotizaciones')
+                ->select(
+                    'cotizaciones.id',
+                    'cotizaciones.code',
+                    'cotizaciones.created_at',
+                    'cotizaciones.descripcion',
+                    'cotizaciones.status',
+                    'cotizaciones.aprobado',
+                    'cotizaciones.fecha_revision',
+                    'cliente.razon_social',
+                    'empleados.nombre as creador',
+                    DB::raw('COUNT(detalle_cotizaciones.id) as productos')
+                )
+                ->join('detalle_cotizaciones', 'cotizaciones.id', '=', 'detalle_cotizaciones.cotizacion_id')
+                ->join('cliente', 'cotizaciones.cliente_id', '=', 'cliente.id')
+                ->join('empleados', 'cotizaciones.created_by', '=', 'empleados.id')
+                ->join("history_cotizaciones", "cotizaciones.id", "=", "history_cotizaciones.cotizacion_id")
+                ->where('cotizaciones.aprobado', 0)
+                ->where('history_cotizaciones.tipo', 3)
+                ->whereNull('detalle_cotizaciones.titulo')
+                ->orderBy('cotizaciones.aprobado', 'asc')
+                ->groupBy('cotizaciones.id', 'cotizaciones.code', 'cotizaciones.created_at', 'cotizaciones.descripcion', 'cotizaciones.status', 'cotizaciones.fecha_revision', 'cotizaciones.aprobado', 'cliente.razon_social', 'empleados.nombre')
                 ->orderBy('cotizaciones.id', 'desc')
                 ->get();
 
@@ -88,7 +119,7 @@ class CotizacionController extends Controller
                 ->join('detalle_cotizaciones', 'cotizaciones.id', '=', 'detalle_cotizaciones.cotizacion_id')
                 ->join('cliente', 'cotizaciones.cliente_id', '=', 'cliente.id')
                 ->join('empleados', 'cotizaciones.created_by', '=', 'empleados.id')
-                ->where('cotizaciones.status', 1)
+                ->where('cotizaciones.aprobado', '>', 0)
                 ->whereNull('detalle_cotizaciones.titulo')
                 ->whereIn('cotizaciones.created_by', $usuarios_cotizaciones)
                 ->orderBy('cotizaciones.aprobado', 'asc')
@@ -96,7 +127,7 @@ class CotizacionController extends Controller
                 ->orderBy('cotizaciones.id', 'desc')
                 ->get();
 
-            return view('admin.comercial.cotizaciones', compact('clientes', 'productos', 'cotizaciones_pendientes', 'cotizaciones_aprobadas'));
+            return view('admin.comercial.cotizaciones', compact('clientes', 'productos', 'cotizaciones_pendientes', 'cotizaciones_aprobadas', 'cotizaciones_para_aprobar'));
         } catch (Exception $ex) {
             return view('errors.500');
             return $ex->getMessage();

@@ -16,7 +16,7 @@
         </div>
         <!-- /breadcrumb -->
 
-        <!-- Row -->
+        <!-- Pendientes -->
         <div class="row row-sm">
             <div class="col-lg-12">
                 <div class="card">
@@ -54,21 +54,28 @@
                                             <td>{{ $cotizacion->productos }}</td>
                                             <td class="text-center">
                                                 <!--<a href="javascript:void(0);" data-id="{{ $cotizacion->id }}"
-                                                    title="Ver Detalles" class="btn btn-primary btn-sm btnView"><i
-                                                        class="fa fa-eye"></i></a>-->
+                                                                    title="Ver Detalles" class="btn btn-primary btn-sm btnView"><i
+                                                                        class="fa fa-eye"></i></a>-->
                                                 <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}"
                                                     title="Modificar" class="btn btn-warning btn-sm btnEdit"><i
                                                         class="fa fa-edit"></i></a>
-                                                <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}"
-                                                    title="Completar" class="btn btn-success btn-sm btnCompletar"><i
-                                                        class="fa fa-check"></i></a>
+                                                <!--<a href="javascript:void(0);" data-id="{{ $cotizacion->id }}"
+                                                            title="Completar" class="btn btn-success btn-sm btnCompletar"><i
+                                                                class="fa fa-check"></i></a>-->
                                                 <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}"
                                                     title="Eliminar" class="btn btn-danger btn-sm btnEliminar"><i
                                                         class="fa fa-trash"></i></a>
+                                                <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}"
+                                                    title="Enviar por correo" class="btn btn-success btn-sm btnEmail"><i
+                                                        class="fa fa-envelope"></i></a>
                                                 <a target="_BLANK"
                                                     href="{{ route('cotizaciones_print') }}?token={{ $cotizacion->id }}"
                                                     title="Ver o Imprimir" class="btn btn-primary btn-sm btnPrint"><i
                                                         class="fa fa-print"></i></a>
+                                                <a target="_BLANK"
+                                                    href="{{ route('history_cotizaciones') }}?token={{ $cotizacion->id }}"
+                                                    title="Avances y/o Anexos" class="btn btn-success btn-sm btnHistory"><i
+                                                        class="fa fa-book"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -79,9 +86,87 @@
                 </div>
             </div>
         </div>
-        <!-- End Row -->
 
-        <!-- Row -->
+        <!-- Pendientes de aprobar -->
+        <div class="row row-sm">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header d-flex-header-table bg-info" style="border-radius: 4px">
+                        <div class="div-1-tables-header">
+                            <h3 class="card-title mt-2">Cotizaciones Pendientes de Aprobar</h3>
+                        </div>
+                        <div class="div-2-tables-header">
+                            <!--<button class="btn btn-primary" data-bs-target="#modalAdd" data-bs-toggle="modal"
+                                        data-bs-effect="effect-scale">Crear Cotización</button>-->
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table border-top-0 table-bordered text-nowrap border-bottom basic-datatable-t">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Creador</th>
+                                        <th>Cliente</th>
+                                        <th style="width: 37%">Descripción</th>
+                                        <th>Fecha</th>
+                                        <th>Cant.<br>Productos</th>
+                                        <th class="text-center">¿Aprobada?</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($cotizaciones_para_aprobar as $cotizacion)
+                                        <tr>
+                                            <td>{{ $cotizacion->code }}</td>
+                                            <td>{{ $cotizacion->creador }}</td>
+                                            <td>{{ $cotizacion->razon_social }}</td>
+                                            <td>{{ $cotizacion->descripcion }}</td>
+                                            <td>{{ date('d-m-Y g:i A', strtotime($cotizacion->created_at)) }}</td>
+                                            <td>{{ $cotizacion->productos }}</td>
+                                            <td class="text-center">
+                                                <select class="form-control aprobado_select"
+                                                    data-id="{{ $cotizacion->id }}">
+                                                    <option value="0"
+                                                        {{ $cotizacion->aprobado == 0 ? 'selected' : '' }}>Pendiente
+                                                    </option>
+                                                    <option value="2"
+                                                        {{ $cotizacion->aprobado == 2 ? 'selected' : '' }}>No</option>
+                                                    <option value="1"
+                                                        {{ $cotizacion->aprobado == 1 ? 'selected' : '' }}>Sí</option>
+                                                </select>
+                                            </td>
+                                            <td class="text-center">
+                                                <!--<a href="javascript:void(0);" data-id="{{ $cotizacion->id }}"
+                                                                    title="Ver Detalles" class="btn btn-primary btn-sm btnView"><i
+                                                                        class="fa fa-eye"></i></a>-->
+                                                <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}"
+                                                    title="Eliminar" class="btn btn-danger btn-sm btnEliminar"><i
+                                                        class="fa fa-trash"></i></a>
+                                                <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}"
+                                                    title="Enviar por correo" class="btn btn-success btn-sm btnEmail"><i
+                                                        class="fa fa-envelope"></i></a>
+                                                <a target="_BLANK"
+                                                    href="{{ route('cotizaciones_print') }}?token={{ $cotizacion->id }}"
+                                                    title="Ver o Imprimir" class="btn btn-primary btn-sm btnPrint"><i
+                                                        class="fa fa-print"></i></a>
+                                                <a target="_BLANK"
+                                                    href="{{ route('history_cotizaciones') }}?token={{ $cotizacion->id }}"
+                                                    title="Avances y/o Anexos"
+                                                    class="btn btn-success btn-sm btnHistory"><i
+                                                        class="fa fa-book"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Completadas -->
         <div class="row row-sm">
             <div class="col-lg-12">
                 <div class="card">
@@ -115,7 +200,7 @@
                                             $aprobado = $cotizacion->aprobado;
                                             $color = '';
                                             $color_fecha = '';
-                                            
+
                                             if ($aprobado == 0) {
                                                 $color = 'rgb(255 193 7 / 30%);';
                                             } elseif ($aprobado == 1) {
@@ -123,7 +208,7 @@
                                             } elseif ($aprobado == 2) {
                                                 $color = 'rgb(245 60 91 / 30%);';
                                             }
-                                            
+
                                             if ($cotizacion->fecha_revision) {
                                                 $color_fecha = 'rgb(245 60 91 / 30%);';
                                             }
@@ -136,14 +221,13 @@
                                             <td>{{ date('d-m-Y', strtotime($cotizacion->created_at)) }}</td>
                                             <td>{{ $cotizacion->productos }}</td>
                                             <td class="text-center">
-                                                <select class="form-select aprobado_select"
+                                                <select class="form-control aprobado_select"
                                                     data-id="{{ $cotizacion->id }}">
                                                     <option value="0"
-                                                        {{ $cotizacion->aprobado == 0 ? 'selected' : '' }}>Pendiente
-                                                    </option>
+                                                        {{ $cotizacion->aprobado == 0 ? 'selected' : '' }}>Pendiente</option>
                                                     <option value="2"
                                                         {{ $cotizacion->aprobado == 2 ? 'selected' : '' }}>No</option>
-                                                    <option value="1" disabled
+                                                    <option value="1"
                                                         {{ $cotizacion->aprobado == 1 ? 'selected' : '' }}>Sí</option>
                                                 </select>
                                             </td>
@@ -154,8 +238,8 @@
                                                     class="form-control mb-2 date_revision text-center"
                                                     value="{{ $cotizacion->fecha_revision }}">
                                                 <!--<a href="javascript:void(0);" data-id="{{ $cotizacion->id }}"
-                                                    title="Ver Detalles" class="btn btn-primary btn-sm btnView"><i
-                                                        class="fa fa-eye"></i></a>-->
+                                                                    title="Ver Detalles" class="btn btn-primary btn-sm btnView"><i
+                                                                        class="fa fa-eye"></i></a>-->
                                                 <a href="javascript:void(0);" data-id="{{ $cotizacion->id }}"
                                                     title="Modificar" class="btn btn-warning btn-sm btnEdit"><i
                                                         class="fa fa-edit"></i></a>
@@ -181,7 +265,6 @@
                 </div>
             </div>
         </div>
-        <!-- End Row -->
 
         <!-- Modal Add -->
         <div class="modal  fade" id="modalAdd">
@@ -609,7 +692,8 @@
                         <div class="row row-sm">
                             <label for="">Fecha recordatorio</label>
                             <div class="col-lg">
-                                <input class="form-control" value="{{ $fecha_recordatorio }}" id="fecha_email_recordatorio" type="date">
+                                <input class="form-control" value="{{ $fecha_recordatorio }}"
+                                    id="fecha_email_recordatorio" type="date">
                             </div>
                         </div>
                         <br>
