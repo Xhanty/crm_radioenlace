@@ -131,7 +131,7 @@
         <!-- main-sidebar -->
         <div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
         <div class="sticky">
-            <aside class="app-sidebar sidebar-scroll">
+            <aside class="app-sidebar sidebar-scroll" style="overflow-y: scroll !important;">
                 <div class="main-sidebar-header active">
                     <a class="desktop-logo logo-light active" href="javascript:void(0)"><img
                             src="{{ asset('assets/img/brand/logo.png') }}" class="main-logo" alt="logo"></a>
