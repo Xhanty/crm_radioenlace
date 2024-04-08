@@ -14,6 +14,12 @@
 
     body {
         font-family: 'Poppins', sans-serif;
+        background-image: url("https://crm.radioenlacesas.com/logo-re.png");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center center;
+        background-size: 60%;
+        opacity: 0.08;
     }
 
     th {
@@ -113,16 +119,14 @@
             <thead>
                 <tr>
                     <th colspan="2" style="text-align: center;">
-                        <h3>Asistentes</h3>
+                        <h3>Observaciones y/o Detalles</h3>
                     </th>
                 </tr>
-                @foreach ($asistentes as $key => $item)
-                    <tr>
-                        <th colspan="2" style="text-align: center; border-top: 0">
-                            <p style="font-weight: 400">{{ $item->nombre }}</p>
-                        </th>
-                    </tr>
-                @endforeach
+                <tr>
+                    <th colspan="2" style="text-align: center; border-top: 0; padding: 10px">
+                        <p style="font-weight: 400; text-align: justify">{{ $acta->observaciones }}</p>
+                    </th>
+                </tr>
             </thead>
         </table>
 
@@ -135,17 +139,18 @@
                 </tr>
                 @foreach ($detalle as $key => $item)
                     <tr>
-                        <th colspan="2" style="text-align: center; border-top: 0; padding: 10px">
+                        <th style="width: 50%; border-top: 0; padding: 10px;">
                             <p style="font-weight: 400; text-align: justify">{{ $item->compromiso }}</p>
-                            <br>
-                            <div style="display: flex; justify-content: flex-end">
+                        </th>
+                        <th style="width: 50%; border-top: 0; padding: 10px;">
+                            <div style="display: flex; justify-content: flex-end;">
                                 <strong>{{ $item->nombre_empleado }}</strong>
-                                <strong> - {{ date('d/m/Y', strtotime($item->fecha)) }}</strong>
+                                <br>
+                                <strong>{{ date('d/m/Y', strtotime($item->fecha)) }}</strong>
                             </div>
                         </th>
                     </tr>
                 @endforeach
-
             </thead>
         </table>
 
@@ -153,14 +158,20 @@
             <thead>
                 <tr>
                     <th colspan="2" style="text-align: center;">
-                        <h3>Observaciones</h3>
+                        <h3>Asistentes</h3>
                     </th>
                 </tr>
-                <tr>
-                    <th colspan="2" style="text-align: center; border-top: 0; padding: 10px">
-                        <p style="font-weight: 400; text-align: justify">{{ $acta->observaciones }}</p>
-                    </th>
-                </tr>
+                @foreach ($asistentes as $key => $item)
+                    <tr>
+                        <th style="width: 50%; border-top: 0; padding: 10px;">
+                            <p style="font-weight: 400">{{ $item->nombre }}</p>
+                        </th>
+                        <th style="width: 50%; border-top: 0; padding: 10px;">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Miguel_D%C3%ADaz-Canel_firma.png"
+                                width="40px" alt="">
+                        </th>
+                    </tr>
+                @endforeach
             </thead>
         </table>
     </body>
