@@ -283,9 +283,10 @@ class VehiculosController extends Controller
         try {
             $vehiculo = $request->id;
 
-            $data = DB::table("checklist")->where('id_vehiculo', $vehiculo)
-                ->select('checklist.*', 'empleados.nombre as creador')
-                ->join('empleados', 'checklist.id_usuario', '=', 'empleados.id')
+            $data = DB::table("checklist_vehiculos")->where('checklist_vehiculos.vehiculo_id', $vehiculo)
+                ->where('checklist_vehiculos.tipo', 2)
+                ->select('checklist_vehiculos.*', 'empleados.nombre as creador')
+                ->join('empleados', 'checklist_vehiculos.created_by', '=', 'empleados.id')
                 ->get();
             return response()->json(['gruas' => $data]);
         } catch (Exception $ex) {
@@ -299,9 +300,10 @@ class VehiculosController extends Controller
         try {
             $vehiculo = $request->id;
 
-            $data = DB::table("checklist2")->where('id_vehiculo', $vehiculo)
-                ->select('checklist2.*', 'empleados.nombre as creador')
-                ->join('empleados', 'checklist2.id_usuario', '=', 'empleados.id')
+            $data = DB::table("checklist_vehiculos")->where('checklist_vehiculos.vehiculo_id', $vehiculo)
+                ->where('checklist_vehiculos.tipo', 0)
+                ->select('checklist_vehiculos.*', 'empleados.nombre as creador')
+                ->join('empleados', 'checklist_vehiculos.created_by', '=', 'empleados.id')
                 ->get();
             return response()->json(['gruas' => $data]);
         } catch (Exception $ex) {
@@ -315,9 +317,10 @@ class VehiculosController extends Controller
         try {
             $vehiculo = $request->id;
 
-            $data = DB::table("inspeccion")->where('id_vehiculo', $vehiculo)
-                ->select('inspeccion.*', 'empleados.nombre as creador')
-                ->join('empleados', 'inspeccion.id_usuario', '=', 'empleados.id')
+            $data = DB::table("checklist_vehiculos")->where('checklist_vehiculos.vehiculo_id', $vehiculo)
+                ->where('checklist_vehiculos.tipo', 1)
+                ->select('checklist_vehiculos.*', 'empleados.nombre as creador')
+                ->join('empleados', 'checklist_vehiculos.created_by', '=', 'empleados.id')
                 ->get();
             return response()->json(['gruas' => $data]);
         } catch (Exception $ex) {
@@ -330,12 +333,13 @@ class VehiculosController extends Controller
     {
         try {
             DB::beginTransaction();
-            DB::table("checklist")->where('id', $request->id)->delete();
+            DB::table("checklist_vehiculos")->where('id', $request->id)->delete();
             DB::commit();
 
-            $data = DB::table("checklist")->where('id_vehiculo', $request->id_vehiculo)
-                ->select('checklist.*', 'empleados.nombre as creador')
-                ->join('empleados', 'checklist.id_usuario', '=', 'empleados.id')
+            $data = DB::table("checklist_vehiculos")->where('checklist_vehiculos.vehiculo_id', $request->id_vehiculo)
+                ->where('checklist_vehiculos.tipo', 2)
+                ->select('checklist_vehiculos.*', 'empleados.nombre as creador')
+                ->join('empleados', 'checklist_vehiculos.created_by', '=', 'empleados.id')
                 ->get();
             return response()->json(['info' => 1, 'gruas' => $data, 'success' => 'Checklist eliminado correctamente.']);
         } catch (Exception $ex) {
@@ -346,12 +350,13 @@ class VehiculosController extends Controller
     {
         try {
             DB::beginTransaction();
-            DB::table("checklist2")->where('id', $request->id)->delete();
+            DB::table("checklist_vehiculos")->where('id', $request->id)->delete();
             DB::commit();
 
-            $data = DB::table("checklist2")->where('id_vehiculo', $request->id_vehiculo)
-                ->select('checklist2.*', 'empleados.nombre as creador')
-                ->join('empleados', 'checklist2.id_usuario', '=', 'empleados.id')
+            $data = DB::table("checklist_vehiculos")->where('checklist_vehiculos.vehiculo_id', $request->id_vehiculo)
+                ->where('checklist_vehiculos.tipo', 0)
+                ->select('checklist_vehiculos.*', 'empleados.nombre as creador')
+                ->join('empleados', 'checklist_vehiculos.created_by', '=', 'empleados.id')
                 ->get();
             return response()->json(['info' => 1, 'gruas' => $data, 'success' => 'Checklist eliminado correctamente.']);
         } catch (Exception $ex) {
@@ -362,12 +367,13 @@ class VehiculosController extends Controller
     {
         try {
             DB::beginTransaction();
-            DB::table("inspeccion")->where('id', $request->id)->delete();
+            DB::table("checklist_vehiculos")->where('id', $request->id)->delete();
             DB::commit();
 
-            $data = DB::table("inspeccion")->where('id_vehiculo', $request->id_vehiculo)
-                ->select('inspeccion.*', 'empleados.nombre as creador')
-                ->join('empleados', 'inspeccion.id_usuario', '=', 'empleados.id')
+            $data = DB::table("checklist_vehiculos")->where('checklist_vehiculos.vehiculo_id', $request->id_vehiculo)
+                ->where('checklist_vehiculos.tipo', 1)
+                ->select('checklist_vehiculos.*', 'empleados.nombre as creador')
+                ->join('empleados', 'checklist_vehiculos.created_by', '=', 'empleados.id')
                 ->get();
             return response()->json(['info' => 1, 'gruas' => $data, 'success' => 'Inspeccion eliminada correctamente.']);
         } catch (Exception $ex) {

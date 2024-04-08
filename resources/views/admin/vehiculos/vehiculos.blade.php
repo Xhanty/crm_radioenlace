@@ -240,93 +240,11 @@
         <!-- row closed -->
 
         <!-- row Técnicos -->
-        <div class="row row-sm" id="div_content_tecnicos">
-            <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
-                <!--div-->
-                <div class="card">
-                    <div class="card-header d-flex-header-table">
-                        <div class="div-1-tables-header">
-                            <h3 class="card-title mt-2">CheckList Técnicos</h3>
-                        </div>
-                        <div class="div-2-tables-header">
-                            <button class="btn btn-primary" id="back_table_tecnicos">&times;</button>
-                        </div>
-                    </div>
-                    <div class="card-body" style="margin-top: -18px;">
-                        <div class="row row-sm">
-                            <div class="col-lg">
-                                <label for="">¿Dolor de garganta? *</label>
-                                <input type="text" class="form-control" id="sede_add" placeholder="Ingrese la sede">
-                            </div>
-                        </div>
-                        <br>
-                        <div class="text-center">
-                            <button class="btn ripple btn-primary" id="btnAgregarTecnico" type="button">Agregar
-                                CheckList Técnico</button>
-                        </div>
-
-                        <br>
-                        <table class="table border-top-0 table-bordered text-nowrap border-bottom"
-                            id="table_tecnico_vehiculos">
-                            <thead>
-                                <tr>
-                                    <th class="wd-15p border-bottom-0">Creado Por</th>
-                                    <th class="wd-20p border-bottom-0">Fecha Creación</th>
-                                    <th class="wd-10p border-bottom-0">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('admin.vehiculos.tecnicos')
         <!-- row closed -->
 
         <!-- row Inspección -->
-        <div class="row row-sm" id="div_content_inspeccion">
-            <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
-                <!--div-->
-                <div class="card">
-                    <div class="card-header d-flex-header-table">
-                        <div class="div-1-tables-header">
-                            <h3 class="card-title mt-2">Inspección</h3>
-                        </div>
-                        <div class="div-2-tables-header">
-                            <button class="btn btn-primary" id="back_table_inspeccion">&times;</button>
-                        </div>
-                    </div>
-                    <div class="card-body" style="margin-top: -18px;">
-                        <div class="row row-sm">
-                            <div class="col-lg">
-                                <label for="">¿Dolor de garganta? *</label>
-                                <input type="text" class="form-control" id="sede_add" placeholder="Ingrese la sede">
-                            </div>
-                        </div>
-                        <br>
-                        <div class="text-center">
-                            <button class="btn ripple btn-primary" id="btnAgregarInspeccion" type="button">Agregar
-                                Inspección</button>
-                        </div>
-
-                        <br>
-                        <table class="table border-top-0 table-bordered text-nowrap border-bottom"
-                            id="table_inspeccion_vehiculos">
-                            <thead>
-                                <tr>
-                                    <th class="wd-15p border-bottom-0">Creado Por</th>
-                                    <th class="wd-20p border-bottom-0">Fecha Creación</th>
-                                    <th class="wd-10p border-bottom-0">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('admin.vehiculos.completo')
         <!-- row closed -->
     </div>
 
