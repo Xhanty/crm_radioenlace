@@ -291,7 +291,7 @@
                                         @endif
                                     </ul>
                                 </li>
-                                <li class="sub-slide">
+                                <!--<li class="sub-slide">
                                     <a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span
                                             class="sub-side-menu__label">Proyectos</span><i
                                             class="sub-angle fe fe-chevron-down"></i></a>
@@ -299,12 +299,12 @@
                                         <li><a class="sub-side-menu__item"
                                                 href="{{ route('asignaciones') }}">Asignaciones</a></li>
                                         @if (auth()->user()->hasPermissionTo('gestion_asignaciones_proyectos'))
-                                            <!--<li><a class="sub-side-menu__item"
+                                            <li><a class="sub-side-menu__item"
                                                     href="{{ route('gestionar_asignaciones') }}">Gestionar
-                                                    Asignaciones</a></li>-->
+                                                    Asignaciones</a></li>
                                         @endif
                                     </ul>
-                                </li>
+                                </li>-->
                             </ul>
                         </li>
 

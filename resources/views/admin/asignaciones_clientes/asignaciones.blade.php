@@ -68,6 +68,51 @@
                         </div>
                         <!-- /col -->
                     @endforeach
+
+                    @foreach ($asignaciones_proyectos_pendientes as $value)
+                        <!-- col -->
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card mg-b-20">
+                                <div class="card-body p-0">
+                                    <div class="todo-widget-header d-flex pb-2 pd-20 bg-warning"
+                                        style="border-radius: 4px;">
+                                        <strong>{{ $value->codigo }} ({{ $value->proyecto }})</strong>
+                                        <div class="ms-auto">
+                                            <div class="" style="cursor: pointer;">
+                                                <a href="{{ route('tasks.index') . '/?project=' . $value->project_id . '&task=' . $value->task_id  }}" target="_BLANK" class="p-2 text-muted">
+                                                    <i class="fas fa-eye" style="color: #000"></i>
+                                                </a>
+                                                <!--<a class="p-2 text-muted" data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                        class="fas fa-ellipsis-v" style="color: #fff"></i></a>
+                                                <div class="dropdown-menu tx-13 dropleft">
+                                                    <a class="dropdown-item btn_openAvances"
+                                                        data-asignacion="{{ $value->asignacion }}"
+                                                        data-idshow="{{ $value->id }}" href="javascript:void(0);">Agregar
+                                                        Avance</a>
+                                                </div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-3 border-top">
+                                        <span class="tx-12 text-muted">Asignación</span>
+                                        <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ $value->asignacion }}</h5>
+                                    </div>
+                                    <div class="p-3 border-top">
+                                        <span class="tx-12 text-muted">Asignada por</span>
+                                        <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ $value->nombre }}</h5>
+                                    </div>
+                                    <div class="p-3 border-top">
+                                        <span class="tx-12 text-muted">Fecha Inicio - Fecha Fin</span>
+                                        @php
+                                            $fecha = date_create($value->fecha);
+                                        @endphp
+                                        <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ date_format($fecha, "d-m-Y") }} - {{ $value->fecha_completada }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /col -->
+                    @endforeach
                 </div>
 
                 <div class="row row-sm d-none" id="div_asignaciones_completadas">
@@ -113,6 +158,52 @@
                                         @endphp
                                         <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ date_format($fecha, 'd-m-Y') }} /
                                             {{ date_format($fecha2, 'd-m-Y') }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /col -->
+                    @endforeach
+
+                    @foreach ($asignaciones_proyectos_completadas as $value)
+                        <!-- col -->
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card mg-b-20">
+                                <div class="card-body p-0">
+                                    <div class="todo-widget-header d-flex pb-2 pd-20 bg-success"
+                                        style="border-radius: 4px;">
+                                        <strong>{{ $value->codigo }} ({{ $value->proyecto }})</strong>
+                                        <div class="ms-auto">
+                                            <div class="" style="cursor: pointer;">
+                                                <a href="{{ route('tasks.index') . '/?project=' . $value->project_id . '&task=' . $value->task_id  }}" target="_BLANK" class="p-2 text-muted">
+                                                    <i class="fas fa-eye" style="color: #000"></i>
+                                                </a>
+                                                <!--<a class="p-2 text-muted" data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                        class="fas fa-ellipsis-v" style="color: #fff"></i></a>
+                                                <div class="dropdown-menu tx-13 dropleft">
+                                                    <a class="dropdown-item btn_openAvances"
+                                                        data-asignacion="{{ $value->asignacion }}"
+                                                        data-idshow="{{ $value->id }}" href="javascript:void(0);">Agregar
+                                                        Avance</a>
+                                                </div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-3 border-top">
+                                        <span class="tx-12 text-muted">Asignación</span>
+                                        <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ $value->asignacion }}</h5>
+                                    </div>
+                                    <div class="p-3 border-top">
+                                        <span class="tx-12 text-muted">Asignada por</span>
+                                        <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ $value->nombre }}</h5>
+                                    </div>
+                                    <div class="p-3 border-top">
+                                        <span class="tx-12 text-muted">Fecha Inicio - Fecha Fin</span>
+                                        @php
+                                            $fecha = date_create($value->fecha);
+                                            $fecha2 = date_create($value->fecha_completada);
+                                        @endphp
+                                        <h5 class="tx-14 mb-0 mg-t-5 text-capitalize">{{ date_format($fecha, "d-m-Y") }} - {{ date_format($fecha2, "d-m-Y") }}</h5>
                                     </div>
                                 </div>
                             </div>

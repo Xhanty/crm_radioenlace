@@ -46,6 +46,7 @@ class AsignacionesController extends Controller
     public function asignaciones_clientes()
     {
         try {
+            // Asignaciones Generales
             $asignaciones_pendientes = DB::table("asignaciones")
                 ->join("empleados", "empleados.id", "=", "asignaciones.created_by")
                 ->join("cliente", "cliente.id", "=", "asignaciones.id_cliente")
@@ -77,7 +78,28 @@ class AsignacionesController extends Controller
                 ->where("asignaciones.id_empleado", session("user"))
                 ->orderBy("asignaciones.id", "DESC")
                 ->get();
-            return view('admin.asignaciones_clientes.asignaciones', compact('asignaciones_pendientes', 'asignaciones_completadas', 'clientes', 'asignaciones_revision'));
+
+            // Asignaciones de proyectos
+            $asignaciones_proyectos_pendientes = DB::table("asignaciones")
+                ->join("empleados", "empleados.id", "=", "asignaciones.created_by")
+                ->join("task_projects", "task_projects.code", "=", "asignaciones.codigo")
+                ->join("proyecto", "task_projects.project_id", "=", "proyecto.id")
+                ->select("asignaciones.*", "empleados.nombre", "task_projects.id AS task_id", "task_projects.project_id", "proyecto.nombre AS proyecto")
+                ->where("asignaciones.status", 0)
+                ->where("asignaciones.id_empleado", session("user"))
+                ->orderBy("asignaciones.id", "DESC")
+                ->get();
+
+            $asignaciones_proyectos_completadas = DB::table("asignaciones")
+                ->join("empleados", "empleados.id", "=", "asignaciones.created_by")
+                ->join("task_projects", "task_projects.code", "=", "asignaciones.codigo")
+                ->join("proyecto", "task_projects.project_id", "=", "proyecto.id")
+                ->select("asignaciones.*", "empleados.nombre", "task_projects.id AS task_id", "task_projects.project_id", "proyecto.nombre AS proyecto")
+                ->where("asignaciones.status", 1)
+                ->where("asignaciones.id_empleado", session("user"))
+                ->orderBy("asignaciones.id", "DESC")
+                ->get();
+            return view('admin.asignaciones_clientes.asignaciones', compact('asignaciones_pendientes', 'asignaciones_completadas', 'clientes', 'asignaciones_revision', 'asignaciones_proyectos_pendientes', 'asignaciones_proyectos_completadas'));
         } catch (Exception $ex) {
             return view('errors.500');
         }
