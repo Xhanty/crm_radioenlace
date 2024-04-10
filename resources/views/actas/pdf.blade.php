@@ -124,7 +124,7 @@
                 </tr>
                 <tr>
                     <th colspan="2" style="text-align: center; border-top: 0; padding: 10px">
-                        <p style="font-weight: 400; text-align: justify">{{ $acta->observaciones }}</p>
+                        <p style="font-weight: 400; text-align: justify">{!! nl2br($acta->observaciones) !!}</p>
                     </th>
                 </tr>
             </thead>
@@ -140,7 +140,7 @@
                 @foreach ($detalle as $key => $item)
                     <tr>
                         <th style="width: 50%; border-top: 0; padding: 10px;">
-                            <p style="font-weight: 400; text-align: justify">{{ $item->compromiso }}</p>
+                            <p style="font-weight: 400; text-align: justify">{!! nl2br($item->compromiso) !!}</p>
                         </th>
                         <th style="width: 50%; border-top: 0; padding: 10px;">
                             <div style="display: flex; justify-content: flex-end;">
