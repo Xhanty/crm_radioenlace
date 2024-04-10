@@ -73,7 +73,7 @@ class ProyectosController extends Controller
                         ->leftJoin("categorias_proyectos", "proyecto.id_categoria", "=", "categorias_proyectos.id")
                         ->leftJoin("empleados", "proyecto.created_by", "=", "empleados.id")
                         ->leftJoin("cliente", "proyecto.id_cliente", "=", "cliente.id")
-                        ->where('created_by', $id_user)
+                        ->where('proyecto.created_by', $id_user)
                         ->get();
 
                     foreach ($proyectos_creados as $proyecto) {
