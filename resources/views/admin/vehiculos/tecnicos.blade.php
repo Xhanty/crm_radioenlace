@@ -17,7 +17,7 @@
                     </div>
                     <div class="row general-content-check" style="margin-bottom: 12px">
                         <div class="col-lg-3 col-md-2 mt-2">
-                            <label class="ckbox"><input type="checkbox" class="general-tec general-tec-1"><span>Kit de
+                            <label class="ckbox"><input type="checkbox" id="general-tec" class="general-tec-1"><span>Kit de
                                     carretera</span></label>
                             <div class="mt-1 d-none">
                                 <input type="radio" name="general-tec-1" value="Bueno"> Bueno
@@ -26,39 +26,39 @@
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-2 mt-2">
-                            <label class="ckbox"><input type="checkbox" class="general-tec general-tec-2"><span>Caja de
+                            <label class="ckbox"><input type="checkbox" id="general-tec" class="general-tec-2"><span>Caja de
                                     herramientas</span></label>
                             <div class="mt-1 d-none">
                                 <input type="radio" name="general-tec-2" value="Bueno"> Bueno
-                                <input type="radio" name="general-tec-2" value="Bueno"> Regular
-                                <input type="radio" name="general-tec-2" value="Bueno"> Malo
+                                <input type="radio" name="general-tec-2" value="Regular"> Regular
+                                <input type="radio" name="general-tec-2" value="Malo"> Malo
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-2 mt-2">
                             <label class="ckbox"><input type="checkbox"
-                                    class="general-tec general-tec-3"><span>Linterna</span></label>
+                                    id="general-tec" class="general-tec-3"><span>Linterna</span></label>
                             <div class="mt-1 d-none">
                                 <input type="radio" name="general-tec-3" value="Bueno"> Bueno
-                                <input type="radio" name="general-tec-3" value="Bueno"> Regular
-                                <input type="radio" name="general-tec-3" value="Bueno"> Malo
+                                <input type="radio" name="general-tec-3" value="Regular"> Regular
+                                <input type="radio" name="general-tec-3" value="Malo"> Malo
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-2 mt-2">
                             <label class="ckbox"><input type="checkbox"
-                                    class="general-tec general-tec-4"><span>Extintor</span></label>
+                                    id="general-tec" class="general-tec-4"><span>Extintor</span></label>
                             <div class="mt-1 d-none">
                                 <input type="radio" name="general-tec-4" value="Bueno"> Bueno
-                                <input type="radio" name="general-tec-4" value="Bueno"> Regular
-                                <input type="radio" name="general-tec-4" value="Bueno"> Malo
+                                <input type="radio" name="general-tec-4" value="Regular"> Regular
+                                <input type="radio" name="general-tec-4" value="Malo"> Malo
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-2 mt-2">
-                            <label class="ckbox"><input type="checkbox" class="general-tec general-tec-5"><span>Llanta
+                            <label class="ckbox"><input type="checkbox" id="general-tec" class="general-tec-5"><span>Llanta
                                     de repuesto</span></label>
                             <div class="mt-1 d-none">
                                 <input type="radio" name="general-tec-5" value="Bueno"> Bueno
-                                <input type="radio" name="general-tec-5" value="Bueno"> Regular
-                                <input type="radio" name="general-tec-5" value="Bueno"> Malo
+                                <input type="radio" name="general-tec-5" value="Regular"> Regular
+                                <input type="radio" name="general-tec-5" value="Malo"> Malo
                             </div>
                         </div>
                     </div>
@@ -70,39 +70,39 @@
                     <div class="row general-content-check">
                         <div class="col-lg-3 col-md-2 mt-2">
                             <label class="ckbox"><input type="checkbox"
-                                    class="kit-tec kit-tec-1"><span>Kit de primeros
+                                    id="kit-tec" class="kit-tec-1"><span>Kit de primeros
                                     auxilios</span></label>
                             <div class="mt-1 d-none">
                                 <input type="radio" name="kit-tec-1" value="Bueno"> Bueno
-                                <input type="radio" name="kit-tec-1" value="Bueno"> Regular
-                                <input type="radio" name="kit-tec-1" value="Bueno"> Malo
+                                <input type="radio" name="kit-tec-1" value="Regular"> Regular
+                                <input type="radio" name="kit-tec-1" value="Malo"> Malo
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-2 mt-2">
                             <label class="ckbox"><input type="checkbox"
-                                    class="kit-tec kit-tec-2"><span>Repelente</span></label>
+                                    id="kit-tec" class="kit-tec-2"><span>Repelente</span></label>
                             <div class="mt-1 d-none">
                                 <input type="radio" name="kit-tec-2" value="Bueno"> Bueno
-                                <input type="radio" name="kit-tec-2" value="Bueno"> Regular
-                                <input type="radio" name="kit-tec-2" value="Bueno"> Malo
+                                <input type="radio" name="kit-tec-2" value="Regular"> Regular
+                                <input type="radio" name="kit-tec-2" value="Malo"> Malo
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-2 mt-2">
                             <label class="ckbox"><input type="checkbox"
-                                    class="kit-tec kit-tec-3"><span>Antisolar</span></label>
+                                    id="kit-tec" class="kit-tec-3"><span>Antisolar</span></label>
                             <div class="mt-1 d-none">
                                 <input type="radio" name="kit-tec-3" value="Bueno"> Bueno
-                                <input type="radio" name="kit-tec-3" value="Bueno"> Regular
-                                <input type="radio" name="kit-tec-3" value="Bueno"> Malo
+                                <input type="radio" name="kit-tec-3" value="Regular"> Regular
+                                <input type="radio" name="kit-tec-3" value="Malo"> Malo
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-2 mt-2">
                             <label class="ckbox"><input type="checkbox"
-                                    class="kit-tec kit-tec-4"><span>Papel Higienico</span></label>
+                                    id="kit-tec" class="kit-tec-4"><span>Papel Higienico</span></label>
                             <div class="mt-1 d-none">
                                 <input type="radio" name="kit-tec-4" value="Bueno"> Bueno
-                                <input type="radio" name="kit-tec-4" value="Bueno"> Regular
-                                <input type="radio" name="kit-tec-4" value="Bueno"> Malo
+                                <input type="radio" name="kit-tec-4" value="Regular"> Regular
+                                <input type="radio" name="kit-tec-4" value="Malo"> Malo
                             </div>
                         </div>
                     </div>
@@ -114,38 +114,38 @@
                     <div class="row general-content-check" style="margin-bottom: 12px">
                         <div class="col-lg-3 col-md-2 mt-2">
                             <label class="ckbox"><input type="checkbox"
-                                    class="elect-tec elect-tec-1"><span>Luces</span></label>
+                                    id="elect-tec" class="elect-tec-1"><span>Luces</span></label>
                             <div class="mt-1 d-none">
                                 <input type="radio" name="elect-tec-1" value="Bueno"> Bueno
-                                <input type="radio" name="elect-tec-1" value="Bueno"> Regular
-                                <input type="radio" name="elect-tec-1" value="Bueno"> Malo
+                                <input type="radio" name="elect-tec-1" value="Regular"> Regular
+                                <input type="radio" name="elect-tec-1" value="Malo"> Malo
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-2 mt-2">
                             <label class="ckbox"><input type="checkbox"
-                                    class="elect-tec elect-tec-2"><span>Radio de comunicacion</span></label>
+                                    id="elect-tec" class="elect-tec-2"><span>Radio de comunicacion</span></label>
                             <div class="mt-1 d-none">
                                 <input type="radio" name="elect-tec-2" value="Bueno"> Bueno
-                                <input type="radio" name="elect-tec-2" value="Bueno"> Regular
-                                <input type="radio" name="elect-tec-2" value="Bueno"> Malo
+                                <input type="radio" name="elect-tec-2" value="Regular"> Regular
+                                <input type="radio" name="elect-tec-2" value="Malo"> Malo
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-2 mt-2">
                             <label class="ckbox"><input type="checkbox"
-                                    class="elect-tec elect-tec-3"><span>Antena</span></label>
+                                    id="elect-tec" class="elect-tec-3"><span>Antena</span></label>
                             <div class="mt-1 d-none">
                                 <input type="radio" name="elect-tec-3" value="Bueno"> Bueno
-                                <input type="radio" name="elect-tec-3" value="Bueno"> Regular
-                                <input type="radio" name="elect-tec-3" value="Bueno"> Malo
+                                <input type="radio" name="elect-tec-3" value="Regular"> Regular
+                                <input type="radio" name="elect-tec-3" value="Malo"> Malo
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-2 mt-2">
                             <label class="ckbox"><input type="checkbox"
-                                    class="elect-tec elect-tec-4"><span>Microfono</span></label>
+                                    id="elect-tec" class="elect-tec-4"><span>Microfono</span></label>
                             <div class="mt-1 d-none">
                                 <input type="radio" name="elect-tec-4" value="Bueno"> Bueno
-                                <input type="radio" name="elect-tec-4" value="Bueno"> Regular
-                                <input type="radio" name="elect-tec-4" value="Bueno"> Malo
+                                <input type="radio" name="elect-tec-4" value="Regular"> Regular
+                                <input type="radio" name="elect-tec-4" value="Malo"> Malo
                             </div>
                         </div>
                     </div>
@@ -157,11 +157,11 @@
                     <div class="row general-content-check" style="margin-bottom: 12px">
                         <div class="col-lg-3 col-md-2 mt-2">
                             <label class="ckbox"><input type="checkbox"
-                                    class="cabina-tec cabina-tec-1"><span>Estado general de la cabina</span></label>
+                                    id="cabina-tec" class="cabina-tec-1"><span>Estado general de la cabina</span></label>
                             <div class="mt-1 d-none">
                                 <input type="radio" name="cabina-tec-1" value="Bueno"> Bueno
-                                <input type="radio" name="cabina-tec-1" value="Bueno"> Regular
-                                <input type="radio" name="cabina-tec-1" value="Bueno"> Malo
+                                <input type="radio" name="cabina-tec-1" value="Regular"> Regular
+                                <input type="radio" name="cabina-tec-1" value="Malo"> Malo
                             </div>
                         </div>
                     </div>
@@ -172,39 +172,39 @@
                     </div>
                     <div class="row general-content-check" style="margin-bottom: 12px">
                         <div class="col-lg-3 col-md-2 mt-2">
-                            <label class="ckbox"><input type="checkbox" class="doc-tec doc-tec-1"><span>Humedad
+                            <label class="ckbox"><input type="checkbox" id="doc-tec" class="doc-tec-1"><span>Humedad
                                     Motor</span></label>
                             <div class="mt-1 d-none">
                                 <input type="radio" name="doc-tec-1" value="Bueno"> Bueno
-                                <input type="radio" name="doc-tec-1" value="Bueno"> Regular
-                                <input type="radio" name="doc-tec-1" value="Bueno"> Malo
+                                <input type="radio" name="doc-tec-1" value="Regular"> Regular
+                                <input type="radio" name="doc-tec-1" value="Malo"> Malo
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-2 mt-2">
                             <label class="ckbox"><input type="checkbox"
-                                    class="doc-tec doc-tec-2"><span>Soat</span></label>
+                                    id="doc-tec" class="doc-tec-2"><span>Soat</span></label>
                             <div class="mt-1 d-none">
                                 <input type="radio" name="doc-tec-2" value="Bueno"> Bueno
-                                <input type="radio" name="doc-tec-2" value="Bueno"> Regular
-                                <input type="radio" name="doc-tec-2" value="Bueno"> Malo
+                                <input type="radio" name="doc-tec-2" value="Regular"> Regular
+                                <input type="radio" name="doc-tec-2" value="Malo"> Malo
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-2 mt-2">
                             <label class="ckbox"><input type="checkbox"
-                                    class="doc-tec doc-tec-3"><span>Matricula</span></label>
+                                    id="doc-tec" class="doc-tec-3"><span>Matricula</span></label>
                             <div class="mt-1 d-none">
                                 <input type="radio" name="doc-tec-3" value="Bueno"> Bueno
-                                <input type="radio" name="doc-tec-3" value="Bueno"> Regular
-                                <input type="radio" name="doc-tec-3" value="Bueno"> Malo
+                                <input type="radio" name="doc-tec-3" value="Regular"> Regular
+                                <input type="radio" name="doc-tec-3" value="Malo"> Malo
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-2 mt-2">
                             <label class="ckbox"><input type="checkbox"
-                                    class="doc-tec doc-tec-4"><span>Tecnomecanica</span></label>
+                                    id="doc-tec" class="doc-tec-4"><span>Tecnomecanica</span></label>
                             <div class="mt-1 d-none">
                                 <input type="radio" name="doc-tec-4" value="Bueno"> Bueno
-                                <input type="radio" name="doc-tec-4" value="Bueno"> Regular
-                                <input type="radio" name="doc-tec-4" value="Bueno"> Malo
+                                <input type="radio" name="doc-tec-4" value="Regular"> Regular
+                                <input type="radio" name="doc-tec-4" value="Malo"> Malo
                             </div>
                         </div>
                     </div>
@@ -216,12 +216,12 @@
                     <div class="row general-content-check" style="margin-bottom: 12px">
                         <div class="col-lg-3 col-md-2 mt-2">
                             <label class="ckbox"><input type="checkbox"
-                                    class="lato-tec lato-tec-1"><span>Estado general de la
+                                    id="lato-tec" class="lato-tec-1"><span>Estado general de la
                                     latoneria</span></label>
                             <div class="mt-1 d-none">
                                 <input type="radio" name="lato-tec-1" value="Bueno"> Bueno
-                                <input type="radio" name="lato-tec-1" value="Bueno"> Regular
-                                <input type="radio" name="lato-tec-1" value="Bueno"> Malo
+                                <input type="radio" name="lato-tec-1" value="Regular"> Regular
+                                <input type="radio" name="lato-tec-1" value="Malo"> Malo
                             </div>
                         </div>
                     </div>
@@ -233,29 +233,29 @@
                     <div class="row general-content-check" style="margin-bottom: 12px">
                         <div class="col-lg-3 col-md-2 mt-2">
                             <label class="ckbox"><input type="checkbox"
-                                    class="hidra-tec hidra-tec-1"><span>Estado de llantas</span></label>
+                                    id="hidra-tec" class="hidra-tec-1"><span>Estado de llantas</span></label>
                             <div class="mt-1 d-none">
                                 <input type="radio" name="hidra-tec-1" value="Bueno"> Bueno
-                                <input type="radio" name="hidra-tec-1" value="Bueno"> Regular
-                                <input type="radio" name="hidra-tec-1" value="Bueno"> Malo
+                                <input type="radio" name="hidra-tec-1" value="Regular"> Regular
+                                <input type="radio" name="hidra-tec-1" value="Malo"> Malo
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-2 mt-2">
                             <label class="ckbox"><input type="checkbox"
-                                    class="hidra-tec hidra-tec-2"><span>Llaves de caseta</span></label>
+                                    id="hidra-tec" class="hidra-tec-2"><span>Llaves de caseta</span></label>
                             <div class="mt-1 d-none">
                                 <input type="radio" name="hidra-tec-2" value="Bueno"> Bueno
-                                <input type="radio" name="hidra-tec-2" value="Bueno"> Regular
-                                <input type="radio" name="hidra-tec-2" value="Bueno"> Malo
+                                <input type="radio" name="hidra-tec-2" value="Regular"> Regular
+                                <input type="radio" name="hidra-tec-2" value="Malo"> Malo
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-2 mt-2">
                             <label class="ckbox"><input type="checkbox"
-                                    class="hidra-tec hidra-tec-3"><span>Control Remoto</span></label>
+                                    id="hidra-tec" class="hidra-tec-3"><span>Control Remoto</span></label>
                             <div class="mt-1 d-none">
                                 <input type="radio" name="hidra-tec-3" value="Bueno"> Bueno
-                                <input type="radio" name="hidra-tec-3" value="Bueno"> Regular
-                                <input type="radio" name="hidra-tec-3" value="Bueno"> Malo
+                                <input type="radio" name="hidra-tec-3" value="Regular"> Regular
+                                <input type="radio" name="hidra-tec-3" value="Malo"> Malo
                             </div>
                         </div>
                     </div>

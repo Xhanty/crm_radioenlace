@@ -299,10 +299,10 @@
                                         <li><a class="sub-side-menu__item"
                                                 href="{{ route('asignaciones') }}">Asignaciones</a></li>
                                         @if (auth()->user()->hasPermissionTo('gestion_asignaciones_proyectos'))
-                                            <li><a class="sub-side-menu__item"
+<li><a class="sub-side-menu__item"
                                                     href="{{ route('gestionar_asignaciones') }}">Gestionar
                                                     Asignaciones</a></li>
-                                        @endif
+@endif
                                     </ul>
                                 </li>-->
                             </ul>
@@ -492,7 +492,11 @@
                             </li>
                         @endif
 
-                        @if (auth()->user()->hasPermissionToMultiple('gesion_categorias_proyectos|' . 'gestion_proyectos'))
+                        @if (auth()->user()->hasPermissionToMultiple(
+                                    'gesion_categorias_proyectos|' .
+                                        'gestion_proyectos|' .
+                                        'gestion_todos_proyectos|' .
+                                        'gestion_involucrados_proyectos'))
                             <li class="slide">
                                 <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
                                         class="side-menu__icon fe fe-shield"></i><span
@@ -504,7 +508,7 @@
                                                 href="{{ route('categorias_proyectos') }}">Categorías</a>
                                         </li>
                                     @endif
-                                    @if (auth()->user()->hasPermissionTo('gestion_proyectos'))
+                                    @if (auth()->user()->hasPermissionToMultiple('gestion_proyectos|gestion_todos_proyectos|gestion_involucrados_proyectos'))
                                         <li><a class="slide-item" href="{{ route('proyectos') }}">Proyectos</a></li>
                                     @endif
                                 </ul>

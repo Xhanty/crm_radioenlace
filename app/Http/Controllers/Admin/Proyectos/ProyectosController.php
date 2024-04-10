@@ -13,32 +13,72 @@ class ProyectosController extends Controller
     public function index()
     {
         try {
-            if (!auth()->user()->hasPermissionTo('gestion_proyectos')) {
+            if (
+                !auth()->user()->hasPermissionTo('gestion_proyectos') &&
+                !auth()->user()->hasPermissionTo('gestion_todos_proyectos') &&
+                !auth()->user()->hasPermissionTo('gestion_involucrados_proyectos')
+            ) {
                 return redirect()->route('home');
             }
 
-            $proyectos_pendientes = DB::table('proyecto')
-                ->select("proyecto.*", "categorias_proyectos.nombre as categoria", "empleados.nombre as empleado", "cliente.razon_social as cliente")
-                ->leftJoin("categorias_proyectos", "proyecto.id_categoria", "=", "categorias_proyectos.id")
-                ->leftJoin("empleados", "proyecto.created_by", "=", "empleados.id")
-                ->leftJoin("cliente", "proyecto.id_cliente", "=", "cliente.id")
-                ->where('visto_bueno', 0)
-                ->orderBy('proyecto.id', 'desc')
-                ->get();
+            if (auth()->user()->hasPermissionTo('gestion_todos_proyectos')) {
+                $proyectos_pendientes = DB::table('proyecto')
+                    ->select("proyecto.*", "categorias_proyectos.nombre as categoria", "empleados.nombre as empleado", "cliente.razon_social as cliente")
+                    ->leftJoin("categorias_proyectos", "proyecto.id_categoria", "=", "categorias_proyectos.id")
+                    ->leftJoin("empleados", "proyecto.created_by", "=", "empleados.id")
+                    ->leftJoin("cliente", "proyecto.id_cliente", "=", "cliente.id")
+                    ->where('visto_bueno', 0)
+                    ->orderBy('proyecto.id', 'desc')
+                    ->get();
 
-            $proyectos_aprobados = DB::table('proyecto')
-                ->select("proyecto.*", "categorias_proyectos.nombre as categoria", "empleados.nombre as empleado", "cliente.razon_social as cliente")
-                ->leftJoin("categorias_proyectos", "proyecto.id_categoria", "=", "categorias_proyectos.id")
-                ->leftJoin("empleados", "proyecto.created_by", "=", "empleados.id")
-                ->leftJoin("cliente", "proyecto.id_cliente", "=", "cliente.id")
-                ->where('visto_bueno', 1)
-                ->orderBy('proyecto.id', 'desc')
-                ->get();
+                $proyectos_aprobados = DB::table('proyecto')
+                    ->select("proyecto.*", "categorias_proyectos.nombre as categoria", "empleados.nombre as empleado", "cliente.razon_social as cliente")
+                    ->leftJoin("categorias_proyectos", "proyecto.id_categoria", "=", "categorias_proyectos.id")
+                    ->leftJoin("empleados", "proyecto.created_by", "=", "empleados.id")
+                    ->leftJoin("cliente", "proyecto.id_cliente", "=", "cliente.id")
+                    ->where('visto_bueno', 1)
+                    ->orderBy('proyecto.id', 'desc')
+                    ->get();
+            } else {
+                if (auth()->user()->hasPermissionTo('gestion_involucrados_proyectos')) {
+                    $id_user = auth()->user()->id;
+                    $tasks = DB::table('task_projects')
+                        ->select('project_id')
+                        ->where('user_id', 'like', '%' . $id_user . '%')
+                        ->groupBy('project_id')
+                        ->get();
+
+                    $proyectos_pendientes = [];
+                    $proyectos_aprobados = [];
+
+                    foreach ($tasks as $task) {
+                        $proyecto = DB::table('proyecto')
+                            ->select("proyecto.*", "categorias_proyectos.nombre as categoria", "empleados.nombre as empleado", "cliente.razon_social as cliente")
+                            ->leftJoin("categorias_proyectos", "proyecto.id_categoria", "=", "categorias_proyectos.id")
+                            ->leftJoin("empleados", "proyecto.created_by", "=", "empleados.id")
+                            ->leftJoin("cliente", "proyecto.id_cliente", "=", "cliente.id")
+                            ->where('proyecto.id', $task->project_id)
+                            ->first();
+
+                        if ($proyecto->visto_bueno == 0) {
+                            array_push($proyectos_pendientes, $proyecto);
+                        } else {
+                            array_push($proyectos_aprobados, $proyecto);
+                        }
+                    }
+                } else {
+                    $proyectos_pendientes = [];
+                    $proyectos_aprobados = [];
+                }
+            }
+
 
             $categorias = DB::table('categorias_proyectos')->get();
             $clientes = DB::table('cliente')->where("estado", 1)->get();
             return view('admin.proyectos.proyectos', compact('proyectos_pendientes', 'proyectos_aprobados', 'categorias', 'clientes'));
         } catch (Exception $ex) {
+            echo $ex->getMessage();
+            exit;
             return view('errors.500');
         }
     }

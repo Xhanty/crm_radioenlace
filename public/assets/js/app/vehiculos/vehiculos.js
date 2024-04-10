@@ -957,4 +957,35 @@ $(function () {
             }
         });
     });
+
+    // Checklist Técnicos
+    $("#btnAgregarTecnico").click(function () {
+        let vehiculo = vehiculo_global;
+        let tipo = 0;
+        let data = [];
+
+        $("#div_content_tecnicos input[type='checkbox']").each(function () {
+            // Verifica si el checkbox está marcado
+            if ($(this).prop("checked")) {
+                // Obtener el id del checkbox
+                let id = $(this).attr("id");
+                // Obtiene el valor del checkbox marcado
+                let valorCheckbox = $(this)
+                    .siblings("div")
+                    .find("input[type=radio]:checked")
+                    .val();
+                // Obtiene el texto asociado al checkbox
+                let textoCheckbox = $(this).siblings("span").text();
+
+                // Agrega los datos al arreglo 'data'
+                data.push({
+                    id: id,
+                    texto: textoCheckbox,
+                    valor: valorCheckbox,
+                });
+            }
+        });
+
+        console.log(data);
+    });
 });

@@ -25,8 +25,10 @@
                             <h3 class="card-title mt-2">Lista de Proyectos Pendientes</h3>
                         </div>
                         <div class="div-2-tables-header">
-                            <button class="btn btn-primary" data-bs-target="#modalAdd" data-bs-toggle="modal"
-                                data-bs-effect="effect-scale">Crear Proyecto</button>
+                            @if (auth()->user()->hasPermissionTo('gestion_proyectos'))
+                                <button class="btn btn-primary" data-bs-target="#modalAdd" data-bs-toggle="modal"
+                                    data-bs-effect="effect-scale">Crear Proyecto</button>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body">
@@ -58,22 +60,27 @@
                                             <td>{{ $proyecto->fecha_inicio }}</td>
                                             <td>{{ $proyecto->fecha_culminacion }}</td>
                                             <td>
-                                                <a class="d-flex btn_completar" data-id="{{ $proyecto->id }}"
-                                                    href="javascript:void(0);"><i class="fa fa-list"></i>&nbsp;Gestionar
-                                                    Estatus</a>
-                                                <a class="d-flex btn_board" data-id="{{ $proyecto->id }}"
-                                                    href="javascript:void(0);"><i
-                                                        class="fa fa-check"></i>&nbsp;Asignaciones</a>
-                                                <a class="d-flex btn_editar" data-id="{{ $proyecto->id }}"
-                                                    href="javascript:void(0);"><i
-                                                        class="fa fa-pencil-alt"></i>&nbsp;Editar</a>
+                                                @if (auth()->user()->hasPermissionTo('gestion_proyectos'))
+                                                    <a class="d-flex btn_completar" data-id="{{ $proyecto->id }}"
+                                                        href="javascript:void(0);"><i class="fa fa-list"></i>&nbsp;Gestionar
+                                                        Estatus</a>
+                                                    <a class="d-flex btn_board" data-id="{{ $proyecto->id }}"
+                                                        href="javascript:void(0);"><i
+                                                            class="fa fa-check"></i>&nbsp;Asignaciones</a>
+                                                    <a class="d-flex btn_editar" data-id="{{ $proyecto->id }}"
+                                                        href="javascript:void(0);"><i
+                                                            class="fa fa-pencil-alt"></i>&nbsp;Editar</a>
+                                                @endif
                                                 @if (auth()->user()->hasPermissionTo('gestion_actas_proyectos'))
                                                     <a class="d-flex btn_avances" data-id="{{ $proyecto->id }}"
                                                         href="javascript:void(0);"><i class="fa fa-file"></i>&nbsp;Gestionar
                                                         Acta</a>
                                                 @endif
-                                                <a class="d-flex btn_eliminar" data-id="{{ $proyecto->id }}"
-                                                    href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>
+                                                @if (auth()->user()->hasPermissionTo('gestion_proyectos'))
+                                                    <a class="d-flex btn_eliminar" data-id="{{ $proyecto->id }}"
+                                                        href="javascript:void(0);"><i
+                                                            class="fa fa-trash"></i>&nbsp;Eliminar</a>
+                                                @endif
                                                 @if (auth()->user()->hasPermissionTo('firma_cliente_proyectos'))
                                                     <a class="d-flex btn_avances" data-id="{{ $proyecto->id }}"
                                                         href="javascript:void(0);"><i class="fa fa-user"></i>&nbsp;Firma
@@ -136,22 +143,27 @@
                                             <td>{{ $proyecto->fecha_inicio }}</td>
                                             <td>{{ $proyecto->fecha_culminacion }}</td>
                                             <td>
-                                                <a class="d-flex btn_completar" data-id="{{ $proyecto->id }}"
-                                                    href="javascript:void(0);"><i class="fa fa-list"></i>&nbsp;Gestionar
-                                                    Estatus</a>
-                                                <a class="d-flex btn_board" data-id="{{ $proyecto->id }}"
-                                                    href="javascript:void(0);"><i
-                                                        class="fa fa-check"></i>&nbsp;Asignaciones</a>
-                                                <a class="d-flex btn_editar" data-id="{{ $proyecto->id }}"
-                                                    href="javascript:void(0);"><i
-                                                        class="fa fa-pencil-alt"></i>&nbsp;Editar</a>
+                                                @if (auth()->user()->hasPermissionTo('gestion_proyectos'))
+                                                    <a class="d-flex btn_completar" data-id="{{ $proyecto->id }}"
+                                                        href="javascript:void(0);"><i class="fa fa-list"></i>&nbsp;Gestionar
+                                                        Estatus</a>
+                                                    <a class="d-flex btn_board" data-id="{{ $proyecto->id }}"
+                                                        href="javascript:void(0);"><i
+                                                            class="fa fa-check"></i>&nbsp;Asignaciones</a>
+                                                    <a class="d-flex btn_editar" data-id="{{ $proyecto->id }}"
+                                                        href="javascript:void(0);"><i
+                                                            class="fa fa-pencil-alt"></i>&nbsp;Editar</a>
+                                                @endif
                                                 @if (auth()->user()->hasPermissionTo('gestion_actas_proyectos'))
                                                     <a class="d-flex btn_avances" data-id="{{ $proyecto->id }}"
                                                         href="javascript:void(0);"><i class="fa fa-file"></i>&nbsp;Gestionar
                                                         Acta</a>
                                                 @endif
-                                                <a class="d-flex btn_eliminar" data-id="{{ $proyecto->id }}"
-                                                    href="javascript:void(0);"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>
+                                                @if (auth()->user()->hasPermissionTo('gestion_proyectos'))
+                                                    <a class="d-flex btn_eliminar" data-id="{{ $proyecto->id }}"
+                                                        href="javascript:void(0);"><i
+                                                            class="fa fa-trash"></i>&nbsp;Eliminar</a>
+                                                @endif
                                             </td>
                                             @if (auth()->user()->hasPermissionTo('visto_bueno_proyectos'))
                                                 <td class="text-center">
