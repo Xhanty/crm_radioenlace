@@ -4,7 +4,7 @@ $(function () {
     // CHECKS
     $(".check-asig-gen-0").on("change", function () {
         let check = $(this).prop("checked");
-        let cantidad = 2;
+        let cantidad = 4;
 
         for (let i = 1; i <= cantidad; i++) {
             if (check) {

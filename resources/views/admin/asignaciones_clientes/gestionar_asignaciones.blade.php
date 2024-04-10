@@ -83,8 +83,10 @@
                             <h3 class="card-title mt-2">Lista de Asignaciones Pendientes</h3>
                         </div>
                         <div class="div-2-tables-header">
-                            <button class="btn btn-primary" data-bs-target="#modalAdd" data-bs-toggle="modal"
-                                data-bs-effect="effect-scale">Crear Asignación</button>
+                            @if (auth()->user()->hasPermissionTo('gestion_asignacion'))
+                                <button class="btn btn-primary" data-bs-target="#modalAdd" data-bs-toggle="modal"
+                                    data-bs-effect="effect-scale">Crear Asignación</button>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body">
@@ -119,42 +121,49 @@
                                                         </div>
                                                         <hr class=" mx-3">
                                                         <div class="d-flex flex-row justify-content-between px-3 pb-1">
-                                                            <span class="text-muted">Fecha Inicio</span>
+                                                            <span class="text-muted">Asignación</span>
                                                             <h6 class="mb-0">
-                                                                {{ date('d-m-Y g:i A', strtotime($value->fecha)) }}</h6>
+                                                                {{ strlen($value->asignacion) > 44 ? substr($value->asignacion, 0, 44) . '...' : $value->asignacion }}
+                                                            </h6>
                                                         </div>
                                                         <hr class=" mx-3">
                                                         <div class="d-flex flex-row justify-content-between px-3 pb-1">
-                                                            <span class="text-muted">Fecha Fin</span>
+                                                            <span class="text-muted">Fechas</span>
                                                             <h6 class="mb-0">
-                                                                {{ date('d-m-Y g:i A', strtotime($value->fecha_culminacion)) }}
+                                                                {{ date('d-m-Y', strtotime($value->fecha)) }} /
+                                                                {{ date('d-m-Y', strtotime($value->fecha_culminacion)) }}
                                                             </h6>
                                                         </div>
                                                         <hr class=" mx-3">
                                                         <div class="text-center"
                                                             style="display: grid; justify-content: center">
-                                                            @if ($value->revision == 1)
-                                                                <a class="d-flex btn_completar"
+                                                            @if (auth()->user()->hasPermissionTo('gestion_asignacion'))
+                                                                @if ($value->revision == 1)
+                                                                    <a class="d-flex btn_completar"
+                                                                        data-id="{{ $value->id }}"
+                                                                        href="javascript:void(0);"><i
+                                                                            class="fa fa-check"></i>&nbsp;Completar</a>
+                                                                    <a class="d-flex btn_rechazar"
+                                                                        data-id="{{ $value->id }}"
+                                                                        href="javascript:void(0);"><i
+                                                                            class="fa fa-times"></i>&nbsp;Rechazar</a>
+                                                                @endif
+                                                                <a class="d-flex btn_openDetalles"
                                                                     data-id="{{ $value->id }}"
                                                                     href="javascript:void(0);"><i
-                                                                        class="fa fa-check"></i>&nbsp;Completar</a>
-                                                                <a class="d-flex btn_rechazar" data-id="{{ $value->id }}"
+                                                                        class="fa fa-eye"></i>&nbsp;Ver</a>
+                                                                <a class="d-flex btn_editar" data-id="{{ $value->id }}"
                                                                     href="javascript:void(0);"><i
-                                                                        class="fa fa-times"></i>&nbsp;Rechazar</a>
+                                                                        class="fa fa-pencil-alt"></i>&nbsp;Editar</a>
+                                                                <a class="d-flex btn_avances" data-id="{{ $value->id }}"
+                                                                    href="javascript:void(0);"><i
+                                                                        class="fa fa-file"></i>&nbsp;Ver
+                                                                    Avances</a>
+                                                                <a class="d-flex btn_eliminar"
+                                                                    data-id="{{ $value->id }}"
+                                                                    href="javascript:void(0);"><i
+                                                                        class="fa fa-trash"></i>&nbsp;Eliminar</a>
                                                             @endif
-                                                            <a class="d-flex btn_openDetalles" data-id="{{ $value->id }}"
-                                                                href="javascript:void(0);"><i
-                                                                    class="fa fa-eye"></i>&nbsp;Ver</a>
-                                                            <a class="d-flex btn_editar" data-id="{{ $value->id }}"
-                                                                href="javascript:void(0);"><i
-                                                                    class="fa fa-pencil-alt"></i>&nbsp;Editar</a>
-                                                            <a class="d-flex btn_avances" data-id="{{ $value->id }}"
-                                                                href="javascript:void(0);"><i
-                                                                    class="fa fa-file"></i>&nbsp;Ver
-                                                                Avances</a>
-                                                            <a class="d-flex btn_eliminar" data-id="{{ $value->id }}"
-                                                                href="javascript:void(0);"><i
-                                                                    class="fa fa-trash"></i>&nbsp;Eliminar</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -216,20 +225,23 @@
                                                         </div>
                                                         <hr class=" mx-3">
                                                         <div class="d-flex flex-row justify-content-between px-3 pb-1">
-                                                            <span class="text-muted">Fecha Inicio</span>
+                                                            <span class="text-muted">Asignación</span>
                                                             <h6 class="mb-0">
-                                                                {{ date('d-m-Y g:i A', strtotime($value->fecha)) }}</h6>
+                                                                {{ strlen($value->asignacion) > 44 ? substr($value->asignacion, 0, 44) . '...' : $value->asignacion }}
+                                                            </h6>
                                                         </div>
                                                         <hr class=" mx-3">
                                                         <div class="d-flex flex-row justify-content-between px-3 pb-1">
-                                                            <span class="text-muted">Fecha Fin</span>
+                                                            <span class="text-muted">Fechas</span>
                                                             <h6 class="mb-0">
-                                                                {{ date('d-m-Y g:i A', strtotime($value->fecha_culminacion)) }}
+                                                                {{ date('d-m-Y', strtotime($value->fecha_culminacion)) }} /
+                                                                {{ date('d-m-Y', strtotime($value->fecha)) }}
                                                             </h6>
                                                         </div>
                                                         <hr class=" mx-3">
                                                         <div class="text-center"
                                                             style="display: grid; justify-content: center">
+                                                            @if (auth()->user()->hasPermissionTo('gestion_asignacion'))
                                                             <a class="d-flex btn_openDetalles"
                                                                 data-id="{{ $value->id }}"
                                                                 href="javascript:void(0);"><i
@@ -247,6 +259,7 @@
                                                             <a class="d-flex btn_eliminar" data-id="{{ $value->id }}"
                                                                 href="javascript:void(0);"><i
                                                                     class="fa fa-trash"></i>&nbsp;Eliminar</a>
+                                                                    @endif
                                                         </div>
                                                     </div>
                                                 </div>

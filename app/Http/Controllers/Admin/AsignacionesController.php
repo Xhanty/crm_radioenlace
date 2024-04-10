@@ -185,28 +185,56 @@ class AsignacionesController extends Controller
     {
         try {
 
-            if (!auth()->user()->hasPermissionTo('gestion_asignacion')) {
+            if (!auth()->user()->hasPermissionTo('gestion_asignacion') && !auth()->user()->hasPermissionTo('gestion_todas_asignacion') && !auth()->user()->hasPermissionTo('gestion_solo_asignacion')) {
                 return redirect()->route('home');
             }
 
-            $asignaciones_pendientes = DB::table("asignaciones")
-                ->join("empleados", "empleados.id", "=", "asignaciones.id_empleado")
-                ->join("empleados AS creador", "creador.id", "=", "asignaciones.created_by")
-                ->join("cliente", "cliente.id", "=", "asignaciones.id_cliente")
-                ->select("asignaciones.*", "empleados.nombre", "creador.nombre AS creador", "cliente.razon_social AS cliente")
-                ->where("asignaciones.status", 0)
-                ->orderBy("asignaciones.id", "desc")
-                ->get();
+            if (auth()->user()->hasPermissionTo('gestion_todas_asignacion')) {
+                $asignaciones_pendientes = DB::table("asignaciones")
+                    ->join("empleados", "empleados.id", "=", "asignaciones.id_empleado")
+                    ->join("empleados AS creador", "creador.id", "=", "asignaciones.created_by")
+                    ->join("cliente", "cliente.id", "=", "asignaciones.id_cliente")
+                    ->select("asignaciones.*", "empleados.nombre", "creador.nombre AS creador", "cliente.razon_social AS cliente")
+                    ->where("asignaciones.status", 0)
+                    ->orderBy("asignaciones.id", "desc")
+                    ->get();
 
-            $asignaciones_completadas = DB::table("asignaciones")
-                ->join("empleados", "empleados.id", "=", "asignaciones.id_empleado")
-                ->join("empleados AS creador", "creador.id", "=", "asignaciones.created_by")
-                ->join("cliente", "cliente.id", "=", "asignaciones.id_cliente")
-                ->select("asignaciones.*", "empleados.nombre", "creador.nombre AS creador", "cliente.razon_social AS cliente")
-                ->where("asignaciones.status", 1)
-                ->where("asignaciones.revision", 2)
-                ->orderBy("asignaciones.id", "desc")
-                ->get();
+                $asignaciones_completadas = DB::table("asignaciones")
+                    ->join("empleados", "empleados.id", "=", "asignaciones.id_empleado")
+                    ->join("empleados AS creador", "creador.id", "=", "asignaciones.created_by")
+                    ->join("cliente", "cliente.id", "=", "asignaciones.id_cliente")
+                    ->select("asignaciones.*", "empleados.nombre", "creador.nombre AS creador", "cliente.razon_social AS cliente")
+                    ->where("asignaciones.status", 1)
+                    ->where("asignaciones.revision", 2)
+                    ->orderBy("asignaciones.id", "desc")
+                    ->get();
+            } else {
+                if (auth()->user()->hasPermissionTo('gestion_solo_asignacion')) {
+                    $asignaciones_pendientes = DB::table("asignaciones")
+                        ->join("empleados", "empleados.id", "=", "asignaciones.id_empleado")
+                        ->join("empleados AS creador", "creador.id", "=", "asignaciones.created_by")
+                        ->join("cliente", "cliente.id", "=", "asignaciones.id_cliente")
+                        ->select("asignaciones.*", "empleados.nombre", "creador.nombre AS creador", "cliente.razon_social AS cliente")
+                        ->where("asignaciones.status", 0)
+                        ->where("asignaciones.created_by", session("user"))
+                        ->orderBy("asignaciones.id", "desc")
+                        ->get();
+
+                    $asignaciones_completadas = DB::table("asignaciones")
+                        ->join("empleados", "empleados.id", "=", "asignaciones.id_empleado")
+                        ->join("empleados AS creador", "creador.id", "=", "asignaciones.created_by")
+                        ->join("cliente", "cliente.id", "=", "asignaciones.id_cliente")
+                        ->select("asignaciones.*", "empleados.nombre", "creador.nombre AS creador", "cliente.razon_social AS cliente")
+                        ->where("asignaciones.status", 1)
+                        ->where("asignaciones.revision", 2)
+                        ->where("asignaciones.created_by", session("user"))
+                        ->orderBy("asignaciones.id", "desc")
+                        ->get();
+                } else {
+                    $asignaciones_pendientes = [];
+                    $asignaciones_completadas = [];
+                }
+            }
 
             $empleados = DB::table("empleados")->where("status", 1)->get();
             $clientes = DB::table("cliente")->where("estado", 1)->get();

@@ -284,7 +284,7 @@
                                     <ul class="sub-slide-menu" style="display: none;" id="2_1_otro_asignaciones">
                                         <li><a class="sub-side-menu__item"
                                                 href="{{ route('asignaciones_clientes') }}">Asignaciones</a></li>
-                                        @if (auth()->user()->hasPermissionTo('gestion_asignacion'))
+                                        @if (auth()->user()->hasPermissionToMultiple('gestion_asignacion|gestion_todas_asignacion|gestion_solo_asignacion'))
                                             <li><a class="sub-side-menu__item"
                                                     href="{{ route('gestionar_asignaciones_clientes') }}">Gestionar
                                                     Asignaciones</a></li>

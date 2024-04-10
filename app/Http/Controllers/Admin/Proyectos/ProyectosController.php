@@ -66,6 +66,23 @@ class ProyectosController extends Controller
                             array_push($proyectos_aprobados, $proyecto);
                         }
                     }
+
+                    // Proyectos creados por el usuario
+                    $proyectos_creados = DB::table('proyecto')
+                        ->select("proyecto.*", "categorias_proyectos.nombre as categoria", "empleados.nombre as empleado", "cliente.razon_social as cliente")
+                        ->leftJoin("categorias_proyectos", "proyecto.id_categoria", "=", "categorias_proyectos.id")
+                        ->leftJoin("empleados", "proyecto.created_by", "=", "empleados.id")
+                        ->leftJoin("cliente", "proyecto.id_cliente", "=", "cliente.id")
+                        ->where('created_by', $id_user)
+                        ->get();
+
+                    foreach ($proyectos_creados as $proyecto) {
+                        if ($proyecto->visto_bueno == 0) {
+                            array_push($proyectos_pendientes, $proyecto);
+                        } else {
+                            array_push($proyectos_aprobados, $proyecto);
+                        }
+                    }
                 } else {
                     $proyectos_pendientes = [];
                     $proyectos_aprobados = [];
