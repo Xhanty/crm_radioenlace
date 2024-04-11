@@ -102,8 +102,8 @@
                                 class="tm_border tm_accent_border_20 tm_radius_0 tm_accent_bg_10 tm_curve_35 tm_text_center">
                                 <div>
                                     <b class="tm_accent_color tm_medium tm_body_lineheight"
-                                        style="font-size: 20px">FACTURA DE VENTA
-                                        ELECTRÓNICA # FE-{{ $factura->numero }}</b>
+                                        style="font-size: 18px">FACTURA DE VENTA
+                                        ELECTRÓNICA # FERE-{{ $factura->numero }}</b>
                                 </div>
                             </div>
                         </div>
@@ -413,7 +413,7 @@
                                 máxima legal autorizada. En caso de NO PAGO se procederá a reportarse en las
                                 centrales
                                 de crédito.
-                                Resolución DIAN 18764046586505 prefijo FE numeración Autorizada del 3823 al 4000
+                                Resolución DIAN 18764046586505 prefijo FERE numeración Autorizada del 3823 al 4000
                                 Fecha
                                 23/09/21 Vigencia: 12 Meses.
                                 Responsable de IVA - Actividad Económica 4741 Comercio al por menor de computadores,

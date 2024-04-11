@@ -270,7 +270,7 @@
                                                     $color = 'badge-danger';
                                                 }
                                             @endphp
-                                            <h6><span>FE-{{ $factura->numero }}@if($bg == 'bg-pending')<badge
+                                            <h6><span>FERE-{{ $factura->numero }}@if($bg == 'bg-pending')<badge
                                                         class="badge {{ $color }}">{{ $dias_pasados }}</badge>@endif</span>
                                                 <span>{{ $factura->valor_total }}
                                                     @if ($factura->favorito == 0)
@@ -311,7 +311,7 @@
             <div class="card card-invoice">
                 <div class="card-body">
                     <div class="invoice-header">
-                        <h1 class="invoice-title">FACTURA VENTA</h1>
+                        <h1 class="invoice-title">FACTURA DE VENTA ELECTRÓNICA</h1>
                         <div class="billed-from">
                             <h6>RADIO ENLACE S.A.S.</h6>
                             <p>Nit 830.504.313-5<br>

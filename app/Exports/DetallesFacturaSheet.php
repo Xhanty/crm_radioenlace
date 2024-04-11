@@ -29,7 +29,7 @@ class DetallesFacturaSheet implements FromArray, WithHeadings, WithTitle
 
                 if($detalle->producto) {
                     $detalleData[] = [
-                        "Factura" => "FE-" . $item->numero,
+                        "Factura" => "FERE-" . $item->numero,
                         "Identificación" => $item->nit . "-" . $item->codigo_verificacion,
                         "Razón Social" => $item->razon_social,
                         "Producto/Servicio" => $detalle->producto->nombre ?? '' . " (" . $detalle->producto->marca ?? '' . " - " . $detalle->producto->modelo . ")",
@@ -42,7 +42,7 @@ class DetallesFacturaSheet implements FromArray, WithHeadings, WithTitle
                     ];
                 } else {
                     $detalleData[] = [
-                        "Factura" => "FE-" . $item->numero,
+                        "Factura" => "FERE-" . $item->numero,
                         "Identificación" => $item->nit . "-" . $item->codigo_verificacion,
                         "Razón Social" => $item->razon_social,
                         "Producto/Servicio" => $detalle->description,
