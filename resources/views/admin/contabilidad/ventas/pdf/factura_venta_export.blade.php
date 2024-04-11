@@ -11,13 +11,16 @@
     <style>
         .descrip-personalizado {
             font-size: 12px;
-            text-transform: lowercase; /* Convierte todo el texto en minúsculas */
+            text-transform: lowercase;
+            /* Convierte todo el texto en minúsculas */
         }
-    
+
         .descrip-personalizado::first-letter {
-            text-transform: uppercase; /* Convierte la primera letra en mayúscula */
+            text-transform: uppercase;
+            /* Convierte la primera letra en mayúscula */
         }
     </style>
+
     <body>
         <div class="tm_container">
             <div class="tm_invoice_wrap">
@@ -222,11 +225,14 @@
                                                     </td>
                                                     <td class="tm_width_6 tm_accent_border_20 tm_text_center"
                                                         style="text-align: justify">
-                                                        <b>{{ $item->detalle->nombre }} (@if ($item->detalle->marca)
-                                                                {{ $item->detalle->marca }} -
-                                                            @endif
-                                                            {{ $item->detalle->modelo }})</b>
-                                                        <br><p class="descrip-personalizado">{{ $item->description }}</p>
+                                                        @if ($item->detalle)
+                                                            <b>{{ $item->detalle->nombre }} (@if ($item->detalle->marca)
+                                                                    {{ $item->detalle->marca }} -
+                                                                @endif
+                                                                {{ $item->detalle->modelo }})</b>
+                                                        @endif
+                                                        <br>
+                                                        <p class="descrip-personalizado">{{ $item->description }}</p>
                                                     </td>
                                                     <td class="tm_width_1 tm_accent_border_20 tm_text_center">
                                                         {{ $item->cantidad }}</td>
@@ -291,27 +297,34 @@
                                                     {{ $factura->subtotal }}</td>
                                             </tr>
                                             @php
-                                                $impuestos_1 = $factura->impuestos_1 == 'null' ? [] : $factura->impuestos_1;
-                                                $impuestos_2 = $factura->impuestos_2 == 'null' ? [] : $factura->impuestos_2;
-                                                
+                                                $impuestos_1 =
+                                                    $factura->impuestos_1 == 'null' ? [] : $factura->impuestos_1;
+                                                $impuestos_2 =
+                                                    $factura->impuestos_2 == 'null' ? [] : $factura->impuestos_2;
+
                                                 $subtotal = $factura->subtotal;
                                                 // Eliminar los dos ceros del final
                                                 $subtotal = rtrim($subtotal, '0');
-                                                
+
                                                 // Reemplazar comas y puntos
                                                 $subtotal = str_replace(',', '', $subtotal);
                                                 $subtotal = str_replace('.', '', $subtotal);
-                                                
+
                                                 // Convertir a entero
                                                 $subtotal_num = (int) $subtotal;
                                                 $sum_impuestos_1 = 0;
-                                                
+
                                                 if ($impuestos_1) {
                                                     if (json_decode($impuestos_1)) {
                                                         $impuestos = json_decode($impuestos_1);
                                                         foreach ($impuestos as $impuesto) {
                                                             $sum_impuestos_1 += intval($impuesto[1]);
-                                                            $valor_impuesto = number_format(intval($impuesto[1]), 2, ',', '.');
+                                                            $valor_impuesto = number_format(
+                                                                intval($impuesto[1]),
+                                                                2,
+                                                                ',',
+                                                                '.',
+                                                            );
                                                             echo '<tr>
                                                             <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">' .
                                                                 $impuesto[0] .
@@ -323,12 +336,17 @@
                                                         }
                                                     }
                                                 }
-                                                
+
                                                 if ($impuestos_2) {
                                                     if (json_decode($impuestos_2)) {
                                                         $impuestos = json_decode($impuestos_2);
                                                         foreach ($impuestos as $impuesto) {
-                                                            $valor_impuesto = number_format(intval($impuesto[1]), 2, ',', '.');
+                                                            $valor_impuesto = number_format(
+                                                                intval($impuesto[1]),
+                                                                2,
+                                                                ',',
+                                                                '.',
+                                                            );
                                                             echo '<tr>
                                                             <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">' .
                                                                 $impuesto[0] .

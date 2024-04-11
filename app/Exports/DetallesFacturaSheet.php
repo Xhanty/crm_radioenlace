@@ -27,18 +27,33 @@ class DetallesFacturaSheet implements FromArray, WithHeadings, WithTitle
                 $valor_iva = ($valor_unitario * $detalle->cantidad) * ($detalle->impuesto_cargo ?? 0 / 100);
                 $html_iva .= number_format($valor_iva, 2, ',', '.');*/
 
-                $detalleData[] = [
-                    "Factura" => "FE-" . $item->numero,
-                    "Identificación" => $item->nit . "-" . $item->codigo_verificacion,
-                    "Razón Social" => $item->razon_social,
-                    "Producto/Servicio" => $detalle->producto->nombre . " (" . $detalle->producto->marca . " - " . $detalle->producto->modelo . ")",
-                    "Cantidad" => $detalle->cantidad,
-                    /*"Iva" => $html_iva,
-                    "Rte Fte" => "",
-                    "Rte Iva" => "",
-                    "Rte Ica" => "",*/
-                    "Valor Total" => $detalle->valor_total,
-                ];
+                if($detalle->producto) {
+                    $detalleData[] = [
+                        "Factura" => "FE-" . $item->numero,
+                        "Identificación" => $item->nit . "-" . $item->codigo_verificacion,
+                        "Razón Social" => $item->razon_social,
+                        "Producto/Servicio" => $detalle->producto->nombre ?? '' . " (" . $detalle->producto->marca ?? '' . " - " . $detalle->producto->modelo . ")",
+                        "Cantidad" => $detalle->cantidad,
+                        /*"Iva" => $html_iva,
+                        "Rte Fte" => "",
+                        "Rte Iva" => "",
+                        "Rte Ica" => "",*/
+                        "Valor Total" => $detalle->valor_total,
+                    ];
+                } else {
+                    $detalleData[] = [
+                        "Factura" => "FE-" . $item->numero,
+                        "Identificación" => $item->nit . "-" . $item->codigo_verificacion,
+                        "Razón Social" => $item->razon_social,
+                        "Producto/Servicio" => $detalle->description,
+                        "Cantidad" => $detalle->cantidad,
+                        /*"Iva" => $html_iva,
+                        "Rte Fte" => "",
+                        "Rte Iva" => "",
+                        "Rte Ica" => "",*/
+                        "Valor Total" => $detalle->valor_total,
+                    ];
+                }
             }
         }
 

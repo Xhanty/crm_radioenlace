@@ -728,13 +728,16 @@
     <script>
         $(document).ready(function() {
             $('#btnCompras').click(function() {
-                $('#content_list_options').hide();
-                $('#content_list_compras').show();
+                //$('#content_list_options').hide();
+                //$('#content_list_compras').show();
+                // redirigir a factura_compra
+                window.location.href = "factura_compra";
             });
 
             $('#btnVentas').click(function() {
-                $('#content_list_options').hide();
-                $('#content_list_ventas').show();
+                //$('#content_list_options').hide();
+                //$('#content_list_ventas').show();
+                window.location.href = "factura_venta";
             });
 
             $('#btnNomina').click(function() {
