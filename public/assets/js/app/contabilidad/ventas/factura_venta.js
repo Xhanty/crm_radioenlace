@@ -2441,4 +2441,35 @@ $(document).ready(function () {
             }
         });
     });
+
+    /*traerfacturasSiigo();
+
+    function traerfacturasSiigo() {
+        var all_data = [];
+        var cantidad = 46;
+
+        for(var i = 1; i <= cantidad; i++) {
+            var settings = {
+                url:
+                    "https://cors-anywhere.herokuapp.com/https://api.siigo.com/v1/invoices?page_size=100&page=" + i,
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Partner-Id": "CRM",
+                    "Authorization":
+                        "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IkYyRDQ2NTgyMUY1QjE2QTU3QkZENDQ3NUVBNzgwRTk1MzlGMTFEOThSUzI1NiIsInR5cCI6ImF0K2p3dCIsIng1dCI6Ijh0UmxnaDliRnFWN19VUjE2bmdPbFRueEhaZyJ9.eyJuYmYiOjE3MTI4NTU1OTgsImV4cCI6MTcxNTQ0NzU5OCwiaXNzIjoiaHR0cDovL21zLXNlY3VyaXR5OjUwMDAiLCJhdWQiOiJodHRwOi8vbXMtc2VjdXJpdHk6NTAwMC9yZXNvdXJjZXMiLCJjbGllbnRfaWQiOiJTaWlnb0FQSSIsInN1YiI6IjYwMzg5NiIsImF1dGhfdGltZSI6MTcxMjg1NTU5OCwiaWRwIjoibG9jYWwiLCJuYW1lIjoiZ2NvbWVyY2lhbEByYWRpb2VubGFjZXNhcy5jb20iLCJtYWlsX3NpaWdvIjoiZ2NvbWVyY2lhbEByYWRpb2VubGFjZXNhcy5jb20iLCJjbG91ZF90ZW5hbnRfY29tcGFueV9rZXkiOiJSQURJT0VOTEFDRVNBUyIsInVzZXJzX2lkIjoiNTk0IiwidGVuYW50X2lkIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDIxMDYxNyIsInVzZXJfbGljZW5zZV90eXBlIjoiMCIsInBsYW5fdHlwZSI6IjE0IiwidGVuYW50X3N0YXRlIjoiMiIsIm11bHRpdGVuYW50X2lkIjoiMTUzIiwiY29tcGFuaWVzIjoiMCIsImFwaV9zdWJzY3JpcHRpb25fa2V5IjoiZTFiMDllMzY2NGNlNGY5MGEzYWVhOGE4ZGM2YjlkOGMiLCJhcGlfdXNlcl9jcmVhdGVkX2F0IjoiMTY3NjY1NjQ4NCIsImFjY291bnRhbnQiOiJmYWxzZSIsImp0aSI6IjU5ODk2N0Q4ODZGMkJCRkYwRDUzOTE5RTI1MDM0OTQ1IiwiaWF0IjoxNzEyODU1NTk4LCJzY29wZSI6WyJTaWlnb0FQSSJdLCJhbXIiOlsiY3VzdG9tIl19.U5sUe0TgiAHEI8Cp-EhdWmo6reeY2bBzuUH3slje4m-d2HGw9qyC9jnX345B84CWKOC01O7LK9_5ht-r95s4v_WlembWAcmdW_Edyl4y9sb9A1inWbpU1YJwnXAllLKhY4g-e1ZjS98cTAeP9pdZSucxvVOA1qquwNxSpvzRS7JPdWmFwRhqhTBcFGI8N_d3uzr_f3_bLIUZkQ_09oedtBHIN_Ju7PJbqQv09099cJGQHj613IFvNIrtobPdVIoSXyneV475PjjS7h7d7NAMBBAcqx3pWjATDVgll2TZ9r1FknufCaRh34F844JV2GQVV3RXASh9EGYs3_9WVKVARg",
+                },
+            };
+    
+            $.ajax(settings).done(function (response) {
+                let data = response.results;
+    
+                all_data.push(data);
+            });
+        }
+
+        setTimeout(() => {
+            console.log(all_data);
+        }, 100000);
+    }*/
 });
