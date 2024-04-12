@@ -103,7 +103,7 @@ class FacturaVentaSheet implements FromCollection, WithHeadings, WithTitle, With
             }
 
             return [
-                "FE-" . $item->numero,
+                "FERE-" . $item->numero,
                 $item->nit . "-" . $item->codigo_verificacion,
                 $item->razon_social,
                 $item->total_bruto,
