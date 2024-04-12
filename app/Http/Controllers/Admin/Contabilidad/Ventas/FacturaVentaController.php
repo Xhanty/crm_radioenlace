@@ -126,7 +126,7 @@ class FacturaVentaController extends Controller
                 }
             }*/
 
-            exit;
+            //exit;
 
             // Eliminar la sesión de la consulta
             session()->forget('facturas_venta_filtro');
