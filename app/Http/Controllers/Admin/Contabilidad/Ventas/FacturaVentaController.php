@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\File;
 
 class FacturaVentaController extends Controller
 {
@@ -17,6 +18,115 @@ class FacturaVentaController extends Controller
             if (!auth()->user()->hasPermissionTo('contabilidad_factura_venta')) {
                 return redirect()->route('home');
             }
+
+            // Cargar Datos JSON
+            /*$rutaArchivo = public_path('facturas_ventas.json');
+            if (File::exists($rutaArchivo)) {
+                // Lee el contenido del archivo JSON
+                $contenido = File::get($rutaArchivo);
+
+                // Decodifica el JSON a un array asociativo
+                $datos = json_decode($contenido, true);
+
+                for ($i = 0; $i < count($datos); $i++) {
+                    // Haz lo que necesites hacer con los datos
+                    foreach ($datos[$i] as $key => $value) {
+                        $token = $value["stamp"]["cufe"] ?? null;
+                        $numero = $value["number"];
+                        $tipo = 1;
+                        $fecha_elaboracion = $value["date"];
+                        $nit_cliente = $value["customer"]["identification"];
+                        $id_cliente = 0;
+                        $vendedor_id = 6;
+                        $observaciones = $value["observations"] ?? null;
+                        $valor_total = $value["total"];
+                        $status = 1;
+                        $created_at = date('Y-m-d H:i:s');
+                        $created_by = 6;
+
+                        // Actualizar después de crear la factura
+                        $total_bruto = 0;
+                        $descuentos = 0;
+                        $subtotal = 0;
+                        $impuestos_1 = [];
+                        $impuestos_2 = [];
+
+                        // Consultar el cliente
+                        $cliente = DB::table('cliente')
+                            ->where('nit', $nit_cliente)
+                            ->first();
+
+                        if ($cliente) {
+                            $id_cliente = $cliente->id;
+                        } else {
+                            $id_cliente = DB::table('cliente')->insertGetId([
+                                'nit' => $nit_cliente,
+                                'razon_social' => 'N/A',
+                            ]);
+                        }
+
+                        $valid_factura = DB::table('factura_venta')
+                            ->where('numero', $numero)
+                            ->first();
+
+                        if (!$valid_factura) {
+                            $factura = DB::table('factura_venta')->insertGetId([
+                                'token' => $token,
+                                'numero' => $numero,
+                                'tipo' => $tipo,
+                                'fecha_elaboracion' => $fecha_elaboracion,
+                                'cliente_id' => $id_cliente,
+                                'vendedor_id' => $vendedor_id,
+                                'total_bruto' => $total_bruto,
+                                'descuentos' => $descuentos,
+                                'subtotal' => $subtotal,
+                                'impuestos_1' => json_encode($impuestos_1),
+                                'impuestos_2' => json_encode($impuestos_2),
+                                'valor_total' => $valor_total,
+                                'observaciones' => $observaciones,
+                                'status' => $status,
+                                'created_at' => $created_at,
+                                'created_by' => $created_by,
+                            ]);
+
+                            foreach ($value["items"] as $key => $item) {
+                                $impuesto_cargo = 0;
+                                $impuesto_retencion = 0;
+                                $descuento = 0;
+
+                                if (isset($item["taxes"])) {
+                                    foreach ($item["taxes"] as $key => $tax) {
+                                        if ($tax["type"] == "IVA") {
+                                            $impuesto_cargo = $tax["percentage"];
+                                        } else {
+                                            $impuesto_retencion = $tax["percentage"];
+                                        }
+                                    }
+                                }
+
+                                if (isset($item["discount"])) {
+                                    $descuento = $item["discount"]["value"];
+                                }
+
+                                $detalle = DB::table('detalle_factura_venta')->insert([
+                                    'factura_id' => $factura,
+                                    'producto' => null,
+                                    'serial_producto' => null,
+                                    'description' => $item["description"],
+                                    'cantidad' => $item["quantity"],
+                                    'valor_unitario' => $item["price"],
+                                    'descuento' => $descuento,
+                                    'impuesto_cargo' => $impuesto_cargo,
+                                    'impuesto_retencion' => $impuesto_retencion,
+                                    'valor_total' => $item["total"],
+                                ]);
+                            }
+                        }
+                    }
+                }
+            }*/
+
+            exit;
 
             // Eliminar la sesión de la consulta
             session()->forget('facturas_venta_filtro');

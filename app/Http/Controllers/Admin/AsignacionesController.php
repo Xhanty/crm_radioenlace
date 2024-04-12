@@ -81,7 +81,7 @@ class AsignacionesController extends Controller
                     DB::raw("IFNULL(task_projects.project_id, '') AS project_id")
                 )
                 ->where(function ($query) {
-                    $query->whereNull("task_projects.id")->where("asignaciones.status", 0);
+                    $query->whereNull("task_projects.id")->orWhere("asignaciones.status", 0);
                 })
                 ->where("asignaciones.revision", 0)
                 ->where("asignaciones.id_empleado", session("user"))
