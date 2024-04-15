@@ -63,6 +63,12 @@
                                                     <br>
                                                     @if ($value->tipo == 1)
                                                         <strong>Observación:</strong> {{ $value->observacion }}
+                                                        @if ($value->adjunto)
+                                                            <br>
+                                                            <strong>Archivo:</strong> <a
+                                                                href="{{ asset('images/cotizaciones/' . $value->adjunto) }}"
+                                                                target="_blank">Ver Archivo</a>
+                                                        @endif
                                                     @else
                                                         <strong>Archivo:</strong> <a
                                                             href="{{ asset('images/cotizaciones/' . $value->adjunto) }}"
@@ -101,7 +107,8 @@
                                                                 @if (!auth()->user()->hasPermissionTo('aprobacion_tesoreria_cotizacion')) disabled @endif
                                                                 style="margin-left: 0px !important;">
                                                             <label class="form-check label bold"
-                                                                style="margin-left: 16px !important">Aprobación Tesorería</label>
+                                                                style="margin-left: 16px !important">Aprobación
+                                                                Tesorería</label>
                                                         </div>
                                                         <div class="form-checkbox form-checkbox-primary">
                                                             <input type="checkbox" class="form-check-input checkAprobados"
@@ -156,6 +163,12 @@
                                                     <br>
                                                     @if ($value->tipo == 1)
                                                         <strong>Observación:</strong> {{ $value->observacion }}
+                                                        @if ($value->adjunto)
+                                                            <br>
+                                                            <strong>Archivo:</strong> <a
+                                                                href="{{ asset('images/cotizaciones/' . $value->adjunto) }}"
+                                                                target="_blank">Ver Archivo</a>
+                                                        @endif
                                                     @else
                                                         <strong>Archivo:</strong> <a
                                                             href="{{ asset('images/cotizaciones/' . $value->adjunto) }}"
@@ -193,7 +206,8 @@
                                                                 @if (!auth()->user()->hasPermissionTo('aprobacion_tesoreria_cotizacion')) disabled @endif
                                                                 style="margin-left: 0px !important;">
                                                             <label class="form-check label bold"
-                                                                style="margin-left: 16px !important">Aprobación Tesorería</label>
+                                                                style="margin-left: 16px !important">Aprobación
+                                                                Tesorería</label>
                                                         </div>
                                                         <div class="form-checkbox form-checkbox-primary">
                                                             <input type="checkbox" class="form-check-input checkAprobados"
@@ -251,7 +265,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div id="content_observacion_add" style="display: block">
+                        <div id="content_observacion_add">
                             <br>
                             <div class="row row-sm">
                                 <div class="col-lg">
@@ -261,7 +275,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="content_adjunto_add" style="display: none">
+                        <div id="content_adjunto_add">
                             <br>
                             <div class="row row-sm">
                                 <div class="col-lg">

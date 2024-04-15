@@ -155,13 +155,13 @@ $(document).ready(function () {
     $("#tipo_observacion").change(function () {
         let tipo = $(this).val();
 
-        if (tipo == 1) {
+        /*if (tipo == 1) {
             $("#content_adjunto_add").hide();
             $("#content_observacion_add").show();
         } else {
             $("#content_adjunto_add").show();
             $("#content_observacion_add").hide();
-        }
+        }*/
     });
 
     $(document).on("change", ".checkAprobados", function () {
