@@ -19,7 +19,7 @@ class FacturaVentaController extends Controller
                 return redirect()->route('home');
             }
 
-            // Cargar Datos JSON
+            // Cargar Facturas de Venta JSON
             /*$rutaArchivo = public_path('facturas_ventas.json');
             if (File::exists($rutaArchivo)) {
                 // Lee el contenido del archivo JSON
@@ -126,7 +126,131 @@ class FacturaVentaController extends Controller
                 }
             }*/
 
-            //exit;
+            // Cargar Recibos de Caja JSON
+            /*$rutaArchivo = public_path('recibos_caja.json');
+            if (File::exists($rutaArchivo)) {
+                // Lee el contenido del archivo JSON
+                $contenido = File::get($rutaArchivo);
+
+                // Decodifica el JSON a un array asociativo
+                $datos = json_decode($contenido, true);
+                $numero = 0;
+
+                foreach ($datos as $key => $value) {
+                    $numero = $numero + 1;
+                    $numero_siigo = $value["number"];
+                    $tipo = 1;
+                    $fecha_elaboracion = $value["date"];
+                    $status = 1;
+                    $created_at = date('Y-m-d H:i:s');
+                    $created_by = 6;
+
+                    // Cuenta de ahorros (MIRAR)
+                    $forma_pago = 21;
+                    $factura_id = null;
+                    $grupo_facturas = null;
+                    $cliente_id = null;
+                    $valor = 0;
+                    $observacion = null;
+
+                    if (count($value["items"]) == 1) {
+                        if (isset($value["items"][0]["due"])) {
+                            $factura = $value["items"][0]["due"]["consecutive"];
+                            $factura_data = DB::table('factura_venta')
+                                ->where('numero', $factura)
+                                ->first();
+                            if ($factura_data) {
+                                $factura_id = $factura_data->id;
+                                $valor = $value["items"][0]["value"];
+                                $observacion = $value["items"][0]["description"] ?? null;
+
+                                DB::table('pagos_ventas')->insert([
+                                    'numero' => $numero,
+                                    'numero_siigo' => $numero_siigo,
+                                    'tipo' => $tipo,
+                                    'factura_id' => $factura_id,
+                                    'fecha_elaboracion' => $fecha_elaboracion,
+                                    'forma_pago' => $forma_pago,
+                                    'valor' => $valor,
+                                    'status' => $status,
+                                    'observacion' => $observacion,
+                                    'created_at' => $created_at,
+                                    'created_by' => $created_by,
+                                ]);
+
+                                //Mirar si la factura ya fue pagada
+                                if($factura_data->valor_total == $valor) {
+                                    DB::table('factura_venta')
+                                        ->where('id', $factura_id)
+                                        ->update(['status' => 2]);
+                                }
+                            }
+                        }
+                    } else {
+                        $cliente = $value["customer"]["identification"];
+                        $cliente_data = DB::table('cliente')
+                            ->where('nit', $cliente)
+                            ->first();
+
+                        if ($cliente_data) {
+                            $grupo_facturas = [];
+                            foreach ($value["items"] as $key => $item) {
+                                if (isset($item["tax"])) {
+                                    if ($item["tax"]["type"] == "ReteIVA") {
+                                        $rete_iva = $item["tax"]["percentage"];
+                                    } else if ($item["tax"]["type"] == "ReteICA") {
+                                        $rete_ica = $item["tax"]["percentage"];
+                                    } else if ($item["tax"]["type"] == "ReteFuente") {
+                                        $rete_fuente = $item["tax"]["percentage"];
+                                    }
+
+                                    // Cuadrar los impuestos
+                                } else {
+                                    if (isset($item["due"])) {
+                                        $factura = $item["due"]["consecutive"];
+                                        $factura_data = DB::table('factura_venta')
+                                            ->where('numero', $factura)
+                                            ->first();
+                                        if ($factura_data) {
+                                            // Revisar para agrupar las facturas
+                                            $factura_id = $factura_data->id;
+                                            $valor = $item["value"];
+                                            $data = [
+                                                'id' => $factura_id,
+                                                'valor' => $item["value"],
+                                            ];
+                                            array_push($grupo_facturas, $data);
+                                            
+                                            DB::table('pagos_ventas')->insert([
+                                                'numero' => $numero,
+                                                'numero_siigo' => $numero_siigo,
+                                                'tipo' => $tipo,
+                                                'factura_id' => $factura_id,
+                                                'fecha_elaboracion' => $fecha_elaboracion,
+                                                'forma_pago' => $forma_pago,
+                                                'valor' => $valor,
+                                                'status' => $status,
+                                                'observacion' => $observacion,
+                                                'created_at' => $created_at,
+                                                'created_by' => $created_by,
+                                            ]);
+            
+                                            //Mirar si la factura ya fue pagada
+                                            if($factura_data->valor_total == $valor) {
+                                                DB::table('factura_venta')
+                                                    ->where('id', $factura_id)
+                                                    ->update(['status' => 2]);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            exit;*/
 
             // Eliminar la sesión de la consulta
             session()->forget('facturas_venta_filtro');

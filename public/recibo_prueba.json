@@ -1,0 +1,101 @@
+[
+    {
+        "items": [
+            {
+                "account": {
+                    "code": "13551701",
+                    "movement": "Debit"
+                },
+                "tax": {
+                    "id": 12456,
+                    "name": "ReteIVA 15%",
+                    "type": "ReteIVA",
+                    "percentage": 15.0,
+                    "base_value": 1255200.0
+                },
+                "description": "ReteIVA 15%",
+                "value": 188280.0
+            },
+            {
+                "account": {
+                    "code": "13551503",
+                    "movement": "Debit"
+                },
+                "tax": {
+                    "id": 21702,
+                    "name": "Arriendos 4%",
+                    "type": "Retefuente",
+                    "percentage": 4.0,
+                    "base_value": 7845000.0
+                },
+                "description": "Arriendos 4%",
+                "value": 313800.0
+            },
+            {
+                "account": {
+                    "code": "13551701",
+                    "movement": "Debit"
+                },
+                "tax": {
+                    "id": 12456,
+                    "name": "ReteIVA 15%",
+                    "type": "ReteIVA",
+                    "percentage": 15.0,
+                    "base_value": 1088960.0
+                },
+                "description": "ReteIVA 15%",
+                "value": 163344.0
+            },
+            {
+                "account": {
+                    "code": "13551824",
+                    "movement": "Debit"
+                },
+                "tax": {
+                    "id": 23068,
+                    "name": "Rete ica 10",
+                    "type": "ReteICA",
+                    "percentage": 10.0,
+                    "base_value": 6806000.0
+                },
+                "description": "Rete ica 10",
+                "value": 68060.0
+            },
+            {
+                "account": {
+                    "code": "13551503",
+                    "movement": "Debit"
+                },
+                "tax": {
+                    "id": 21702,
+                    "name": "Arriendos 4%",
+                    "type": "Retefuente",
+                    "percentage": 4.0,
+                    "base_value": 6806000.0
+                },
+                "description": "Arriendos 4%",
+                "value": 272240.0
+            },
+            {
+                "due": {
+                    "prefix": "FV-2",
+                    "consecutive": 3483,
+                    "quote": 1,
+                    "date": "2022-12-18"
+                },
+                "description": "Clientes nacionales",
+                "value": 9100200.0
+            },
+            {
+                "due": {
+                    "prefix": "FV-2",
+                    "consecutive": 3393,
+                    "quote": 1,
+                    "date": "2022-11-10"
+                },
+                "description": "Clientes nacionales",
+                "value": 7894960.0
+            }
+        ]
+    }
+]
