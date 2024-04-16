@@ -1,0 +1,36 @@
+[
+    {
+        "id": "c754ef7f-2ada-409a-bd6e-1c1c8f40ebcb",
+        "document": {
+            "id": 27466
+        },
+        "number": 4,
+        "name": "RC-2-4",
+        "date": "2024-01-09",
+        "type": "Detailed",
+        "customer": {
+            "id": "b91a9545-9919-4605-8539-7845173378a2",
+            "identification": "901463092",
+            "branch_office": 0
+        },
+        "items": [
+            {
+                "account": {
+                    "code": "13050501",
+                    "movement": "Credit"
+                },
+                "due": {
+                    "prefix": "FV-1",
+                    "consecutive": 4620,
+                    "quote": 1,
+                    "date": "2024-01-04"
+                },
+                "description": "Clientes nacionales",
+                "value": 2576000.0
+            }
+        ],
+        "metadata": {
+            "created": "2024-04-05T14:50:39.35"
+        }
+    }
+]
