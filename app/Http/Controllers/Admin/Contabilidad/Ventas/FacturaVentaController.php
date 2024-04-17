@@ -28,6 +28,11 @@ class FacturaVentaController extends Controller
                 // Decodifica el JSON a un array asociativo
                 $datos = json_decode($contenido, true);
 
+                //for ($i = 0; $i < count($datos); $i++) {
+                //foreach ($datos[$i] as $key => $value) {
+                //}
+                //}
+
                 foreach ($datos as $key => $value) {
                     $token = $value["stamp"]["cufe"] ?? null;
                     $numero = $value["number"];
@@ -111,6 +116,7 @@ class FacturaVentaController extends Controller
                                 'producto' => null,
                                 'serial_producto' => null,
                                 'description' => $item["description"],
+                                'code_siigo' => $item["code"],
                                 'cantidad' => $item["quantity"],
                                 'valor_unitario' => $item["price"],
                                 'descuento' => $descuento,
@@ -126,7 +132,7 @@ class FacturaVentaController extends Controller
             exit;*/
 
             // Cargar Recibos de Caja JSON
-            /*$rutaArchivo = public_path('recibos_caja_2024.json');
+            /*$rutaArchivo = public_path('recibos_caja.json');
             if (File::exists($rutaArchivo)) {
                 // Lee el contenido del archivo JSON
                 $contenido = File::get($rutaArchivo);
