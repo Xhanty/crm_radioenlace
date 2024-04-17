@@ -221,18 +221,26 @@
                                                 <td class="tm_width_1 tm_accent_border_20 tm_text_center">
                                                     {{ $count }}
                                                 </td>
-                                                <td class="tm_width_6 tm_accent_border_20 tm_text_center"
-                                                    style="text-align: justify">
-                                                    <b>{{ $item->detalle->nombre }} (@if ($item->detalle->marca)
-                                                            {{ $item->detalle->marca }} -
-                                                        @endif{{ $item->detalle->modelo }})</b>
-                                                    <br><p
-                                                        class="descrip-personalizado">{{ $item->description }}</p>
-                                                </td>
+                                                @if ($item->producto)
+                                                    <td class="tm_width_6 tm_accent_border_20 tm_text_center"
+                                                        style="text-align: justify">
+                                                        <b>{{ $item->detalle->nombre }} (@if ($item->detalle->marca)
+                                                                {{ $item->detalle->marca }} -
+                                                            @endif
+                                                            {{ $item->detalle->modelo }})</b>
+                                                        <br>
+                                                        <p class="descrip-personalizado">{{ $item->description }}</p>
+                                                    </td>
+                                                @else
+                                                    <td class="tm_width_6 tm_accent_border_20 tm_text_center"
+                                                        style="text-align: justify">
+                                                        <p class="descrip-personalizado">{{ $item->description }}</p>
+                                                    </td>
+                                                @endif
                                                 <td class="tm_width_1 tm_accent_border_20 tm_text_center">
                                                     {{ $item->cantidad }}</td>
                                                 <td class="tm_width_1 tm_accent_border_20 tm_text_center">
-                                                    {{ $item->valor_unitario }}</td>
+                                                    {{ number_format($item->valor_unitario, 2, ',', '.') }}</td>
                                                 <td style="display: none"
                                                     class="tm_width_1 tm_accent_border_20 tm_text_center">
                                                     {{ $item->impuesto_cargo }}%</td>
@@ -240,7 +248,7 @@
                                                     class="tm_width_1 tm_accent_border_20 tm_text_center">
                                                     {{ $item->impuesto_retencion }}%</td>
                                                 <td class="tm_width_1 tm_accent_border_20 tm_text_right">
-                                                    {{ $item->valor_total }}</td>
+                                                    {{ number_format($item->valor_total, 2, ',', '.') }}</td>
                                             </tr>
                                             @php
                                                 $count++;
@@ -274,44 +282,49 @@
                                             </td>
                                             <td
                                                 class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
-                                                {{ $factura->total_bruto }}</td>
+                                                {{ number_format($factura->valor_total, 2, ',', '.') }}</td>
                                         </tr>
                                         <tr>
                                             <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">Descuento
                                             </td>
                                             <td
                                                 class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
-                                                {{ $factura->descuentos }}</td>
+                                                {{ number_format($factura->descuentos, 2, ',', '.') }}</td>
                                         </tr>
                                         <tr>
                                             <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">Subtotal
                                             </td>
                                             <td
                                                 class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
-                                                {{ $factura->subtotal }}</td>
+                                                {{ number_format($factura->valor_total, 2, ',', '.') }}</td>
                                         </tr>
                                         @php
                                             $impuestos_1 = $factura->impuestos_1 == 'null' ? [] : $factura->impuestos_1;
                                             $impuestos_2 = $factura->impuestos_2 == 'null' ? [] : $factura->impuestos_2;
-                                            
+
                                             $subtotal = $factura->subtotal;
                                             // Eliminar los dos ceros del final
                                             $subtotal = rtrim($subtotal, '0');
-                                            
+
                                             // Reemplazar comas y puntos
                                             $subtotal = str_replace(',', '', $subtotal);
                                             $subtotal = str_replace('.', '', $subtotal);
-                                            
+
                                             // Convertir a entero
                                             $subtotal_num = (int) $subtotal;
                                             $sum_impuestos_1 = 0;
-                                            
+
                                             if ($impuestos_1) {
                                                 if (json_decode($impuestos_1)) {
                                                     $impuestos = json_decode($impuestos_1);
                                                     foreach ($impuestos as $impuesto) {
                                                         $sum_impuestos_1 += intval($impuesto[1]);
-                                                        $valor_impuesto = number_format(intval($impuesto[1]), 2, ',', '.');
+                                                        $valor_impuesto = number_format(
+                                                            intval($impuesto[1]),
+                                                            2,
+                                                            ',',
+                                                            '.',
+                                                        );
                                                         echo '<tr>
                                                             <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">' .
                                                             $impuesto[0] .
@@ -323,12 +336,17 @@
                                                     }
                                                 }
                                             }
-                                            
+
                                             if ($impuestos_2) {
                                                 if (json_decode($impuestos_2)) {
                                                     $impuestos = json_decode($impuestos_2);
                                                     foreach ($impuestos as $impuesto) {
-                                                        $valor_impuesto = number_format(intval($impuesto[1]), 2, ',', '.');
+                                                        $valor_impuesto = number_format(
+                                                            intval($impuesto[1]),
+                                                            2,
+                                                            ',',
+                                                            '.',
+                                                        );
                                                         echo '<tr>
                                                             <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">' .
                                                             $impuesto[0] .
@@ -384,7 +402,7 @@
                                                 Total a Pagar</td>
                                             <td
                                                 class="tm_width_3 tm_bold tm_f16 tm_border_top_0 tm_accent_color tm_text_right tm_accent_bg_10 tm_invoice_total">
-                                                {{ $factura->valor_total }}
+                                                {{ number_format($factura->valor_total, 2, ',', '.') }}
                                             </td>
                                         </tr>
                                     </tbody>
@@ -441,9 +459,8 @@
                             <path
                                 d="M384 368h24a40.12 40.12 0 0040-40V168a40.12 40.12 0 00-40-40H104a40.12 40.12 0 00-40 40v160a40.12 40.12 0 0040 40h24"
                                 fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" />
-                            <rect x="128" y="240" width="256" height="208" rx="24.32"
-                                ry="24.32" fill="none" stroke="currentColor" stroke-linejoin="round"
-                                stroke-width="32" />
+                            <rect x="128" y="240" width="256" height="208" rx="24.32" ry="24.32"
+                                fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" />
                             <path d="M384 128v-24a40.12 40.12 0 00-40-40H168a40.12 40.12 0 00-40 40v24" fill="none"
                                 stroke="currentColor" stroke-linejoin="round" stroke-width="32" />
                             <circle cx="392" cy="184" r="24" fill='currentColor' />

@@ -272,7 +272,7 @@
                                             @endphp
                                             <h6><span>FERE-{{ $factura->numero }}@if($bg == 'bg-pending')<badge
                                                         class="badge {{ $color }}">{{ $dias_pasados }}</badge>@endif</span>
-                                                <span>{{ $factura->valor_total }}
+                                                <span>{{ number_format($factura->valor_total, 2, ',', '.') }}
                                                     @if ($factura->favorito == 0)
                                                         <i data-id="{{ $factura->id }}"
                                                             class="far fa-star btn_favorite"></i>

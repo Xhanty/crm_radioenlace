@@ -414,6 +414,12 @@ $(document).ready(function () {
                     let factura = response.factura;
                     let productos = factura.productos;
 
+                    // Format the price above to USD using the locale, style, and currency.
+                    let USDollar = new Intl.NumberFormat('es-ES', {
+                        style: 'currency',
+                        currency: 'COP',
+                    });
+
                     var fecha_compra = new Date(factura.fecha_elaboracion);
                     $("#cliente_view").html(factura.razon_social);
                     $("#nit_view").html(factura.nit + '-' + factura.codigo_verificacion + "<br>" + factura.telefono_fijo + "<br>" + factura.ciudad + ' - Colombia');
@@ -441,9 +447,9 @@ $(document).ready(function () {
                     if (productos) {
                         $("#productos_view").empty();
                         let count = 1;
-                        let total_bruto = factura.total_bruto;
+                        let total_bruto = factura.valor_total; //factura.total_bruto;
                         let descuentos = factura.descuentos;
-                        let subtotal = factura.subtotal;
+                        let subtotal = factura.valor_total; //factura.subtotal;
                         let impuestos_1 = JSON.parse(factura.impuestos_1);
                         let impuestos_2 = JSON.parse(factura.impuestos_2);
                         let total = factura.valor_total;
@@ -473,7 +479,25 @@ $(document).ready(function () {
                                     item.impuesto_cargo +
                                     '%</td>' +
                                     '<td style="text-align: right;">' +
-                                    item.valor_total +
+                                    USDollar.format(item.valor_total) +
+                                    '</td>' +
+                                    '</tr>'
+                                );
+                            } else {
+                                $("#productos_view").append(
+                                    '<tr>' +
+                                    '<td>' + count + '</td>' +
+                                    '<td class="tx-13">' +
+                                    item.description +
+                                    '</td>' +
+                                    '<td class="text-center">' +
+                                    parseInt(item.cantidad) +
+                                    '</td>' +
+                                    '<td style="text-align: center;">' +
+                                    item.impuesto_cargo +
+                                    '%</td>' +
+                                    '<td style="text-align: right;">' +
+                                    USDollar.format(item.valor_total) +
                                     '</td>' +
                                     '</tr>'
                                 );
@@ -583,18 +607,18 @@ $(document).ready(function () {
                             '</div>' +
                             '</td>' +
                             '<td class="tx-right" style="font-weight: 700; color: #7987a1;">Total Bruto</td>' +
-                            '<td class="tx-right" colspan="2">' + total_bruto + '</td>' +
+                            '<td class="tx-right" colspan="2">' + USDollar.format(total_bruto) + '</td>' +
                             '</tr>'
                         );
 
                         $("#productos_view").append(
                             '<tr>' +
                             '<td class="tx-right" style="font-weight: 700; color: #7987a1;">Descuentos</td>' +
-                            '<td class="tx-right" colspan="2">' + descuentos + '</td>' +
+                            '<td class="tx-right" colspan="2">' + USDollar.format(descuentos) + '</td>' +
                             '</tr>' +
                             '<tr>' +
                             '<td class="tx-right" style="font-weight: 700; color: #7987a1;">Subtotal</td>' +
-                            '<td class="tx-right" colspan="2">' + subtotal + '</td>' +
+                            '<td class="tx-right" colspan="2">' + USDollar.format(subtotal) + '</td>' +
                             '</tr>' +
                             impuestos_1_total +
                             /*impuestos_2_total +*/
@@ -604,7 +628,7 @@ $(document).ready(function () {
                             '<tr>' +
                             '<td class="tx-right tx-uppercase tx-bold tx-inverse">Total Neto</td>' +
                             '<td class="tx-right" colspan="2">' +
-                            '<h4 class="tx-primary tx-bold">' + total + '</h4>' +
+                            '<h4 class="tx-primary tx-bold">' + USDollar.format(total) + '</h4>' +
                             '</td>' +
                             '</tr>'
                         );
@@ -2371,6 +2395,11 @@ $(document).ready(function () {
                             $("#mainInvoiceList").html("");
                             $("#cant_facturas").html(facturas.length);
 
+                            let USDollar = new Intl.NumberFormat('es-ES', {
+                                style: 'currency',
+                                currency: 'COP',
+                            });
+
                             facturas.forEach(function (factura) {
                                 let bg = "";
                                 let favorito = "";
@@ -2411,7 +2440,7 @@ $(document).ready(function () {
                                     '</div>' +
                                     '<div class="media-body">' +
                                     '<h6><span>' + tipo + factura.numero + mora_html + '</span>' +
-                                    '<span>' + factura.valor_total +
+                                    '<span>' + USDollar.format(factura.valor_total) +
                                     '<i data-id="' + factura.id + '" class="' + favorito + ' btn_favorite"></i></span>' +
                                     '</h6>' +
                                     '<div>' +
