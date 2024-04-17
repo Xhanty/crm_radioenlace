@@ -165,7 +165,7 @@
                         <img src="{{ asset('assets/img/contabilidad/contabilidad.png') }}" width="100px" alt=""
                             class="img-cards">
                         <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);"
-                                style="color: white">Contabilidad</a></h3>
+                                style="color: white">Comprobantes</a></h3>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box" id="btnProductos">
@@ -746,8 +746,9 @@
             });
 
             $('#btnContabilidad').click(function() {
-                $('#content_list_options').hide();
-                $('#content_list_contabilidad').show();
+                //$('#content_list_options').hide();
+                //$('#content_list_contabilidad').show();
+                window.location.href = "conciliacion_bancaria";
             });
 
             $("#btnReportes").click(function() {
