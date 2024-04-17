@@ -463,10 +463,12 @@ $(document).ready(function () {
                                 serial = "S/N: " + serial.toUpperCase();
                             }
 
+                            item.code_siigo = item.code_siigo == null ? "" : item.code_siigo;
+
                             if (item.producto) {
                                 $("#productos_view").append(
                                     '<tr>' +
-                                    '<td>' + count + '</td>' +
+                                    '<td>' + count + ' - (' + item.code_siigo + ')' + '</td>' +
                                     '<td class="tx-13">' +
                                     detalle.nombre + " (" + detalle.marca + " - " + detalle.modelo + ")" +
                                     '<br>' +
@@ -486,7 +488,7 @@ $(document).ready(function () {
                             } else {
                                 $("#productos_view").append(
                                     '<tr>' +
-                                    '<td>' + count + '</td>' +
+                                    '<td>' + count + ' - (' + item.code_siigo + ')' + '</td>' +
                                     '<td class="tx-13">' +
                                     item.description +
                                     '</td>' +

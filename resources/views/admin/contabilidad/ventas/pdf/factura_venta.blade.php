@@ -219,7 +219,7 @@
                                         @foreach ($factura->productos as $key => $item)
                                             <tr>
                                                 <td class="tm_width_1 tm_accent_border_20 tm_text_center">
-                                                    {{ $count }}
+                                                    {{ $count }} - ({{ $item->code_siigo }})
                                                 </td>
                                                 @if ($item->producto)
                                                     <td class="tm_width_6 tm_accent_border_20 tm_text_center"
