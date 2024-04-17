@@ -40,7 +40,12 @@ class ConciliacionBancariaController extends Controller
             }
         }
 
-        return view('admin.contabilidad.conciliacion_banc', compact('empleados', 'conciliaciones'));
+        $clientes = DB::table('cliente')
+            ->select('id', 'razon_social', 'nit')
+            ->where('estado', 1)
+            ->get();
+
+        return view('admin.contabilidad.conciliacion_banc', compact('empleados', 'conciliaciones', 'clientes'));
     }
 
     public function valid(Request $request)
@@ -196,7 +201,6 @@ class ConciliacionBancariaController extends Controller
             return response()->json([
                 'info' => 1,
             ]);
-
         } catch (Exception $ex) {
             DB::rollBack();
             echo $ex->getMessage();
@@ -224,7 +228,6 @@ class ConciliacionBancariaController extends Controller
             return response()->json([
                 'info' => 1,
             ]);
-
         } catch (Exception $ex) {
             DB::rollBack();
             return response()->json([

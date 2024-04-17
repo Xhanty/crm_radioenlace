@@ -8,6 +8,7 @@ $(document).ready(function () {
     var protocol = window.location.protocol;
     var host = window.location.host;
     var url_general = protocol + "//" + host + "/";
+    let clientes = JSON.parse(localStorage.getItem("clientes"));
 
     $(".open-toggle").trigger("click");
 
@@ -133,10 +134,6 @@ $(document).ready(function () {
                                                         "date"
                                                     );
                                                     input.setAttribute(
-                                                        "readonly",
-                                                        "readonly"
-                                                    );
-                                                    input.setAttribute(
                                                         "class",
                                                         "fecha_add form-control"
                                                     );
@@ -241,11 +238,6 @@ $(document).ready(function () {
                                                         "value",
                                                         formattedNumber
                                                     );
-
-                                                    input.setAttribute(
-                                                        "readonly",
-                                                        "readonly"
-                                                    );
                                                     newCell.appendChild(input);
                                                 } else {
                                                     //Añadir en input el contenido de la celda
@@ -256,10 +248,6 @@ $(document).ready(function () {
                                                     input.setAttribute(
                                                         "type",
                                                         "text"
-                                                    );
-                                                    input.setAttribute(
-                                                        "readonly",
-                                                        "readonly"
                                                     );
                                                     input.setAttribute(
                                                         "class",
@@ -283,8 +271,13 @@ $(document).ready(function () {
                                         );
                                         select_documento.setAttribute(
                                             "placeholder",
-                                            "Documento"
+                                            "Cliente"
                                         );
+                                        select_documento.innerHTML =
+                                            '<option value="">Seleccione una opción</option>' +
+                                            clientes.map((cliente) => {
+                                                return `<option value="${cliente.id}">${cliente.razon_social} (${cliente.nit})</option>`;
+                                            });
                                         newRow
                                             .insertCell()
                                             .appendChild(select_documento);
@@ -327,6 +320,17 @@ $(document).ready(function () {
                                     })
                                     .disableSelection();
 
+                                setTimeout(() => {
+                                    $(".form-select").each(function () {
+                                        $(this).select2({
+                                            dropdownParent: $(this).parent(),
+                                            placeholder: "Seleccione",
+                                            searchInputPlaceholder: "Buscar",
+                                            allowClear: true,
+                                        });
+                                    });
+                                }, 1000);
+
                                 $("#show_content_excel").removeClass("d-none");
                                 $("#show_list_excel").addClass("d-none");
                                 $("#modalAdd").modal("hide");
@@ -354,7 +358,6 @@ $(document).ready(function () {
         let mes = $("#mesadd").val();
         let anio = $("#anioadd").val();
         let last_value = "0.00";
-
         if ($("#excelTable tbody tr:last-child").length > 0) {
             last_value = $("#excelTable tbody tr:last-child .saldo_add").val();
         }
@@ -365,13 +368,26 @@ $(document).ready(function () {
                 '<td><input type="text" class="form-control descripcion_add"></td>' +
                 '<td><input type="text" class="form-control input_dinner debito_add"></td>' +
                 '<td><input type="text" class="form-control input_dinner credito_add"></td>' +
-                '<td><input type="text" class="form-control input_dinner saldo_add" readonly value="' +
+                '<td><input type="text" class="form-control input_dinner saldo_add" value="' +
                 last_value +
                 '"></td>' +
-                '<td><select class="form-select documento_add" placeholder="Documento"></select></td>' +
+                '<td><select class="form-select documento_add" placeholder="Cliente">' +
+                '<option value="">Seleccione una opción</option>' +
+                clientes.map((cliente) => {
+                    return `<option value="${cliente.id}">${cliente.razon_social} (${cliente.nit})</option>`;
+                }) +
                 '<td><div class="d-flex"><textarea rows="1" cols="20" class="form-control nota_add" placeholder="Nota"></textarea><i class="fas fa-trash-alt text-danger btnDeleteRow mt-2" style="margin-left: 6px"></i></div></td>' +
                 "</tr>"
         );
+
+        $(".form-select").each(function () {
+            $(this).select2({
+                dropdownParent: $(this).parent(),
+                placeholder: "Seleccione",
+                searchInputPlaceholder: "Buscar",
+                allowClear: true,
+            });
+        });
 
         //No permitir ingresar fechas menores y mayores al mes y año seleccionado
         let ultimoDiaDelMes = new Date(anio, mes, 0).getDate();
@@ -471,7 +487,7 @@ $(document).ready(function () {
         let data = [];
         let error = false;
 
-        if(!$("#excelTable tbody tr").html()) {
+        if (!$("#excelTable tbody tr").html()) {
             error = true;
         }
 
@@ -489,14 +505,19 @@ $(document).ready(function () {
             } else if (descripcion == "") {
                 error = true;
             } else if (!debito && !credito) {
-                if($(this).find("td:nth-child(3)").html() != "") {
+                if ($(this).find("td:nth-child(3)").html() != "") {
                     debito = $(this).find("td:nth-child(3)").html();
-                } else if($(this).find("td:nth-child(4)").html() != "") {
+                } else if ($(this).find("td:nth-child(4)").html() != "") {
                     credito = $(this).find("td:nth-child(4)").html();
                 } else {
                     error = true;
                 }
-            } else if (!saldo || saldo == "" || saldo == "0.00" || saldo == "NaN") {
+            } else if (
+                !saldo ||
+                saldo == "" ||
+                saldo == "0.00" ||
+                saldo == "NaN"
+            ) {
                 error = true;
             }
 
@@ -513,7 +534,7 @@ $(document).ready(function () {
 
         console.log(data);
 
-        if(error) {
+        if (error) {
             toastr.error("Revisa los campos");
         } else {
             $("#btnGuardarExcel").prop("disabled", true);
@@ -558,7 +579,7 @@ $(document).ready(function () {
 
     $(document).on("click", ".btnView", function () {
         let id = $(this).attr("data-id");
-        $("#global-loader").fadeIn('slow');
+        $("#global-loader").fadeIn("slow");
 
         $.ajax({
             url: "data_concil_bancaria",
@@ -567,7 +588,7 @@ $(document).ready(function () {
                 id: id,
             },
             success: function (response) {
-                $("#global-loader").fadeOut('slow');
+                $("#global-loader").fadeOut("slow");
                 if (response.info == 1) {
                     let data = response.data;
                     console.log(data);
@@ -576,7 +597,7 @@ $(document).ready(function () {
                 }
             },
             error: function (error) {
-                $("#global-loader").fadeOut('slow');
+                $("#global-loader").fadeOut("slow");
                 console.log(error);
                 toastr.error("Error al cargar la información");
             },
@@ -586,7 +607,7 @@ $(document).ready(function () {
     $(document).on("click", ".btnEdit", function () {
         let id = $(this).attr("data-id");
 
-        $("#global-loader").fadeIn('slow');
+        $("#global-loader").fadeIn("slow");
 
         $.ajax({
             url: "data_concil_bancaria",
@@ -595,7 +616,7 @@ $(document).ready(function () {
                 id: id,
             },
             success: function (response) {
-                $("#global-loader").fadeOut('slow');
+                $("#global-loader").fadeOut("slow");
                 if (response.info == 1) {
                     let data = response.data;
                     console.log(data);
@@ -604,7 +625,7 @@ $(document).ready(function () {
                 }
             },
             error: function (error) {
-                $("#global-loader").fadeOut('slow');
+                $("#global-loader").fadeOut("slow");
                 console.log(error);
                 toastr.error("Error al cargar la información");
             },
@@ -654,6 +675,5 @@ $(document).ready(function () {
         });
     });
 
-    function totales() {
-    }
+    function totales() {}
 });

@@ -222,7 +222,8 @@
                                         <th>Debito</th>
                                         <th>Crédito</th>
                                         <th>Saldo</th>
-                                        <th>Dcto.</th>
+                                        <!--<th>Dcto.</th>-->
+                                        <th>Cliente</th>
                                         <th>Nota</th>
                                     </tr>
                                 </thead>
@@ -356,4 +357,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.2/xlsx.full.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js'></script>
     <script src="{{ asset('assets/js/app/contabilidad/conciliacion_bancaria.js') }}"></script>
+    <script>
+        let clientes = @json($clientes);
+        // Guardar en localstorage
+        localStorage.setItem('clientes', JSON.stringify(clientes));
+    </script>
 @endsection
