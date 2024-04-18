@@ -283,6 +283,8 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/completar_concil_bancaria', [App\Http\Controllers\Admin\Contabilidad\ConciliacionBancariaController::class, 'completar'])->name('completar_concil_bancaria');
     Route::post('/rechazar_concil_bancaria', [App\Http\Controllers\Admin\Contabilidad\ConciliacionBancariaController::class, 'rechazar'])->name('rechazar_concil_bancaria');
     Route::post('/eliminar_concil_bancaria', [App\Http\Controllers\Admin\Contabilidad\ConciliacionBancariaController::class, 'eliminar'])->name('eliminar_concil_bancaria');
+    Route::get('/salidas_concil_bancaria', [App\Http\Controllers\Admin\Contabilidad\ConciliacionBancariaController::class, 'salidas_excel'])->name('salidas_concil_bancaria');
+    Route::get('/ingresos_concil_bancaria', [App\Http\Controllers\Admin\Contabilidad\ConciliacionBancariaController::class, 'ingresos_excel'])->name('ingresos_concil_bancaria');
 
     // COMPROBANTES CONTABLES
     Route::get('/comprobantes_contables', [App\Http\Controllers\Admin\Contabilidad\ComprobantesContablesController::class, 'index'])->name('comprobantes_contables');

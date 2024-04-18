@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin\Contabilidad;
 
+use App\Exports\Contabilidad\IngresoConciliacionBancaria;
+use App\Exports\Contabilidad\SalidaConciliacionBancaria;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Exception;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ConciliacionBancariaController extends Controller
 {
@@ -291,5 +294,43 @@ class ConciliacionBancariaController extends Controller
                 'info' => 0,
             ]);
         }
+    }
+
+    public function salidas_excel(Request $request)
+    {
+        $id = $request->id;
+
+        $data = DB::table('conciliacion_bancaria')
+            ->where('id', $id)
+            ->first();
+
+        $data->detalle = DB::table('detalle_conciliacion_bancaria')
+            ->select('detalle_conciliacion_bancaria.*', 'cliente.razon_social AS nombre_cliente', 'cliente.nit AS nit_cliente')
+            ->leftJoin('cliente', 'detalle_conciliacion_bancaria.cliente', '=', 'cliente.id')
+            ->where('detalle_conciliacion_bancaria.conciliacion_id', $id)
+            ->whereNotNull('detalle_conciliacion_bancaria.debito')
+            ->get();
+
+        // Generar el archivo Excel
+        return Excel::download(new SalidaConciliacionBancaria($data->detalle), 'Salidas Bancarias.xlsx');
+    }
+
+    public function ingresos_excel(Request $request)
+    {
+        $id = $request->id;
+
+        $data = DB::table('conciliacion_bancaria')
+            ->where('id', $id)
+            ->first();
+
+        $data->detalle = DB::table('detalle_conciliacion_bancaria')
+            ->select('detalle_conciliacion_bancaria.*', 'cliente.razon_social AS nombre_cliente', 'cliente.nit AS nit_cliente')
+            ->leftJoin('cliente', 'detalle_conciliacion_bancaria.cliente', '=', 'cliente.id')
+            ->where('detalle_conciliacion_bancaria.conciliacion_id', $id)
+            ->whereNotNull('detalle_conciliacion_bancaria.credito')
+            ->get();
+
+        // Generar el archivo Excel
+        return Excel::download(new IngresoConciliacionBancaria($data->detalle), 'Ingresos Bancarios.xlsx');
     }
 }

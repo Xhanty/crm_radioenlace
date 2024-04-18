@@ -111,6 +111,7 @@
                                         <th class="wd-20p border-bottom-0">Mes</th>
                                         <th class="wd-15p border-bottom-0">Año</th>
                                         <th class="wd-15p border-bottom-0">Saldo Final</th>
+                                        <th class="wd-15p border-bottom-0">Archivos</th>
                                         <th class="wd-15p border-bottom-0">Acciones</th>
                                     </tr>
                                 </thead>
@@ -171,6 +172,16 @@
                                             <td>{{ $mes }}</td>
                                             <td>{{ $conciliacion->anio }}</td>
                                             <td>{{ $conciliacion->saldo_final }}</td>
+                                            <td class="text-center">
+                                                <a
+                                                    href="{{ route('salidas_concil_bancaria') . '?id=' . $conciliacion->id }}">Salidas</a>
+                                                <br>
+                                                <a
+                                                    href="{{ route('ingresos_concil_bancaria') . '?id=' . $conciliacion->id }}">Ingresos</a>
+                                                <br>
+                                                <a href="{{ asset('storage/' . $conciliacion->archivo) }}"
+                                                    target="_blank">Archivo Completo</a>
+                                            </td>
                                             <td>
                                                 <a href="javascript:void(0);" title="Visualizar"
                                                     data-id="{{ $conciliacion->id }}" class="btn btn-primary btnView"><i
@@ -265,7 +276,8 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <!-- basic-datatable-t -->
-                            <table class="table border-top-0 table-bordered text-nowrap border-bottom" id="excelTableEdit">
+                            <table class="table border-top-0 table-bordered text-nowrap border-bottom"
+                                id="excelTableEdit">
                                 <thead>
                                     <tr>
                                         <th>Fecha</th>
@@ -311,7 +323,8 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <!-- basic-datatable-t -->
-                            <table class="table border-top-0 table-bordered text-nowrap border-bottom" id="excelTableView">
+                            <table class="table border-top-0 table-bordered text-nowrap border-bottom"
+                                id="excelTableView">
                                 <thead>
                                     <tr>
                                         <th>Fecha</th>
