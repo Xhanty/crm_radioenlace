@@ -50,7 +50,6 @@
                 </nav>
             </div>
         </div>
-        <!-- /breadcrumb -->
 
         <!-- Row -->
         <div class="row row-sm" id="show_list_excel">
@@ -224,7 +223,7 @@
                             <h3 class="card-title mt-2">Listado desde el excel</h3>
                         </div>
                         <div class="div-2-tables-header">
-                            <a class="btn btn-primary" id="newRowAdd">Añadir</a>
+                            <a class="btn btn-warning" href="{{ route('conciliacion_bancaria') }}">Regresar</a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -249,10 +248,10 @@
                             <br>
                             <div class="text-center d-flex">
                                 <div class="col-lg">
-                                    <a class="btn btn-warning" href="{{ route('conciliacion_bancaria') }}">Regresar</a>
+                                    <a class="btn btn-primary" id="newRowAdd">Añadir</a>
                                 </div>
                                 <div class="col-lg">
-                                    <button class="btn btn-primary" id="btnGuardarExcel">Guardar</button>
+                                    <button class="btn btn-success" id="btnGuardarExcel">Guardar</button>
                                 </div>
                             </div>
                         </div>
@@ -270,10 +269,11 @@
                             <h3 class="card-title mt-2">Listado desde el excel</h3>
                         </div>
                         <div class="div-2-tables-header">
-                            <a class="btn btn-primary" id="newRowEdit">Añadir</a>
+                            <a class="btn btn-warning" href="{{ route('conciliacion_bancaria') }}">Regresar</a>
                         </div>
                     </div>
                     <div class="card-body">
+                        <input type="hidden" disabled readonly id="id_conci_edit">
                         <div class="table-responsive">
                             <!-- basic-datatable-t -->
                             <table class="table border-top-0 table-bordered text-nowrap border-bottom"
@@ -296,10 +296,10 @@
                             <br>
                             <div class="text-center d-flex">
                                 <div class="col-lg">
-                                    <a class="btn btn-warning" href="{{ route('conciliacion_bancaria') }}">Regresar</a>
+                                    <a class="btn btn-primary" id="newRowEdit">Añadir nueva fila</a>
                                 </div>
                                 <div class="col-lg">
-                                    <button class="btn btn-primary" id="btnModificarExcel">Modificar</button>
+                                    <button class="btn btn-success" id="btnModificarExcel">Modificar</button>
                                 </div>
                             </div>
                         </div>
@@ -317,7 +317,7 @@
                             <h3 class="card-title mt-2">Listado desde el excel</h3>
                         </div>
                         <div class="div-2-tables-header">
-                            <a class="btn btn-primary" href="{{ route('conciliacion_bancaria') }}">Regresar</a>
+                            <a class="btn btn-warning" href="{{ route('conciliacion_bancaria') }}">Regresar</a>
                         </div>
                     </div>
                     <div class="card-body">

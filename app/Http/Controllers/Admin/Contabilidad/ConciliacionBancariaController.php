@@ -157,28 +157,15 @@ class ConciliacionBancariaController extends Controller
             DB::beginTransaction();
 
             $conciliacion_id = $request->id;
-            $mes = $request->mes;
-            $anio = $request->anio;
             $saldo_final = $request->saldo_final;
             $data = json_decode($request->data);
             $updated_by = auth()->user()->id;
             $updated_at = date('Y-m-d H:i:s');
-            $archivo = null;
-
-            if ($request->hasFile('file')) {
-                $file = $request->file('file');
-                $name = time() . $file->getClientOriginalName();
-                $file->move('images/contabilidad/conciliacion_bancaria/', $name);
-                $archivo = $name;
-            }
 
             DB::table('conciliacion_bancaria')
                 ->where('id', $conciliacion_id)
                 ->update([
-                    'mes' => $mes,
-                    'anio' => $anio,
                     'saldo_final' => $saldo_final,
-                    'archivo' => $archivo ?? null,
                     'updated_by' => $updated_by,
                     'updated_at' => $updated_at,
                 ]);
@@ -192,11 +179,12 @@ class ConciliacionBancariaController extends Controller
                     'conciliacion_id' => $conciliacion_id,
                     'fecha' => $item->fecha,
                     'descripcion' => $item->descripcion,
-                    'debito' => $item->debito ?? '',
-                    'credito' => $item->credito ?? '',
+                    'debito' => $item->debito ?? null,
+                    'credito' => $item->credito ?? null,
                     'saldo' => $item->saldo,
-                    'documento' => $item->documento,
-                    'nota' => $item->nota,
+                    //'documento' => $item->documento,
+                    'cliente' => $item->cliente ?? null,
+                    'nota' => $item->nota ?? null,
                     'created_at' => $updated_at,
                     'created_by' => $updated_by,
                 ]);

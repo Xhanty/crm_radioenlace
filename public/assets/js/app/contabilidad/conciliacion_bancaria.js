@@ -418,6 +418,49 @@ $(document).ready(function () {
             .disableSelection();
     });
 
+    $("#newRowEdit").click(function () {
+        let last_value = "0.00";
+        if ($("#excelTableEdit tbody tr:last-child").length > 0) {
+            last_value = $("#excelTableEdit tbody tr:last-child .saldo_edit").val();
+        }
+
+        $("#excelTableEdit tbody").append(
+            '<tr class="ui-sortable-handle">' +
+                '<td><input type="date" class="form-control fecha_edit"></td>' +
+                '<td><input type="text" class="form-control descripcion_edit"></td>' +
+                '<td><input type="text" class="form-control input_dinner debito_edit"></td>' +
+                '<td><input type="text" class="form-control input_dinner credito_edit"></td>' +
+                '<td><input type="text" class="form-control input_dinner saldo_edit" value="' +
+                last_value +
+                '"></td>' +
+                '<td><select class="form-select documento_edit" placeholder="Tercero">' +
+                '<option value="">Seleccione una opción</option>' +
+                clientes.map((cliente) => {
+                    return `<option value="${cliente.id}">${cliente.razon_social} (${cliente.nit})</option>`;
+                }) +
+                '<td><div class="d-flex"><textarea rows="1" cols="20" class="form-control nota_edit" placeholder="Facturas"></textarea><i class="fas fa-trash-alt text-danger btnDeleteRow mt-2" style="margin-left: 6px"></i></div></td>' +
+                "</tr>"
+        );
+
+        $(".form-select").each(function () {
+            $(this).select2({
+                dropdownParent: $(this).parent(),
+                placeholder: "Seleccione",
+                searchInputPlaceholder: "Buscar",
+                allowClear: true,
+            });
+        });
+
+        $("#excelTable tbody")
+            .sortable({
+                cursor: "row-resize",
+                placeholder: "ui-state-highlight",
+                opacity: "0.55",
+                items: ".ui-sortable-handle",
+            })
+            .disableSelection();
+    });
+
     $(document).on("click", ".btnDeleteRow", function () {
         $(this).closest("tr").remove();
     });
@@ -586,6 +629,105 @@ $(document).ready(function () {
         }
     });
 
+    $("#btnModificarExcel").click(function () {
+        let id = $("#id_conci_edit").val();
+        let saldo_final = $("#excelTable tbody tr:last-child .saldo_add").val();
+        let data = [];
+        let error = false;
+
+        if (!$("#excelTableEdit tbody tr").html()) {
+            error = true;
+        }
+
+        $("#excelTableEdit tbody tr").each(function () {
+            let fecha = $(this).find(".fecha_edit").val();
+            let descripcion = $(this).find(".descripcion_edit").val();
+            let debito = $(this).find(".debito_edit").val();
+            let credito = $(this).find(".credito_edit").val();
+            let saldo = $(this).find(".saldo_edit").val();
+            // let documento = $(this).find(".documento_add").val();
+            let cliente = $(this).find(".documento_edit").val();
+            let nota = $(this).find(".nota_edit").val();
+
+            if (fecha == "") {
+                error = true;
+            } else if (descripcion == "") {
+                error = true;
+            } else if (!debito && !credito) {
+                if ($(this).find("td:nth-child(3)").html() != "") {
+                    debito = $(this).find("td:nth-child(3)").html();
+                } else if ($(this).find("td:nth-child(4)").html() != "") {
+                    credito = $(this).find("td:nth-child(4)").html();
+                } else {
+                    error = true;
+                }
+            } else if (
+                !saldo ||
+                saldo == "" ||
+                saldo == "0.00" ||
+                saldo == "NaN"
+            ) {
+                error = true;
+            }
+
+            /*if(cliente == "") {
+                error = true;
+            }*/
+
+            data.push({
+                fecha: fecha,
+                descripcion: descripcion,
+                debito: debito,
+                credito: credito,
+                saldo: saldo,
+                cliente: cliente,
+                nota: nota,
+            });
+        });
+
+        //console.log(data);
+
+        if (error) {
+            toastr.error("Revisa los campos");
+        } else {
+            $("#btnModificarExcel").prop("disabled", true);
+            $("#btnModificarExcel").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Modificando...'
+            );
+
+            let formData = new FormData();
+            formData.append("id", id);
+            formData.append("saldo_final", saldo_final);
+            formData.append("data", JSON.stringify(data));
+
+            $.ajax({
+                url: "edit_concil_bancaria",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.info == 1) {
+                        toastr.success("Datos modificados correctamente");
+                        setTimeout(function () {
+                            location.reload();
+                        }, 1000);
+                    } else {
+                        toastr.error("Error al modificar los datos");
+                        $("#btnModificarExcel").prop("disabled", false);
+                        $("#btnModificarExcel").html("Modificar");
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                    toastr.error("Error al modificar los datos");
+                    $("#btnModificarExcel").prop("disabled", false);
+                    $("#btnModificarExcel").html("Modificar");
+                },
+            });
+        }
+    });
+
     $(document).on("click", ".btnView", function () {
         let id = $(this).attr("data-id");
         $("#global-loader").fadeIn("slow");
@@ -617,7 +759,12 @@ $(document).ready(function () {
                         let debito = item.debito ? item.debito : "";
                         let credito = item.credito ? item.credito : "";
                         let saldo = item.saldo;
-                        let cliente = item.cliente ? item.nombre_cliente + " (" + item.nit_cliente + ")" : "";
+                        let cliente = item.cliente
+                            ? item.nombre_cliente +
+                              " (" +
+                              item.nit_cliente +
+                              ")"
+                            : "";
 
                         $("#excelTableView tbody").append(
                             "<tr>" +
@@ -675,7 +822,84 @@ $(document).ready(function () {
                 $("#global-loader").fadeOut("slow");
                 if (response.info == 1) {
                     let data = response.data;
-                    console.log(data);
+                    let detalle = response.data.detalle;
+                    //console.log(data);
+
+                    $("#excelTableEdit tbody").html("");
+                    $("#id_conci_edit").val(id);
+
+                    detalle.forEach((item) => {
+                        let fecha = item.fecha;
+                        let debito = item.debito ? item.debito : "";
+                        let credito = item.credito ? item.credito : "";
+                        let saldo = item.saldo;
+                        let cliente = item.cliente
+                            ? item.nombre_cliente +
+                              " (" +
+                              item.nit_cliente +
+                              ")"
+                            : "";
+
+                        $("#excelTableEdit tbody").append(
+                            "<tr>" +
+                                "<td>" +
+                                '<input type="date" class="form-control fecha_edit" value="' +
+                                fecha +
+                                '">' +
+                                "</td>" +
+                                "<td>" +
+                                '<input type="text" class="form-control descripcion_edit" value="' +
+                                item.descripcion +
+                                '">' +
+                                "</td>" +
+                                "<td>" +
+                                '<input type="text" class="form-control input_dinner debito_edit" value="' +
+                                debito +
+                                '">' +
+                                "</td>" +
+                                "<td>" +
+                                '<input type="text" class="form-control input_dinner credito_edit" value="' +
+                                credito +
+                                '">' +
+                                "</td>" +
+                                "<td>" +
+                                '<input type="text" class="form-control input_dinner saldo_edit" value="' +
+                                saldo +
+                                '">' +
+                                "</td>" +
+                                "<td>" +
+                                '<select class="form-select documento_edit" placeholder="Tercero">' +
+                                '<option value="">Seleccione una opción</option>' +
+                                clientes.map((cliente) => {
+                                    return `<option value="${cliente.id}" ${
+                                        item.cliente == cliente.id
+                                            ? "selected"
+                                            : ""
+                                    }>${cliente.razon_social} (${
+                                        cliente.nit
+                                    })</option>`;
+                                }) +
+                                "</td>" +
+                                "<td>" +
+                                '<textarea rows="1" placeholder="Facturas" cols="20" class="form-control nota_edit">' +
+                                item.nota +
+                                "</textarea>" +
+                                "</td>" +
+                                "</tr>"
+                        );
+                    });
+
+                    $(".form-select").each(function () {
+                        $(this).select2({
+                            dropdownParent: $(this).parent(),
+                            placeholder: "Seleccione",
+                            searchInputPlaceholder: "Buscar",
+                            allowClear: true,
+                        });
+                    });
+
+                    $("#show_list_excel").addClass("d-none");
+                    $("#edit_content_excel").removeClass("d-none");
                 } else {
                     toastr.error("Error al cargar la información");
                 }
