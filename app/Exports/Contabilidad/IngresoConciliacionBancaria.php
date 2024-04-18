@@ -27,7 +27,7 @@ class IngresoConciliacionBancaria implements FromCollection, WithHeadings
     {
         // Definir los títulos de las columnas
         return [
-            'Cliente',
+            'Tercero',
             'Descripción',
             'Ingreso',
             //'Saldo',

@@ -239,8 +239,8 @@
                                         <th>Crédito</th>
                                         <th>Saldo</th>
                                         <!--<th>Dcto.</th>-->
-                                        <th>Cliente</th>
-                                        <th>Nota</th>
+                                        <th>Tercero</th>
+                                        <th>Facturas</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -286,8 +286,8 @@
                                         <th>Crédito</th>
                                         <th>Saldo</th>
                                         <!--<th>Dcto.</th>-->
-                                        <th>Cliente</th>
-                                        <th>Nota</th>
+                                        <th>Tercero</th>
+                                        <th>Facturas</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -333,8 +333,8 @@
                                         <th>Crédito</th>
                                         <th>Saldo</th>
                                         <!--<th>Dcto.</th>-->
-                                        <th>Cliente</th>
-                                        <th>Nota</th>
+                                        <th>Tercero</th>
+                                        <th>Facturas</th>
                                     </tr>
                                 </thead>
                                 <tbody>

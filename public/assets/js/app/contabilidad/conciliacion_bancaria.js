@@ -275,7 +275,7 @@ $(document).ready(function () {
                                         );
                                         select_documento.setAttribute(
                                             "placeholder",
-                                            "Cliente"
+                                            "Tercero"
                                         );
                                         select_documento.innerHTML =
                                             '<option value="">Seleccione una opción</option>' +
@@ -300,7 +300,7 @@ $(document).ready(function () {
                                         );
                                         textarea_nota.setAttribute(
                                             "placeholder",
-                                            "Nota"
+                                            "Facturas"
                                         );
                                         newRow
                                             .insertCell()
@@ -375,12 +375,12 @@ $(document).ready(function () {
                 '<td><input type="text" class="form-control input_dinner saldo_add" value="' +
                 last_value +
                 '"></td>' +
-                '<td><select class="form-select documento_add" placeholder="Cliente">' +
+                '<td><select class="form-select documento_add" placeholder="Tercero">' +
                 '<option value="">Seleccione una opción</option>' +
                 clientes.map((cliente) => {
                     return `<option value="${cliente.id}">${cliente.razon_social} (${cliente.nit})</option>`;
                 }) +
-                '<td><div class="d-flex"><textarea rows="1" cols="20" class="form-control nota_add" placeholder="Nota"></textarea><i class="fas fa-trash-alt text-danger btnDeleteRow mt-2" style="margin-left: 6px"></i></div></td>' +
+                '<td><div class="d-flex"><textarea rows="1" cols="20" class="form-control nota_add" placeholder="Facturas"></textarea><i class="fas fa-trash-alt text-danger btnDeleteRow mt-2" style="margin-left: 6px"></i></div></td>' +
                 "</tr>"
         );
 
