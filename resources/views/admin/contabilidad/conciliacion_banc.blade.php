@@ -119,7 +119,7 @@
                                         @php
                                             $bgcolor = '';
 
-                                            if ($conciliacion->valid_completar == 1 && $conciliacion->visto_bueno == 1) {
+                                            if ($conciliacion->visto_bueno == 1) {
                                                 $bgcolor = 'style="background-color: #c3e6cb"';
                                             } else {
                                                 $bgcolor = 'style="background-color: #f5c6cb"';
@@ -172,22 +172,26 @@
                                             <td>{{ $conciliacion->anio }}</td>
                                             <td>{{ $conciliacion->saldo_final }}</td>
                                             <td>
-                                                <a href="javascript:void(0);" data-id="{{ $conciliacion->id }}"
-                                                    class="btn btn-primary btnView"><i class="fas fa-eye"></i></a>
-                                                @if ($conciliacion->valid_completar == 1)
-                                                    @if ($conciliacion->visto_bueno != 1)
-                                                        <a href="javascript:void(0);" data-id="{{ $conciliacion->id }}"
-                                                            class="btn btn-warning btnEdit"><i
-                                                                class="fas fa-pencil-alt"></i></a>
-                                                        <a href="javascript:void(0);" data-id="{{ $conciliacion->id }}"
-                                                            class="btn btn-success btnCompletar"><i
-                                                                class="fas fa-check"></i></a>
-                                                    @endif
+                                                <a href="javascript:void(0);" title="Visualizar"
+                                                    data-id="{{ $conciliacion->id }}" class="btn btn-primary btnView"><i
+                                                        class="fas fa-eye"></i></a>
+                                                @if ($conciliacion->visto_bueno == 0)
+                                                    <a href="javascript:void(0);" title="Aprobar"
+                                                        data-id="{{ $conciliacion->id }}"
+                                                        class="btn btn-success btnCompletar"><i
+                                                            class="fas fa-check"></i></a>
                                                 @else
-                                                    <a href="javascript:void(0);" data-id="{{ $conciliacion->id }}"
-                                                        class="btn btn-warning btnEdit"><i
-                                                            class="fas fa-pencil-alt"></i></a>
+                                                    <a href="javascript:void(0);" title="Desaprobar"
+                                                        data-id="{{ $conciliacion->id }}"
+                                                        class="btn btn-danger btnDesaprobar"><i
+                                                            class="fas fa-times"></i></a>
                                                 @endif
+                                                <a href="javascript:void(0);" title="Modificar"
+                                                    data-id="{{ $conciliacion->id }}" class="btn btn-warning btnEdit"><i
+                                                        class="fas fa-pencil-alt"></i></a>
+                                                <a href="javascript:void(0);" title="Eliminar"
+                                                    data-id="{{ $conciliacion->id }}" class="btn btn-danger btnDelete"><i
+                                                        class="fas fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -200,6 +204,7 @@
         </div>
         <!-- End Row -->
 
+        <!-- Content Add Excel -->
         <div class="row row-sm d-none" id="show_content_excel">
             <div class="col-lg-12">
                 <div class="card">
@@ -245,6 +250,97 @@
             </div>
         </div>
 
+        <!-- Content Edit Excel -->
+        <div class="row row-sm d-none" id="edit_content_excel">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header d-flex-header-table">
+                        <div class="div-1-tables-header">
+                            <h3 class="card-title mt-2">Listado desde el excel</h3>
+                        </div>
+                        <div class="div-2-tables-header">
+                            <a class="btn btn-primary" id="newRowEdit">Añadir</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <!-- basic-datatable-t -->
+                            <table class="table border-top-0 table-bordered text-nowrap border-bottom" id="excelTableEdit">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Descripción</th>
+                                        <th>Debito</th>
+                                        <th>Crédito</th>
+                                        <th>Saldo</th>
+                                        <!--<th>Dcto.</th>-->
+                                        <th>Cliente</th>
+                                        <th>Nota</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <br>
+                            <div class="text-center d-flex">
+                                <div class="col-lg">
+                                    <a class="btn btn-warning" href="{{ route('conciliacion_bancaria') }}">Regresar</a>
+                                </div>
+                                <div class="col-lg">
+                                    <button class="btn btn-primary" id="btnModificarExcel">Modificar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content View Excel -->
+        <div class="row row-sm d-none" id="view_content_excel">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header d-flex-header-table">
+                        <div class="div-1-tables-header">
+                            <h3 class="card-title mt-2">Listado desde el excel</h3>
+                        </div>
+                        <div class="div-2-tables-header">
+                            <!--<a class="btn btn-primary" id="newRowAdd">Añadir</a>-->
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <!-- basic-datatable-t -->
+                            <table class="table border-top-0 table-bordered text-nowrap border-bottom" id="excelTableView">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Descripción</th>
+                                        <th>Debito</th>
+                                        <th>Crédito</th>
+                                        <th>Saldo</th>
+                                        <!--<th>Dcto.</th>-->
+                                        <th>Cliente</th>
+                                        <th>Nota</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <br>
+                            <div class="text-center d-flex">
+                                <div class="col-lg">
+                                    <a class="btn btn-warning" href="{{ route('conciliacion_bancaria') }}">Regresar</a>
+                                </div>
+                                <div class="col-lg">
+                                    <!--<button class="btn btn-primary" id="btnGuardarExcel">Guardar</button>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Modal Add -->
         <div class="modal  fade" id="modalAdd">

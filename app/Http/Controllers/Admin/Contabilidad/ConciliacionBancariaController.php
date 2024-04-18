@@ -78,7 +78,9 @@ class ConciliacionBancariaController extends Controller
             ->first();
 
         $data->detalle = DB::table('detalle_conciliacion_bancaria')
-            ->where('conciliacion_id', $id)
+            ->select('detalle_conciliacion_bancaria.*', 'cliente.razon_social AS nombre_cliente', 'cliente.nit AS nit_cliente')
+            ->leftJoin('cliente', 'detalle_conciliacion_bancaria.cliente', '=', 'cliente.id')
+            ->where('detalle_conciliacion_bancaria.conciliacion_id', $id)
             ->get();
 
         return response()->json([
@@ -112,8 +114,8 @@ class ConciliacionBancariaController extends Controller
                 'anio' => $anio,
                 'saldo_final' => $saldo_final,
                 'archivo' => $archivo ?? null,
-                'created_by' => $created_by,
                 'created_at' => $created_at,
+                'created_by' => $created_by,
             ]);
 
             foreach ($data as $item) {
@@ -121,11 +123,12 @@ class ConciliacionBancariaController extends Controller
                     'conciliacion_id' => $conciliacion_id,
                     'fecha' => $item->fecha,
                     'descripcion' => $item->descripcion,
-                    'debito' => $item->debito ?? '',
-                    'credito' => $item->credito ?? '',
+                    'debito' => $item->debito ?? null,
+                    'credito' => $item->credito ?? null,
                     'saldo' => $item->saldo,
-                    'documento' => $item->documento,
-                    'nota' => $item->nota,
+                    //'documento' => $item->documento,
+                    'cliente' => $item->cliente ?? null,
+                    'nota' => $item->nota ?? null,
                     'created_at' => $created_at,
                     'created_by' => $created_by,
                 ]);
@@ -209,7 +212,7 @@ class ConciliacionBancariaController extends Controller
             ]);
         }
     }
-
+    
     public function completar(Request $request)
     {
         try {
@@ -222,6 +225,60 @@ class ConciliacionBancariaController extends Controller
                 ->update([
                     'visto_bueno' => 1,
                 ]);
+
+            DB::commit();
+
+            return response()->json([
+                'info' => 1,
+            ]);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return response()->json([
+                'info' => 0,
+            ]);
+        }
+    }
+
+    public function rechazar(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $conciliacion_id = $request->id;
+
+            DB::table('conciliacion_bancaria')
+                ->where('id', $conciliacion_id)
+                ->update([
+                    'visto_bueno' => 0,
+                ]);
+
+            DB::commit();
+
+            return response()->json([
+                'info' => 1,
+            ]);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return response()->json([
+                'info' => 0,
+            ]);
+        }
+    }
+
+    public function eliminar(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $conciliacion_id = $request->id;
+
+            DB::table('conciliacion_bancaria')
+                ->where('id', $conciliacion_id)
+                ->delete();
+
+            DB::table('detalle_conciliacion_bancaria')
+                ->where('conciliacion_id', $conciliacion_id)
+                ->delete();
 
             DB::commit();
 

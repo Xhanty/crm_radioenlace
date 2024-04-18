@@ -168,8 +168,9 @@ $(document).ready(function () {
                                                 ) {
                                                     // Verificar si el valor es positivo o negativo
                                                     const valor = parseFloat(
-                                                        row[j]
+                                                        row[j].replace(/,/g, "")
                                                     );
+
                                                     if (valor >= 0) {
                                                         // Colocar el valor en "DÉBITO"
                                                         newRow.insertCell(
@@ -213,7 +214,10 @@ $(document).ready(function () {
                                                     // Formatear el número en dinero con separadores de miles y coma decimal
                                                     const formattedNumber =
                                                         parseFloat(
-                                                            row[j]
+                                                            row[j].replace(
+                                                                /,/g,
+                                                                ""
+                                                            )
                                                         ).toLocaleString(
                                                             "de-DE",
                                                             {
@@ -497,7 +501,8 @@ $(document).ready(function () {
             let debito = $(this).find(".debito_add").val();
             let credito = $(this).find(".credito_add").val();
             let saldo = $(this).find(".saldo_add").val();
-            let documento = $(this).find(".documento_add").val();
+            // let documento = $(this).find(".documento_add").val();
+            let cliente = $(this).find(".documento_add").val();
             let nota = $(this).find(".nota_add").val();
 
             if (fecha == "") {
@@ -521,18 +526,22 @@ $(document).ready(function () {
                 error = true;
             }
 
+            /*if(cliente == "") {
+                error = true;
+            }*/
+
             data.push({
                 fecha: fecha,
                 descripcion: descripcion,
                 debito: debito,
                 credito: credito,
                 saldo: saldo,
-                documento: documento,
+                cliente: cliente,
                 nota: nota,
             });
         });
 
-        console.log(data);
+        //console.log(data);
 
         if (error) {
             toastr.error("Revisa los campos");
@@ -591,7 +600,54 @@ $(document).ready(function () {
                 $("#global-loader").fadeOut("slow");
                 if (response.info == 1) {
                     let data = response.data;
-                    console.log(data);
+                    let detalle = response.data.detalle;
+                    //console.log(data);
+
+                    $("#excelTableView tbody").html("");
+
+                    detalle.forEach((item) => {
+                        let fecha = new Date(item.fecha);
+                        let fecha_format =
+                            fecha.getDate() +
+                            "/" +
+                            (fecha.getMonth() + 1) +
+                            "/" +
+                            fecha.getFullYear();
+
+                        let debito = item.debito ? item.debito : "";
+                        let credito = item.credito ? item.credito : "";
+                        let saldo = item.saldo;
+                        let cliente = item.cliente ? item.nombre_cliente + " (" + item.nit_cliente + ")" : "";
+
+                        $("#excelTableView tbody").append(
+                            "<tr>" +
+                                "<td>" +
+                                fecha_format +
+                                "</td>" +
+                                "<td>" +
+                                item.descripcion +
+                                "</td>" +
+                                "<td>" +
+                                debito +
+                                "</td>" +
+                                "<td>" +
+                                credito +
+                                "</td>" +
+                                "<td>" +
+                                saldo +
+                                "</td>" +
+                                "<td>" +
+                                cliente +
+                                "</td>" +
+                                "<td>" +
+                                item.nota +
+                                "</td>" +
+                                "</tr>"
+                        );
+                    });
+
+                    $("#show_list_excel").addClass("d-none");
+                    $("#view_content_excel").removeClass("d-none");
                 } else {
                     toastr.error("Error al cargar la información");
                 }
@@ -668,6 +724,92 @@ $(document).ready(function () {
                         console.log(error);
                         toastr.error(
                             "Error al completar la conciliación bancaria"
+                        );
+                    },
+                });
+            }
+        });
+    });
+
+    $(document).on("click", ".btnDesaprobar", function () {
+        let id = $(this).attr("data-id");
+
+        Swal.fire({
+            title: "¿Está seguro de rechazar la conciliación bancaria?",
+            text: "Esta acción no se puede revertir",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#28a745",
+            cancelButtonColor: "#dc3545",
+            confirmButtonText: "Rechazar",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "rechazar_concil_bancaria",
+                    type: "POST",
+                    data: {
+                        id: id,
+                    },
+                    success: function (response) {
+                        if (response.info == 1) {
+                            toastr.success("Conciliación bancaria rechazada");
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000);
+                        } else {
+                            toastr.error(
+                                "Error al rechazar la conciliación bancaria"
+                            );
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        toastr.error(
+                            "Error al rechazar la conciliación bancaria"
+                        );
+                    },
+                });
+            }
+        });
+    });
+
+    $(document).on("click", ".btnDelete", function () {
+        let id = $(this).attr("data-id");
+
+        Swal.fire({
+            title: "¿Está seguro de eliminar la conciliación bancaria?",
+            text: "Esta acción no se puede revertir",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#28a745",
+            cancelButtonColor: "#dc3545",
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "eliminar_concil_bancaria",
+                    type: "POST",
+                    data: {
+                        id: id,
+                    },
+                    success: function (response) {
+                        if (response.info == 1) {
+                            toastr.success("Conciliación bancaria eliminada");
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000);
+                        } else {
+                            toastr.error(
+                                "Error al eliminar la conciliación bancaria"
+                            );
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        toastr.error(
+                            "Error al eliminar la conciliación bancaria"
                         );
                     },
                 });
