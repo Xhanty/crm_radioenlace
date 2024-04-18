@@ -305,7 +305,7 @@
                             <h3 class="card-title mt-2">Listado desde el excel</h3>
                         </div>
                         <div class="div-2-tables-header">
-                            <!--<a class="btn btn-primary" id="newRowAdd">Añadir</a>-->
+                            <a class="btn btn-primary" href="{{ route('conciliacion_bancaria') }}">Regresar</a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -327,15 +327,6 @@
                                 <tbody>
                                 </tbody>
                             </table>
-                            <br>
-                            <div class="text-center d-flex">
-                                <div class="col-lg">
-                                    <a class="btn btn-warning" href="{{ route('conciliacion_bancaria') }}">Regresar</a>
-                                </div>
-                                <div class="col-lg">
-                                    <!--<button class="btn btn-primary" id="btnGuardarExcel">Guardar</button>-->
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
