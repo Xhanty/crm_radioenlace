@@ -782,7 +782,7 @@
                                                 <th class="text-center">Valor Unitario</th>
                                                 <th class="text-center">Descuento</th>
                                                 <th class="text-center">Impuesto<br>Cargo</th>
-                                                <th class="text-center">Impuesto<br>Retención</th>
+                                                <!--<th class="text-center">Impuesto<br>Retención</th>-->
                                                 <th class="text-center">Valor Total</th>
                                             </tr>
                                         </thead>
