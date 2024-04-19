@@ -2396,6 +2396,8 @@ $(document).ready(function () {
                             //console.log(facturas);
                             $("#mainInvoiceList").html("");
                             $("#cant_facturas").html(facturas.length);
+                            let valor_completados = 0;
+                            let valor_pendientes = 0;
 
                             let USDollar = new Intl.NumberFormat('es-ES', {
                                 style: 'currency',
@@ -2425,9 +2427,11 @@ $(document).ready(function () {
                                     bg = "bg-cancel";
                                 } else if (factura.status == 2) {
                                     bg = "bg-paid";
+                                    valor_completados += parseFloat(factura.valor_total);
                                 } else {
                                     bg = "bg-pending";
                                     mora_html = '<span style="color: white" class="badge ' + color + '">' + diasPasados + '</span>';
+                                    valor_pendientes += parseFloat(factura.valor_total);
                                 }
 
                                 if (factura.favorito == 1) {
@@ -2454,6 +2458,10 @@ $(document).ready(function () {
 
                                 $("#mainInvoiceList").append(html);
                             });
+                            console.log(valor_completados);
+                            console.log(valor_pendientes);
+                            $("#txt_valor_completados").html("$ " + USDollar.format(valor_completados));
+                            $("#txt_valor_pendientes").html("$ " + USDollar.format(valor_pendientes));
 
                             $(".center-div .pagination").remove();
                             paginacionFacturas();

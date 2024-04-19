@@ -170,6 +170,40 @@
                     </ol>
                 </nav>
             </div>
+            <div class="d-flex my-auto">
+			    <div class=" d-flex right-page">
+				    <div class="d-flex justify-content-center me-5">
+					    <div class="">
+						    <span class="d-block">
+							    <span class="label">PAGADAS</span>
+						    </span>
+						    <span class="value" id="txt_valor_completados">
+							    $53,000
+						    </span>
+					    </div>
+							<div class="ms-3 mt-2">
+						    <span class="sparkline_bar">
+                                <canvas width="52" height="30" style="display: inline-block; width: 52px; height: 30px; vertical-align: top;"></canvas>
+                            </span>
+					    </div>
+				    </div>
+				    <div class="d-flex justify-content-center">
+						<div class="">
+							<span class="d-block">
+								<span class="label">PENDIENTES</span>
+							</span>
+							<span class="value" id="txt_valor_pendientes">
+								$34,000
+							</span>
+						</div>
+						<div class="ms-3 mt-2">
+							<span class="sparkline_bar31">
+                                <canvas width="52" height="30" style="display: inline-block; width: 52px; height: 30px; vertical-align: top;"></canvas>
+                            </span>
+						</div>
+					</div>
+				</div>
+			</div>
         </div>
         @if ($view_alert == 1)
             <div class="alert alert-danger mb-2" role="alert">
@@ -227,6 +261,10 @@
                         </div>
                         <div class="p-0">
                             <div class="main-invoice-list" id="mainInvoiceList">
+                                @php
+                                    $valor_completados = 0;
+                                    $valor_pendientes = 0;
+                                @endphp
                                 @foreach ($facturas as $key => $factura)
                                     @if ($factura->status == 0)
                                         @php
@@ -235,10 +273,12 @@
                                     @elseif($factura->status == 2)
                                         @php
                                             $bg = 'bg-paid';
+                                            $valor_completados += $factura->valor_total;
                                         @endphp
                                     @else
                                         @php
                                             $bg = 'bg-pending';
+                                            $valor_pendientes += $factura->valor_total;
                                         @endphp
                                     @endif
 
@@ -1083,15 +1123,50 @@ reportarse en las centrales de crédito.</textarea>
 @section('scripts')
     <script>
         $(document).ready(function() {
+            let USDollar = new Intl.NumberFormat('es-ES', {
+                style: 'currency',
+                currency: 'COP',
+            });
+
             var productos = @json($productos);
             var formas_pago = @json($formas_pago);
             var impuestos_cargos = @json($impuestos_cargos);
             var impuestos_retencion = @json($impuestos_retencion);
+            var valor_completados = @json($valor_completados);
+            var valor_pendientes = @json($valor_pendientes);
 
             localStorage.setItem('productos', JSON.stringify(productos));
             localStorage.setItem('formas_pago', JSON.stringify(formas_pago));
             localStorage.setItem('impuestos_cargos', JSON.stringify(impuestos_cargos));
             localStorage.setItem('impuestos_retencion', JSON.stringify(impuestos_retencion));
+
+            $("#txt_valor_completados").text("$ " + USDollar.format(valor_completados));
+            $("#txt_valor_pendientes").text("$ " + USDollar.format(valor_pendientes));
+
+            $(".sparkline_bar").sparkline([2, 4, 3, 4, 5, 4,5,3,4], {
+                type: 'bar',
+                height:30,
+                width:50,
+                barWidth: 4,
+                
+                barSpacing: 2,
+                colorMap: {
+                    '9': '#a1a1a1'
+                },
+                barColor: '#0bd02b'
+            });
+
+            $(".sparkline_bar31").sparkline([2, 4, 3, 4, 5, 4,5,3,4], {
+                type: 'bar',
+                height:30,
+                width:50,
+                barWidth:4,
+                barSpacing: 2,
+                colorMap: {
+                    '9': '#a1a1a1'
+                },
+                barColor: '#ebcd26',
+            });
         });
     </script>
     <script src="{{ asset('assets/js/app/contabilidad/ventas/factura_venta.js') }}"></script>
