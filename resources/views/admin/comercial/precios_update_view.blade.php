@@ -197,10 +197,17 @@
                     var preciofinal = $(this).text();
                     var cantidad = $(this).parent().parent().find('.cantidad').val();
                     preciofinal = preciofinal.replace("$", "");
-                    preciofinal = preciofinal.replace(",", "");
+                    preciofinal = preciofinal.replace(" ", "");
                     if(money == 'COP') {
                         preciofinal = preciofinal.replace(".", "");
+
+                        if(preciofinal.includes(",")) {
+                            preciofinal = preciofinal.replace(",", ".");
+                        }
+                    } else if(money == 'USD') {
+                        preciofinal = preciofinal.replace(",", "");
                     }
+
                     preciofinal_total = preciofinal_total + (preciofinal * cantidad);
                 });
 

@@ -573,13 +573,13 @@
                                                 <div class="row">
                                                     <div class="col-md-6 col-6 text-center">
                                                         <div class="task-box primary mb-0">
-                                                            <p class="mb-0 tx-12">Total Tasks</p>
+                                                            <p class="mb-0 tx-12">Pagadas</p>
                                                             <h3 class="mb-0">385</h3>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 col-6 text-center">
                                                         <div class="task-box danger  mb-0">
-                                                            <p class="mb-0 tx-12">Overdue Tasks</p>
+                                                            <p class="mb-0 tx-12">Pendientes</p>
                                                             <h3 class="mb-0">19</h3>
                                                         </div>
                                                     </div>
