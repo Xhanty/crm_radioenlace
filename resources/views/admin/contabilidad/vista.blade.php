@@ -176,12 +176,11 @@
                                 Servicios</a></h3>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box" id="btnHabilitacion">
+                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box" id="btnDocumentacion">
                     <div class="col-12 rounded bg-info p-3 text-center">
-                        <img src="{{ asset('assets/img/contabilidad/habilitacion.png') }}" width="100px" alt=""
+                        <img src="{{ asset('assets/img/contabilidad/reportes_nomina.png') }}" width="100px" alt=""
                             class="img-cards">
-                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Habilitación
-                                Electrónica</a></h3>
+                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Documentación</a></h3>
                     </div>
                 </div>
             </div>
@@ -202,12 +201,11 @@
                         </h3>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box" id="btnReportesNomina">
+                <div class="col-lg-4 col-md-6 col-sm-12 p-4 fadeIn box" id="btnConfiguracion">
                     <div class="col-12 rounded bg-info p-3 text-center">
-                        <img src="{{ asset('assets/img/contabilidad/reportes_nomina.png') }}" width="100px" alt=""
+                        <img src="{{ asset('assets/img/contabilidad/habilitacion.png') }}" width="100px" alt=""
                             class="img-cards">
-                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Reportes de
-                                Nómina</a></h3>
+                        <h3 class="mt-4 slideIn h3-cards"><a href="javascript:void(0);" style="color: white">Configuración</a></h3>
                     </div>
                 </div>
             </div>
@@ -749,6 +747,14 @@
                 //$('#content_list_options').hide();
                 //$('#content_list_contabilidad').show();
                 window.location.href = "conciliacion_bancaria";
+            });
+
+            $("#btnDocumentacion").click(function() {
+                window.location.href = "documentacion_contabilidad";
+            });
+
+            $("#btnConfiguracion").click(function() {
+                window.location.href = "configuracion_contabilidad";
             });
 
             $("#btnReportes").click(function() {

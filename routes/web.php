@@ -274,7 +274,7 @@ Route::middleware(['auth_user'])->group(function () {
     Route::get('/configuracion_contabilidad', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'index'])->name('configuracion_contabilidad');
     Route::get('/contabilidad_vista', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'contabilidad_vista'])->name('contabilidad_vista');
     
-    // CONCILIACIÓN BANCARIA edit_concil_bancaria
+    // CONCILIACIÓN BANCARIA
     Route::get('/conciliacion_bancaria', [App\Http\Controllers\Admin\Contabilidad\ConciliacionBancariaController::class, 'index'])->name('conciliacion_bancaria');
     Route::post('/valid_concil_bancaria', [App\Http\Controllers\Admin\Contabilidad\ConciliacionBancariaController::class, 'valid'])->name('valid_concil_bancaria');
     Route::post('/data_concil_bancaria', [App\Http\Controllers\Admin\Contabilidad\ConciliacionBancariaController::class, 'data'])->name('data_concil_bancaria');
@@ -290,6 +290,11 @@ Route::middleware(['auth_user'])->group(function () {
     Route::get('/comprobantes_contables', [App\Http\Controllers\Admin\Contabilidad\ComprobantesContablesController::class, 'index'])->name('comprobantes_contables');
     Route::post('/comprobantes_contables_add', [App\Http\Controllers\Admin\Contabilidad\ComprobantesContablesController::class, 'add'])->name('comprobantes_contables_add');
     Route::get('/reporte_resultado_integral', [App\Http\Controllers\Admin\Contabilidad\ComprobantesContablesController::class, 'reporte_resultado_integral'])->name('reporte_resultado_integral');
+
+    // DOCUMENTACIÓN CONTABLE
+    Route::get('/documentacion_contabilidad', [App\Http\Controllers\Admin\Contabilidad\DocumentacionContableController::class, 'index'])->name('documentacion_contabilidad');
+    Route::post('/documentacion_contabilidad_add', [App\Http\Controllers\Admin\Contabilidad\DocumentacionContableController::class, 'add'])->name('documentacion_contabilidad_add');
+    Route::post('/documentacion_contabilidad_delete', [App\Http\Controllers\Admin\Contabilidad\DocumentacionContableController::class, 'delete'])->name('documentacion_contabilidad_delete');
 
     // ORGANIZACIÓN
     Route::post('/edit_organizacion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_organizacion'])->name('edit_organizacion');
