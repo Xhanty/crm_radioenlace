@@ -2312,6 +2312,7 @@ $(document).ready(function () {
         let fecha_fin = $("#fecha_fin_select").val();
         let mayor_menor_mora = $("#mayor_menor_select").val();
         let dia_mora = $("#dia_mora_select").val();
+        let palabra_clave = $("#palabra_clave_select").val();
 
         // Validar si todos los campos están vacíos
         if (!cliente && !estado && !producto && !num_factura && !cons_inicio && !cons_fin && !fecha_inicio && !fecha_fin && !mayor_menor_mora && !dia_mora) {
@@ -2377,6 +2378,7 @@ $(document).ready(function () {
                 fecha_fin: fecha_fin,
                 mayor_menor_mora: mayor_menor_mora,
                 dia_mora: dia_mora,
+                palabra_clave: palabra_clave
             },
             dataType: "JSON",
             success: function (response) {

@@ -679,6 +679,7 @@ class FacturaVentaController extends Controller
             $fecha_fin = $request->fecha_fin;
             $mayor_menor_mora = $request->mayor_menor_mora;
             $dia_mora = $request->dia_mora;
+            $palabra_clave = $request->palabra_clave;
 
             $query = DB::table('factura_venta')
                 ->select('factura_venta.*', 'cliente.razon_social', 'cliente.nit', 'cliente.codigo_verificacion', 'cliente.ciudad', 'cliente.telefono_fijo', 'cliente.direccion')
@@ -702,6 +703,14 @@ class FacturaVentaController extends Controller
                     $subquery->select('factura_id')
                         ->from('detalle_factura_venta')
                         ->where('producto', $producto);
+                });
+            }
+
+            if ($palabra_clave) {
+                $query->whereIn('factura_venta.id', function ($subquery) use ($palabra_clave) {
+                    $subquery->select('factura_id')
+                        ->from('detalle_factura_venta')
+                        ->where('description', 'like', '%' . $palabra_clave . '%');
                 });
             }
 

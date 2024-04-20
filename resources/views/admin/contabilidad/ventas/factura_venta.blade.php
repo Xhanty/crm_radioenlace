@@ -1252,6 +1252,13 @@ reportarse en las centrales de crédito.</textarea>
                         </div>
                     </div>
                     <br>
+                    <div class="row row-sm">
+                        <div class="col-lg">
+                            <label for="">Palabra clave</label>
+                            <input type="text" placeholder="Palabra clave" class="form-control" id="palabra_clave_select">
+                        </div>
+                    </div>
+                    <br>
                     <br>
                     <button class="btn btn-primary btn-block" id="btn_filtrar">Filtrar</button>
                     <br>
