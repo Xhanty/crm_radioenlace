@@ -2315,7 +2315,7 @@ $(document).ready(function () {
         let palabra_clave = $("#palabra_clave_select").val();
 
         // Validar si todos los campos están vacíos
-        if (!cliente && !estado && !producto && !num_factura && !cons_inicio && !cons_fin && !fecha_inicio && !fecha_fin && !mayor_menor_mora && !dia_mora) {
+        if (!cliente && !estado && !producto && !num_factura && !cons_inicio && !cons_fin && !fecha_inicio && !fecha_fin && !mayor_menor_mora && !dia_mora && !palabra_clave) {
             toastr.error('Debe ingresar al menos un filtro');
             return false;
         }
@@ -2415,6 +2415,24 @@ $(document).ready(function () {
                                 let fechaVencimiento = new Date(factura.fecha_elaboracion);
                                 let fechaActual = new Date();
                                 let diasPasados = Math.floor((fechaActual - fechaVencimiento) / (1000 * 60 * 60 * 24));
+                                
+                                // Fecha elaboración
+                                var partesFecha = factura.fecha_elaboracion.split('-');
+                                var fecha_elaboracion = new Date(partesFecha[0], partesFecha[1] - 1, partesFecha[2]);
+                                var dia_elaboracion = fecha_elaboracion.getDate();
+                                var mes_elaboracion = fecha_elaboracion.getMonth() + 1; // Se suma 1 porque los meses van de 0 a 11 en JavaScript
+                                var año_elaboracion = fecha_elaboracion.getFullYear();
+
+                                // Asegurarse de que el día y el mes tengan dos dígitos
+                                if (dia_elaboracion < 10) {
+                                    dia_elaboracion = '0' + dia_elaboracion;
+                                }
+
+                                if (mes_elaboracion < 10) {
+                                    mes_elaboracion = '0' + mes_elaboracion;
+                                }
+
+                                var fechaFormateada = dia_elaboracion + '/' + mes_elaboracion + '/' + año_elaboracion;
 
                                 let color = "";
                                 if (diasPasados < 20) {
@@ -2452,7 +2470,7 @@ $(document).ready(function () {
                                     '<i data-id="' + factura.id + '" class="' + favorito + ' btn_favorite"></i></span>' +
                                     '</h6>' +
                                     '<div>' +
-                                    '<p><span>Fecha:</span>' + factura.fecha_elaboracion + '</p>' +
+                                    '<p><span>Fecha:</span>' + fechaFormateada + '</p>' +
                                     '<p>' + factura.razon_social + '(NIT: ' + factura.nit + '-' + factura.codigo_verificacion + ')</p>' +
                                     '</div>' +
                                     '</div>' +
@@ -2460,8 +2478,8 @@ $(document).ready(function () {
 
                                 $("#mainInvoiceList").append(html);
                             });
-                            console.log(valor_completados);
-                            console.log(valor_pendientes);
+                            //console.log(valor_completados);
+                            //console.log(valor_pendientes);
                             $("#txt_valor_completados").html("$ " + USDollar.format(valor_completados));
                             $("#txt_valor_pendientes").html("$ " + USDollar.format(valor_pendientes));
 
