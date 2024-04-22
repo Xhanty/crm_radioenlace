@@ -92,6 +92,11 @@
                                             class="fe fe-maximize"></i></span></a>
                                 </div>-->
                                 <div class="nav-item full-screen" style="margin: auto 0;">
+                                    <a class="new nav-link full-screen-link" title="Chats"
+                                        href="{{ route('chat') }}"><i
+                                            class="fe fe-message-square"></i></span></a>
+                                </div>
+                                <div class="nav-item full-screen" style="margin: auto 0;">
                                     <a class="new nav-link full-screen-link" title="Actas Reuniones"
                                         href="{{ route('actas_reuniones') }}"><i
                                             class="fe fe-file-text"></i></span></a>

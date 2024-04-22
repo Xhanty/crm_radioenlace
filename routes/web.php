@@ -537,6 +537,9 @@ Route::middleware(['auth_user'])->group(function () {
 
     // Formularios
     Route::get('/gestion_humana', [App\Http\Controllers\Admin\GestionHumanaController::class, 'index'])->name('gestion_humana');
+
+    // Chat
+    Route::get('/chat', [App\Http\Controllers\ChatController::class, 'index'])->name('chat');
 });
 
 // RUTAS PARA EL CANVA ASIGNACION DE TAREAS (PROYECTOS)
