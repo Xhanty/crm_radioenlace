@@ -357,6 +357,16 @@
 
 @section('scripts')
     <script>
-        $(document).ready(function() {});
+        $(document).ready(function() {
+            let USDollar = new Intl.NumberFormat('es-ES', {
+                style: 'currency',
+                currency: 'COP',
+            });
+
+            var cuentas_contables = @json($cuentas_contables);
+            
+            localStorage.setItem('cuentas_contables', JSON.stringify(cuentas_contables));
+        });
     </script>
+    <script src="{{ asset('assets/js/app/contabilidad/comprobantes.js') }}"></script>
 @endsection
