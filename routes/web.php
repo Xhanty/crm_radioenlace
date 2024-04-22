@@ -286,11 +286,6 @@ Route::middleware(['auth_user'])->group(function () {
     Route::get('/salidas_concil_bancaria', [App\Http\Controllers\Admin\Contabilidad\ConciliacionBancariaController::class, 'salidas_excel'])->name('salidas_concil_bancaria');
     Route::get('/ingresos_concil_bancaria', [App\Http\Controllers\Admin\Contabilidad\ConciliacionBancariaController::class, 'ingresos_excel'])->name('ingresos_concil_bancaria');
 
-    // COMPROBANTES CONTABLES
-    Route::get('/comprobantes_contables', [App\Http\Controllers\Admin\Contabilidad\ComprobantesContablesController::class, 'index'])->name('comprobantes_contables');
-    Route::post('/comprobantes_contables_add', [App\Http\Controllers\Admin\Contabilidad\ComprobantesContablesController::class, 'add'])->name('comprobantes_contables_add');
-    Route::get('/reporte_resultado_integral', [App\Http\Controllers\Admin\Contabilidad\ComprobantesContablesController::class, 'reporte_resultado_integral'])->name('reporte_resultado_integral');
-
     // DOCUMENTACIÓN CONTABLE
     Route::get('/documentacion_contabilidad', [App\Http\Controllers\Admin\Contabilidad\DocumentacionContableController::class, 'index'])->name('documentacion_contabilidad');
     Route::post('/documentacion_contabilidad_add', [App\Http\Controllers\Admin\Contabilidad\DocumentacionContableController::class, 'add'])->name('documentacion_contabilidad_add');
@@ -434,6 +429,11 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/recibo_pago_grupo_edit', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'pago_grupo_edit'])->name('recibo_pago_grupo_edit');
     Route::post('/filtrar_recibos_caja', [App\Http\Controllers\Admin\Contabilidad\Ventas\ReciboPagoController::class, 'filtrar_recibos_caja'])->name('filtrar_recibos_caja');
 
+
+    // COMPROBANTES CONTABLES 
+    Route::get('/comprobantes_contabilidad', [App\Http\Controllers\Admin\Contabilidad\Comprobantes\ComprobanteContableController::class, 'index'])->name('comprobantes_contabilidad');
+
+    
     // NOTA CREDITO VENTA
     Route::get('/nota_credito_venta', [App\Http\Controllers\Admin\Contabilidad\Ventas\NotaCreditoController::class, 'index'])->name('nota_credito_venta');
     Route::post('/nota_credito_venta_add', [App\Http\Controllers\Admin\Contabilidad\Ventas\NotaCreditoController::class, 'add'])->name('nota_credito_venta_add');

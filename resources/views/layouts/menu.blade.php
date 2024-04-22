@@ -385,10 +385,6 @@
                                         </li>
                                         <!--<li><a class="slide-item"
                                                 href="{{ route('conciliacion_bancaria') }}">Conciliación Bancaría</a>
-                                        </li>
-                                        <li><a class="slide-item"
-                                                href="{{ route('comprobantes_contables') }}">Comprobantes
-                                                Contables</a>
                                         </li>-->
                                     @endif
                                     @if (auth()->user()->hasPermissionToMultiple(
@@ -597,10 +593,6 @@
                                             </li>
                                             <li><a class="sub-side-menu__item"
                                                     href="{{ route('reporte_gastos_fijos') }}">Gastos Fijos</a>
-                                            </li>
-                                            <li><a class="sub-side-menu__item"
-                                                    href="{{ route('reporte_resultado_integral') }}">Estado de
-                                                    resultado integral</a>
                                             </li>
                                         </ul>
                                     </li>

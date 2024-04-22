@@ -757,6 +757,10 @@
                 window.location.href = "configuracion_contabilidad";
             });
 
+            $("#btnProductos").click(function() {
+                window.location.href = "comprobantes_contabilidad";
+            });
+
             $("#btnReportes").click(function() {
                 $('#content_list_options').hide();
                 $('#content_list_reportes').show();
