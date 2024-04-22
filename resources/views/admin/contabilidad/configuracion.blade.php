@@ -258,6 +258,7 @@
         @include('admin.contabilidad.configuracion.parametrizacion.impuestos')
         @include('admin.contabilidad.configuracion.parametrizacion.resolucion')
         @include('admin.contabilidad.configuracion.tributos')
+        @include('admin.contabilidad.configuracion.parametrizacion.comprobantes')
 
         <!-- Modal Seleccionar Parametrización -->
         <div class="modal  fade" id="modalCuentas">

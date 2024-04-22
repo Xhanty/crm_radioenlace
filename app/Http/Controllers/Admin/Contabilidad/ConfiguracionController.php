@@ -73,12 +73,12 @@ class ConfiguracionController extends Controller
                 ->where('forma_pago', 0)
                 ->whereRaw('LENGTH(code) = 8')
                 ->get();
-            
+
             $resolu_resoluc_fv = '';
 
             $numini_resoluc_fv = 0;
             $num_resoluc_fv = 0;
-            
+
             $fechaini_resoluc_fv = null;
             $fecha_resoluc_fv = null;
 
@@ -1425,6 +1425,90 @@ class ConfiguracionController extends Controller
             return response()->json([
                 'info' => 0,
                 'error' => $ex->getMessage(),
+            ]);
+        }
+    }
+
+    public function get_tipo_comprobante()
+    {
+        $tipo_comprobante = DB::table('tipos_comprobantes')->get();
+
+        return response()->json([
+            'info' => 1,
+            'data' => $tipo_comprobante,
+        ]);
+    }
+
+    public function add_tipo_comprobante(Request $request)
+    {
+        try {
+            $codigo = $request->codigo;
+            $titulo = $request->titulo;
+            $numeracion = $request->numeracion;
+            $centro_costo = $request->centro_costo;
+            $consecutivo = $request->consecutivo;
+            $libros = $request->libros;
+            $documento_soporte = $request->documento_soporte;
+            $en_uso = $request->en_uso;
+            
+            $valid_codigo = DB::table('tipos_comprobantes')->where('codigo', $codigo)->first();
+            if ($valid_codigo) {
+                return response()->json([
+                    'info' => 2,
+                ]);
+            }
+
+            DB::table('tipos_comprobantes')->insert([
+                'codigo' => $codigo,
+                'titulo' => $titulo,
+                'num_automatica' => $numeracion,
+                'centro_costo' => $centro_costo,
+                'consecutivo' => $consecutivo,
+                'libros_oficiales' => $libros,
+                'documento_soporte' => $documento_soporte,
+                'en_uso' => $en_uso,
+                'created_by' => auth()->user()->id,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+
+            return response()->json([
+                'info' => 1,
+            ]);
+        } catch (Exception $ex) {
+            return response()->json([
+                'info' => 0,
+            ]);
+        }
+    }
+
+    public function edit_tipo_comprobante(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $titulo = $request->titulo;
+            $numeracion = $request->numeracion;
+            $centro_costo = $request->centro_costo;
+            $consecutivo = $request->consecutivo;
+            $libros = $request->libros;
+            $documento_soporte = $request->documento_soporte;
+            $en_uso = $request->en_uso;
+
+            DB::table('tipos_comprobantes')->where('id', $id)->update([
+                'titulo' => $titulo,
+                'num_automatica' => $numeracion,
+                'centro_costo' => $centro_costo,
+                'consecutivo' => $consecutivo,
+                'libros_oficiales' => $libros,
+                'documento_soporte' => $documento_soporte,
+                'en_uso' => $en_uso,
+            ]);
+
+            return response()->json([
+                'info' => 1,
+            ]);
+        } catch (Exception $ex) {
+            return response()->json([
+                'info' => 0,
             ]);
         }
     }

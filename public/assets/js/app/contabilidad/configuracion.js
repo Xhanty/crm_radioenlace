@@ -54,6 +54,7 @@ $(document).ready(function () {
     load_impuestos();
     load_retenciones();
     load_tributos();
+    load_comprobantes();
 
     $(".open-toggle").trigger("click");
 
@@ -117,6 +118,11 @@ $(document).ready(function () {
         $("#div_param_impuestos").removeClass("d-none");
     });
 
+    $("#btnComprobantes").on("click", function () {
+        $("#div_general").addClass("d-none");
+        $("#div_param_comprobantes").removeClass("d-none");
+    });
+
     $(document).on("click", ".back_to_menu", function () {
         $("#div_general").removeClass("d-none");
         $("#div_organizacion").addClass("d-none");
@@ -132,6 +138,7 @@ $(document).ready(function () {
         $("#div_param_cuentas").addClass("d-none");
         $("#div_param_impuestos").addClass("d-none");
         $("#div_tributos").addClass("d-none");
+        $("#div_param_comprobantes").addClass("d-none");
     });
 
     $(document).on("click", ".back_to_menu_param_doc", function () {
@@ -830,6 +837,54 @@ $(document).ready(function () {
 
                 }
                 $("#tipo_empresa").html(data);
+            },
+            error: function (data) {
+                toastr.error("Error al cargar la información");
+                console.log(data);
+            },
+        });
+    }
+
+    function load_comprobantes() {
+        $.ajax({
+            url: "get_tipo_comprobante",
+            type: "POST",
+            dataType: "json",
+            success: function (response) {
+                if (response.info == 1) {
+                    var data = response.data;
+                    var html = '';
+
+                    for (let i = 0; i < data.length; i++) {
+                        html += '<tr>';
+                        html += '<td class="text-center">' + data[i].codigo + '</td>';
+                        html += '<td class="text-center">' + data[i].titulo + '</td>';
+                        html += '<td class="text-center">';
+                        html += '<button type="button" class="btn btn-sm btn-primary btnEditComprobante" title="Modificar" data-id="' + data[i].id +
+                        '" data-codigo="' + data[i].codigo + '" data-titulo="' + data[i].titulo + '" data-num="' + data[i].num_automatica + '" data-centro="' + data[i].centro_costo + '" data-consecutivo="' + data[i].consecutivo +
+                        '" data-libros="' + data[i].libros_oficiales + '" data-documento="' + data[i].documento_soporte + '" data-uso="' + data[i].en_uso +
+                        '"><i class="fa fa-edit" style="color: #fff"></i></button>&nbsp;';
+                        html += '</td>';
+                        html += '</tr>';
+                    }
+
+                    if ($.fn.DataTable.isDataTable("#tbl_comprobantes")) {
+                        $("#tbl_comprobantes").DataTable().destroy();
+                    }
+
+                    $("#tbl_comprobantes tbody").empty();
+
+                    $("#tbl_comprobantes tbody").html(html);
+
+                    $("#tbl_comprobantes").DataTable({
+                        "responsive": true,
+                        "language": language,
+                        "order": [],
+                    });
+                } else {
+                    toastr.error("Error al cargar la información");
+
+                }
             },
             error: function (data) {
                 toastr.error("Error al cargar la información");
@@ -3546,6 +3601,157 @@ $(document).ready(function () {
                     toastr.error("Error al agregar la resolución");
                     $("#btnAddResolucionVenta").attr("disabled", false);
                     $("#btnAddResolucionVenta").html("Adicionar Resolución");
+                    console.log(data);
+                }
+            });
+        }
+    });
+
+
+    $("#btnAddComprobante").on("click", function () {
+        let codigo = $("#codigo_add_comprobante").val();
+        let titulo = $("#titulo_add_comprobante").val();
+        let numeracion = $("#numeracion_automatica_add_comprobante").val();
+        let centro_costo = $("#centro_costo_add_comprobante").val();
+        let consecutivo = $("#consecutivo_add_comprobante").val();
+        let libros = $("#libros_oficiales_add_comprobante").val();
+        let documento_soporte = $("#documento_soporte_add_comprobante").val();
+        let en_uso = $("#en_uso_add_comprobante").val();
+
+        if (codigo.trim().length == 0) {
+            toastr.error("Debe ingresar un código");
+            return false;
+        } else if (titulo.trim().length == 0) {
+            toastr.error("Debe ingresar un título");
+            return false;
+        } else if (consecutivo < 0) {
+            toastr.error("Debe ingresar un consecutivo");
+            return false;
+        } else {
+            $("#btnAddComprobante").attr("disabled", true);
+            $("#btnAddComprobante").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Agregando...'
+            );
+
+            $.ajax({
+                url: "add_tipo_comprobante",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    codigo: codigo,
+                    titulo: titulo,
+                    numeracion: numeracion,
+                    centro_costo: centro_costo,
+                    consecutivo: consecutivo,
+                    libros: libros,
+                    documento_soporte: documento_soporte,
+                    en_uso: en_uso,
+                },
+                success: function (response) {
+                    $("#btnAddComprobante").attr("disabled", false);
+                    $("#btnAddComprobante").html("Adicionar Tipo de Comprobante");
+                    if (response.info == 1) {
+                        load_comprobantes();
+                        toastr.success("Tipo de Comprobante agregado correctamente");
+                        $("#codigo_add_comprobante").val("");
+                        $("#titulo_add_comprobante").val("");
+                        $("#numeracion_automatica_add_comprobante").val("1").trigger("change");
+                        $("#centro_costo_add_comprobante").val("0").trigger("change");
+                        $("#consecutivo_add_comprobante").val("");
+                        $("#libros_oficiales_add_comprobante").val("0").trigger("change");
+                        $("#documento_soporte_add_comprobante").val("0").trigger("change");
+                        $("#en_uso_add_comprobante").val("1").trigger("change");
+                        $("#modalAddComprobante").modal("hide");
+                    } else if (response.info == 2) {
+                        toastr.error("El código ya se encuentra registrado");
+                    } else {
+                        toastr.error("Error al agregar el tipo de comprobante");
+                    }
+                },
+                error: function (data) {
+                    $("#btnAddComprobante").attr("disabled", false);
+                    $("#btnAddComprobante").html("Adicionar Tipo de Comprobante");
+                    toastr.error("Error al agregar el tipo de comprobante");
+                    console.log(data);
+                }
+            });
+        }
+    });
+
+    $(document).on("click", ".btnEditComprobante", function () {
+        let id = $(this).data("id");
+        let codigo = $(this).data("codigo");
+        let titulo = $(this).data("titulo");
+        let numeracion = $(this).data("num");
+        let centro_costo = $(this).data("centro");
+        let consecutivo = $(this).data("consecutivo");
+        let libros = $(this).data("libros");
+        let documento_soporte = $(this).data("documento");
+        let en_uso = $(this).data("uso");
+
+        $("#id_edit_comprobante").val(id);
+        $("#codigo_edit_comprobante").val(codigo);
+        $("#titulo_edit_comprobante").val(titulo);
+        $("#numeracion_automatica_edit_comprobante").val(numeracion).trigger("change");
+        $("#centro_costo_edit_comprobante").val(centro_costo).trigger("change");
+        $("#consecutivo_edit_comprobante").val(consecutivo);
+        $("#libros_oficiales_edit_comprobante").val(libros).trigger("change");
+        $("#documento_soporte_edit_comprobante").val(documento_soporte).trigger("change");
+        $("#en_uso_edit_comprobante").val(en_uso).trigger("change");
+        $("#modalEditComprobante").modal("show");
+    });
+
+    $("#btnUpdateComprobante").on("click", function () {
+        let id = $("#id_edit_comprobante").val();
+        let titulo = $("#titulo_edit_comprobante").val();
+        let numeracion = $("#numeracion_automatica_edit_comprobante").val();
+        let centro_costo = $("#centro_costo_edit_comprobante").val();
+        let consecutivo = $("#consecutivo_edit_comprobante").val();
+        let libros = $("#libros_oficiales_edit_comprobante").val();
+        let documento_soporte = $("#documento_soporte_edit_comprobante").val();
+        let en_uso = $("#en_uso_edit_comprobante").val();
+
+        if (titulo.trim().length == 0) {
+            toastr.error("Debe ingresar un título");
+            return false;
+        } else if (consecutivo < 0) {
+            toastr.error("Debe ingresar un consecutivo");
+            return false;
+        } else {
+            $("#btnUpdateComprobante").attr("disabled", true);
+            $("#btnUpdateComprobante").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Actualizando...'
+            );
+
+            $.ajax({
+                url: "edit_tipo_comprobante",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id: id,
+                    titulo: titulo,
+                    numeracion: numeracion,
+                    centro_costo: centro_costo,
+                    consecutivo: consecutivo,
+                    libros: libros,
+                    documento_soporte: documento_soporte,
+                    en_uso: en_uso,
+                },
+                success: function (response) {
+                    $("#btnUpdateComprobante").attr("disabled", false);
+                    $("#btnUpdateComprobante").html("Actualizar Tipo de Comprobante");
+                    if (response.info == 1) {
+                        load_comprobantes();
+                        toastr.success("Tipo de Comprobante actualizado correctamente");
+                        $("#modalEditComprobante").modal("hide");
+                    } else {
+                        toastr.error("Error al actualizar el tipo de comprobante");
+                    }
+                },
+                error: function (data) {
+                    $("#btnUpdateComprobante").attr("disabled", false);
+                    $("#btnUpdateComprobante").html("Actualizar Tipo de Comprobante");
+                    toastr.error("Error al actualizar el tipo de comprobante");
                     console.log(data);
                 }
             });

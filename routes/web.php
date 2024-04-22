@@ -370,6 +370,9 @@ Route::middleware(['auth_user'])->group(function () {
     Route::post('/delete_retencion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'delete_retencion'])->name('delete_retencion');
     Route::post('/update_uso_retencion', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'update_uso_retencion'])->name('update_uso_retencion');
 
+    Route::post('/get_tipo_comprobante', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'get_tipo_comprobante'])->name('get_tipo_comprobante');
+    Route::post('/add_tipo_comprobante', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'add_tipo_comprobante'])->name('add_tipo_comprobante');
+    Route::post('/edit_tipo_comprobante', [App\Http\Controllers\Admin\Contabilidad\ConfiguracionController::class, 'edit_tipo_comprobante'])->name('edit_tipo_comprobante');
 
     //NOMINA
     Route::get('/config_nomina', [App\Http\Controllers\Admin\Contabilidad\Nomina\NominaController::class, 'config_nomina'])->name('config_nomina');
