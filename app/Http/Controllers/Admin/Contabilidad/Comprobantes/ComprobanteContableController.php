@@ -19,16 +19,16 @@ class ComprobanteContableController extends Controller
             ->where('status', 1)
             ->get();
 
-        /*$comprobantes = DB::table('comprobantes_contables')
+        $comprobantes = DB::table('comprobantes_contables')
             ->join('empleados', 'comprobantes_contables.created_by', '=', 'empleados.id')
             ->select('comprobantes_contables.*', 'empleados.nombre AS empleado')
-            ->get();*/
+            ->get();
 
         $clientes = DB::table('cliente')
             ->select('id', 'razon_social', 'nit')
             ->where('estado', 1)
             ->get();
 
-        return view('admin.contabilidad.comprobantes', compact('empleados', 'clientes'));
+        return view('admin.contabilidad.comprobantes', compact('empleados', 'clientes', 'comprobantes'));
     }
 }
