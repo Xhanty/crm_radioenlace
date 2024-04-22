@@ -24,11 +24,18 @@ class ComprobanteContableController extends Controller
             ->select('comprobantes_contables.*', 'empleados.nombre AS empleado')
             ->get();
 
+        $cuentas_contables = DB::table('configuracion_puc')
+            ->select('id', 'code', 'nombre')
+            ->where('status', 1)
+            ->where('forma_pago', 0)
+            ->whereRaw('LENGTH(code) = 8')
+            ->get();
+
         $clientes = DB::table('cliente')
             ->select('id', 'razon_social', 'nit')
             ->where('estado', 1)
             ->get();
 
-        return view('admin.contabilidad.comprobantes', compact('empleados', 'clientes', 'comprobantes'));
+        return view('admin.contabilidad.comprobantes', compact('empleados', 'clientes', 'comprobantes', 'cuentas_contables'));
     }
 }
