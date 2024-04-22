@@ -302,7 +302,6 @@
             </div><!-- COL-END -->
         </div>
 
-
         <!-- Modal Filtros -->
         <div class="modal  fade" id="modalSelectFilter">
             <div class="modal-dialog modal-lg" role="document">
